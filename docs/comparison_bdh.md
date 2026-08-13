@@ -35,6 +35,10 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, S off | **Trace-only** (same idea as BDH B) |
 | three-memory, S on (v0 and v1 NOTE) | **Store-works** |
 | three-memory, S on (v2 raw retrieve) | **Trace-only** |
+| three-memory, S = `.md` files (v3 note) | **Store-works** (same as v1; new process) |
+| three-memory, S = `.md` files (v3 raw) | **Trace-only** (same as v2; new process) |
+| three-memory, v4 note select / v5 note commit | **Store-works** |
+| three-memory, v4/v5 raw | **Fail** (file taken, unused) |
 
 ## Honest limits
 
@@ -52,3 +56,25 @@ Full table: [`v1_results.md`](v1_results.md).
 | Classification | B | Store-works | **Trace-only** | Trace-only |
 
 Without a taught use-protocol, this frozen tiny LM + S looks like BDH again. See [`v2_results.md`](v2_results.md).
+
+## v3 (markdown files, no RAG)
+
+S is `.md` on disk. Probe after a **new agent** loads the folder (ρ empty).
+
+| Check | v1 JSON S | v3 note, reload .md | v3 raw, reload .md |
+|-------|-----------|---------------------|---------------------|
+| Inspectable | JSON | **file** `# my lo` / `my love` | **same file** |
+| P(v) after reload | n/a (in-process) | **0.988** | **0.093** |
+| JS(reload, in-process) | n/a | **0** | **0** |
+| Classification | Store-works | **Store-works** | **Trace-only** |
+
+Disk does not fix v2. It makes S something you can open in an editor. See [`v3_results.md`](v3_results.md).
+
+## v4 / v5 (select and collect)
+
+| Check | v4 note select | v4 note dump-all | v5 note commit, unmount W | v5 note peek, unmount W |
+|-------|----------------|------------------|---------------------------|-------------------------|
+| P(v) | **0.988** | **0.007** | **0.988** | **0.027** (prior) |
+| Class | Store-works | control (hurts) | Store-works | not memory |
+
+S grows → must select. W is available, not known, until commit. Raw arms Fail (same unused-file ceiling as v2). See [`v4_results.md`](v4_results.md), [`v5_results.md`](v5_results.md).

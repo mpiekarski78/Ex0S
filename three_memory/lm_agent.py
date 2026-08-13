@@ -10,6 +10,7 @@ import torch
 from .byte_lm import TinyByteLM, hash_lm, js_divergence, next_byte_logits, softmax
 from .bytes_util import PROBE, R_ID, V_ID, encode_bytes
 from .drives import InnateDrives
+from .library import WorldLibrary, format_note, format_raw, select_records
 from .rho import RhoConfig, WorkingTrace
 from .store import FactRecord, WorldStore
 
@@ -18,7 +19,8 @@ class LanguageAgent:
     """
     Frozen LM = species prior (syntax/dynamics only in v2; v1 also had NOTE-copy).
     ρ = session hidden EMA (write novelty) + prefix→byte buffer (S-off probe bias).
-    S = inspectable snippets. v1 retrieve = taught NOTE; v2 retrieve = raw replay.
+    S = inspectable life (JSON or .md). W = unread library (not memory until collect).
+    Retrieve: select matching note (default) or dump all. v1 NOTE / v2 raw.
     """
 
     def __init__(
@@ -28,23 +30,36 @@ class LanguageAgent:
         *,
         store_enabled: bool = True,
         retrieve_mode: str = "note",
+        retrieve_policy: str = "select",
+        collect_mode: str = "off",
         prefix_len: int = 5,
         rho_byte_bias: float = 2.5,
+        store: WorldStore | None = None,
+        world: WorldLibrary | None = None,
     ):
         if retrieve_mode not in ("note", "raw"):
             raise ValueError(retrieve_mode)
+        if retrieve_policy not in ("select", "dump"):
+            raise ValueError(retrieve_policy)
+        if collect_mode not in ("off", "commit", "peek"):
+            raise ValueError(collect_mode)
         self.model = model
         self.device = device
         self.retrieve_mode = retrieve_mode
+        self.retrieve_policy = retrieve_policy
+        self.collect_mode = collect_mode
         self.prefix_len = prefix_len
         hdim = model.config.n_hidden
         self.rho = WorkingTrace(RhoConfig(embed_dim=hdim))
-        self.store = WorldStore(enabled=store_enabled)
+        self.store = store if store is not None else WorldStore(enabled=store_enabled)
+        self.world = world
         self.drives = InnateDrives()
         self.t = 0
         self.rho_byte_bias = rho_byte_bias
         self._hash0 = hash_lm(model)
         self.session_next: dict[str, int] = {}
+        self._peek: list[FactRecord] = []
+        self.last_retrieve: dict[str, Any] = {}
 
     def weight_hash(self) -> str:
         return hash_lm(self.model)
@@ -55,40 +70,84 @@ class LanguageAgent:
     def reset_rho(self) -> None:
         self.rho.reset()
         self.session_next.clear()
+        self._peek = []
 
     def reset_store(self) -> None:
         self.store.reset()
+        self._peek = []
+
+    def _pool(self) -> list[FactRecord]:
+        return list(self.store.records()) + list(self._peek)
+
+    def collect(self, probe: str) -> dict[str, Any]:
+        """If S misses, take matching W. commit copies into S; peek is session-only."""
+        s_hits = select_records(self.store.records(), probe)
+        w_hits = self.world.match(probe) if self.world is not None else []
+        info: dict[str, Any] = {
+            "n_store_hits": len(s_hits),
+            "n_world_hits": len(w_hits),
+            "taken": 0,
+            "committed": 0,
+            "mode": self.collect_mode,
+        }
+        if self.collect_mode == "off" or self.world is None:
+            return info
+        if not self.drives.should_collect(len(s_hits), len(w_hits)):
+            return info
+        rec = w_hits[0]
+        info["taken"] = 1
+        info["taken_file"] = rec.tags.get("source_file")
+        info["taken_prefix"] = rec.tags.get("prefix")
+        if self.collect_mode == "commit":
+            copied = FactRecord(
+                fact_id=rec.fact_id,
+                what=rec.what,
+                when=self.t,
+                drive_scores={"collect": 1.0},
+                tags=dict(rec.tags),
+            )
+            copied.tags["source"] = "W->S"
+            if self.store.write(copied):
+                info["committed"] = 1
+        else:
+            self._peek = [rec]
+        return info
 
     def _retrieve_context(self, probe: str) -> str:
+        self.collect(probe)
+        pool = self._pool()
+        if self.retrieve_policy == "dump":
+            chosen = sorted(pool, key=lambda r: (str(r.tags.get("prefix") or ""), r.what))
+            source = "dump"
+        else:
+            chosen = select_records(pool, probe)
+            source = "select"
         if self.retrieve_mode == "note":
-            return self._notes_for(probe)
-        return self._raw_for(probe)
+            if source == "dump":
+                ctx = "".join(format_note(r) + format_raw(r) for r in chosen)
+            else:
+                ctx = "".join(format_note(r) for r in chosen)
+        else:
+            ctx = "".join(format_raw(r) for r in chosen)
+        self.last_retrieve = {
+            "policy": self.retrieve_policy,
+            "mode": self.retrieve_mode,
+            "n_pool": len(pool),
+            "n_chosen": len(chosen),
+            "n_rejected": max(0, len(pool) - len(chosen)),
+            "prefixes": [str(r.tags.get("prefix") or "") for r in chosen],
+            "whats": [r.what for r in chosen],
+            "source": source,
+        }
+        return ctx
 
     def _raw_for(self, probe: str) -> str:
-        """Replay stored snippets as ordinary bytes (no NOTE format)."""
-        hits = []
-        for rec in self.store.records():
-            snip = str(rec.tags.get("snippet") or rec.what or "")
-            if probe and snip.startswith(probe):
-                hits.append((len(snip), snip))
-        if not hits:
-            return ""
-        hits.sort(reverse=True)
-        snip = hits[0][1]
-        if not snip.endswith("\n"):
-            snip += "\n"
-        return snip
+        chosen = select_records(self._pool(), probe)
+        return "".join(format_raw(r) for r in chosen)
 
     def _notes_for(self, probe: str) -> str:
-        hits = []
-        for rec in self.store.records():
-            pfx = str(rec.tags.get("prefix", ""))
-            if pfx and probe.endswith(pfx):
-                hits.append(rec)
-        if not hits:
-            return ""
-        hits.sort(key=lambda r: len(str(r.tags.get("prefix", ""))), reverse=True)
-        return f"NOTE: {hits[0].what}\n"
+        chosen = select_records(self._pool(), probe)
+        return "".join(format_note(r) for r in chosen)
 
     def _apply_rho_bias(self, logits: np.ndarray, probe: str) -> np.ndarray:
         out = logits.copy()
@@ -98,7 +157,8 @@ class LanguageAgent:
         return out
 
     def probe(self, text: str, *, use_store: bool = True, apply_rho: bool = True) -> dict[str, Any]:
-        ctx = (self._retrieve_context(text) if use_store else "") + text
+        retrieved = self._retrieve_context(text) if use_store else ""
+        ctx = retrieved + text
         ids = encode_bytes(ctx)
         logits, hidden = next_byte_logits(self.model, ids, self.device)
         if apply_rho:
@@ -112,10 +172,11 @@ class LanguageAgent:
             "p_r": float(probs[R_ID]),
             "p_v": float(probs[V_ID]),
             "argmax": int(np.argmax(probs)),
-            "store_notes": self._retrieve_context(text) if use_store else "",
+            "store_notes": retrieved,
             "n_store": len(self.store),
             "rho_l2": float(np.linalg.norm(self.rho.rho)),
             "session_next": dict(self.session_next),
+            "retrieve": dict(self.last_retrieve),
         }
 
     def experience(self, text: str) -> dict[str, Any]:

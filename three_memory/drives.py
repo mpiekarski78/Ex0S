@@ -38,3 +38,7 @@ class InnateDrives:
 
     def should_write(self, novelty: float, integrity: float) -> bool:
         return novelty >= self.thresholds.novelty_write or integrity >= self.thresholds.integrity_write
+
+    def should_collect(self, n_store_hits: int, n_world_hits: int) -> bool:
+        """Take from W only on an S miss. Frozen; not learn-to-learn."""
+        return n_store_hits == 0 and n_world_hits > 0

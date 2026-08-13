@@ -9,11 +9,14 @@
 
 Biology’s lesson here: hardcode **drives and learning rules**, leave **world-knowledge** to experience, and do **not** confuse a short trace with a life of knowledge.
 
-## Result (v0 + v1 Store-works; v2 Trace-only)
+## Result (v0–v5)
 
 v0: [`docs/conclusion.md`](docs/conclusion.md).  
 v1 NOTE-copy: [`docs/v1_results.md`](docs/v1_results.md).  
 v2 raw retrieve: [`docs/v2_results.md`](docs/v2_results.md).  
+v3 markdown files (no RAG): [`docs/v3_results.md`](docs/v3_results.md).  
+v4 select among notes: [`docs/v4_results.md`](docs/v4_results.md).  
+v5 collect from unread W: [`docs/v5_results.md`](docs/v5_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -29,14 +32,19 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v1 `my lo` after ρ reset, S on | P(`v`)=0.988 (taught NOTE-copy) |
 | v1 same, S off | P(`v`)=0.027 (empty prior) |
 | v2 raw retrieve after ρ reset, S on | P(`v`)=0.093 ≈ prior (**Trace-only**) |
+| v3 new agent, load `.md` only (NOTE prior) | P(`v`)=0.988 (**Store-works**; JS vs in-process = 0) |
+| v3 new agent, load `.md` only (plain prior) | P(`v`)=0.093 (**Trace-only**) |
+| v4 select 1 of 13 notes (NOTE prior) | P(`v`)=0.988; dump-all P(`v`)=0.007 |
+| v5 commit W→S then unmount W (NOTE prior) | P(`v`)=0.988; peek then unmount → prior |
 
-## Three pieces
+## Four pieces
 
 | Piece | Role | Survives ρ reset? |
 |-------|------|-------------------|
-| Frozen cortex | Species prior (sensors / dynamics) | yes (fixed weights) |
+| Frozen cortex | Species prior + use/collect rules | yes (fixed weights) |
 | Working trace ρ | Session residue | **no** |
-| World store S | Inspectable life-of-knowledge (JSON) | **yes** |
+| World store S | Life-of-knowledge (committed notes) | **yes** |
+| Library W | Unread available data | **no** (not owned until commit) |
 
 ## Status
 
@@ -47,6 +55,9 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | Compare to BDH Category B | done | [`docs/comparison_bdh.md`](docs/comparison_bdh.md) |
 | v1 tiny LM | **Store-works** | taught NOTE-copy; [`docs/v1_results.md`](docs/v1_results.md) |
 | v2 raw retrieve | **Trace-only** | no NOTE-copy; [`docs/v2_results.md`](docs/v2_results.md) |
+| v3 markdown S | **Store-works** / **Trace-only** | files on disk, no RAG; [`docs/v3_results.md`](docs/v3_results.md) |
+| v4 select | **Store-works** / **Fail** | pick one `.md` among 13; [`docs/v4_results.md`](docs/v4_results.md) |
+| v5 collect | **Store-works** / **Fail** | W→S commit vs peek; [`docs/v5_results.md`](docs/v5_results.md) |
 
 ## Quick start
 
@@ -56,11 +67,16 @@ pip install -r requirements.txt
 
 python tests/test_smoke.py
 python tests/test_v1_smoke.py
+python tests/test_md_store.py
+python tests/test_library.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
 python -m experiments.train_prior --plain
 python -m experiments.run_v2
+python -m experiments.run_v3 --both
+python -m experiments.run_v4 --both
+python -m experiments.run_v5 --both
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -68,9 +84,9 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 ## Layout
 
 ```text
-three_memory/     # cortex, ρ, store S, drives, agent, env, byte LM
-experiments/      # run_v0, train_prior, run_v1, run_v2
-docs/             # protocol, comparison, conclusion, v1/v2 results
+three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
+experiments/      # run_v0 … run_v5, train_prior
+docs/             # protocol, comparison, conclusion, v1–v5 results
 tests/
 runs/             # gitignored
 checkpoints/      # gitignored (prior.pt)
@@ -82,3 +98,4 @@ checkpoints/      # gitignored (prior.pt)
 - Not hardcoded “survive / reproduce” objectives
 - Not a chatbot / agent product
 - Not Category D on ρ — ρ stays session-only
+- Not RAG (v3 is string-matched `.md` files, no embeddings)

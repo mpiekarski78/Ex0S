@@ -101,3 +101,20 @@ v1 does not reopen Category D on BDH ρ. It shows the missing box on the *langua
 
 No NOTE-copy in pretrain (NOTE-follow acc 0.025). Retrieve prepends `my love\n` as ordinary text. Classification: **Trace-only**. After ρ reset, P(`v`)≈0.093 vs prior 0.084. The fact is in S and in the prompt; this tiny LSTM does not use it. Details: [`v2_results.md`](v2_results.md).
 
+## v3 (markdown files, no RAG)
+
+S is a folder of `.md` files. After experience, a **new** agent with empty ρ loads only that folder. Same-process vs reload JS = 0.
+
+- NOTE prior: **Store-works**, P(`v`)=0.988 — the file is enough because the LM was taught to copy `NOTE:`.
+- Plain prior: **Trace-only**, P(`v`)=0.093 — the same file sits in the prompt unused.
+
+Disk persistence ≠ a use-protocol. Not RAG. Details: [`v3_results.md`](v3_results.md).
+
+## v4 (select) and v5 (collect)
+
+v4: 13 notes. Select the matching heading (reject 12). NOTE prior **Store-works** P(`v`)=0.988. Dump-all **collapses** to 0.007. Raw **Fail**.
+
+v5: unread library W. **Commit** copies `my-lo.md` into S; after unmounting W, P(`v`)=0.988. **Peek** works while W is mounted, then returns to prior. Collect off ignores W. Raw commit still **Fail**.
+
+Available data is not memory. Details: [`v4_results.md`](v4_results.md), [`v5_results.md`](v5_results.md).
+

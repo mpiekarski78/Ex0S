@@ -62,3 +62,36 @@ Predeclared in `experiments/run_v1.py`.
 Same probes and categories. Prior is trained on **stripped Shakespeare only** (`--plain`). Retrieve prepends the stored **snippet as ordinary text** (`my love\\n` + `my lo`), not a taught `NOTE:` format.
 
 Pass Store-works on the same numeric thresholds. If the tiny LM cannot use raw context, classify **Fail** or **Trace-only**. Do not add NOTE training to rescue the plot.
+
+## v3 markdown files (no RAG)
+
+S is a **folder of `.md` files** (heading = prefix, body = snippet). No embeddings.
+
+After experience, copy the folder and build a **new agent** with empty ρ that only reloads those files. Classify on the reloaded probe, same numeric thresholds as v1.
+
+Two predeclared arms:
+
+| Arm | Prior | Retrieve | Expected if v1/v2 hold |
+|-----|-------|----------|------------------------|
+| note | `prior.pt` | `NOTE:` | Store-works (file ≈ JSON S) |
+| raw | `prior_plain.pt` | raw snippet | Trace-only (file unread by the LM) |
+
+The new claim is **inspectable persistence on disk**, not a better retrieve. Do not add a vector index here.
+
+## v4 select among many notes
+
+S has 13 `.md` files. One matches `my lo`. Traps are shorter suffixes (`lo`, `my l`). Retrieve **select** = longest matching heading only. Control **dump-all** concatenates every file.
+
+Classify on select, same P(`v`) thresholds as v1. Dump-all is reported, not labeled. Predeclare: note+select may Store-works; raw+select may Fail (no session, unused file). If dump-all matches select, say N is too small to matter.
+
+## v5 collect from unread W
+
+W is a second folder (available data). S starts empty. Frozen rule: S miss and W heading match → take **one** file.
+
+| Mode | Durable after unmount W + ρ reset? |
+|------|--------------------------------------|
+| commit (copy W→S) | yes if the LM can use S |
+| peek (session only) | **no** |
+| collect off | **no** |
+
+Classify on **commit + unmount W**. Peek after unmount must sit at prior. Do not ingest the whole library.
