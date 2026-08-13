@@ -3,9 +3,7 @@
 BDH is the **trace-only baseline**, not a scoreboard.  
 Source: [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [docs/conclusion.md](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
 
-v0 compares **the same questions**. Door success rate is not JS on `my lo`.
-
-## Shared checklist (reported v0 run)
+## v0 (key/door) — same questions, not the same numbers
 
 | Check | BDH (measured) | three-memory S **off** | three-memory S **on** |
 |-------|----------------|------------------------|------------------------|
@@ -17,18 +15,29 @@ v0 compares **the same questions**. Door success rate is not JS on `my lo`.
 | Snapshot restore of ρ | exact | action match after restore | action match (knowledge does not *need* it) |
 | Inspectable record of the fact | no | no | **yes** (`store_A.json`) |
 
+## v1 (language) — same probes, published BDH numbers
+
+Full table: [`v1_results.md`](v1_results.md).
+
+| Check | BDH (published) | three-memory S off | three-memory S on |
+|-------|-----------------|--------------------|-------------------|
+| Probe | `my lo` → r/v | same | same |
+| Empty prior P(v) | 0.181 | 0.027 (stripped pretrain) | 0.027 |
+| 8× love, P(v) after ρ reset | wiped | 0.027 (prior) | **0.988** |
+| disable-S after ρ reset | n/a (no S) | prior | — |
+| Inspectable | no | no | `my lo -> v` |
+
 ## Classification
 
 | System | Letter / label |
 |--------|----------------|
 | Public BDH | **Category B** — short-term adaptive memory |
-| three-memory, S off | **Trace-only** (same idea as BDH B): works in-session, dies on ρ reset |
-| three-memory, S on | **Store-works**: fact survives ρ reset and is readable in JSON |
+| three-memory, S off | **Trace-only** (same idea as BDH B) |
+| three-memory, S on (v0 and v1) | **Store-works** |
 
 ## Honest limits
 
-- Different architecture and task (key/door vs Shakespeare bytes).
-- BDH was not given an explicit store; winning Store-works does **not** mean public BDH was wrong.
-- It means the missing box for a *life of knowledge* was an inspectable store, not a longer ρ.
-- v0 retrieve is **tag→action rules**, not reading English from S. The JSON `what` field is for inspection.
-- Comparable *numbers* (JS, ΔP, `my lord`/`my love`) wait for **v1** language probes if pursued.
+- v0 retrieve was tag→action. v1 retrieve is a NOTE string the frozen LM was trained to copy.
+- Empty priors differ because v1 **stripped** lord/love from pretrain on purpose.
+- One filler byte does not scramble v1’s prefix-keyed session buffer; BDH’s mixed ρ can. **Reset of ρ** is the matched test.
+- Winning Store-works does **not** mean public BDH was wrong. It means the missing box was an explicit store.

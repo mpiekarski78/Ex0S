@@ -83,10 +83,16 @@ Winning v0 does not reopen Category D on BDH ρ.
 
 ```bash
 python -m experiments.run_v0
+python -m experiments.train_prior
+python -m experiments.run_v1
 ```
 
-Numbers: `runs/` (gitignored). Comparison: [`comparison_bdh.md`](comparison_bdh.md). Protocol: [`protocol.md`](protocol.md).
+Numbers: `runs/` (gitignored). Comparison: [`comparison_bdh.md`](comparison_bdh.md). Protocol: [`protocol.md`](protocol.md). v1 table: [`v1_results.md`](v1_results.md).
 
-## Gate
+## v1 (language)
 
-v0 is **Store-works** → v1 (tiny language, same three boxes) is **allowed**. See [`v1_plan.md`](v1_plan.md). Not started until explicitly run.
+Same three boxes, same probes as BDH (`my lo` → r/v). Frozen tiny byte LSTM; lord/love stripped from pretrain; S retrieved as `NOTE:` context.
+
+**Classification: Store-works.** After 8× `my love`, P(`v`) after ρ reset is **0.988** with S on, **0.027** (empty prior) with S off. Fact in JSON: `my lo -> v`. BDH published: the same probe’s association dies on ρ reset.
+
+v1 does not reopen Category D on BDH ρ. It shows the missing box on the *language* probes is still the inspectable store.

@@ -7,4 +7,4 @@
 - v0 key/door world + CLI `experiments.run_v0`.
 - Reported classification: **Store-works**. disable-S recovers Trace-only (BDH Category B analogue).
 - Audit: removed env-injected lesson strings; writes are event-driven. Documented tag→action retrieve limit. Metrics include `n_forced_steps`.
-- Docs: protocol, comparison to BDH, conclusion, gated v1 plan.
+- v1 tiny byte LM + NOTE retrieve; same `my lo` probes as BDH. Classification **Store-works**. Published BDH numbers are the trace-only column ([`docs/v1_results.md`](v1_results.md)).

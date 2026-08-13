@@ -52,6 +52,17 @@ class WorldStore:
                 out.append(r)
         return out
 
+    def retrieve_prefix(self, probe: str) -> list[FactRecord]:
+        """Facts whose stored prefix is a suffix of the probe string."""
+        if not self.enabled:
+            return []
+        out = []
+        for r in self._records:
+            pfx = str(r.tags.get("prefix", ""))
+            if pfx and probe.endswith(pfx):
+                out.append(r)
+        return out
+
     def has_fact(self, fact_id: str) -> bool:
         return any(r.fact_id == fact_id for r in self._records)
 

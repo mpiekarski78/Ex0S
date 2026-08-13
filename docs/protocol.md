@@ -45,3 +45,14 @@ Fact: `red door opens only with key`.
 ## Comparison to BDH
 
 See [`comparison_bdh.md`](comparison_bdh.md). BDH is the trace-only baseline ([mpiekarski78/bdh](https://github.com/mpiekarski78/bdh)).
+
+## v1 language protocol
+
+Same categories. Frozen tiny byte LM (syntax + NOTE-copy; lord/love/`my lo` stripped). Experience is 8× `my lord` vs 8× `my love`. Probe `my lo`.
+
+- **A/B** write 5-gram facts to S when novelty or next-byte error is high.
+- Retrieve: longest stored prefix that is a suffix of the probe, injected as `NOTE: {what}\n`.
+- disable-S: session prefix→byte buffer only (cleared on ρ reset).
+- Pass Store-works: S-on P(v) after ρ reset ≥ prior + 0.10; S-off after reset within 0.10 of prior; inspectable `my lo -> v`; weights unchanged.
+
+Predeclared in `experiments/run_v1.py`.

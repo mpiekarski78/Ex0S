@@ -9,9 +9,11 @@
 
 Biology’s lesson here: hardcode **drives and learning rules**, leave **world-knowledge** to experience, and do **not** confuse a short trace with a life of knowledge.
 
-## Result (v0): **Store-works**
+## Result (v0 + v1): **Store-works**
 
-Full write-up: [`docs/conclusion.md`](docs/conclusion.md). Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
+v0 write-up: [`docs/conclusion.md`](docs/conclusion.md).  
+v1 language vs BDH: [`docs/v1_results.md`](docs/v1_results.md).  
+Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
 |-------|---------|
@@ -23,6 +25,8 @@ Full write-up: [`docs/conclusion.md`](docs/conclusion.md). Comparison: [`docs/co
 | disable-S: correct before ρ reset | yes (session residue) |
 | disable-S: correct after ρ reset | **no** (BDH-like Category B) |
 | Reset S | effect gone |
+| v1 `my lo` after ρ reset, S on | P(`v`)=0.988 (fact in JSON) |
+| v1 same, S off | P(`v`)=0.027 (empty prior) |
 
 ## Three pieces
 
@@ -39,7 +43,7 @@ Full write-up: [`docs/conclusion.md`](docs/conclusion.md). Comparison: [`docs/co
 | Public repo | done | this repository |
 | v0 key/door | **Store-works** | [`docs/conclusion.md`](docs/conclusion.md) |
 | Compare to BDH Category B | done | [`docs/comparison_bdh.md`](docs/comparison_bdh.md) |
-| v1 tiny LM | planned (gated) | [`docs/v1_plan.md`](docs/v1_plan.md) — not started |
+| v1 tiny LM | **Store-works** | [`docs/v1_results.md`](docs/v1_results.md) |
 
 ## Quick start
 
@@ -48,7 +52,10 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 python tests/test_smoke.py
+python tests/test_v1_smoke.py
 python -m experiments.run_v0
+python -m experiments.train_prior
+python -m experiments.run_v1
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -56,11 +63,12 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 ## Layout
 
 ```text
-three_memory/     # cortex, ρ, store S, drives, agent, env
-experiments/      # run_v0 CLI
-docs/             # protocol, comparison, conclusion, v1 plan
-tests/            # smoke tests
-runs/             # gitignored metrics
+three_memory/     # cortex, ρ, store S, drives, agent, env, byte LM
+experiments/      # run_v0, train_prior, run_v1
+docs/             # protocol, comparison, conclusion, v1 results
+tests/
+runs/             # gitignored
+checkpoints/      # gitignored (prior.pt)
 ```
 
 ## What this is not
