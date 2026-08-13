@@ -77,8 +77,10 @@ def classify(m: dict[str, Any]) -> tuple[str, str]:
     fact = m["love_has_inspectable_fact"]
     delta_on = love_after - prior_v
     delta_off_after = off_after - prior_v
-    # Predeclared: S-on after ρ reset must raise P(v); S-off after reset must not.
-    if fact and delta_on >= 0.10 and abs(delta_off_after) < 0.10:
+    reset_s_near_prior = abs(reset_s - prior_v) < 0.10
+    # Predeclared: S-on after ρ reset must raise P(v); S-off after reset must not;
+    # clearing S must remove the effect.
+    if fact and delta_on >= 0.10 and abs(delta_off_after) < 0.10 and reset_s_near_prior:
         return (
             "Store-works",
             "Language fact in S survives ρ reset; disable-S after reset returns near prior (BDH-like B).",
@@ -165,9 +167,9 @@ def run_v1(ckpt: Path, exposures: int, seed: int) -> dict[str, Any]:
         "argmax_ch": bytes([d["argmax"]]).decode("latin-1", errors="replace"),
         "context": d["context"],
         "n_store": d["n_store"],
-            "rho_l2": d["rho_l2"],
-            "session_next": d["session_next"],
-        }
+        "rho_l2": d["rho_l2"],
+        "session_next": d["session_next"],
+    }
 
     metrics: dict[str, Any] = {
         "seed": seed,

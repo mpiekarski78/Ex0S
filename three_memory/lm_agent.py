@@ -17,8 +17,8 @@ from .store import FactRecord, WorldStore
 class LanguageAgent:
     """
     Frozen LM = species prior (syntax + how to use NOTE lines).
-    ρ = session hidden EMA + last observed next-byte.
-    S = inspectable prefix→byte facts, retrieved as NOTE context.
+    ρ = session hidden EMA (drives/novelty on write) + prefix→byte buffer (S-off probe bias).
+    S = inspectable prefix→byte facts, retrieved as NOTE context at probe time.
     """
 
     def __init__(

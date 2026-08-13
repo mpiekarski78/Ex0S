@@ -34,14 +34,15 @@ Empty prior on `my lo`: P(`r`)=**0.0006**, P(`v`)=**0.027** (no Shakespeare “l
 | Twin ρ L2 | 0 | 0 | 0 |
 | ρ restore | exact | P(v) match | P(v) match |
 
-disable-S before reset: ΔP(v)=**+0.225** (session prefix→byte buffer). After reset: **+0**. That is the BDH Category B analogue.
+disable-S before reset: ΔP(v)=**+0.225** (prefix→byte logit bias, not the hidden EMA). After reset: **+0**. That is the BDH Category B analogue. Argmax stays `p` until S injects a NOTE.
 
 ## Honest limits
 
-- Retrieve is **explicit NOTE context** the frozen LM was trained to copy, not a mystery in ρ.
-- S records every surprising 5-gram; probe uses the **longest suffix match** (`my lo -> v`).
-- Session ρ is a **prefix-keyed** last-byte buffer plus hidden EMA. One filler byte does **not** scramble other keys (unlike BDH’s mixed linear-attention ρ). Durability after **ρ reset** is the comparison that matters; it is entirely S.
-- Do not say the tiny LSTM is a better language model than BDH. It is a different prior plus a store.
+- Retrieve is **explicit NOTE context** the frozen LM was trained to copy. After ρ reset, P(v)≈0.99 is almost entirely that copy, not an internalized weight change.
+- Writes fire often: next-byte error is high on this tiny LM, so most 5-grams are stored; the probe uses the **longest suffix match**.
+- Hidden EMA ρ is used for **novelty at write time**. Probe-time S-off bias is the **prefix→byte buffer** (+2.5 on that logit). One filler byte does not overwrite the `my lo` key (unlike BDH’s mixed ρ). Durability after **ρ reset** is entirely S.
+- Empty prior is not BDH’s lord-heavy prior (facts were stripped on purpose).
+- Do not say the tiny LSTM is a better language model than BDH.
 
 ## Reproduce
 
