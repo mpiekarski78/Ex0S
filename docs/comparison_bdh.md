@@ -33,11 +33,22 @@ Full table: [`v1_results.md`](v1_results.md).
 |--------|----------------|
 | Public BDH | **Category B** — short-term adaptive memory |
 | three-memory, S off | **Trace-only** (same idea as BDH B) |
-| three-memory, S on (v0 and v1) | **Store-works** |
+| three-memory, S on (v0 and v1 NOTE) | **Store-works** |
+| three-memory, S on (v2 raw retrieve) | **Trace-only** |
 
 ## Honest limits
 
 - v0 retrieve was tag→action. v1 retrieve is a NOTE string the frozen LM was trained to copy.
-- Empty priors differ because v1 **stripped** lord/love from pretrain on purpose.
+- v2 removes that lesson: raw snippet in the prompt. This tiny LSTM does not use it after ρ reset.
+- Empty priors differ because lord/love were **stripped** from pretrain on purpose.
 - One filler byte does not scramble v1’s prefix-keyed session buffer; BDH’s mixed ρ can. **Reset of ρ** is the matched test.
-- Winning Store-works does **not** mean public BDH was wrong. It means the missing box was an explicit store.
+
+## v2 (raw retrieve, no NOTE-copy)
+
+| Check | BDH | v1 S on (NOTE) | v2 S on (raw) | v2 S off |
+|-------|-----|----------------|---------------|----------|
+| Taught retrieve format | n/a | yes | **no** | no |
+| P(v) after ρ reset | wiped | 0.988 | **0.093** | 0.084 |
+| Classification | B | Store-works | **Trace-only** | Trace-only |
+
+Without a taught use-protocol, this frozen tiny LM + S looks like BDH again. See [`v2_results.md`](v2_results.md).

@@ -9,10 +9,11 @@
 
 Biology’s lesson here: hardcode **drives and learning rules**, leave **world-knowledge** to experience, and do **not** confuse a short trace with a life of knowledge.
 
-## Result (v0 + v1): **Store-works**
+## Result (v0 + v1 Store-works; v2 Trace-only)
 
-v0 write-up: [`docs/conclusion.md`](docs/conclusion.md).  
-v1 language vs BDH: [`docs/v1_results.md`](docs/v1_results.md).  
+v0: [`docs/conclusion.md`](docs/conclusion.md).  
+v1 NOTE-copy: [`docs/v1_results.md`](docs/v1_results.md).  
+v2 raw retrieve: [`docs/v2_results.md`](docs/v2_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -25,8 +26,9 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | disable-S: correct before ρ reset | yes (session residue) |
 | disable-S: correct after ρ reset | **no** (BDH-like Category B) |
 | Reset S | effect gone |
-| v1 `my lo` after ρ reset, S on | P(`v`)=0.988 (fact in JSON) |
+| v1 `my lo` after ρ reset, S on | P(`v`)=0.988 (taught NOTE-copy) |
 | v1 same, S off | P(`v`)=0.027 (empty prior) |
+| v2 raw retrieve after ρ reset, S on | P(`v`)=0.093 ≈ prior (**Trace-only**) |
 
 ## Three pieces
 
@@ -43,7 +45,8 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | Public repo | done | this repository |
 | v0 key/door | **Store-works** | [`docs/conclusion.md`](docs/conclusion.md) |
 | Compare to BDH Category B | done | [`docs/comparison_bdh.md`](docs/comparison_bdh.md) |
-| v1 tiny LM | **Store-works** | [`docs/v1_results.md`](docs/v1_results.md) |
+| v1 tiny LM | **Store-works** | taught NOTE-copy; [`docs/v1_results.md`](docs/v1_results.md) |
+| v2 raw retrieve | **Trace-only** | no NOTE-copy; [`docs/v2_results.md`](docs/v2_results.md) |
 
 ## Quick start
 
@@ -56,6 +59,8 @@ python tests/test_v1_smoke.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
+python -m experiments.train_prior --plain
+python -m experiments.run_v2
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -64,8 +69,8 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, store S, drives, agent, env, byte LM
-experiments/      # run_v0, train_prior, run_v1
-docs/             # protocol, comparison, conclusion, v1 results
+experiments/      # run_v0, train_prior, run_v1, run_v2
+docs/             # protocol, comparison, conclusion, v1/v2 results
 tests/
 runs/             # gitignored
 checkpoints/      # gitignored (prior.pt)

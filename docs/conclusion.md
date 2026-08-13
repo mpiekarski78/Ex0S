@@ -95,4 +95,9 @@ Same three boxes, same probes as BDH (`my lo` → r/v). Frozen tiny byte LSTM; l
 
 **Classification: Store-works.** After 8× `my love`, P(`v`) after ρ reset is **0.988** with S on, **0.027** (empty prior) with S off. Fact in JSON: `my lo -> v`. BDH published: the same probe’s association dies on ρ reset.
 
-v1 does not reopen Category D on BDH ρ. It shows the missing box on the *language* probes is still the inspectable store.
+v1 does not reopen Category D on BDH ρ. It shows the missing box on the *language* probes is still the inspectable store **plus a taught way to read it**.
+
+## v2 (raw retrieve)
+
+No NOTE-copy in pretrain (NOTE-follow acc 0.025). Retrieve prepends `my love\n` as ordinary text. Classification: **Trace-only**. After ρ reset, P(`v`)≈0.093 vs prior 0.084. The fact is in S and in the prompt; this tiny LSTM does not use it. Details: [`v2_results.md`](v2_results.md).
+

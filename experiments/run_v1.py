@@ -34,15 +34,17 @@ BDH = {
 }
 
 
-def _run_dir() -> Path:
+def _run_dir(prefix: str = "v1") -> Path:
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H%M%S")
-    d = REPO_ROOT / "runs" / f"{stamp}_v1"
+    d = REPO_ROOT / "runs" / f"{stamp}_{prefix}"
     d.mkdir(parents=True, exist_ok=True)
     return d
 
 
-def make_agent(model, device, store: bool) -> LanguageAgent:
-    return LanguageAgent(model, device, store_enabled=store, prefix_len=5)
+def make_agent(model, device, store: bool, retrieve_mode: str = "note") -> LanguageAgent:
+    return LanguageAgent(
+        model, device, store_enabled=store, prefix_len=5, retrieve_mode=retrieve_mode
+    )
 
 
 def snapshot(agent: LanguageAgent) -> dict:
@@ -55,15 +57,23 @@ def restore(agent: LanguageAgent, snap: dict) -> None:
 
 
 def has_love_fact(agent: LanguageAgent) -> bool:
-    return any(
-        r.tags.get("prefix") == PROBE and r.tags.get("next") == "v" for r in agent.store.records()
-    )
+    for r in agent.store.records():
+        if r.tags.get("prefix") == PROBE and r.tags.get("next") == "v":
+            return True
+        snip = str(r.tags.get("snippet") or r.what or "")
+        if snip.startswith("my lov"):
+            return True
+    return False
 
 
 def has_lord_fact(agent: LanguageAgent) -> bool:
-    return any(
-        r.tags.get("prefix") == PROBE and r.tags.get("next") == "r" for r in agent.store.records()
-    )
+    for r in agent.store.records():
+        if r.tags.get("prefix") == PROBE and r.tags.get("next") == "r":
+            return True
+        snip = str(r.tags.get("snippet") or r.what or "")
+        if snip.startswith("my lor"):
+            return True
+    return False
 
 
 def classify(m: dict[str, Any]) -> tuple[str, str]:
@@ -90,17 +100,24 @@ def classify(m: dict[str, Any]) -> tuple[str, str]:
     return "Fail", "S did not produce a durable, inspectable language association after ρ reset."
 
 
-def run_v1(ckpt: Path, exposures: int, seed: int) -> dict[str, Any]:
+def run_v1(
+    ckpt: Path,
+    exposures: int,
+    seed: int,
+    *,
+    retrieve_mode: str = "note",
+    run_prefix: str = "v1",
+) -> dict[str, Any]:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = load_lm(ckpt, device)
-    h0 = make_agent(model, device, True).weight_hash()
-    run_dir = _run_dir()
+    h0 = make_agent(model, device, True, retrieve_mode).weight_hash()
+    run_dir = _run_dir(run_prefix)
 
-    prior_agent = make_agent(model, device, True)
+    prior_agent = make_agent(model, device, True, retrieve_mode)
     empty = prior_agent.probe(PROBE, use_store=True, apply_rho=True)
 
     # A: lord experience, S on
-    A = make_agent(model, device, True)
+    A = make_agent(model, device, True, retrieve_mode)
     teach_A = A.experience(LINE_LORD * exposures)
     A_before = A.probe(PROBE)
     snap_A = snapshot(A)
@@ -111,7 +128,7 @@ def run_v1(ckpt: Path, exposures: int, seed: int) -> dict[str, Any]:
     A.reset_rho()
 
     # B: love experience, S on
-    B = make_agent(model, device, True)
+    B = make_agent(model, device, True, retrieve_mode)
     teach_B = B.experience(LINE_LOVE * exposures)
     B_before = B.probe(PROBE)
     snap_B = snapshot(B)
@@ -121,36 +138,36 @@ def run_v1(ckpt: Path, exposures: int, seed: int) -> dict[str, Any]:
     B_restored = B.probe(PROBE)
 
     # disable-S: same love experience
-    C = make_agent(model, device, False)
+    C = make_agent(model, device, False, retrieve_mode)
     teach_C = C.experience(LINE_LOVE * exposures)
     C_before = C.probe(PROBE)
     C.reset_rho()
     C_after = C.probe(PROBE)
 
     # reset S after love
-    D = make_agent(model, device, True)
+    D = make_agent(model, device, True, retrieve_mode)
     D.experience(LINE_LOVE * exposures)
     D.reset_rho()
     D.reset_store()
     D_after = D.probe(PROBE)
 
     # 1-byte filler after love, S on and S off (BDH comparison)
-    E = make_agent(model, device, True)
+    E = make_agent(model, device, True, retrieve_mode)
     E.experience(LINE_LOVE * exposures)
     E.reset_rho()
     E_pre_fill = E.probe(PROBE)
     E.experience(CLEAN_FILLER[:1])
     E_post_fill = E.probe(PROBE)
 
-    F = make_agent(model, device, False)
+    F = make_agent(model, device, False, retrieve_mode)
     F.experience(LINE_LOVE * exposures)
     F_pre_fill = F.probe(PROBE)
     F.experience(CLEAN_FILLER[:1])
     F_post_fill = F.probe(PROBE)
 
     # twins
-    T1 = make_agent(model, device, True)
-    T2 = make_agent(model, device, True)
+    T1 = make_agent(model, device, True, retrieve_mode)
+    T2 = make_agent(model, device, True, retrieve_mode)
     T1.experience(LINE_LOVE * exposures)
     T2.experience(LINE_LOVE * exposures)
     twin = T1.rho.distance(T2.rho)
@@ -172,6 +189,7 @@ def run_v1(ckpt: Path, exposures: int, seed: int) -> dict[str, Any]:
     }
 
     metrics: dict[str, Any] = {
+        "retrieve_mode": retrieve_mode,
         "seed": seed,
         "exposures": exposures,
         "checkpoint": str(ckpt),

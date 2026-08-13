@@ -56,3 +56,9 @@ Same categories. Frozen tiny byte LM (syntax + NOTE-copy; lord/love/`my lo` stri
 - Pass Store-works: S-on P(v) after ρ reset ≥ prior + 0.10; S-off after reset within 0.10 of prior; inspectable `my lo -> v`; weights unchanged.
 
 Predeclared in `experiments/run_v1.py`.
+
+## v2 raw retrieve (no NOTE-copy)
+
+Same probes and categories. Prior is trained on **stripped Shakespeare only** (`--plain`). Retrieve prepends the stored **snippet as ordinary text** (`my love\\n` + `my lo`), not a taught `NOTE:` format.
+
+Pass Store-works on the same numeric thresholds. If the tiny LM cannot use raw context, classify **Fail** or **Trace-only**. Do not add NOTE training to rescue the plot.

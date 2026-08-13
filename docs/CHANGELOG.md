@@ -8,4 +8,4 @@
 - Reported classification: **Store-works**. disable-S recovers Trace-only (BDH Category B analogue).
 - Audit: removed env-injected lesson strings; writes are event-driven. Documented tag→action retrieve limit. Metrics include `n_forced_steps`.
 - v1 tiny byte LM + NOTE retrieve; same `my lo` probes as BDH. Classification **Store-works**. Published BDH numbers are the trace-only column ([`docs/v1_results.md`](v1_results.md)).
-- Audit (v1): probe-time S-off effect is a prefix→byte logit bias; hidden EMA is for write novelty only. Classification now requires reset-S to return to prior. NOTE-copy is the S-on mechanism after ρ reset (stated in v1_results).
+- v2: plain prior (no NOTE-copy, follow-acc 0.025) + raw snippet retrieve. Classification **Trace-only**. S is inspectable and prepended as `my love\nmy lo`; after ρ reset P(v) stays at prior. v1 Store-works needed the taught copy protocol.

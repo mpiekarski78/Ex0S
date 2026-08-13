@@ -73,15 +73,23 @@ def main() -> None:
     p.add_argument("--lr", type=float, default=3e-3)
     p.add_argument("--seed", type=int, default=1337)
     p.add_argument("--shakespeare", type=str, default="")
-    p.add_argument("--out", type=str, default=str(REPO_ROOT / "checkpoints" / "prior.pt"))
+    p.add_argument("--plain", action="store_true", help="Language only: no NOTE-copy training (v2 prior).")
+    p.add_argument("--out", type=str, default="")
     args = p.parse_args()
+    if not args.out:
+        args.out = str(
+            REPO_ROOT / "checkpoints" / ("prior_plain.pt" if args.plain else "prior.pt")
+        )
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     rng = np.random.default_rng(args.seed)
     torch.manual_seed(args.seed)
 
     raw = load_shakespeare(Path(args.shakespeare) if args.shakespeare else None)
-    text = build_train_text(raw, rng, n_notes=4000)
+    if args.plain:
+        text = strip_probe_facts(raw)
+    else:
+        text = build_train_text(raw, rng, n_notes=4000)
     stripped = strip_probe_facts(raw)
     low = stripped.lower()
     assert "lord" not in low and "love" not in low and "my lo" not in stripped
@@ -98,17 +106,24 @@ def main() -> None:
         ix = rng.integers(0, n, size=args.batch)
         x_lang = np.stack([data[i : i + args.block] for i in ix])
         y_lang = np.stack([data[i + 1 : i + 1 + args.block] for i in ix])
-        nx, ny, nlast = packed_note_batch(rng, args.batch, args.block)
-
-        x = torch.tensor(np.concatenate([x_lang, nx], 0), dtype=torch.long, device=device)
-        y = torch.tensor(np.concatenate([y_lang, ny], 0), dtype=torch.long, device=device)
-        logits, _ = model(x)
-        loss_all = F.cross_entropy(logits.reshape(-1, 256), y.reshape(-1))
-        note_logits = logits[args.batch :, -1]
-        loss_note = F.cross_entropy(
-            note_logits, torch.tensor(nlast, dtype=torch.long, device=device)
-        )
-        loss = loss_all + 4.0 * loss_note
+        if args.plain:
+            x = torch.tensor(x_lang, dtype=torch.long, device=device)
+            y = torch.tensor(y_lang, dtype=torch.long, device=device)
+            logits, _ = model(x)
+            loss = F.cross_entropy(logits.reshape(-1, 256), y.reshape(-1))
+            loss_note_v = float("nan")
+        else:
+            nx, ny, nlast = packed_note_batch(rng, args.batch, args.block)
+            x = torch.tensor(np.concatenate([x_lang, nx], 0), dtype=torch.long, device=device)
+            y = torch.tensor(np.concatenate([y_lang, ny], 0), dtype=torch.long, device=device)
+            logits, _ = model(x)
+            loss_all = F.cross_entropy(logits.reshape(-1, 256), y.reshape(-1))
+            note_logits = logits[args.batch :, -1]
+            loss_note = F.cross_entropy(
+                note_logits, torch.tensor(nlast, dtype=torch.long, device=device)
+            )
+            loss = loss_all + 4.0 * loss_note
+            loss_note_v = float(loss_note.item())
         opt.zero_grad(set_to_none=True)
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -119,7 +134,7 @@ def main() -> None:
             acc = note_follow_acc(model, device, rng)
             model.train()
             print(
-                f"step {step:4d} loss={losses[-1]:.3f} note_ce={float(loss_note.item()):.3f} note_acc={acc:.3f}",
+                f"step {step:4d} loss={losses[-1]:.3f} note_ce={loss_note_v:.3f} note_acc={acc:.3f}",
                 flush=True,
             )
 
@@ -133,14 +148,18 @@ def main() -> None:
         "weight_hash": hash_lm(model),
         "corpus_bytes": int(len(data)),
         "stripped": True,
+        "plain": bool(args.plain),
+        "note_copy_trained": not bool(args.plain),
     }
     save_lm(model, args.out, extra=extra)
     meta_path = Path(args.out).with_suffix(".json")
     meta_path.write_text(json.dumps(extra, indent=2) + "\n", encoding="utf-8")
     print("saved", args.out)
     print(json.dumps(extra, indent=2))
-    if acc < 0.7:
+    if not args.plain and acc < 0.7:
         raise SystemExit(f"NOTE-follow accuracy too low ({acc:.3f}); prior cannot use S.")
+    if args.plain and acc >= 0.5:
+        print("WARNING: plain prior still follows NOTE; check corpus leakage.")
 
 
 if __name__ == "__main__":
