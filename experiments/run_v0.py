@@ -33,11 +33,6 @@ def teach_red_door(agent: ThreeMemoryAgent, seed: int = 0, max_steps: int = 12) 
     log = []
     for _ in range(max_steps):
         action, meta = agent.act(obs)
-        # Scripted curriculum: try OPEN once (fail), pick key, USE_KEY (success).
-        # Agent still chooses via logits; we also force a teach path if it stalls.
-        if not world.has_key and obs.key_visible and meta["store_hits"] == 0:
-            # Early: encourage exploration that surfaces the contingency.
-            pass
         result = world.step(action, "experience_teach")
         write_meta = agent.observe_outcome(result.obs, result.success, result.info)
         log.append(
@@ -54,7 +49,7 @@ def teach_red_door(agent: ThreeMemoryAgent, seed: int = 0, max_steps: int = 12) 
             break
 
     # Ensure the contingency was experienced at least once (OPEN fail + USE_KEY success).
-    # This is the *world* teaching signal; drives decide whether to write S.
+    # Fallback curriculum if free policy never opens the door — still event-driven writes, not labeled facts.
     saw_key_success = any(
         (step.get("info") or {}).get("opened") and step.get("action") == int(Action.USE_KEY)
         for step in log
@@ -63,7 +58,6 @@ def teach_red_door(agent: ThreeMemoryAgent, seed: int = 0, max_steps: int = 12) 
         world = KeyDoorWorld(seed=seed + 1)
         obs = world.reset("experience_teach")
         for forced in (Action.OPEN, Action.PICK_KEY, Action.USE_KEY):
-            # Still go through act() for ρ, then override action for curriculum.
             _, meta = agent.act(obs, update_rho=True)
             result = world.step(int(forced), "experience_teach")
             write_meta = agent.observe_outcome(result.obs, result.success, result.info)
@@ -87,6 +81,7 @@ def teach_red_door(agent: ThreeMemoryAgent, seed: int = 0, max_steps: int = 12) 
         "has_fact": agent.store.has_fact(KeyDoorWorld.FACT_ID),
         "rho_l2": float(np.linalg.norm(agent.rho.rho)),
         "weights_unchanged": agent.weights_unchanged(),
+        "n_forced_steps": sum(1 for s in log if s.get("forced")),
     }
 
 
@@ -221,6 +216,7 @@ def run_v0(seed: int = 12345) -> dict[str, Any]:
             "has_fact": teach_A["has_fact"],
             "store": teach_A["store"],
             "rho_l2": teach_A["rho_l2"],
+            "n_forced_steps": teach_A["n_forced_steps"],
         },
         "B_teach": {
             "has_fact": teach_B["has_fact"],
@@ -232,6 +228,7 @@ def run_v0(seed: int = 12345) -> dict[str, Any]:
             "store": teach_C["store"],
             "rho_l2": teach_C["rho_l2"],
             "writes_blocked": C.store._writes_blocked,
+            "n_forced_steps": teach_C["n_forced_steps"],
         },
         "A_has_inspectable_fact": teach_A["has_fact"],
         "A_rho_l2_after_exp": teach_A["rho_l2"],
@@ -249,6 +246,7 @@ def run_v0(seed: int = 12345) -> dict[str, Any]:
     label, rationale = classify(metrics)
     metrics["classification"] = label
     metrics["rationale"] = rationale
+    metrics["run_dir"] = str(run_dir)
 
     # Persist
     A.store.dump(run_dir / "store_A.json")
@@ -288,7 +286,6 @@ Classification: **{label}**
 ```
 """
     (run_dir / "summary.md").write_text(summary, encoding="utf-8")
-    metrics["run_dir"] = str(run_dir)
     return metrics
 
 

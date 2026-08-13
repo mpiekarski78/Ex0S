@@ -71,6 +71,14 @@ Winning v0 does not reopen Category D on BDH ρ.
 
 ---
 
+## Limitations (honest)
+
+- This is a **tiny designed world**, not an emergent LLM. Store→action uses **tags** (`door=red` → prefer `use_key`), not natural-language understanding of `what`.
+- The `what` string is a **fixed template** written by the learning rule when events fire; the environment no longer injects a labeled lesson string.
+- Fallback forced curriculum (OPEN → PICK_KEY → USE_KEY) runs only if free policy never succeeds; reported in metrics as `n_forced_steps`.
+- Foil B still forces `OPEN` on the blue door so A/B experience differs by design.
+- Winning Store-works does **not** reopen Category D on BDH ρ.
+
 ## Reproduce
 
 ```bash

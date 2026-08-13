@@ -121,7 +121,11 @@ class ThreeMemoryAgent:
         return action, meta
 
     def observe_outcome(self, obs: Obs, success: bool | None, info: dict[str, Any]) -> dict[str, Any]:
-        """Apply innate write rules. Facts go to S, never into cortex weights."""
+        """Apply innate write rules. Facts go to S, never into cortex weights.
+
+        The world reports events (open_failed / key_worked), not a fact string.
+        Write rules build the inspectable record from observation + event.
+        """
         vec = obs.vector(self.cortex.config.obs_dim)
         embed = self.cortex.encode(vec)
         novelty = self.drives.novelty(embed, self.rho.predict())
@@ -129,9 +133,17 @@ class ThreeMemoryAgent:
         wrote = False
         record = None
 
-        lesson = info.get("lesson")
-        if lesson and self.drives.should_write(novelty, integrity):
-            if "red door" in lesson and "key" in lesson:
+        event = None
+        if obs.event_open_failed:
+            event = "open_failed"
+        elif obs.event_key_worked:
+            event = "key_worked"
+        elif obs.last_succeeded and obs.at_blue_door:
+            event = "blue_opened"
+
+        if self.drives.should_write(novelty, integrity):
+            if obs.at_red_door and event in ("open_failed", "key_worked"):
+                # Contingency rule: bare open failed or key worked at red door → store the association.
                 record = FactRecord(
                     fact_id=KeyDoorWorld.FACT_ID,
                     what=KeyDoorWorld.FACT_TEXT,
@@ -140,7 +152,7 @@ class ThreeMemoryAgent:
                     tags={"door": "red", "requires": "key", "action": "use_key"},
                 )
                 wrote = self.store.write(record)
-            elif obs.at_blue_door and success:
+            elif obs.at_blue_door and event == "blue_opened":
                 record = FactRecord(
                     fact_id="blue_door_opens",
                     what="blue door opens with open",
@@ -163,6 +175,7 @@ class ThreeMemoryAgent:
             "novelty": novelty,
             "integrity": integrity,
             "wrote": wrote,
+            "event": event,
             "record": record.to_dict() if record and wrote else None,
             "weights_unchanged": self.weights_unchanged(),
         }

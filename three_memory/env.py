@@ -136,14 +136,12 @@ class KeyDoorWorld:
                 success = False
                 reward = -1.0
                 event = "open_failed"
-                info["lesson"] = self.FACT_TEXT
             elif action == Action.USE_KEY:
                 if self.has_key:
                     success = True
                     reward = 1.0
                     event = "key_worked"
                     done = True
-                    info["lesson"] = self.FACT_TEXT
                     info["opened"] = True
                 else:
                     success = False

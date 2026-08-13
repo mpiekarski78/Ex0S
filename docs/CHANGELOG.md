@@ -6,4 +6,5 @@
 - Scaffold: frozen cortex, session ρ, inspectable store S, innate novelty/integrity drives.
 - v0 key/door world + CLI `experiments.run_v0`.
 - Reported classification: **Store-works**. disable-S recovers Trace-only (BDH Category B analogue).
+- Audit: removed env-injected lesson strings; writes are event-driven. Documented tag→action retrieve limit. Metrics include `n_forced_steps`.
 - Docs: protocol, comparison to BDH, conclusion, gated v1 plan.

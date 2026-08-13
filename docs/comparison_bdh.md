@@ -30,4 +30,5 @@ v0 compares **the same questions**. Door success rate is not JS on `my lo`.
 - Different architecture and task (key/door vs Shakespeare bytes).
 - BDH was not given an explicit store; winning Store-works does **not** mean public BDH was wrong.
 - It means the missing box for a *life of knowledge* was an inspectable store, not a longer ρ.
+- v0 retrieve is **tag→action rules**, not reading English from S. The JSON `what` field is for inspection.
 - Comparable *numbers* (JS, ΔP, `my lord`/`my love`) wait for **v1** language probes if pursued.

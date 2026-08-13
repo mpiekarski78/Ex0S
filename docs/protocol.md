@@ -20,9 +20,10 @@
 3. **World store S** — explicit JSON records `{what, when, drive_scores, tags}`.
 
 Innate drives (frozen thresholds): novelty / prediction-error vs ρ, integrity-cost on failure.
-Write rule: write a lesson to S when novelty or integrity crosses threshold.
-Retrieve rule: matching tags bias action logits (knowledge is not stored in ρ).
+Write rule: on salient failure/success events at a door, write a structured fact (tags + template `what`) to S.
+Retrieve rule: matching tags bias action logits (toy: not NLP over `what`).
 
+The environment reports **events** (`open_failed`, `key_worked`), not a pre-labeled fact string.
 ## v0 world
 
 Fact: `red door opens only with key`.
