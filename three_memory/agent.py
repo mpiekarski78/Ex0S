@@ -11,6 +11,8 @@ from .drives import InnateDrives
 from .env import Action, KeyDoorWorld, Obs
 from .rho import RhoConfig, WorkingTrace
 from .store import FactRecord, WorldStore
+from .symbols import ACT_OPEN, ACT_PICK_KEY, ACT_USE_KEY, DOOR_BLUE, DOOR_RED, RED_FACT_ID, REQ_KEY, encode_tags
+from .tag_store import TagLibrary
 
 
 class ThreeMemoryAgent:
@@ -21,13 +23,27 @@ class ThreeMemoryAgent:
         cortex_seed: int = 1337,
         obs_dim: int = 16,
         embed_dim: int = 32,
+        native: bool = False,
+        retrieve_policy: str = "select",
+        collect_mode: str = "off",
+        store: WorldStore | None = None,
+        world: TagLibrary | None = None,
     ):
+        if retrieve_policy not in ("select", "dump"):
+            raise ValueError(retrieve_policy)
+        if collect_mode not in ("off", "commit", "peek"):
+            raise ValueError(collect_mode)
         cfg = CortexConfig(obs_dim=obs_dim, embed_dim=embed_dim, n_actions=4, seed=cortex_seed)
         self.cortex = FrozenCortex(cfg)
         self.rho = WorkingTrace(RhoConfig(embed_dim=embed_dim))
-        self.store = WorldStore(enabled=store_enabled)
+        self.store = store if store is not None else WorldStore(enabled=store_enabled)
+        self.world = world
         self.drives = InnateDrives()
         self.t = 0
+        self.native = native
+        self.retrieve_policy = retrieve_policy
+        self.collect_mode = collect_mode
+        self._peek: list[FactRecord] = []
         self._weight_hash0 = self.cortex.weight_hash()
 
     def weight_hash(self) -> str:
@@ -38,9 +54,11 @@ class ThreeMemoryAgent:
 
     def reset_rho(self) -> None:
         self.rho.reset()
+        self._peek = []
 
     def reset_store(self) -> None:
         self.store.reset()
+        self._peek = []
 
     def reset_life(self) -> None:
         self.reset_rho()
@@ -55,24 +73,94 @@ class ThreeMemoryAgent:
             cortex_seed=self.cortex.config.seed,
             obs_dim=self.cortex.config.obs_dim,
             embed_dim=self.cortex.config.embed_dim,
+            native=self.native,
+            retrieve_policy=self.retrieve_policy,
+            collect_mode="off",
         )
 
-    def _store_bias(self, obs: Obs) -> np.ndarray:
-        """Retrieve facts and bias action logits. Knowledge lives in S, not ρ."""
-        logits = np.zeros(4, dtype=np.float64)
-        hits = self.store.retrieve({"door": "red"}) if obs.at_red_door else []
-        if not hits and obs.at_red_door:
-            hits = [r for r in self.store.records() if r.fact_id == KeyDoorWorld.FACT_ID]
-        for rec in hits:
-            # Fact: red door opens only with key → prefer USE_KEY, avoid bare OPEN.
+    def _obs_query(self, obs: Obs) -> dict[str, Any] | None:
+        if obs.at_red_door:
+            return {"door": DOOR_RED} if self.native else {"door": "red"}
+        if obs.at_blue_door:
+            return {"door": DOOR_BLUE} if self.native else {"door": "blue"}
+        return None
+
+    def collect(self, obs: Obs) -> dict[str, Any]:
+        query = self._obs_query(obs)
+        info: dict[str, Any] = {"taken": 0, "committed": 0, "mode": self.collect_mode}
+        if query is None:
+            return info
+        s_hits = self.store.retrieve(query)
+        w_hits = self.world.match(query) if self.world is not None else []
+        info["n_store_hits"] = len(s_hits)
+        info["n_world_hits"] = len(w_hits)
+        if self.collect_mode == "off" or self.world is None:
+            return info
+        if not self.drives.should_collect(len(s_hits), len(w_hits)):
+            return info
+        rec = w_hits[0]
+        info["taken"] = 1
+        if self.collect_mode == "commit":
+            copied = FactRecord(
+                fact_id=rec.fact_id,
+                what=rec.what,
+                when=self.t,
+                drive_scores={"collect": 1.0},
+                tags={k: v for k, v in rec.tags.items() if k not in ("source_file", "source")},
+            )
+            copied.tags["source"] = "W->S"
+            if self.store.write(copied):
+                info["committed"] = 1
+        else:
+            self._peek = [rec]
+        return info
+
+    def _pool(self) -> list[FactRecord]:
+        recs = list(self.store.records()) if self.store.enabled else []
+        return recs + list(self._peek)
+
+    def _hits_for(self, obs: Obs) -> list[FactRecord]:
+        pool = self._pool()
+        if self.retrieve_policy == "dump":
+            return pool
+        query = self._obs_query(obs)
+        if not query:
+            return []
+        out = []
+        for r in pool:
+            if all(r.tags.get(k) == v for k, v in query.items()):
+                out.append(r)
+        if not self.native and not out and obs.at_red_door:
+            out = [r for r in pool if r.fact_id == KeyDoorWorld.FACT_ID]
+        return out
+
+    def _apply_record_bias(self, logits: np.ndarray, rec: FactRecord, obs: Obs) -> None:
+        act = rec.tags.get("action")
+        if self.native:
+            if act == ACT_USE_KEY:
+                logits[Action.USE_KEY] += 3.0
+                logits[Action.OPEN] -= 2.0
+                if not obs.has_key and obs.key_visible:
+                    logits[Action.PICK_KEY] += 2.0
+            elif act == ACT_OPEN:
+                logits[Action.OPEN] += 2.0
+            elif act == ACT_PICK_KEY:
+                logits[Action.PICK_KEY] += 2.0
+            return
+        if rec.tags.get("door") == "red" or rec.fact_id == KeyDoorWorld.FACT_ID:
             logits[Action.USE_KEY] += 3.0
             logits[Action.OPEN] -= 2.0
             if not obs.has_key and obs.key_visible:
                 logits[Action.PICK_KEY] += 2.0
-        if obs.at_blue_door:
-            blue = self.store.retrieve({"door": "blue"})
-            for _ in blue:
-                logits[Action.OPEN] += 2.0
+        if rec.tags.get("door") == "blue":
+            logits[Action.OPEN] += 2.0
+
+    def _store_bias(self, obs: Obs) -> np.ndarray:
+        """Retrieve facts and bias action logits. Knowledge lives in S, not ρ."""
+        self.collect(obs)
+        logits = np.zeros(4, dtype=np.float64)
+        for rec in self._hits_for(obs):
+            self._apply_record_bias(logits, rec, obs)
         return logits
 
     def _rho_bias(self) -> np.ndarray:
@@ -114,7 +202,7 @@ class ThreeMemoryAgent:
             "novelty": novelty,
             "logits": logits.tolist(),
             "action": action,
-            "store_hits": len(self.store.retrieve({"door": "red"})) if obs.at_red_door else 0,
+            "store_hits": len(self._hits_for(obs)),
             "rho_l2": float(np.linalg.norm(self.rho.rho)),
             "last_success_action": self.rho.last_success_action,
         }
@@ -143,23 +231,42 @@ class ThreeMemoryAgent:
 
         if self.drives.should_write(novelty, integrity):
             if obs.at_red_door and event in ("open_failed", "key_worked"):
-                # Contingency rule: bare open failed or key worked at red door → store the association.
-                record = FactRecord(
-                    fact_id=KeyDoorWorld.FACT_ID,
-                    what=KeyDoorWorld.FACT_TEXT,
-                    when=self.t,
-                    drive_scores={"novelty": novelty, "integrity": integrity},
-                    tags={"door": "red", "requires": "key", "action": "use_key"},
-                )
+                if self.native:
+                    tags = {"door": DOOR_RED, "requires": REQ_KEY, "action": ACT_USE_KEY}
+                    record = FactRecord(
+                        fact_id=RED_FACT_ID,
+                        what=encode_tags(tags),
+                        when=self.t,
+                        drive_scores={"novelty": novelty, "integrity": integrity},
+                        tags=tags,
+                    )
+                else:
+                    record = FactRecord(
+                        fact_id=KeyDoorWorld.FACT_ID,
+                        what=KeyDoorWorld.FACT_TEXT,
+                        when=self.t,
+                        drive_scores={"novelty": novelty, "integrity": integrity},
+                        tags={"door": "red", "requires": "key", "action": "use_key"},
+                    )
                 wrote = self.store.write(record)
             elif obs.at_blue_door and event == "blue_opened":
-                record = FactRecord(
-                    fact_id="blue_door_opens",
-                    what="blue door opens with open",
-                    when=self.t,
-                    drive_scores={"novelty": novelty, "integrity": integrity},
-                    tags={"door": "blue", "action": "open"},
-                )
+                if self.native:
+                    tags = {"door": DOOR_BLUE, "action": ACT_OPEN}
+                    record = FactRecord(
+                        fact_id="d1",
+                        what=encode_tags(tags),
+                        when=self.t,
+                        drive_scores={"novelty": novelty, "integrity": integrity},
+                        tags=tags,
+                    )
+                else:
+                    record = FactRecord(
+                        fact_id="blue_door_opens",
+                        what="blue door opens with open",
+                        when=self.t,
+                        drive_scores={"novelty": novelty, "integrity": integrity},
+                        tags={"door": "blue", "action": "open"},
+                    )
                 wrote = self.store.write(record)
 
         # Session residue: remember which action just worked (cleared on ρ reset).

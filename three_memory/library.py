@@ -90,6 +90,26 @@ def format_raw(record: FactRecord) -> str:
     return snip
 
 
+def next_byte_from_record(record: FactRecord) -> int | None:
+    """Read heading/body → next byte. Machinery, not LM weights."""
+    if record.tags.get("next_id") is not None:
+        return int(record.tags["next_id"])
+    nxt = str(record.tags.get("next") or "")
+    if nxt:
+        return ord(nxt[0])
+    what = record.what or ""
+    if " -> " in what:
+        ch = what.split(" -> ", 1)[1]
+        if ch:
+            return ord(ch[0])
+    return None
+
+
+# Frozen use-skill demos. No lord/love/`my lo`. Not world facts.
+FEWSHOT_DEMOS = "NOTE: qq qq -> z\nNOTE: aa aa -> b\nNOTE: xx xx -> w\n"
+TOOL_BYTE_BIAS = 3.0  # same magnitude as v0 store bias on USE_KEY
+
+
 class WorldLibrary:
     """Unread data W. Readable files; not S until collect commits a copy."""
 

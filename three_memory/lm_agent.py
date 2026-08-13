@@ -10,7 +10,15 @@ import torch
 from .byte_lm import TinyByteLM, hash_lm, js_divergence, next_byte_logits, softmax
 from .bytes_util import PROBE, R_ID, V_ID, encode_bytes
 from .drives import InnateDrives
-from .library import WorldLibrary, format_note, format_raw, select_records
+from .library import (
+    FEWSHOT_DEMOS,
+    TOOL_BYTE_BIAS,
+    WorldLibrary,
+    format_note,
+    format_raw,
+    next_byte_from_record,
+    select_records,
+)
 from .rho import RhoConfig, WorkingTrace
 from .store import FactRecord, WorldStore
 
@@ -20,7 +28,8 @@ class LanguageAgent:
     Frozen LM = species prior (syntax/dynamics only in v2; v1 also had NOTE-copy).
     ρ = session hidden EMA (write novelty) + prefix→byte buffer (S-off probe bias).
     S = inspectable life (JSON or .md). W = unread library (not memory until collect).
-    Retrieve: select matching note (default) or dump all. v1 NOTE / v2 raw.
+    Retrieve: select matching note (default) or dump all.
+    Modes: note / raw / tool (heading→byte bias) / fewshot (frozen demos + NOTE).
     """
 
     def __init__(
@@ -37,7 +46,7 @@ class LanguageAgent:
         store: WorldStore | None = None,
         world: WorldLibrary | None = None,
     ):
-        if retrieve_mode not in ("note", "raw"):
+        if retrieve_mode not in ("note", "raw", "tool", "fewshot"):
             raise ValueError(retrieve_mode)
         if retrieve_policy not in ("select", "dump"):
             raise ValueError(retrieve_policy)
@@ -122,13 +131,18 @@ class LanguageAgent:
         else:
             chosen = select_records(pool, probe)
             source = "select"
-        if self.retrieve_mode == "note":
+        if self.retrieve_mode == "tool":
+            ctx = ""
+        elif self.retrieve_mode == "fewshot":
+            ctx = FEWSHOT_DEMOS + "".join(format_note(r) for r in chosen)
+        elif self.retrieve_mode == "note":
             if source == "dump":
                 ctx = "".join(format_note(r) + format_raw(r) for r in chosen)
             else:
                 ctx = "".join(format_note(r) for r in chosen)
         else:
             ctx = "".join(format_raw(r) for r in chosen)
+        tool_ids = [next_byte_from_record(r) for r in chosen]
         self.last_retrieve = {
             "policy": self.retrieve_policy,
             "mode": self.retrieve_mode,
@@ -138,6 +152,7 @@ class LanguageAgent:
             "prefixes": [str(r.tags.get("prefix") or "") for r in chosen],
             "whats": [r.what for r in chosen],
             "source": source,
+            "tool_next_ids": [i for i in tool_ids if i is not None],
         }
         return ctx
 
@@ -156,6 +171,15 @@ class LanguageAgent:
                 out[int(bid)] += self.rho_byte_bias
         return out
 
+    def _apply_tool_bias(self, logits: np.ndarray) -> np.ndarray:
+        """Frozen grammar: matched note's next byte biases logits. Not in LM weights."""
+        if self.retrieve_mode != "tool":
+            return logits
+        out = logits.copy()
+        for bid in self.last_retrieve.get("tool_next_ids") or []:
+            out[int(bid)] += TOOL_BYTE_BIAS
+        return out
+
     def probe(self, text: str, *, use_store: bool = True, apply_rho: bool = True) -> dict[str, Any]:
         retrieved = self._retrieve_context(text) if use_store else ""
         ctx = retrieved + text
@@ -163,6 +187,8 @@ class LanguageAgent:
         logits, hidden = next_byte_logits(self.model, ids, self.device)
         if apply_rho:
             logits = self._apply_rho_bias(logits, text)
+        if use_store:
+            logits = self._apply_tool_bias(logits)
         probs = softmax(logits)
         return {
             "context": ctx,

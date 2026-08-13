@@ -118,3 +118,13 @@ v5: unread library W. **Commit** copies `my-lo.md` into S; after unmounting W, P
 
 Available data is not memory. Details: [`v4_results.md`](v4_results.md), [`v5_results.md`](v5_results.md).
 
+## v6 (use-skill, plain prior)
+
+No NOTE-copy in the cortex. **Tool** grammar reads the committed file (heading → next byte, bias +3.0). LM window is only `my lo`. Classification: **Store-works**, P(`v`)=0.649. Peek/unmount and delete S return to prior 0.084.
+
+Three in-context `NOTE:` demos, and untaught NOTE prepend, both **Fail** (P(`v`)≈0.053). This LSTM does not acquire the protocol from the prompt. Details: [`v6_results.md`](v6_results.md).
+
+## v7 (native tags)
+
+No English prior. Genome = frozen cortex seed, not DNA letters. Notes are `door=0` / `action=2`. Classification: **Store-works**. Reload files and collect-from-W both yield `use_key` after ρ reset; peek and dump-all do not. Details: [`v7_results.md`](v7_results.md).
+

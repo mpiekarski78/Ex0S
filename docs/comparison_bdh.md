@@ -39,6 +39,9 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, S = `.md` files (v3 raw) | **Trace-only** (same as v2; new process) |
 | three-memory, v4 note select / v5 note commit | **Store-works** |
 | three-memory, v4/v5 raw | **Fail** (file taken, unused) |
+| three-memory, v6 tool (plain prior) | **Store-works** (skill in machinery) |
+| three-memory, v6 fewshot / untaught NOTE | **Fail** |
+| three-memory, v7 native tags | **Store-works** (no English prior) |
 
 ## Honest limits
 
@@ -78,3 +81,19 @@ Disk does not fix v2. It makes S something you can open in an editor. See [`v3_r
 | Class | Store-works | control (hurts) | Store-works | not memory |
 
 S grows → must select. W is available, not known, until commit. Raw arms Fail (same unused-file ceiling as v2). See [`v4_results.md`](v4_results.md), [`v5_results.md`](v5_results.md).
+
+## v6 (use-skill, plain prior)
+
+No NOTE-copy in weights. Fact in `.md`. Skill in machinery.
+
+| Check | tool | fewshot | untaught NOTE |
+|-------|------|---------|----------------|
+| P(v) after commit, unmount W | **0.649** | 0.053 | 0.053 |
+| `love` in LM window | **no** | yes | yes |
+| Class | **Store-works** | Fail | Fail |
+
+See [`v6_results.md`](v6_results.md).
+
+## v7 (native tags, no English)
+
+Key/door with integer `.tag` files. Empty prior: `open`. After commit/reload: `use_key`. Dump-all: `open`. Peek-unmount: `open`. **Store-works**. See [`v7_results.md`](v7_results.md).

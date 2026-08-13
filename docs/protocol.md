@@ -95,3 +95,26 @@ W is a second folder (available data). S starts empty. Frozen rule: S miss and W
 | collect off | **no** |
 
 Classify on **commit + unmount W**. Peek after unmount must sit at prior. Do not ingest the whole library.
+
+## v6 use-skill on the plain prior
+
+Checkpoint: **`prior_plain.pt` only**. No NOTE-copy, no lord/love in pretrain. Same collect pipeline as v5.
+
+Three predeclared retrieve arms:
+
+| Arm | Skill | Expected |
+|-----|--------|----------|
+| tool | match heading, next byte from body, logit bias **+3.0** (v0 store magnitude) | Store-works if machinery can use S |
+| fewshot | frozen `NOTE:` demos without probe facts + selected note | Fail unless this LSTM in-context-copies |
+| note | untaught `NOTE:` prepend | Fail (v2/v5) |
+
+Do not train NOTE-copy to rescue fewshot/note. Do not raise the tool bias after seeing P(`v`). Classify on commit + unmount W.
+
+## v7 native tags (no English prior)
+
+Same key/door world as v0. Observations = bit vectors. S/W = integer `.tag` files (`door=0`, `action=2`). Genome = frozen cortex seed + rules, **not** ACGT.
+
+Select by tag match. Collect commit/peek/off as v5. Dump-all is a control (clutter `action=1` should prefer `open`).
+
+Pass Store-works: A correct after ρ reset; reload from `.tag` files correct; B and disable-S fail after reset; collect+unmount correct; peek+unmount incorrect; no English prose in files; weights unchanged.
+
