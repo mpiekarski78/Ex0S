@@ -25,6 +25,7 @@ class Obs:
 
     at_red_door: bool = False
     at_blue_door: bool = False
+    at_green_door: bool = False
     has_key: bool = False
     key_visible: bool = False
     last_failed: bool = False
@@ -42,6 +43,7 @@ class Obs:
             self.last_succeeded,
             self.event_open_failed,
             self.event_key_worked,
+            self.at_green_door,
         ]
         v = np.zeros(dim, dtype=np.float64)
         for i, b in enumerate(bits):
@@ -93,6 +95,8 @@ class KeyDoorWorld:
             o.at_red_door = True
         elif scenario in ("experience_foil", "probe_blue"):
             o.at_blue_door = True
+        elif scenario == "probe_green":
+            o.at_green_door = True
         if scenario == "probe_red_with_key":
             self.has_key = True
         if scenario == "probe_red_no_key":
@@ -165,6 +169,23 @@ class KeyDoorWorld:
             else:
                 success = None
                 reward = -0.01
+
+        elif self.phase == "probe_green":
+            # Held-out: WAIT opens (action=0). Prior prefers OPEN.
+            if action == Action.WAIT:
+                success = True
+                reward = 1.0
+                event = "opened"
+                done = True
+                info["opened"] = True
+            elif action == Action.OPEN:
+                success = False
+                reward = -1.0
+                event = "open_failed"
+            else:
+                success = False
+                reward = -0.5
+                event = "open_failed"
 
         obs = self._obs_for_scenario(self.phase, event)
         return StepResult(obs=obs, reward=reward, success=success, done=done, info=info)

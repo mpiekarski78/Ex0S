@@ -16,9 +16,11 @@ ACT_PICK_KEY = 3
 
 DOOR_RED = 0
 DOOR_BLUE = 1
+DOOR_GREEN = 2
 REQ_KEY = 1
 
 RED_FACT_ID = "d0"
+GREEN_FACT_ID = "d2"
 
 
 def encode_tags(tags: dict[str, Any]) -> str:

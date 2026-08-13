@@ -42,6 +42,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v6 tool (plain prior) | **Store-works** (skill in machinery) |
 | three-memory, v6 fewshot / untaught NOTE | **Fail** |
 | three-memory, v7 native tags | **Store-works** (no English prior) |
+| three-memory, v8 boxed policy | **Store-works** (skill box moves; cortex frozen) |
 
 ## Honest limits
 
@@ -97,3 +98,16 @@ See [`v6_results.md`](v6_results.md).
 ## v7 (native tags, no English)
 
 Key/door with integer `.tag` files. Empty prior: `open`. After commit/reload: `use_key`. Dump-all: `open`. Peek-unmount: `open`. **Store-works**. See [`v7_results.md`](v7_results.md).
+
+## v8 (boxed use-policy, frozen cortex)
+
+Policy learns when to commit/apply. Cortex hash unchanged. Action still from `action=` in the file.
+
+| Check | Untrained | After train, unmount W |
+|-------|-----------|------------------------|
+| Red (`d0.tag`) | `open` | **`use_key`** |
+| Held-out green (`d2.tag`) | `open` | **`wait`** |
+| Empty S / disable-S | `open` | `open` |
+| Class | — | **Store-works** |
+
+See [`v8_results.md`](v8_results.md).

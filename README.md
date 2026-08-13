@@ -9,7 +9,7 @@
 
 Biology’s lesson here: hardcode **drives and learning rules**, leave **world-knowledge** to experience, and do **not** confuse a short trace with a life of knowledge.
 
-## Result (v0–v7)
+## Result (v0–v8)
 
 v0: [`docs/conclusion.md`](docs/conclusion.md).  
 v1 NOTE-copy: [`docs/v1_results.md`](docs/v1_results.md).  
@@ -19,6 +19,7 @@ v4 select among notes: [`docs/v4_results.md`](docs/v4_results.md).
 v5 collect from unread W: [`docs/v5_results.md`](docs/v5_results.md).  
 v6 use-skill on plain prior: [`docs/v6_results.md`](docs/v6_results.md).  
 v7 native tags (no English): [`docs/v7_results.md`](docs/v7_results.md).  
+v8 boxed use-policy (cortex frozen): [`docs/v8_results.md`](docs/v8_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -41,6 +42,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v6 tool grammar, plain prior, no `love` in window | P(`v`)=0.649 (**Store-works**) |
 | v6 fewshot / untaught NOTE, plain prior | P(`v`)≈0.053 (**Fail**) |
 | v7 native tags, no English prior | **Store-works** (`use_key` after reload/collect; dump-all/`peek` → `open`) |
+| v8 boxed policy, held-out green | **Store-works** (red unmount `use_key`; green `wait`; cortex hash unchanged) |
 
 ## Four pieces
 
@@ -65,6 +67,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v5 collect | **Store-works** / **Fail** | W→S commit vs peek; [`docs/v5_results.md`](docs/v5_results.md) |
 | v6 use-skill | **Store-works** / **Fail** | tool vs fewshot on plain prior; [`docs/v6_results.md`](docs/v6_results.md) |
 | v7 native tags | **Store-works** | bits + integer `.tag` files; [`docs/v7_results.md`](docs/v7_results.md) |
+| v8 boxed use-policy | **Store-works** | policy learns when to commit/apply; cortex frozen; [`docs/v8_results.md`](docs/v8_results.md) |
 
 ## Quick start
 
@@ -78,6 +81,7 @@ python tests/test_md_store.py
 python tests/test_library.py
 python tests/test_v6.py
 python tests/test_v7.py
+python tests/test_v8.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -88,6 +92,7 @@ python -m experiments.run_v4 --both
 python -m experiments.run_v5 --both
 python -m experiments.run_v6 --all-modes
 python -m experiments.run_v7
+python -m experiments.run_v8
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -96,8 +101,8 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v7, train_prior
-docs/             # protocol, comparison, conclusion, v1–v7 results
+experiments/      # run_v0 … run_v8, train_prior
+docs/             # protocol, comparison, conclusion, v1–v8 results
 tests/
 runs/             # gitignored
 checkpoints/      # gitignored (prior.pt)

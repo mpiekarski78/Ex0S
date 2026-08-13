@@ -11,7 +11,9 @@ from .symbols import (
     ACT_USE_KEY,
     ACT_WAIT,
     DOOR_BLUE,
+    DOOR_GREEN,
     DOOR_RED,
+    GREEN_FACT_ID,
     RED_FACT_ID,
     REQ_KEY,
     encode_tags,
@@ -35,6 +37,7 @@ def tags_to_record(path: Path, when: int = 0) -> FactRecord | None:
 
 
 RED_NOTE = (f"{RED_FACT_ID}.tag", {**{"door": DOOR_RED, "requires": REQ_KEY, "action": ACT_USE_KEY}})
+GREEN_NOTE = (f"{GREEN_FACT_ID}.tag", {"door": DOOR_GREEN, "action": ACT_WAIT})
 
 # Clutter: other integer tags. Dump-all would apply their action=OPEN bias.
 CLUTTER_NOTES: list[tuple[str, dict[str, Any]]] = [
@@ -53,10 +56,12 @@ CLUTTER_NOTES: list[tuple[str, dict[str, Any]]] = [
 ]
 
 
-def all_tag_notes(*, include_red: bool = True) -> list[tuple[str, dict[str, Any]]]:
+def all_tag_notes(*, include_red: bool = True, include_green: bool = False) -> list[tuple[str, dict[str, Any]]]:
     notes = list(CLUTTER_NOTES)
     if include_red:
         notes.append(RED_NOTE)
+    if include_green:
+        notes.append(GREEN_NOTE)
     return notes
 
 

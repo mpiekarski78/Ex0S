@@ -128,3 +128,7 @@ Three in-context `NOTE:` demos, and untaught NOTE prepend, both **Fail** (P(`v`)
 
 No English prior. Genome = frozen cortex seed, not DNA letters. Notes are `door=0` / `action=2`. Classification: **Store-works**. Reload files and collect-from-W both yield `use_key` after ρ reset; peek and dump-all do not. Details: [`v7_results.md`](v7_results.md).
 
+## v8 (boxed use-policy)
+
+The collect/apply box may change; cortex SHA256 must not. Policy features exclude door identity. Classification: **Store-works**. After training, red commit+unmount yields `use_key`; held-out green (`d2.tag`, never in train W) yields `wait`; empty S and disable-S stay `open`. The motor act still comes from the file’s `action=`. Details: [`v8_results.md`](v8_results.md).
+

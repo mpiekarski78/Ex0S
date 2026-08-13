@@ -118,3 +118,19 @@ Select by tag match. Collect commit/peek/off as v5. Dump-all is a control (clutt
 
 Pass Store-works: A correct after ρ reset; reload from `.tag` files correct; B and disable-S fail after reset; collect+unmount correct; peek+unmount incorrect; no English prose in files; weights unchanged.
 
+## v8 boxed use-policy (cortex frozen)
+
+Tiny linear policy may change. Cortex must not. Features = `{s_hit, w_hit}` only (no door id, no novelty). Collect is ignore/peek/commit; apply is a gate. Frozen `_apply_record_bias` still reads `action=` from the file.
+
+Training: two-step red episodes — (1) W on, commit; (2) unmount W, reset ρ, apply from S. Reward on step 2.
+
+Held-out: green door, `d2.tag` `{door:2, action:0}`, probe WAIT. Never in training W.
+
+| ID | If |
+|----|----|
+| Confound | Cortex hash moves, or disable-S (W unmounted) still `use_key` |
+| Fail | Policy hash unchanged; red unmount wrong; green unmount wrong |
+| Store-works | Cortex unchanged, policy changed, red unmount `use_key`, empty S `open`, green unmount `wait` |
+
+Do not bake `use_key` into the policy. Do not raise store bias to rescue the plot. disable-S must unmount W (peek of W is not a fact leak test).
+
