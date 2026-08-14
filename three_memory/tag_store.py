@@ -1,4 +1,4 @@
-"""Tag-file store S and unread tag library W. Integer key=value. No English prose."""
+"""Tag-file store S, unread .tag W, and unread .md document W."""
 
 from __future__ import annotations
 
@@ -150,3 +150,53 @@ class TagLibrary:
             if all(r.tags.get(k) == v for k, v in query_tags.items()):
                 hits.append(r)
         return hits
+
+
+class DocLibrary:
+    """Unread W: .md documents with optional k=v integer lines. Not memory until commit.
+
+    Prose lines without '=' are ignored by the tag parser. Exact loc=/door= match is
+    still not required when the agent uses the search head.
+    """
+
+    def __init__(self, root: Path | str, enabled: bool = True):
+        self.root = Path(root)
+        self.enabled = enabled
+
+    def list_files(self) -> list[str]:
+        if not self.enabled or not self.root.is_dir():
+            return []
+        return [p.name for p in sorted(self.root.glob("*.md"))]
+
+    def records(self) -> list[FactRecord]:
+        if not self.enabled or not self.root.is_dir():
+            return []
+        out: list[FactRecord] = []
+        for path in sorted(self.root.glob("*.md")):
+            rec = tags_to_record(path)
+            if rec is not None:
+                rec.tags["source"] = "W"
+                out.append(rec)
+        return out
+
+    def match(self, query_tags: dict[str, Any]) -> list[FactRecord]:
+        hits = []
+        for r in self.records():
+            if all(r.tags.get(k) == v for k, v in query_tags.items()):
+                hits.append(r)
+        return hits
+
+
+def write_doc_notes(root: Path, notes: list[tuple[str, str, dict[str, Any]]]) -> None:
+    """Write unread .md pages: (filename, prose, tags). Prose is not English memory."""
+    root.mkdir(parents=True, exist_ok=True)
+    for name, prose, tags in notes:
+        fid = Path(name).stem
+        lines = [f"# {fid}", ""]
+        prose = prose.strip()
+        if prose:
+            lines.append(prose)
+            lines.append("")
+        for k, v in sorted(tags.items()):
+            lines.append(f"{k}={v}")
+        (root / name).write_text("\n".join(lines) + "\n", encoding="utf-8")

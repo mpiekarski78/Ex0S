@@ -24,7 +24,7 @@ from .symbols import (
     REQ_KEY,
     encode_tags,
 )
-from .tag_store import TagLibrary
+from .tag_store import DocLibrary, TagLibrary
 
 # Bookkeeping tags, not a place-name menu. Query candidates are whatever else the files have.
 _QNAME_SKIP = frozenset({"source", "source_file", "when", "ok", "what"})
@@ -42,7 +42,7 @@ class ThreeMemoryAgent:
         retrieve_policy: str = "select",
         collect_mode: str = "off",
         store: WorldStore | None = None,
-        world: TagLibrary | None = None,
+        world: TagLibrary | DocLibrary | None = None,
         use_policy: UsePolicy | None = None,
         write_from_events: bool = True,
         policy_epsilon: float = 0.0,

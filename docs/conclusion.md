@@ -212,3 +212,7 @@ Same search recipe; W is **256** messy files. **A** split and **B** shared retur
 
 Free life find/commit (not probe→unmount→probe train). **A** **Store-works**: commits `p99.tag` in life; after ρ reset W gone → `use_key`; held-out green `wait`; `n_forced=0`. **B** **Fail**: shared return last-50 0; red stays on clutter. Cortex unchanged. Details: [`tm030_results.md`](tm030_results.md).
 
+## TM.0.3.1 (documents / shared return)
+
+Free life over unread `.md` documents (prose + embedded `k=v`). **A** **Store-works**: commits from `p99.md`; after ρ reset W gone → `use_key`; held-out green `wait`. **B** **Fail**: shared return last-50 0. Cortex unchanged. Not English NLP. Details: [`tm031_results.md`](tm031_results.md).
+

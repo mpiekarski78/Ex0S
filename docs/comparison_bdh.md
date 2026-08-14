@@ -63,6 +63,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.1.2 messy retrieve | **Store-works** / **Store-works** (rank files; exact `loc=`/`door=` misses) |
 | three-memory, TM.0.2.0 scale of W | **Store-works** / **Store-works** (256 unread files; same search) |
 | three-memory, TM.0.3.0 a life | **Store-works** / **Fail** (free life find/commit; shared return starves) |
+| three-memory, TM.0.3.1 documents | **Store-works** / **Fail** (`.md` W; free life; shared return starves) |
 
 ## Honest limits
 
@@ -380,5 +381,19 @@ See [`tm020_results.md`](tm020_results.md).
 | Class | **Store-works** | **Fail** |
 
 See [`tm030_results.md`](tm030_results.md).
+
+## TM.0.3.1 (documents / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| W | all `.md` + prose | same |
+| Free red found messy doc | yes (`p99`) | no (`p0`) |
+| After ρ reset, W gone | **`use_key`** | `open` |
+| Held-out green | **`wait`** | `open` |
+| Train last 50 | 0.82 | 0.00 |
+| Class | **Store-works** | **Fail** |
+
+See [`tm031_results.md`](tm031_results.md).
+
 
 

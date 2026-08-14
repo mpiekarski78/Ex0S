@@ -436,3 +436,19 @@ Not the scripted probe→unmount→probe train. Free life: wander, search W, com
 
 Do not restore the scripted unmount train or exact match to rescue a plot.
 
+## TM.0.3.1 A documents free life, B shared return
+
+Same free life as TM.0.3.0. W is `.md` documents with prose + embedded `k=v` (not tidy `.tag` W). Useful page `p99.md` `{where:0, action:2, pad:7}`. Copy frozen `action=`. Cortex frozen. No NOTE-copy. `write_from_events=False`. `n_forced=0`.
+
+**A.** Split: found messy page in S during life / probe after reset.
+
+**B.** Same `make()`. One `r` = probe correct, applied to search and use.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; `.tag` in W; no prose; planted `when=` / `loc=` / `here=`; `d0` in W; writes from life; forced curriculum | same |
+| Fail | Untrained probe already `use_key`; green fails; exact match still solves; freeze-search / use-off still `use_key`; training not a free life | Untrained already `use_key`; red stays `open`; last-50 ≈ 0 |
+| Store-works | Untrained probe `open`; free red commits from `p99.md`; after reset W gone → `use_key`; green `wait`; controls fail | Same without splitting the return |
+
+Do not restore `.tag` W, NOTE-copy, or exact match to rescue a plot.
+
