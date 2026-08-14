@@ -304,3 +304,7 @@ Search keeps unread pages with the most rare tokens S lacks, and attends that pa
 
 Same find-novel recipe, but several clutter pages also match the novel-count of `p99`/`p98`. **A** **Fail**: train S `bind=neon` on `c09`; C life `bind=xenon` on `c08`. **B** **Store-works** on the motor bar (n=1, last-50 0.92); not the jump, not retuned. Details: [`tm069_results.md`](tm069_results.md).
 
+## TM.0.7.0 (retry-novel / shared return)
+
+Do not lock find on the first max-novel page. **A** **Fail**: train S is the whole novel tie (n=4, `push` plus `xenon`/`neon`/`krypton`); C life adds `adjust`. **B** **Store-works** on the motor bar (n=4, last-50 0.96); not the jump, not retuned. Details: [`tm070_results.md`](tm070_results.md).
+

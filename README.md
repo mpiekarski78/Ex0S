@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.6.9. Toy series: v0–v23.
+**Current:** TM.0.7.0. Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.6.9: find-novel without a unique two-rare pair. Several clutter pages match the novel-count of `p99`/`p98`. Train S is one file `bind=neon`. C life TUNEs from `xenon`. **A Fail**. Shared return **Store-works** on the motor bar (n=1, last-50 0.92; not the jump, not retuned). Still genome: stream-first bind, new-here stamp, concurrent-bind, here-only/sweep, in-hand new-here, find-novel, `{has_code, has_rare}`, five acts, `domain=`. Tiny logs, not Wikipedia. Math is a later life.
+Honest status after TM.0.7.0: retry-novel. Find no longer locks on the first max-novel page. Train S is the whole novel tie (n=4): `push` plus `xenon`/`neon`/`krypton`. C life adds `adjust`. **A Fail**. Shared return **Store-works** on the motor bar (n=4, last-50 0.96; not the jump, not retuned). Still genome: stream-first bind, new-here stamp, concurrent-bind, here-only/sweep, in-hand new-here, find-novel, retry-novel, `{has_code, has_rare}`, five acts, `domain=`. Tiny logs, not Wikipedia. Math is a later life.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -71,6 +71,7 @@ TM.0.6.6 correct dirty English S: [`docs/tm066_results.md`](docs/tm066_results.m
 TM.0.6.7 in-hand new-here: [`docs/tm067_results.md`](docs/tm067_results.md).  
 TM.0.6.8 find-novel: [`docs/tm068_results.md`](docs/tm068_results.md).  
 TM.0.6.9 find-novel without unique two-rare: [`docs/tm069_results.md`](docs/tm069_results.md).  
+TM.0.7.0 retry-novel: [`docs/tm070_results.md`](docs/tm070_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -137,6 +138,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.6.7 A in-hand new-here / B shared return | **Fail** / **Store-works** (leftover walk gone; C bound `neon` in-hand; shared return not the jump) |
 | TM.0.6.8 A find-novel / B shared return | **Store-works** / **Store-works** (C bound `adjust`; shared return not the jump) |
 | TM.0.6.9 A find-novel without unique two-rare / B shared return | **Fail** / **Store-works** (train bound `neon`, C bound `xenon`; shared return not the jump) |
+| TM.0.7.0 A retry-novel / B shared return | **Fail** / **Store-works** (n=4, `push` plus clutter hapax; shared return not the jump) |
 
 ## Five pieces
 
@@ -206,6 +208,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.6.7 in-hand new-here | **Fail** / **Store-works** | leftover walk gone; C bound `neon` in-hand; [`docs/tm067_results.md`](docs/tm067_results.md) |
 | TM.0.6.8 find-novel | **Store-works** / **Store-works** | C bound `adjust`; [`docs/tm068_results.md`](docs/tm068_results.md) |
 | TM.0.6.9 find-novel without unique two-rare | **Fail** / **Store-works** | train bound `neon`, C bound `xenon`; [`docs/tm069_results.md`](docs/tm069_results.md) |
+| TM.0.7.0 retry-novel | **Fail** / **Store-works** | n=4, `push` plus clutter hapax; [`docs/tm070_results.md`](docs/tm070_results.md) |
 
 ## Quick start
 
@@ -263,6 +266,7 @@ python tests/test_tm066.py
 python tests/test_tm067.py
 python tests/test_tm068.py
 python tests/test_tm069.py
+python tests/test_tm070.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -317,6 +321,7 @@ python -m experiments.run_tm066
 python -m experiments.run_tm067
 python -m experiments.run_tm068
 python -m experiments.run_tm069
+python -m experiments.run_tm070
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -325,7 +330,7 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010 … run_tm069, train_prior
+experiments/      # run_v0 … run_v23, run_tm010 … run_tm070, train_prior
 docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.x results
 tests/
 runs/             # gitignored

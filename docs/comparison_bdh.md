@@ -86,6 +86,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.6.7 in-hand new-here | **Fail** / **Store-works** (leftover walk gone; C bound `neon` in-hand; shared return not the jump) |
 | three-memory, TM.0.6.8 find-novel | **Store-works** / **Store-works** (C bound `adjust`; shared return not the jump) |
 | three-memory, TM.0.6.9 find-novel without unique two-rare | **Fail** / **Store-works** (train bound `neon`, C bound `xenon`; shared return not the jump) |
+| three-memory, TM.0.7.0 retry-novel | **Fail** / **Store-works** (n=4, `push` plus clutter hapax; shared return not the jump) |
 
 ## Honest limits
 
@@ -701,4 +702,18 @@ See [`tm068_results.md`](tm068_results.md).
 | Class | **Fail** | **Store-works** |
 
 See [`tm069_results.md`](tm069_results.md).
+
+## TM.0.7.0 (retry-novel / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| After train, S: A / foil C | **`press` / `hold`** | **`press` / `hold`** |
+| C life on that S: A / C | `press` / `tune` | **`press` / `tune`** |
+| Train S n files | **4** | **4** |
+| Train S binds | `xenon` + `neon` + `krypton` + **`push`** | same |
+| C life binds | those + **`adjust`** | those + `adjust` |
+| Train last 50 | 0.96 | 0.96 |
+| Class | **Fail** | **Store-works** |
+
+See [`tm070_results.md`](tm070_results.md).
 

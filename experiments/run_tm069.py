@@ -151,6 +151,8 @@ def _require_pair(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Confound", "Need several two-rare clutter pages so the pair is not unique."
     if not m.get("find_without_unique_pair"):
         return "Fail", "Find-without-unique-pair was frozen off."
+    if m.get("use_retry_novel"):
+        return "Confound", "Retry-novel was smuggled onto this slice."
     return None
 
 

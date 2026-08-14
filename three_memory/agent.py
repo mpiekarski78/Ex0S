@@ -85,6 +85,7 @@ class ThreeMemoryAgent:
         use_block_here: bool = False,
         use_in_hand_new_here: bool = False,
         use_find_novel: bool = False,
+        use_retry_novel: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -167,6 +168,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_in_hand_new_here requires use_stamp_new_here")
         if use_find_novel and not use_search_head:
             raise ValueError("use_find_novel requires use_search_head")
+        if use_retry_novel and not use_find_novel:
+            raise ValueError("use_retry_novel requires use_find_novel")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -228,6 +231,7 @@ class ThreeMemoryAgent:
         self.use_block_here = use_block_here
         self.use_in_hand_new_here = use_in_hand_new_here
         self.use_find_novel = use_find_novel
+        self.use_retry_novel = use_retry_novel
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._in_hand_id: str | None = None
@@ -309,6 +313,7 @@ class ThreeMemoryAgent:
             use_block_here=self.use_block_here,
             use_in_hand_new_here=self.use_in_hand_new_here,
             use_find_novel=self.use_find_novel,
+            use_retry_novel=self.use_retry_novel,
             domain=self.domain,
         )
 
@@ -470,6 +475,37 @@ class ThreeMemoryAgent:
             return pool
         return [r for r, n in zip(pool, scores) if n == m]
 
+    def _full_world_novel_count(self, rec) -> int:
+        """Rare tokens on rec vs the whole unread library, minus S. Not leftover-pile rarity."""
+        if self.world is None:
+            return 0
+        base_words = [prose_tokens(getattr(o, "what", "") or "") for o in self.world.records()]
+        words = prose_tokens(getattr(rec, "what", "") or "")
+        rare = {w for w in words if sum(1 for ws in base_words if w in ws) < 3}
+        return len(rare - self._s_token_set())
+
+    def _unused_novel_remain(self, obs: Obs, wpool: list | None = None) -> bool:
+        """True when an unowned page still adds a full-W rare token S lacks."""
+        if not self.use_retry_novel or not self.use_find_novel or self.world is None:
+            return False
+        owned = {r.fact_id for r in self.store.records()} if self.store.enabled else set()
+        pool = list(wpool) if wpool is not None else list(self.world.records())
+        return any(
+            getattr(r, "fact_id", None) not in owned
+            and getattr(r, "fact_id", None) not in self._w_skip
+            and self._full_world_novel_count(r) > 0
+            for r in pool
+        )
+
+    def _in_hand_is_novel(self) -> bool:
+        if not self._in_hand_id or self.world is None:
+            return False
+        owned = {r.fact_id for r in self.store.records()} if self.store.enabled else set()
+        if self._in_hand_id in owned or self._in_hand_id in self._w_skip:
+            return False
+        rec = next((r for r in self.world.records() if getattr(r, "fact_id", None) == self._in_hand_id), None)
+        return rec is not None and self._full_world_novel_count(rec) > 0
+
     def _search_picks(self, pool: list, obs: Obs, *, record: bool) -> list:
         if not pool or self.use_policy is None:
             return []
@@ -537,7 +573,11 @@ class ThreeMemoryAgent:
             and self.collect_mode == "commit"
             and any(self._rec_names_here(r, obs) for r in self.store.records())
         ):
-            return info
+            if self.use_retry_novel and self._unused_novel_remain(obs, wpool):
+                owned = {r.fact_id for r in self.store.records()}
+                wpool = [r for r in wpool if getattr(r, "fact_id", None) not in owned]
+            else:
+                return info
         picks = self._search_picks(wpool, obs, record=record)
         if not picks:
             return info
@@ -1003,6 +1043,14 @@ class ThreeMemoryAgent:
         rec = None
         if self.use_block_here and self.use_here_match:
             rec = self._bound_here_note(station)
+            if self.use_retry_novel and self._in_hand_is_novel():
+                hand = self._in_hand_note() or self._commit_in_hand()
+                if (
+                    hand is not None
+                    and self._is_rare_in_world(hand)
+                    and (rec is None or hand.fact_id != rec.fact_id)
+                ):
+                    rec = hand
             if rec is None:
                 rec = self._in_hand_note() or self._commit_in_hand()
                 if rec is not None and not self._is_rare_in_world(rec):
