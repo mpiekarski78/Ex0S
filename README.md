@@ -3,11 +3,17 @@
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
 
+BDH showed that a working trace ρ is useful in-session and gone after reset. This repo does not try to make ρ long-term. It asks what belongs **beside** ρ.
+
 ## Question
 
-> Can frozen innate drives + learning rules fill an **inspectable** world-knowledge store from experience, such that facts **survive reset of the working trace** — while the trace alone does not?
+**v0 (answered):** frozen drives can write an inspectable fact into S; after ρ reset the fact still steers behavior **if and only if** it lives in S. disable-S is BDH Category B again. See [`docs/conclusion.md`](docs/conclusion.md).
 
-Biology’s lesson here: hardcode **drives and learning rules**, leave **world-knowledge** to experience, and do **not** confuse a short trace with a life of knowledge.
+**Now:** DNA is a **recipe for the machine**, not Wikipedia. English is not a species prior. Hardcode **drives and learning rules**. Leave **world-knowledge to experience**. Facts go in files you can open. Skills (when to write, whether to copy, which field to match or emit) go in **boxed heads**. The cortex SHA256 must not move.
+
+> Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
+
+Honest status after v18: the **split is real on a toy**. Not a general learner. Still genome: two-key name menus `{action, do}` / `{door, here}`, generic `logits[int] += 3.0`, exact match, split credit, ε-greedy fidget, four discrete acts. Tiny LSTM still needs a taught tool grammar for English. No wiki, no code, no cameras.
 
 ## Result (v0–v18)
 
@@ -34,9 +40,9 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
 |-------|---------|
-| Same frozen cortex (species prior) | yes |
-| Weights after experience | unchanged (SHA256) |
-| A learns `red door opens only with key` into S | yes (plain JSON) |
+| Frozen cortex SHA256 after a life | unchanged |
+| Boxed policy after a life (v8+) | **may move** (when/whether/which-name; not facts) |
+| A learns `red door opens only with key` into S (v0) | yes (plain JSON) |
 | A correct after ρ reset (S kept) | yes |
 | B (foil) after ρ reset | no |
 | disable-S: correct before ρ reset | yes (session residue) |
@@ -64,13 +70,14 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v17 A do= / B here= | **Store-works** / **Store-works** (learn field name to copy or match) |
 | v18 A write do= / B write here= | **Store-works** / **Store-works** (learn field name to emit) |
 
-## Four pieces
+## Five pieces
 
 | Piece | Role | Survives ρ reset? |
 |-------|------|-------------------|
-| Frozen cortex | Species prior + use/collect rules | yes (fixed weights) |
+| Frozen cortex | Species prior (sensors/dynamics). No facts. SHA256 fixed. | yes |
+| Boxed policy | Learning rules (when / whether / which name). May move. Not Wikipedia. | yes (weights ≠ facts) |
 | Working trace ρ | Session residue | **no** |
-| World store S | Life-of-knowledge (committed notes) | **yes** |
+| World store S | Committed life (inspectable notes) | **yes** |
 | Library W | Unread available data | **no** (not owned until commit) |
 
 ## Status
@@ -161,7 +168,8 @@ checkpoints/      # gitignored (prior.pt)
 ## What this is not
 
 - Not a Pathway BDH patch or PR
-- Not hardcoded “survive / reproduce” objectives
-- Not a chatbot / agent product
 - Not Category D on ρ — ρ stays session-only
+- Not Wikipedia in the genome, and not English as a species prior
+- Not a general learner / chatbot / agent product
 - Not RAG (v3 is string-matched `.md` files, no embeddings)
+- Not hardcoded “survive / reproduce” objectives
