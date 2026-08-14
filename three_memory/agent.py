@@ -75,6 +75,7 @@ class ThreeMemoryAgent:
         use_revise_head: bool = False,
         use_event_annotate: bool = False,
         use_here_match: bool = False,
+        use_commit_rare_only: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -191,6 +192,7 @@ class ThreeMemoryAgent:
         self.use_revise_head = use_revise_head
         self.use_event_annotate = use_event_annotate
         self.use_here_match = use_here_match
+        self.use_commit_rare_only = use_commit_rare_only
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._w_skip: set[str] = set()
@@ -261,6 +263,7 @@ class ThreeMemoryAgent:
             use_revise_head=self.use_revise_head,
             use_event_annotate=self.use_event_annotate,
             use_here_match=self.use_here_match,
+            use_commit_rare_only=self.use_commit_rare_only,
             domain=self.domain,
         )
 
@@ -451,6 +454,22 @@ class ThreeMemoryAgent:
         picks = self._search_picks(wpool, obs, record=record)
         if not picks:
             return info
+        if (
+            self.use_commit_rare_only
+            and self.use_here_match
+            and self.store.enabled
+            and self.collect_mode == "commit"
+            and any(self._rec_names_here(r, obs) for r in self.store.records())
+        ):
+            pool_words = [prose_tokens(getattr(o, "what", "") or "") for o in wpool]
+            rare_picks = []
+            for rec in picks:
+                words = prose_tokens(getattr(rec, "what", "") or "")
+                if any(sum(1 for ws in pool_words if w in ws) < 3 for w in words):
+                    rare_picks.append(rec)
+            picks = rare_picks
+            if not picks:
+                return info
         info["taken"] = 1
         if self.collect_mode == "commit":
             n = 0

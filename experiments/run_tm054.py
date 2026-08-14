@@ -160,6 +160,7 @@ def make(
     use_prose_ints: bool = False,
     use_event_annotate: bool = True,
     use_here_match: bool = True,
+    use_commit_rare_only: bool = False,
 ) -> ThreeMemoryAgent:
     world = ProseLibrary(w_dir) if w_dir is not None else None
     return ThreeMemoryAgent(
@@ -187,6 +188,7 @@ def make(
         use_prose_tokens=use_prose_tokens,
         use_event_annotate=use_event_annotate,
         use_here_match=use_here_match,
+        use_commit_rare_only=use_commit_rare_only,
     )
 
 

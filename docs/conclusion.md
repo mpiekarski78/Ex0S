@@ -248,3 +248,7 @@ Unread W is distinct multi-paragraph documents, not cloned one-liners. Same find
 
 Two lives, one store. **A** **Store-works**: after A then C on the same S → A PRESS / C TUNE. Wipe-between loses A. **B** **Fail**: last-50 0. Details: [`tm055_results.md`](tm055_results.md).
 
+## TM.0.5.6 (never-wipe train / shared return)
+
+Training keeps S. **A** **Store-works**: after 500 A lives the dirty store still PRESS; a C life on that S adds TUNE without losing A. **B** **Fail**: last-50 0. Details: [`tm056_results.md`](tm056_results.md).
+

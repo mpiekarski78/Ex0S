@@ -45,3 +45,4 @@
 - TM.0.5.3: use the fact, not pick-a-motor — same S, A PRESS / C HOLD; copy-only still PRESS on C. A **Store-works**; B shared return **Fail**. [`docs/tm053_results.md`](tm053_results.md).
 - TM.0.5.4: Open W — distinct multi-paragraph unread pages, not cloned one-liners. Same find/stamp/here-match. A **Store-works**; B shared return **Fail**. [`docs/tm054_results.md`](tm054_results.md).
 - TM.0.5.5: accumulate S — two lives, same store; after both, A PRESS / C TUNE. Wipe-between loses A. A **Store-works**; B shared return **Fail**. [`docs/tm055_results.md`](tm055_results.md).
+- TM.0.5.6: never-wipe train — dirty S survives 500 episodes; C life on that S adds TUNE without losing A. A **Store-works**; B shared return **Fail**. [`docs/tm056_results.md`](tm056_results.md).

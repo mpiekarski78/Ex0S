@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.5.5. Toy series: v0–v23.
+**Current:** TM.0.5.6. Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.5.5: two lives can share one store. After A then C on the same S: A PRESS, C TUNE. Wipe-between loses A. Copy-only still PRESS on C. Train still wipes. Not English NLP. Shared return still **Fail**s (last-50 0). Still genome: innate act and station names, rarity, five acts, `domain=`. Twelve-odd short logs, not Wikipedia.
+Honest status after TM.0.5.6: training no longer throws S away. After 500 A lives the dirty store still PRESS; a C life on that same S adds TUNE without losing A. Wipe-between loses A. Not English NLP. Shared return still **Fail**s (last-50 0). Still genome: innate act and station names, rarity, five acts, `domain=`. Short logs, not Wikipedia.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -57,6 +57,7 @@ TM.0.5.2 unnamed motor: [`docs/tm052_results.md`](docs/tm052_results.md).
 TM.0.5.3 use-the-fact: [`docs/tm053_results.md`](docs/tm053_results.md).  
 TM.0.5.4 Open W: [`docs/tm054_results.md`](docs/tm054_results.md).  
 TM.0.5.5 accumulate S: [`docs/tm055_results.md`](docs/tm055_results.md).  
+TM.0.5.6 never-wipe train: [`docs/tm056_results.md`](docs/tm056_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -109,6 +110,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.5.3 A use-the-fact / B shared return | **Store-works** / **Fail** (same S: A PRESS, C HOLD; copy-only still PRESS on C) |
 | TM.0.5.4 A Open W / B shared return | **Store-works** / **Fail** (distinct documents; same S: A PRESS, C HOLD) |
 | TM.0.5.5 A accumulate S / B shared return | **Store-works** / **Fail** (two lives, same S: A PRESS, C TUNE) |
+| TM.0.5.6 A never-wipe train / B shared return | **Store-works** / **Fail** (dirty train S still PRESS; C life adds TUNE) |
 
 ## Five pieces
 
@@ -164,6 +166,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.5.3 use-the-fact | **Store-works** / **Fail** | same S: A PRESS, C HOLD; [`docs/tm053_results.md`](docs/tm053_results.md) |
 | TM.0.5.4 Open W | **Store-works** / **Fail** | distinct multi-paragraph W; [`docs/tm054_results.md`](docs/tm054_results.md) |
 | TM.0.5.5 accumulate S | **Store-works** / **Fail** | two lives, same S: A PRESS, C TUNE; [`docs/tm055_results.md`](docs/tm055_results.md) |
+| TM.0.5.6 never-wipe train | **Store-works** / **Fail** | dirty train S still PRESS; [`docs/tm056_results.md`](docs/tm056_results.md) |
 
 ## Quick start
 
@@ -207,6 +210,7 @@ python tests/test_tm052.py
 python tests/test_tm053.py
 python tests/test_tm054.py
 python tests/test_tm055.py
+python tests/test_tm056.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -247,6 +251,7 @@ python -m experiments.run_tm052
 python -m experiments.run_tm053
 python -m experiments.run_tm054
 python -m experiments.run_tm055
+python -m experiments.run_tm056
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -255,7 +260,7 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010 … run_tm055, train_prior
+experiments/      # run_v0 … run_v23, run_tm010 … run_tm056, train_prior
 docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.x results
 tests/
 runs/             # gitignored

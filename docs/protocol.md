@@ -32,7 +32,7 @@ Order of remaining recipe jumps (do not skip ahead to an English life):
 5. Open W (wiki-shaped content) (TM.0.5.4).
 6. One return (shared credit that actually works, or an honest genome admission).
 7. No `domain=` switch.
-8. Accumulate S (stop wiping every episode) (TM.0.5.5 eval path; train still wipes).
+8. Accumulate S (stop wiping every episode). TM.0.5.5 eval path; TM.0.5.6 never-wipe train.
 9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works (TM.0.5.1).
 10. Then an English life, then a math life.
 
@@ -617,5 +617,21 @@ Genome grammar for two facts (not English): skip already-owned W pages only when
 | Store-works | Untrained HOLD; after A life A PRESS / C HOLD; after both lives A PRESS / C TUNE; wipe-between A HOLD; copy-only PRESS on C | Same without splitting the return |
 
 Do not restore wiping S on the eval path, a motor name in W, or an English lexicon to rescue a plot.
+
+## TM.0.5.6 A never-wipe train, B shared return
+
+Recipe jump 8, train slice: **do not rmtree S each train episode**. ρ still resets (session). After 500 A lives the same store is probed (no fresh A life): PRESS, foil C HOLD. Then a C life on that **dirty** S with both useful pages: A PRESS kept, C TUNE added. Wipe-between loses A. Open W, unnamed pages, here-match. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. Not English. `use_commit_rare_only` on this slice only (do not vacuum clutter once S already names here) — off by default so TM.0.5.5 B stays Fail.
+
+**A.** Split: search rare / write stamp / probe A correct. Train keeps S.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; train still wipes; English; drop `has_code`; drop `domain=`; digit-copy; synonym lexicon; v9 writes; empty S TUNE; rare-commit filter smuggled into 0.5.5 | same |
+| Fail | After train, dirty S not PRESS; C life on dirty S loses A or misses TUNE; wipe-between still PRESS on A | Untrained PRESS; dirty S miss; split restored |
+| Store-works | Untrained HOLD; after never-wipe train A PRESS / C HOLD; C life on that S A PRESS / C TUNE; wipe-between A HOLD | Same without splitting the return |
+
+Do not restore per-episode train wipe, a motor name in W, or an English lexicon to rescue a plot.
 
 
