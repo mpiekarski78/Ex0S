@@ -356,3 +356,19 @@ v22 A had complete-vs-stub without `when=`. v22 B composed find+newest+use under
 
 Do not plant `when=` or restore split credit to rescue B.
 
+## TM.0.1.0 A open query names, B shared return
+
+First post-toy series. Drop the `{door, here}` match menu. Query names are keys that exist in W/S files. Features `{has_hit, key_common}` — no name id. Copy still `action=`. Cortex frozen. No `d0.tag`. No `here=`. No `when=`. Probe greedy.
+
+**A.** Split: found `action=2` in S / unmount probe. Useful unread page `{loc:0, action:2}`. Clutter is `{place, action}`.
+
+**B.** Same `make()`. One `r` = unmount probe correct, applied to qname and use.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; planted `when=` / `here=`; `d0` in W; empty-S green `wait` | same |
+| Fail | Untrained already `use_key`; green fails; `{door, here}` menu still solves; freeze-qname / use-off still `use_key` | Untrained already `use_key`; red stays `open`; last-50 ≈ 0 |
+| Store-works | Untrained `open`; red `use_key` from `loc=` page; green `wait`; menu / qname-off / use-off fail | Same without splitting the return |
+
+Do not restore `{door, here}` or plant `here=` to rescue a plot.
+

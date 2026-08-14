@@ -192,3 +192,7 @@ Many unread pages share `here=`. Collect’s filename-first `w_hits[0]` is the w
 
 **A** runs match + complete-vs-stub + use together with no `when=` and no clamps, under split credit. **Store-works**. Untrained `open`. Trained red `use_key` from `p99.tag` after unmount W; held-out green `wait`. Freeze-match `door=`, freeze-stub, and use-off all fail. **B** uses one shared return on the same stack. **Fail**. Last-50 0.00; `update()` never ran; red stayed `door=` junk. Same starvation as v16 B, now on unread W. Cortex unchanged. Details: [`v23_results.md`](v23_results.md).
 
+## TM.0.1.0 (open query names / shared return)
+
+Query keys come from files, not `{door, here}`. **A** split and **B** shared return both **Store-works**. Untrained queries `action=` and stays `open`. Trained red `use_key` from `p99.tag` `{loc:0, action:2}` after unmount W; held-out green `wait`. Restored match menu finds nothing. Use-off stays `open`. loc-is-wait stays `wait`. Two-head shared return worked here; it does not overturn v16/v23 starvation on larger joints. Cortex unchanged. Details: [`tm010_results.md`](tm010_results.md).
+

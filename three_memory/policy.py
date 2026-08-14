@@ -74,6 +74,9 @@ class UsePolicy:
         # Untrained: keep filename-first stub. Learn the page that has action=/do=.
         self.w_wcomp = rng.normal(0.0, 0.05, size=(self.n_feat,))
         self.b_wcomp = np.array(-1.2, dtype=np.float64)
+        # Untrained: among keys found in files, prefer any hit. Learn uncommon keys.
+        # Not a {door, here} menu: candidates are whatever keys the files have.
+        self.w_qname = np.array([1.2, 0.0], dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
@@ -107,6 +110,7 @@ class UsePolicy:
             np.asarray(self.b_wsel).reshape(1),
             self.w_wcomp,
             np.asarray(self.b_wcomp).reshape(1),
+            self.w_qname,
         )
 
     def weight_hash(self) -> str:
@@ -312,6 +316,40 @@ class UsePolicy:
             "feat": feat.tolist(),
         }
 
+    @staticmethod
+    def qname_features(has_hit: bool, key_common: bool) -> np.ndarray:
+        """Hit on this file-key at the current code? Key appears in many files? No name id, no door id."""
+        return np.array([1.0 if has_hit else 0.0, 1.0 if key_common else 0.0], dtype=np.float64)
+
+    def decide_qname(
+        self,
+        items: list[tuple[bool, bool]],
+        *,
+        epsilon: float = 0.0,
+        rng: np.random.Generator | None = None,
+    ) -> dict[str, Any]:
+        """Choose a query name among keys that exist in files. Untrained: any hit (first on ties)."""
+        rng = rng or np.random.default_rng()
+        if not items:
+            return {"kind": "qname", "idx": 0, "feats": [], "logp": 0.0, "feat": [0.0, 0.0]}
+        feats = np.stack([self.qname_features(h, c) for h, c in items], axis=0)
+        scores = feats @ self.w_qname
+        probs = softmax(scores)
+        if float(rng.random()) < epsilon:
+            idx = int(rng.integers(0, len(items)))
+        else:
+            idx = int(np.argmax(scores))
+        logp = float(np.log(probs[idx] + 1e-12))
+        return {
+            "kind": "qname",
+            "idx": idx,
+            "feats": feats.tolist(),
+            "feat": feats[idx].tolist(),
+            "has_hit": bool(items[idx][0]),
+            "key_common": bool(items[idx][1]),
+            "logp": logp,
+        }
+
     def decide_match(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
         """False: match door=. True: match here=."""
         p_alt = sigmoid(float(feat @ self.w_match + self.b_match))
@@ -395,6 +433,18 @@ class UsePolicy:
                 grad = -probs
                 grad[idx] += 1.0
                 self.w_rank += lr * (feats.T @ grad)
+                self.n_updates += 1
+                continue
+            if tr.get("kind") == "qname":
+                feats = np.asarray(tr.get("feats") or [tr["feat"]], dtype=np.float64)
+                if feats.size == 0:
+                    continue
+                scores = feats @ self.w_qname
+                probs = softmax(scores)
+                idx = int(tr["idx"])
+                grad = -probs
+                grad[idx] += 1.0
+                self.w_qname += lr * (feats.T @ grad)
                 self.n_updates += 1
                 continue
             feat = np.asarray(tr["feat"], dtype=np.float64)

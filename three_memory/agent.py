@@ -26,6 +26,9 @@ from .symbols import (
 )
 from .tag_store import TagLibrary
 
+# Bookkeeping tags, not a place-name menu. Query candidates are whatever else the files have.
+_QNAME_SKIP = frozenset({"source", "source_file", "when", "ok", "what"})
+
 
 class ThreeMemoryAgent:
     def __init__(
@@ -62,6 +65,7 @@ class ThreeMemoryAgent:
         use_wsel_head: bool = False,
         wsel_dump: bool = False,
         use_wcomp_head: bool = False,
+        use_qname_head: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -91,6 +95,10 @@ class ThreeMemoryAgent:
             raise ValueError("use_wsel_head requires use_policy")
         if use_wcomp_head and use_policy is None:
             raise ValueError("use_wcomp_head requires use_policy")
+        if use_qname_head and use_policy is None:
+            raise ValueError("use_qname_head requires use_policy")
+        if use_qname_head and use_match_head:
+            raise ValueError("use_qname_head cannot run with the {door, here} match menu")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if place_key not in ("door", "here"):
@@ -127,6 +135,7 @@ class ThreeMemoryAgent:
         self.use_wsel_head = use_wsel_head
         self.wsel_dump = wsel_dump
         self.use_wcomp_head = use_wcomp_head
+        self.use_qname_head = use_qname_head
         self._peek: list[FactRecord] = []
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
@@ -183,6 +192,7 @@ class ThreeMemoryAgent:
             use_wsel_head=self.use_wsel_head,
             wsel_dump=self.wsel_dump,
             use_wcomp_head=self.use_wcomp_head,
+            use_qname_head=self.use_qname_head,
         )
 
     def _obs_query(self, obs: Obs) -> dict[str, Any] | None:
@@ -197,6 +207,11 @@ class ThreeMemoryAgent:
         code = self._door_code(obs)
         if code is None:
             return None
+        if self.use_qname_head:
+            key = self.last_policy.get("qname")
+            if not key:
+                return None
+            return {str(key): code}
         key = self.place_key
         if self.use_match_head:
             key = "here" if bool(self.last_policy.get("match_alt")) else "door"
@@ -219,6 +234,42 @@ class ThreeMemoryAgent:
         if obs.at_green_door:
             return DOOR_GREEN
         return None
+
+    def _qname_pool(self) -> list:
+        if self.world is not None:
+            return list(self.world.records())
+        if self.store.enabled:
+            return list(self.store.records())
+        return []
+
+    def _query_keys(self, pool: list) -> list[str]:
+        keys: set[str] = set()
+        for rec in pool:
+            keys.update(k for k in rec.tags if k not in _QNAME_SKIP)
+        return sorted(keys)
+
+    def _choose_qname(self, obs: Obs, *, record: bool) -> None:
+        if not self.use_qname_head or self.use_policy is None:
+            return
+        code = self._door_code(obs)
+        pool = self._qname_pool()
+        keys = self._query_keys(pool)
+        if not keys or code is None:
+            self.last_policy = {k: v for k, v in self.last_policy.items() if k != "qname"}
+            return
+        items = []
+        for k in keys:
+            has_hit = any(r.tags.get(k) == code for r in pool)
+            key_common = sum(1 for r in pool if k in r.tags) >= 3
+            items.append((has_hit, key_common))
+        dec = self.use_policy.decide_qname(
+            items, epsilon=self.policy_epsilon, rng=self.policy_rng
+        )
+        dec["qname"] = keys[int(dec["idx"])]
+        dec["qnames"] = keys
+        self.last_policy = {**self.last_policy, **dec}
+        if record:
+            self.policy_traces.append(dec)
 
     def collect(self, obs: Obs, *, novelty: float = 0.0) -> dict[str, Any]:
         query = self._obs_query(obs)
@@ -396,8 +447,10 @@ class ThreeMemoryAgent:
 
     def _store_bias(self, obs: Obs, *, novelty: float = 0.0, record_use: bool = True) -> np.ndarray:
         """Retrieve facts and bias action logits. Knowledge lives in S, not ρ."""
-        # Match first so collect's W lookup uses this step's query name, not a stale one.
-        if self.use_match_head and self.use_policy is not None:
+        # Match / open-name first so collect's W lookup uses this step's query name, not a stale one.
+        if self.use_qname_head:
+            self._choose_qname(obs, record=record_use)
+        elif self.use_match_head and self.use_policy is not None:
             at = self._door_code(obs) is not None
             feat = UsePolicy.features(at, False)
             dec = self.use_policy.decide_match(feat, epsilon=self.policy_epsilon, rng=self.policy_rng)

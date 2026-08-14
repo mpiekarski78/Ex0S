@@ -58,6 +58,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v21 select among W hits | **Store-works** / **Store-works** (newest `when=` over filename-first or dump-all) |
 | three-memory, v22 complete vs stub / joint | **Store-works** / **Store-works** (payload over stub; find+pick+use together) |
 | three-memory, v23 joint wiki / shared return | **Store-works** / **Fail** (no `when=`; split credit load-bearing on unread W) |
+| three-memory, TM.0.1.0 open query names | **Store-works** / **Store-works** (keys from files; `{door, here}` off) |
 
 ## Honest limits
 
@@ -314,3 +315,15 @@ See [`v22_results.md`](v22_results.md).
 | Class | **Store-works** | **Fail** |
 
 See [`v23_results.md`](v23_results.md).
+
+## TM.0.1.0 (open query names / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| Untrained | `open` (query `action`) | `open` |
+| Trained red, unmount W | **`use_key`** (`loc=`) | **`use_key`** (`loc=`) |
+| Held-out green | **`wait`** | **`wait`** |
+| Train last 50 | 0.88 | 0.90 |
+| Class | **Store-works** | **Store-works** |
+
+See [`tm010_results.md`](tm010_results.md).
