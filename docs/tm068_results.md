@@ -55,7 +55,7 @@ A train note is only `p99`: `bind=push`, `did=press`, `argon` kept. C added `p98
 
 - Stream-first is still frozen grammar, not English syntax.
 - Tiny closed corpus, not Wikipedia.
-- Search is still `{has_code, has_rare}` after the novel-count filter. A clutter page with two hapax would compete with `p98`.
+- Search is still `{has_code, has_rare}` after the novel-count filter. A clutter page with two hapax would compete with `p98`. TM.0.6.9 did that (three body hapax, because `# p99`/`# p98` already add rare `p`); A Fail.
 - Split credit still teaches A to attend `push`; C life has no split `r_find` for `adjust`. Find-novel is frozen grammar, not that signal.
 - Shared return passing here does not rewrite earlier Fail slices.
 - Still five acts, innate names, `domain=`. Math is a later life.

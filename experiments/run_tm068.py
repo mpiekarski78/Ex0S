@@ -76,6 +76,8 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Fail", "Find-novel was frozen off."
     if not m.get("find_novel"):
         return "Fail", "Find-novel was frozen off."
+    if m.get("w_clutter_has_two_rare") or (m.get("w_n_two_rare_clutter") or 0) >= 1:
+        return "Confound", "Two-rare clutter was smuggled onto this slice."
     return None
 
 
@@ -87,6 +89,8 @@ def classify_a(m: dict[str, Any]) -> tuple[str, str]:
         return "Fail", "Find-novel was frozen off."
     if not m.get("find_novel"):
         return "Fail", "Find-novel was frozen off."
+    if m.get("w_clutter_has_two_rare") or (m.get("w_n_two_rare_clutter") or 0) >= 1:
+        return "Confound", "Two-rare clutter was smuggled onto this slice."
     if label == "Store-works":
         return (
             "Store-works",
@@ -101,6 +105,8 @@ def classify_b(m: dict[str, Any]) -> tuple[str, str]:
     m["use_find_novel"] = saved
     if not saved:
         return "Fail", "Find-novel was frozen off."
+    if m.get("w_clutter_has_two_rare") or (m.get("w_n_two_rare_clutter") or 0) >= 1:
+        return "Confound", "Two-rare clutter was smuggled onto this slice."
     if (m.get("train_s", {}).get("n") or 0) > MAX_TRAIN_S_FILES:
         return "Fail", "Shared return train S is still stamp-collecting clutter."
     if label == "Store-works":

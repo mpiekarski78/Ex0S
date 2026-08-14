@@ -300,3 +300,7 @@ A new station stamps the attended rare page, not the first leftover rare in W. *
 
 Search keeps unread pages with the most rare tokens S lacks, and attends that page without stamp-collecting leftover hapax. **A** **Store-works**: train S `bind=push`; C life `bind=adjust`. **B** **Store-works** on this slice (n=1, last-50 0.94); not the jump, not retuned. Details: [`tm068_results.md`](tm068_results.md).
 
+## TM.0.6.9 (find-novel without unique two-rare / shared return)
+
+Same find-novel recipe, but several clutter pages also match the novel-count of `p99`/`p98`. **A** **Fail**: train S `bind=neon` on `c09`; C life `bind=xenon` on `c08`. **B** **Store-works** on the motor bar (n=1, last-50 0.92); not the jump, not retuned. Details: [`tm069_results.md`](tm069_results.md).
+

@@ -14,7 +14,7 @@ Jumps must get closer to a machine that **could in theory** learn from wiki / En
 |-------|------------------------------------------------------|-----------------------------|
 | How to learn | Find unread data, commit, use after ρ reset — without planted answer integers, a door table, or an English lexicon | — |
 | How to correct | Detect mismatch, revise S (mark/overwrite/drop), retry, keep the correction after ρ reset | — |
-| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first (TM.0.6.0); one bind against a distractor hapax (TM.0.6.1); never-wipe English (TM.0.6.2); new-here stamp (TM.0.6.3); English find without a unique rare token (TM.0.6.4); concurrent bind / block extra hapax here (TM.0.6.5); correct the dirty English store (TM.0.6.6); in-hand new-here (TM.0.6.7); find-novel unread rares vs S (TM.0.6.8) |
+| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first (TM.0.6.0); one bind against a distractor hapax (TM.0.6.1); never-wipe English (TM.0.6.2); new-here stamp (TM.0.6.3); English find without a unique rare token (TM.0.6.4); concurrent bind / block extra hapax here (TM.0.6.5); correct the dirty English store (TM.0.6.6); in-hand new-here (TM.0.6.7); find-novel unread rares vs S (TM.0.6.8); find-novel without a unique two-rare pair (TM.0.6.9) |
 | Learn math | Not a calculator in cortex | A later life after some language is already in S |
 
 Four recipe skills, in order: **find / commit / use / correct**. English and math are lives that use those skills. Dumping wiki + algebra into one experiment is illegal.
@@ -34,7 +34,7 @@ Order of recipe jumps (English is a life that uses the skills, not a lexicon in 
 7. No `domain=` switch.
 8. Accumulate S (stop wiping every episode). TM.0.5.5 eval path; TM.0.5.6 never-wipe train.
 9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works (TM.0.5.1). TM.0.5.9: correct the dirty never-wipe store (stop appending once S names here; drop unstamped pages after a real stamp). TM.0.6.6: same correct flags on the English concurrent-bind store.
-10. English life, tiny corpus (TM.0.6.0). One bind per note against a distractor hapax (TM.0.6.1). Never-wipe English on that recipe (TM.0.6.2). New-here stamp so a second station gets an unmarked page (TM.0.6.3). English find without a unique rare token (TM.0.6.4). Concurrent bind: stamp the page in play, block extra hapax at this station (TM.0.6.5). Correct the dirty English store (TM.0.6.6). In-hand new-here: a new station stamps the attended rare page, not the first leftover rare in W (TM.0.6.7). Find-novel: search keeps unread pages that add the most rare tokens S lacks (TM.0.6.8). Then more language in S, then a math life.
+10. English life, tiny corpus (TM.0.6.0). One bind per note against a distractor hapax (TM.0.6.1). Never-wipe English on that recipe (TM.0.6.2). New-here stamp so a second station gets an unmarked page (TM.0.6.3). English find without a unique rare token (TM.0.6.4). Concurrent bind: stamp the page in play, block extra hapax at this station (TM.0.6.5). Correct the dirty English store (TM.0.6.6). In-hand new-here: a new station stamps the attended rare page, not the first leftover rare in W (TM.0.6.7). Find-novel: search keeps unread pages that add the most rare tokens S lacks (TM.0.6.8). Find-novel without a unique two-rare pair: several clutter pages also match that novel count (TM.0.6.9). Then more language in S, then a math life.
 
 Do not restore digit-copy, filed `action=`/`where=`, the door toy, or a synonym lexicon to rescue a plot.
 
@@ -820,10 +820,26 @@ Recipe: search keeps unread pages that would add the **most rare tokens S does n
 
 | ID | A | B |
 |----|---|----|
-| Confound | Cortex moves; unique-rare restored; synonym table in the agent; drop `has_code`; drop `domain=`; argon as clutter hapax; leftover walk kept; n_train raised | same |
+| Confound | Cortex moves; unique-rare restored; synonym table in the agent; drop `has_code`; drop `domain=`; argon as clutter hapax; leftover walk kept; two-rare clutter smuggled; n_train raised | same |
 | Fail | Untrained PRESS; train S not PRESS; train S still stamp-collecting; C life loses A or misses TUNE; wipe-between still PRESS; bind=clutter hapax; nonce PRESS | Untrained PRESS; A miss; C miss; n too large; nonce PRESS |
 | Store-works | Multi-rare English W; small never-wipe S; train A PRESS from `push`; C life A PRESS / C TUNE from `adjust`; wipe-between A HOLD; nonce HOLD | Same without splitting the return |
 
 Do not restore leftover hapax commits, a unique-rare needle, or a `push` table in the agent to rescue a plot.
+
+## TM.0.6.9 A find-novel without unique two-rare, B shared return
+
+Recipe: same find-novel + in-hand English store as TM.0.6.8, but several late clutter pages also have enough hapax to match the novel-count of `p99`/`p98` (`# p99`/`# p98` tokenize to rare `p`, so two body hapax still lose). Not a filename ranker. Not unique-rare restored. Find-novel is **off by default**. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. Not math. Do not retune `n_train`. Do not rank `p98`.
+
+**A.** Split: search rare / write one bind / copy the bound word / probe A correct. Never wipe train S. Train S must be small. Bind must be `push`, not a clutter hapax. C life on that S must TUNE from `adjust`.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|----|
+| Confound | Cortex moves; unique two-rare pair restored; synonym table in the agent; drop `has_code`; drop `domain=`; argon as clutter hapax; leftover walk kept; n_train raised | same |
+| Fail | Untrained PRESS; train S not PRESS; train S still stamp-collecting; C life loses A or misses TUNE; wipe-between still PRESS; bind=clutter hapax; nonce PRESS | Untrained PRESS; A miss; C miss; n too large; nonce PRESS |
+| Store-works | Multi-rare English W with two-rare clutter; small never-wipe S; train A PRESS from `push`; C life A PRESS / C TUNE from `adjust`; wipe-between A HOLD; nonce HOLD | Same without splitting the return |
+
+Do not restore a unique two-rare pair, a unique-rare needle, or a `push` table in the agent to rescue a plot.
 
 
