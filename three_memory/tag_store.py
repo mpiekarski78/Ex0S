@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 from typing import Any
 
@@ -200,3 +201,101 @@ def write_doc_notes(root: Path, notes: list[tuple[str, str, dict[str, Any]]]) ->
         for k, v in sorted(tags.items()):
             lines.append(f"{k}={v}")
         (root / name).write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+_INT_RE = re.compile(r"(?<![A-Za-z])-?\d+(?![A-Za-z])")
+_WORD_RE = re.compile(r"[A-Za-z]+")
+# Filed k=v names that would smuggle the answer as tags (not prose).
+_FILED_KEYS = frozenset(
+    {"where", "action", "loc", "door", "here", "act", "do", "when", "pad", "place", "ok"}
+)
+
+
+def extract_prose_ints(text: str) -> list[int]:
+    """Genome digit scan: integers in text, not English understanding."""
+    out: list[int] = []
+    for m in _INT_RE.finditer(text):
+        try:
+            out.append(int(m.group(0)))
+        except ValueError:
+            continue
+    return out
+
+
+def prose_tokens(text: str) -> set[str]:
+    return {w.lower() for w in _WORD_RE.findall(text)}
+
+
+def prose_to_record(path: Path, when: int = 0) -> FactRecord | None:
+    """Load a .md page as prose. Digits become anonymous n0,n1,… tags. No filed where=/action=."""
+    text = path.read_text(encoding="utf-8")
+    for ln in text.splitlines():
+        s = ln.strip()
+        if "=" not in s or s.startswith("#"):
+            continue
+        key = s.split("=", 1)[0].strip().lower()
+        if key in _FILED_KEYS:
+            # Filed motor/place tags — not a prose page.
+            return None
+    fact_id, _ = parse_tagfile(text)
+    if fact_id == "x":
+        fact_id = path.stem
+    # Digits in the # heading (e.g. p99) are filenames, not world content.
+    body_lines = []
+    for ln in text.splitlines():
+        if ln.strip().startswith("#") and not body_lines:
+            continue
+        body_lines.append(ln)
+    body = "\n".join(body_lines)
+    ints = extract_prose_ints(body)
+    if not ints:
+        return None
+    tags: dict[str, Any] = {f"n{i}": v for i, v in enumerate(ints)}
+    tags["source_file"] = str(path)
+    return FactRecord(
+        fact_id=fact_id,
+        what=text,
+        when=when,
+        drive_scores={},
+        tags=tags,
+    )
+
+
+def write_prose_notes(root: Path, notes: list[tuple[str, str]]) -> None:
+    """Write unread prose .md pages: (filename, body). No k=v motor fields."""
+    root.mkdir(parents=True, exist_ok=True)
+    for name, body in notes:
+        fid = Path(name).stem
+        body = body if body.endswith("\n") else body + "\n"
+        (root / name).write_text(f"# {fid}\n\n{body}", encoding="utf-8")
+
+
+class ProseLibrary:
+    """Unread W: pure prose .md pages. Digits scanned into anonymous n* tags."""
+
+    def __init__(self, root: Path | str, enabled: bool = True):
+        self.root = Path(root)
+        self.enabled = enabled
+
+    def list_files(self) -> list[str]:
+        if not self.enabled or not self.root.is_dir():
+            return []
+        return [p.name for p in sorted(self.root.glob("*.md"))]
+
+    def records(self) -> list[FactRecord]:
+        if not self.enabled or not self.root.is_dir():
+            return []
+        out: list[FactRecord] = []
+        for path in sorted(self.root.glob("*.md")):
+            rec = prose_to_record(path)
+            if rec is not None:
+                rec.tags["source"] = "W"
+                out.append(rec)
+        return out
+
+    def match(self, query_tags: dict[str, Any]) -> list[FactRecord]:
+        hits = []
+        for r in self.records():
+            if all(r.tags.get(k) == v for k, v in query_tags.items()):
+                hits.append(r)
+        return hits

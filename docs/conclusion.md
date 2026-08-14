@@ -216,3 +216,7 @@ Free life find/commit (not probe→unmount→probe train). **A** **Store-works**
 
 Free life over unread `.md` documents (prose + embedded `k=v`). **A** **Store-works**: commits from `p99.md`; after ρ reset W gone → `use_key`; held-out green `wait`. **B** **Fail**: shared return last-50 0. Cortex unchanged. Not English NLP. Details: [`tm031_results.md`](tm031_results.md).
 
+## TM.0.3.2 (prose retrieve / shared return)
+
+Pure prose `.md` (no filed `action=` / `where=`). Digits → anonymous `n*`; vname picks the motor int. **A** **Store-works**; **B** **Fail** (shared return last-50 0). Cortex unchanged. Digit scan is not English. Details: [`tm032_results.md`](tm032_results.md).
+

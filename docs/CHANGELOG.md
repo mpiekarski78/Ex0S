@@ -37,3 +37,4 @@
 - TM.0.2.0: scale of W — 256 messy unread files; same `{has_code, has_rare}`. A split and B shared return both **Store-works**. [`docs/tm020_results.md`](tm020_results.md).
 - TM.0.3.0: a life — free life find/commit; probe after ρ reset with W gone. A **Store-works**; B shared return **Fail** (last-50 0). [`docs/tm030_results.md`](tm030_results.md).
 - TM.0.3.1: documents — free life over unread `.md` W (prose + embedded `k=v`). A **Store-works**; B shared return **Fail**. [`docs/tm031_results.md`](tm031_results.md).
+- TM.0.3.2: prose retrieve — no filed `action=`/`where=`; digit scan → anonymous `n*`; vname picks motor int. A **Store-works**; B shared return **Fail**. Audit: heading digits excluded. [`docs/tm032_results.md`](tm032_results.md).

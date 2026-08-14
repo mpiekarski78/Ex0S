@@ -452,3 +452,19 @@ Same free life as TM.0.3.0. W is `.md` documents with prose + embedded `k=v` (no
 
 Do not restore `.tag` W, NOTE-copy, or exact match to rescue a plot.
 
+## TM.0.3.2 A prose retrieve free life, B shared return
+
+Same free life. W is pure prose `.md` with **no** filed `where=` / `action=` / `loc=` / `door=` / `here=`. Digits → anonymous `n*`. Vname picks which int to copy (`is_code` vs not). Cortex frozen. No NOTE-copy. `n_forced=0`.
+
+**A.** Split: found door+motor ints in S during life / probe after reset.
+
+**B.** Same `make()`. One `r` = probe correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; filed motor/place tags in W; `.tag` in W; `d0` in W; writes from life; forced curriculum | same |
+| Fail | Untrained probe already `use_key`; green fails; exact match still solves; freeze search/vname/use still `use_key` | Untrained already `use_key`; red stays `open`; last-50 ≈ 0 |
+| Store-works | Untrained probe `open`; free red commits prose ints; after reset W gone → `use_key`; green `wait`; S has `n*` not `action=` | Same without splitting the return |
+
+Do not restore filed `action=` / `where=` or NOTE-copy to rescue a plot.
+

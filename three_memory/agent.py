@@ -24,7 +24,7 @@ from .symbols import (
     REQ_KEY,
     encode_tags,
 )
-from .tag_store import DocLibrary, TagLibrary
+from .tag_store import DocLibrary, ProseLibrary, TagLibrary, prose_tokens
 
 # Bookkeeping tags, not a place-name menu. Query candidates are whatever else the files have.
 _QNAME_SKIP = frozenset({"source", "source_file", "when", "ok", "what"})
@@ -42,7 +42,7 @@ class ThreeMemoryAgent:
         retrieve_policy: str = "select",
         collect_mode: str = "off",
         store: WorldStore | None = None,
-        world: TagLibrary | DocLibrary | None = None,
+        world: TagLibrary | DocLibrary | ProseLibrary | None = None,
         use_policy: UsePolicy | None = None,
         write_from_events: bool = True,
         policy_epsilon: float = 0.0,
@@ -69,6 +69,7 @@ class ThreeMemoryAgent:
         use_vname_head: bool = False,
         use_search_head: bool = False,
         record_search_on_explore: bool = False,
+        use_prose_ints: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -110,6 +111,10 @@ class ThreeMemoryAgent:
             raise ValueError("use_search_head requires use_policy")
         if use_search_head and (use_match_head or use_qname_head):
             raise ValueError("use_search_head cannot run with exact query match")
+        if use_prose_ints and use_policy is None:
+            raise ValueError("use_prose_ints requires use_policy")
+        if use_prose_ints and not (use_search_head and use_vname_head and use_read):
+            raise ValueError("use_prose_ints requires search + vname + use_read")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -151,6 +156,8 @@ class ThreeMemoryAgent:
         self.use_search_head = use_search_head
         # Free life: motor explores, but search commits must still leave learnable traces.
         self.record_search_on_explore = record_search_on_explore
+        # Prose pages: digits → anonymous n* tags; vname picks among values, not filed action=.
+        self.use_prose_ints = use_prose_ints
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self.last_policy: dict[str, Any] = {}
@@ -212,6 +219,7 @@ class ThreeMemoryAgent:
             use_vname_head=self.use_vname_head,
             use_search_head=self.use_search_head,
             record_search_on_explore=self.record_search_on_explore,
+            use_prose_ints=self.use_prose_ints,
         )
 
     def _obs_query(self, obs: Obs) -> dict[str, Any] | None:
@@ -336,8 +344,9 @@ class ThreeMemoryAgent:
         code = self._door_code(obs)
         if code is None:
             return []
+        pool_words = [prose_tokens(getattr(o, "what", "") or "") for o in pool]
         items = []
-        for rec in pool:
+        for i, rec in enumerate(pool):
             ints = [int(v) for v in self._tag_vals(rec) if isinstance(v, (int, np.integer))]
             has_code = code in ints
             has_rare = any(
@@ -345,6 +354,9 @@ class ThreeMemoryAgent:
                 for k in rec.tags
                 if k not in _QNAME_SKIP
             )
+            if self.use_prose_ints and not has_rare:
+                words = pool_words[i]
+                has_rare = any(sum(1 for ws in pool_words if w in ws) < 3 for w in words)
             items.append((has_code, has_rare))
         dec = self.use_policy.decide_search(
             items, epsilon=self.policy_epsilon, rng=self.policy_rng
@@ -497,18 +509,49 @@ class ThreeMemoryAgent:
         qkey = next(iter(q)) if q else ""
         pool = self._qname_pool()
         keys = sorted({k for r in recs for k in r.tags if k not in _QNAME_SKIP})
+        if self.use_prose_ints:
+            keys = [
+                k
+                for k in keys
+                if any(
+                    isinstance(r.tags.get(k), (int, np.integer))
+                    and 0 <= int(r.tags[k]) < 4
+                    for r in recs
+                )
+            ]
         if not keys:
             return
         items = []
+        code = self._door_code(obs)
         for k in keys:
-            is_query = k == qkey
-            key_common = sum(1 for r in pool if k in r.tags) >= 3
-            items.append((is_query, key_common))
+            if self.use_prose_ints:
+                val = next((r.tags.get(k) for r in recs if k in r.tags), None)
+                is_code = code is not None and val == code
+                val_common = (
+                    sum(
+                        1
+                        for r in pool
+                        if any(
+                            r.tags.get(kk) == val
+                            for kk in r.tags
+                            if kk not in _QNAME_SKIP
+                        )
+                    )
+                    >= 3
+                )
+                items.append((is_code, val_common))
+            else:
+                is_query = k == qkey
+                key_common = sum(1 for r in pool if k in r.tags) >= 3
+                items.append((is_query, key_common))
         dec = self.use_policy.decide_vname(
             items, epsilon=self.policy_epsilon, rng=self.policy_rng
         )
         dec["vname"] = keys[int(dec["idx"])]
         dec["vnames"] = keys
+        if self.use_prose_ints:
+            dec["is_code"] = bool(items[int(dec["idx"])][0])
+            dec["val_common"] = bool(items[int(dec["idx"])][1])
         self.last_policy = {**self.last_policy, **dec}
         if record:
             self.policy_traces.append(dec)
