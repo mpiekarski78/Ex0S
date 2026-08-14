@@ -340,3 +340,19 @@ v21 used planted `when=`. v22 A removes it. v22 B removes v20/v21 clamps.
 
 Do not plant `when=` on A or freeze `here=` / `force_use` on B to rescue a plot.
 
+## v23 A joint find+complete+use, B shared return
+
+v22 A had complete-vs-stub without `when=`. v22 B composed find+newest+use under split credit (still used planted recency). v23 puts find + complete + use on the same unread W, no `when=`, and asks if split credit is load-bearing.
+
+**A.** Split: found `here=` / kept `action=2` / unmount probe. W: stub `{here:0}`, complete `{here:0, action:2}`, `door=` junk. Match learns `here=`. No `force_use`.
+
+**B.** Same `make()`. One `r` = unmount probe correct, applied to match, wcomp, and use.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; planted `when=`; `d0` in W; empty-S green `wait` | same |
+| Fail | Untrained already `use_key`; green fails; freeze-match / stub / use-off still `use_key` | Untrained already `use_key`; red stays `open`; last-50 ≈ 0 |
+| Store-works | Untrained `open`; red complete `here=` `use_key`; green `wait`; three freeze-offs fail | Same joint as A without splitting the return |
+
+Do not plant `when=` or restore split credit to rescue B.
+

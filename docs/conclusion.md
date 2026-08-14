@@ -188,3 +188,7 @@ Many unread pages share `here=`. Collect’s filename-first `w_hits[0]` is the w
 
 **A** drops planted recency. A stub `{here:0}` sorts first; the useful page has `action=`. **B** runs match + newest-pick + use-gate together with no clamps. Both **Store-works**. Untrained `open`. Trained red `use_key` after unmount W; held-out green `wait`. A’s complete-is-junk and stub-only controls fail; B’s `door=` / first-file / use-off controls fail. Cortex unchanged. Details: [`v22_results.md`](v22_results.md).
 
+## v23 (joint find+complete+use / shared return)
+
+**A** runs match + complete-vs-stub + use together with no `when=` and no clamps, under split credit. **Store-works**. Untrained `open`. Trained red `use_key` from `p99.tag` after unmount W; held-out green `wait`. Freeze-match `door=`, freeze-stub, and use-off all fail. **B** uses one shared return on the same stack. **Fail**. Last-50 0.00; `update()` never ran; red stayed `door=` junk. Same starvation as v16 B, now on unread W. Cortex unchanged. Details: [`v23_results.md`](v23_results.md).
+
