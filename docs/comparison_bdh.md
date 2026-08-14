@@ -68,6 +68,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.4.0 channel dial | **Store-works** / **Fail** (left door world; C TUNE; shared return clutter) |
 | three-memory, TM.0.5.0 no answer integers | **Store-works** / **Fail** (no digits in W; innate name token; shared return starves) |
 | three-memory, TM.0.5.1 correct | **Store-works** / **Fail** (drop junk S; shared return never revises) |
+| three-memory, TM.0.5.2 unnamed motor | **Store-works** / **Fail** (no motor name in W; stamp from the event; shared return starves) |
 
 ## Honest limits
 
@@ -450,4 +451,17 @@ See [`tm050_results.md`](tm050_results.md).
 | Class | **Store-works** | **Fail** |
 
 See [`tm051_results.md`](tm051_results.md).
+
+## TM.0.5.2 (unnamed motor / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| W motor names | none | none |
+| Free A stamp | yes (`w7=press`) | no (clutter) |
+| After ρ reset, W gone | **`press`** | `hold` |
+| Held-out C | **`tune`** | `hold` |
+| Train last 50 | 0.36 | 0.00 |
+| Class | **Store-works** | **Fail** |
+
+See [`tm052_results.md`](tm052_results.md).
 

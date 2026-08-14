@@ -26,7 +26,7 @@ Four recipe skills, in order: **find / commit / use / correct**. English and mat
 Order of remaining recipe jumps (do not skip ahead to an English life):
 
 1. No answer integers in W (TM.0.5.0).
-2. Use the committed file as text (not int→motor). TM.0.5.0 is the first slice: copy an **innate motor name** mentioned in the page — closed body vocabulary, not English NLP.
+2. Use the committed file as text (not int→motor). TM.0.5.0: copy an **innate motor name** mentioned in the page. TM.0.5.2: the page does **not** name the motor; stamp the act the body just did onto a rare committed note. Closed body vocabulary, not English NLP.
 3. Search without `has_code` (side-effect of 1 if pages have no place ints; keep it load-bearing).
 4. Probe is use-the-fact, not only pick-a-motor.
 5. Open W (wiki-shaped content).
@@ -551,4 +551,20 @@ Recipe: detect fail, drop junk S, blacklist that W page, retry, keep after ρ re
 | Store-works | Untrained HOLD, n_revised=0; eval life revises ≥1, drops clutter, commits `press`; after ρ reset W gone → PRESS; C TUNE; revise-off HOLD | Same without splitting the return |
 
 Do not restore trained search, answer integers, or “always delete on fail including motor-name notes” to rescue a plot.
+
+## TM.0.5.2 A unnamed motor, B shared return
+
+Recipe jump 2, second slice: unread W has **no** innate motor name and **no** digits. Useful page is a rare-word scrap. On a real success, stamp the body’s act name onto a rare committed note (extra `w*` token). Copy that name after ρ reset. Channel dial. Species prior HOLD. Cortex frozen. `n_forced=0`. v9 writes from life off. Digit-copy off. Revise off (isolate this jump). Search trained (unlike TM.0.5.1).
+
+**A.** Split: find rare page / stamp the act / probe after reset.
+
+**B.** Same `make()`. One `r` = probe correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; motor name still in W; door world; body digits; filed tags; `.tag` W; digit-copy; synonym lexicon; v9 `write_from_events`; forced curriculum; empty S TUNE on C | same |
+| Fail | Untrained already PRESS or already stamps; A life misses stamp; after reset not PRESS; C not TUNE; annotate-off / clutter-only still PRESS | Untrained PRESS; A/C miss; empty S solves A; split restored |
+| Store-works | Untrained HOLD; free A commits krypton and stamps `press`; after reset W gone → PRESS; C TUNE from stamped `tune` | Same without splitting the return |
+
+Do not restore a motor name in W, digit-copy, filed `action=`, or a PRESS/TUNE lexicon beyond innate act names to rescue a plot.
 

@@ -232,3 +232,7 @@ Unread W has no place/motor digits. Copy an innate motor name token (`press` / `
 
 Detect fail, drop clutter in S, retry, keep after ρ reset. Search frozen untrained. **A** **Store-works**: n_revised=11, then `p99` / PRESS; held-out C TUNE. Revise-off stays HOLD. **B** **Fail**: last-50 0, never revises. Details: [`tm051_results.md`](tm051_results.md).
 
+## TM.0.5.2 (unnamed motor / shared return)
+
+Unread W has no motor name. Stamp the act the body just did onto a rare committed note. **A** **Store-works**: after ρ reset W gone → PRESS from `w7=press`; held-out C TUNE from stamped `tune`. **B** **Fail**: shared return last-50 0. Not English NLP. Details: [`tm052_results.md`](tm052_results.md).
+

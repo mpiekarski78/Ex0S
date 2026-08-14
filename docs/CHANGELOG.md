@@ -41,3 +41,4 @@
 - TM.0.4.0: leave the door world — `ChannelDialWorld` + prose free life. A **Store-works** (PRESS / held-out TUNE); B shared return **Fail** (clutter PRESS, C miss). [`docs/tm040_results.md`](tm040_results.md).
 - TM.0.5.0: no answer integers — copy innate motor name token, not digits. A **Store-works**; B shared return **Fail** (last-50 0). Developmental rule locked (how to learn / correct; English then math as lives). [`docs/tm050_results.md`](tm050_results.md).
 - TM.0.5.1: correct a wrong commit — drop junk S, retry, keep after ρ reset. Search frozen so correction is load-bearing. A **Store-works**; B shared return **Fail**. [`docs/tm051_results.md`](tm051_results.md).
+- TM.0.5.2: unread W does not name the motor — stamp the act from the event onto a rare committed note. A **Store-works**; B shared return **Fail**. [`docs/tm052_results.md`](tm052_results.md).

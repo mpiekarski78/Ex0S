@@ -73,6 +73,7 @@ class ThreeMemoryAgent:
         use_prose_ints: bool = False,
         use_prose_tokens: bool = False,
         use_revise_head: bool = False,
+        use_event_annotate: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -129,6 +130,12 @@ class ThreeMemoryAgent:
             raise ValueError("use_prose_ints and use_prose_tokens cannot run together")
         if use_revise_head and use_policy is None:
             raise ValueError("use_revise_head requires use_policy")
+        if use_event_annotate and use_policy is None:
+            raise ValueError("use_event_annotate requires use_policy")
+        if use_event_annotate and write_from_events:
+            raise ValueError("use_event_annotate cannot run with write_from_events")
+        if use_event_annotate and not (use_search_head and use_vname_head and use_read and use_prose_tokens):
+            raise ValueError("use_event_annotate requires search + vname + use_read + use_prose_tokens")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -179,10 +186,12 @@ class ThreeMemoryAgent:
         # Prose pages with no answer ints: words → w* tags; vname picks a token, not n*.
         self.use_prose_tokens = use_prose_tokens
         self.use_revise_head = use_revise_head
+        self.use_event_annotate = use_event_annotate
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._w_skip: set[str] = set()
         self.n_revised = 0
+        self.n_annotated = 0
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
         self._weight_hash0 = self.cortex.weight_hash()
@@ -246,6 +255,7 @@ class ThreeMemoryAgent:
             use_prose_ints=self.use_prose_ints,
             use_prose_tokens=self.use_prose_tokens,
             use_revise_head=self.use_revise_head,
+            use_event_annotate=self.use_event_annotate,
             domain=self.domain,
         )
 
@@ -467,6 +477,10 @@ class ThreeMemoryAgent:
     def _commit_w_record(self, rec: FactRecord) -> bool:
         if rec.fact_id in self._w_skip:
             return False
+        if self.use_event_annotate:
+            # Do not replace a committed note with the unread original (would wipe did=).
+            if any(r.fact_id == rec.fact_id for r in self.store.records()):
+                return False
         copied = FactRecord(
             fact_id=rec.fact_id,
             what=rec.what,
@@ -591,6 +605,58 @@ class ThreeMemoryAgent:
         if self.store.delete(fid):
             self._w_skip.add(fid)
             self.n_revised += 1
+
+    def _rec_words(self, rec) -> set[str]:
+        words = {
+            str(v).lower()
+            for k, v in rec.tags.items()
+            if str(k).startswith("w") and isinstance(v, str)
+        }
+        if not words and getattr(rec, "what", ""):
+            words = prose_tokens(rec.what)
+        return words
+
+    def _is_rare_in_world(self, rec) -> bool:
+        if self.world is None:
+            return False
+        pool = list(self.world.records())
+        pool_words = [prose_tokens(getattr(o, "what", "") or "") for o in pool]
+        words = self._rec_words(rec)
+        return any(sum(1 for ws in pool_words if w in ws) < 3 for w in words)
+
+    def _maybe_annotate(self, action_name: str) -> None:
+        """Write the act the body just did onto a rare committed note. Not from W.
+
+        Stamp the distinctive file already in S, not whichever page search glanced
+        at on the success step.
+        """
+        if self.use_policy is None or not self.store.enabled:
+            return
+        if action_name not in self._act_names():
+            return
+        recs = list(self.store.records())
+        if not recs:
+            return
+        rare_recs = [r for r in recs if self._is_rare_in_world(r)]
+        rare = bool(rare_recs)
+        feat = UsePolicy.features(rare, True)
+        do_write = self.force_write
+        if not do_write:
+            dec = self.use_policy.decide_write(
+                feat, epsilon=self.policy_epsilon, rng=self.policy_rng
+            )
+            self.last_policy = {**self.last_policy, **dec}
+            self.policy_traces.append(dec)
+            do_write = bool(dec["write"])
+        if not do_write or not rare:
+            return
+        rec = rare_recs[0]
+        if any(isinstance(v, str) and str(v).lower() == action_name for v in rec.tags.values()):
+            return
+        n = sum(1 for k in rec.tags if str(k).startswith("w"))
+        rec.tags[f"w{n}"] = action_name
+        if self.store.write(rec):
+            self.n_annotated += 1
 
     def _choose_vname(self, recs: list, obs: Obs, *, record: bool) -> None:
         if not self.use_vname_head or self.use_policy is None:
@@ -771,6 +837,10 @@ class ThreeMemoryAgent:
             if record_use:
                 self.policy_traces.append(dec)
             apply = bool(dec["use"])
+            if self.use_event_annotate and bool(self.last_policy.get("is_act")):
+                # Selected innate act name: copy is frozen grammar. A non-act token
+                # does not bias the motor, so untrained (common word) stays HOLD.
+                apply = True
         if apply:
             for rec in chosen:
                 self._apply_record_bias(logits, rec, obs)
@@ -896,6 +966,9 @@ class ThreeMemoryAgent:
 
         if self.use_revise_head and success is False:
             self._maybe_revise(failed=True)
+
+        if self.use_event_annotate and opened and action_name:
+            self._maybe_annotate(str(action_name).lower())
 
         if self.use_policy is not None and self.write_from_events:
             # v9: frozen WHAT = {here, the act that opened}. Learned WHEN.
