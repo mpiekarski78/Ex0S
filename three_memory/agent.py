@@ -61,6 +61,7 @@ class ThreeMemoryAgent:
         use_wplace_head: bool = False,
         use_wsel_head: bool = False,
         wsel_dump: bool = False,
+        use_wcomp_head: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -88,6 +89,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_wplace_head requires use_policy")
         if use_wsel_head and use_policy is None:
             raise ValueError("use_wsel_head requires use_policy")
+        if use_wcomp_head and use_policy is None:
+            raise ValueError("use_wcomp_head requires use_policy")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if place_key not in ("door", "here"):
@@ -123,6 +126,7 @@ class ThreeMemoryAgent:
         self.use_wplace_head = use_wplace_head
         self.use_wsel_head = use_wsel_head
         self.wsel_dump = wsel_dump
+        self.use_wcomp_head = use_wcomp_head
         self._peek: list[FactRecord] = []
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
@@ -178,6 +182,7 @@ class ThreeMemoryAgent:
             use_wplace_head=self.use_wplace_head,
             use_wsel_head=self.use_wsel_head,
             wsel_dump=self.wsel_dump,
+            use_wcomp_head=self.use_wcomp_head,
         )
 
     def _obs_query(self, obs: Obs) -> dict[str, Any] | None:
@@ -250,10 +255,29 @@ class ThreeMemoryAgent:
             self._peek = list(picks)
         return info
 
+    @staticmethod
+    def _has_payload(rec: FactRecord) -> bool:
+        return "action" in rec.tags or "do" in rec.tags
+
     def _wsel_picks(self, w_hits: list) -> list:
-        """Which unread W hits to take. Untrained: first file, or all if dump. Alt: newest when=."""
+        """Which unread W hits to take. Untrained: first file, or all if dump.
+
+        wcomp alt: first hit with action=/do=. wsel alt: newest when=.
+        """
         if not w_hits:
             return []
+        if self.use_wcomp_head and self.use_policy is not None:
+            any_payload = any(self._has_payload(r) for r in w_hits)
+            feat = UsePolicy.wcomp_features(any_payload, len(w_hits))
+            dec = self.use_policy.decide_wcomp(
+                feat, epsilon=self.policy_epsilon, rng=self.policy_rng
+            )
+            self.last_policy = {**self.last_policy, **dec}
+            self.policy_traces.append(dec)
+            if dec["wcomp_alt"]:
+                complete = [r for r in w_hits if self._has_payload(r)]
+                return [complete[0]] if complete else [w_hits[0]]
+            return [w_hits[0]]
         if not self.use_wsel_head or self.use_policy is None:
             return [w_hits[0]]
         feat = UsePolicy.pick_features(len(w_hits))

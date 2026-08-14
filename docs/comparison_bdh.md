@@ -56,6 +56,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v19 shared name | **Store-works** / **Store-works** (write and read learn a convention) |
 | three-memory, v20 find in W | **Store-works** / **Store-works** (query `here=`; unread `p99.tag`; junk on `door=` does not leak `use_key`) |
 | three-memory, v21 select among W hits | **Store-works** / **Store-works** (newest `when=` over filename-first or dump-all) |
+| three-memory, v22 complete vs stub / joint | **Store-works** / **Store-works** (payload over stub; find+pick+use together) |
 
 ## Honest limits
 
@@ -288,3 +289,15 @@ See [`v20_results.md`](v20_results.md).
 | Class | **Store-works** | **Store-works** |
 
 See [`v21_results.md`](v21_results.md).
+
+## v22 (complete vs stub / joint no clamps)
+
+| Check | A complete vs stub | B joint |
+|-------|--------------------|---------|
+| Untrained | `open` (stub) | `open` |
+| Trained red, unmount W | **`use_key`** (no `when=`) | **`use_key`** |
+| Held-out green | **`wait`** | **`wait`** |
+| Controls | stub-only `open`; complete-junk `wait` | `door=` `wait`; first `wait`; use-off `open` |
+| Class | **Store-works** | **Store-works** |
+
+See [`v22_results.md`](v22_results.md).

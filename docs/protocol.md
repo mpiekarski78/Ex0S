@@ -324,3 +324,19 @@ Held-out green: junk `open` older, `wait` newer. Recency-swap: newest is junk; m
 
 Do not freeze-newest or restore filename-first / dump-all to rescue a plot.
 
+## v22 A complete vs stub, B joint no clamps
+
+v21 used planted `when=`. v22 A removes it. v22 B removes v20/v21 clamps.
+
+**A.** No `when=`. Stub `{here:0}` sorts first. Useful `{here:0, action:2}`. Query `here=` and copy frozen. Head: complete vs first. Features `{has_payload, n_hits≥2}`.
+
+**B.** Match + wsel + use together. No `force_use`. No frozen `here=`. W has first/newest `here=` pages and `door=` junk. Split credit.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; planted `when=`; `d0` in W | Cortex moves; disable-S `use_key`; `d0` in W |
+| Fail | Untrained already `use_key`; complete-is-junk `use_key`; stub-only `use_key` | Untrained already `use_key`; freeze-match / first / use-off still `use_key` |
+| Store-works | Untrained stub `open`; red complete `use_key`; green `wait` | Untrained `open`; red newest `here=` `use_key`; green `wait`; three controls fail |
+
+Do not plant `when=` on A or freeze `here=` / `force_use` on B to rescue a plot.
+

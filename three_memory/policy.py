@@ -71,6 +71,9 @@ class UsePolicy:
         # Untrained: keep filename-first / dump-all W hits. Learn newest one.
         self.w_wsel = rng.normal(0.0, 0.05, size=(self.n_feat,))
         self.b_wsel = np.array(-1.2, dtype=np.float64)
+        # Untrained: keep filename-first stub. Learn the page that has action=/do=.
+        self.w_wcomp = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_wcomp = np.array(-1.2, dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
@@ -102,6 +105,8 @@ class UsePolicy:
             np.asarray(self.b_wplace).reshape(1),
             self.w_wsel,
             np.asarray(self.b_wsel).reshape(1),
+            self.w_wcomp,
+            np.asarray(self.b_wcomp).reshape(1),
         )
 
     def weight_hash(self) -> str:
@@ -212,6 +217,28 @@ class UsePolicy:
         return {
             "kind": "wsel",
             "wsel_alt": alt,
+            "p_alt": p_alt,
+            "logp": logp,
+            "feat": feat.tolist(),
+        }
+
+    @staticmethod
+    def wcomp_features(has_payload: bool, n_hits: int) -> np.ndarray:
+        """Any action=/do= in the W hits? Several matches? No door id, no integer."""
+        return np.array([1.0 if has_payload else 0.0, 1.0 if n_hits >= 2 else 0.0], dtype=np.float64)
+
+    def decide_wcomp(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        """False: filename-first. True: commit the first hit that has action= or do=."""
+        p_alt = sigmoid(float(feat @ self.w_wcomp + self.b_wcomp))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            alt = bool(rng.random() < 0.5)
+        else:
+            alt = bool(p_alt >= 0.5)
+        logp = float(np.log((p_alt if alt else (1.0 - p_alt)) + 1e-12))
+        return {
+            "kind": "wcomp",
+            "wcomp_alt": alt,
             "p_alt": p_alt,
             "logp": logp,
             "feat": feat.tolist(),
@@ -409,6 +436,14 @@ class UsePolicy:
                 g = y - p
                 self.w_wsel += lr * g * feat
                 self.b_wsel = np.array(float(self.b_wsel) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
+            if tr.get("kind") == "wcomp":
+                p = sigmoid(float(feat @ self.w_wcomp + self.b_wcomp))
+                y = 1.0 if tr["wcomp_alt"] else 0.0
+                g = y - p
+                self.w_wcomp += lr * g * feat
+                self.b_wcomp = np.array(float(self.b_wcomp) + lr * g, dtype=np.float64)
                 self.n_updates += 1
                 continue
             if tr.get("kind") == "pick":

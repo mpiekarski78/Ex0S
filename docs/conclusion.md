@@ -184,3 +184,7 @@ Unread library W, not authored S. Collect is the frozen v5 commit-on-hit rule. *
 
 Many unread pages share `here=`. Collect’s filename-first `w_hits[0]` is the wrong prior. **A** learns newest `when=` over `aaa.tag` junk. **B** learns newest over dumping every match. Both **Store-works**. Untrained `wait`. Trained red `use_key` from `p99.tag` after unmount W; held-out green `wait`. Recency-swap (newest is junk) stays `wait`. Cortex unchanged. Details: [`v21_results.md`](v21_results.md).
 
+## v22 (complete vs stub / joint no clamps)
+
+**A** drops planted recency. A stub `{here:0}` sorts first; the useful page has `action=`. **B** runs match + newest-pick + use-gate together with no clamps. Both **Store-works**. Untrained `open`. Trained red `use_key` after unmount W; held-out green `wait`. A’s complete-is-junk and stub-only controls fail; B’s `door=` / first-file / use-off controls fail. Cortex unchanged. Details: [`v22_results.md`](v22_results.md).
+

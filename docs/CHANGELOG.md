@@ -29,3 +29,4 @@
 - v19: A shared value-name (`do=` vs `action=`); B shared place-name (`door=` vs `here=`). Neither side frozen. Both **Store-works**. [`docs/v19_results.md`](v19_results.md).
 - v20: A find unread W (`p99.tag` `{here, action}`); B find vs `door=` junk. Frozen v5 commit; use-gate + match learn. Both **Store-works**. Audit: match now runs before collect; collect no longer wipes `match_alt`. [`docs/v20_results.md`](v20_results.md).
 - v21: A filename-first vs newest among unread `here=` hits; B dump-all vs newest. Query and copy frozen. Recency-swap stays `wait`. Both **Store-works**. [`docs/v21_results.md`](v21_results.md).
+- v22: A complete vs stub (no planted `when=`); B joint match+wsel+use with no clamps. Both **Store-works**. [`docs/v22_results.md`](v22_results.md).
