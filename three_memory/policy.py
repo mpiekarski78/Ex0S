@@ -44,6 +44,9 @@ class UsePolicy:
         # Untrained: do not author a note from a life event.
         self.w_write = rng.normal(0.0, 0.05, size=(self.n_feat,))
         self.b_write = np.array(-1.2, dtype=np.float64)
+        # Untrained: dump the pile (species prior + mixed notes). Learn to select.
+        self.w_retrieve = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_retrieve = np.array(-1.2, dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
@@ -56,6 +59,8 @@ class UsePolicy:
             np.asarray(self.b_apply).reshape(1),
             self.w_write,
             np.asarray(self.b_write).reshape(1),
+            self.w_retrieve,
+            np.asarray(self.b_retrieve).reshape(1),
         )
 
     def weight_hash(self) -> str:
@@ -93,6 +98,28 @@ class UsePolicy:
             "feat": feat.tolist(),
         }
 
+    @staticmethod
+    def retrieve_features(n_store: int, n_hits: int) -> np.ndarray:
+        """Grown pile? Any match? No door id."""
+        return np.array([1.0 if n_store >= 2 else 0.0, 1.0 if n_hits >= 1 else 0.0], dtype=np.float64)
+
+    def decide_retrieve(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        p_select = sigmoid(float(feat @ self.w_retrieve + self.b_retrieve))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            select = bool(rng.random() < 0.5)
+        else:
+            select = bool(p_select >= 0.5)
+        logp = float(np.log((p_select if select else (1.0 - p_select)) + 1e-12))
+        return {
+            "kind": "retrieve",
+            "retrieve_mode": "select" if select else "dump",
+            "select": select,
+            "p_select": p_select,
+            "logp": logp,
+            "feat": feat.tolist(),
+        }
+
     def decide_write(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
         p_write = sigmoid(float(feat @ self.w_write + self.b_write))
         rng = rng or np.random.default_rng()
@@ -122,6 +149,14 @@ class UsePolicy:
                 g = y - p
                 self.w_write += lr * g * feat
                 self.b_write = np.array(float(self.b_write) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
+            if tr.get("kind") == "retrieve":
+                p = sigmoid(float(feat @ self.w_retrieve + self.b_retrieve))
+                y = 1.0 if tr["select"] else 0.0
+                g = y - p
+                self.w_retrieve += lr * g * feat
+                self.b_retrieve = np.array(float(self.b_retrieve) + lr * g, dtype=np.float64)
                 self.n_updates += 1
                 continue
             probs = softmax(feat @ self.W_collect + self.b_collect)

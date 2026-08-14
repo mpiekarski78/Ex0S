@@ -178,3 +178,15 @@ Retrieve **select** = tag match on `door=`. Control **dump-all** applies every `
 
 Do not hand-write the two tags into S. Do not raise store bias so dump-all also works.
 
+## v12 boxed select vs dump
+
+Retrieve is a policy head, not a constructor flag. Features `{n_store ≥ 2, n_hits ≥ 1}` — no door id. Untrained dumps. Train on red+green S (reward on red probe). Held-out: free blue life authors `d1.tag`. Probe greedy.
+
+| ID | If |
+|----|----|
+| Confound | Cortex moves; disable-S still `use_key`; answer in W; `n_forced > 0`; probe explores |
+| Fail | Head unchanged; untrained already correct on red; trained dumps; blue unused; dump-all correct on all probes |
+| Store-works | Head changed; untrained dump fails red; trained select red `use_key` / green `wait` / blue `open`; dump-all still fails red |
+
+Do not put door id in retrieve features. Do not let the policy emit the motor act.
+

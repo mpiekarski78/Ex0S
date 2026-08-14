@@ -20,6 +20,7 @@ DOOR_GREEN = 2
 REQ_KEY = 1
 
 RED_FACT_ID = "d0"
+BLUE_FACT_ID = "d1"
 GREEN_FACT_ID = "d2"
 
 

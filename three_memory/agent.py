@@ -46,12 +46,14 @@ class ThreeMemoryAgent:
         policy_rng: np.random.Generator | None = None,
         explore_epsilon: float = 0.0,
     ):
-        if retrieve_policy not in ("select", "dump"):
+        if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
         if collect_mode not in ("off", "commit", "peek", "policy"):
             raise ValueError(collect_mode)
         if collect_mode == "policy" and use_policy is None:
             raise ValueError("collect_mode=policy requires use_policy")
+        if retrieve_policy == "policy" and use_policy is None:
+            raise ValueError("retrieve_policy=policy requires use_policy")
         cfg = CortexConfig(obs_dim=obs_dim, embed_dim=embed_dim, n_actions=4, seed=cortex_seed)
         self.cortex = FrozenCortex(cfg)
         self.rho = WorkingTrace(RhoConfig(embed_dim=embed_dim))
@@ -175,10 +177,7 @@ class ThreeMemoryAgent:
         recs = list(self.store.records()) if self.store.enabled else []
         return recs + list(self._peek)
 
-    def _hits_for(self, obs: Obs) -> list[FactRecord]:
-        pool = self._pool()
-        if self.retrieve_policy == "dump":
-            return pool
+    def _select_hits(self, obs: Obs, pool: list) -> list:
         query = self._obs_query(obs)
         if not query:
             return []
@@ -189,6 +188,26 @@ class ThreeMemoryAgent:
         if not self.native and not out and obs.at_red_door:
             out = [r for r in pool if r.fact_id == KeyDoorWorld.FACT_ID]
         return out
+
+    def _choose_retrieve(self, obs: Obs) -> None:
+        if self.retrieve_policy != "policy" or self.use_policy is None:
+            return
+        pool = self._pool()
+        hits = self._select_hits(obs, pool)
+        n_store = len(self.store) if self.store.enabled else 0
+        feat = UsePolicy.retrieve_features(n_store, len(hits))
+        dec = self.use_policy.decide_retrieve(feat, epsilon=self.policy_epsilon, rng=self.policy_rng)
+        self.last_policy = {**self.last_policy, **dec}
+        self.policy_traces.append(dec)
+
+    def _hits_for(self, obs: Obs) -> list:
+        pool = self._pool()
+        mode = self.retrieve_policy
+        if mode == "policy":
+            mode = str(self.last_policy.get("retrieve_mode") or "select")
+        if mode == "dump":
+            return pool
+        return self._select_hits(obs, pool)
 
     def _apply_record_bias(self, logits: np.ndarray, rec: FactRecord, obs: Obs) -> None:
         act = rec.tags.get("action")
@@ -217,6 +236,8 @@ class ThreeMemoryAgent:
     def _store_bias(self, obs: Obs, *, novelty: float = 0.0) -> np.ndarray:
         """Retrieve facts and bias action logits. Knowledge lives in S, not ρ."""
         self.collect(obs, novelty=novelty)
+        if self.retrieve_policy == "policy":
+            self._choose_retrieve(obs)
         logits = np.zeros(4, dtype=np.float64)
         apply = True
         if self.collect_mode == "policy":

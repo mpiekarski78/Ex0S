@@ -46,6 +46,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v9 write-from-life | **Store-works** (note authored from events; W has no answer) |
 | three-memory, v10 free life | **Store-works** (`n_forced=0`; live then write) |
 | three-memory, v11 select authored notes | **Store-works** (pick the matching life; dump-all mixes lives) |
+| three-memory, v12 learn select vs dump | **Store-works** (head learns not to dump; held-out blue `open`) |
 
 ## Honest limits
 
@@ -155,3 +156,16 @@ Two free lives. Files authored, not placed. Select vs dump-all.
 | Class | **Store-works** | control (hurts red) |
 
 See [`v11_results.md`](v11_results.md).
+
+## v12 (learn select vs dump)
+
+Retrieve head. Features are pile-size and match-count, not door id.
+
+| Check | Untrained | Trained | Dump-all |
+|-------|-----------|---------|----------|
+| Red | dump, `wait` | **select**, **`use_key`** | `wait` |
+| Green | — | **select**, **`wait`** | `wait` |
+| Held-out blue | — | **select**, **`open`** | `wait` |
+| Class | — | **Store-works** | control |
+
+See [`v12_results.md`](v12_results.md).

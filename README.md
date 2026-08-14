@@ -9,7 +9,7 @@
 
 Biology’s lesson here: hardcode **drives and learning rules**, leave **world-knowledge** to experience, and do **not** confuse a short trace with a life of knowledge.
 
-## Result (v0–v11)
+## Result (v0–v12)
 
 v0: [`docs/conclusion.md`](docs/conclusion.md).  
 v1 NOTE-copy: [`docs/v1_results.md`](docs/v1_results.md).  
@@ -23,6 +23,7 @@ v8 boxed use-policy (cortex frozen): [`docs/v8_results.md`](docs/v8_results.md).
 v9 write from a life (W has no answer): [`docs/v9_results.md`](docs/v9_results.md).  
 v10 free life (no forced curriculum): [`docs/v10_results.md`](docs/v10_results.md).  
 v11 select among authored notes: [`docs/v11_results.md`](docs/v11_results.md).  
+v12 learn select vs dump: [`docs/v12_results.md`](docs/v12_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -49,6 +50,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v9 write from events, no answer in W | **Store-works** (authors `d0.tag`/`d2.tag`; red `use_key`; green `wait`) |
 | v10 free life, n_forced=0 | **Store-works** (red not the v9 script; green found WAIT; greedy probe after ρ reset) |
 | v11 two lives, select vs dump | **Store-works** (select red `use_key` / green `wait`; dump-all red `wait`) |
+| v12 retrieve head, held-out blue | **Store-works** (untrained dump `wait`; trained select; blue `open`) |
 
 ## Four pieces
 
@@ -77,6 +79,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v9 write from a life | **Store-works** | author S from events; W has no answer; [`docs/v9_results.md`](docs/v9_results.md) |
 | v10 free life | **Store-works** | no forced curriculum; live then write; [`docs/v10_results.md`](docs/v10_results.md) |
 | v11 select authored notes | **Store-works** | two lives, pick the match; dump-all mixes; [`docs/v11_results.md`](docs/v11_results.md) |
+| v12 learn select vs dump | **Store-works** | retrieve head; held-out blue; [`docs/v12_results.md`](docs/v12_results.md) |
 
 ## Quick start
 
@@ -94,6 +97,7 @@ python tests/test_v8.py
 python tests/test_v9.py
 python tests/test_v10.py
 python tests/test_v11.py
+python tests/test_v12.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -108,6 +112,7 @@ python -m experiments.run_v8
 python -m experiments.run_v9
 python -m experiments.run_v10
 python -m experiments.run_v11
+python -m experiments.run_v12
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -116,8 +121,8 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v11, train_prior
-docs/             # protocol, comparison, conclusion, v1–v11 results
+experiments/      # run_v0 … run_v12, train_prior
+docs/             # protocol, comparison, conclusion, v1–v12 results
 tests/
 runs/             # gitignored
 checkpoints/      # gitignored (prior.pt)
