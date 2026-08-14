@@ -169,6 +169,7 @@ def make(
     use_stamp_new_here: bool = False,
     use_block_here: bool = False,
     use_in_hand_new_here: bool = False,
+    use_find_novel: bool = False,
 ) -> ThreeMemoryAgent:
     world = ProseLibrary(w_dir) if w_dir is not None else None
     return ThreeMemoryAgent(
@@ -205,6 +206,7 @@ def make(
         use_stamp_new_here=use_stamp_new_here,
         use_block_here=use_block_here,
         use_in_hand_new_here=use_in_hand_new_here,
+        use_find_novel=use_find_novel,
     )
 
 

@@ -118,7 +118,7 @@ def test_skips_stay_skipped():
     assert "KeyDoorWorld" not in src_exp
     a = agent_mod.ThreeMemoryAgent(use_policy=UsePolicy(seed=1), store_enabled=False, cortex_seed=1337)
     assert a.domain == "door" and not a.use_in_hand_new_here
-    assert not a.use_stamp_new_here and not a.use_block_here
+    assert not a.use_stamp_new_here and not a.use_block_here and not a.use_find_novel
     b = make054(Path("/tmp/tm067_skip_s"), None, UsePolicy(seed=1), enabled=False)
     assert not b.use_in_hand_new_here
     c = make060(Path("/tmp/tm067_skip_060"), None, UsePolicy(seed=1), enabled=False)
@@ -137,7 +137,7 @@ def test_skips_stay_skipped():
     assert i.use_revise_head and not i.use_in_hand_new_here
     j = make(Path("/tmp/tm067_skip_067"), None, UsePolicy(seed=1), enabled=False)
     assert j.use_in_hand_new_here and j.use_stamp_new_here and j.use_block_here
-    assert j.use_revise_head and j.use_commit_here_only
+    assert j.use_revise_head and j.use_commit_here_only and not j.use_find_novel
     k = make059(Path("/tmp/tm067_skip_059"), None, UsePolicy(seed=1), enabled=False)
     assert k.use_revise_head and not k.use_in_hand_new_here
     copy = make(Path("/tmp/tm067_copy"), None, UsePolicy(seed=1), enabled=False, use_here_match=False)

@@ -84,6 +84,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.6.5 concurrent bind | **Store-works** / **Fail** (one CS here from the page in play; shared return first-CS `neon`, C miss) |
 | three-memory, TM.0.6.6 correct dirty English S | **Fail** / **Store-works** (train S n=1 `push`; C bound `xenon`; shared return not the jump) |
 | three-memory, TM.0.6.7 in-hand new-here | **Fail** / **Store-works** (leftover walk gone; C bound `neon` in-hand; shared return not the jump) |
+| three-memory, TM.0.6.8 find-novel | **Store-works** / **Store-works** (C bound `adjust`; shared return not the jump) |
 
 ## Honest limits
 
@@ -671,4 +672,18 @@ See [`tm066_results.md`](tm066_results.md).
 | Class | **Fail** | **Store-works** |
 
 See [`tm067_results.md`](tm067_results.md).
+
+## TM.0.6.8 (find-novel / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| After train, S: A / foil C | **`press` / `hold`** | **`press` / `hold`** |
+| C life on that S: A / C | **`press` / `tune`** | **`press` / `tune`** |
+| Train S n files | **1** | **1** |
+| Train S binds | **`push`** | **`push`** |
+| C life binds | **`push` + `adjust`** | **`push` + `adjust`** |
+| Train last 50 | 1.00 | 0.94 |
+| Class | **Store-works** | **Store-works** |
+
+See [`tm068_results.md`](tm068_results.md).
 

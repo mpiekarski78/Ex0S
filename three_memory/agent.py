@@ -84,6 +84,7 @@ class ThreeMemoryAgent:
         use_stamp_new_here: bool = False,
         use_block_here: bool = False,
         use_in_hand_new_here: bool = False,
+        use_find_novel: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -164,6 +165,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_block_here requires use_event_annotate")
         if use_in_hand_new_here and not use_stamp_new_here:
             raise ValueError("use_in_hand_new_here requires use_stamp_new_here")
+        if use_find_novel and not use_search_head:
+            raise ValueError("use_find_novel requires use_search_head")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -224,6 +227,7 @@ class ThreeMemoryAgent:
         self.use_stamp_new_here = use_stamp_new_here
         self.use_block_here = use_block_here
         self.use_in_hand_new_here = use_in_hand_new_here
+        self.use_find_novel = use_find_novel
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._in_hand_id: str | None = None
@@ -304,6 +308,7 @@ class ThreeMemoryAgent:
             use_stamp_new_here=self.use_stamp_new_here,
             use_block_here=self.use_block_here,
             use_in_hand_new_here=self.use_in_hand_new_here,
+            use_find_novel=self.use_find_novel,
             domain=self.domain,
         )
 
@@ -434,10 +439,44 @@ class ThreeMemoryAgent:
     def _tag_vals(self, rec) -> list:
         return [v for k, v in rec.tags.items() if k not in _QNAME_SKIP]
 
+    def _s_token_set(self) -> set[str]:
+        """Tokens already committed. Find-novel treats these as known, not new rares."""
+        out: set[str] = set()
+        if not self.store.enabled:
+            return out
+        for rec in self.store.records():
+            out |= prose_tokens(getattr(rec, "what", "") or "")
+            for v in rec.tags.values():
+                if isinstance(v, str):
+                    out.add(v.lower())
+        return out
+
+    def _filter_find_novel(self, pool: list) -> list:
+        """Keep unread pages that would add the most rare tokens S does not already have.
+
+        Frozen grammar, not a filename ranker and not unique-rare restored: clutter hapax
+        stay rare; they lose only when some other unread page has more novel rares.
+        """
+        if not self.use_find_novel or not pool:
+            return pool
+        pool_words = [prose_tokens(getattr(o, "what", "") or "") for o in pool]
+        known = self._s_token_set()
+        scores = []
+        for words in pool_words:
+            rare = {w for w in words if sum(1 for ws in pool_words if w in ws) < 3}
+            scores.append(len(rare - known))
+        m = max(scores)
+        if m <= 0:
+            return pool
+        return [r for r, n in zip(pool, scores) if n == m]
+
     def _search_picks(self, pool: list, obs: Obs, *, record: bool) -> list:
         if not pool or self.use_policy is None:
             return []
         pool = [r for r in pool if getattr(r, "fact_id", None) not in self._w_skip]
+        if not pool:
+            return []
+        pool = self._filter_find_novel(pool)
         if not pool:
             return []
         if self.use_here_match:
@@ -520,6 +559,9 @@ class ThreeMemoryAgent:
             if not picks:
                 return info
         info["taken"] = 1
+        if self.use_find_novel:
+            # Attend the novel page; stamp commits it. Do not keep copying leftover hapax into S.
+            return info
         if self.collect_mode == "commit":
             n = 0
             for rec in picks:
