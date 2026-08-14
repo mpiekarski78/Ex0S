@@ -142,7 +142,7 @@ class ThreeMemoryAgent:
         self.t = 0
 
     def clone_empty(self, store_enabled: bool | None = None) -> "ThreeMemoryAgent":
-        """Same frozen cortex seed, empty ρ and S."""
+        """Same frozen cortex seed and boxed heads, empty ρ and S."""
         en = self.store.enabled if store_enabled is None else store_enabled
         return ThreeMemoryAgent(
             store_enabled=en,
@@ -151,7 +151,25 @@ class ThreeMemoryAgent:
             embed_dim=self.cortex.config.embed_dim,
             native=self.native,
             retrieve_policy=self.retrieve_policy,
-            collect_mode="off",
+            collect_mode=self.collect_mode,
+            use_policy=self.use_policy,
+            write_from_events=self.write_from_events,
+            policy_epsilon=self.policy_epsilon,
+            explore_epsilon=self.explore_epsilon,
+            use_read=self.use_read,
+            unique_writes=self.unique_writes,
+            use_pick=self.use_pick,
+            write_schema=self.write_schema,
+            force_use=self.force_use,
+            force_write=self.force_write,
+            use_rank=self.use_rank,
+            mark_ok=self.mark_ok,
+            value_key=self.value_key,
+            place_key=self.place_key,
+            use_key_head=self.use_key_head,
+            use_match_head=self.use_match_head,
+            use_wkey_head=self.use_wkey_head,
+            use_wplace_head=self.use_wplace_head,
         )
 
     def _obs_query(self, obs: Obs) -> dict[str, Any] | None:

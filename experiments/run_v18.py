@@ -154,6 +154,8 @@ def classify_a(m: dict[str, Any]) -> tuple[str, str]:
         return "Fail", "Held-out green failed; head learned that door, not write do=."
     if m["empty_S"]["correct"]:
         return "Fail", "Empty S still use_key."
+    if m["empty_S_green"]["correct"] or m["empty_S_green"]["action_name"] == "wait":
+        return "Confound", "Empty S already wait on green; held-out is not a transfer test."
     if m["action_control"]["correct"]:
         return "Fail", "Writing action= still solved red; do= was not required."
     if "do=" not in m.get("red_tag", ""):
@@ -199,6 +201,8 @@ def classify_b(m: dict[str, Any]) -> tuple[str, str]:
         return "Fail", "Held-out green failed; head learned that door, not write here=."
     if m["empty_S"]["correct"]:
         return "Fail", "Empty S still use_key."
+    if m["empty_S_green"]["correct"] or m["empty_S_green"]["action_name"] == "wait":
+        return "Confound", "Empty S already wait on green; held-out is not a transfer test."
     if m["door_control"]["correct"]:
         return "Fail", "Writing door= still solved red; here= was not required."
     if "here=" not in m.get("red_tag", ""):
@@ -338,6 +342,7 @@ def run_arm_a(run_dir: Path, w_clutter: Path, w_files: list[str], seed: int, n_t
     empty = make_a(s_empty, None, policy)
     empty.reset_rho()
     empty_p = probe(empty, "probe_red_with_key", seed + 10)
+    empty_g = probe(empty, "probe_green", seed + 20)
     off_a, _ = _life(make_a, s_off, None, policy, "experience_teach", seed + 10, np.random.default_rng(seed + 2), max_steps, enabled=False)
     disable_red = probe(off_a, "probe_red_with_key", seed + 10)
 
@@ -345,7 +350,7 @@ def run_arm_a(run_dir: Path, w_clutter: Path, w_files: list[str], seed: int, n_t
         "arm": "A",
         "trained_force_use": False,
         "trained_force_write": False,
-        "value_key_frozen_do_on_write": False,
+        "value_key_frozen_do_on_write": (not dummy.use_wkey_head) and dummy.value_key == "do",
         "train_return_last50": float(np.mean(rewards[-50:])) if rewards else 0.0,
         "cortex_hash": cortex0,
         "cortex_unchanged": cortex0 == red_a.weight_hash(),
@@ -363,6 +368,7 @@ def run_arm_a(run_dir: Path, w_clutter: Path, w_files: list[str], seed: int, n_t
         "action_control": action_control,
         "ctrl_tag": _tags(s_ctrl),
         "empty_S": empty_p,
+        "empty_S_green": empty_g,
         "disable_S_red": disable_red,
     }
     label, rationale = classify_a(metrics)
@@ -410,6 +416,7 @@ def run_arm_b(run_dir: Path, w_clutter: Path, w_files: list[str], seed: int, n_t
     empty = make_b(s_empty, None, policy)
     empty.reset_rho()
     empty_p = probe(empty, "probe_red_with_key", seed + 10)
+    empty_g = probe(empty, "probe_green", seed + 20)
     off_a, _ = _life(make_b, s_off, None, policy, "experience_teach", seed + 10, np.random.default_rng(seed + 2), max_steps, enabled=False)
     disable_red = probe(off_a, "probe_red_with_key", seed + 10)
 
@@ -417,7 +424,7 @@ def run_arm_b(run_dir: Path, w_clutter: Path, w_files: list[str], seed: int, n_t
         "arm": "B",
         "trained_force_use": False,
         "trained_force_write": False,
-        "place_key_frozen_here_on_write": False,
+        "place_key_frozen_here_on_write": (not dummy.use_wplace_head) and dummy.place_key == "here",
         "train_return_last50": float(np.mean(rewards[-50:])) if rewards else 0.0,
         "cortex_hash": cortex0,
         "cortex_unchanged": cortex0 == red_a.weight_hash(),
@@ -435,6 +442,7 @@ def run_arm_b(run_dir: Path, w_clutter: Path, w_files: list[str], seed: int, n_t
         "door_control": door_control,
         "ctrl_tag": _tags(s_ctrl),
         "empty_S": empty_p,
+        "empty_S_green": empty_g,
         "disable_S_red": disable_red,
     }
     label, rationale = classify_b(metrics)

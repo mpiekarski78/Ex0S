@@ -421,6 +421,8 @@ class UsePolicy:
                 self.b_retrieve = np.array(float(self.b_retrieve) + lr * g, dtype=np.float64)
                 self.n_updates += 1
                 continue
+            if tr.get("kind") != "collect":
+                raise ValueError(f"unknown policy trace kind: {tr.get('kind')}")
             probs = softmax(feat @ self.W_collect + self.b_collect)
             c = int(tr["collect_idx"])
             grad = -probs

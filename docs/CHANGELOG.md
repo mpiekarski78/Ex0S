@@ -25,3 +25,4 @@
 - v16: A prefer `ok=1` over newest junk (**Store-works**); B shared return on v15 joint (**Fail**). [`docs/v16_results.md`](v16_results.md).
 - v17: A read `do=` vs `action=`; B match `here=` vs `door=`. Both **Store-works**. [`docs/v17_results.md`](v17_results.md).
 - v18: A write `do=` vs `action=`; B write `here=` vs `door=`. Read/match frozen. Both **Store-works**. [`docs/v18_results.md`](v18_results.md).
+- Audit: unknown policy traces no longer train the collect head; `clone_empty` keeps boxed-head flags; v18 now probes empty-S green. Retest still **Store-works** / **Store-works**.

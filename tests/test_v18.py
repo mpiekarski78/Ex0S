@@ -142,9 +142,58 @@ def test_frozen_match_uses_here(tmp_path: Path):
     assert action == Action.WAIT
 
 
+def test_empty_green_prior_is_open():
+    a = ThreeMemoryAgent(native=True, cortex_seed=1337, write_from_events=False)
+    obs = KeyDoorWorld(0).reset("probe_green")
+    action, _ = a.act(obs, update_rho=False, explore=False)
+    assert action == Action.OPEN
+
+
+def test_clone_empty_keeps_write_name_flags(tmp_path: Path):
+    policy = UsePolicy(seed=7)
+    a = ThreeMemoryAgent(
+        native=True,
+        use_policy=policy,
+        use_read=True,
+        value_key="do",
+        place_key="here",
+        use_wkey_head=True,
+        use_wplace_head=True,
+        store=TagStore(tmp_path),
+        cortex_seed=1337,
+    )
+    b = a.clone_empty()
+    assert b.native is True
+    assert b.use_read is True
+    assert b.value_key == "do"
+    assert b.place_key == "here"
+    assert b.use_wkey_head is True
+    assert b.use_wplace_head is True
+    assert b.use_policy is policy
+    assert len(b.store) == 0
+
+
+def test_unknown_trace_kind_does_not_train_collect():
+    p = UsePolicy(seed=7)
+    h0 = p.weight_hash()
+    w0 = p.W_collect.copy()
+    try:
+        p.update([{"kind": "nope", "feat": [0.0, 1.0], "collect_idx": 0, "apply": False}], 1.0)
+    except ValueError as e:
+        assert "unknown policy trace kind" in str(e)
+    else:
+        raise AssertionError("expected ValueError")
+    assert p.weight_hash() == h0
+    assert np.allclose(p.W_collect, w0)
+
+
 if __name__ == "__main__":
     import tempfile
 
+    test_empty_green_prior_is_open()
+    test_unknown_trace_kind_does_not_train_collect()
+    with tempfile.TemporaryDirectory() as d:
+        test_clone_empty_keeps_write_name_flags(Path(d))
     with tempfile.TemporaryDirectory() as d:
         test_untrained_wkey_writes_action(Path(d))
     with tempfile.TemporaryDirectory() as d:
