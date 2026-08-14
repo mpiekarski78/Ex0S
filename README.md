@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.5.0. Toy series: v0–v23.
+**Current:** TM.0.5.1. Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.5.0: the **split is real without answer integers in W** — channel dial + token copy of an innate motor name, PRESS from S after ρ reset, held-out C TUNE. Not a general learner. Not English NLP (body vocabulary, not synonyms). Shared return still **Fail**s (last-50 0). Still genome: name→same-named motor, `{has_rare}` search, five discrete acts. How-to-correct is locked in protocol, not built. Tiny LSTM still needs a taught tool grammar. W is a handful of scraps, not Wikipedia. No code, no cameras.
+Honest status after TM.0.5.1: the **split is real on correction** — wrong clutter commit is dropped, useful `press` kept, PRESS from S after ρ reset, held-out C TUNE. Search was frozen so this is not a rerun of rare-word find. Not English NLP. Shared return still **Fail**s (last-50 0, never revises). Still genome: innate act names, drop+skip, five acts. How-to-correct is now a boxed head, not a life of English. W is a handful of scraps, not Wikipedia.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -52,6 +52,7 @@ TM.0.3.1 documents: [`docs/tm031_results.md`](docs/tm031_results.md).
 TM.0.3.2 prose retrieve: [`docs/tm032_results.md`](docs/tm032_results.md).  
 TM.0.4.0 channel dial: [`docs/tm040_results.md`](docs/tm040_results.md).  
 TM.0.5.0 no answer integers: [`docs/tm050_results.md`](docs/tm050_results.md).  
+TM.0.5.1 correct a wrong commit: [`docs/tm051_results.md`](docs/tm051_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -99,6 +100,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.3.2 A prose retrieve / B shared return | **Store-works** / **Fail** (no filed `action=`; anonymous `n*`; shared return last-50 0) |
 | TM.0.4.0 A channel dial / B shared return | **Store-works** / **Fail** (left door world; C TUNE; shared return clutter PRESS) |
 | TM.0.5.0 A no answer integers / B shared return | **Store-works** / **Fail** (no digits in W; copy innate motor name; shared return last-50 0) |
+| TM.0.5.1 A correct / B shared return | **Store-works** / **Fail** (drop junk S; PRESS from corrected file; shared return last-50 0) |
 
 ## Five pieces
 
@@ -149,6 +151,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.3.2 prose retrieve | **Store-works** / **Fail** | no filed `action=`; digit scan + vname; [`docs/tm032_results.md`](docs/tm032_results.md) |
 | TM.0.4.0 channel dial | **Store-works** / **Fail** | left door world; PRESS / C TUNE; [`docs/tm040_results.md`](docs/tm040_results.md) |
 | TM.0.5.0 no answer integers | **Store-works** / **Fail** | no digits in W; innate name token; [`docs/tm050_results.md`](docs/tm050_results.md) |
+| TM.0.5.1 correct a wrong commit | **Store-works** / **Fail** | drop junk S, keep after ρ reset; [`docs/tm051_results.md`](docs/tm051_results.md) |
 
 ## Quick start
 
@@ -187,6 +190,7 @@ python tests/test_tm031.py
 python tests/test_tm032.py
 python tests/test_tm040.py
 python tests/test_tm050.py
+python tests/test_tm051.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -222,6 +226,7 @@ python -m experiments.run_tm031
 python -m experiments.run_tm032
 python -m experiments.run_tm040
 python -m experiments.run_tm050
+python -m experiments.run_tm051
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -230,7 +235,7 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010 … run_tm050, train_prior
+experiments/      # run_v0 … run_v23, run_tm010 … run_tm051, train_prior
 docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.x results
 tests/
 runs/             # gitignored

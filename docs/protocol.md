@@ -33,7 +33,7 @@ Order of remaining recipe jumps (do not skip ahead to an English life):
 6. One return (shared credit that actually works, or an honest genome admission).
 7. No `domain=` switch.
 8. Accumulate S (stop wiping every episode).
-9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works.
+9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works (TM.0.5.1).
 10. Then an English life, then a math life.
 
 Do not restore digit-copy, filed `action=`/`where=`, the door toy, or a synonym lexicon to rescue a plot.
@@ -535,4 +535,20 @@ Honest limit: the genome knows the names of its own acts. It does not parse Engl
 | Store-works | Untrained HOLD; free A commits `press`; after reset W gone → PRESS; C TUNE from `tune`; S has `w*` tokens not `n*` motor ints | Same without splitting the return |
 
 Do not restore answer integers, filed `action=`, or a PRESS/TUNE lexicon beyond innate act names to rescue a plot.
+
+## TM.0.5.1 A correct a wrong commit, B shared return
+
+Recipe: detect fail, drop junk S, blacklist that W page, retry, keep after ρ reset. Same no-integer dial prose as TM.0.5.0. Search **frozen untrained** (first remaining file) so correction is load-bearing — not a rerun of rare-word search. Genome will not drop a file that already names an innate act. Species prior HOLD. Cortex frozen. `n_forced=0`. Writes from life off. Digit-copy off.
+
+**A.** Split: found `press` in S after a life that revised / probe after reset.
+
+**B.** Same `make()`. One `r` = probe correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; search trained to skip correct; body digits; digit-copy; door world; filed tags; writes from life; forced curriculum; empty S TUNE | same |
+| Fail | Untrained PRESS or already revises; after reset not PRESS; C not TUNE; revise-off still PRESS; n_revised=0 | Untrained PRESS; A/C miss; empty S solves A; split restored |
+| Store-works | Untrained HOLD, n_revised=0; eval life revises ≥1, drops clutter, commits `press`; after ρ reset W gone → PRESS; C TUNE; revise-off HOLD | Same without splitting the return |
+
+Do not restore trained search, answer integers, or “always delete on fail including motor-name notes” to rescue a plot.
 

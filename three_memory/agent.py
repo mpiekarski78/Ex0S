@@ -72,6 +72,7 @@ class ThreeMemoryAgent:
         record_search_on_explore: bool = False,
         use_prose_ints: bool = False,
         use_prose_tokens: bool = False,
+        use_revise_head: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -126,6 +127,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_prose_tokens requires search + vname + use_read")
         if use_prose_ints and use_prose_tokens:
             raise ValueError("use_prose_ints and use_prose_tokens cannot run together")
+        if use_revise_head and use_policy is None:
+            raise ValueError("use_revise_head requires use_policy")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -175,8 +178,11 @@ class ThreeMemoryAgent:
         self.use_prose_ints = use_prose_ints
         # Prose pages with no answer ints: words → w* tags; vname picks a token, not n*.
         self.use_prose_tokens = use_prose_tokens
+        self.use_revise_head = use_revise_head
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
+        self._w_skip: set[str] = set()
+        self.n_revised = 0
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
         self._weight_hash0 = self.cortex.weight_hash()
@@ -190,6 +196,7 @@ class ThreeMemoryAgent:
     def reset_rho(self) -> None:
         self.rho.reset()
         self._peek = []
+        self._w_skip = set()
 
     def reset_store(self) -> None:
         self.store.reset()
@@ -238,6 +245,7 @@ class ThreeMemoryAgent:
             record_search_on_explore=self.record_search_on_explore,
             use_prose_ints=self.use_prose_ints,
             use_prose_tokens=self.use_prose_tokens,
+            use_revise_head=self.use_revise_head,
             domain=self.domain,
         )
 
@@ -371,6 +379,9 @@ class ThreeMemoryAgent:
     def _search_picks(self, pool: list, obs: Obs, *, record: bool) -> list:
         if not pool or self.use_policy is None:
             return []
+        pool = [r for r in pool if getattr(r, "fact_id", None) not in self._w_skip]
+        if not pool:
+            return []
         code = self._door_code(obs)
         if code is None:
             return []
@@ -454,6 +465,8 @@ class ThreeMemoryAgent:
         return [w_hits[0]]
 
     def _commit_w_record(self, rec: FactRecord) -> bool:
+        if rec.fact_id in self._w_skip:
+            return False
         copied = FactRecord(
             fact_id=rec.fact_id,
             what=rec.what,
@@ -542,6 +555,42 @@ class ThreeMemoryAgent:
         if self.domain == "dial":
             return {a.name.lower(): int(a) for a in DialAction}
         return {a.name.lower(): int(a) for a in Action}
+
+    def _chosen_has_act_name(self) -> bool:
+        fid = str(self.last_policy.get("file") or "")
+        if not fid:
+            return False
+        acts = self._act_names()
+        for rec in self.store.records():
+            if rec.fact_id != fid:
+                continue
+            for k, v in rec.tags.items():
+                if k in _QNAME_SKIP:
+                    continue
+                if isinstance(v, str) and v.lower() in acts:
+                    return True
+        return False
+
+    def _maybe_revise(self, *, failed: bool) -> None:
+        if self.use_policy is None or not self.store.enabled:
+            return
+        fid = str(self.last_policy.get("file") or "")
+        has_act = self._chosen_has_act_name()
+        feat = UsePolicy.revise_features(failed, has_act)
+        dec = self.use_policy.decide_revise(
+            feat, epsilon=self.policy_epsilon, rng=self.policy_rng
+        )
+        dec["file"] = fid
+        dec["has_act_name"] = has_act
+        self.last_policy = {**self.last_policy, **dec}
+        self.policy_traces.append(dec)
+        if not dec["revise"] or not fid:
+            return
+        if has_act:
+            return
+        if self.store.delete(fid):
+            self._w_skip.add(fid)
+            self.n_revised += 1
 
     def _choose_vname(self, recs: list, obs: Obs, *, record: bool) -> None:
         if not self.use_vname_head or self.use_policy is None:
@@ -844,6 +893,9 @@ class ThreeMemoryAgent:
             name_to_id = {a.name.lower(): int(a) for a in Action}
         opened = bool(info.get("opened"))
         door = self._door_code(obs) if self.native else None
+
+        if self.use_revise_head and success is False:
+            self._maybe_revise(failed=True)
 
         if self.use_policy is not None and self.write_from_events:
             # v9: frozen WHAT = {here, the act that opened}. Learned WHEN.

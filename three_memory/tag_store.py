@@ -110,6 +110,16 @@ class TagStore(WorldStore):
         self.reload()
         return True
 
+    def delete(self, fact_id: str) -> bool:
+        if not self.enabled:
+            return False
+        path = self.root / f"{fact_id}.tag"
+        if not path.is_file():
+            return False
+        path.unlink()
+        self.reload()
+        return True
+
     def reset(self) -> None:
         super().reset()
         if self.root.is_dir():

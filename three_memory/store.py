@@ -41,6 +41,14 @@ class WorldStore:
         self._records.append(record)
         return True
 
+    def delete(self, fact_id: str) -> bool:
+        """Drop a committed file. Correction, not a new write."""
+        if not self.enabled:
+            return False
+        before = len(self._records)
+        self._records = [r for r in self._records if r.fact_id != fact_id]
+        return len(self._records) < before
+
     def retrieve(self, query_tags: dict[str, Any] | None = None) -> list[FactRecord]:
         if not self.enabled or not self._records:
             return []

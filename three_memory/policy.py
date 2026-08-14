@@ -81,6 +81,9 @@ class UsePolicy:
         self.w_vname = np.array([1.2, 0.0], dtype=np.float64)
         # Untrained: among unread files, prefer any that carry the current code. Learn rare keys.
         self.w_search = np.array([1.2, 0.0], dtype=np.float64)
+        # Untrained: keep the committed file. Learn to drop it after a failed use.
+        self.w_revise = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_revise = np.array(-1.2, dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
@@ -117,6 +120,8 @@ class UsePolicy:
             self.w_qname,
             self.w_vname,
             self.w_search,
+            self.w_revise,
+            np.asarray(self.b_revise).reshape(1),
         )
 
     def weight_hash(self) -> str:
@@ -189,6 +194,28 @@ class UsePolicy:
             "kind": "use",
             "use": use,
             "p_use": p_use,
+            "logp": logp,
+            "feat": feat.tolist(),
+        }
+
+    @staticmethod
+    def revise_features(failed: bool, has_act_name: bool) -> np.ndarray:
+        """World said no? Chosen file already names an innate act? No door id."""
+        return np.array([1.0 if failed else 0.0, 1.0 if has_act_name else 0.0], dtype=np.float64)
+
+    def decide_revise(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        """Untrained: keep S. Learn to drop a file after a failed act."""
+        p_rev = sigmoid(float(feat @ self.w_revise + self.b_revise))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            revise = bool(rng.random() < 0.5)
+        else:
+            revise = bool(p_rev >= 0.5)
+        logp = float(np.log((p_rev if revise else (1.0 - p_rev)) + 1e-12))
+        return {
+            "kind": "revise",
+            "revise": revise,
+            "p_revise": p_rev,
             "logp": logp,
             "feat": feat.tolist(),
         }
@@ -606,6 +633,14 @@ class UsePolicy:
                 g = y - p
                 self.w_use += lr * g * feat
                 self.b_use = np.array(float(self.b_use) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
+            if tr.get("kind") == "revise":
+                p = sigmoid(float(feat @ self.w_revise + self.b_revise))
+                y = 1.0 if tr["revise"] else 0.0
+                g = y - p
+                self.w_revise += lr * g * feat
+                self.b_revise = np.array(float(self.b_revise) + lr * g, dtype=np.float64)
                 self.n_updates += 1
                 continue
             if tr.get("kind") == "write":

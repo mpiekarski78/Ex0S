@@ -40,3 +40,4 @@
 - TM.0.3.2: prose retrieve — no filed `action=`/`where=`; digit scan → anonymous `n*`; vname picks motor int. A **Store-works**; B shared return **Fail**. Audit: heading digits excluded. [`docs/tm032_results.md`](tm032_results.md).
 - TM.0.4.0: leave the door world — `ChannelDialWorld` + prose free life. A **Store-works** (PRESS / held-out TUNE); B shared return **Fail** (clutter PRESS, C miss). [`docs/tm040_results.md`](tm040_results.md).
 - TM.0.5.0: no answer integers — copy innate motor name token, not digits. A **Store-works**; B shared return **Fail** (last-50 0). Developmental rule locked (how to learn / correct; English then math as lives). [`docs/tm050_results.md`](tm050_results.md).
+- TM.0.5.1: correct a wrong commit — drop junk S, retry, keep after ρ reset. Search frozen so correction is load-bearing. A **Store-works**; B shared return **Fail**. [`docs/tm051_results.md`](tm051_results.md).

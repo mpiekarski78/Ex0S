@@ -228,3 +228,7 @@ Left the key/door room. Same prose machinery on `ChannelDialWorld`. **A** **Stor
 
 Unread W has no place/motor digits. Copy an innate motor name token (`press` / `tune`). **A** **Store-works**: after ρ reset W gone → PRESS; held-out C TUNE. **B** **Fail**: shared return last-50 0. Developmental rule locked. Not English NLP. Details: [`tm050_results.md`](tm050_results.md).
 
+## TM.0.5.1 (correct a wrong commit / shared return)
+
+Detect fail, drop clutter in S, retry, keep after ρ reset. Search frozen untrained. **A** **Store-works**: n_revised=11, then `p99` / PRESS; held-out C TUNE. Revise-off stays HOLD. **B** **Fail**: last-50 0, never revises. Details: [`tm051_results.md`](tm051_results.md).
+
