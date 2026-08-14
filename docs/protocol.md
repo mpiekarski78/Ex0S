@@ -134,3 +134,19 @@ Held-out: green door, `d2.tag` `{door:2, action:0}`, probe WAIT. Never in traini
 
 Do not bake `use_key` into the policy. Do not raise store bias to rescue the plot. disable-S must unmount W (peek of W is not a fact leak test).
 
+## v9 write from a life (W has no answer)
+
+Collect is **off**. W is clutter only (no `d0.tag`, no `d2.tag`). Boxed policy learns **when** to author a note. Frozen WHAT: on door-opening, write `{door: here, action: the act}`. Features = `{s_hit, opportunity}` (no door id).
+
+Training: forced red curriculum (OPEN, PICK_KEY, USE_KEY) so an opening fires; write gated by policy; unmount W; reset ρ; reward on probe.
+
+Held-out: green life (OPEN, WAIT). Same policy, no green file in W.
+
+| ID | If |
+|----|----|
+| Confound | Cortex hash moves; disable-S still `use_key`; or answer file was in W |
+| Fail | Policy unchanged; no authored file; red dies after ρ reset; green life fails |
+| Store-works | Cortex unchanged, policy changed, S authored from events, red `use_key` and green `wait` after ρ reset, empty S / disable-S fail |
+
+Do not copy a labeled tag from W. Do not let the policy emit `use_key` / `wait`.
+

@@ -1,4 +1,4 @@
-"""Tiny boxed policy: when to collect, whether to apply a matched record.
+"""Tiny boxed policy: when to collect/write, whether to apply a matched record.
 
 Features exclude door identity so the policy cannot memorize 'red → use_key'.
 The file's action= tag still chooses the action (frozen grammar).
@@ -30,9 +30,9 @@ def sigmoid(x: float) -> float:
 
 
 class UsePolicy:
-    """Linear collect (3-way) + apply gate. Cortex stays frozen elsewhere."""
+    """Linear collect (3-way) + apply gate + write gate. Cortex stays frozen elsewhere."""
 
-    n_feat = 2  # s_hit, w_hit — no door id, no novelty (novelty leaks the observation)
+    n_feat = 2  # s_hit, opportunity (w_hit or opened) — no door id, no novelty
 
     def __init__(self, seed: int = 7, lr: float = 0.15):
         rng = np.random.default_rng(seed)
@@ -41,12 +41,22 @@ class UsePolicy:
         # Untrained: prefer not applying the store (species prior wins).
         self.w_apply = rng.normal(0.0, 0.05, size=(self.n_feat,))
         self.b_apply = np.array(-1.2, dtype=np.float64)
+        # Untrained: do not author a note from a life event.
+        self.w_write = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_write = np.array(-1.2, dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
 
     def arrays(self) -> tuple[np.ndarray, ...]:
-        return (self.W_collect, self.b_collect, self.w_apply, np.asarray(self.b_apply).reshape(1))
+        return (
+            self.W_collect,
+            self.b_collect,
+            self.w_apply,
+            np.asarray(self.b_apply).reshape(1),
+            self.w_write,
+            np.asarray(self.b_write).reshape(1),
+        )
 
     def weight_hash(self) -> str:
         return hash_arrays(self.arrays())
@@ -73,12 +83,29 @@ class UsePolicy:
         logp_c = float(np.log(probs[c] + 1e-12))
         logp_a = float(np.log((p_apply if apply else (1.0 - p_apply)) + 1e-12))
         return {
+            "kind": "collect",
             "collect_mode": COLLECT_NAMES[c],
             "collect_idx": c,
             "apply": apply,
             "p_apply": p_apply,
             "probs_collect": probs.tolist(),
             "logp": logp_c + logp_a,
+            "feat": feat.tolist(),
+        }
+
+    def decide_write(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        p_write = sigmoid(float(feat @ self.w_write + self.b_write))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            write = bool(rng.random() < 0.5)
+        else:
+            write = bool(p_write >= 0.5)
+        logp = float(np.log((p_write if write else (1.0 - p_write)) + 1e-12))
+        return {
+            "kind": "write",
+            "write": write,
+            "p_write": p_write,
+            "logp": logp,
             "feat": feat.tolist(),
         }
 
@@ -89,6 +116,14 @@ class UsePolicy:
         lr = self.lr * float(advantage)
         for tr in traces:
             feat = np.asarray(tr["feat"], dtype=np.float64)
+            if tr.get("kind") == "write":
+                p = sigmoid(float(feat @ self.w_write + self.b_write))
+                y = 1.0 if tr["write"] else 0.0
+                g = y - p
+                self.w_write += lr * g * feat
+                self.b_write = np.array(float(self.b_write) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
             probs = softmax(feat @ self.W_collect + self.b_collect)
             c = int(tr["collect_idx"])
             grad = -probs

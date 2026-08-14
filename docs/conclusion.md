@@ -132,3 +132,7 @@ No English prior. Genome = frozen cortex seed, not DNA letters. Notes are `door=
 
 The collect/apply box may change; cortex SHA256 must not. Policy features exclude door identity. Classification: **Store-works**. After training, red commit+unmount yields `use_key`; held-out green (`d2.tag`, never in train W) yields `wait`; empty S and disable-S stay `open`. The motor act still comes from the file’s `action=`. Details: [`v8_results.md`](v8_results.md).
 
+## v9 (write from a life)
+
+W has no answer file. The policy learns **when** to author a note from a door-opening; the frozen template is `{here, that act}`. Classification: **Store-works**. Red life writes `d0.tag` (`action=2`) and `use_key` after ρ reset; held-out green life writes `d2.tag` (`action=0`) and `wait`. Empty S and disable-S stay `open`. Cortex unchanged. Details: [`v9_results.md`](v9_results.md).
+

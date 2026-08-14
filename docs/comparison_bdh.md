@@ -43,6 +43,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v6 fewshot / untaught NOTE | **Fail** |
 | three-memory, v7 native tags | **Store-works** (no English prior) |
 | three-memory, v8 boxed policy | **Store-works** (skill box moves; cortex frozen) |
+| three-memory, v9 write-from-life | **Store-works** (note authored from events; W has no answer) |
 
 ## Honest limits
 
@@ -111,3 +112,17 @@ Policy learns when to commit/apply. Cortex hash unchanged. Action still from `ac
 | Class | — | **Store-works** |
 
 See [`v8_results.md`](v8_results.md).
+
+## v9 (write from a life, no answer in W)
+
+Policy learns when to author S. Collect off. W is clutter only.
+
+| Check | Untrained | After train, ρ reset |
+|-------|-----------|----------------------|
+| Red life → `d0.tag` | S empty, `open` | **authored**, **`use_key`** |
+| Held-out green → `d2.tag` | — | **authored**, **`wait`** |
+| Empty S / disable-S | `open` | `open` |
+| Answer in W | no | no |
+| Class | — | **Store-works** |
+
+See [`v9_results.md`](v9_results.md).

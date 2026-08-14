@@ -111,6 +111,15 @@ class ThreeMemoryAgent:
             return {"door": DOOR_GREEN} if self.native else {"door": "green"}
         return None
 
+    def _door_code(self, obs: Obs) -> int | None:
+        if obs.at_red_door:
+            return DOOR_RED
+        if obs.at_blue_door:
+            return DOOR_BLUE
+        if obs.at_green_door:
+            return DOOR_GREEN
+        return None
+
     def collect(self, obs: Obs, *, novelty: float = 0.0) -> dict[str, Any]:
         query = self._obs_query(obs)
         info: dict[str, Any] = {"taken": 0, "committed": 0, "mode": self.collect_mode}
@@ -258,6 +267,7 @@ class ThreeMemoryAgent:
 
         The world reports events (open_failed / key_worked), not a fact string.
         Write rules build the inspectable record from observation + event.
+        Policy-gated writes (v9) author {door, action} from a door-opening success.
         """
         vec = obs.vector(self.cortex.config.obs_dim)
         embed = self.cortex.encode(vec)
@@ -273,8 +283,37 @@ class ThreeMemoryAgent:
             event = "key_worked"
         elif obs.last_succeeded and obs.at_blue_door:
             event = "blue_opened"
+        elif obs.last_succeeded and obs.at_green_door:
+            event = "green_opened"
 
-        if self.write_from_events and self.drives.should_write(novelty, integrity):
+        action_name = info.get("action")
+        name_to_id = {a.name.lower(): int(a) for a in Action}
+        opened = bool(info.get("opened"))
+        door = self._door_code(obs) if self.native else None
+
+        if self.use_policy is not None and self.write_from_events:
+            # v9: frozen WHAT = {here, the act that opened}. Learned WHEN.
+            if opened and door is not None and action_name in name_to_id:
+                query = {"door": door}
+                s_hit = bool(self.store.retrieve(query)) if self.store.enabled else False
+                feat = UsePolicy.features(s_hit, True)
+                dec = self.use_policy.decide_write(
+                    feat, epsilon=self.policy_epsilon, rng=self.policy_rng
+                )
+                self.last_policy = dec
+                self.policy_traces.append(dec)
+                if dec["write"]:
+                    act = name_to_id[action_name]
+                    tags: dict[str, Any] = {"door": door, "action": act}
+                    record = FactRecord(
+                        fact_id=f"d{door}",
+                        what=encode_tags(tags),
+                        when=self.t,
+                        drive_scores={"novelty": novelty, "integrity": integrity},
+                        tags=tags,
+                    )
+                    wrote = self.store.write(record)
+        elif self.write_from_events and self.drives.should_write(novelty, integrity):
             if obs.at_red_door and event in ("open_failed", "key_worked"):
                 if self.native:
                     tags = {"door": DOOR_RED, "requires": REQ_KEY, "action": ACT_USE_KEY}
@@ -315,9 +354,7 @@ class ThreeMemoryAgent:
                 wrote = self.store.write(record)
 
         # Session residue: remember which action just worked (cleared on ρ reset).
-        action_name = info.get("action")
         if success and action_name:
-            name_to_id = {a.name.lower(): int(a) for a in Action}
             if action_name in name_to_id:
                 self.rho.note_success(name_to_id[action_name])
 
@@ -330,4 +367,5 @@ class ThreeMemoryAgent:
             "event": event,
             "record": record.to_dict() if record and wrote else None,
             "weights_unchanged": self.weights_unchanged(),
+            "policy": dict(self.last_policy) if self.use_policy is not None else {},
         }

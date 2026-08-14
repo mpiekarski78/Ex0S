@@ -95,7 +95,7 @@ class KeyDoorWorld:
             o.at_red_door = True
         elif scenario in ("experience_foil", "probe_blue"):
             o.at_blue_door = True
-        elif scenario == "probe_green":
+        elif scenario in ("experience_green", "probe_green"):
             o.at_green_door = True
         if scenario == "probe_red_with_key":
             self.has_key = True
@@ -170,7 +170,7 @@ class KeyDoorWorld:
                 success = None
                 reward = -0.01
 
-        elif self.phase == "probe_green":
+        elif self.phase in ("experience_green", "probe_green"):
             # Held-out: WAIT opens (action=0). Prior prefers OPEN.
             if action == Action.WAIT:
                 success = True
