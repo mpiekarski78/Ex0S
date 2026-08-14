@@ -397,6 +397,10 @@ class ThreeMemoryAgent:
         pool = [r for r in pool if getattr(r, "fact_id", None) not in self._w_skip]
         if not pool:
             return []
+        if self.use_here_match:
+            here = [r for r in pool if self._rec_names_here(r, obs)]
+            if here:
+                pool = here
         code = self._door_code(obs)
         if code is None:
             return []
@@ -430,7 +434,21 @@ class ThreeMemoryAgent:
             return info
         if self._door_code(obs) is None:
             return info
-        picks = self._search_picks(list(self.world.records()), obs, record=record)
+        wpool = list(self.world.records())
+        if self.use_here_match and self.store.enabled:
+            here = self._station_name(obs)
+            stations = set(STATION_NAMES.values())
+            recs = list(self.store.records())
+            other = False
+            for rec in recs:
+                vals = {str(v).lower() for v in rec.tags.values() if isinstance(v, str)}
+                if (vals & stations) - ({here} if here else set()):
+                    other = True
+                    break
+            if other:
+                owned = {r.fact_id for r in recs}
+                wpool = [r for r in wpool if getattr(r, "fact_id", None) not in owned]
+        picks = self._search_picks(wpool, obs, record=record)
         if not picks:
             return info
         info["taken"] = 1
@@ -673,8 +691,18 @@ class ThreeMemoryAgent:
             do_write = bool(dec["write"])
         if not do_write or not rare:
             return
-        rec = rare_recs[0]
         station = self._station_name(obs) if self.use_here_match else None
+        stations = set(STATION_NAMES.values())
+        rec = None
+        for cand in rare_recs:
+            vals = {str(v).lower() for v in cand.tags.values() if isinstance(v, str)}
+            other = (vals & stations) - ({station} if station else set())
+            if other:
+                continue
+            rec = cand
+            break
+        if rec is None:
+            return
         vals = {str(v).lower() for v in rec.tags.values() if isinstance(v, str)}
         need_act = action_name not in vals
         need_st = bool(station) and station not in vals

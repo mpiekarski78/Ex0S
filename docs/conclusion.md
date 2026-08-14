@@ -244,3 +244,7 @@ The file is a fact about this station, not a global motor. **A** **Store-works**
 
 Unread W is distinct multi-paragraph documents, not cloned one-liners. Same find/stamp/here-match. **A** **Store-works**: after A life, same S → A PRESS / C HOLD; after C life → C TUNE / A HOLD. Copy-only still PRESS on C. **B** **Fail**: last-50 0. Details: [`tm054_results.md`](tm054_results.md).
 
+## TM.0.5.5 (accumulate S / shared return)
+
+Two lives, one store. **A** **Store-works**: after A then C on the same S → A PRESS / C TUNE. Wipe-between loses A. **B** **Fail**: last-50 0. Details: [`tm055_results.md`](tm055_results.md).
+

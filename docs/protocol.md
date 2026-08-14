@@ -32,7 +32,7 @@ Order of remaining recipe jumps (do not skip ahead to an English life):
 5. Open W (wiki-shaped content) (TM.0.5.4).
 6. One return (shared credit that actually works, or an honest genome admission).
 7. No `domain=` switch.
-8. Accumulate S (stop wiping every episode).
+8. Accumulate S (stop wiping every episode) (TM.0.5.5 eval path; train still wipes).
 9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works (TM.0.5.1).
 10. Then an English life, then a math life.
 
@@ -599,5 +599,23 @@ Recipe jump 5: unread W is **document-shaped** — heading plus a few paragraphs
 | Store-works | Untrained HOLD; after A life A PRESS and C HOLD; after C life C TUNE and A HOLD; copy-only PRESS on C; distinct multi-paragraph W | Same without splitting the return |
 
 Do not restore cloned one-liners, a motor name in W, or an English lexicon to rescue a plot.
+
+## TM.0.5.5 A accumulate S, B shared return
+
+Recipe jump 8, eval slice: two lives, **same S**, one unread library with both useful pages (krypton and helium) plus distinct Open W clutter. Life A then life C, no `rmtree`. After both, ρ reset, W gone: probe A PRESS (first fact kept) and probe C TUNE (second fact added). Wipe-between control: A HOLD after the second life — accumulate is load-bearing. After A only, C still HOLD (here-match). Copy-only still PRESS on C. Train still wipes each episode. Channel dial. Species prior HOLD. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. Not English.
+
+Genome grammar for two facts (not English): skip already-owned W pages only when S already names a **different** station; do not stamp a note that names another station; retrieve the S file that names **here**.
+
+**A.** Split: find rare page / stamp act+station / probe A correct. Eval: A then C on the same S.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; eval W missing p98; cloned W; motor or station name in W; digits; English; train also never wipes; drop `has_code`; drop `domain=`; digit-copy; synonym lexicon; v9 writes; empty S TUNE | same |
+| Fail | S wiped between eval lives; after both lives A not PRESS or C not TUNE; wipe-between still PRESS on A; copy-only already HOLDs on C | Untrained PRESS; two-life miss; split restored |
+| Store-works | Untrained HOLD; after A life A PRESS / C HOLD; after both lives A PRESS / C TUNE; wipe-between A HOLD; copy-only PRESS on C | Same without splitting the return |
+
+Do not restore wiping S on the eval path, a motor name in W, or an English lexicon to rescue a plot.
 
 

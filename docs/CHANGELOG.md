@@ -44,3 +44,4 @@
 - TM.0.5.2: unread W does not name the motor — stamp the act from the event onto a rare committed note. A **Store-works**; B shared return **Fail**. [`docs/tm052_results.md`](tm052_results.md).
 - TM.0.5.3: use the fact, not pick-a-motor — same S, A PRESS / C HOLD; copy-only still PRESS on C. A **Store-works**; B shared return **Fail**. [`docs/tm053_results.md`](tm053_results.md).
 - TM.0.5.4: Open W — distinct multi-paragraph unread pages, not cloned one-liners. Same find/stamp/here-match. A **Store-works**; B shared return **Fail**. [`docs/tm054_results.md`](tm054_results.md).
+- TM.0.5.5: accumulate S — two lives, same store; after both, A PRESS / C TUNE. Wipe-between loses A. A **Store-works**; B shared return **Fail**. [`docs/tm055_results.md`](tm055_results.md).
