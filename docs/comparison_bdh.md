@@ -80,6 +80,8 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.6.1 one bind | **Store-works** / **Store-works** (distractor hapax on the note does not fire; shared return not the jump) |
 | three-memory, TM.0.6.2 never-wipe English | **Fail** / **Store-works** (dirty train S still PRESS from `push`; C life missed TUNE; shared return not the jump) |
 | three-memory, TM.0.6.3 new-here stamp | **Store-works** / **Store-works** (second station gets an unmarked page; shared return not the jump) |
+| three-memory, TM.0.6.4 English find without unique rare | **Fail** / **Store-works** (clutter hapax bound as acts; motors still work; shared return not the jump) |
+| three-memory, TM.0.6.5 concurrent bind | **Store-works** / **Fail** (one CS here from the page in play; shared return first-CS `neon`, C miss) |
 
 ## Honest limits
 
@@ -614,4 +616,29 @@ See [`tm062_results.md`](tm062_results.md).
 | Class | **Store-works** | **Store-works** |
 
 See [`tm063_results.md`](tm063_results.md).
+
+## TM.0.6.4 (English find without unique rare / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| After train, dirty S: A / foil C | `press` / `hold` | **`press` / `hold`** |
+| C life on dirty S: A / C | `press` / `tune` | **`press` / `tune`** |
+| Train S binds | `push` **and** xenon/neon/krypton | same |
+| Nonce-only A | **`hold`** | **`hold`** |
+| Train last 50 | 0.94 | 0.94 |
+| Class | **Fail** | **Store-works** |
+
+See [`tm064_results.md`](tm064_results.md).
+
+## TM.0.6.5 (concurrent bind / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| After train, dirty S: A / foil C | **`press` / `hold`** | `press` / `hold` |
+| C life on dirty S: A / C | **`press` / `tune`** | `press` / **`hold`** |
+| Train S binds | **`push` only** | `neon` |
+| Train last 50 | 0.92 | **0.96** |
+| Class | **Store-works** | **Fail** |
+
+See [`tm065_results.md`](tm065_results.md).
 

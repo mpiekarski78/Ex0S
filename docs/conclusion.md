@@ -280,3 +280,11 @@ Never-wipe train on the one-bind English recipe. **A** **Fail**: dirty train S s
 
 A growing English store takes a second station as a new unmarked page. **A** **Store-works**: never-wipe train S still PRESS from `push`; C life on that S stamps `bind=adjust` and TUNE. **B** **Store-works** on this slice (last-50 0.92); not the jump, not retuned. Details: [`tm063_results.md`](tm063_results.md).
 
+## TM.0.6.4 (English find without unique rare / shared return)
+
+Same recipe on a multi-rare English W. **A** **Fail**: motors still PRESS/TUNE, but search bound clutter hapax (`xenon`/`neon`/`krypton`) as acts, not only `push`. **B** **Store-works** on the motor bar (last-50 0.94); not the jump, not retuned. Details: [`tm064_results.md`](tm064_results.md).
+
+## TM.0.6.5 (concurrent bind / shared return)
+
+Stamp the attended page, then block extra hapax at this station. **A** **Store-works**: only `bind=push` at A; C life `bind=adjust`. **B** **Fail** (first CS was `neon`; C missed TUNE). Details: [`tm065_results.md`](tm065_results.md).
+

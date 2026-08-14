@@ -14,7 +14,7 @@ Jumps must get closer to a machine that **could in theory** learn from wiki / En
 |-------|------------------------------------------------------|-----------------------------|
 | How to learn | Find unread data, commit, use after ρ reset — without planted answer integers, a door table, or an English lexicon | — |
 | How to correct | Detect mismatch, revise S (mark/overwrite/drop), retry, keep the correction after ρ reset | — |
-| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first (TM.0.6.0); one bind against a distractor hapax (TM.0.6.1); never-wipe English (TM.0.6.2); new-here stamp (TM.0.6.3) |
+| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first (TM.0.6.0); one bind against a distractor hapax (TM.0.6.1); never-wipe English (TM.0.6.2); new-here stamp (TM.0.6.3); English find without a unique rare token (TM.0.6.4); concurrent bind / block extra hapax here (TM.0.6.5) |
 | Learn math | Not a calculator in cortex | A later life after some language is already in S |
 
 Four recipe skills, in order: **find / commit / use / correct**. English and math are lives that use those skills. Dumping wiki + algebra into one experiment is illegal.
@@ -27,14 +27,14 @@ Order of recipe jumps (English is a life that uses the skills, not a lexicon in 
 
 1. No answer integers in W (TM.0.5.0).
 2. Use the committed file as text (not int→motor). TM.0.5.0: copy an **innate motor name** mentioned in the page. TM.0.5.2: the page does **not** name the motor; stamp the act the body just did onto a rare committed note. Closed body vocabulary, not English NLP.
-3. Search without `has_code` (side-effect of 1 if pages have no place ints; keep it load-bearing). TM.0.5.7: find without a unique rare token (`has_code` stays in the vector). TM.0.5.8: scale of Open W (64 documents).
+3. Search without `has_code` (side-effect of 1 if pages have no place ints; keep it load-bearing). TM.0.5.7: find without a unique rare token (`has_code` stays in the vector). TM.0.5.8: scale of Open W (64 documents). TM.0.6.4: same uniqueness test on the English recipe (hapax clutter; still `{has_code, has_rare}`).
 4. Probe is use-the-fact, not only pick-a-motor (TM.0.5.3).
 5. Open W (wiki-shaped content) (TM.0.5.4).
 6. One return (shared credit that actually works, or an honest genome admission).
 7. No `domain=` switch.
 8. Accumulate S (stop wiping every episode). TM.0.5.5 eval path; TM.0.5.6 never-wipe train.
 9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works (TM.0.5.1). TM.0.5.9: correct the dirty never-wipe store (stop appending once S names here; drop unstamped pages after a real stamp).
-10. English life, tiny corpus (TM.0.6.0). One bind per note against a distractor hapax (TM.0.6.1). Never-wipe English on that recipe (TM.0.6.2). New-here stamp so a second station gets an unmarked page (TM.0.6.3). Then a math life.
+10. English life, tiny corpus (TM.0.6.0). One bind per note against a distractor hapax (TM.0.6.1). Never-wipe English on that recipe (TM.0.6.2). New-here stamp so a second station gets an unmarked page (TM.0.6.3). English find without a unique rare token (TM.0.6.4). Concurrent bind: stamp the page in play, block extra hapax at this station (TM.0.6.5). Then more language in S, then a math life.
 
 Do not restore digit-copy, filed `action=`/`where=`, the door toy, or a synonym lexicon to rescue a plot.
 
@@ -745,5 +745,37 @@ Recipe: a growing store must take a **new place** as a new unmarked rare page. S
 | Store-works | Untrained HOLD; never-wipe train A PRESS from `push`; C life on that S A PRESS / C TUNE from `adjust`; wipe-between A HOLD; nonce HOLD | Same without splitting the return |
 
 Do not restore a train wipe, raise `n_train`, or a `push` table in the agent to rescue a plot.
+
+## TM.0.6.4 A English find without unique rare, B shared return
+
+Recipe: unread English W has **several distinctive clutter pages** (hapax English words), not one unique rare needle at `p99`. Same never-wipe one-bind + new-here recipe as TM.0.6.3. Hapax are `xenon` / `neon` / `krypton` on late clutter files — not `argon` (already on the useful A page). `{has_code, has_rare}` still ranks; uniqueness is gone. Closed-lexicon clutter-only control (no hapax) must not PRESS. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. Not math. Do not retune `n_train`. Do not add a ranker in this slice.
+
+**A.** Split: search rare / write one bind / copy the bound word / probe A correct. Never wipe train S. Bind must be `push`, not a clutter hapax.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|----|
+| Confound | Cortex moves; useful page is still the only rare token; synonym table in the agent; drop `has_code`; drop `domain=`; argon as clutter hapax; revise/here-only on | same |
+| Fail | Untrained PRESS; train S not PRESS; C life loses A or misses TUNE; wipe-between still PRESS; bind=clutter hapax; nonce PRESS; closed clutter-only PRESS | Untrained PRESS; A miss; C miss; nonce PRESS |
+| Store-works | Multi-rare English W; never-wipe train A PRESS from `push` only; C life on that S A PRESS / C TUNE from `adjust`; wipe-between A HOLD; nonce HOLD | Same without splitting the return |
+
+Do not restore a unique-rare needle, a `push` table in the agent, or a new ranker to rescue a plot.
+
+## TM.0.6.5 A concurrent bind, B shared return
+
+Recipe: the CS is the **attended page** when the body succeeds; once this station has a bind, do not stamp a second hapax. Same English multi-rare W as TM.0.6.4. Not a ranker. Not unique-rare restored. Concurrent-bind is **off by default**. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. Not math. Do not retune `n_train`. Do not turn on 0.5.9 here-only/revise in this slice.
+
+**A.** Split: search rare / write one bind / copy the bound word / probe A correct. Never wipe train S. Bind must be `push`, not a clutter hapax.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|----|
+| Confound | Cortex moves; unique-rare restored; synonym table in the agent; drop `has_code`; drop `domain=`; argon as clutter hapax; revise/here-only on | same |
+| Fail | Untrained PRESS; train S not PRESS; C life loses A or misses TUNE; wipe-between still PRESS; bind=clutter hapax; nonce PRESS | Untrained PRESS; A miss; C miss; nonce PRESS |
+| Store-works | Multi-rare English W; one CS here from the page in play; train A PRESS from `push`; C life A PRESS / C TUNE from `adjust`; wipe-between A HOLD; nonce HOLD | Same without splitting the return |
+
+Do not restore unique-rare, a `push` table in the agent, or a ranker to rescue a plot.
 
 

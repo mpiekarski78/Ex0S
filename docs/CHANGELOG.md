@@ -53,3 +53,5 @@
 - TM.0.6.1: one bind per note — distractor hapax on the same page does not fire. A **Store-works**; B shared return **Store-works** on this slice (not retuned). [`docs/tm061_results.md`](tm061_results.md).
 - TM.0.6.2: never-wipe English on the one-bind recipe — dirty train S still PRESS from `push`; C life on that S missed TUNE. A **Fail**; B shared return **Store-works** on this slice (not retuned). [`docs/tm062_results.md`](tm062_results.md).
 - TM.0.6.3: new-here stamp — a second station gets an unmarked rare page on the dirty English store. A **Store-works**; B shared return **Store-works** on this slice (not retuned). [`docs/tm063_results.md`](tm063_results.md).
+- TM.0.6.4: English find without a unique rare token — hapax clutter so `has_rare` is not a needle at `p99`. A **Fail** (clutter hapax bound as acts); B shared return **Store-works** on the motor bar (not retuned). [`docs/tm064_results.md`](tm064_results.md).
+- TM.0.6.5: concurrent bind — stamp the attended page, block extra hapax at this station. A **Store-works** (`bind=push` only); B shared return **Fail** (first CS `neon`; C miss). [`docs/tm065_results.md`](tm065_results.md).

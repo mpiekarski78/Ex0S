@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.6.3. Toy series: v0–v23.
+**Current:** TM.0.6.5. Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.6.3: a growing English store can take a second station as a new unmarked page. Never-wipe train keeps `bind=push` (PRESS; argon does not fire). C life on that dirty S stamps `bind=adjust` (**Store-works**). TM.0.6.2 without this genome stayed Fail. Shared return **Store-works** on this slice (last-50 0.92; not the jump, not retuned). Still genome: stream-first bind, new-here stamp, innate act and station names, `{has_code, has_rare}`, five acts, `domain=`. Tiny logs, not Wikipedia. Math is a later life.
+Honest status after TM.0.6.5: on a multi-rare English W, the recipe stamps the attended page and blocks extra hapax at that station. Never-wipe train keeps only `bind=push` (PRESS). C life on that dirty S stamps `bind=adjust` (**Store-works**). TM.0.6.4 without this genome bound xenon/neon/krypton as well. Shared return **Fail** (first CS was `neon`; C missed TUNE; not retuned). Still genome: stream-first bind, new-here stamp, concurrent-bind, `{has_code, has_rare}`, five acts, `domain=`. Tiny logs, not Wikipedia. Math is a later life.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -65,6 +65,8 @@ TM.0.6.0 English life: [`docs/tm060_results.md`](docs/tm060_results.md).
 TM.0.6.1 one bind: [`docs/tm061_results.md`](docs/tm061_results.md).  
 TM.0.6.2 never-wipe English: [`docs/tm062_results.md`](docs/tm062_results.md).  
 TM.0.6.3 new-here stamp: [`docs/tm063_results.md`](docs/tm063_results.md).  
+TM.0.6.4 English find without unique rare: [`docs/tm064_results.md`](docs/tm064_results.md).  
+TM.0.6.5 concurrent bind: [`docs/tm065_results.md`](docs/tm065_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -125,6 +127,8 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.6.1 A one bind / B shared return | **Store-works** / **Store-works** (distractor hapax does not fire; nonce HOLD; bind-all nonce PRESS) |
 | TM.0.6.2 A never-wipe English / B shared return | **Fail** / **Store-works** (train S still PRESS from `push`; C life on dirty S missed TUNE; shared return not the jump) |
 | TM.0.6.3 A new-here stamp / B shared return | **Store-works** / **Store-works** (C life on dirty English S stamps `adjust`; shared return not the jump) |
+| TM.0.6.4 A English find without unique rare / B shared return | **Fail** / **Store-works** (clutter hapax bound as acts; motors still PRESS/TUNE; shared return not the jump) |
+| TM.0.6.5 A concurrent bind / B shared return | **Store-works** / **Fail** (one CS here from the page in play; shared return first-CS `neon`, C miss) |
 
 ## Five pieces
 
@@ -188,6 +192,8 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.6.1 one bind | **Store-works** / **Store-works** | distractor hapax does not fire; [`docs/tm061_results.md`](docs/tm061_results.md) |
 | TM.0.6.2 never-wipe English | **Fail** / **Store-works** | dirty English S still PRESS; C life missed TUNE; [`docs/tm062_results.md`](docs/tm062_results.md) |
 | TM.0.6.3 new-here stamp | **Store-works** / **Store-works** | second station gets an unmarked page; [`docs/tm063_results.md`](docs/tm063_results.md) |
+| TM.0.6.4 English find without unique rare | **Fail** / **Store-works** | clutter hapax bound as acts; [`docs/tm064_results.md`](docs/tm064_results.md) |
+| TM.0.6.5 concurrent bind | **Store-works** / **Fail** | one CS here from the page in play; [`docs/tm065_results.md`](docs/tm065_results.md) |
 
 ## Quick start
 
@@ -239,6 +245,8 @@ python tests/test_tm060.py
 python tests/test_tm061.py
 python tests/test_tm062.py
 python tests/test_tm063.py
+python tests/test_tm064.py
+python tests/test_tm065.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -287,6 +295,8 @@ python -m experiments.run_tm060
 python -m experiments.run_tm061
 python -m experiments.run_tm062
 python -m experiments.run_tm063
+python -m experiments.run_tm064
+python -m experiments.run_tm065
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -295,7 +305,7 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010 … run_tm063, train_prior
+experiments/      # run_v0 … run_v23, run_tm010 … run_tm065, train_prior
 docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.x results
 tests/
 runs/             # gitignored

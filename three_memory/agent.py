@@ -82,6 +82,7 @@ class ThreeMemoryAgent:
         use_did_stamp: bool = False,
         use_one_bind: bool = False,
         use_stamp_new_here: bool = False,
+        use_block_here: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -156,6 +157,10 @@ class ThreeMemoryAgent:
             raise ValueError("use_one_bind requires use_alias_bind")
         if use_stamp_new_here and not use_here_match:
             raise ValueError("use_stamp_new_here requires use_here_match")
+        if use_block_here and not use_here_match:
+            raise ValueError("use_block_here requires use_here_match")
+        if use_block_here and not use_event_annotate:
+            raise ValueError("use_block_here requires use_event_annotate")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -214,8 +219,10 @@ class ThreeMemoryAgent:
         self.use_did_stamp = use_did_stamp
         self.use_one_bind = use_one_bind
         self.use_stamp_new_here = use_stamp_new_here
+        self.use_block_here = use_block_here
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
+        self._in_hand_id: str | None = None
         self._w_skip: set[str] = set()
         self.n_revised = 0
         self.n_annotated = 0
@@ -233,6 +240,7 @@ class ThreeMemoryAgent:
         self.rho.reset()
         self._peek = []
         self._w_skip = set()
+        self._in_hand_id = None
 
     def reset_store(self) -> None:
         self.store.reset()
@@ -290,6 +298,7 @@ class ThreeMemoryAgent:
             use_did_stamp=self.use_did_stamp,
             use_one_bind=self.use_one_bind,
             use_stamp_new_here=self.use_stamp_new_here,
+            use_block_here=self.use_block_here,
             domain=self.domain,
         )
 
@@ -488,6 +497,7 @@ class ThreeMemoryAgent:
         picks = self._search_picks(wpool, obs, record=record)
         if not picks:
             return info
+        self._in_hand_id = getattr(picks[0], "fact_id", None)
         if (
             self.use_commit_rare_only
             and self.use_here_match
@@ -791,6 +801,42 @@ class ThreeMemoryAgent:
         for i, vl in enumerate(keep):
             rec.tags[f"w{i}"] = vl
 
+    def _bound_here_note(self, station: str | None):
+        """The note that already binds an act at this station. One CS per place."""
+        if not station or not self.store.enabled:
+            return None
+        for rec in self.store.records():
+            vals = {str(v).lower() for v in rec.tags.values() if isinstance(v, str)}
+            bind = rec.tags.get("bind")
+            did = rec.tags.get("did")
+            if station in vals and (isinstance(bind, str) or isinstance(did, str)):
+                return rec
+        return None
+
+    def _in_hand_note(self):
+        """The page attended this step, if it already lives in S."""
+        fid = self._in_hand_id
+        if not fid or not self.store.enabled:
+            return None
+        for rec in self.store.records():
+            if rec.fact_id == fid:
+                return rec
+        return None
+
+    def _commit_in_hand(self):
+        """Commit the attended unread page. Coincidence, not a librarian leftover."""
+        fid = self._in_hand_id
+        if not fid or self.world is None or not self.store.enabled:
+            return None
+        if any(r.fact_id == fid for r in self.store.records()):
+            return self._in_hand_note()
+        for rec in self.world.records():
+            if getattr(rec, "fact_id", None) == fid:
+                if self._commit_w_record(rec):
+                    return self._in_hand_note()
+                return None
+        return None
+
     def _unknown_here(self, obs) -> bool:
         """S already names some other station, but not this one. Clutter-only S is not 'unknown'."""
         if not self.use_stamp_new_here or not self.use_here_match or not self.store.enabled:
@@ -879,7 +925,7 @@ class ThreeMemoryAgent:
         if action_name not in self._act_names():
             return
         recs = list(self.store.records())
-        if not recs:
+        if not recs and not (self.use_block_here and self._in_hand_id):
             return
         rare_recs = [r for r in recs if self._is_rare_in_world(r)]
         rare = bool(rare_recs)
@@ -896,13 +942,25 @@ class ThreeMemoryAgent:
         new_here = bool(self.use_stamp_new_here and station and self._unknown_here(obs))
         if not do_write and not new_here:
             return
-        if not rare and not new_here:
+        if not rare and not new_here and not (self.use_block_here and self._in_hand_id):
             return
-        rec = self._pick_stamp_note(rare_recs, station)
-        if rec is None and new_here:
-            if self._commit_rare_unmarked():
-                rare_recs = [r for r in self.store.records() if self._is_rare_in_world(r)]
-                rec = self._pick_stamp_note(rare_recs, station)
+        rec = None
+        if self.use_block_here and self.use_here_match:
+            rec = self._bound_here_note(station)
+            if rec is None:
+                rec = self._in_hand_note() or self._commit_in_hand()
+                if rec is not None and not self._is_rare_in_world(rec) and not new_here:
+                    rec = None
+                if rec is None and new_here:
+                    if self._commit_rare_unmarked():
+                        rare_recs = [r for r in self.store.records() if self._is_rare_in_world(r)]
+                        rec = self._pick_stamp_note(rare_recs, station)
+        else:
+            rec = self._pick_stamp_note(rare_recs, station)
+            if rec is None and new_here:
+                if self._commit_rare_unmarked():
+                    rare_recs = [r for r in self.store.records() if self._is_rare_in_world(r)]
+                    rec = self._pick_stamp_note(rare_recs, station)
         if rec is None:
             return
         vals = {str(v).lower() for v in rec.tags.values() if isinstance(v, str)}
@@ -1059,6 +1117,7 @@ class ThreeMemoryAgent:
         if record_search is None:
             record_search = record_use
         self._search_chosen = []
+        self._in_hand_id = None
         # Match / open-name first so collect's W lookup uses this step's query name, not a stale one.
         if self.use_qname_head:
             self._choose_qname(obs, record=record_use)
