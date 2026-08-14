@@ -51,6 +51,8 @@ class ThreeMemoryAgent:
         write_schema: bool = False,
         force_use: bool = False,
         force_write: bool = False,
+        use_rank: bool = False,
+        mark_ok: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -66,6 +68,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_pick requires use_policy")
         if write_schema and use_policy is None:
             raise ValueError("write_schema requires use_policy")
+        if use_rank and use_policy is None:
+            raise ValueError("use_rank requires use_policy")
         cfg = CortexConfig(obs_dim=obs_dim, embed_dim=embed_dim, n_actions=4, seed=cortex_seed)
         self.cortex = FrozenCortex(cfg)
         self.rho = WorkingTrace(RhoConfig(embed_dim=embed_dim))
@@ -87,6 +91,8 @@ class ThreeMemoryAgent:
         self.write_schema = write_schema
         self.force_use = force_use
         self.force_write = force_write
+        self.use_rank = use_rank
+        self.mark_ok = mark_ok
         self._peek: list[FactRecord] = []
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
@@ -228,6 +234,19 @@ class ThreeMemoryAgent:
     def _newest(self, hits: list) -> object:
         return max(hits, key=self._note_when)
 
+    def _rank_hits(self, hits: list, *, record: bool) -> list:
+        if not hits or self.use_policy is None:
+            return hits
+        newest_t = max(self._note_when(r) for r in hits)
+        items = [
+            (self._note_when(r) == newest_t, int(r.tags.get("ok", 0)) == 1) for r in hits
+        ]
+        dec = self.use_policy.decide_rank(items, epsilon=self.policy_epsilon, rng=self.policy_rng)
+        self.last_policy = {**self.last_policy, **dec}
+        if record:
+            self.policy_traces.append(dec)
+        return [hits[int(dec["idx"])]]
+
     def _hits_for(self, obs: Obs) -> list:
         pool = self._pool()
         mode = self.retrieve_policy
@@ -282,7 +301,9 @@ class ThreeMemoryAgent:
             if record_use:
                 self.policy_traces.append(dec)
             if dec["one"] and hits:
-                chosen = [self._newest(hits)]
+                chosen = self._rank_hits(hits, record=record_use) if self.use_rank else [self._newest(hits)]
+        elif self.use_rank and self.use_policy is not None and hits:
+            chosen = self._rank_hits(hits, record=record_use)
         if self.collect_mode == "policy":
             apply = bool(self.last_policy.get("apply", False))
         elif self.force_use:
@@ -410,6 +431,8 @@ class ThreeMemoryAgent:
                     tags: dict[str, Any] = {"door": door}
                     if complete:
                         tags["action"] = act
+                        if self.mark_ok:
+                            tags["ok"] = 1
                     if self.unique_writes:
                         tags["when"] = int(self.t)
                         fact_id = f"d{door}_t{self.t}_{len(self.store)}"

@@ -50,6 +50,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v13 copy action= | **Store-works** (gate learns to read the integer; held-out green `wait`) |
 | three-memory, v14 pick vs schema | **Store-works** / **Store-works** (newest among matches; include `action=` in the note) |
 | three-memory, v15 joint no clamps | **Store-works** (write+schema+use+pick together; held-out green `wait`) |
+| three-memory, v16 ok= vs newest / shared return | **Store-works** / **Fail** (prefer `ok=1`; one return starves the joint) |
 
 ## Honest limits
 
@@ -211,3 +212,14 @@ All four heads. No `force_use` / `force_write`.
 | Class | — | **Store-works** | control |
 
 See [`v15_results.md`](v15_results.md).
+
+## v16 (ok= vs newest, shared return)
+
+| Check | A rank `ok=` | B shared return |
+|-------|--------------|-----------------|
+| Untrained red | newest `wait` | `open` |
+| Trained red | **`use_key`** | `open` |
+| Held-out green | **`wait`** | `open` |
+| Class | **Store-works** | **Fail** |
+
+See [`v16_results.md`](v16_results.md).

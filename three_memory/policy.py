@@ -56,6 +56,8 @@ class UsePolicy:
         # Untrained: write {door} only. Learn to include action=.
         self.w_schema = rng.normal(0.0, 0.05, size=(self.n_feat,))
         self.b_schema = np.array(-1.2, dtype=np.float64)
+        # Untrained recency prior: newest wins. Learn to prefer ok=1 over newest.
+        self.w_rank = np.array([1.2, 0.0], dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
@@ -76,6 +78,7 @@ class UsePolicy:
             np.asarray(self.b_pick).reshape(1),
             self.w_schema,
             np.asarray(self.b_schema).reshape(1),
+            self.w_rank,
         )
 
     def weight_hash(self) -> str:
@@ -191,6 +194,40 @@ class UsePolicy:
             "feat": feat.tolist(),
         }
 
+    @staticmethod
+    def rank_features(is_newest: bool, has_ok: bool) -> np.ndarray:
+        """Recency vs success mark. No door id, no action=."""
+        return np.array([1.0 if is_newest else 0.0, 1.0 if has_ok else 0.0], dtype=np.float64)
+
+    def decide_rank(
+        self,
+        items: list[tuple[bool, bool]],
+        *,
+        epsilon: float = 0.0,
+        rng: np.random.Generator | None = None,
+    ) -> dict[str, Any]:
+        """Choose one hit. Untrained argmax is newest. Trained can prefer ok=1."""
+        rng = rng or np.random.default_rng()
+        if not items:
+            return {"kind": "rank", "idx": 0, "feats": [], "logp": 0.0, "feat": [0.0, 0.0]}
+        feats = np.stack([self.rank_features(n, o) for n, o in items], axis=0)
+        scores = feats @ self.w_rank
+        probs = softmax(scores)
+        if float(rng.random()) < epsilon:
+            idx = int(rng.integers(0, len(items)))
+        else:
+            idx = int(np.argmax(scores))
+        logp = float(np.log(probs[idx] + 1e-12))
+        return {
+            "kind": "rank",
+            "idx": idx,
+            "feats": feats.tolist(),
+            "feat": feats[idx].tolist(),
+            "is_newest": bool(items[idx][0]),
+            "has_ok": bool(items[idx][1]),
+            "logp": logp,
+        }
+
     def decide_write(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
         p_write = sigmoid(float(feat @ self.w_write + self.b_write))
         rng = rng or np.random.default_rng()
@@ -213,6 +250,18 @@ class UsePolicy:
             return
         lr = self.lr * float(advantage)
         for tr in traces:
+            if tr.get("kind") == "rank":
+                feats = np.asarray(tr.get("feats") or [tr["feat"]], dtype=np.float64)
+                if feats.size == 0:
+                    continue
+                scores = feats @ self.w_rank
+                probs = softmax(scores)
+                idx = int(tr["idx"])
+                grad = -probs
+                grad[idx] += 1.0
+                self.w_rank += lr * (feats.T @ grad)
+                self.n_updates += 1
+                continue
             feat = np.asarray(tr["feat"], dtype=np.float64)
             if tr.get("kind") == "pick":
                 p = sigmoid(float(feat @ self.w_pick + self.b_pick))

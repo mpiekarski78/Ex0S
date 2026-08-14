@@ -230,3 +230,17 @@ Unique files + write WHEN + schema + use-gate + pick-one, all learned. No `force
 
 Do not re-clamp. Do not put the motor act in a head.
 
+## v16 A ok= vs newest, B shared return
+
+**A.** Rank features `{is_newest, has_ok}`. Untrained recency prior. After a success write (`ok=1`), plant newer junk. Train red. Held-out green junk `open`. Newest-prior control must still fail.
+
+**B.** v15 joint setup with **one** return (`r = probe correct`) for every head. No split credit.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; door in rank features | Cortex moves; disable-S `use_key` |
+| Fail | Untrained already `use_key`; green fails; newest-wins still works | Red still `open`; last-50 ≈ 0 |
+| Store-works | Untrained newest wrong; trained `ok=1` red `use_key`; green `wait` | Same as v15 under shared return |
+
+Do not restore newest-wins or split credit to rescue an arm.
+

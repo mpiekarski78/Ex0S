@@ -160,3 +160,7 @@ Two boxed heads, same frozen cortex. **A** learns to apply one matching note (ne
 
 Write WHEN, schema, use-gate, and pick-one trained together. Classification: **Store-works**. Untrained conflict stays `open`. Trained red `use_key` (newest complete file). Held-out green `wait`. Apply-all still mixes. No `force_use` / `force_write`. Cortex unchanged. Details: [`v15_results.md`](v15_results.md).
 
+## v16 (ok= vs newest, shared return)
+
+**A** learns to prefer a success-marked note over a newer junk file. Classification: **Store-works**. Untrained recency prior `wait`. Trained red `use_key` (`ok=1`). Held-out green `wait`. Newest-wins control still `wait`. **B** uses one shared return on the v15 joint setup. Classification: **Fail** (last-50 = 0, red stays `open`). Split credit was load-bearing. Details: [`v16_results.md`](v16_results.md).
+
