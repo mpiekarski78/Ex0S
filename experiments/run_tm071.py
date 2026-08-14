@@ -89,6 +89,8 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Fail", "Local-alias was frozen off."
     if not m.get("local_alias"):
         return "Fail", "Local-alias was frozen off."
+    if m.get("use_keep_steerer"):
+        return "Confound", "Keep-steerer was smuggled onto this slice."
     return None
 
 
@@ -100,6 +102,8 @@ def classify_a(m: dict[str, Any]) -> tuple[str, str]:
         return "Fail", "Local-alias was frozen off."
     if not m.get("local_alias"):
         return "Fail", "Local-alias was frozen off."
+    if m.get("use_keep_steerer"):
+        return "Confound", "Keep-steerer was smuggled onto this slice."
     ub_a = _used_bind(m, "train_s_probe")
     ub_c = _used_bind(m, "both_after_c")
     m["used_bind_a"] = ub_a
@@ -131,6 +135,8 @@ def classify_b(m: dict[str, Any]) -> tuple[str, str]:
     m["use_local_alias"] = saved
     if not saved:
         return "Fail", "Local-alias was frozen off."
+    if m.get("use_keep_steerer"):
+        return "Confound", "Keep-steerer was smuggled onto this slice."
     if (m.get("train_s", {}).get("n") or 0) > MAX_TRAIN_S_FILES:
         return "Fail", "Shared return train S is still stamp-collecting clutter."
     if label == "Store-works":

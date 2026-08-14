@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.7.1. Toy series: v0–v23.
+**Current:** TM.0.7.2. Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.7.1: file-local bind→did. Dirty S still holds the novel tie. Retrieve used `xenon`, not `push`. **A Fail**. Shared return **Store-works** on the motor bar (n=4, last-50 0.96; not the jump, not retuned). Still genome: stream-first bind, find-novel, retry-novel, local-alias, `{has_code, has_rare}`, five acts, `domain=`. Tiny logs, not Wikipedia. Math is a later life.
+Honest status after TM.0.7.2: keep the note that steered. Search still retrieved `xenon`; keep-steerer dropped `push`. C used `neon`. **A Fail**. Shared return **Store-works** on the motor bar (n=2, last-50 0.94; not the jump, not retuned). Still genome: stream-first bind, find-novel, retry-novel, local-alias, keep-steerer, `{has_code, has_rare}`, five acts, `domain=`. Tiny logs, not Wikipedia. Math is a later life.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -73,6 +73,7 @@ TM.0.6.8 find-novel: [`docs/tm068_results.md`](docs/tm068_results.md).
 TM.0.6.9 find-novel without unique two-rare: [`docs/tm069_results.md`](docs/tm069_results.md).  
 TM.0.7.0 retry-novel: [`docs/tm070_results.md`](docs/tm070_results.md).  
 TM.0.7.1 local-alias: [`docs/tm071_results.md`](docs/tm071_results.md).  
+TM.0.7.2 keep-steerer: [`docs/tm072_results.md`](docs/tm072_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -141,6 +142,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.6.9 A find-novel without unique two-rare / B shared return | **Fail** / **Store-works** (train bound `neon`, C bound `xenon`; shared return not the jump) |
 | TM.0.7.0 A retry-novel / B shared return | **Fail** / **Store-works** (n=4, `push` plus clutter hapax; shared return not the jump) |
 | TM.0.7.1 A local-alias / B shared return | **Fail** / **Store-works** (retrieve used `xenon`; shared return not the jump) |
+| TM.0.7.2 A keep-steerer / B shared return | **Fail** / **Store-works** (kept `xenon`, dropped `push`; C used `neon`; shared return not the jump) |
 
 ## Five pieces
 
@@ -212,6 +214,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.6.9 find-novel without unique two-rare | **Fail** / **Store-works** | train bound `neon`, C bound `xenon`; [`docs/tm069_results.md`](docs/tm069_results.md) |
 | TM.0.7.0 retry-novel | **Fail** / **Store-works** | n=4, `push` plus clutter hapax; [`docs/tm070_results.md`](docs/tm070_results.md) |
 | TM.0.7.1 local-alias | **Fail** / **Store-works** | retrieve used `xenon`; [`docs/tm071_results.md`](docs/tm071_results.md) |
+| TM.0.7.2 keep-steerer | **Fail** / **Store-works** | kept `xenon`, dropped `push`; [`docs/tm072_results.md`](docs/tm072_results.md) |
 
 ## Quick start
 
@@ -271,6 +274,7 @@ python tests/test_tm068.py
 python tests/test_tm069.py
 python tests/test_tm070.py
 python tests/test_tm071.py
+python tests/test_tm072.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1

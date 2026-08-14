@@ -312,3 +312,7 @@ Do not lock find on the first max-novel page. **A** **Fail**: train S is the who
 
 Bind→did is file-local. **A** **Fail**: retrieve used `xenon`, not `push`. C used `adjust`. **B** **Store-works** on the motor bar (n=4, last-50 0.96); not the jump, not retuned. Details: [`tm071_results.md`](tm071_results.md).
 
+## TM.0.7.2 (keep-steerer / shared return)
+
+After success, drop other same-here notes. **A** **Fail**: search still retrieved `xenon`; keep-steerer dropped `push`. C used `neon`. **B** **Store-works** on the motor bar (n=2, last-50 0.94); not the jump, not retuned. Details: [`tm072_results.md`](tm072_results.md).
+

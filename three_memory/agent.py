@@ -87,6 +87,7 @@ class ThreeMemoryAgent:
         use_find_novel: bool = False,
         use_retry_novel: bool = False,
         use_local_alias: bool = False,
+        use_keep_steerer: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -173,6 +174,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_retry_novel requires use_find_novel")
         if use_local_alias and not use_alias_bind:
             raise ValueError("use_local_alias requires use_alias_bind")
+        if use_keep_steerer and not use_here_match:
+            raise ValueError("use_keep_steerer requires use_here_match")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -236,6 +239,8 @@ class ThreeMemoryAgent:
         self.use_find_novel = use_find_novel
         self.use_retry_novel = use_retry_novel
         self.use_local_alias = use_local_alias
+        self.use_keep_steerer = use_keep_steerer
+        self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._in_hand_id: str | None = None
@@ -319,6 +324,7 @@ class ThreeMemoryAgent:
             use_find_novel=self.use_find_novel,
             use_retry_novel=self.use_retry_novel,
             use_local_alias=self.use_local_alias,
+            use_keep_steerer=self.use_keep_steerer,
             domain=self.domain,
         )
 
@@ -800,6 +806,21 @@ class ThreeMemoryAgent:
             for k, v in rec.tags.items()
             if k not in _QNAME_SKIP
         )
+
+    def _keep_steerer(self, obs) -> None:
+        """Drop other same-here notes after a file steered. Not a subject."""
+        if not self.use_keep_steerer or not self.store.enabled:
+            return
+        keep = {i for i in self._last_chosen_ids if i}
+        if self._in_hand_id:
+            keep.add(str(self._in_hand_id))
+        if not keep:
+            return
+        for rec in list(self.store.records()):
+            if rec.fact_id in keep:
+                continue
+            if self._rec_names_here(rec, obs) and self.store.delete(rec.fact_id):
+                self.n_revised += 1
 
     def _chosen_has_act_name(self) -> bool:
         fid = str(self.last_policy.get("file") or "")
@@ -1287,11 +1308,15 @@ class ThreeMemoryAgent:
                     # File is a fact about *this* station, not a global motor.
                     apply = any(self._rec_names_here(r, obs) for r in chosen)
                     self.last_policy["here_match"] = apply
+        self._last_chosen_ids = []
         if apply:
             for rec in chosen:
+                fid = getattr(rec, "fact_id", None)
+                if fid:
+                    self._last_chosen_ids.append(str(fid))
                 bind = rec.tags.get("bind")
                 if isinstance(bind, str):
-                    self.last_policy["used_file"] = getattr(rec, "fact_id", None)
+                    self.last_policy["used_file"] = fid
                     self.last_policy["used_bind"] = bind.lower()
                 self._apply_record_bias(logits, rec, obs)
         return logits
@@ -1419,6 +1444,8 @@ class ThreeMemoryAgent:
 
         if self.use_event_annotate and opened and action_name:
             self._maybe_annotate(str(action_name).lower(), obs)
+        if self.use_keep_steerer and success is True:
+            self._keep_steerer(obs)
 
         if self.use_policy is not None and self.write_from_events:
             # v9: frozen WHAT = {here, the act that opened}. Learned WHEN.

@@ -88,6 +88,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.6.9 find-novel without unique two-rare | **Fail** / **Store-works** (train bound `neon`, C bound `xenon`; shared return not the jump) |
 | three-memory, TM.0.7.0 retry-novel | **Fail** / **Store-works** (n=4, `push` plus clutter hapax; shared return not the jump) |
 | three-memory, TM.0.7.1 local-alias | **Fail** / **Store-works** (retrieve used `xenon`; shared return not the jump) |
+| three-memory, TM.0.7.2 keep-steerer | **Fail** / **Store-works** (kept `xenon`, dropped `push`; C used `neon`; shared return not the jump) |
 
 ## Honest limits
 
@@ -727,4 +728,14 @@ See [`tm070_results.md`](tm070_results.md).
 | Class | **Fail** | **Store-works** |
 
 See [`tm071_results.md`](tm071_results.md).
+
+## TM.0.7.2 (keep-steerer / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| Used bind A / C | **`xenon`** / **`neon`** | — |
+| Train S n files | **2** | **2** |
+| Class | **Fail** | **Store-works** |
+
+See [`tm072_results.md`](tm072_results.md).
 
