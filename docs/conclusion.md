@@ -240,3 +240,7 @@ Unread W has no motor name. Stamp the act the body just did onto a rare committe
 
 The file is a fact about this station, not a global motor. **A** **Store-works**: after A life, same S → A PRESS / C HOLD; after C life → C TUNE / A HOLD. Copy-only still PRESS on C. **B** **Fail**: last-50 0. Details: [`tm053_results.md`](tm053_results.md).
 
+## TM.0.5.4 (Open W / shared return)
+
+Unread W is distinct multi-paragraph documents, not cloned one-liners. Same find/stamp/here-match. **A** **Store-works**: after A life, same S → A PRESS / C HOLD; after C life → C TUNE / A HOLD. Copy-only still PRESS on C. **B** **Fail**: last-50 0. Details: [`tm054_results.md`](tm054_results.md).
+

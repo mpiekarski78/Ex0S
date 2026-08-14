@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.5.3. Toy series: v0–v23.
+**Current:** TM.0.5.4. Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.5.3: the committed file is a fact about **this station**, not a global motor. After A life, same S: A PRESS, C HOLD. Copy-only still PRESS on C. Not English NLP. Shared return still **Fail**s (last-50 0). Still genome: innate act and station names, rarity, five acts, `domain=`, wipe S. W is a handful of scraps, not Wikipedia.
+Honest status after TM.0.5.4: unread W is a small stack of **distinct documents**, not 11 clones of one line. Same find/stamp/here-match as TM.0.5.3: after A life, same S: A PRESS, C HOLD. Copy-only still PRESS on C. Not English NLP. Shared return still **Fail**s (last-50 0). Still genome: innate act and station names, rarity, five acts, `domain=`, wipe S. Twelve short logs, not Wikipedia.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -55,6 +55,7 @@ TM.0.5.0 no answer integers: [`docs/tm050_results.md`](docs/tm050_results.md).
 TM.0.5.1 correct a wrong commit: [`docs/tm051_results.md`](docs/tm051_results.md).  
 TM.0.5.2 unnamed motor: [`docs/tm052_results.md`](docs/tm052_results.md).  
 TM.0.5.3 use-the-fact: [`docs/tm053_results.md`](docs/tm053_results.md).  
+TM.0.5.4 Open W: [`docs/tm054_results.md`](docs/tm054_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -105,6 +106,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.5.1 A correct / B shared return | **Store-works** / **Fail** (drop junk S; PRESS from corrected file; shared return last-50 0) |
 | TM.0.5.2 A unnamed motor / B shared return | **Store-works** / **Fail** (W has no motor name; stamp from the event; shared return last-50 0) |
 | TM.0.5.3 A use-the-fact / B shared return | **Store-works** / **Fail** (same S: A PRESS, C HOLD; copy-only still PRESS on C) |
+| TM.0.5.4 A Open W / B shared return | **Store-works** / **Fail** (distinct documents; same S: A PRESS, C HOLD) |
 
 ## Five pieces
 
@@ -158,6 +160,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.5.1 correct a wrong commit | **Store-works** / **Fail** | drop junk S, keep after ρ reset; [`docs/tm051_results.md`](docs/tm051_results.md) |
 | TM.0.5.2 unnamed motor | **Store-works** / **Fail** | W has no motor name; stamp from the event; [`docs/tm052_results.md`](docs/tm052_results.md) |
 | TM.0.5.3 use-the-fact | **Store-works** / **Fail** | same S: A PRESS, C HOLD; [`docs/tm053_results.md`](docs/tm053_results.md) |
+| TM.0.5.4 Open W | **Store-works** / **Fail** | distinct multi-paragraph W; [`docs/tm054_results.md`](docs/tm054_results.md) |
 
 ## Quick start
 
@@ -199,6 +202,7 @@ python tests/test_tm050.py
 python tests/test_tm051.py
 python tests/test_tm052.py
 python tests/test_tm053.py
+python tests/test_tm054.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -237,6 +241,7 @@ python -m experiments.run_tm050
 python -m experiments.run_tm051
 python -m experiments.run_tm052
 python -m experiments.run_tm053
+python -m experiments.run_tm054
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -245,7 +250,7 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010 … run_tm053, train_prior
+experiments/      # run_v0 … run_v23, run_tm010 … run_tm054, train_prior
 docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.x results
 tests/
 runs/             # gitignored

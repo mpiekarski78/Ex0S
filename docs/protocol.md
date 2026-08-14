@@ -29,7 +29,7 @@ Order of remaining recipe jumps (do not skip ahead to an English life):
 2. Use the committed file as text (not int→motor). TM.0.5.0: copy an **innate motor name** mentioned in the page. TM.0.5.2: the page does **not** name the motor; stamp the act the body just did onto a rare committed note. Closed body vocabulary, not English NLP.
 3. Search without `has_code` (side-effect of 1 if pages have no place ints; keep it load-bearing).
 4. Probe is use-the-fact, not only pick-a-motor (TM.0.5.3).
-5. Open W (wiki-shaped content).
+5. Open W (wiki-shaped content) (TM.0.5.4).
 6. One return (shared credit that actually works, or an honest genome admission).
 7. No `domain=` switch.
 8. Accumulate S (stop wiping every episode).
@@ -583,5 +583,21 @@ Recipe jump 4: the file is a fact about **this station**, not a global motor. Sa
 | Store-works | Untrained HOLD; after A life A PRESS and C HOLD; after C life C TUNE and A HOLD; copy-only PRESS on C | Same without splitting the return |
 
 Do not restore pick-a-motor, a motor name in W, or an English place lexicon to rescue a plot.
+
+## TM.0.5.4 A Open W, B shared return
+
+Recipe jump 5: unread W is **document-shaped** — heading plus a few paragraphs, **distinct** clutter pages (not 11 identical clones). Useful fact still unnamed (no `press`/`tune`/`cha`). Same find/stamp/here-match as TM.0.5.3. After A life, **same S**, ρ reset, W gone: probe A PRESS; probe C HOLD. After C life: probe C TUNE; probe A HOLD. Copy-only still PRESS on C. Clutter words share a closed lexicon so only the useful page is rare (`krypton`/`helium` scrap). Channel dial. Species prior HOLD. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. S wiped every episode. Not English.
+
+**A.** Split: find rare page / stamp act+station / probe A correct.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; cloned one-line W; clutter pages are rare; motor or station name in W; digits; English; accumulate S; drop `has_code`; drop `domain=`; digit-copy; synonym lexicon; v9 writes; empty S TUNE | same |
+| Fail | W not Open W; Untrained PRESS; A's stamp fires on C; C's stamp fires on A; copy-only already HOLDs on C | Untrained PRESS; A miss; split restored |
+| Store-works | Untrained HOLD; after A life A PRESS and C HOLD; after C life C TUNE and A HOLD; copy-only PRESS on C; distinct multi-paragraph W | Same without splitting the return |
+
+Do not restore cloned one-liners, a motor name in W, or an English lexicon to rescue a plot.
 
 

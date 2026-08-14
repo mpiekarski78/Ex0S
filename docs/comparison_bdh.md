@@ -70,6 +70,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.5.1 correct | **Store-works** / **Fail** (drop junk S; shared return never revises) |
 | three-memory, TM.0.5.2 unnamed motor | **Store-works** / **Fail** (no motor name in W; stamp from the event; shared return starves) |
 | three-memory, TM.0.5.3 use-the-fact | **Store-works** / **Fail** (same S: A PRESS, C HOLD; shared return starves) |
+| three-memory, TM.0.5.4 Open W | **Store-works** / **Fail** (distinct documents; same S: A PRESS, C HOLD; shared return starves) |
 
 ## Honest limits
 
@@ -477,4 +478,16 @@ See [`tm052_results.md`](tm052_results.md).
 | Class | **Store-works** | **Fail** |
 
 See [`tm053_results.md`](tm053_results.md).
+
+## TM.0.5.4 (Open W / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| After A life: A / foil C | **`press` / `hold`** | `hold` / `hold` |
+| After C life: C / foil A | **`tune` / `hold`** | `hold` / `hold` |
+| Copy-only foil C | **`press`** | `hold` |
+| Train last 50 | 0.14 | 0.00 |
+| Class | **Store-works** | **Fail** |
+
+See [`tm054_results.md`](tm054_results.md).
 
