@@ -49,6 +49,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v12 learn select vs dump | **Store-works** (head learns not to dump; held-out blue `open`) |
 | three-memory, v13 copy action= | **Store-works** (gate learns to read the integer; held-out green `wait`) |
 | three-memory, v14 pick vs schema | **Store-works** / **Store-works** (newest among matches; include `action=` in the note) |
+| three-memory, v15 joint no clamps | **Store-works** (write+schema+use+pick together; held-out green `wait`) |
 
 ## Honest limits
 
@@ -198,3 +199,15 @@ Same cortex. Two heads.
 | Class | **Store-works** | **Store-works** |
 
 See [`v14_results.md`](v14_results.md).
+
+## v15 (joint, no clamps)
+
+All four heads. No `force_use` / `force_write`.
+
+| Check | Untrained | Trained | Apply-all |
+|-------|-----------|---------|-----------|
+| Red | `open` (use-gate off) | **`use_key`** (newest complete) | `wait` |
+| Held-out green | — | **`wait`** | — |
+| Class | — | **Store-works** | control |
+
+See [`v15_results.md`](v15_results.md).

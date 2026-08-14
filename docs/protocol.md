@@ -218,3 +218,15 @@ Same cortex. Generic copy. Two arms.
 
 Do not put the motor act in either head. Do not restore the if/elif table.
 
+## v15 joint, no clamps
+
+Unique files + write WHEN + schema + use-gate + pick-one, all learned. No `force_use` / `force_write`. Train on red with a stale wrong note in S. Held-out green with stale `open` in S. Generic copy. Probe greedy. `n_forced=0`. W has no answers.
+
+| ID | If |
+|----|----|
+| Confound | Cortex moves; disable-S `use_key`; answer in W; probe explores; door id in a head |
+| Fail | Untrained already `use_key`; green fails; apply-all still works; a gate was clamped to rescue the plot |
+| Store-works | All four heads changed; untrained not `use_key`; trained red `use_key` (newest complete); green `wait`; empty S / disable-S `open`; apply-all mixes |
+
+Do not re-clamp. Do not put the motor act in a head.
+

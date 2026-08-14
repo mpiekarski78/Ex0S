@@ -273,33 +273,29 @@ class ThreeMemoryAgent:
             self._choose_retrieve(obs)
         logits = np.zeros(4, dtype=np.float64)
         apply = True
-        chosen = None
-        if self.collect_mode == "policy":
-            apply = bool(self.last_policy.get("apply", False))
-        elif self.use_pick and self.use_policy is not None:
-            hits = self._hits_for(obs)
+        hits = self._hits_for(obs)
+        chosen = hits
+        if self.use_pick and self.use_policy is not None:
             feat = UsePolicy.pick_features(len(hits))
             dec = self.use_policy.decide_pick(feat, epsilon=self.policy_epsilon, rng=self.policy_rng)
             self.last_policy = {**self.last_policy, **dec}
             if record_use:
                 self.policy_traces.append(dec)
-            chosen = hits
             if dec["one"] and hits:
                 chosen = [self._newest(hits)]
-            apply = True
+        if self.collect_mode == "policy":
+            apply = bool(self.last_policy.get("apply", False))
         elif self.force_use:
             apply = True
         elif self.use_read and self.use_policy is not None:
-            hits = self._hits_for(obs)
-            feat = UsePolicy.features(bool(hits), False)
+            feat = UsePolicy.features(bool(chosen), False)
             dec = self.use_policy.decide_use(feat, epsilon=self.policy_epsilon, rng=self.policy_rng)
             self.last_policy = {**self.last_policy, **dec}
             if record_use:
                 self.policy_traces.append(dec)
             apply = bool(dec["use"])
         if apply:
-            recs = chosen if chosen is not None else self._hits_for(obs)
-            for rec in recs:
+            for rec in chosen:
                 self._apply_record_bias(logits, rec, obs)
         return logits
 

@@ -156,3 +156,7 @@ A boxed use-gate learns when to copy the file’s integer into motor logits. No 
 
 Two boxed heads, same frozen cortex. **A** learns to apply one matching note (newest `when=`) instead of summing every `action=`. **B** learns to put `action=` in the note instead of `{door}` only. Both **Store-works**. Untrained A mixes (`wait`); untrained B writes door-only (`open`). Trained red `use_key`; held-out green `wait`. Details: [`v14_results.md`](v14_results.md).
 
+## v15 (joint, no clamps)
+
+Write WHEN, schema, use-gate, and pick-one trained together. Classification: **Store-works**. Untrained conflict stays `open`. Trained red `use_key` (newest complete file). Held-out green `wait`. Apply-all still mixes. No `force_use` / `force_write`. Cortex unchanged. Details: [`v15_results.md`](v15_results.md).
+
