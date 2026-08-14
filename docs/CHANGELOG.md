@@ -50,3 +50,5 @@
 - TM.0.5.8: scale of Open W — 64 distinct document-shaped clutter pages; same multi-rare never-wipe recipe. A **Store-works**; B shared return **Store-works** (not retuned). [`docs/tm058_results.md`](tm058_results.md).
 - TM.0.5.9: correct the dirty store — stop committing once S names here; drop unstamped pages after a real stamp. A **Store-works** (S n=1); B shared return **Fail**. [`docs/tm059_results.md`](tm059_results.md).
 - TM.0.6.0: first English life, tiny corpus — bind a page word from the event (`did=` bookkeeping, copy `push`/`adjust`). A **Store-works**; B shared return **Store-works** on this slice (not retuned). [`docs/tm060_results.md`](tm060_results.md).
+- TM.0.6.1: one bind per note — distractor hapax on the same page does not fire. A **Store-works**; B shared return **Store-works** on this slice (not retuned). [`docs/tm061_results.md`](tm061_results.md).
+- TM.0.6.2: never-wipe English on the one-bind recipe — dirty train S still PRESS from `push`; C life on that S missed TUNE. A **Fail**; B shared return **Store-works** on this slice (not retuned). [`docs/tm062_results.md`](tm062_results.md).

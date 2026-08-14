@@ -268,3 +268,11 @@ Stop stamp-collecting on a never-wipe life. **A** **Store-works**: train S is on
 
 Tiny English corpus. Pages never say `press`/`tune`. **A** **Store-works**: after a free life A PRESS / C HOLD from `push` bound in S (`did=press` is bookkeeping); bind-off HOLD. **B** **Store-works** on this slice (last-50 0.46); not the jump, not retuned. Details: [`tm060_results.md`](tm060_results.md).
 
+## TM.0.6.1 (one bind / shared return)
+
+Two rare words on the useful page. **A** **Store-works**: bind=`push` not `argon`; nonce-only S HOLD; bind-all on argon PRESS. **B** **Store-works** on this slice (last-50 0.90); not the jump, not retuned. Details: [`tm061_results.md`](tm061_results.md).
+
+## TM.0.6.2 (never-wipe English / shared return)
+
+Never-wipe train on the one-bind English recipe. **A** **Fail**: dirty train S still PRESS from `push`, but a C life on that S did not stamp TUNE. **B** **Store-works** on this slice (last-50 0.92); not the jump, not retuned. Details: [`tm062_results.md`](tm062_results.md).
+

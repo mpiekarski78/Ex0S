@@ -1,16 +1,15 @@
-"""TM.0.6.0: first English life — tiny corpus, bind a page word from the event.
+"""TM.0.6.2: never-wipe English life on the TM.0.6.1 one-bind recipe.
 
-Unread pages never say press/tune. Genome has no synonym table. On success,
-stamp did= (bookkeeping) and keep rare page words; copy those words later via
-inspectable aliases in S. Not Wikipedia, not math, not shared-return rescue,
-not dropping has_code or domain="dial".
+Same tiny English W and stream-first bind as TM.0.6.1, but train does not rmtree S.
+After train, probe that dirty store (no fresh A life). Then a C life on the same S.
+Not math, not shared-return rescue, not dropping has_code or domain="dial",
+not turning on 0.5.9 revise/here-only.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,120 +23,180 @@ sys.path.insert(0, str(REPO_ROOT))
 from experiments.run_tm010 import _copy_heads, _head_fp
 from experiments.run_tm012 import _has_field
 from experiments.run_tm040 import probe
-from experiments.run_tm052 import _s_has_token, live_free
-from experiments.run_tm054 import (
-    _life_then_two_probes as _life054,
-    _n_paragraphs,
-    _rare_words,
+from experiments.run_tm052 import live_free
+from experiments.run_tm054 import _MOTOR_WORDS
+from experiments.run_tm055 import _accumulate_lives
+from experiments.run_tm056 import _copy_s
+from experiments.run_tm061 import (
+    _enrich,
+    _life_then_two_probes,
+    _w_flags as _w_flags061,
+    _write_nonce_s,
     clutter_prose,
-    make as _make054,
+    make as _make061,
+    wiki_prose,
 )
-from experiments.run_tm054 import _w_flags as _w_flags054
-from three_memory.dial_env import STATION_NAMES, DialAction
+from experiments.run_v22 import _tags
 from three_memory.policy import UsePolicy
-from three_memory.tag_store import extract_prose_ints, prose_tokens, write_prose_notes
+from three_memory.tag_store import write_prose_notes
 
-_MOTOR_WORDS = {a.name.lower() for a in DialAction}
-_STATION_WORDS = set(STATION_NAMES.values())
-
-WIKI_A = (
-    "p99.md",
-    "Staff bench log.\n\n"
-    "Push turned up in the tray.\n"
-    "Notes from the lab follow. The fixture was quiet.\n",
+LIVE_KEYS = (
+    "opened",
+    "files",
+    "n_forced",
+    "n_steps",
+    "n_explored",
+    "n_annotated",
+    "found_press",
+    "found_tune",
+    "found_push",
+    "found_adjust",
+    "found_argon",
+    "found_alpha",
+    "found_did_press",
+    "found_did_tune",
+    "found_bind_push",
+    "found_bind_adjust",
+    "found_bind_argon",
+    "found_bind_alpha",
+    "found_krypton",
+    "found_helium",
+    "found_cha",
+    "found_chc",
+    "actions",
 )
-WIKI_C = (
-    "p98.md",
-    "Staff bench log.\n\n"
-    "Adjust turned up in the tray.\n"
-    "Notes from the lab follow. The fixture was quiet.\n",
-)
-
-
-def wiki_prose(*, include_a: bool = False, include_c: bool = False) -> list[tuple[str, str]]:
-    notes = clutter_prose()
-    if include_a:
-        assert _n_paragraphs(WIKI_A[1]) >= 2
-        assert not extract_prose_ints(WIKI_A[1])
-        toks = prose_tokens(WIKI_A[1])
-        assert not (toks & _MOTOR_WORDS)
-        assert not (toks & _STATION_WORDS)
-        notes.append(WIKI_A)
-    if include_c:
-        assert _n_paragraphs(WIKI_C[1]) >= 2
-        assert not extract_prose_ints(WIKI_C[1])
-        toks = prose_tokens(WIKI_C[1])
-        assert not (toks & _MOTOR_WORDS)
-        assert not (toks & _STATION_WORDS)
-        notes.append(WIKI_C)
-    return notes
 
 
 def _run_dir() -> Path:
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H%M%S")
-    d = REPO_ROOT / "runs" / f"{stamp}_tm060"
+    d = REPO_ROOT / "runs" / f"{stamp}_tm062"
     d.mkdir(parents=True, exist_ok=True)
     return d
-
-
-def _s_has_did(tag: str, word: str) -> bool:
-    word = word.lower()
-    for ln in tag.splitlines():
-        if "=" not in ln or ln.startswith("#"):
-            continue
-        k, _, v = ln.partition("=")
-        if k.strip() == "did" and v.strip().lower() == word:
-            return True
-    return False
-
-
-def _enrich(live: dict[str, Any]) -> dict[str, Any]:
-    tag = live.get("tag") or ""
-    live["found_push"] = _s_has_token(tag, "push")
-    live["found_adjust"] = _s_has_token(tag, "adjust")
-    live["found_did_press"] = _s_has_did(tag, "press")
-    live["found_did_tune"] = _s_has_did(tag, "tune")
-    live["found_cha"] = _s_has_token(tag, "cha")
-    live["found_chc"] = _s_has_token(tag, "chc")
-    return live
 
 
 def make(
     *args,
     use_alias_bind: bool = True,
     use_did_stamp: bool = True,
-    use_one_bind: bool = False,
+    use_one_bind: bool = True,
+    use_commit_rare_only: bool = True,
+    use_revise_head: bool = False,
+    use_commit_here_only: bool = False,
+    use_event_annotate: bool = True,
     **kwargs,
 ):
-    return _make054(
+    if not use_event_annotate:
+        use_alias_bind = False
+        use_did_stamp = False
+        use_one_bind = False
+    return _make061(
         *args,
         use_alias_bind=use_alias_bind,
         use_did_stamp=use_did_stamp,
         use_one_bind=use_one_bind,
+        use_commit_rare_only=use_commit_rare_only,
+        use_revise_head=use_revise_head,
+        use_commit_here_only=use_commit_here_only,
+        use_event_annotate=use_event_annotate,
         **kwargs,
     )
 
 
 def _w_flags(w_files: list[str], w_dir: Path) -> dict[str, Any]:
-    flags = _w_flags054(w_files, w_dir)
+    flags = _w_flags061(w_files, w_dir)
     flags["english_life"] = True
     flags["use_alias_bind"] = True
-    flags["accumulate_s"] = False
-    rare = _rare_words(wiki_prose(include_a=True))
-    flags["w_clutter_has_rare"] = any(rare[n] for n in rare if n.startswith("c"))
-    flags["w_useful_has_rare"] = bool(rare.get("p99.md"))
-    flags["w_min_paragraphs"] = min((_n_paragraphs(b) for _, b in wiki_prose(include_a=True)), default=0)
-    flags["w_a_has_synonym"] = "push" in set(flags.get("w_a_tokens") or [])
-    flags["w_a_has_nonce"] = "krypton" in set(flags.get("w_a_tokens") or [])
+    flags["use_one_bind"] = True
+    flags["accumulate_s"] = True
+    flags["train_wipe_s"] = False
+    flags["eval_s_wiped_between"] = False
+    flags["open_w"] = True
+    flags["use_commit_rare_only"] = True
+    flags["use_revise_head"] = False
+    flags["use_commit_here_only"] = False
+    flags["w_has_p98"] = "p98.md" in w_files
     return flags
 
 
-def _life_then_two_probes(*args, **kwargs):
-    ag, live, p_here, p_foil, tag = _life054(*args, **kwargs)
-    return ag, _enrich(live), p_here, p_foil, tag
+def _live_slice(live: dict[str, Any]) -> dict[str, Any]:
+    return {k: live.get(k) for k in LIVE_KEYS}
 
 
-def _train(
+def _s_snapshot(s_dir: Path) -> dict[str, Any]:
+    tag = _tags(s_dir) if s_dir.exists() else ""
+    files = sorted(p.name for p in s_dir.glob("*.tag")) if s_dir.exists() else []
+    live = {
+        "tag": tag,
+        "files": files,
+        "opened": False,
+        "n_forced": 0,
+        "n_steps": 0,
+        "n_explored": 0,
+        "n_annotated": 0,
+        "found_press": False,
+        "found_tune": False,
+        "found_krypton": False,
+        "found_helium": False,
+        "actions": [],
+    }
+    snap = _enrich(live)
+    snap["n"] = len(files)
+    snap["tag"] = tag
+    snap["files"] = files
+    return snap
+
+
+def _probe_s(
+    s_dir: Path,
+    policy: UsePolicy,
+    seed: int,
+    *,
+    rng: np.random.Generator | None = None,
+    **make_kw: Any,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    ag = make(s_dir, None, policy, explore_epsilon=0.0, rng=rng, **make_kw)
+    ag.reset_rho()
+    p_a = probe(ag, "probe_channel_a", seed)
+    ag.reset_rho()
+    p_c = probe(ag, "probe_channel_c", seed)
+    return p_a, p_c
+
+
+def _c_life_on_s(
+    s_dir: Path,
+    w_dir: Path,
+    policy: UsePolicy,
+    seed: int,
+    *,
+    max_steps: int,
+    explore_epsilon: float,
+    rng: np.random.Generator | None = None,
+    **make_kw: Any,
+):
+    ag = make(s_dir, w_dir, policy, explore_epsilon=explore_epsilon, rng=rng, **make_kw)
+    ag.reset_rho()
+    ag.policy_traces = []
+    c_live = _enrich(live_free(ag, "experience_channel_c", seed, max_steps=max_steps))
+    ag.world = None
+    ag.reset_rho()
+    both_a = probe(ag, "probe_channel_a", seed)
+    ag.reset_rho()
+    both_c = probe(ag, "probe_channel_c", seed)
+    return ag, c_live, both_a, both_c, c_live["tag"]
+
+
+def _wipe_lives(*args, **kwargs):
+    import experiments.run_tm055 as tm055
+
+    saved = tm055.make
+    tm055.make = make
+    try:
+        return _accumulate_lives(*args, **kwargs)
+    finally:
+        tm055.make = saved
+
+
+def _train_keep(
     policy: UsePolicy,
     w_dir: Path,
     work: Path,
@@ -146,23 +205,46 @@ def _train(
     *,
     split: bool,
     max_steps: int,
-) -> list[float]:
+) -> tuple[list[float], Path]:
     rng = np.random.default_rng(seed)
     rewards: list[float] = []
     b_f = b_m = b_u = 0.0
     s_dir = work / "ep"
+    s_dir.mkdir(parents=True, exist_ok=True)
     for ep in range(n):
         eps = 0.45 * (1.0 - ep / max(n, 1)) + 0.05
         explore_eps = 0.55 * (1.0 - 0.4 * ep / max(n, 1))
-        if s_dir.exists():
-            shutil.rmtree(s_dir)
-        s_dir.mkdir(parents=True)
+        snap = _s_snapshot(s_dir)
         ag = make(s_dir, w_dir, policy, epsilon=eps, explore_epsilon=explore_eps, rng=rng)
         ag.policy_traces = []
         ag.reset_rho()
         live = _enrich(live_free(ag, "experience_channel_a", seed + 10, max_steps=max_steps))
-        r_find = 1.0 if live["found_push"] else 0.0
-        r_mark = 1.0 if live["found_push"] and live["found_cha"] and live["found_did_press"] else 0.0
+        tr_life = list(ag.policy_traces)
+        r_find = (
+            1.0
+            if (live["found_push"] and live["found_argon"])
+            or (snap["found_push"] and snap["found_argon"])
+            else 0.0
+        )
+        wrote = any(t.get("kind") == "write" and t.get("write") for t in tr_life)
+        r_mark = (
+            1.0
+            if (
+                live["found_bind_push"]
+                and live["found_argon"]
+                and live["found_cha"]
+                and live["found_did_press"]
+                and not live["found_bind_argon"]
+            )
+            or (
+                snap["found_bind_push"]
+                and snap["found_cha"]
+                and snap["found_argon"]
+                and not snap["found_bind_argon"]
+                and wrote
+            )
+            else 0.0
+        )
         ag.world = None
         ag.reset_rho()
         p = probe(ag, "probe_channel_a", seed + 10)
@@ -181,7 +263,7 @@ def _train(
             policy.update([t for t in tr if t.get("kind") in ("search", "write")], adv)
             policy.update([t for t in tr if t.get("kind") == "vname"], adv)
         rewards.append(r_use)
-    return rewards
+    return rewards, s_dir
 
 
 def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
@@ -197,8 +279,8 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Confound", "W .md files have no prose."
     if m["w_has_where"] or m["w_has_action"] or m["w_has_loc"] or m["w_has_here"] or m["w_has_door"]:
         return "Confound", "Filed k=v motor/place tags were planted."
-    if not m["w_has_p99"]:
-        return "Confound", "W must have useful prose p99.md."
+    if not m["w_has_p99"] or not m.get("w_has_p98"):
+        return "Confound", "Eval W must have both useful pages p99.md and p98.md."
     if m.get("w_body_ints") or m.get("w_a_ints"):
         return "Confound", "Answer integers were restored in W."
     if m.get("w_has_motor_name") or any(t in m.get("w_a_tokens", []) for t in _MOTOR_WORDS):
@@ -213,6 +295,12 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Confound", "Useful page never used an English corpus word."
     if not m.get("use_alias_bind"):
         return "Fail", "Alias bind was frozen off."
+    if not m.get("use_one_bind"):
+        return "Fail", "One-bind was frozen off."
+    if not m.get("w_a_has_distractor"):
+        return "Confound", "Useful page has no distractor hapax."
+    if (m.get("w_useful_n_rare") or 0) < 2:
+        return "Confound", "Unique-rare needle was restored."
     if not m.get("open_w"):
         return "Fail", "W was not document-shaped Open W."
     if m.get("w_clutter_cloned") or (m.get("w_n_distinct_clutter") or 0) < 11:
@@ -223,8 +311,14 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Confound", "Clutter pages are rare-word pages; search is not load-bearing."
     if not m.get("w_useful_has_rare"):
         return "Confound", "Useful page has no rare word."
-    if m.get("accumulate_s"):
-        return "Confound", "S was accumulated across lives."
+    if not m.get("accumulate_s") or m.get("eval_s_wiped_between"):
+        return "Fail", "S was still wiped between eval lives."
+    if m.get("train_wipe_s"):
+        return "Fail", "Train still wiped S every episode."
+    if not m.get("use_commit_rare_only"):
+        return "Fail", "Rare-only commit was frozen off."
+    if m.get("use_revise_head") or m.get("use_commit_here_only"):
+        return "Confound", "Dirty-store correct flags were smuggled onto this English never-wipe slice."
     if not m.get("has_code_in_search"):
         return "Confound", "has_code was dropped from search (not this jump)."
     if not m.get("domain_switch"):
@@ -251,7 +345,7 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Confound", "disable-S still solved A; fact leaked outside S."
     if any(
         p.get("explored")
-        for p in (m["untrained_probe"], m["a_after_reset"], m["a_foil_c"], m["c_after_reset"], m["c_foil_a"])
+        for p in (m["untrained_probe"], m["train_s_probe"], m["train_s_foil"], m["both_after_a"], m["both_after_c"])
     ):
         return "Confound", "Probe used exploration."
     if m["empty_S_c"]["correct"] or m["empty_S_c"]["action_name"] == "tune":
@@ -271,18 +365,18 @@ def classify_a(m: dict[str, Any]) -> tuple[str, str]:
         return "Fail", "Untrained already PRESS on foil C."
     if m["untrained_live"].get("found_did_press") or m["untrained_live"].get("n_annotated", 0):
         return "Fail", "Untrained already bound a motor onto S."
-    if not m["a_after_reset"]["correct"] or m["a_after_reset"]["action_name"] != "press":
-        return "Fail", "After A life, probe A was not PRESS."
-    if m["a_foil_c"]["action_name"] == "press" or m["a_foil_c"]["correct"]:
-        return "Fail", "A's bind still fired on channel C (pick-a-motor)."
-    if m["a_foil_c"]["action_name"] != "hold":
-        return "Fail", "A's S on channel C was not HOLD."
-    if not m["c_after_reset"]["correct"] or m["c_after_reset"]["action_name"] != "tune":
-        return "Fail", "After C life, probe C was not TUNE."
-    if m["c_foil_a"]["action_name"] == "tune" or m["c_foil_a"]["action_name"] == "press":
-        return "Fail", "C's bind still fired on channel A."
-    if m["c_foil_a"]["action_name"] != "hold":
-        return "Fail", "C's S on channel A was not HOLD."
+    if not m["train_s_probe"]["correct"] or m["train_s_probe"]["action_name"] != "press":
+        return "Fail", "After never-wipe train, dirty S was not PRESS."
+    if m["train_s_foil"]["action_name"] == "press" or m["train_s_foil"]["correct"]:
+        return "Fail", "Train S still fired PRESS on channel C."
+    if m["train_s_foil"]["action_name"] != "hold":
+        return "Fail", "Train S on channel C was not HOLD."
+    if not m["both_after_a"]["correct"] or m["both_after_a"]["action_name"] != "press":
+        return "Fail", "C life on dirty S lost A's PRESS."
+    if not m["both_after_c"]["correct"] or m["both_after_c"]["action_name"] != "tune":
+        return "Fail", "C life on dirty S was not TUNE."
+    if m["wipe_ctrl_a"]["action_name"] == "press" or m["wipe_ctrl_a"]["correct"]:
+        return "Fail", "Wiping dirty S still PRESS on A; keep-S was not load-bearing."
     if m["empty_S"]["correct"]:
         return "Fail", "Empty S still solved A."
     if m["menu_control"]["correct"]:
@@ -295,27 +389,37 @@ def classify_a(m: dict[str, Any]) -> tuple[str, str]:
         return "Fail", "Clutter-only W still solved A."
     if m["bind_control"]["correct"]:
         return "Fail", "Bind-off still solved A; English bind was not load-bearing."
-    if not (
-        m["copy_only"]["a_after_reset"]["action_name"] == "press"
-        and m["copy_only"]["a_foil_c"]["action_name"] == "press"
-    ):
-        return "Fail", "Copy-only control did not fire PRESS on C; here-match was not load-bearing."
+    if m["nonce_control"]["correct"] or m["nonce_control"]["action_name"] == "press":
+        return "Fail", "Nonce-only S still PRESS; one-bind was not load-bearing."
+    if not m["bindall_nonce"]["correct"] or m["bindall_nonce"]["action_name"] != "press":
+        return "Fail", "Bind-all on nonce S did not PRESS; the distractor test is not load-bearing."
     if not (m["search_changed"] and m["vname_changed"] and m["write_changed"]):
         return "Fail", "A joint head did not move."
-    if m["a_live"].get("found_press") or m["c_live"].get("found_tune"):
+    train = m["train_s"]
+    if train.get("found_press") or m["c_live"].get("found_press") or m["c_live"].get("found_tune"):
         return "Confound", "S still has an innate motor name as a copy token."
-    if not m["a_live"]["found_push"] or not m["a_live"].get("found_cha") or not m["a_live"].get("found_did_press"):
-        return "Fail", "Free A life never bound a page word to press+cha."
-    if not m["c_live"]["found_adjust"] or not m["c_live"].get("found_chc") or not m["c_live"].get("found_did_tune"):
-        return "Fail", "Held-out C life never bound a page word to tune+chc."
-    tag = m.get("a_tag", "")
+    if not train.get("found_push") or not train.get("found_cha") or not train.get("found_did_press"):
+        return "Fail", "Never-wipe train never bound a page word to press+cha."
+    if not train.get("found_argon") or not train.get("found_bind_push"):
+        return "Fail", "Train S did not keep the distractor and bind the stream-first word."
+    if train.get("found_bind_argon"):
+        return "Fail", "Train S aliased the distractor hapax."
+    if not m["c_live"].get("found_adjust") or not m["c_live"].get("found_chc") or not m["c_live"].get("found_did_tune"):
+        return "Fail", "C life on dirty S never bound a page word to tune+chc."
+    if not m["c_live"].get("found_alpha") or not m["c_live"].get("found_bind_adjust"):
+        return "Fail", "C life did not keep the distractor and bind the stream-first word."
+    if m["c_live"].get("found_bind_alpha"):
+        return "Fail", "C life aliased the distractor hapax."
+    if not m["c_live"].get("found_bind_push") or not m["c_live"].get("found_cha"):
+        return "Fail", "C life clobbered train's bind=push+cha."
+    tag = m.get("both_tag", "")
     if _has_field(tag, "action") or _has_field(tag, "door") or _has_field(tag, "where"):
         return "Fail", "S restored filed tag names."
     if _has_field(tag, "n0") or _has_field(tag, "n1"):
         return "Fail", "S still has n* digit tags."
     return (
         "Store-works",
-        "English life: same S, A PRESS / C HOLD from a page word bound in S, not a DNA synonym table. Cortex frozen.",
+        "Never-wipe English train S still PRESS from push; C life on that S: A PRESS, C TUNE. Cortex frozen.",
     )
 
 
@@ -325,21 +429,21 @@ def classify_b(m: dict[str, Any]) -> tuple[str, str]:
         return early
     if m["trained_split"]:
         return "Fail", "Split credit was restored to rescue shared return."
-    if not m["a_after_reset"]["correct"] or m["a_after_reset"]["action_name"] != "press":
-        return "Fail", "Shared return did not solve A after a free life."
-    if m["a_foil_c"]["action_name"] == "press":
-        return "Fail", "Shared return still fired A's press on C."
-    if not m["c_after_reset"]["correct"] or m["c_after_reset"]["action_name"] != "tune":
-        return "Fail", "Shared return C was not TUNE."
+    if not m["train_s_probe"]["correct"] or m["train_s_probe"]["action_name"] != "press":
+        return "Fail", "Shared return never-wipe train S was not PRESS."
+    if not m["both_after_c"]["correct"] or m["both_after_c"]["action_name"] != "tune":
+        return "Fail", "Shared return C on dirty S was not TUNE."
     if m["empty_S"]["correct"]:
         return "Fail", "Empty S still solved A."
     if not (m["search_changed"] and m["vname_changed"] and m["write_changed"]):
         return "Fail", "A joint head did not move."
-    if m["a_live"].get("found_press"):
+    if m["train_s"].get("found_press"):
         return "Confound", "S still has an innate motor name as a copy token."
+    if m["nonce_control"]["action_name"] == "press":
+        return "Fail", "Shared return nonce-only S still PRESS."
     return (
         "Store-works",
-        "Shared return on English life; cortex frozen; foil C HOLD.",
+        "Shared return never-wipe English one-bind; dirty S two facts; cortex frozen.",
     )
 
 
@@ -349,7 +453,7 @@ def run_arm(
     split: bool,
     run_dir: Path,
     w_a: Path,
-    w_c: Path,
+    w_both: Path,
     w_clutter: Path,
     w_files: list[str],
     seed: int,
@@ -362,14 +466,18 @@ def run_arm(
         k: run_dir / f"{arm}_{k}"
         for k in (
             "untrained",
-            "a",
-            "c",
+            "trains",
+            "acc",
+            "wipe",
             "menuctrl",
             "searchctrl",
             "writectrl",
             "clutter",
             "bindoff",
+            "nonce",
+            "bindall",
             "copyonly",
+            "copydirty",
             "off",
             "empty",
         )
@@ -399,37 +507,38 @@ def run_arm(
         rng=np.random.default_rng(seed + 99),
     )
 
-    rewards = _train(policy, w_a, work, n_train, train_seed, split=split, max_steps=max_steps)
+    rewards, train_s = _train_keep(policy, w_a, work, n_train, train_seed, split=split, max_steps=max_steps)
     search1 = _head_fp(policy, "search")
     vname1 = _head_fp(policy, "vname")
     use1 = _head_fp(policy, "use")
     write1 = _head_fp(policy, "write")
 
-    a_ag, a_live, a_after, a_foil, a_tag = _life_then_two_probes(
-        make,
-        dirs["a"],
-        w_a,
+    _copy_s(train_s, dirs["trains"])
+    train_snap = _s_snapshot(dirs["trains"])
+    train_s_probe, train_s_foil = _probe_s(
+        dirs["trains"], policy, seed + 10, rng=np.random.default_rng(seed + 1)
+    )
+
+    _copy_s(train_s, dirs["acc"])
+    acc_ag, c_live, both_a, both_c, both_tag = _c_life_on_s(
+        dirs["acc"],
+        w_both,
         policy,
-        "experience_channel_a",
-        "probe_channel_a",
-        "probe_channel_c",
-        seed + 10,
+        seed + 20,
         max_steps=max_steps,
         explore_epsilon=0.5,
         rng=np.random.default_rng(seed + 1),
     )
-    _, c_live, c_after, c_foil, c_tag = _life_then_two_probes(
-        make,
-        dirs["c"],
-        w_c,
+
+    _, _, wipe_a_after, _, _, _, wipe_a, wipe_c, wipe_tag = _wipe_lives(
+        dirs["wipe"],
+        w_both,
         policy,
-        "experience_channel_c",
-        "probe_channel_c",
-        "probe_channel_a",
-        seed + 20,
+        seed + 10,
         max_steps=max_steps,
         explore_epsilon=0.5,
-        rng=np.random.default_rng(seed + 3),
+        rng=np.random.default_rng(seed + 2),
+        wipe_between=True,
     )
     _, _, menu_control, _, _ = _life_then_two_probes(
         lambda s, w, p, **kw: make(
@@ -445,6 +554,7 @@ def run_arm(
             use_here_match=False,
             use_alias_bind=False,
             use_did_stamp=False,
+            use_one_bind=False,
             **kw,
         ),
         dirs["menuctrl"],
@@ -473,7 +583,15 @@ def run_arm(
     )
     _, _, write_control, _, _ = _life_then_two_probes(
         lambda s, w, p, **kw: make(
-            s, w, p, use_event_annotate=False, use_here_match=False, use_alias_bind=False, use_did_stamp=False, **kw
+            s,
+            w,
+            p,
+            use_event_annotate=False,
+            use_here_match=False,
+            use_alias_bind=False,
+            use_did_stamp=False,
+            use_one_bind=False,
+            **kw,
         ),
         dirs["writectrl"],
         w_a,
@@ -499,32 +617,39 @@ def run_arm(
         explore_epsilon=0.5,
         rng=np.random.default_rng(seed + 8),
     )
-    _, bind_live, bind_control, _, bind_tag = _life_then_two_probes(
-        lambda s, w, p, **kw: make(s, w, p, use_alias_bind=False, use_did_stamp=True, **kw),
-        dirs["bindoff"],
-        w_a,
+    bind_a, bind_c = _probe_s(
+        dirs["trains"],
         policy,
-        "experience_channel_a",
-        "probe_channel_a",
-        "probe_channel_c",
         seed + 10,
-        max_steps=max_steps,
-        explore_epsilon=0.5,
         rng=np.random.default_rng(seed + 12),
+        use_alias_bind=False,
+        use_one_bind=False,
+        use_did_stamp=True,
     )
-    _, copy_live, copy_a, copy_c, copy_tag = _life_then_two_probes(
-        lambda s, w, p, **kw: make(s, w, p, use_here_match=False, **kw),
-        dirs["copyonly"],
-        w_a,
+    bind_control = bind_a
+    bind_tag = train_snap["tag"]
+    bind_live = _live_slice(train_snap)
+
+    _write_nonce_s(dirs["trains"], dirs["nonce"], nonce="argon", station="cha")
+    nonce_ag = make(dirs["nonce"], None, policy, explore_epsilon=0.0)
+    nonce_ag.reset_rho()
+    nonce_control = probe(nonce_ag, "probe_channel_a", seed + 10)
+    _write_nonce_s(dirs["trains"], dirs["bindall"], nonce="argon", station="cha")
+    bindall_ag = make(dirs["bindall"], None, policy, explore_epsilon=0.0, use_one_bind=False)
+    bindall_ag.reset_rho()
+    bindall_nonce = probe(bindall_ag, "probe_channel_a", seed + 10)
+
+    _copy_s(train_s, dirs["copydirty"])
+    copy_snap = _s_snapshot(dirs["copydirty"])
+    copy_a, copy_c = _probe_s(
+        dirs["copydirty"],
         policy,
-        "experience_channel_a",
-        "probe_channel_a",
-        "probe_channel_c",
         seed + 10,
-        max_steps=max_steps,
-        explore_epsilon=0.5,
         rng=np.random.default_rng(seed + 11),
+        use_here_match=False,
     )
+    copy_tag = copy_snap["tag"]
+    copy_live = _live_slice(copy_snap)
 
     empty = make(dirs["empty"], None, policy, explore_epsilon=0.0)
     empty.reset_rho()
@@ -538,25 +663,7 @@ def run_arm(
     off.reset_rho()
     disable_a = probe(off, "probe_channel_a", seed + 10)
 
-    live_keys = (
-        "opened",
-        "files",
-        "n_forced",
-        "n_steps",
-        "n_explored",
-        "n_annotated",
-        "found_press",
-        "found_tune",
-        "found_push",
-        "found_adjust",
-        "found_did_press",
-        "found_did_tune",
-        "found_krypton",
-        "found_helium",
-        "found_cha",
-        "found_chc",
-        "actions",
-    )
+    train_live = _live_slice(train_snap)
     metrics: dict[str, Any] = {
         "arm": arm,
         "trained_split": split,
@@ -566,6 +673,10 @@ def run_arm(
         "use_event_annotate": dummy.use_event_annotate,
         "use_here_match": dummy.use_here_match,
         "use_alias_bind": dummy.use_alias_bind,
+        "use_one_bind": dummy.use_one_bind,
+        "use_commit_rare_only": dummy.use_commit_rare_only,
+        "use_revise_head": dummy.use_revise_head,
+        "use_commit_here_only": dummy.use_commit_here_only,
         "use_search_head": dummy.use_search_head,
         "use_match_head": dummy.use_match_head,
         "use_qname_head": dummy.use_qname_head,
@@ -577,37 +688,49 @@ def run_arm(
         "n_actions": dummy.n_actions,
         "train_return_last50": float(np.mean(rewards[-50:])) if rewards else 0.0,
         "cortex_hash": cortex0,
-        "cortex_unchanged": cortex0 == a_ag.weight_hash(),
+        "cortex_unchanged": cortex0 == acc_ag.weight_hash(),
         "search_changed": search0 != search1,
         "vname_changed": vname0 != vname1,
         "use_changed": use0 != use1,
         "write_changed": write0 != write1,
         "policy_n_updates": policy.n_updates,
-        **_w_flags(w_files, w_a),
-        "untrained_live": {k: untrained_live[k] for k in live_keys},
+        **_w_flags(w_files, w_both),
+        "untrained_live": _live_slice(untrained_live),
         "untrained_probe": untrained_probe,
         "untrained_foil_c": untrained_foil,
-        "a_live": {k: a_live[k] for k in live_keys},
-        "a_after_reset": a_after,
-        "a_foil_c": a_foil,
-        "a_tag": a_tag,
-        "c_live": {k: c_live[k] for k in live_keys},
-        "c_after_reset": c_after,
-        "c_foil_a": c_foil,
-        "c_tag": c_tag,
+        "a_live": train_live,
+        "train_s": train_snap,
+        "train_s_probe": train_s_probe,
+        "train_s_foil": train_s_foil,
+        "a_after_reset": train_s_probe,
+        "a_foil_c": train_s_foil,
+        "a_tag": train_snap["tag"],
+        "c_live": _live_slice(c_live),
+        "both_after_a": both_a,
+        "both_after_c": both_c,
+        "both_tag": both_tag,
+        "c_after_reset": both_c,
+        "c_foil_a": both_a,
+        "wipe_ctrl_a": wipe_a,
+        "wipe_ctrl_c": wipe_c,
+        "wipe_ctrl_tag": wipe_tag,
+        "wipe_ctrl_after_a": wipe_a_after,
         "menu_control": menu_control,
         "search_control": search_control,
         "write_control": write_control,
         "clutter_control": clutter_control,
         "clutter_tag": clutter_tag,
         "bind_control": bind_control,
+        "bind_foil_c": bind_c,
         "bind_tag": bind_tag,
-        "bind_live": {k: bind_live[k] for k in live_keys},
+        "bind_live": bind_live,
+        "nonce_control": nonce_control,
+        "bindall_nonce": bindall_nonce,
         "copy_only": {
             "a_after_reset": copy_a,
             "a_foil_c": copy_c,
             "tag": copy_tag,
-            "live": {k: copy_live[k] for k in live_keys},
+            "live": copy_live,
         },
         "empty_S": empty_p,
         "empty_S_c": empty_c,
@@ -619,21 +742,21 @@ def run_arm(
     return metrics
 
 
-def run_tm060(seed: int = 12345, n_train: int = 500, max_steps: int = 32) -> dict[str, Any]:
+def run_tm062(seed: int = 12345, n_train: int = 500, max_steps: int = 32) -> dict[str, Any]:
     run_dir = _run_dir()
     w_a = run_dir / "W_a"
-    w_c = run_dir / "W_c"
+    w_both = run_dir / "W_both"
     w_clutter = run_dir / "W_clutter"
     write_prose_notes(w_a, wiki_prose(include_a=True))
-    write_prose_notes(w_c, wiki_prose(include_c=True))
+    write_prose_notes(w_both, wiki_prose(include_a=True, include_c=True))
     write_prose_notes(w_clutter, clutter_prose())
-    w_files = sorted(p.name for p in w_a.glob("*.md"))
+    w_files = sorted(p.name for p in w_both.glob("*.md"))
     a = run_arm(
         arm="A",
         split=True,
         run_dir=run_dir,
         w_a=w_a,
-        w_c=w_c,
+        w_both=w_both,
         w_clutter=w_clutter,
         w_files=w_files,
         seed=seed,
@@ -646,7 +769,7 @@ def run_tm060(seed: int = 12345, n_train: int = 500, max_steps: int = 32) -> dic
         split=False,
         run_dir=run_dir,
         w_a=w_a,
-        w_c=w_c,
+        w_both=w_both,
         w_clutter=w_clutter,
         w_files=w_files,
         seed=seed,
@@ -655,7 +778,7 @@ def run_tm060(seed: int = 12345, n_train: int = 500, max_steps: int = 32) -> dic
         max_steps=max_steps,
     )
     out = {
-        "version": "TM.0.6.0",
+        "version": "TM.0.6.2",
         "seed": seed,
         "n_train": n_train,
         "max_steps": max_steps,
@@ -667,11 +790,11 @@ def run_tm060(seed: int = 12345, n_train: int = 500, max_steps: int = 32) -> dic
     }
     (run_dir / "metrics.json").write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8")
     (run_dir / "summary.md").write_text(
-        f"""# TM.0.6.0 A English life vs B shared return
+        f"""# TM.0.6.2 A never-wipe English vs B shared return
 
 | Arm | Classification | Train last 50 |
 |-----|----------------|---------------|
-| A split English bind | **{a['classification']}** | {a['train_return_last50']:.2f} |
+| A split never-wipe English | **{a['classification']}** | {a['train_return_last50']:.2f} |
 | B shared return | **{b['classification']}** | {b['train_return_last50']:.2f} |
 
 A: {a['rationale']}
@@ -681,10 +804,14 @@ B: {b['rationale']}
 | Check | A | B |
 |-------|---|---|
 | Untrained A / foil C | {a['untrained_probe']['action_name']} / {a['untrained_foil_c']['action_name']} | {b['untrained_probe']['action_name']} / {b['untrained_foil_c']['action_name']} |
-| After A life: probe A / foil C | {a['a_after_reset']['action_name']} / {a['a_foil_c']['action_name']} | {b['a_after_reset']['action_name']} / {b['a_foil_c']['action_name']} |
-| After C life: probe C / foil A | {a['c_after_reset']['action_name']} / {a['c_foil_a']['action_name']} | {b['c_after_reset']['action_name']} / {b['c_foil_a']['action_name']} |
+| After train, dirty S: A / foil C | {a['train_s_probe']['action_name']} / {a['train_s_foil']['action_name']} | {b['train_s_probe']['action_name']} / {b['train_s_foil']['action_name']} |
+| C life on dirty S: A / C | {a['both_after_a']['action_name']} / {a['both_after_c']['action_name']} | {b['both_after_a']['action_name']} / {b['both_after_c']['action_name']} |
+| Wipe-between: A / C | {a['wipe_ctrl_a']['action_name']} / {a['wipe_ctrl_c']['action_name']} | {b['wipe_ctrl_a']['action_name']} / {b['wipe_ctrl_c']['action_name']} |
 | Bind-off A | {a['bind_control']['action_name']} | {b['bind_control']['action_name']} |
+| Nonce-only A | {a['nonce_control']['action_name']} | {b['nonce_control']['action_name']} |
+| Bind-all nonce A | {a['bindall_nonce']['action_name']} | {b['bindall_nonce']['action_name']} |
 | Copy-only foil C | {a['copy_only']['a_foil_c']['action_name']} | {b['copy_only']['a_foil_c']['action_name']} |
+| Train S n files | {a['train_s']['n']} | {b['train_s']['n']} |
 """,
         encoding="utf-8",
     )
@@ -692,12 +819,12 @@ B: {b['rationale']}
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="TM.0.6.0 first English life — tiny corpus")
+    p = argparse.ArgumentParser(description="TM.0.6.2 never-wipe English life on one-bind")
     p.add_argument("--seed", type=int, default=12345)
     p.add_argument("--n-train", type=int, default=500)
     p.add_argument("--max-steps", type=int, default=32)
     args = p.parse_args()
-    m = run_tm060(seed=args.seed, n_train=args.n_train, max_steps=args.max_steps)
+    m = run_tm062(seed=args.seed, n_train=args.n_train, max_steps=args.max_steps)
     print(
         json.dumps(
             {"A": m["A"]["classification"], "B": m["B"]["classification"], "world": m["world"], "run_dir": m["run_dir"]},
@@ -706,16 +833,20 @@ def main() -> None:
     )
     print(
         "A",
-        m["A"]["a_after_reset"]["action_name"],
-        m["A"]["a_foil_c"]["action_name"],
-        m["A"]["c_after_reset"]["action_name"],
-        m["A"]["c_foil_a"]["action_name"],
+        "trainS",
+        m["A"]["train_s_probe"]["action_name"],
+        m["A"]["train_s_foil"]["action_name"],
+        "dirtyC",
+        m["A"]["both_after_a"]["action_name"],
+        m["A"]["both_after_c"]["action_name"],
+        "n",
+        m["A"]["train_s"]["n"],
         m["A"]["a_tag"].strip().replace("\n", " | "),
     )
     print(
         "B",
-        m["B"]["a_after_reset"]["action_name"],
-        m["B"]["a_foil_c"]["action_name"],
+        m["B"]["train_s_probe"]["action_name"],
+        m["B"]["both_after_c"]["action_name"],
         "last50",
         m["B"]["train_return_last50"],
     )

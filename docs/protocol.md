@@ -14,7 +14,7 @@ Jumps must get closer to a machine that **could in theory** learn from wiki / En
 |-------|------------------------------------------------------|-----------------------------|
 | How to learn | Find unread data, commit, use after ρ reset — without planted answer integers, a door table, or an English lexicon | — |
 | How to correct | Detect mismatch, revise S (mark/overwrite/drop), retry, keep the correction after ρ reset | — |
-| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first (TM.0.6.0) |
+| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first (TM.0.6.0); one bind against a distractor hapax (TM.0.6.1); never-wipe English (TM.0.6.2) |
 | Learn math | Not a calculator in cortex | A later life after some language is already in S |
 
 Four recipe skills, in order: **find / commit / use / correct**. English and math are lives that use those skills. Dumping wiki + algebra into one experiment is illegal.
@@ -34,7 +34,7 @@ Order of recipe jumps (English is a life that uses the skills, not a lexicon in 
 7. No `domain=` switch.
 8. Accumulate S (stop wiping every episode). TM.0.5.5 eval path; TM.0.5.6 never-wipe train.
 9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works (TM.0.5.1). TM.0.5.9: correct the dirty never-wipe store (stop appending once S names here; drop unstamped pages after a real stamp).
-10. English life, tiny corpus (TM.0.6.0). Then a math life.
+10. English life, tiny corpus (TM.0.6.0). One bind per note against a distractor hapax (TM.0.6.1). Never-wipe English on that recipe (TM.0.6.2). Then a math life.
 
 Do not restore digit-copy, filed `action=`/`where=`, the door toy, or a synonym lexicon to rescue a plot.
 
@@ -697,5 +697,37 @@ Recipe: a later life over English pages, tiny corpus first. Genome may know stre
 | Store-works | Untrained HOLD; tiny English W; after a free life A PRESS / C HOLD from a page word bound in S; C life TUNE; bind-off HOLD | Same without splitting the return |
 
 Do not restore an innate-name stamp, a `push` table in the agent, or Wikipedia-scale W to rescue a plot.
+
+## TM.0.6.1 A one bind, B shared return
+
+Recipe: a page is many words. Alias **one** rare token per successful note — the first rare word in stream order — not every hapax. Useful pages have a synonym and a distractor that sorts earlier in the alphabet (`argon` before `push`; `alpha` before `adjust`). One-bind is **off by default**. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. Not math. Do not retune `n_train`. Nonce-only S must HOLD; bind-all on that S must PRESS.
+
+**A.** Split: search rare / write one bind / copy the bound word / probe A correct.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; unique-rare needle; synonym table in the agent; drop `has_code`; drop `domain=`; digit-copy; alphabet bind | same |
+| Fail | Untrained PRESS; bind=distractor; nonce-only PRESS; bind-all nonce HOLD | Untrained PRESS; A miss; C miss; nonce PRESS |
+| Store-works | Untrained HOLD; two rares; bind=synonym; A PRESS / C HOLD; nonce HOLD; bind-all nonce PRESS; C TUNE | Same without splitting the return |
+
+Do not restore bind-all-rares, a unique-rare needle, or a `push` table in the agent to rescue a plot.
+
+## TM.0.6.2 A never-wipe English, B shared return
+
+Recipe: English uses the recipe skills already bought. Same 0.6.1 one-bind W (two rares per useful page). Train **does not rmtree S**. After train, probe that dirty store (no fresh A life). Then a C life on the same S with both pages. `use_commit_rare_only` on this slice only. Revise / here-only stay **off**. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. Not math. Do not retune `n_train`. Nonce-only S must HOLD; bind-all on that S must PRESS.
+
+**A.** Split: search rare / write one bind / copy the bound word / probe A correct. Never wipe train S.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|----|
+| Confound | Cortex moves; unique-rare needle; synonym table in the agent; drop `has_code`; drop `domain=`; revise/here-only on; train still wipes | same |
+| Fail | Untrained PRESS; train S not PRESS; C life loses A or misses TUNE; wipe-between still PRESS; bind=distractor; nonce PRESS | Untrained PRESS; A miss; C miss; nonce PRESS |
+| Store-works | Untrained HOLD; never-wipe train A PRESS from `push`; C life on that S A PRESS / C TUNE; wipe-between A HOLD; nonce HOLD | Same without splitting the return |
+
+Do not restore a train wipe, a unique-rare needle, or a `push` table in the agent to rescue a plot.
 
 

@@ -25,11 +25,11 @@ from .symbols import (
     REQ_KEY,
     encode_tags,
 )
-from .tag_store import DocLibrary, ProseLibrary, TagLibrary, prose_tokens
+from .tag_store import DocLibrary, ProseLibrary, TagLibrary, prose_token_stream, prose_tokens
 
 # Bookkeeping tags, not a place-name menu. Query candidates are whatever else the files have.
-# `did` is the act the body just did (not a copy token). Aliases live on remaining w* words.
-_QNAME_SKIP = frozenset({"source", "source_file", "when", "ok", "what", "did"})
+# `did` is the act the body just did (not a copy token). `bind` is the one page-word aliased to it.
+_QNAME_SKIP = frozenset({"source", "source_file", "when", "ok", "what", "did", "bind"})
 
 
 class ThreeMemoryAgent:
@@ -80,6 +80,7 @@ class ThreeMemoryAgent:
         use_commit_here_only: bool = False,
         use_alias_bind: bool = False,
         use_did_stamp: bool = False,
+        use_one_bind: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -150,6 +151,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_did_stamp requires use_event_annotate")
         if use_alias_bind and not use_did_stamp:
             raise ValueError("use_alias_bind requires use_did_stamp")
+        if use_one_bind and not use_alias_bind:
+            raise ValueError("use_one_bind requires use_alias_bind")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -206,6 +209,7 @@ class ThreeMemoryAgent:
         self.use_commit_here_only = use_commit_here_only
         self.use_alias_bind = use_alias_bind
         self.use_did_stamp = use_did_stamp
+        self.use_one_bind = use_one_bind
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._w_skip: set[str] = set()
@@ -280,6 +284,7 @@ class ThreeMemoryAgent:
             use_commit_here_only=self.use_commit_here_only,
             use_alias_bind=self.use_alias_bind,
             use_did_stamp=self.use_did_stamp,
+            use_one_bind=self.use_one_bind,
             domain=self.domain,
         )
 
@@ -647,6 +652,13 @@ class ThreeMemoryAgent:
             aid = innate.get(did.lower())
             if aid is None:
                 continue
+            if self.use_one_bind:
+                bound = rec.tags.get("bind")
+                if isinstance(bound, str):
+                    vl = bound.lower()
+                    if vl not in innate and vl not in stations:
+                        m[vl] = aid
+                continue
             for k, v in rec.tags.items():
                 if not str(k).startswith("w") or not isinstance(v, str):
                     continue
@@ -774,6 +786,34 @@ class ThreeMemoryAgent:
         for i, vl in enumerate(keep):
             rec.tags[f"w{i}"] = vl
 
+    def _page_stream(self, rec) -> list[str]:
+        text = ""
+        if self.world is not None:
+            fid = rec.fact_id
+            for o in self.world.records():
+                if getattr(o, "fact_id", None) == fid:
+                    text = getattr(o, "what", "") or ""
+                    break
+        if not text:
+            text = getattr(rec, "what", "") or ""
+        return prose_token_stream(text)
+
+    def _stamp_one_bind(self, rec) -> None:
+        """Alias the first rare page word in stream order. Not a lexicon."""
+        if rec.tags.get("bind"):
+            return
+        rare = {
+            str(v).lower()
+            for k, v in rec.tags.items()
+            if str(k).startswith("w") and isinstance(v, str)
+        }
+        stations = set(STATION_NAMES.values())
+        innate = self._act_names()
+        for w in self._page_stream(rec):
+            if w in rare and w not in stations and w not in innate:
+                rec.tags["bind"] = w
+                return
+
     def _maybe_annotate(self, action_name: str, obs=None) -> None:
         """Write the act (and station, if here-match) the body just did onto a rare note."""
         if self.use_policy is None or not self.store.enabled:
@@ -825,6 +865,8 @@ class ThreeMemoryAgent:
                 n += 1
         if need_st:
             rec.tags[f"w{n}"] = station
+        if self.use_one_bind and rec.tags.get("did"):
+            self._stamp_one_bind(rec)
         if self.store.write(rec):
             self.n_annotated += 1
             if self.use_revise_head:

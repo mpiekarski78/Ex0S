@@ -236,6 +236,24 @@ def prose_tokens(text: str) -> set[str]:
     return {w.lower() for w in _WORD_RE.findall(text)}
 
 
+def prose_token_stream(text: str) -> list[str]:
+    """Word order in the page body. Streams exist; this is not an English lexicon."""
+    body_lines: list[str] = []
+    for ln in text.splitlines():
+        if ln.strip().startswith("#") and not body_lines:
+            continue
+        body_lines.append(ln)
+    body = "\n".join(body_lines)
+    seen: list[str] = []
+    have: set[str] = set()
+    for w in _WORD_RE.findall(body):
+        wl = w.lower()
+        if wl not in have:
+            have.add(wl)
+            seen.append(wl)
+    return seen
+
+
 def prose_to_record(path: Path, when: int = 0) -> FactRecord | None:
     """Load a .md page as prose. Digits become anonymous n0,n1,… tags. No filed where=/action=."""
     text = path.read_text(encoding="utf-8")
