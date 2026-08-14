@@ -420,3 +420,19 @@ Same messy search as TM.0.1.2. W has **256** unread `.tag` files. Features `{has
 
 Do not restore exact match, plant `when=`, shrink W, or retune heads to rescue a plot.
 
+## TM.0.3.0 A free life, B shared return
+
+Not the scripted probe→unmount→probe train. Free life: wander, search W, commit, act. Then ρ reset, W gone, greedy probe. Messy page `{where:0, action:2, pad:7}`. Copy frozen `action=`. Cortex frozen. `write_from_events=False`. `n_forced=0`. `record_search_on_explore` so search leaves traces during life.
+
+**A.** Split: found messy page in S during life / probe after reset.
+
+**B.** Same `make()`. One `r` = probe correct, applied to search and use.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; planted `when=` / `loc=` / `here=`; `d0` in W; writes from life; forced curriculum; empty-S green `wait` | same |
+| Fail | Untrained probe already `use_key`; green fails; exact match still solves; freeze-search / use-off still `use_key`; training not a free life | Untrained already `use_key`; red stays `open`; last-50 ≈ 0 |
+| Store-works | Untrained probe `open`; free red commits `p99.tag`; after reset W gone → `use_key`; green `wait`; controls fail | Same without splitting the return |
+
+Do not restore the scripted unmount train or exact match to rescue a plot.
+

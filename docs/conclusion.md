@@ -208,3 +208,7 @@ Rank unread files; exact `loc=` / `door=` misses. Useful page `{where:0, action:
 
 Same search recipe; W is **256** messy files. **A** split and **B** shared return both **Store-works**. Untrained takes early clutter with the door code and stays `open`. Trained red `use_key` from `p99.tag` after unmount W; held-out green `wait`. Exact match finds nothing. Use-off stays `open`. Cortex unchanged. `w_n=256`. Details: [`tm020_results.md`](tm020_results.md).
 
+## TM.0.3.0 (a life / shared return)
+
+Free life find/commit (not probe→unmount→probe train). **A** **Store-works**: commits `p99.tag` in life; after ρ reset W gone → `use_key`; held-out green `wait`; `n_forced=0`. **B** **Fail**: shared return last-50 0; red stays on clutter. Cortex unchanged. Details: [`tm030_results.md`](tm030_results.md).
+

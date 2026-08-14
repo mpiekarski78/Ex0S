@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.2.0. Toy series: v0–v23.
+**Current:** TM.0.3.0. Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,9 +15,9 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.2.0: the **split is real on a toy that can rank one useful unread page among 256 messy files**. Not a general learner. Query/copy names can come from files (separate runs). Search is still `{has_code, has_rare}` over `.tag` files, not English. Still genome: generic `logits[int] += 3.0`, frozen commit-on-hit, four discrete acts. Shared return worked on these two-head stacks; it still starved the v16/v23 joints. Tiny LSTM still needs a taught tool grammar for English. W is hundreds of `.tag` files, not Wikipedia. No code, no cameras.
+Honest status after TM.0.3.0: the **split is real on a toy that can find/commit in a free life and still use S after ρ reset**. Not a general learner. Shared return on that life **Fail**s (last-50 0). Query/copy names and messy search worked in earlier TM runs. Still genome: generic `logits[int] += 3.0`, `{has_code, has_rare}`, frozen commit-on-hit, four discrete acts. Tiny LSTM still needs a taught tool grammar for English. W is `.tag` files, not Wikipedia. No code, no cameras.
 
-## Result (v0–v23 toy, TM.0.1.x–TM.0.2.0)
+## Result (v0–v23 toy, TM.0.x)
 
 v0: [`docs/conclusion.md`](docs/conclusion.md).  
 v1 NOTE-copy: [`docs/v1_results.md`](docs/v1_results.md).  
@@ -47,6 +47,7 @@ TM.0.1.0 open query names: [`docs/tm010_results.md`](docs/tm010_results.md).
 TM.0.1.1 open copy names: [`docs/tm011_results.md`](docs/tm011_results.md).  
 TM.0.1.2 messy retrieve: [`docs/tm012_results.md`](docs/tm012_results.md).  
 TM.0.2.0 scale of W: [`docs/tm020_results.md`](docs/tm020_results.md).  
+TM.0.3.0 a life: [`docs/tm030_results.md`](docs/tm030_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -89,6 +90,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.1.1 A open copy names / B shared return | **Store-works** / **Store-works** (keys from the hit, not `{action, do}`; green must not copy `loc=2`) |
 | TM.0.1.2 A messy retrieve / B shared return | **Store-works** / **Store-works** (rank files; no exact `loc=`/`door=`; extra `pad=`) |
 | TM.0.2.0 A scale of W / B shared return | **Store-works** / **Store-works** (256 unread files; same `{has_code, has_rare}`; no shrink) |
+| TM.0.3.0 A free life / B shared return | **Store-works** / **Fail** (find/commit in life; shared return last-50 0) |
 
 ## Five pieces
 
@@ -134,6 +136,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.1.1 open copy names | **Store-works** / **Store-works** | files supply copy keys; `{action, do}` menu off; [`docs/tm011_results.md`](docs/tm011_results.md) |
 | TM.0.1.2 messy retrieve | **Store-works** / **Store-works** | rank unread files; exact match misses; [`docs/tm012_results.md`](docs/tm012_results.md) |
 | TM.0.2.0 scale of W | **Store-works** / **Store-works** | 256 messy files; same search; [`docs/tm020_results.md`](docs/tm020_results.md) |
+| TM.0.3.0 a life | **Store-works** / **Fail** | free life find/commit; shared return starves; [`docs/tm030_results.md`](docs/tm030_results.md) |
 
 ## Quick start
 
@@ -167,6 +170,7 @@ python tests/test_tm010.py
 python tests/test_tm011.py
 python tests/test_tm012.py
 python tests/test_tm020.py
+python tests/test_tm030.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -197,6 +201,7 @@ python -m experiments.run_tm010
 python -m experiments.run_tm011
 python -m experiments.run_tm012
 python -m experiments.run_tm020
+python -m experiments.run_tm030
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -205,7 +210,7 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010 … run_tm020, train_prior
+experiments/      # run_v0 … run_v23, run_tm010 … run_tm030, train_prior
 docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.x results
 tests/
 runs/             # gitignored

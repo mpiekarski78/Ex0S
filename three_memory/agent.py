@@ -68,6 +68,7 @@ class ThreeMemoryAgent:
         use_qname_head: bool = False,
         use_vname_head: bool = False,
         use_search_head: bool = False,
+        record_search_on_explore: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -148,6 +149,8 @@ class ThreeMemoryAgent:
         self.use_qname_head = use_qname_head
         self.use_vname_head = use_vname_head
         self.use_search_head = use_search_head
+        # Free life: motor explores, but search commits must still leave learnable traces.
+        self.record_search_on_explore = record_search_on_explore
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self.last_policy: dict[str, Any] = {}
@@ -208,6 +211,7 @@ class ThreeMemoryAgent:
             use_qname_head=self.use_qname_head,
             use_vname_head=self.use_vname_head,
             use_search_head=self.use_search_head,
+            record_search_on_explore=self.record_search_on_explore,
         )
 
     def _obs_query(self, obs: Obs) -> dict[str, Any] | None:
@@ -538,8 +542,17 @@ class ThreeMemoryAgent:
         if rec.tags.get("door") == "blue":
             logits[Action.OPEN] += 2.0
 
-    def _store_bias(self, obs: Obs, *, novelty: float = 0.0, record_use: bool = True) -> np.ndarray:
+    def _store_bias(
+        self,
+        obs: Obs,
+        *,
+        novelty: float = 0.0,
+        record_use: bool = True,
+        record_search: bool | None = None,
+    ) -> np.ndarray:
         """Retrieve facts and bias action logits. Knowledge lives in S, not ρ."""
+        if record_search is None:
+            record_search = record_use
         self._search_chosen = []
         # Match / open-name first so collect's W lookup uses this step's query name, not a stale one.
         if self.use_qname_head:
@@ -551,9 +564,9 @@ class ThreeMemoryAgent:
             self.last_policy = {**self.last_policy, **dec}
             if record_use:
                 self.policy_traces.append(dec)
-        self.collect(obs, novelty=novelty, record=record_use)
+        self.collect(obs, novelty=novelty, record=record_search)
         if self.use_search_head:
-            self._search_chosen = self._search_picks(self._pool(), obs, record=record_use)
+            self._search_chosen = self._search_picks(self._pool(), obs, record=record_search)
         if self.retrieve_policy == "policy":
             self._choose_retrieve(obs)
         logits = np.zeros(4, dtype=np.float64)
@@ -615,8 +628,13 @@ class ThreeMemoryAgent:
         if at_door:
             logits[Action.OPEN] += 1.5
             logits[Action.USE_KEY] -= 0.5
-        # Probe (explore=False) records the use-gate trace; life does not (write traces only).
-        logits = logits + self._store_bias(obs, novelty=novelty, record_use=not explore)
+        # Probe records use. Life usually does not (write traces only), unless a free-life
+        # search head must leave traces while the motor still explores.
+        record_use = not explore
+        record_search = (not explore) or self.record_search_on_explore
+        logits = logits + self._store_bias(
+            obs, novelty=novelty, record_use=record_use, record_search=record_search
+        )
 
         # Hard constraints from current percept (not knowledge): can't use key without holding it.
         if not obs.has_key:
