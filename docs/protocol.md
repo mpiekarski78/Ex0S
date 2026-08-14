@@ -272,3 +272,19 @@ Do not restore `action=` / `door=` to rescue a plot.
 
 Do not freeze-write `do=` / `here=` or restore `action=` / `door=` read to rescue a plot.
 
+## v19 A shared value-name, B shared place-name
+
+Neither side frozen. Untrained priors disagree: write `action=` / `door=`, read/match `do=` / `here=`. Both heads may move. Either agreed name is legal.
+
+**A.** Write-key + read-key. **B.** Write-place + match-key.
+
+Train red. Held-out green must use the **same** name. Write+use without agreement must stay `open`. Empty-S green must stay `open`.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; integer in a name head; empty-S green `wait` | Cortex moves; disable-S `use_key`; door id in a place head; empty-S green `wait` |
+| Fail | Untrained already `use_key`; green fails or uses a different name; freeze a head | same |
+| Store-works | Untrained `open`; red `use_key` from one shared value name; green `wait` on that name | Untrained `open`; red `use_key` from one shared place name; green `wait` on that name |
+
+Do not freeze one side or restore a wired name to rescue a plot.
+

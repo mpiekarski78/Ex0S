@@ -172,3 +172,7 @@ Write WHEN, schema, use-gate, and pick-one trained together. Classification: **S
 
 **A** learns to emit `do=` instead of `action=` (read frozen to `do=`). **B** learns to emit `here=` instead of `door=` (match frozen to `here=`). Both **Store-works**. Untrained writer stays `open` (`action=` / `door=`). Trained red `use_key`; held-out green `wait`. Controls that keep the old write-name fail. Cortex unchanged. Details: [`v18_results.md`](v18_results.md).
 
+## v19 (shared value-name vs shared place-name)
+
+Neither side frozen. Untrained write/read disagree. **A** met on `do=` (writer moved). **B** met on `door=` (matcher moved). Both **Store-works**. Untrained `open`. Trained red `use_key`; held-out green `wait` on the same name. Write+use without agreement stays `open`. Cortex unchanged. Details: [`v19_results.md`](v19_results.md).
+

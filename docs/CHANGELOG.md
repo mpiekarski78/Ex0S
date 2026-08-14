@@ -26,3 +26,4 @@
 - v17: A read `do=` vs `action=`; B match `here=` vs `door=`. Both **Store-works**. [`docs/v17_results.md`](v17_results.md).
 - v18: A write `do=` vs `action=`; B write `here=` vs `door=`. Read/match frozen. Both **Store-works**. [`docs/v18_results.md`](v18_results.md).
 - Audit: unknown policy traces no longer train the collect head; `clone_empty` keeps boxed-head flags; v18 now probes empty-S green. Retest still **Store-works** / **Store-works**.
+- v19: A shared value-name (`do=` vs `action=`); B shared place-name (`door=` vs `here=`). Neither side frozen. Both **Store-works**. [`docs/v19_results.md`](v19_results.md).

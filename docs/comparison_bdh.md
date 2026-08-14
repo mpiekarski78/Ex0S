@@ -53,6 +53,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v16 ok= vs newest / shared return | **Store-works** / **Fail** (prefer `ok=1`; one return starves the joint) |
 | three-memory, v17 do= / here= | **Store-works** / **Store-works** (learn the field name to copy or match) |
 | three-memory, v18 write do= / here= | **Store-works** / **Store-works** (learn the field name to emit) |
+| three-memory, v19 shared name | **Store-works** / **Store-works** (write and read learn a convention) |
 
 ## Honest limits
 
@@ -249,3 +250,15 @@ See [`v17_results.md`](v17_results.md).
 | Class | **Store-works** | **Store-works** |
 
 See [`v18_results.md`](v18_results.md).
+
+## v19 (shared value-name vs shared place-name)
+
+| Check | A value-name | B place-name |
+|-------|--------------|--------------|
+| Untrained | `open` (mismatch) | `open` (mismatch) |
+| Trained red | **`use_key`** (`do=`) | **`use_key`** (`door=`) |
+| Held-out green | **`wait`** | **`wait`** |
+| Name control | `open` | `open` |
+| Class | **Store-works** | **Store-works** |
+
+See [`v19_results.md`](v19_results.md).
