@@ -150,3 +150,17 @@ Held-out: green life (OPEN, WAIT). Same policy, no green file in W.
 
 Do not copy a labeled tag from W. Do not let the policy emit `use_key` / `wait`.
 
+## v10 free life (no forced curriculum)
+
+Same write box and `{here, that act}` template as v9. W clutter only. During the life, `act(explore=True)` is ε-greedy over percept affordances (no USE_KEY without a held key). Probe is greedy (`explore=False`). **No** OPEN→PICK_KEY→USE_KEY fallback.
+
+Held-out: free green life (must find WAIT without a WAIT tuple).
+
+| ID | If |
+|----|----|
+| Confound | Cortex moves; disable-S still `use_key`; answer in W; `n_forced > 0`; probe explored |
+| Fail | Free red never opens; no file; greedy probe fails; free green never opens |
+| Store-works | `n_forced = 0`; S authored from a real opening; red `use_key` and green `wait` after ρ reset; empty S / disable-S fail |
+
+Do not sneak a hidden script. Do not let the policy emit `use_key` / `wait`.
+

@@ -44,6 +44,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v7 native tags | **Store-works** (no English prior) |
 | three-memory, v8 boxed policy | **Store-works** (skill box moves; cortex frozen) |
 | three-memory, v9 write-from-life | **Store-works** (note authored from events; W has no answer) |
+| three-memory, v10 free life | **Store-works** (`n_forced=0`; live then write) |
 
 ## Honest limits
 
@@ -126,3 +127,17 @@ Policy learns when to author S. Collect off. W is clutter only.
 | Class | — | **Store-works** |
 
 See [`v9_results.md`](v9_results.md).
+
+## v10 (free life, no script)
+
+ε-greedy over affordances during the life. Probe greedy. No forced curriculum.
+
+| Check | Result |
+|-------|--------|
+| n_forced | **0** |
+| Red life | `pick_key … use_key` (not the v9 tuple), authored `d0.tag`, greedy probe **`use_key`** |
+| Green life | sampled `wait`, authored `d2.tag`, greedy probe **`wait`** |
+| Empty S / disable-S | `open` |
+| Class | **Store-works** |
+
+See [`v10_results.md`](v10_results.md).

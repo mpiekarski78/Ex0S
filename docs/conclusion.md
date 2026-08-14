@@ -136,3 +136,7 @@ The collect/apply box may change; cortex SHA256 must not. Policy features exclud
 
 W has no answer file. The policy learns **when** to author a note from a door-opening; the frozen template is `{here, that act}`. Classification: **Store-works**. Red life writes `d0.tag` (`action=2`) and `use_key` after ρ reset; held-out green life writes `d2.tag` (`action=0`) and `wait`. Empty S and disable-S stay `open`. Cortex unchanged. Details: [`v9_results.md`](v9_results.md).
 
+## v10 (free life)
+
+No forced OPEN→PICK_KEY→USE_KEY. The agent explores percept-legal acts, authors the note if a door opens, then a **greedy** probe after ρ reset. Classification: **Store-works**. `n_forced=0`. Red life was `pick_key … wait … use_key`; green found `wait` without a script. Details: [`v10_results.md`](v10_results.md).
+

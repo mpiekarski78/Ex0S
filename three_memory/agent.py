@@ -44,6 +44,7 @@ class ThreeMemoryAgent:
         write_from_events: bool = True,
         policy_epsilon: float = 0.0,
         policy_rng: np.random.Generator | None = None,
+        explore_epsilon: float = 0.0,
     ):
         if retrieve_policy not in ("select", "dump"):
             raise ValueError(retrieve_policy)
@@ -65,6 +66,7 @@ class ThreeMemoryAgent:
         self.write_from_events = write_from_events
         self.policy_epsilon = policy_epsilon
         self.policy_rng = policy_rng or np.random.default_rng(0)
+        self.explore_epsilon = explore_epsilon
         self._peek: list[FactRecord] = []
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
@@ -110,6 +112,15 @@ class ThreeMemoryAgent:
         if obs.at_green_door:
             return {"door": DOOR_GREEN} if self.native else {"door": "green"}
         return None
+
+    def _affordances(self, obs: Obs) -> list[int]:
+        """Percept-legal acts. Not knowledge: cannot use a key you do not hold."""
+        acts = [int(Action.WAIT), int(Action.OPEN)]
+        if obs.key_visible and not obs.has_key:
+            acts.append(int(Action.PICK_KEY))
+        if obs.has_key:
+            acts.append(int(Action.USE_KEY))
+        return acts
 
     def _door_code(self, obs: Obs) -> int | None:
         if obs.at_red_door:
@@ -222,7 +233,7 @@ class ThreeMemoryAgent:
             logits[self.rho.last_success_action] += 2.5
         return logits
 
-    def act(self, obs: Obs, *, update_rho: bool = True) -> tuple[int, dict[str, Any]]:
+    def act(self, obs: Obs, *, update_rho: bool = True, explore: bool = False) -> tuple[int, dict[str, Any]]:
         vec = obs.vector(self.cortex.config.obs_dim)
         predicted = self.rho.predict()
         embed = self.cortex.encode(vec)
@@ -247,7 +258,12 @@ class ThreeMemoryAgent:
             logits[Action.OPEN] -= 5.0
             logits[Action.USE_KEY] -= 5.0
 
+        explored = False
         action = int(np.argmax(logits))
+        if explore and self.explore_epsilon > 0.0 and float(self.policy_rng.random()) < self.explore_epsilon:
+            afford = self._affordances(obs)
+            action = int(afford[int(self.policy_rng.integers(0, len(afford)))])
+            explored = True
         if update_rho:
             self.rho.update(embed)
         self.t += 1
@@ -255,6 +271,7 @@ class ThreeMemoryAgent:
             "novelty": novelty,
             "logits": logits.tolist(),
             "action": action,
+            "explored": explored,
             "store_hits": len(self._hits_for(obs)),
             "rho_l2": float(np.linalg.norm(self.rho.rho)),
             "last_success_action": self.rho.last_success_action,
