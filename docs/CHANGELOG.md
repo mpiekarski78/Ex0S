@@ -47,3 +47,4 @@
 - TM.0.5.5: accumulate S — two lives, same store; after both, A PRESS / C TUNE. Wipe-between loses A. A **Store-works**; B shared return **Fail**. [`docs/tm055_results.md`](tm055_results.md).
 - TM.0.5.6: never-wipe train — dirty S survives 500 episodes; C life on that S adds TUNE without losing A. A **Store-works**; B shared return **Fail**. [`docs/tm056_results.md`](tm056_results.md).
 - TM.0.5.7: find without a unique rare token — several hapax clutter pages; same never-wipe store. A **Store-works**; B shared return **Fail** (C stays HOLD). [`docs/tm057_results.md`](tm057_results.md).
+- TM.0.5.8: scale of Open W — 64 distinct document-shaped clutter pages; same multi-rare never-wipe recipe. A **Store-works**; B shared return **Store-works** (not retuned). [`docs/tm058_results.md`](tm058_results.md).

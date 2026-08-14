@@ -256,3 +256,7 @@ Training keeps S. **A** **Store-works**: after 500 A lives the dirty store still
 
 Several distinctive clutter pages, not one unique rare needle. **A** **Store-works**: never-wipe dirty S still PRESS; C life adds TUNE without losing A. **B** **Fail**: C stays HOLD (last-50 0.86 on the first fact). Details: [`tm057_results.md`](tm057_results.md).
 
+## TM.0.5.8 (scale of Open W / shared return)
+
+64 distinct document-shaped clutter pages. **A** **Store-works**: never-wipe dirty S still PRESS; C life adds TUNE without losing A. **B** **Store-works** on this slice (last-50 0.94); not the jump, not retuned. Details: [`tm058_results.md`](tm058_results.md).
+

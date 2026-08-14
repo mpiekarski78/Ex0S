@@ -27,7 +27,7 @@ Order of remaining recipe jumps (do not skip ahead to an English life):
 
 1. No answer integers in W (TM.0.5.0).
 2. Use the committed file as text (not int→motor). TM.0.5.0: copy an **innate motor name** mentioned in the page. TM.0.5.2: the page does **not** name the motor; stamp the act the body just did onto a rare committed note. Closed body vocabulary, not English NLP.
-3. Search without `has_code` (side-effect of 1 if pages have no place ints; keep it load-bearing). TM.0.5.7: find without a unique rare token (`has_code` stays in the vector).
+3. Search without `has_code` (side-effect of 1 if pages have no place ints; keep it load-bearing). TM.0.5.7: find without a unique rare token (`has_code` stays in the vector). TM.0.5.8: scale of Open W (64 documents).
 4. Probe is use-the-fact, not only pick-a-motor (TM.0.5.3).
 5. Open W (wiki-shaped content) (TM.0.5.4).
 6. One return (shared credit that actually works, or an honest genome admission).
@@ -649,5 +649,21 @@ Recipe: unread W has **several distinctive clutter pages** (hapax scraps), not o
 | Store-works | Untrained HOLD; multi-rare W; after never-wipe train A PRESS / C HOLD; C life on that S A PRESS / C TUNE; wipe-between A HOLD | Same without splitting the return |
 
 Do not restore a unique-rare needle, a motor name in W, or an English lexicon to rescue a plot.
+
+## TM.0.5.8 A scale of Open W, B shared return
+
+Recipe: unread W is a **pile** of document-shaped pages (64 distinct clutter logs), not a dozen. Same multi-rare never-wipe recipe as TM.0.5.7: hapax clutter (`xenon`/`argon`/`neon`) plus krypton/helium, so uniqueness is still gone. Closed-lexicon clutter-only control (64 pages, no hapax) must not PRESS. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. Not English. Do not retune `n_train`.
+
+**A.** Split: search rare / write stamp / probe A correct. Train keeps S. W is scaled.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; W still a dozen logs; useful page is the only rare token; English; drop `has_code`; drop `domain=`; digit-copy; synonym lexicon; v9 writes; empty S TUNE | same |
+| Fail | After train, dirty S not PRESS; C life on dirty S loses A or misses TUNE; wipe-between still PRESS on A; closed clutter-only PRESS | Untrained PRESS; dirty S miss; split restored |
+| Store-works | Untrained HOLD; 64-page W; after never-wipe train A PRESS / C HOLD; C life on that S A PRESS / C TUNE; wipe-between A HOLD | Same without splitting the return |
+
+Do not shrink W, restore a unique-rare needle, or add an English lexicon to rescue a plot.
 
 
