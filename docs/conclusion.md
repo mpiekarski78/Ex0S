@@ -288,3 +288,7 @@ Same recipe on a multi-rare English W. **A** **Fail**: motors still PRESS/TUNE, 
 
 Stamp the attended page, then block extra hapax at this station. **A** **Store-works**: only `bind=push` at A; C life `bind=adjust`. **B** **Fail** (first CS was `neon`; C missed TUNE). Details: [`tm065_results.md`](tm065_results.md).
 
+## TM.0.6.6 (correct dirty English S / shared return)
+
+Here-only + sweep on the English concurrent-bind store. **A** **Fail**: train S is one file `bind=push` (the junk drawer is gone), but C life bound `xenon` not `adjust`. **B** **Store-works** on the motor bar (n=1, last-50 1.00); not the jump, not retuned. Details: [`tm066_results.md`](tm066_results.md).
+

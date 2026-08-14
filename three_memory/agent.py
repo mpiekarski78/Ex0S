@@ -949,7 +949,7 @@ class ThreeMemoryAgent:
             rec = self._bound_here_note(station)
             if rec is None:
                 rec = self._in_hand_note() or self._commit_in_hand()
-                if rec is not None and not self._is_rare_in_world(rec) and not new_here:
+                if rec is not None and not self._is_rare_in_world(rec):
                     rec = None
                 if rec is None and new_here:
                     if self._commit_rare_unmarked():
