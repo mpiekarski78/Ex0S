@@ -46,6 +46,11 @@ class ThreeMemoryAgent:
         policy_rng: np.random.Generator | None = None,
         explore_epsilon: float = 0.0,
         use_read: bool = False,
+        unique_writes: bool = False,
+        use_pick: bool = False,
+        write_schema: bool = False,
+        force_use: bool = False,
+        force_write: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -57,6 +62,10 @@ class ThreeMemoryAgent:
             raise ValueError("retrieve_policy=policy requires use_policy")
         if use_read and use_policy is None:
             raise ValueError("use_read requires use_policy")
+        if use_pick and use_policy is None:
+            raise ValueError("use_pick requires use_policy")
+        if write_schema and use_policy is None:
+            raise ValueError("write_schema requires use_policy")
         cfg = CortexConfig(obs_dim=obs_dim, embed_dim=embed_dim, n_actions=4, seed=cortex_seed)
         self.cortex = FrozenCortex(cfg)
         self.rho = WorkingTrace(RhoConfig(embed_dim=embed_dim))
@@ -73,6 +82,11 @@ class ThreeMemoryAgent:
         self.policy_rng = policy_rng or np.random.default_rng(0)
         self.explore_epsilon = explore_epsilon
         self.use_read = use_read
+        self.unique_writes = unique_writes
+        self.use_pick = use_pick
+        self.write_schema = write_schema
+        self.force_use = force_use
+        self.force_write = force_write
         self._peek: list[FactRecord] = []
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
@@ -204,6 +218,16 @@ class ThreeMemoryAgent:
         self.last_policy = {**self.last_policy, **dec}
         self.policy_traces.append(dec)
 
+    @staticmethod
+    def _note_when(rec: FactRecord) -> int:
+        w = rec.tags.get("when")
+        if isinstance(w, (int, np.integer)):
+            return int(w)
+        return int(rec.when)
+
+    def _newest(self, hits: list) -> object:
+        return max(hits, key=self._note_when)
+
     def _hits_for(self, obs: Obs) -> list:
         pool = self._pool()
         mode = self.retrieve_policy
@@ -249,8 +273,22 @@ class ThreeMemoryAgent:
             self._choose_retrieve(obs)
         logits = np.zeros(4, dtype=np.float64)
         apply = True
+        chosen = None
         if self.collect_mode == "policy":
             apply = bool(self.last_policy.get("apply", False))
+        elif self.use_pick and self.use_policy is not None:
+            hits = self._hits_for(obs)
+            feat = UsePolicy.pick_features(len(hits))
+            dec = self.use_policy.decide_pick(feat, epsilon=self.policy_epsilon, rng=self.policy_rng)
+            self.last_policy = {**self.last_policy, **dec}
+            if record_use:
+                self.policy_traces.append(dec)
+            chosen = hits
+            if dec["one"] and hits:
+                chosen = [self._newest(hits)]
+            apply = True
+        elif self.force_use:
+            apply = True
         elif self.use_read and self.use_policy is not None:
             hits = self._hits_for(obs)
             feat = UsePolicy.features(bool(hits), False)
@@ -260,7 +298,8 @@ class ThreeMemoryAgent:
                 self.policy_traces.append(dec)
             apply = bool(dec["use"])
         if apply:
-            for rec in self._hits_for(obs):
+            recs = chosen if chosen is not None else self._hits_for(obs)
+            for rec in recs:
                 self._apply_record_bias(logits, rec, obs)
         return logits
 
@@ -349,20 +388,39 @@ class ThreeMemoryAgent:
 
         if self.use_policy is not None and self.write_from_events:
             # v9: frozen WHAT = {here, the act that opened}. Learned WHEN.
+            # v14 B: schema head may omit action=; integer still comes from the event.
             if opened and door is not None and action_name in name_to_id:
                 query = {"door": door}
                 s_hit = bool(self.store.retrieve(query)) if self.store.enabled else False
                 feat = UsePolicy.features(s_hit, True)
-                dec = self.use_policy.decide_write(
-                    feat, epsilon=self.policy_epsilon, rng=self.policy_rng
-                )
-                self.last_policy = dec
-                self.policy_traces.append(dec)
-                if dec["write"]:
+                do_write = self.force_write
+                if not do_write:
+                    dec = self.use_policy.decide_write(
+                        feat, epsilon=self.policy_epsilon, rng=self.policy_rng
+                    )
+                    self.last_policy = dec
+                    self.policy_traces.append(dec)
+                    do_write = bool(dec["write"])
+                complete = True
+                if do_write and self.write_schema:
+                    sch = self.use_policy.decide_schema(
+                        feat, epsilon=self.policy_epsilon, rng=self.policy_rng
+                    )
+                    self.last_policy = {**self.last_policy, **sch}
+                    self.policy_traces.append(sch)
+                    complete = bool(sch["complete"])
+                if do_write:
                     act = name_to_id[action_name]
-                    tags: dict[str, Any] = {"door": door, "action": act}
+                    tags: dict[str, Any] = {"door": door}
+                    if complete:
+                        tags["action"] = act
+                    if self.unique_writes:
+                        tags["when"] = int(self.t)
+                        fact_id = f"d{door}_t{self.t}_{len(self.store)}"
+                    else:
+                        fact_id = f"d{door}"
                     record = FactRecord(
-                        fact_id=f"d{door}",
+                        fact_id=fact_id,
                         what=encode_tags(tags),
                         when=self.t,
                         drive_scores={"novelty": novelty, "integrity": integrity},

@@ -48,6 +48,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v11 select authored notes | **Store-works** (pick the matching life; dump-all mixes lives) |
 | three-memory, v12 learn select vs dump | **Store-works** (head learns not to dump; held-out blue `open`) |
 | three-memory, v13 copy action= | **Store-works** (gate learns to read the integer; held-out green `wait`) |
+| three-memory, v14 pick vs schema | **Store-works** / **Store-works** (newest among matches; include `action=` in the note) |
 
 ## Honest limits
 
@@ -184,3 +185,16 @@ Use-gate. Features are match/no-match, not door id. Copy is generic `logits[int(
 | Class | — | **Store-works** | control |
 
 See [`v13_results.md`](v13_results.md).
+
+## v14 (pick-one vs write schema)
+
+Same cortex. Two heads.
+
+| Check | A pick-one | B schema |
+|-------|------------|----------|
+| Untrained red | mix `wait` | door-only `open` |
+| Trained red | **`use_key`** (newest file) | **`use_key`** (`action=2`) |
+| Held-out green | **`wait`** | **`wait`** |
+| Class | **Store-works** | **Store-works** |
+
+See [`v14_results.md`](v14_results.md).

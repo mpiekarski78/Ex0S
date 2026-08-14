@@ -50,6 +50,12 @@ class UsePolicy:
         # Untrained: do not copy action= from the file into motor logits.
         self.w_use = rng.normal(0.0, 0.05, size=(self.n_feat,))
         self.b_use = np.array(-1.2, dtype=np.float64)
+        # Untrained: apply every match (mix). Learn to pick one (newest).
+        self.w_pick = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_pick = np.array(-1.2, dtype=np.float64)
+        # Untrained: write {door} only. Learn to include action=.
+        self.w_schema = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_schema = np.array(-1.2, dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
@@ -66,6 +72,10 @@ class UsePolicy:
             np.asarray(self.b_retrieve).reshape(1),
             self.w_use,
             np.asarray(self.b_use).reshape(1),
+            self.w_pick,
+            np.asarray(self.b_pick).reshape(1),
+            self.w_schema,
+            np.asarray(self.b_schema).reshape(1),
         )
 
     def weight_hash(self) -> str:
@@ -142,6 +152,45 @@ class UsePolicy:
             "feat": feat.tolist(),
         }
 
+    @staticmethod
+    def pick_features(n_hits: int) -> np.ndarray:
+        """Several matches? Any match? No door id, no action=."""
+        return np.array([1.0 if n_hits >= 2 else 0.0, 1.0 if n_hits >= 1 else 0.0], dtype=np.float64)
+
+    def decide_pick(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        """Gate: apply only the newest match, or copy every hit."""
+        p_one = sigmoid(float(feat @ self.w_pick + self.b_pick))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            one = bool(rng.random() < 0.5)
+        else:
+            one = bool(p_one >= 0.5)
+        logp = float(np.log((p_one if one else (1.0 - p_one)) + 1e-12))
+        return {
+            "kind": "pick",
+            "one": one,
+            "p_one": p_one,
+            "logp": logp,
+            "feat": feat.tolist(),
+        }
+
+    def decide_schema(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        """Gate: write {door, action} or {door} only. Integer still comes from the event."""
+        p_complete = sigmoid(float(feat @ self.w_schema + self.b_schema))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            complete = bool(rng.random() < 0.5)
+        else:
+            complete = bool(p_complete >= 0.5)
+        logp = float(np.log((p_complete if complete else (1.0 - p_complete)) + 1e-12))
+        return {
+            "kind": "schema",
+            "complete": complete,
+            "p_complete": p_complete,
+            "logp": logp,
+            "feat": feat.tolist(),
+        }
+
     def decide_write(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
         p_write = sigmoid(float(feat @ self.w_write + self.b_write))
         rng = rng or np.random.default_rng()
@@ -165,6 +214,22 @@ class UsePolicy:
         lr = self.lr * float(advantage)
         for tr in traces:
             feat = np.asarray(tr["feat"], dtype=np.float64)
+            if tr.get("kind") == "pick":
+                p = sigmoid(float(feat @ self.w_pick + self.b_pick))
+                y = 1.0 if tr["one"] else 0.0
+                g = y - p
+                self.w_pick += lr * g * feat
+                self.b_pick = np.array(float(self.b_pick) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
+            if tr.get("kind") == "schema":
+                p = sigmoid(float(feat @ self.w_schema + self.b_schema))
+                y = 1.0 if tr["complete"] else 0.0
+                g = y - p
+                self.w_schema += lr * g * feat
+                self.b_schema = np.array(float(self.b_schema) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
             if tr.get("kind") == "use":
                 p = sigmoid(float(feat @ self.w_use + self.b_use))
                 y = 1.0 if tr["use"] else 0.0

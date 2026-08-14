@@ -152,3 +152,7 @@ A boxed retrieve head chooses select vs dump without door identity. Classificati
 
 A boxed use-gate learns when to copy the file’s integer into motor logits. No USE_KEY/WAIT table on this path. Classification: **Store-works**. Untrained (empty S or planted `d0.tag`) stays `open`. Trained red `use_key`. Held-out green `wait` (integer was never in the head). Dump-all still mixes. Cortex unchanged. Details: [`v13_results.md`](v13_results.md).
 
+## v14 (pick-one vs write schema)
+
+Two boxed heads, same frozen cortex. **A** learns to apply one matching note (newest `when=`) instead of summing every `action=`. **B** learns to put `action=` in the note instead of `{door}` only. Both **Store-works**. Untrained A mixes (`wait`); untrained B writes door-only (`open`). Trained red `use_key`; held-out green `wait`. Details: [`v14_results.md`](v14_results.md).
+

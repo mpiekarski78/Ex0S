@@ -202,3 +202,19 @@ v7–v12 apply a frozen USE_KEY/WAIT table. v13 (`use_read=True`): untrained gat
 
 Do not restore the if/elif table on this path. Do not put door id in the use-head. Do not emit `use_key` with no file.
 
+## v14 A pick-one vs B schema
+
+Same cortex. Generic copy. Two arms.
+
+**A.** Unique files (no overwrite). Pick head: one vs all, features `{n_hits ≥ 2}` — no door, no `action=`. When one: frozen newest `when=`. Train on red stale+new. Held-out green conflict.
+
+**B.** Schema head: `{door}` vs `{door, action}`. Integer from the event. Train on red. Held-out green life. Door-only plant must stay `open`.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; door in pick features | Cortex moves; disable-S `use_key`; door in schema features |
+| Fail | Untrained already `use_key`; green fails; apply-all still works | Untrained already has `action=`; green fails; door-only plant `use_key` |
+| Store-works | Untrained mix; trained newest red `use_key`; green `wait` | Untrained door-only `open`; trained complete red `use_key`; green `wait` |
+
+Do not put the motor act in either head. Do not restore the if/elif table.
+

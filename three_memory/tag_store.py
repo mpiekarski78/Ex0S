@@ -27,6 +27,8 @@ def tags_to_record(path: Path, when: int = 0) -> FactRecord | None:
     fact_id, tags = parse_tagfile(text)
     if not tags:
         return None
+    if "when" in tags and isinstance(tags["when"], int):
+        when = int(tags["when"])
     return FactRecord(
         fact_id=fact_id,
         what=encode_tags(tags),
