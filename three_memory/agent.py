@@ -71,6 +71,7 @@ class ThreeMemoryAgent:
         use_search_head: bool = False,
         record_search_on_explore: bool = False,
         use_prose_ints: bool = False,
+        use_prose_tokens: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -119,6 +120,12 @@ class ThreeMemoryAgent:
             raise ValueError("use_prose_ints requires use_policy")
         if use_prose_ints and not (use_search_head and use_vname_head and use_read):
             raise ValueError("use_prose_ints requires search + vname + use_read")
+        if use_prose_tokens and use_policy is None:
+            raise ValueError("use_prose_tokens requires use_policy")
+        if use_prose_tokens and not (use_search_head and use_vname_head and use_read):
+            raise ValueError("use_prose_tokens requires search + vname + use_read")
+        if use_prose_ints and use_prose_tokens:
+            raise ValueError("use_prose_ints and use_prose_tokens cannot run together")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -166,6 +173,8 @@ class ThreeMemoryAgent:
         self.record_search_on_explore = record_search_on_explore
         # Prose pages: digits → anonymous n* tags; vname picks among values, not filed action=.
         self.use_prose_ints = use_prose_ints
+        # Prose pages with no answer ints: words → w* tags; vname picks a token, not n*.
+        self.use_prose_tokens = use_prose_tokens
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self.last_policy: dict[str, Any] = {}
@@ -228,6 +237,7 @@ class ThreeMemoryAgent:
             use_search_head=self.use_search_head,
             record_search_on_explore=self.record_search_on_explore,
             use_prose_ints=self.use_prose_ints,
+            use_prose_tokens=self.use_prose_tokens,
             domain=self.domain,
         )
 
@@ -374,7 +384,7 @@ class ThreeMemoryAgent:
                 for k in rec.tags
                 if k not in _QNAME_SKIP
             )
-            if self.use_prose_ints and not has_rare:
+            if (self.use_prose_ints or self.use_prose_tokens) and not has_rare:
                 words = pool_words[i]
                 has_rare = any(sum(1 for ws in pool_words if w in ws) < 3 for w in words)
             items.append((has_code, has_rare))
@@ -522,6 +532,17 @@ class ThreeMemoryAgent:
             return "do" if bool(self.last_policy.get("key_alt")) else "action"
         return self.value_key
 
+    def _act_names(self) -> set[str]:
+        """Innate motor names (body vocabulary). Not an English lexicon."""
+        if self.domain == "dial":
+            return {a.name.lower() for a in DialAction}
+        return {a.name.lower() for a in Action}
+
+    def _act_map(self) -> dict[str, int]:
+        if self.domain == "dial":
+            return {a.name.lower(): int(a) for a in DialAction}
+        return {a.name.lower(): int(a) for a in Action}
+
     def _choose_vname(self, recs: list, obs: Obs, *, record: bool) -> None:
         if not self.use_vname_head or self.use_policy is None:
             return
@@ -529,7 +550,13 @@ class ThreeMemoryAgent:
         qkey = next(iter(q)) if q else ""
         pool = self._qname_pool()
         keys = sorted({k for r in recs for k in r.tags if k not in _QNAME_SKIP})
-        if self.use_prose_ints:
+        if self.use_prose_tokens:
+            keys = [
+                k
+                for k in keys
+                if any(isinstance(r.tags.get(k), str) and r.tags.get(k) for r in recs)
+            ]
+        elif self.use_prose_ints:
             keys = [
                 k
                 for k in keys
@@ -543,8 +570,27 @@ class ThreeMemoryAgent:
             return
         items = []
         code = self._door_code(obs)
+        acts = self._act_names()
         for k in keys:
-            if self.use_prose_ints:
+            if self.use_prose_tokens:
+                val = next((str(r.tags.get(k)) for r in recs if isinstance(r.tags.get(k), str)), "")
+                val = val.lower()
+                is_act = val in acts
+                is_common = (
+                    sum(
+                        1
+                        for r in pool
+                        if any(
+                            isinstance(r.tags.get(kk), str) and str(r.tags.get(kk)).lower() == val
+                            for kk in r.tags
+                            if kk not in _QNAME_SKIP
+                        )
+                    )
+                    >= 3
+                )
+                # Untrained prefers common words (first feat). Trained must copy the act-name token.
+                items.append((is_common, is_act))
+            elif self.use_prose_ints:
                 val = next((r.tags.get(k) for r in recs if k in r.tags), None)
                 is_code = code is not None and val == code
                 val_common = (
@@ -569,7 +615,10 @@ class ThreeMemoryAgent:
         )
         dec["vname"] = keys[int(dec["idx"])]
         dec["vnames"] = keys
-        if self.use_prose_ints:
+        if self.use_prose_tokens:
+            dec["is_common"] = bool(items[int(dec["idx"])][0])
+            dec["is_act"] = bool(items[int(dec["idx"])][1])
+        elif self.use_prose_ints:
             dec["is_code"] = bool(items[int(dec["idx"])][0])
             dec["val_common"] = bool(items[int(dec["idx"])][1])
         self.last_policy = {**self.last_policy, **dec}
@@ -577,6 +626,14 @@ class ThreeMemoryAgent:
             self.policy_traces.append(dec)
 
     def _apply_record_bias(self, logits: np.ndarray, rec: FactRecord, obs: Obs) -> None:
+        if self.use_prose_tokens:
+            key = self._value_tag() if self.use_read else ""
+            val = rec.tags.get(key)
+            if isinstance(val, str):
+                act = self._act_map().get(val.lower())
+                if act is not None:
+                    logits[int(act)] += 3.0
+            return
         act = rec.tags.get(self._value_tag() if self.use_read else "action")
         if self.use_read:
             # Generic copy: the file's integer is the motor index. No USE_KEY/WAIT table.

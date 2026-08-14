@@ -4,6 +4,40 @@
 
 > Can frozen innate drives + learning rules fill an **inspectable** world-knowledge store from experience, such that facts **survive reset of the working trace** — while the trace alone does not?
 
+## Developmental rule (locked, TM.0.5+)
+
+Jumps must get closer to a machine that **could in theory** learn from wiki / English / an open world. Another isomorphic toy (new room, same digit-copy) is not a jump.
+
+**How** is genome. **What** is a life. Not all at once. Gradual, like a brain.
+
+| Layer | In the recipe (frozen cortex + boxed heads + S/W/ρ) | In experience (later lives) |
+|-------|------------------------------------------------------|-----------------------------|
+| How to learn | Find unread data, commit, use after ρ reset — without planted answer integers, a door table, or an English lexicon | — |
+| How to correct | Detect mismatch, revise S (mark/overwrite/drop), retry, keep the correction after ρ reset | — |
+| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first |
+| Learn math | Not a calculator in cortex | A later life after some language is already in S |
+
+Four recipe skills, in order: **find / commit / use / correct**. English and math are lives that use those skills. Dumping wiki + algebra into one experiment is illegal.
+
+**Test for every jump:** did we improve the recipe, or smuggle a subject into DNA? A PRESS/TUNE word list in the agent is smuggling English. `+` in the cortex is smuggling math. Split credit is an experimenter crutch; shared return stays an honest arm until the recipe can take one life signal.
+
+**Self-correction (recipe, not a subject):** (1) detect — S and the world disagree; (2) revise — do not only append; (3) retry — look again; (4) keep — after ρ reset the corrected file steers, the first wrong commit does not. Without this, learning is stamp-collecting.
+
+Order of remaining recipe jumps (do not skip ahead to an English life):
+
+1. No answer integers in W (TM.0.5.0).
+2. Use the committed file as text (not int→motor). TM.0.5.0 is the first slice: copy an **innate motor name** mentioned in the page — closed body vocabulary, not English NLP.
+3. Search without `has_code` (side-effect of 1 if pages have no place ints; keep it load-bearing).
+4. Probe is use-the-fact, not only pick-a-motor.
+5. Open W (wiki-shaped content).
+6. One return (shared credit that actually works, or an honest genome admission).
+7. No `domain=` switch.
+8. Accumulate S (stop wiping every episode).
+9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works.
+10. Then an English life, then a math life.
+
+Do not restore digit-copy, filed `action=`/`where=`, the door toy, or a synonym lexicon to rescue a plot.
+
 ## Predeclared categories
 
 | ID | Meaning |
@@ -483,4 +517,22 @@ Leave the key/door room. Same prose free life (`n*`, search, vname). World is `C
 | Store-works | Untrained HOLD; free A commits prose ints; after reset W gone → PRESS; C TUNE; S has `n*` | Same without splitting the return |
 
 Do not restore the door toy or filed `action=` to rescue a plot.
+
+## TM.0.5.0 A no answer integers, B shared return
+
+Recipe jump 1: unread W has **no** place/motor digits. Useful page mentions an **innate motor name** (`press` / `tune`), not `0`/`1`/`3`. Search cannot use `has_code`. Vname picks a token; untrained prefers a common word; trained copies the act-name token. Generic copy is name→same-named motor (closed body vocabulary), not an English synonym table, not `logits[int] += 3.0`. Channel dial. Species prior HOLD. Cortex frozen. `n_forced=0`. Writes from life off.
+
+Honest limit: the genome knows the names of its own acts. It does not parse English. Synonyms (`push` for PRESS) are a later English life.
+
+**A.** Split: found act-name token in S during life / probe after reset.
+
+**B.** Same `make()`. One `r` = probe correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; door world; body digits in W; filed tags; `.tag` W; digit-copy (`use_prose_ints`); synonym lexicon; writes from life; forced curriculum; empty S TUNE on C | same |
+| Fail | Untrained already PRESS; A life misses `press`; after reset not PRESS; C not TUNE; controls still PRESS; swap `idle` still PRESS | Untrained PRESS; A/C miss; empty S solves A; split restored |
+| Store-works | Untrained HOLD; free A commits `press`; after reset W gone → PRESS; C TUNE from `tune`; S has `w*` tokens not `n*` motor ints | Same without splitting the return |
+
+Do not restore answer integers, filed `action=`, or a PRESS/TUNE lexicon beyond innate act names to rescue a plot.
 

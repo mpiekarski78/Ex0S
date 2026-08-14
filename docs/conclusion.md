@@ -224,3 +224,7 @@ Pure prose `.md` (no filed `action=` / `where=`). Digits → anonymous `n*`; vna
 
 Left the key/door room. Same prose machinery on `ChannelDialWorld`. **A** **Store-works**: after ρ reset W gone → PRESS; held-out C TUNE (not place-copy). **B** **Fail**: shared return never commits useful pages; C wrong. Cortex frozen (5-action hash). Details: [`tm040_results.md`](tm040_results.md).
 
+## TM.0.5.0 (no answer integers / shared return)
+
+Unread W has no place/motor digits. Copy an innate motor name token (`press` / `tune`). **A** **Store-works**: after ρ reset W gone → PRESS; held-out C TUNE. **B** **Fail**: shared return last-50 0. Developmental rule locked. Not English NLP. Details: [`tm050_results.md`](tm050_results.md).
+

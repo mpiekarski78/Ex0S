@@ -248,9 +248,13 @@ def prose_to_record(path: Path, when: int = 0) -> FactRecord | None:
         body_lines.append(ln)
     body = "\n".join(body_lines)
     ints = extract_prose_ints(body)
-    if not ints:
+    tokens = sorted(prose_tokens(body))
+    if not ints and not tokens:
         return None
     tags: dict[str, Any] = {f"n{i}": v for i, v in enumerate(ints)}
+    # No digits: persist words so commit W→S still has something to copy (TagStore keeps tags, not `what`).
+    if not ints:
+        tags.update({f"w{i}": t for i, t in enumerate(tokens)})
     tags["source_file"] = str(path)
     return FactRecord(
         fact_id=fact_id,

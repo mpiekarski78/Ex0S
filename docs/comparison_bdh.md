@@ -66,6 +66,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.3.1 documents | **Store-works** / **Fail** (`.md` W; free life; shared return starves) |
 | three-memory, TM.0.3.2 prose retrieve | **Store-works** / **Fail** (no filed `action=`; anonymous `n*`; shared return starves) |
 | three-memory, TM.0.4.0 channel dial | **Store-works** / **Fail** (left door world; C TUNE; shared return clutter) |
+| three-memory, TM.0.5.0 no answer integers | **Store-works** / **Fail** (no digits in W; innate name token; shared return starves) |
 
 ## Honest limits
 
@@ -422,4 +423,17 @@ See [`tm032_results.md`](tm032_results.md).
 | Class | **Store-works** | **Fail** |
 
 See [`tm040_results.md`](tm040_results.md).
+
+## TM.0.5.0 (no answer integers / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| W body integers | none | none |
+| Free A found `press` | yes (`w2=press`) | no (clutter) |
+| After ρ reset, W gone | **`press`** | `hold` |
+| Held-out C | **`tune`** | `hold` |
+| Train last 50 | 0.90 | 0.00 |
+| Class | **Store-works** | **Fail** |
+
+See [`tm050_results.md`](tm050_results.md).
 
