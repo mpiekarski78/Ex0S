@@ -75,6 +75,8 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.5.6 never-wipe train | **Store-works** / **Fail** (dirty train S still PRESS; C life adds TUNE; shared return starves) |
 | three-memory, TM.0.5.7 find without unique rare | **Store-works** / **Fail** (several hapax clutter pages; C life adds TUNE; shared return misses C) |
 | three-memory, TM.0.5.8 scale of Open W | **Store-works** / **Store-works** (64-page pile; C life adds TUNE; shared return not the jump) |
+| three-memory, TM.0.5.9 correct dirty S | **Store-works** / **Fail** (one stamped note; C life adds TUNE; shared return misses C) |
+| three-memory, TM.0.6.0 English life | **Store-works** / **Store-works** (page word bound in S, not a DNA synonym; shared return not the jump) |
 
 ## Honest limits
 
@@ -545,4 +547,29 @@ See [`tm057_results.md`](tm057_results.md).
 | Class | **Store-works** | **Store-works** |
 
 See [`tm058_results.md`](tm058_results.md).
+
+## TM.0.5.9 (correct dirty S / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| After train, S: A / foil C | **`press` / `hold`** | `press` / `hold` |
+| C life on that S: A / C | **`press` / `tune`** | `press` / `hold` |
+| Wipe-between: A / C | **`hold` / `tune`** | `hold` / `hold` |
+| Train S n files | **1** | **1** |
+| Train last 50 | 0.92 | 0.98 |
+| Class | **Store-works** | **Fail** |
+
+See [`tm059_results.md`](tm059_results.md).
+
+## TM.0.6.0 (English life / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| After A life: A / foil C | **`press` / `hold`** | **`press` / `hold`** |
+| After C life: C / foil A | **`tune` / `hold`** | **`tune` / `hold`** |
+| Bind-off A | **`hold`** | **`hold`** |
+| Train last 50 | 0.88 | 0.46 |
+| Class | **Store-works** | **Store-works** |
+
+See [`tm060_results.md`](tm060_results.md).
 

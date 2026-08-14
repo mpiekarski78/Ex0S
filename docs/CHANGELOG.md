@@ -48,3 +48,5 @@
 - TM.0.5.6: never-wipe train — dirty S survives 500 episodes; C life on that S adds TUNE without losing A. A **Store-works**; B shared return **Fail**. [`docs/tm056_results.md`](tm056_results.md).
 - TM.0.5.7: find without a unique rare token — several hapax clutter pages; same never-wipe store. A **Store-works**; B shared return **Fail** (C stays HOLD). [`docs/tm057_results.md`](tm057_results.md).
 - TM.0.5.8: scale of Open W — 64 distinct document-shaped clutter pages; same multi-rare never-wipe recipe. A **Store-works**; B shared return **Store-works** (not retuned). [`docs/tm058_results.md`](tm058_results.md).
+- TM.0.5.9: correct the dirty store — stop committing once S names here; drop unstamped pages after a real stamp. A **Store-works** (S n=1); B shared return **Fail**. [`docs/tm059_results.md`](tm059_results.md).
+- TM.0.6.0: first English life, tiny corpus — bind a page word from the event (`did=` bookkeeping, copy `push`/`adjust`). A **Store-works**; B shared return **Store-works** on this slice (not retuned). [`docs/tm060_results.md`](tm060_results.md).

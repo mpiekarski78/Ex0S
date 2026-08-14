@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.5.8. Toy series: v0–v23.
+**Current:** TM.0.6.0. Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.5.8: Open W is a 64-page pile, not a dozen logs. Same never-wipe store: after 500 A lives the dirty S still PRESS; a C life adds TUNE without losing A. Wipe-between loses A. Not English NLP. Shared return **Store-works** on this scaled slice (last-50 0.94); TM.0.5.7 on the dozen-page library still **Fail**ed. Still genome: innate act and station names, `{has_code, has_rare}`, five acts, `domain=`. Short logs, not Wikipedia.
+Honest status after TM.0.6.0: a tiny English life can bind a page word to a motor without a synonym table in DNA. After a free life on pages that never say `press`/`tune`, ρ reset, W gone: A **PRESS** / C **TUNE** from `push`/`adjust` in S (`did=` is bookkeeping). Bind-off HOLD. Shared return **Store-works** on this slice (last-50 0.46; not the jump, not retuned). Still genome: innate act and station names, `{has_code, has_rare}`, five acts, `domain=`. Tiny logs, not Wikipedia. Math is a later life.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -60,6 +60,8 @@ TM.0.5.5 accumulate S: [`docs/tm055_results.md`](docs/tm055_results.md).
 TM.0.5.6 never-wipe train: [`docs/tm056_results.md`](docs/tm056_results.md).  
 TM.0.5.7 find without unique rare: [`docs/tm057_results.md`](docs/tm057_results.md).  
 TM.0.5.8 scale of Open W: [`docs/tm058_results.md`](docs/tm058_results.md).  
+TM.0.5.9 correct dirty S: [`docs/tm059_results.md`](docs/tm059_results.md).  
+TM.0.6.0 English life: [`docs/tm060_results.md`](docs/tm060_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -115,6 +117,8 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.5.6 A never-wipe train / B shared return | **Store-works** / **Fail** (dirty train S still PRESS; C life adds TUNE) |
 | TM.0.5.7 A find without unique rare / B shared return | **Store-works** / **Fail** (several hapax clutter pages; C life adds TUNE) |
 | TM.0.5.8 A scale of Open W / B shared return | **Store-works** / **Store-works** (64-page pile; C life adds TUNE) |
+| TM.0.5.9 A correct dirty S / B shared return | **Store-works** / **Fail** (train S is one stamped note; C life adds TUNE) |
+| TM.0.6.0 A English life / B shared return | **Store-works** / **Store-works** (page word bound in S; bind-off HOLD; shared return not the jump) |
 
 ## Five pieces
 
@@ -173,6 +177,8 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.5.6 never-wipe train | **Store-works** / **Fail** | dirty train S still PRESS; [`docs/tm056_results.md`](docs/tm056_results.md) |
 | TM.0.5.7 find without unique rare | **Store-works** / **Fail** | several hapax clutter pages; [`docs/tm057_results.md`](docs/tm057_results.md) |
 | TM.0.5.8 scale of Open W | **Store-works** / **Store-works** | 64-page document pile; [`docs/tm058_results.md`](docs/tm058_results.md) |
+| TM.0.5.9 correct dirty S | **Store-works** / **Fail** | one stamped note; [`docs/tm059_results.md`](docs/tm059_results.md) |
+| TM.0.6.0 English life | **Store-works** / **Store-works** | bind a page word; [`docs/tm060_results.md`](docs/tm060_results.md) |
 
 ## Quick start
 
@@ -219,6 +225,8 @@ python tests/test_tm055.py
 python tests/test_tm056.py
 python tests/test_tm057.py
 python tests/test_tm058.py
+python tests/test_tm059.py
+python tests/test_tm060.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -262,6 +270,8 @@ python -m experiments.run_tm055
 python -m experiments.run_tm056
 python -m experiments.run_tm057
 python -m experiments.run_tm058
+python -m experiments.run_tm059
+python -m experiments.run_tm060
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -270,7 +280,7 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010 … run_tm058, train_prior
+experiments/      # run_v0 … run_v23, run_tm010 … run_tm060, train_prior
 docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.x results
 tests/
 runs/             # gitignored

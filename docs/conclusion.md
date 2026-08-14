@@ -260,3 +260,11 @@ Several distinctive clutter pages, not one unique rare needle. **A** **Store-wor
 
 64 distinct document-shaped clutter pages. **A** **Store-works**: never-wipe dirty S still PRESS; C life adds TUNE without losing A. **B** **Store-works** on this slice (last-50 0.94); not the jump, not retuned. Details: [`tm058_results.md`](tm058_results.md).
 
+## TM.0.5.9 (correct dirty S / shared return)
+
+Stop stamp-collecting on a never-wipe life. **A** **Store-works**: train S is one stamped note and still PRESS; C life adds TUNE without losing A. **B** **Fail**: C stays HOLD (last-50 0.98 on the first fact). Details: [`tm059_results.md`](tm059_results.md).
+
+## TM.0.6.0 (English life / shared return)
+
+Tiny English corpus. Pages never say `press`/`tune`. **A** **Store-works**: after a free life A PRESS / C HOLD from `push` bound in S (`did=press` is bookkeeping); bind-off HOLD. **B** **Store-works** on this slice (last-50 0.46); not the jump, not retuned. Details: [`tm060_results.md`](tm060_results.md).
+

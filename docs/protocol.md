@@ -14,7 +14,7 @@ Jumps must get closer to a machine that **could in theory** learn from wiki / En
 |-------|------------------------------------------------------|-----------------------------|
 | How to learn | Find unread data, commit, use after ρ reset — without planted answer integers, a door table, or an English lexicon | — |
 | How to correct | Detect mismatch, revise S (mark/overwrite/drop), retry, keep the correction after ρ reset | — |
-| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first |
+| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first (TM.0.6.0) |
 | Learn math | Not a calculator in cortex | A later life after some language is already in S |
 
 Four recipe skills, in order: **find / commit / use / correct**. English and math are lives that use those skills. Dumping wiki + algebra into one experiment is illegal.
@@ -23,7 +23,7 @@ Four recipe skills, in order: **find / commit / use / correct**. English and mat
 
 **Self-correction (recipe, not a subject):** (1) detect — S and the world disagree; (2) revise — do not only append; (3) retry — look again; (4) keep — after ρ reset the corrected file steers, the first wrong commit does not. Without this, learning is stamp-collecting.
 
-Order of remaining recipe jumps (do not skip ahead to an English life):
+Order of recipe jumps (English is a life that uses the skills, not a lexicon in DNA):
 
 1. No answer integers in W (TM.0.5.0).
 2. Use the committed file as text (not int→motor). TM.0.5.0: copy an **innate motor name** mentioned in the page. TM.0.5.2: the page does **not** name the motor; stamp the act the body just did onto a rare committed note. Closed body vocabulary, not English NLP.
@@ -33,8 +33,8 @@ Order of remaining recipe jumps (do not skip ahead to an English life):
 6. One return (shared credit that actually works, or an honest genome admission).
 7. No `domain=` switch.
 8. Accumulate S (stop wiping every episode). TM.0.5.5 eval path; TM.0.5.6 never-wipe train.
-9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works (TM.0.5.1).
-10. Then an English life, then a math life.
+9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works (TM.0.5.1). TM.0.5.9: correct the dirty never-wipe store (stop appending once S names here; drop unstamped pages after a real stamp).
+10. English life, tiny corpus (TM.0.6.0). Then a math life.
 
 Do not restore digit-copy, filed `action=`/`where=`, the door toy, or a synonym lexicon to rescue a plot.
 
@@ -665,5 +665,37 @@ Recipe: unread W is a **pile** of document-shaped pages (64 distinct clutter log
 | Store-works | Untrained HOLD; 64-page W; after never-wipe train A PRESS / C HOLD; C life on that S A PRESS / C TUNE; wipe-between A HOLD | Same without splitting the return |
 
 Do not shrink W, restore a unique-rare needle, or add an English lexicon to rescue a plot.
+
+## TM.0.5.9 A correct dirty S, B shared return
+
+Recipe: the never-wipe store must not only append. Same 64-page multi-rare W as TM.0.5.8. Once S names **here**, do not commit more W pages for that station. After a successful stamp, drop committed pages that never received an act name. Revise and here-only are **off by default**. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. Not English. Do not retune `n_train`. Predeclared: train S has ≤8 files (TM.0.5.8 had 19).
+
+**A.** Split: search rare / write stamp / revise junk / probe A correct. Train keeps S.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; W still a dozen logs; English; drop `has_code`; drop `domain=`; digit-copy; synonym lexicon; v9 writes; empty S TUNE; revise/here-only smuggled into 0.5.8 | same |
+| Fail | After train, S not PRESS; n files > 8; n_revised=0; C life loses A or misses TUNE; wipe-between still PRESS on A | Untrained PRESS; dirty S miss; split restored |
+| Store-works | Untrained HOLD; 64-page W; after never-wipe train A PRESS / C HOLD, S small, n_revised≥1; C life on that S A PRESS / C TUNE; wipe-between A HOLD | Same without splitting the return |
+
+Do not restore stamp-collecting, shrink W, or add an English lexicon to rescue a plot.
+
+## TM.0.6.0 A English life, B shared return
+
+Recipe: a later life over English pages, tiny corpus first. Genome may know streams of symbols exist and that the body has named acts. It may not know this corpus is English or that a synonym means a motor. Unread W never says `press`/`tune`. On success, stamp `did=` (skipped by copy) and keep rare page words; aliases in S map those words to the act just done. Alias-bind and did-stamp are **off by default**. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. Not math. Do not retune `n_train`. Bind-off (bookkeeping without lookup) must HOLD.
+
+**A.** Split: search rare / write stamp / copy the bound page word / probe A correct.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; W names an innate motor; nonce scrap; synonym table in the agent; drop `has_code`; drop `domain=`; digit-copy; `w*=press` still the copy token | same |
+| Fail | Untrained PRESS; after A life not PRESS; bind-off still PRESS; C miss | Untrained PRESS; A miss; C miss; split restored |
+| Store-works | Untrained HOLD; tiny English W; after a free life A PRESS / C HOLD from a page word bound in S; C life TUNE; bind-off HOLD | Same without splitting the return |
+
+Do not restore an innate-name stamp, a `push` table in the agent, or Wikipedia-scale W to rescue a plot.
 
 

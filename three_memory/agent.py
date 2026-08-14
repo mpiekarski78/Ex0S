@@ -28,7 +28,8 @@ from .symbols import (
 from .tag_store import DocLibrary, ProseLibrary, TagLibrary, prose_tokens
 
 # Bookkeeping tags, not a place-name menu. Query candidates are whatever else the files have.
-_QNAME_SKIP = frozenset({"source", "source_file", "when", "ok", "what"})
+# `did` is the act the body just did (not a copy token). Aliases live on remaining w* words.
+_QNAME_SKIP = frozenset({"source", "source_file", "when", "ok", "what", "did"})
 
 
 class ThreeMemoryAgent:
@@ -76,6 +77,9 @@ class ThreeMemoryAgent:
         use_event_annotate: bool = False,
         use_here_match: bool = False,
         use_commit_rare_only: bool = False,
+        use_commit_here_only: bool = False,
+        use_alias_bind: bool = False,
+        use_did_stamp: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -140,6 +144,12 @@ class ThreeMemoryAgent:
             raise ValueError("use_event_annotate requires search + vname + use_read + use_prose_tokens")
         if use_here_match and not use_event_annotate:
             raise ValueError("use_here_match requires use_event_annotate")
+        if use_alias_bind and not use_event_annotate:
+            raise ValueError("use_alias_bind requires use_event_annotate")
+        if use_did_stamp and not use_event_annotate:
+            raise ValueError("use_did_stamp requires use_event_annotate")
+        if use_alias_bind and not use_did_stamp:
+            raise ValueError("use_alias_bind requires use_did_stamp")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -193,6 +203,9 @@ class ThreeMemoryAgent:
         self.use_event_annotate = use_event_annotate
         self.use_here_match = use_here_match
         self.use_commit_rare_only = use_commit_rare_only
+        self.use_commit_here_only = use_commit_here_only
+        self.use_alias_bind = use_alias_bind
+        self.use_did_stamp = use_did_stamp
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._w_skip: set[str] = set()
@@ -264,6 +277,9 @@ class ThreeMemoryAgent:
             use_event_annotate=self.use_event_annotate,
             use_here_match=self.use_here_match,
             use_commit_rare_only=self.use_commit_rare_only,
+            use_commit_here_only=self.use_commit_here_only,
+            use_alias_bind=self.use_alias_bind,
+            use_did_stamp=self.use_did_stamp,
             domain=self.domain,
         )
 
@@ -451,6 +467,14 @@ class ThreeMemoryAgent:
             if other:
                 owned = {r.fact_id for r in recs}
                 wpool = [r for r in wpool if getattr(r, "fact_id", None) not in owned]
+        if (
+            self.use_commit_here_only
+            and self.use_here_match
+            and self.store.enabled
+            and self.collect_mode == "commit"
+            and any(self._rec_names_here(r, obs) for r in self.store.records())
+        ):
+            return info
         picks = self._search_picks(wpool, obs, record=record)
         if not picks:
             return info
@@ -609,8 +633,28 @@ class ThreeMemoryAgent:
 
     def _act_map(self) -> dict[str, int]:
         if self.domain == "dial":
-            return {a.name.lower(): int(a) for a in DialAction}
-        return {a.name.lower(): int(a) for a in Action}
+            innate = {a.name.lower(): int(a) for a in DialAction}
+        else:
+            innate = {a.name.lower(): int(a) for a in Action}
+        if not self.use_alias_bind:
+            return innate
+        m = dict(innate)
+        stations = set(STATION_NAMES.values())
+        for rec in self.store.records():
+            did = rec.tags.get("did")
+            if not isinstance(did, str):
+                continue
+            aid = innate.get(did.lower())
+            if aid is None:
+                continue
+            for k, v in rec.tags.items():
+                if not str(k).startswith("w") or not isinstance(v, str):
+                    continue
+                vl = v.lower()
+                if vl in innate or vl in stations:
+                    continue
+                m[vl] = aid
+        return m
 
     def _station_name(self, obs) -> str | None:
         """Innate station name for the current percept. Body vocabulary, not English."""
@@ -642,6 +686,9 @@ class ThreeMemoryAgent:
         for rec in self.store.records():
             if rec.fact_id != fid:
                 continue
+            did = rec.tags.get("did")
+            if isinstance(did, str) and did.lower() in acts:
+                return True
             for k, v in rec.tags.items():
                 if k in _QNAME_SKIP:
                     continue
@@ -670,6 +717,23 @@ class ThreeMemoryAgent:
             self._w_skip.add(fid)
             self.n_revised += 1
 
+    def _sweep_unstamped(self) -> None:
+        """Drop committed pages that never received an act name. Not a subject."""
+        if not self.store.enabled:
+            return
+        acts = self._act_names()
+        for rec in list(self.store.records()):
+            vals = {
+                str(v).lower()
+                for v in rec.tags.values()
+                if isinstance(v, str)
+            }
+            if vals & acts:
+                continue
+            if self.store.delete(rec.fact_id):
+                self._w_skip.add(rec.fact_id)
+                self.n_revised += 1
+
     def _rec_words(self, rec) -> set[str]:
         words = {
             str(v).lower()
@@ -681,12 +745,34 @@ class ThreeMemoryAgent:
         return words
 
     def _is_rare_in_world(self, rec) -> bool:
+        return bool(self._rare_page_tokens(rec))
+
+    def _rare_page_tokens(self, rec) -> set[str]:
+        """Tokens on a note that are rare in unread W. Not a lexicon."""
         if self.world is None:
-            return False
+            return set()
         pool = list(self.world.records())
         pool_words = [prose_tokens(getattr(o, "what", "") or "") for o in pool]
         words = self._rec_words(rec)
-        return any(sum(1 for ws in pool_words if w in ws) < 3 for w in words)
+        return {w for w in words if sum(1 for ws in pool_words if w in ws) < 3}
+
+    def _keep_rare_words(self, rec, station: str | None) -> None:
+        """Drop common page words so copy cannot treat a closed-lexicon token as a motor name."""
+        rare = self._rare_page_tokens(rec)
+        stations = set(STATION_NAMES.values())
+        keep: list[str] = []
+        seen: set[str] = set()
+        for k, v in list(rec.tags.items()):
+            if not str(k).startswith("w") or not isinstance(v, str):
+                continue
+            vl = v.lower()
+            if vl in rare or vl in stations or (station and vl == station):
+                if vl not in seen:
+                    keep.append(vl)
+                    seen.add(vl)
+            del rec.tags[k]
+        for i, vl in enumerate(keep):
+            rec.tags[f"w{i}"] = vl
 
     def _maybe_annotate(self, action_name: str, obs=None) -> None:
         """Write the act (and station, if here-match) the body just did onto a rare note."""
@@ -723,18 +809,26 @@ class ThreeMemoryAgent:
         if rec is None:
             return
         vals = {str(v).lower() for v in rec.tags.values() if isinstance(v, str)}
-        need_act = action_name not in vals
+        did = str(rec.tags.get("did") or "").lower()
+        need_act = action_name not in vals and did != action_name
         need_st = bool(station) and station not in vals
         if not need_act and not need_st:
             return
         n = sum(1 for k in rec.tags if str(k).startswith("w"))
         if need_act:
-            rec.tags[f"w{n}"] = action_name
-            n += 1
+            if self.use_did_stamp:
+                rec.tags["did"] = action_name
+                self._keep_rare_words(rec, station)
+                n = sum(1 for k in rec.tags if str(k).startswith("w"))
+            else:
+                rec.tags[f"w{n}"] = action_name
+                n += 1
         if need_st:
             rec.tags[f"w{n}"] = station
         if self.store.write(rec):
             self.n_annotated += 1
+            if self.use_revise_head:
+                self._sweep_unstamped()
 
     def _choose_vname(self, recs: list, obs: Obs, *, record: bool) -> None:
         if not self.use_vname_head or self.use_policy is None:
@@ -763,12 +857,11 @@ class ThreeMemoryAgent:
             return
         items = []
         code = self._door_code(obs)
-        acts = self._act_names()
         for k in keys:
             if self.use_prose_tokens:
                 val = next((str(r.tags.get(k)) for r in recs if isinstance(r.tags.get(k), str)), "")
                 val = val.lower()
-                is_act = val in acts
+                is_act = val in self._act_map()
                 is_common = (
                     sum(
                         1
