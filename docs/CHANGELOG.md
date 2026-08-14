@@ -24,3 +24,4 @@
 - v15: joint write/schema/use/pick with no clamps. **Store-works**. [`docs/v15_results.md`](v15_results.md).
 - v16: A prefer `ok=1` over newest junk (**Store-works**); B shared return on v15 joint (**Fail**). [`docs/v16_results.md`](v16_results.md).
 - v17: A read `do=` vs `action=`; B match `here=` vs `door=`. Both **Store-works**. [`docs/v17_results.md`](v17_results.md).
+- v18: A write `do=` vs `action=`; B write `here=` vs `door=`. Read/match frozen. Both **Store-works**. [`docs/v18_results.md`](v18_results.md).

@@ -52,6 +52,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v15 joint no clamps | **Store-works** (write+schema+use+pick together; held-out green `wait`) |
 | three-memory, v16 ok= vs newest / shared return | **Store-works** / **Fail** (prefer `ok=1`; one return starves the joint) |
 | three-memory, v17 do= / here= | **Store-works** / **Store-works** (learn the field name to copy or match) |
+| three-memory, v18 write do= / here= | **Store-works** / **Store-works** (learn the field name to emit) |
 
 ## Honest limits
 
@@ -236,3 +237,15 @@ See [`v16_results.md`](v16_results.md).
 | Class | **Store-works** | **Store-works** |
 
 See [`v17_results.md`](v17_results.md).
+
+## v18 (write `do=` vs write `here=`)
+
+| Check | A write `do=` | B write `here=` |
+|-------|---------------|-----------------|
+| Untrained | `open` (`action=`) | `open` (`door=`) |
+| Trained red | **`use_key`** | **`use_key`** |
+| Held-out green | **`wait`** | **`wait`** |
+| Old-name control | `open` | `open` |
+| Class | **Store-works** | **Store-works** |
+
+See [`v18_results.md`](v18_results.md).

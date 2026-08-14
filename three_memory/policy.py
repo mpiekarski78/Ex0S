@@ -63,6 +63,11 @@ class UsePolicy:
         self.b_key = np.array(-1.2, dtype=np.float64)
         self.w_match = rng.normal(0.0, 0.05, size=(self.n_feat,))
         self.b_match = np.array(-1.2, dtype=np.float64)
+        # Untrained: write action= / door=. Learn to emit do= / here=.
+        self.w_wkey = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_wkey = np.array(-1.2, dtype=np.float64)
+        self.w_wplace = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_wplace = np.array(-1.2, dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
@@ -88,6 +93,10 @@ class UsePolicy:
             np.asarray(self.b_key).reshape(1),
             self.w_match,
             np.asarray(self.b_match).reshape(1),
+            self.w_wkey,
+            np.asarray(self.b_wkey).reshape(1),
+            self.w_wplace,
+            np.asarray(self.b_wplace).reshape(1),
         )
 
     def weight_hash(self) -> str:
@@ -271,6 +280,40 @@ class UsePolicy:
             "feat": feat.tolist(),
         }
 
+    def decide_wkey(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        """False: write action=. True: write do=."""
+        p_alt = sigmoid(float(feat @ self.w_wkey + self.b_wkey))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            alt = bool(rng.random() < 0.5)
+        else:
+            alt = bool(p_alt >= 0.5)
+        logp = float(np.log((p_alt if alt else (1.0 - p_alt)) + 1e-12))
+        return {
+            "kind": "wkey",
+            "wkey_alt": alt,
+            "p_alt": p_alt,
+            "logp": logp,
+            "feat": feat.tolist(),
+        }
+
+    def decide_wplace(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        """False: write door=. True: write here=."""
+        p_alt = sigmoid(float(feat @ self.w_wplace + self.b_wplace))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            alt = bool(rng.random() < 0.5)
+        else:
+            alt = bool(p_alt >= 0.5)
+        logp = float(np.log((p_alt if alt else (1.0 - p_alt)) + 1e-12))
+        return {
+            "kind": "wplace",
+            "wplace_alt": alt,
+            "p_alt": p_alt,
+            "logp": logp,
+            "feat": feat.tolist(),
+        }
+
     def decide_write(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
         p_write = sigmoid(float(feat @ self.w_write + self.b_write))
         rng = rng or np.random.default_rng()
@@ -320,6 +363,22 @@ class UsePolicy:
                 g = y - p
                 self.w_match += lr * g * feat
                 self.b_match = np.array(float(self.b_match) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
+            if tr.get("kind") == "wkey":
+                p = sigmoid(float(feat @ self.w_wkey + self.b_wkey))
+                y = 1.0 if tr["wkey_alt"] else 0.0
+                g = y - p
+                self.w_wkey += lr * g * feat
+                self.b_wkey = np.array(float(self.b_wkey) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
+            if tr.get("kind") == "wplace":
+                p = sigmoid(float(feat @ self.w_wplace + self.b_wplace))
+                y = 1.0 if tr["wplace_alt"] else 0.0
+                g = y - p
+                self.w_wplace += lr * g * feat
+                self.b_wplace = np.array(float(self.b_wplace) + lr * g, dtype=np.float64)
                 self.n_updates += 1
                 continue
             if tr.get("kind") == "pick":

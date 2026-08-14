@@ -168,3 +168,7 @@ Write WHEN, schema, use-gate, and pick-one trained together. Classification: **S
 
 **A** learns to copy `do=` instead of `action=`. **B** learns to match `here=` instead of `door=`. Both **Store-works**. Untrained planted alt-name stays `open`. Trained red `use_key`; held-out green `wait`. Controls that keep the old name fail. Cortex unchanged. Details: [`v17_results.md`](v17_results.md).
 
+## v18 (write `do=` vs write `here=`)
+
+**A** learns to emit `do=` instead of `action=` (read frozen to `do=`). **B** learns to emit `here=` instead of `door=` (match frozen to `here=`). Both **Store-works**. Untrained writer stays `open` (`action=` / `door=`). Trained red `use_key`; held-out green `wait`. Controls that keep the old write-name fail. Cortex unchanged. Details: [`v18_results.md`](v18_results.md).
+

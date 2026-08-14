@@ -57,6 +57,8 @@ class ThreeMemoryAgent:
         place_key: str = "door",
         use_key_head: bool = False,
         use_match_head: bool = False,
+        use_wkey_head: bool = False,
+        use_wplace_head: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -78,6 +80,10 @@ class ThreeMemoryAgent:
             raise ValueError("use_key_head requires use_policy")
         if use_match_head and use_policy is None:
             raise ValueError("use_match_head requires use_policy")
+        if use_wkey_head and use_policy is None:
+            raise ValueError("use_wkey_head requires use_policy")
+        if use_wplace_head and use_policy is None:
+            raise ValueError("use_wplace_head requires use_policy")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if place_key not in ("door", "here"):
@@ -109,6 +115,8 @@ class ThreeMemoryAgent:
         self.place_key = place_key
         self.use_key_head = use_key_head
         self.use_match_head = use_match_head
+        self.use_wkey_head = use_wkey_head
+        self.use_wplace_head = use_wplace_head
         self._peek: list[FactRecord] = []
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
@@ -158,7 +166,7 @@ class ThreeMemoryAgent:
         code = self._door_code(obs)
         if code is None:
             return None
-        key = "door"
+        key = self.place_key
         if self.use_match_head:
             key = "here" if bool(self.last_policy.get("match_alt")) else "door"
         return {key: code}
@@ -470,9 +478,25 @@ class ThreeMemoryAgent:
                     complete = bool(sch["complete"])
                 if do_write:
                     act = name_to_id[action_name]
-                    tags: dict[str, Any] = {self.place_key: door}
+                    pkey = self.place_key
+                    vkey = self.value_key
+                    if self.use_wplace_head:
+                        wpl = self.use_policy.decide_wplace(
+                            feat, epsilon=self.policy_epsilon, rng=self.policy_rng
+                        )
+                        self.last_policy = {**self.last_policy, **wpl}
+                        self.policy_traces.append(wpl)
+                        pkey = "here" if bool(wpl["wplace_alt"]) else "door"
+                    if complete and self.use_wkey_head:
+                        wk = self.use_policy.decide_wkey(
+                            feat, epsilon=self.policy_epsilon, rng=self.policy_rng
+                        )
+                        self.last_policy = {**self.last_policy, **wk}
+                        self.policy_traces.append(wk)
+                        vkey = "do" if bool(wk["wkey_alt"]) else "action"
+                    tags: dict[str, Any] = {pkey: door}
                     if complete:
-                        tags[self.value_key] = act
+                        tags[vkey] = act
                         if self.mark_ok:
                             tags["ok"] = 1
                     if self.unique_writes:

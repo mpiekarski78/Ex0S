@@ -258,3 +258,17 @@ Do not restore newest-wins or split credit to rescue an arm.
 
 Do not restore `action=` / `door=` to rescue a plot.
 
+## v18 A write do=, B write here=
+
+**A.** Read frozen to `do=`. Write-key head: `{action, do}`. Untrained writes `action=`. Train red. Held-out green `do=0`. `action=` control must fail.
+
+**B.** Match frozen to `here=`. Write-place head: `{door, here}`. Untrained writes `door=`. Train red. Held-out green `here=2`. `door=` control must fail.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; integer in write-key head | Cortex moves; disable-S `use_key`; door id in write-place head |
+| Fail | Untrained already writes `do=`; green fails; freeze-write `do=` | Untrained already writes `here=`; green fails; freeze-write `here=` |
+| Store-works | Untrained `open`; red `use_key` from authored `do=`; green `wait` | Untrained `open`; red `use_key` from authored `here=`; green `wait` |
+
+Do not freeze-write `do=` / `here=` or restore `action=` / `door=` read to rescue a plot.
+
