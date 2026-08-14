@@ -324,3 +324,7 @@ English unread W is 64 pages, 16 two-rare clutter. **A** **Fail**: retrieve used
 
 One shared return is the recipe. **A** **Fail**: retrieve used `xenon`; C used `neon`. **B** **Store-works** on the motor bar (n=2, last-50 0.94); not the English bar, not retuned. Details: [`tm081_results.md`](tm081_results.md).
 
+## TM.0.8.2 (one machine / motor bar)
+
+Body from `n_actions` / percepts, not `domain=`. **A** **Fail**: retrieve used `xenon`; C used `neon`. **B** **Store-works** on the motor bar (n=2, last-50 0.94); not the English bar, not retuned. Details: [`tm082_results.md`](tm082_results.md).
+

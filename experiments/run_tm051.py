@@ -66,6 +66,7 @@ def make(
         store_enabled=enabled,
         cortex_seed=1337,
         native=True,
+        n_actions=5,
         domain="dial",
         retrieve_policy="select",
         collect_mode="commit",

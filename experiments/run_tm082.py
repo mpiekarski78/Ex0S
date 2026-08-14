@@ -1,9 +1,9 @@
-"""TM.0.8.1: one shared return is the A recipe.
+"""TM.0.8.2: one machine — body from n_actions / percepts, not domain=.
 
-Same 64-page English keep-steerer store as TM.0.8.0. A no longer gets split
-find/mark/use credit. One signal: the probe worked after the life. Child
-connects look with it worked. Not a p98 ranker, not unique-pair, not math,
-not dropping has_code or domain="dial", not raising n_train.
+Same one-return 64-page English keep-steerer store as TM.0.8.1. Motors,
+affordances, and station names come from body size and the current percept.
+Not a p98 ranker, not unique-pair, not math, not dropping has_code, not
+raising n_train.
 """
 
 from __future__ import annotations
@@ -20,44 +20,44 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from experiments.run_tm054 import clutter_prose as clutter_closed
 from experiments.run_tm066 import MAX_TRAIN_S_FILES
-from experiments.run_tm080 import (
-    classify_a as _classify_a080,
-    classify_b as _classify_b080,
-    classify_common as _classify_common080,
-    make as _make080,
-    run_arm as _run_arm080,
-    wiki_prose,
-    _w_flags as _w_flags080,
+from experiments.run_tm080 import wiki_prose
+from experiments.run_tm081 import (
+    classify_a as _classify_a081,
+    classify_b as _classify_b081,
+    classify_common as _classify_common081,
+    make as _make081,
+    run_arm as _run_arm081,
+    _w_flags as _w_flags081,
 )
 from three_memory.tag_store import write_prose_notes
+
+_HIDE = ("no_domain_switch", "domain_switch")
 
 
 def _run_dir() -> Path:
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H%M%S")
-    d = REPO_ROOT / "runs" / f"{stamp}_tm081"
+    d = REPO_ROOT / "runs" / f"{stamp}_tm082"
     d.mkdir(parents=True, exist_ok=True)
     return d
 
 
 def make(*args, **kwargs):
-    return _make080(*args, **kwargs)
+    return _make081(*args, **kwargs)
 
 
 def _w_flags(w_files: list[str], w_dir: Path) -> dict[str, Any]:
-    flags = _w_flags080(w_files, w_dir)
+    flags = _w_flags081(w_files, w_dir)
+    flags["no_domain_switch"] = True
+    flags["domain_switch"] = False
     flags["one_return_recipe"] = True
-    flags["w_scale"] = True
-    flags["scale_english_w"] = True
     flags["english_life"] = True
     return flags
 
 
-def _hide(m: dict[str, Any], *, as_split_a: bool = False) -> dict[str, Any]:
-    saved = {"one_return_recipe": m.get("one_return_recipe"), "trained_split": m.get("trained_split")}
-    m["one_return_recipe"] = False
-    if as_split_a:
-        # 080 A's chain expects split; 062 B Fail if split is on.
-        m["trained_split"] = True
+def _hide(m: dict[str, Any]) -> dict[str, Any]:
+    saved = {k: m.get(k) for k in _HIDE}
+    m["no_domain_switch"] = False
+    m["domain_switch"] = True
     return saved
 
 
@@ -65,45 +65,41 @@ def _restore(m: dict[str, Any], saved: dict[str, Any]) -> None:
     m.update(saved)
 
 
-def _require_one(m: dict[str, Any]) -> tuple[str, str] | None:
-    if m.get("trained_split"):
-        return "Confound", "Split credit was restored; one return is the recipe."
-    if not m.get("one_return_recipe"):
-        return "Fail", "One-return recipe was frozen off."
-    if m.get("no_domain_switch"):
-        return "Confound", "domain= switch was removed on this slice."
+def _require_one_machine(m: dict[str, Any]) -> tuple[str, str] | None:
+    if m.get("domain_switch") or not m.get("no_domain_switch"):
+        return "Fail", "domain= switch is still the body."
     return None
 
 
 def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
     saved = _hide(m)
-    early = _classify_common080(m)
+    early = _classify_common081(m)
     _restore(m, saved)
     if early:
         return early
-    return _require_one(m)
+    return _require_one_machine(m)
 
 
 def classify_a(m: dict[str, Any]) -> tuple[str, str]:
-    saved = _hide(m, as_split_a=True)
-    label, why = _classify_a080(m)
+    saved = _hide(m)
+    label, why = _classify_a081(m)
     _restore(m, saved)
-    req = _require_one(m)
+    req = _require_one_machine(m)
     if req:
         return req
     if label == "Store-works":
         return (
             "Store-works",
-            "One return: look and it-worked share one signal; retrieve uses push then adjust. Cortex frozen.",
+            "One machine: body from n_actions / percepts; retrieve uses push then adjust. Cortex frozen.",
         )
     return label, why
 
 
 def classify_b(m: dict[str, Any]) -> tuple[str, str]:
     saved = _hide(m)
-    label, why = _classify_b080(m)
+    label, why = _classify_b081(m)
     _restore(m, saved)
-    req = _require_one(m)
+    req = _require_one_machine(m)
     if req:
         return req
     if (m.get("train_s", {}).get("n") or 0) > MAX_TRAIN_S_FILES:
@@ -111,32 +107,32 @@ def classify_b(m: dict[str, Any]) -> tuple[str, str]:
     if label == "Store-works":
         return (
             "Store-works",
-            "One-return motor bar; small store; cortex frozen.",
+            "One-machine motor bar; small store; cortex frozen.",
         )
     return label, why
 
 
 def run_arm(**kwargs: Any) -> dict[str, Any]:
-    import experiments.run_tm080 as tm080
+    import experiments.run_tm081 as tm081
 
-    saved = (tm080.make, tm080.classify_a, tm080.classify_b, tm080._w_flags)
-    tm080.make = make
-    tm080.classify_a = classify_a
-    tm080.classify_b = classify_b
-    tm080._w_flags = _w_flags
+    saved = (tm081.make, tm081.classify_a, tm081.classify_b, tm081._w_flags)
+    tm081.make = make
+    tm081.classify_a = classify_a
+    tm081.classify_b = classify_b
+    tm081._w_flags = _w_flags
     try:
-        m = _run_arm080(**kwargs)
+        m = _run_arm081(**kwargs)
     finally:
-        tm080.make, tm080.classify_a, tm080.classify_b, tm080._w_flags = saved
-    m["one_return_recipe"] = True
-    # A is the jump even when split=False.
+        tm081.make, tm081.classify_a, tm081.classify_b, tm081._w_flags = saved
+    m["no_domain_switch"] = True
+    m["domain_switch"] = False
     label, why = classify_a(m) if kwargs.get("arm") == "A" else classify_b(m)
     m["classification"] = label
     m["rationale"] = why
     return m
 
 
-def run_tm081(seed: int = 12345, n_train: int = 500, max_steps: int = 32) -> dict[str, Any]:
+def run_tm082(seed: int = 12345, n_train: int = 500, max_steps: int = 32) -> dict[str, Any]:
     run_dir = _run_dir()
     w_a = run_dir / "W_a"
     w_both = run_dir / "W_both"
@@ -154,7 +150,7 @@ def run_tm081(seed: int = 12345, n_train: int = 500, max_steps: int = 32) -> dic
         w_files=w_files, seed=seed, n_train=n_train, train_seed=seed + 5, max_steps=max_steps,
     )
     out = {
-        "version": "TM.0.8.1",
+        "version": "TM.0.8.2",
         "seed": seed,
         "n_train": n_train,
         "max_steps": max_steps,
@@ -166,12 +162,12 @@ def run_tm081(seed: int = 12345, n_train: int = 500, max_steps: int = 32) -> dic
     }
     (run_dir / "metrics.json").write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8")
     (run_dir / "summary.md").write_text(
-        f"""# TM.0.8.1 A one return vs B one return motor bar
+        f"""# TM.0.8.2 A one machine vs B motor bar
 
 | Arm | Classification | Train last 50 |
 |-----|----------------|---------------|
-| A one-return recipe | **{a['classification']}** | {a['train_return_last50']:.2f} |
-| B one-return motor bar | **{b['classification']}** | {b['train_return_last50']:.2f} |
+| A one machine | **{a['classification']}** | {a['train_return_last50']:.2f} |
+| B motor bar | **{b['classification']}** | {b['train_return_last50']:.2f} |
 
 A: {a['rationale']}
 
@@ -179,11 +175,11 @@ B: {b['rationale']}
 
 | Check | A | B |
 |-------|---|---|
-| trained_split | {a.get('trained_split')} | {b.get('trained_split')} |
 | After train, dirty S: A / foil C | {a['train_s_probe']['action_name']} / {a['train_s_foil']['action_name']} | {b['train_s_probe']['action_name']} / {b['train_s_foil']['action_name']} |
 | C life on dirty S: A / C | {a['both_after_a']['action_name']} / {a['both_after_c']['action_name']} | {b['both_after_a']['action_name']} / {b['both_after_c']['action_name']} |
 | Used bind train A / C life | {a.get('used_bind_a')} / {a.get('used_bind_c')} | {b.get('used_bind_a')} / {b.get('used_bind_c')} |
 | Train S n files | {a['train_s']['n']} | {b['train_s']['n']} |
+| n_actions | {a.get('n_actions')} | {b.get('n_actions')} |
 """,
         encoding="utf-8",
     )
@@ -191,19 +187,19 @@ B: {b['rationale']}
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="TM.0.8.1 one shared return is the recipe")
+    p = argparse.ArgumentParser(description="TM.0.8.2 one machine, no domain= switch")
     p.add_argument("--seed", type=int, default=12345)
     p.add_argument("--n-train", type=int, default=500)
     p.add_argument("--max-steps", type=int, default=32)
     args = p.parse_args()
-    m = run_tm081(seed=args.seed, n_train=args.n_train, max_steps=args.max_steps)
+    m = run_tm082(seed=args.seed, n_train=args.n_train, max_steps=args.max_steps)
     print(
         json.dumps(
             {
                 "A": m["A"]["classification"],
                 "B": m["B"]["classification"],
-                "split_a": m["A"].get("trained_split"),
                 "n": m["A"]["train_s"]["n"],
+                "n_actions": m["A"].get("n_actions"),
                 "used_a": m["A"].get("used_bind_a"),
                 "used_c": m["A"].get("used_bind_c"),
                 "run_dir": m["run_dir"],

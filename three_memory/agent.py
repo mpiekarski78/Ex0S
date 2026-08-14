@@ -88,12 +88,15 @@ class ThreeMemoryAgent:
         use_retry_novel: bool = False,
         use_local_alias: bool = False,
         use_keep_steerer: bool = False,
+        n_actions: int = 4,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
         if collect_mode not in ("off", "commit", "peek", "policy"):
             raise ValueError(collect_mode)
+        if n_actions not in (4, 5):
+            raise ValueError(n_actions)
         if domain not in ("door", "dial"):
             raise ValueError(domain)
         if collect_mode == "policy" and use_policy is None:
@@ -181,7 +184,7 @@ class ThreeMemoryAgent:
         if not isinstance(place_key, str) or not place_key:
             raise ValueError(place_key)
         self.domain = domain
-        self.n_actions = 5 if domain == "dial" else 4
+        self.n_actions = n_actions
         cfg = CortexConfig(
             obs_dim=obs_dim, embed_dim=embed_dim, n_actions=self.n_actions, seed=cortex_seed
         )
@@ -325,6 +328,7 @@ class ThreeMemoryAgent:
             use_retry_novel=self.use_retry_novel,
             use_local_alias=self.use_local_alias,
             use_keep_steerer=self.use_keep_steerer,
+            n_actions=self.n_actions,
             domain=self.domain,
         )
 
@@ -350,32 +354,34 @@ class ThreeMemoryAgent:
             key = "here" if bool(self.last_policy.get("match_alt")) else "door"
         return {key: code}
 
+    def _body_enum(self):
+        """Motors from body size, not a domain= label."""
+        return DialAction if self.n_actions == 5 else Action
+
     def _affordances(self, obs) -> list[int]:
         """Percept-legal acts. Not knowledge."""
-        if self.domain == "dial":
+        if self.n_actions == 5:
             return [int(a) for a in DialAction]
         acts = [int(Action.WAIT), int(Action.OPEN)]
-        if obs.key_visible and not obs.has_key:
+        if getattr(obs, "key_visible", False) and not getattr(obs, "has_key", False):
             acts.append(int(Action.PICK_KEY))
-        if obs.has_key:
+        if getattr(obs, "has_key", False):
             acts.append(int(Action.USE_KEY))
         return acts
 
     def _door_code(self, obs) -> int | None:
         """Place code for the current station (door code or dial channel)."""
-        if self.domain == "dial":
-            if getattr(obs, "at_a", False):
-                return CH_A
-            if getattr(obs, "at_b", False):
-                return CH_B
-            if getattr(obs, "at_c", False):
-                return CH_C
-            return None
-        if obs.at_red_door:
+        if getattr(obs, "at_a", False):
+            return CH_A
+        if getattr(obs, "at_b", False):
+            return CH_B
+        if getattr(obs, "at_c", False):
+            return CH_C
+        if getattr(obs, "at_red_door", False):
             return DOOR_RED
-        if obs.at_blue_door:
+        if getattr(obs, "at_blue_door", False):
             return DOOR_BLUE
-        if obs.at_green_door:
+        if getattr(obs, "at_green_door", False):
             return DOOR_GREEN
         return None
 
@@ -745,15 +751,10 @@ class ThreeMemoryAgent:
 
     def _act_names(self) -> set[str]:
         """Innate motor names (body vocabulary). Not an English lexicon."""
-        if self.domain == "dial":
-            return {a.name.lower() for a in DialAction}
-        return {a.name.lower() for a in Action}
+        return {a.name.lower() for a in self._body_enum()}
 
     def _act_map(self, recs=None) -> dict[str, int]:
-        if self.domain == "dial":
-            innate = {a.name.lower(): int(a) for a in DialAction}
-        else:
-            innate = {a.name.lower(): int(a) for a in Action}
+        innate = {a.name.lower(): int(a) for a in self._body_enum()}
         if not self.use_alias_bind:
             return innate
         m = dict(innate)
@@ -787,8 +788,6 @@ class ThreeMemoryAgent:
 
     def _station_name(self, obs) -> str | None:
         """Innate station name for the current percept. Body vocabulary, not English."""
-        if self.domain != "dial":
-            return None
         if getattr(obs, "at_a", False):
             return STATION_NAMES[CH_A]
         if getattr(obs, "at_b", False):
@@ -1339,7 +1338,7 @@ class ThreeMemoryAgent:
         # Species prior: try a default motor at a station (OPEN on doors, HOLD on dial).
         # Dial HOLD is wrong on A and C so empty S cannot look like Store-works.
         # Life knowledge must come from S (or fragile ρ after recent success).
-        if self.domain == "dial":
+        if self.n_actions == 5:
             at_station = bool(
                 getattr(obs, "at_a", False)
                 or getattr(obs, "at_b", False)
@@ -1350,7 +1349,11 @@ class ThreeMemoryAgent:
                 logits[DialAction.PRESS] -= 0.3
                 logits[DialAction.TUNE] -= 0.3
         else:
-            at_door = obs.at_red_door or obs.at_blue_door or obs.at_green_door
+            at_door = bool(
+                getattr(obs, "at_red_door", False)
+                or getattr(obs, "at_blue_door", False)
+                or getattr(obs, "at_green_door", False)
+            )
             if at_door:
                 logits[Action.OPEN] += 1.5
                 logits[Action.USE_KEY] -= 0.5
@@ -1362,7 +1365,7 @@ class ThreeMemoryAgent:
             obs, novelty=novelty, record_use=record_use, record_search=record_search
         )
 
-        if self.domain == "dial":
+        if self.n_actions == 5:
             at_station = bool(
                 getattr(obs, "at_a", False)
                 or getattr(obs, "at_b", False)
@@ -1372,11 +1375,15 @@ class ThreeMemoryAgent:
                 for a in (DialAction.PRESS, DialAction.HOLD, DialAction.TUNE, DialAction.FLIP):
                     logits[int(a)] -= 5.0
         else:
-            at_door = obs.at_red_door or obs.at_blue_door or obs.at_green_door
+            at_door = bool(
+                getattr(obs, "at_red_door", False)
+                or getattr(obs, "at_blue_door", False)
+                or getattr(obs, "at_green_door", False)
+            )
             # Hard constraints from current percept (not knowledge).
-            if not obs.has_key:
+            if not getattr(obs, "has_key", False):
                 logits[Action.USE_KEY] -= 5.0
-            if obs.has_key or not obs.key_visible:
+            if getattr(obs, "has_key", False) or not getattr(obs, "key_visible", False):
                 logits[Action.PICK_KEY] -= 3.0
             if not at_door:
                 logits[Action.OPEN] -= 5.0
@@ -1426,16 +1433,13 @@ class ThreeMemoryAgent:
             event = "blue_opened"
         elif getattr(obs, "last_succeeded", False) and getattr(obs, "at_green_door", False):
             event = "green_opened"
-        elif self.domain == "dial" and getattr(obs, "last_ok", False):
+        elif getattr(obs, "last_ok", False):
             event = "dial_ok"
-        elif self.domain == "dial" and getattr(obs, "last_failed", False):
+        elif getattr(obs, "last_failed", False):
             event = "dial_failed"
 
         action_name = info.get("action")
-        if self.domain == "dial":
-            name_to_id = {a.name.lower(): int(a) for a in DialAction}
-        else:
-            name_to_id = {a.name.lower(): int(a) for a in Action}
+        name_to_id = {a.name.lower(): int(a) for a in self._body_enum()}
         opened = bool(info.get("opened"))
         door = self._door_code(obs) if self.native else None
 
