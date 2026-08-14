@@ -38,3 +38,4 @@
 - TM.0.3.0: a life — free life find/commit; probe after ρ reset with W gone. A **Store-works**; B shared return **Fail** (last-50 0). [`docs/tm030_results.md`](tm030_results.md).
 - TM.0.3.1: documents — free life over unread `.md` W (prose + embedded `k=v`). A **Store-works**; B shared return **Fail**. [`docs/tm031_results.md`](tm031_results.md).
 - TM.0.3.2: prose retrieve — no filed `action=`/`where=`; digit scan → anonymous `n*`; vname picks motor int. A **Store-works**; B shared return **Fail**. Audit: heading digits excluded. [`docs/tm032_results.md`](tm032_results.md).
+- TM.0.4.0: leave the door world — `ChannelDialWorld` + prose free life. A **Store-works** (PRESS / held-out TUNE); B shared return **Fail** (clutter PRESS, C miss). [`docs/tm040_results.md`](tm040_results.md).

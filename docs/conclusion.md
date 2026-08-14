@@ -220,3 +220,7 @@ Free life over unread `.md` documents (prose + embedded `k=v`). **A** **Store-wo
 
 Pure prose `.md` (no filed `action=` / `where=`). Digits → anonymous `n*`; vname picks the motor int. **A** **Store-works**; **B** **Fail** (shared return last-50 0). Cortex unchanged. Digit scan is not English. Details: [`tm032_results.md`](tm032_results.md).
 
+## TM.0.4.0 (channel dial / shared return)
+
+Left the key/door room. Same prose machinery on `ChannelDialWorld`. **A** **Store-works**: after ρ reset W gone → PRESS; held-out C TUNE (not place-copy). **B** **Fail**: shared return never commits useful pages; C wrong. Cortex frozen (5-action hash). Details: [`tm040_results.md`](tm040_results.md).
+

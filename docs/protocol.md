@@ -468,3 +468,19 @@ Same free life. W is pure prose `.md` with **no** filed `where=` / `action=` / `
 
 Do not restore filed `action=` / `where=` or NOTE-copy to rescue a plot.
 
+## TM.0.4.0 A channel dial free life, B shared return
+
+Leave the key/door room. Same prose free life (`n*`, search, vname). World is `ChannelDialWorld` (5 motors). Held-out channel C: place code equals PRESS; must copy TUNE. Species prior HOLD. Cortex frozen (new hash vs door; seed 1337). `n_forced=0`.
+
+**A.** Split: found place+motor ints in S during life / probe after reset.
+
+**B.** Same `make()`. One `r` = probe correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; door world restored; filed motor/place tags; `.tag` W; writes from life; forced curriculum; empty S TUNE on C | same |
+| Fail | Untrained already PRESS on A; A life misses pair; after reset not PRESS; C not TUNE; controls still PRESS; swap IDLE still PRESS | Untrained PRESS; A/C miss; empty S solves A; split restored |
+| Store-works | Untrained HOLD; free A commits prose ints; after reset W gone → PRESS; C TUNE; S has `n*` | Same without splitting the return |
+
+Do not restore the door toy or filed `action=` to rescue a plot.
+

@@ -9,6 +9,7 @@ import numpy as np
 from .cortex import CortexConfig, FrozenCortex
 from .drives import InnateDrives
 from .env import Action, KeyDoorWorld, Obs
+from .dial_env import CH_A, CH_B, CH_C, DialAction
 from .rho import RhoConfig, WorkingTrace
 from .store import FactRecord, WorldStore
 from .policy import UsePolicy
@@ -70,11 +71,14 @@ class ThreeMemoryAgent:
         use_search_head: bool = False,
         record_search_on_explore: bool = False,
         use_prose_ints: bool = False,
+        domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
         if collect_mode not in ("off", "commit", "peek", "policy"):
             raise ValueError(collect_mode)
+        if domain not in ("door", "dial"):
+            raise ValueError(domain)
         if collect_mode == "policy" and use_policy is None:
             raise ValueError("collect_mode=policy requires use_policy")
         if retrieve_policy == "policy" and use_policy is None:
@@ -119,7 +123,11 @@ class ThreeMemoryAgent:
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
             raise ValueError(place_key)
-        cfg = CortexConfig(obs_dim=obs_dim, embed_dim=embed_dim, n_actions=4, seed=cortex_seed)
+        self.domain = domain
+        self.n_actions = 5 if domain == "dial" else 4
+        cfg = CortexConfig(
+            obs_dim=obs_dim, embed_dim=embed_dim, n_actions=self.n_actions, seed=cortex_seed
+        )
         self.cortex = FrozenCortex(cfg)
         self.rho = WorkingTrace(RhoConfig(embed_dim=embed_dim))
         self.store = store if store is not None else WorldStore(enabled=store_enabled)
@@ -220,6 +228,7 @@ class ThreeMemoryAgent:
             use_search_head=self.use_search_head,
             record_search_on_explore=self.record_search_on_explore,
             use_prose_ints=self.use_prose_ints,
+            domain=self.domain,
         )
 
     def _obs_query(self, obs: Obs) -> dict[str, Any] | None:
@@ -244,8 +253,10 @@ class ThreeMemoryAgent:
             key = "here" if bool(self.last_policy.get("match_alt")) else "door"
         return {key: code}
 
-    def _affordances(self, obs: Obs) -> list[int]:
-        """Percept-legal acts. Not knowledge: cannot use a key you do not hold."""
+    def _affordances(self, obs) -> list[int]:
+        """Percept-legal acts. Not knowledge."""
+        if self.domain == "dial":
+            return [int(a) for a in DialAction]
         acts = [int(Action.WAIT), int(Action.OPEN)]
         if obs.key_visible and not obs.has_key:
             acts.append(int(Action.PICK_KEY))
@@ -253,7 +264,16 @@ class ThreeMemoryAgent:
             acts.append(int(Action.USE_KEY))
         return acts
 
-    def _door_code(self, obs: Obs) -> int | None:
+    def _door_code(self, obs) -> int | None:
+        """Place code for the current station (door code or dial channel)."""
+        if self.domain == "dial":
+            if getattr(obs, "at_a", False):
+                return CH_A
+            if getattr(obs, "at_b", False):
+                return CH_B
+            if getattr(obs, "at_c", False):
+                return CH_C
+            return None
         if obs.at_red_door:
             return DOOR_RED
         if obs.at_blue_door:
@@ -515,7 +535,7 @@ class ThreeMemoryAgent:
                 for k in keys
                 if any(
                     isinstance(r.tags.get(k), (int, np.integer))
-                    and 0 <= int(r.tags[k]) < 4
+                    and 0 <= int(r.tags[k]) < self.n_actions
                     for r in recs
                 )
             ]
@@ -612,7 +632,7 @@ class ThreeMemoryAgent:
             self._search_chosen = self._search_picks(self._pool(), obs, record=record_search)
         if self.retrieve_policy == "policy":
             self._choose_retrieve(obs)
-        logits = np.zeros(4, dtype=np.float64)
+        logits = np.zeros(self.n_actions, dtype=np.float64)
         apply = True
         hits = self._hits_for(obs)
         chosen = hits
@@ -665,12 +685,24 @@ class ThreeMemoryAgent:
 
         logits = self.cortex.baseline_logits(embed)
         logits = logits + self._rho_bias()
-        # Species prior: at a door, try OPEN (does not know about keys).
+        # Species prior: try a default motor at a station (OPEN on doors, HOLD on dial).
+        # Dial HOLD is wrong on A and C so empty S cannot look like Store-works.
         # Life knowledge must come from S (or fragile ρ after recent success).
-        at_door = obs.at_red_door or obs.at_blue_door or obs.at_green_door
-        if at_door:
-            logits[Action.OPEN] += 1.5
-            logits[Action.USE_KEY] -= 0.5
+        if self.domain == "dial":
+            at_station = bool(
+                getattr(obs, "at_a", False)
+                or getattr(obs, "at_b", False)
+                or getattr(obs, "at_c", False)
+            )
+            if at_station:
+                logits[DialAction.HOLD] += 1.5
+                logits[DialAction.PRESS] -= 0.3
+                logits[DialAction.TUNE] -= 0.3
+        else:
+            at_door = obs.at_red_door or obs.at_blue_door or obs.at_green_door
+            if at_door:
+                logits[Action.OPEN] += 1.5
+                logits[Action.USE_KEY] -= 0.5
         # Probe records use. Life usually does not (write traces only), unless a free-life
         # search head must leave traces while the motor still explores.
         record_use = not explore
@@ -679,14 +711,25 @@ class ThreeMemoryAgent:
             obs, novelty=novelty, record_use=record_use, record_search=record_search
         )
 
-        # Hard constraints from current percept (not knowledge): can't use key without holding it.
-        if not obs.has_key:
-            logits[Action.USE_KEY] -= 5.0
-        if obs.has_key or not obs.key_visible:
-            logits[Action.PICK_KEY] -= 3.0
-        if not at_door:
-            logits[Action.OPEN] -= 5.0
-            logits[Action.USE_KEY] -= 5.0
+        if self.domain == "dial":
+            at_station = bool(
+                getattr(obs, "at_a", False)
+                or getattr(obs, "at_b", False)
+                or getattr(obs, "at_c", False)
+            )
+            if not at_station:
+                for a in (DialAction.PRESS, DialAction.HOLD, DialAction.TUNE, DialAction.FLIP):
+                    logits[int(a)] -= 5.0
+        else:
+            at_door = obs.at_red_door or obs.at_blue_door or obs.at_green_door
+            # Hard constraints from current percept (not knowledge).
+            if not obs.has_key:
+                logits[Action.USE_KEY] -= 5.0
+            if obs.has_key or not obs.key_visible:
+                logits[Action.PICK_KEY] -= 3.0
+            if not at_door:
+                logits[Action.OPEN] -= 5.0
+                logits[Action.USE_KEY] -= 5.0
 
         explored = False
         action = int(np.argmax(logits))
@@ -724,17 +767,24 @@ class ThreeMemoryAgent:
         record = None
 
         event = None
-        if obs.event_open_failed:
+        if getattr(obs, "event_open_failed", False):
             event = "open_failed"
-        elif obs.event_key_worked:
+        elif getattr(obs, "event_key_worked", False):
             event = "key_worked"
-        elif obs.last_succeeded and obs.at_blue_door:
+        elif getattr(obs, "last_succeeded", False) and getattr(obs, "at_blue_door", False):
             event = "blue_opened"
-        elif obs.last_succeeded and obs.at_green_door:
+        elif getattr(obs, "last_succeeded", False) and getattr(obs, "at_green_door", False):
             event = "green_opened"
+        elif self.domain == "dial" and getattr(obs, "last_ok", False):
+            event = "dial_ok"
+        elif self.domain == "dial" and getattr(obs, "last_failed", False):
+            event = "dial_failed"
 
         action_name = info.get("action")
-        name_to_id = {a.name.lower(): int(a) for a in Action}
+        if self.domain == "dial":
+            name_to_id = {a.name.lower(): int(a) for a in DialAction}
+        else:
+            name_to_id = {a.name.lower(): int(a) for a in Action}
         opened = bool(info.get("opened"))
         door = self._door_code(obs) if self.native else None
 

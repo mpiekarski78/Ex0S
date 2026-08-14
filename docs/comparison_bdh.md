@@ -65,6 +65,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.3.0 a life | **Store-works** / **Fail** (free life find/commit; shared return starves) |
 | three-memory, TM.0.3.1 documents | **Store-works** / **Fail** (`.md` W; free life; shared return starves) |
 | three-memory, TM.0.3.2 prose retrieve | **Store-works** / **Fail** (no filed `action=`; anonymous `n*`; shared return starves) |
+| three-memory, TM.0.4.0 channel dial | **Store-works** / **Fail** (left door world; C TUNE; shared return clutter) |
 
 ## Honest limits
 
@@ -409,6 +410,16 @@ See [`tm031_results.md`](tm031_results.md).
 
 See [`tm032_results.md`](tm032_results.md).
 
+## TM.0.4.0 (channel dial / shared return)
 
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| World | channel_dial | channel_dial |
+| Free A found place+PRESS | yes (`n0=0`, `n1=1`) | no (clutter) |
+| After ρ reset, W gone | **`press`** | `press` (clutter) |
+| Held-out C | **`tune`** | `idle` |
+| Train last 50 | 0.88 | 0.92 |
+| Class | **Store-works** | **Fail** |
 
+See [`tm040_results.md`](tm040_results.md).
 
