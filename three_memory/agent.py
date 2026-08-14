@@ -53,6 +53,10 @@ class ThreeMemoryAgent:
         force_write: bool = False,
         use_rank: bool = False,
         mark_ok: bool = False,
+        value_key: str = "action",
+        place_key: str = "door",
+        use_key_head: bool = False,
+        use_match_head: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -70,6 +74,14 @@ class ThreeMemoryAgent:
             raise ValueError("write_schema requires use_policy")
         if use_rank and use_policy is None:
             raise ValueError("use_rank requires use_policy")
+        if use_key_head and use_policy is None:
+            raise ValueError("use_key_head requires use_policy")
+        if use_match_head and use_policy is None:
+            raise ValueError("use_match_head requires use_policy")
+        if value_key not in ("action", "do"):
+            raise ValueError(value_key)
+        if place_key not in ("door", "here"):
+            raise ValueError(place_key)
         cfg = CortexConfig(obs_dim=obs_dim, embed_dim=embed_dim, n_actions=4, seed=cortex_seed)
         self.cortex = FrozenCortex(cfg)
         self.rho = WorkingTrace(RhoConfig(embed_dim=embed_dim))
@@ -93,6 +105,10 @@ class ThreeMemoryAgent:
         self.force_write = force_write
         self.use_rank = use_rank
         self.mark_ok = mark_ok
+        self.value_key = value_key
+        self.place_key = place_key
+        self.use_key_head = use_key_head
+        self.use_match_head = use_match_head
         self._peek: list[FactRecord] = []
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
@@ -131,13 +147,21 @@ class ThreeMemoryAgent:
         )
 
     def _obs_query(self, obs: Obs) -> dict[str, Any] | None:
-        if obs.at_red_door:
-            return {"door": DOOR_RED} if self.native else {"door": "red"}
-        if obs.at_blue_door:
-            return {"door": DOOR_BLUE} if self.native else {"door": "blue"}
-        if obs.at_green_door:
-            return {"door": DOOR_GREEN} if self.native else {"door": "green"}
-        return None
+        if not self.native:
+            if obs.at_red_door:
+                return {"door": "red"}
+            if obs.at_blue_door:
+                return {"door": "blue"}
+            if obs.at_green_door:
+                return {"door": "green"}
+            return None
+        code = self._door_code(obs)
+        if code is None:
+            return None
+        key = "door"
+        if self.use_match_head:
+            key = "here" if bool(self.last_policy.get("match_alt")) else "door"
+        return {key: code}
 
     def _affordances(self, obs: Obs) -> list[int]:
         """Percept-legal acts. Not knowledge: cannot use a key you do not hold."""
@@ -256,8 +280,13 @@ class ThreeMemoryAgent:
             return pool
         return self._select_hits(obs, pool)
 
+    def _value_tag(self) -> str:
+        if self.use_key_head:
+            return "do" if bool(self.last_policy.get("key_alt")) else "action"
+        return self.value_key
+
     def _apply_record_bias(self, logits: np.ndarray, rec: FactRecord, obs: Obs) -> None:
-        act = rec.tags.get("action")
+        act = rec.tags.get(self._value_tag() if self.use_read else "action")
         if self.use_read:
             # Generic copy: the file's integer is the motor index. No USE_KEY/WAIT table.
             if isinstance(act, (int, np.integer)) and 0 <= int(act) < logits.shape[0]:
@@ -288,6 +317,13 @@ class ThreeMemoryAgent:
     def _store_bias(self, obs: Obs, *, novelty: float = 0.0, record_use: bool = True) -> np.ndarray:
         """Retrieve facts and bias action logits. Knowledge lives in S, not ρ."""
         self.collect(obs, novelty=novelty)
+        if self.use_match_head and self.use_policy is not None:
+            at = self._door_code(obs) is not None
+            feat = UsePolicy.features(at, False)
+            dec = self.use_policy.decide_match(feat, epsilon=self.policy_epsilon, rng=self.policy_rng)
+            self.last_policy = {**self.last_policy, **dec}
+            if record_use:
+                self.policy_traces.append(dec)
         if self.retrieve_policy == "policy":
             self._choose_retrieve(obs)
         logits = np.zeros(4, dtype=np.float64)
@@ -304,6 +340,12 @@ class ThreeMemoryAgent:
                 chosen = self._rank_hits(hits, record=record_use) if self.use_rank else [self._newest(hits)]
         elif self.use_rank and self.use_policy is not None and hits:
             chosen = self._rank_hits(hits, record=record_use)
+        if self.use_key_head and self.use_policy is not None:
+            feat = UsePolicy.features(bool(chosen), False)
+            dec = self.use_policy.decide_key(feat, epsilon=self.policy_epsilon, rng=self.policy_rng)
+            self.last_policy = {**self.last_policy, **dec}
+            if record_use:
+                self.policy_traces.append(dec)
         if self.collect_mode == "policy":
             apply = bool(self.last_policy.get("apply", False))
         elif self.force_use:
@@ -407,7 +449,7 @@ class ThreeMemoryAgent:
             # v9: frozen WHAT = {here, the act that opened}. Learned WHEN.
             # v14 B: schema head may omit action=; integer still comes from the event.
             if opened and door is not None and action_name in name_to_id:
-                query = {"door": door}
+                query = {self.place_key: door}
                 s_hit = bool(self.store.retrieve(query)) if self.store.enabled else False
                 feat = UsePolicy.features(s_hit, True)
                 do_write = self.force_write
@@ -428,9 +470,9 @@ class ThreeMemoryAgent:
                     complete = bool(sch["complete"])
                 if do_write:
                     act = name_to_id[action_name]
-                    tags: dict[str, Any] = {"door": door}
+                    tags: dict[str, Any] = {self.place_key: door}
                     if complete:
-                        tags["action"] = act
+                        tags[self.value_key] = act
                         if self.mark_ok:
                             tags["ok"] = 1
                     if self.unique_writes:

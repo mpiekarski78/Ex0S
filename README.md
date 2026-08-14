@@ -9,7 +9,7 @@
 
 Biology’s lesson here: hardcode **drives and learning rules**, leave **world-knowledge** to experience, and do **not** confuse a short trace with a life of knowledge.
 
-## Result (v0–v16)
+## Result (v0–v17)
 
 v0: [`docs/conclusion.md`](docs/conclusion.md).  
 v1 NOTE-copy: [`docs/v1_results.md`](docs/v1_results.md).  
@@ -28,6 +28,7 @@ v13 copy `action=` from the file: [`docs/v13_results.md`](docs/v13_results.md).
 v14 pick-one vs write schema: [`docs/v14_results.md`](docs/v14_results.md).  
 v15 joint, no clamps: [`docs/v15_results.md`](docs/v15_results.md).  
 v16 ok= vs newest / shared return: [`docs/v16_results.md`](docs/v16_results.md).  
+v17 read `do=` vs match `here=`: [`docs/v17_results.md`](docs/v17_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -59,6 +60,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v14 A pick-one / B schema | **Store-works** / **Store-works** (newest match; include `action=` in the note) |
 | v15 joint, no clamps | **Store-works** (write+schema+use+pick; red `use_key`; green `wait`) |
 | v16 A ok= vs newest / B shared return | **Store-works** / **Fail** (prefer `ok=1`; one return stays `open`) |
+| v17 A do= / B here= | **Store-works** / **Store-works** (learn field name to copy or match) |
 
 ## Four pieces
 
@@ -92,6 +94,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v14 pick vs schema | **Store-works** / **Store-works** | one-of-N matches vs complete note; [`docs/v14_results.md`](docs/v14_results.md) |
 | v15 joint no clamps | **Store-works** | four heads together; [`docs/v15_results.md`](docs/v15_results.md) |
 | v16 ok= vs newest / shared return | **Store-works** / **Fail** | recency vs `ok=1`; split credit was load-bearing; [`docs/v16_results.md`](docs/v16_results.md) |
+| v17 do= / here= | **Store-works** / **Store-works** | copy `do=` or match `here=`; [`docs/v17_results.md`](docs/v17_results.md) |
 
 ## Quick start
 
@@ -114,6 +117,7 @@ python tests/test_v13.py
 python tests/test_v14.py
 python tests/test_v15.py
 python tests/test_v16.py
+python tests/test_v17.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -133,6 +137,7 @@ python -m experiments.run_v13
 python -m experiments.run_v14
 python -m experiments.run_v15
 python -m experiments.run_v16
+python -m experiments.run_v17
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -141,8 +146,8 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v16, train_prior
-docs/             # protocol, comparison, conclusion, v1–v16 results
+experiments/      # run_v0 … run_v17, train_prior
+docs/             # protocol, comparison, conclusion, v1–v17 results
 tests/
 runs/             # gitignored
 checkpoints/      # gitignored (prior.pt)

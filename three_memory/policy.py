@@ -58,6 +58,11 @@ class UsePolicy:
         self.b_schema = np.array(-1.2, dtype=np.float64)
         # Untrained recency prior: newest wins. Learn to prefer ok=1 over newest.
         self.w_rank = np.array([1.2, 0.0], dtype=np.float64)
+        # Untrained: read action=, match door=. Learn alt names do= / here=.
+        self.w_key = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_key = np.array(-1.2, dtype=np.float64)
+        self.w_match = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_match = np.array(-1.2, dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
@@ -79,6 +84,10 @@ class UsePolicy:
             self.w_schema,
             np.asarray(self.b_schema).reshape(1),
             self.w_rank,
+            self.w_key,
+            np.asarray(self.b_key).reshape(1),
+            self.w_match,
+            np.asarray(self.b_match).reshape(1),
         )
 
     def weight_hash(self) -> str:
@@ -228,6 +237,40 @@ class UsePolicy:
             "logp": logp,
         }
 
+    def decide_key(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        """False: copy action=. True: copy do=."""
+        p_alt = sigmoid(float(feat @ self.w_key + self.b_key))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            alt = bool(rng.random() < 0.5)
+        else:
+            alt = bool(p_alt >= 0.5)
+        logp = float(np.log((p_alt if alt else (1.0 - p_alt)) + 1e-12))
+        return {
+            "kind": "key",
+            "key_alt": alt,
+            "p_alt": p_alt,
+            "logp": logp,
+            "feat": feat.tolist(),
+        }
+
+    def decide_match(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        """False: match door=. True: match here=."""
+        p_alt = sigmoid(float(feat @ self.w_match + self.b_match))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            alt = bool(rng.random() < 0.5)
+        else:
+            alt = bool(p_alt >= 0.5)
+        logp = float(np.log((p_alt if alt else (1.0 - p_alt)) + 1e-12))
+        return {
+            "kind": "match",
+            "match_alt": alt,
+            "p_alt": p_alt,
+            "logp": logp,
+            "feat": feat.tolist(),
+        }
+
     def decide_write(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
         p_write = sigmoid(float(feat @ self.w_write + self.b_write))
         rng = rng or np.random.default_rng()
@@ -263,6 +306,22 @@ class UsePolicy:
                 self.n_updates += 1
                 continue
             feat = np.asarray(tr["feat"], dtype=np.float64)
+            if tr.get("kind") == "key":
+                p = sigmoid(float(feat @ self.w_key + self.b_key))
+                y = 1.0 if tr["key_alt"] else 0.0
+                g = y - p
+                self.w_key += lr * g * feat
+                self.b_key = np.array(float(self.b_key) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
+            if tr.get("kind") == "match":
+                p = sigmoid(float(feat @ self.w_match + self.b_match))
+                y = 1.0 if tr["match_alt"] else 0.0
+                g = y - p
+                self.w_match += lr * g * feat
+                self.b_match = np.array(float(self.b_match) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
             if tr.get("kind") == "pick":
                 p = sigmoid(float(feat @ self.w_pick + self.b_pick))
                 y = 1.0 if tr["one"] else 0.0

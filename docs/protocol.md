@@ -244,3 +244,17 @@ Do not re-clamp. Do not put the motor act in a head.
 
 Do not restore newest-wins or split credit to rescue an arm.
 
+## v17 A read do=, B match here=
+
+**A.** Write `do=` not `action=`. Key head: `{action, do}`, features `{s_hit}`. Untrained reads `action=`. Train red. Held-out green `do=0`. `action=` control must fail.
+
+**B.** Write `here=` not `door=`. Match head: `{door, here}`. Untrained matches `door=`. Train red. Held-out green `here=2`. `door=` control must fail.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; integer in key head | Cortex moves; disable-S `use_key`; door id in match head |
+| Fail | Planted `do=` already `use_key`; green fails; `action=` control works | Planted `here=` already `use_key`; green fails; `door=` control works |
+| Store-works | Untrained `open`; red `use_key` from `do=`; green `wait` | Untrained `open`; red `use_key` from `here=`; green `wait` |
+
+Do not restore `action=` / `door=` to rescue a plot.
+

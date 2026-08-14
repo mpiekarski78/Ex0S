@@ -164,3 +164,7 @@ Write WHEN, schema, use-gate, and pick-one trained together. Classification: **S
 
 **A** learns to prefer a success-marked note over a newer junk file. Classification: **Store-works**. Untrained recency prior `wait`. Trained red `use_key` (`ok=1`). Held-out green `wait`. Newest-wins control still `wait`. **B** uses one shared return on the v15 joint setup. Classification: **Fail** (last-50 = 0, red stays `open`). Split credit was load-bearing. Details: [`v16_results.md`](v16_results.md).
 
+## v17 (read `do=` vs match `here=`)
+
+**A** learns to copy `do=` instead of `action=`. **B** learns to match `here=` instead of `door=`. Both **Store-works**. Untrained planted alt-name stays `open`. Trained red `use_key`; held-out green `wait`. Controls that keep the old name fail. Cortex unchanged. Details: [`v17_results.md`](v17_results.md).
+
