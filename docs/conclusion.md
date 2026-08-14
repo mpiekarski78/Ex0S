@@ -252,3 +252,7 @@ Two lives, one store. **A** **Store-works**: after A then C on the same S → A 
 
 Training keeps S. **A** **Store-works**: after 500 A lives the dirty store still PRESS; a C life on that S adds TUNE without losing A. **B** **Fail**: last-50 0. Details: [`tm056_results.md`](tm056_results.md).
 
+## TM.0.5.7 (find without unique rare / shared return)
+
+Several distinctive clutter pages, not one unique rare needle. **A** **Store-works**: never-wipe dirty S still PRESS; C life adds TUNE without losing A. **B** **Fail**: C stays HOLD (last-50 0.86 on the first fact). Details: [`tm057_results.md`](tm057_results.md).
+

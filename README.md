@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.5.6. Toy series: v0–v23.
+**Current:** TM.0.5.7. Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.5.6: training no longer throws S away. After 500 A lives the dirty store still PRESS; a C life on that same S adds TUNE without losing A. Wipe-between loses A. Not English NLP. Shared return still **Fail**s (last-50 0). Still genome: innate act and station names, rarity, five acts, `domain=`. Short logs, not Wikipedia.
+Honest status after TM.0.5.7: search no longer needs one unique rare needle. Several distinctive clutter pages, same never-wipe store: after 500 A lives the dirty S still PRESS; a C life adds TUNE without losing A. Wipe-between loses A. Not English NLP. Shared return still **Fail**s (C stays HOLD; last-50 0.86 on the first fact). Still genome: innate act and station names, `{has_code, has_rare}`, five acts, `domain=`. Short logs, not Wikipedia.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -58,6 +58,7 @@ TM.0.5.3 use-the-fact: [`docs/tm053_results.md`](docs/tm053_results.md).
 TM.0.5.4 Open W: [`docs/tm054_results.md`](docs/tm054_results.md).  
 TM.0.5.5 accumulate S: [`docs/tm055_results.md`](docs/tm055_results.md).  
 TM.0.5.6 never-wipe train: [`docs/tm056_results.md`](docs/tm056_results.md).  
+TM.0.5.7 find without unique rare: [`docs/tm057_results.md`](docs/tm057_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -111,6 +112,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.5.4 A Open W / B shared return | **Store-works** / **Fail** (distinct documents; same S: A PRESS, C HOLD) |
 | TM.0.5.5 A accumulate S / B shared return | **Store-works** / **Fail** (two lives, same S: A PRESS, C TUNE) |
 | TM.0.5.6 A never-wipe train / B shared return | **Store-works** / **Fail** (dirty train S still PRESS; C life adds TUNE) |
+| TM.0.5.7 A find without unique rare / B shared return | **Store-works** / **Fail** (several hapax clutter pages; C life adds TUNE) |
 
 ## Five pieces
 
@@ -167,6 +169,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.5.4 Open W | **Store-works** / **Fail** | distinct multi-paragraph W; [`docs/tm054_results.md`](docs/tm054_results.md) |
 | TM.0.5.5 accumulate S | **Store-works** / **Fail** | two lives, same S: A PRESS, C TUNE; [`docs/tm055_results.md`](docs/tm055_results.md) |
 | TM.0.5.6 never-wipe train | **Store-works** / **Fail** | dirty train S still PRESS; [`docs/tm056_results.md`](docs/tm056_results.md) |
+| TM.0.5.7 find without unique rare | **Store-works** / **Fail** | several hapax clutter pages; [`docs/tm057_results.md`](docs/tm057_results.md) |
 
 ## Quick start
 
@@ -211,6 +214,7 @@ python tests/test_tm053.py
 python tests/test_tm054.py
 python tests/test_tm055.py
 python tests/test_tm056.py
+python tests/test_tm057.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -252,6 +256,7 @@ python -m experiments.run_tm053
 python -m experiments.run_tm054
 python -m experiments.run_tm055
 python -m experiments.run_tm056
+python -m experiments.run_tm057
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -260,7 +265,7 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010 … run_tm056, train_prior
+experiments/      # run_v0 … run_v23, run_tm010 … run_tm057, train_prior
 docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.x results
 tests/
 runs/             # gitignored

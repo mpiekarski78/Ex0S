@@ -73,6 +73,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.5.4 Open W | **Store-works** / **Fail** (distinct documents; same S: A PRESS, C HOLD; shared return starves) |
 | three-memory, TM.0.5.5 accumulate S | **Store-works** / **Fail** (two lives, same S: A PRESS, C TUNE; shared return starves) |
 | three-memory, TM.0.5.6 never-wipe train | **Store-works** / **Fail** (dirty train S still PRESS; C life adds TUNE; shared return starves) |
+| three-memory, TM.0.5.7 find without unique rare | **Store-works** / **Fail** (several hapax clutter pages; C life adds TUNE; shared return misses C) |
 
 ## Honest limits
 
@@ -517,4 +518,17 @@ See [`tm055_results.md`](tm055_results.md).
 | Class | **Store-works** | **Fail** |
 
 See [`tm056_results.md`](tm056_results.md).
+
+## TM.0.5.7 (find without unique rare / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| After train, dirty S: A / foil C | **`press` / `hold`** | `press` / `hold` |
+| C life on dirty S: A / C | **`press` / `tune`** | `press` / `hold` |
+| Wipe-between: A / C | **`hold` / `hold`** | `hold` / `hold` |
+| Rare clutter pages | 3 | 3 |
+| Train last 50 | 0.92 | 0.86 |
+| Class | **Store-works** | **Fail** |
+
+See [`tm057_results.md`](tm057_results.md).
 

@@ -27,7 +27,7 @@ Order of remaining recipe jumps (do not skip ahead to an English life):
 
 1. No answer integers in W (TM.0.5.0).
 2. Use the committed file as text (not int→motor). TM.0.5.0: copy an **innate motor name** mentioned in the page. TM.0.5.2: the page does **not** name the motor; stamp the act the body just did onto a rare committed note. Closed body vocabulary, not English NLP.
-3. Search without `has_code` (side-effect of 1 if pages have no place ints; keep it load-bearing).
+3. Search without `has_code` (side-effect of 1 if pages have no place ints; keep it load-bearing). TM.0.5.7: find without a unique rare token (`has_code` stays in the vector).
 4. Probe is use-the-fact, not only pick-a-motor (TM.0.5.3).
 5. Open W (wiki-shaped content) (TM.0.5.4).
 6. One return (shared credit that actually works, or an honest genome admission).
@@ -633,5 +633,21 @@ Recipe jump 8, train slice: **do not rmtree S each train episode**. ρ still res
 | Store-works | Untrained HOLD; after never-wipe train A PRESS / C HOLD; C life on that S A PRESS / C TUNE; wipe-between A HOLD | Same without splitting the return |
 
 Do not restore per-episode train wipe, a motor name in W, or an English lexicon to rescue a plot.
+
+## TM.0.5.7 A find without unique rare, B shared return
+
+Recipe: unread W has **several distinctive clutter pages** (hapax scraps), not one unique rare needle. `{has_code, has_rare}` still ranks; `has_rare` is true for xenon/argon/neon clutter **and** krypton/helium. A distinctive page is a stampable note — uniqueness is not required. Same never-wipe train as TM.0.5.6. Closed-lexicon clutter-only control (no hapax) must not PRESS. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. Not English.
+
+**A.** Split: search rare / write stamp / probe A correct. Train keeps S. W is multi-rare.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; useful page is still the only rare token; English; drop `has_code`; drop `domain=`; digit-copy; synonym lexicon; v9 writes; empty S TUNE | same |
+| Fail | After train, dirty S not PRESS; C life on dirty S loses A or misses TUNE; wipe-between still PRESS on A; closed clutter-only PRESS | Untrained PRESS; dirty S miss; split restored |
+| Store-works | Untrained HOLD; multi-rare W; after never-wipe train A PRESS / C HOLD; C life on that S A PRESS / C TUNE; wipe-between A HOLD | Same without splitting the return |
+
+Do not restore a unique-rare needle, a motor name in W, or an English lexicon to rescue a plot.
 
 
