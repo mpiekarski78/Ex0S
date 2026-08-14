@@ -66,6 +66,7 @@ class ThreeMemoryAgent:
         wsel_dump: bool = False,
         use_wcomp_head: bool = False,
         use_qname_head: bool = False,
+        use_vname_head: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -99,9 +100,13 @@ class ThreeMemoryAgent:
             raise ValueError("use_qname_head requires use_policy")
         if use_qname_head and use_match_head:
             raise ValueError("use_qname_head cannot run with the {door, here} match menu")
+        if use_vname_head and use_policy is None:
+            raise ValueError("use_vname_head requires use_policy")
+        if use_vname_head and use_key_head:
+            raise ValueError("use_vname_head cannot run with the {action, do} copy menu")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
-        if place_key not in ("door", "here"):
+        if not isinstance(place_key, str) or not place_key:
             raise ValueError(place_key)
         cfg = CortexConfig(obs_dim=obs_dim, embed_dim=embed_dim, n_actions=4, seed=cortex_seed)
         self.cortex = FrozenCortex(cfg)
@@ -136,6 +141,7 @@ class ThreeMemoryAgent:
         self.wsel_dump = wsel_dump
         self.use_wcomp_head = use_wcomp_head
         self.use_qname_head = use_qname_head
+        self.use_vname_head = use_vname_head
         self._peek: list[FactRecord] = []
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
@@ -193,6 +199,7 @@ class ThreeMemoryAgent:
             wsel_dump=self.wsel_dump,
             use_wcomp_head=self.use_wcomp_head,
             use_qname_head=self.use_qname_head,
+            use_vname_head=self.use_vname_head,
         )
 
     def _obs_query(self, obs: Obs) -> dict[str, Any] | None:
@@ -412,9 +419,34 @@ class ThreeMemoryAgent:
         return self._select_hits(obs, pool)
 
     def _value_tag(self) -> str:
+        if self.use_vname_head:
+            return str(self.last_policy.get("vname") or "")
         if self.use_key_head:
             return "do" if bool(self.last_policy.get("key_alt")) else "action"
         return self.value_key
+
+    def _choose_vname(self, recs: list, obs: Obs, *, record: bool) -> None:
+        if not self.use_vname_head or self.use_policy is None:
+            return
+        q = self._obs_query(obs)
+        qkey = next(iter(q)) if q else ""
+        pool = self._qname_pool()
+        keys = sorted({k for r in recs for k in r.tags if k not in _QNAME_SKIP})
+        if not keys:
+            return
+        items = []
+        for k in keys:
+            is_query = k == qkey
+            key_common = sum(1 for r in pool if k in r.tags) >= 3
+            items.append((is_query, key_common))
+        dec = self.use_policy.decide_vname(
+            items, epsilon=self.policy_epsilon, rng=self.policy_rng
+        )
+        dec["vname"] = keys[int(dec["idx"])]
+        dec["vnames"] = keys
+        self.last_policy = {**self.last_policy, **dec}
+        if record:
+            self.policy_traces.append(dec)
 
     def _apply_record_bias(self, logits: np.ndarray, rec: FactRecord, obs: Obs) -> None:
         act = rec.tags.get(self._value_tag() if self.use_read else "action")
@@ -474,7 +506,9 @@ class ThreeMemoryAgent:
                 chosen = self._rank_hits(hits, record=record_use) if self.use_rank else [self._newest(hits)]
         elif self.use_rank and self.use_policy is not None and hits:
             chosen = self._rank_hits(hits, record=record_use)
-        if self.use_key_head and self.use_policy is not None:
+        if self.use_vname_head and self.use_policy is not None and chosen:
+            self._choose_vname(chosen, obs, record=record_use)
+        elif self.use_key_head and self.use_policy is not None:
             feat = UsePolicy.features(bool(chosen), False)
             dec = self.use_policy.decide_key(feat, epsilon=self.policy_epsilon, rng=self.policy_rng)
             self.last_policy = {**self.last_policy, **dec}

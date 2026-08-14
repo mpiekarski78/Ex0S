@@ -196,3 +196,7 @@ Many unread pages share `here=`. Collect’s filename-first `w_hits[0]` is the w
 
 Query keys come from files, not `{door, here}`. **A** split and **B** shared return both **Store-works**. Untrained queries `action=` and stays `open`. Trained red `use_key` from `p99.tag` `{loc:0, action:2}` after unmount W; held-out green `wait`. Restored match menu finds nothing. Use-off stays `open`. loc-is-wait stays `wait`. Two-head shared return worked here; it does not overturn v16/v23 starvation on larger joints. Cortex unchanged. Details: [`tm010_results.md`](tm010_results.md).
 
+## TM.0.1.1 (open copy names / shared return)
+
+Copy keys come from the hit, not `{action, do}`. Query frozen to the files’ place key. **A** split and **B** shared return both **Store-works**. Untrained copies `loc=` and stays `open`. Trained red `use_key` from `act=2` after unmount W; held-out green `wait` (`act=0`, not place code 2). Restored copy menu misses. Use-off stays `open`. Cortex unchanged. Details: [`tm011_results.md`](tm011_results.md).
+

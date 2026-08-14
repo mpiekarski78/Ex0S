@@ -372,3 +372,19 @@ First post-toy series. Drop the `{door, here}` match menu. Query names are keys 
 
 Do not restore `{door, here}` or plant `here=` to rescue a plot.
 
+## TM.0.1.1 A open copy names, B shared return
+
+Query frozen to the files’ place key. Drop the `{action, do}` copy menu. Copy names are keys on the hit. Features `{is_query, key_common}` — no name id, no integer. Cortex frozen. No `d0.tag`. No `do=`. No `when=`. Probe greedy.
+
+**A.** Split: chosen copy-key’s value is 2 / unmount probe. Useful unread page `{loc:0, act:2}`. Green `{loc:2, act:0}` — copying the place code would `use_key`.
+
+**B.** Same `make()`. One `r` = unmount probe correct, applied to vname and use.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; planted `when=` / `do=`; `d0` in W; empty-S green `wait` | same |
+| Fail | Untrained already `use_key`; green fails; `{action, do}` menu still solves; freeze-vname / use-off still `use_key` | Untrained already `use_key`; red stays `open`; last-50 ≈ 0 |
+| Store-works | Untrained `open`; red `use_key` from `act=`; green `wait`; menu / vname-off / use-off fail | Same without splitting the return |
+
+Do not restore `{action, do}` or plant `do=` to rescue a plot.
+

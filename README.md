@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.1.0. Toy series: v0–v23.
+**Current:** TM.0.1.1. Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,9 +15,9 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.1.0: the **split is real on a toy that just opened query names**. Not a general learner. Query keys now come from files (not `{door, here}`). Still genome: value menu `{action, do}`, generic `logits[int] += 3.0`, exact match, frozen commit-on-hit, `{has_hit, key_common}` as the open-name features, four discrete acts. Shared return worked on this two-head stack; it still starved the v16/v23 joints. Tiny LSTM still needs a taught tool grammar for English. W is a handful of `.tag` files, not Wikipedia. No code, no cameras.
+Honest status after TM.0.1.1: the **split is real on a toy that opened query names and copy names**. Not a general learner. Query/copy keys can come from files (not `{door, here}` / `{action, do}`), but not both heads in one run yet. Still genome: generic `logits[int] += 3.0`, exact match, frozen commit-on-hit, `{has_hit, key_common}` / `{is_query, key_common}`, four discrete acts. Shared return worked on these two-head stacks; it still starved the v16/v23 joints. Tiny LSTM still needs a taught tool grammar for English. W is a handful of `.tag` files, not Wikipedia. No code, no cameras.
 
-## Result (v0–v23 toy, TM.0.1.0+)
+## Result (v0–v23 toy, TM.0.1.x)
 
 v0: [`docs/conclusion.md`](docs/conclusion.md).  
 v1 NOTE-copy: [`docs/v1_results.md`](docs/v1_results.md).  
@@ -44,6 +44,7 @@ v21 select among W hits: [`docs/v21_results.md`](docs/v21_results.md).
 v22 complete vs stub / joint: [`docs/v22_results.md`](docs/v22_results.md).  
 v23 joint wiki / shared return: [`docs/v23_results.md`](docs/v23_results.md).  
 TM.0.1.0 open query names: [`docs/tm010_results.md`](docs/tm010_results.md).  
+TM.0.1.1 open copy names: [`docs/tm011_results.md`](docs/tm011_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -83,6 +84,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v22 A complete vs stub / B joint no clamps | **Store-works** / **Store-works** (payload over stub, no `when=`; find+pick+use together) |
 | v23 A joint find+complete+use / B shared return | **Store-works** / **Fail** (no `when=`; split credit load-bearing; shared return last-50 0) |
 | TM.0.1.0 A open query names / B shared return | **Store-works** / **Store-works** (keys from files, not `{door, here}`; two-head shared return works) |
+| TM.0.1.1 A open copy names / B shared return | **Store-works** / **Store-works** (keys from the hit, not `{action, do}`; green must not copy `loc=2`) |
 
 ## Five pieces
 
@@ -125,6 +127,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v22 complete vs stub / joint | **Store-works** / **Store-works** | no `when=` cheat; three heads together; [`docs/v22_results.md`](docs/v22_results.md) |
 | v23 joint wiki / shared return | **Store-works** / **Fail** | find+complete+use, no `when=`; shared return starves; [`docs/v23_results.md`](docs/v23_results.md) |
 | TM.0.1.0 open query names | **Store-works** / **Store-works** | files supply query keys; `{door, here}` menu off; [`docs/tm010_results.md`](docs/tm010_results.md) |
+| TM.0.1.1 open copy names | **Store-works** / **Store-works** | files supply copy keys; `{action, do}` menu off; [`docs/tm011_results.md`](docs/tm011_results.md) |
 
 ## Quick start
 
@@ -155,6 +158,7 @@ python tests/test_v21.py
 python tests/test_v22.py
 python tests/test_v23.py
 python tests/test_tm010.py
+python tests/test_tm011.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -182,6 +186,7 @@ python -m experiments.run_v21
 python -m experiments.run_v22
 python -m experiments.run_v23
 python -m experiments.run_tm010
+python -m experiments.run_tm011
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -190,8 +195,8 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010, train_prior
-docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.1.0 results
+experiments/      # run_v0 … run_v23, run_tm010, run_tm011, train_prior
+docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.1.x results
 tests/
 runs/             # gitignored
 checkpoints/      # gitignored (prior.pt)

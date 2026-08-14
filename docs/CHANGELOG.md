@@ -32,3 +32,4 @@
 - v22: A complete vs stub (no planted `when=`); B joint match+wsel+use with no clamps. Both **Store-works**. [`docs/v22_results.md`](v22_results.md).
 - v23: A joint match+complete+use, no `when=` (**Store-works**); B shared return on the same stack (**Fail**, last-50 0, no policy updates). [`docs/v23_results.md`](v23_results.md).
 - TM.0.1.0: open query names from files, not `{door, here}`. A split and B shared return both **Store-works**. [`docs/tm010_results.md`](tm010_results.md).
+- TM.0.1.1: open copy names from the hit, not `{action, do}`. Query frozen to the files’ place key. A split and B shared return both **Store-works**. [`docs/tm011_results.md`](tm011_results.md).
