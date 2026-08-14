@@ -9,7 +9,7 @@ import numpy as np
 from .cortex import CortexConfig, FrozenCortex
 from .drives import InnateDrives
 from .env import Action, KeyDoorWorld, Obs
-from .dial_env import CH_A, CH_B, CH_C, DialAction
+from .dial_env import CH_A, CH_B, CH_C, DialAction, STATION_NAMES
 from .rho import RhoConfig, WorkingTrace
 from .store import FactRecord, WorldStore
 from .policy import UsePolicy
@@ -74,6 +74,7 @@ class ThreeMemoryAgent:
         use_prose_tokens: bool = False,
         use_revise_head: bool = False,
         use_event_annotate: bool = False,
+        use_here_match: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -136,6 +137,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_event_annotate cannot run with write_from_events")
         if use_event_annotate and not (use_search_head and use_vname_head and use_read and use_prose_tokens):
             raise ValueError("use_event_annotate requires search + vname + use_read + use_prose_tokens")
+        if use_here_match and not use_event_annotate:
+            raise ValueError("use_here_match requires use_event_annotate")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -187,6 +190,7 @@ class ThreeMemoryAgent:
         self.use_prose_tokens = use_prose_tokens
         self.use_revise_head = use_revise_head
         self.use_event_annotate = use_event_annotate
+        self.use_here_match = use_here_match
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._w_skip: set[str] = set()
@@ -256,6 +260,7 @@ class ThreeMemoryAgent:
             use_prose_tokens=self.use_prose_tokens,
             use_revise_head=self.use_revise_head,
             use_event_annotate=self.use_event_annotate,
+            use_here_match=self.use_here_match,
             domain=self.domain,
         )
 
@@ -570,6 +575,28 @@ class ThreeMemoryAgent:
             return {a.name.lower(): int(a) for a in DialAction}
         return {a.name.lower(): int(a) for a in Action}
 
+    def _station_name(self, obs) -> str | None:
+        """Innate station name for the current percept. Body vocabulary, not English."""
+        if self.domain != "dial":
+            return None
+        if getattr(obs, "at_a", False):
+            return STATION_NAMES[CH_A]
+        if getattr(obs, "at_b", False):
+            return STATION_NAMES[CH_B]
+        if getattr(obs, "at_c", False):
+            return STATION_NAMES[CH_C]
+        return None
+
+    def _rec_names_here(self, rec, obs) -> bool:
+        station = self._station_name(obs)
+        if not station:
+            return False
+        return any(
+            isinstance(v, str) and str(v).lower() == station
+            for k, v in rec.tags.items()
+            if k not in _QNAME_SKIP
+        )
+
     def _chosen_has_act_name(self) -> bool:
         fid = str(self.last_policy.get("file") or "")
         if not fid:
@@ -624,12 +651,8 @@ class ThreeMemoryAgent:
         words = self._rec_words(rec)
         return any(sum(1 for ws in pool_words if w in ws) < 3 for w in words)
 
-    def _maybe_annotate(self, action_name: str) -> None:
-        """Write the act the body just did onto a rare committed note. Not from W.
-
-        Stamp the distinctive file already in S, not whichever page search glanced
-        at on the success step.
-        """
+    def _maybe_annotate(self, action_name: str, obs=None) -> None:
+        """Write the act (and station, if here-match) the body just did onto a rare note."""
         if self.use_policy is None or not self.store.enabled:
             return
         if action_name not in self._act_names():
@@ -651,10 +674,18 @@ class ThreeMemoryAgent:
         if not do_write or not rare:
             return
         rec = rare_recs[0]
-        if any(isinstance(v, str) and str(v).lower() == action_name for v in rec.tags.values()):
+        station = self._station_name(obs) if self.use_here_match else None
+        vals = {str(v).lower() for v in rec.tags.values() if isinstance(v, str)}
+        need_act = action_name not in vals
+        need_st = bool(station) and station not in vals
+        if not need_act and not need_st:
             return
         n = sum(1 for k in rec.tags if str(k).startswith("w"))
-        rec.tags[f"w{n}"] = action_name
+        if need_act:
+            rec.tags[f"w{n}"] = action_name
+            n += 1
+        if need_st:
+            rec.tags[f"w{n}"] = station
         if self.store.write(rec):
             self.n_annotated += 1
 
@@ -841,6 +872,10 @@ class ThreeMemoryAgent:
                 # Selected innate act name: copy is frozen grammar. A non-act token
                 # does not bias the motor, so untrained (common word) stays HOLD.
                 apply = True
+                if self.use_here_match:
+                    # File is a fact about *this* station, not a global motor.
+                    apply = any(self._rec_names_here(r, obs) for r in chosen)
+                    self.last_policy["here_match"] = apply
         if apply:
             for rec in chosen:
                 self._apply_record_bias(logits, rec, obs)
@@ -968,7 +1003,7 @@ class ThreeMemoryAgent:
             self._maybe_revise(failed=True)
 
         if self.use_event_annotate and opened and action_name:
-            self._maybe_annotate(str(action_name).lower())
+            self._maybe_annotate(str(action_name).lower(), obs)
 
         if self.use_policy is not None and self.write_from_events:
             # v9: frozen WHAT = {here, the act that opened}. Learned WHEN.

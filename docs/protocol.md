@@ -28,7 +28,7 @@ Order of remaining recipe jumps (do not skip ahead to an English life):
 1. No answer integers in W (TM.0.5.0).
 2. Use the committed file as text (not int→motor). TM.0.5.0: copy an **innate motor name** mentioned in the page. TM.0.5.2: the page does **not** name the motor; stamp the act the body just did onto a rare committed note. Closed body vocabulary, not English NLP.
 3. Search without `has_code` (side-effect of 1 if pages have no place ints; keep it load-bearing).
-4. Probe is use-the-fact, not only pick-a-motor.
+4. Probe is use-the-fact, not only pick-a-motor (TM.0.5.3).
 5. Open W (wiki-shaped content).
 6. One return (shared credit that actually works, or an honest genome admission).
 7. No `domain=` switch.
@@ -567,4 +567,21 @@ Recipe jump 2, second slice: unread W has **no** innate motor name and **no** di
 | Store-works | Untrained HOLD; free A commits krypton and stamps `press`; after reset W gone → PRESS; C TUNE from stamped `tune` | Same without splitting the return |
 
 Do not restore a motor name in W, digit-copy, filed `action=`, or a PRESS/TUNE lexicon beyond innate act names to rescue a plot.
+
+## TM.0.5.3 A use-the-fact, B shared return
+
+Recipe jump 4: the file is a fact about **this station**, not a global motor. Same unnamed W as TM.0.5.2. On success, stamp act name **and** innate station name (`cha` / `chc`) onto the rare note. After A life, **same S**, ρ reset, W gone: probe A PRESS; probe C HOLD. After C life (fresh S, still wiped between lives): probe C TUNE; probe A HOLD. Copy-only (here-match off) fires PRESS on C — so the match is load-bearing. Channel dial. Species prior HOLD. Cortex frozen. `n_forced=0`. Search still has `has_code`. `domain=` stays. S wiped every episode. Not Open W. Not English.
+
+**A.** Split: find rare page / stamp act+station / probe A correct.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; motor or station name in W; digits; Open W; English; accumulate S; drop `has_code`; drop `domain=`; digit-copy; synonym lexicon; v9 writes; empty S TUNE | same |
+| Fail | Untrained PRESS; A's stamp fires on C; C's stamp fires on A; copy-only already HOLDs on C (match not load-bearing) | Untrained PRESS; A miss; split restored |
+| Store-works | Untrained HOLD; after A life A PRESS and C HOLD; after C life C TUNE and A HOLD; copy-only PRESS on C | Same without splitting the return |
+
+Do not restore pick-a-motor, a motor name in W, or an English place lexicon to rescue a plot.
+
 

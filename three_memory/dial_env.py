@@ -28,6 +28,9 @@ CH_A = 0
 CH_B = 4
 CH_C = 1  # equals PRESS — copying place fails held-out
 
+# Innate station names (body vocabulary). Not English. Not place ints.
+STATION_NAMES = {CH_A: "cha", CH_B: "chb", CH_C: "chc"}
+
 CORRECT = {
     CH_A: DialAction.PRESS,
     CH_B: DialAction.HOLD,
@@ -111,6 +114,7 @@ class ChannelDialWorld:
         need = CORRECT[self.channel]
         info: dict[str, Any] = {
             "action": DIAL_ACTION_NAMES.get(DialAction(action), str(action)),
+            "station": STATION_NAMES[self.channel],
             "channel": self.channel,
             "need": int(need),
         }

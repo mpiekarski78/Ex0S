@@ -42,3 +42,4 @@
 - TM.0.5.0: no answer integers — copy innate motor name token, not digits. A **Store-works**; B shared return **Fail** (last-50 0). Developmental rule locked (how to learn / correct; English then math as lives). [`docs/tm050_results.md`](tm050_results.md).
 - TM.0.5.1: correct a wrong commit — drop junk S, retry, keep after ρ reset. Search frozen so correction is load-bearing. A **Store-works**; B shared return **Fail**. [`docs/tm051_results.md`](tm051_results.md).
 - TM.0.5.2: unread W does not name the motor — stamp the act from the event onto a rare committed note. A **Store-works**; B shared return **Fail**. [`docs/tm052_results.md`](tm052_results.md).
+- TM.0.5.3: use the fact, not pick-a-motor — same S, A PRESS / C HOLD; copy-only still PRESS on C. A **Store-works**; B shared return **Fail**. [`docs/tm053_results.md`](tm053_results.md).

@@ -236,3 +236,7 @@ Detect fail, drop clutter in S, retry, keep after ρ reset. Search frozen untrai
 
 Unread W has no motor name. Stamp the act the body just did onto a rare committed note. **A** **Store-works**: after ρ reset W gone → PRESS from `w7=press`; held-out C TUNE from stamped `tune`. **B** **Fail**: shared return last-50 0. Not English NLP. Details: [`tm052_results.md`](tm052_results.md).
 
+## TM.0.5.3 (use-the-fact / shared return)
+
+The file is a fact about this station, not a global motor. **A** **Store-works**: after A life, same S → A PRESS / C HOLD; after C life → C TUNE / A HOLD. Copy-only still PRESS on C. **B** **Fail**: last-50 0. Details: [`tm053_results.md`](tm053_results.md).
+
