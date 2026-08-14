@@ -222,7 +222,7 @@ class ThreeMemoryAgent:
             dec = self.use_policy.decide(feat, epsilon=self.policy_epsilon, rng=self.policy_rng)
             chosen = dec["collect_mode"]
             info["policy"] = dec
-            self.last_policy = dec
+            self.last_policy = {**self.last_policy, **dec}
             self.policy_traces.append(dec)
         elif self.collect_mode == "off" or self.world is None:
             return info
@@ -342,7 +342,7 @@ class ThreeMemoryAgent:
 
     def _store_bias(self, obs: Obs, *, novelty: float = 0.0, record_use: bool = True) -> np.ndarray:
         """Retrieve facts and bias action logits. Knowledge lives in S, not ρ."""
-        self.collect(obs, novelty=novelty)
+        # Match first so collect's W lookup uses this step's query name, not a stale one.
         if self.use_match_head and self.use_policy is not None:
             at = self._door_code(obs) is not None
             feat = UsePolicy.features(at, False)
@@ -350,6 +350,7 @@ class ThreeMemoryAgent:
             self.last_policy = {**self.last_policy, **dec}
             if record_use:
                 self.policy_traces.append(dec)
+        self.collect(obs, novelty=novelty)
         if self.retrieve_policy == "policy":
             self._choose_retrieve(obs)
         logits = np.zeros(4, dtype=np.float64)

@@ -176,3 +176,7 @@ Write WHEN, schema, use-gate, and pick-one trained together. Classification: **S
 
 Neither side frozen. Untrained write/read disagree. **A** met on `do=` (writer moved). **B** met on `door=` (matcher moved). Both **Store-works**. Untrained `open`. Trained red `use_key`; held-out green `wait` on the same name. Write+use without agreement stays `open`. Cortex unchanged. Details: [`v19_results.md`](v19_results.md).
 
+## v20 (find unread W vs find vs junk)
+
+Unread library W, not authored S. Collect is the frozen v5 commit-on-hit rule. **A** finds `{here:0, action:2}` in `p99.tag`. **B** must prefer that page over `door=` junk (`wait`). Both **Store-works**. Untrained `open`. Trained red `use_key` after unmount W; held-out green `wait`. B’s `door=` control copies junk `wait`; junk-only W stays `open`. Cortex unchanged. Details: [`v20_results.md`](v20_results.md).
+

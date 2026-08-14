@@ -288,3 +288,21 @@ Train red. Held-out green must use the **same** name. Write+use without agreemen
 
 Do not freeze one side or restore a wired name to rescue a plot.
 
+## v20 A find unread W, B find vs junk
+
+v9–v19 authored S. v20 puts **find-and-commit** back on the native-tag stack. Collect is the frozen v5 rule (S miss + W hit → commit). Use-gate may learn. Matcher `{door, here}`. Generic copy. No `d0.tag`. No writes from life. Split credit (found `here=` in S / unmount probe). Probe greedy.
+
+**A.** W has `{here:0, action:2}` as `p99.tag` among clutter. Untrained `door=` misses.
+
+**B.** Plus junk `{door:0, action:0}`. Untrained may commit junk; use-gate off stays `open`. Trained `door=` would copy `wait`.
+
+Held-out green: unread `{here:2, action:0}` as `p98.tag`. B also has junk `{door:2, action:1}`.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; `d0`/`d2` in W; empty-S green `wait`; writes from life | same |
+| Fail | Untrained already `use_key` or `here=`; green fails; freeze-match `here=`; use-on + `door=` still `use_key` | same, plus junk-only `use_key` |
+| Store-works | Untrained `open`; unmount W red `use_key` from `p99.tag`; green `wait`; `door=` control `open` | Untrained `open`; red `use_key` from `here=`; green `wait`; `door=` control `wait`; junk-only `open` |
+
+Do not freeze-match `here=` or restore `d0.tag` / the USE_KEY table to rescue a plot.
+

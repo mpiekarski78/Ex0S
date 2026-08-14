@@ -54,6 +54,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v17 do= / here= | **Store-works** / **Store-works** (learn the field name to copy or match) |
 | three-memory, v18 write do= / here= | **Store-works** / **Store-works** (learn the field name to emit) |
 | three-memory, v19 shared name | **Store-works** / **Store-works** (write and read learn a convention) |
+| three-memory, v20 find in W | **Store-works** / **Store-works** (query `here=`; unread `p99.tag`; junk on `door=` does not leak `use_key`) |
 
 ## Honest limits
 
@@ -262,3 +263,15 @@ See [`v18_results.md`](v18_results.md).
 | Class | **Store-works** | **Store-works** |
 
 See [`v19_results.md`](v19_results.md).
+
+## v20 (find unread W vs find vs junk)
+
+| Check | A find | B find vs junk |
+|-------|--------|----------------|
+| Untrained | `open` (miss `here=`) | `open` (junk committed, use off) |
+| Trained red, unmount W | **`use_key`** (`p99.tag`) | **`use_key`** (not junk) |
+| Held-out green | **`wait`** | **`wait`** |
+| `door=` control | `open` | `wait` (junk) |
+| Class | **Store-works** | **Store-works** |
+
+See [`v20_results.md`](v20_results.md).
