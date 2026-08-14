@@ -83,12 +83,16 @@ def make(
     use_revise_head: bool = False,
     use_commit_here_only: bool = False,
     use_event_annotate: bool = True,
+    use_stamp_new_here: bool = False,
     **kwargs,
 ):
     if not use_event_annotate:
         use_alias_bind = False
         use_did_stamp = False
         use_one_bind = False
+        use_stamp_new_here = False
+    if kwargs.get("use_here_match") is False:
+        use_stamp_new_here = False
     return _make061(
         *args,
         use_alias_bind=use_alias_bind,
@@ -98,6 +102,7 @@ def make(
         use_revise_head=use_revise_head,
         use_commit_here_only=use_commit_here_only,
         use_event_annotate=use_event_annotate,
+        use_stamp_new_here=use_stamp_new_here,
         **kwargs,
     )
 
@@ -114,6 +119,7 @@ def _w_flags(w_files: list[str], w_dir: Path) -> dict[str, Any]:
     flags["use_commit_rare_only"] = True
     flags["use_revise_head"] = False
     flags["use_commit_here_only"] = False
+    flags["use_stamp_new_here"] = False
     flags["w_has_p98"] = "p98.md" in w_files
     return flags
 
@@ -319,6 +325,8 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Fail", "Rare-only commit was frozen off."
     if m.get("use_revise_head") or m.get("use_commit_here_only"):
         return "Confound", "Dirty-store correct flags were smuggled onto this English never-wipe slice."
+    if m.get("use_stamp_new_here"):
+        return "Confound", "New-here stamp was smuggled onto this slice."
     if not m.get("has_code_in_search"):
         return "Confound", "has_code was dropped from search (not this jump)."
     if not m.get("domain_switch"):
@@ -677,6 +685,7 @@ def run_arm(
         "use_commit_rare_only": dummy.use_commit_rare_only,
         "use_revise_head": dummy.use_revise_head,
         "use_commit_here_only": dummy.use_commit_here_only,
+        "use_stamp_new_here": dummy.use_stamp_new_here,
         "use_search_head": dummy.use_search_head,
         "use_match_head": dummy.use_match_head,
         "use_qname_head": dummy.use_qname_head,

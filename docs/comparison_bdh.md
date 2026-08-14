@@ -79,6 +79,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.6.0 English life | **Store-works** / **Store-works** (page word bound in S, not a DNA synonym; shared return not the jump) |
 | three-memory, TM.0.6.1 one bind | **Store-works** / **Store-works** (distractor hapax on the note does not fire; shared return not the jump) |
 | three-memory, TM.0.6.2 never-wipe English | **Fail** / **Store-works** (dirty train S still PRESS from `push`; C life missed TUNE; shared return not the jump) |
+| three-memory, TM.0.6.3 new-here stamp | **Store-works** / **Store-works** (second station gets an unmarked page; shared return not the jump) |
 
 ## Honest limits
 
@@ -600,4 +601,17 @@ See [`tm061_results.md`](tm061_results.md).
 | Class | **Fail** | **Store-works** |
 
 See [`tm062_results.md`](tm062_results.md).
+
+## TM.0.6.3 (new-here stamp / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| After train, dirty S: A / foil C | **`press` / `hold`** | **`press` / `hold`** |
+| C life on dirty S: A / C | **`press` / `tune`** | **`press` / `tune`** |
+| Nonce-only A | **`hold`** | **`hold`** |
+| Bind-all nonce A | **`press`** | **`press`** |
+| Train last 50 | 0.92 | 0.92 |
+| Class | **Store-works** | **Store-works** |
+
+See [`tm063_results.md`](tm063_results.md).
 

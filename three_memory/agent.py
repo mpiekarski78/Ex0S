@@ -81,6 +81,7 @@ class ThreeMemoryAgent:
         use_alias_bind: bool = False,
         use_did_stamp: bool = False,
         use_one_bind: bool = False,
+        use_stamp_new_here: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -153,6 +154,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_alias_bind requires use_did_stamp")
         if use_one_bind and not use_alias_bind:
             raise ValueError("use_one_bind requires use_alias_bind")
+        if use_stamp_new_here and not use_here_match:
+            raise ValueError("use_stamp_new_here requires use_here_match")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -210,6 +213,7 @@ class ThreeMemoryAgent:
         self.use_alias_bind = use_alias_bind
         self.use_did_stamp = use_did_stamp
         self.use_one_bind = use_one_bind
+        self.use_stamp_new_here = use_stamp_new_here
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._w_skip: set[str] = set()
@@ -285,6 +289,7 @@ class ThreeMemoryAgent:
             use_alias_bind=self.use_alias_bind,
             use_did_stamp=self.use_did_stamp,
             use_one_bind=self.use_one_bind,
+            use_stamp_new_here=self.use_stamp_new_here,
             domain=self.domain,
         )
 
@@ -786,6 +791,59 @@ class ThreeMemoryAgent:
         for i, vl in enumerate(keep):
             rec.tags[f"w{i}"] = vl
 
+    def _unknown_here(self, obs) -> bool:
+        """S already names some other station, but not this one. Clutter-only S is not 'unknown'."""
+        if not self.use_stamp_new_here or not self.use_here_match or not self.store.enabled:
+            return False
+        station = self._station_name(obs)
+        if not station:
+            return False
+        stations = set(STATION_NAMES.values())
+        named: set[str] = set()
+        for rec in self.store.records():
+            vals = {str(v).lower() for v in rec.tags.values() if isinstance(v, str)}
+            named |= vals & stations
+        if not named:
+            return False
+        return station not in named
+
+    def _commit_rare_unmarked(self) -> bool:
+        """Commit one rare unread page that does not already live in S."""
+        if self.world is None or not self.store.enabled:
+            return False
+        owned = {r.fact_id for r in self.store.records()}
+        stations = set(STATION_NAMES.values())
+        for rec in self.world.records():
+            if getattr(rec, "fact_id", None) in owned:
+                continue
+            if not self._is_rare_in_world(rec):
+                continue
+            vals = {str(v).lower() for v in rec.tags.values() if isinstance(v, str)}
+            if vals & stations:
+                continue
+            return self._commit_w_record(rec)
+        return False
+
+    def _pick_stamp_note(self, rare_recs, station: str | None):
+        """Prefer an unmarked rare page when this station is new."""
+        stations = set(STATION_NAMES.values())
+        unmarked = []
+        named_here = []
+        for cand in rare_recs:
+            vals = {str(v).lower() for v in cand.tags.values() if isinstance(v, str)}
+            other = (vals & stations) - ({station} if station else set())
+            if other:
+                continue
+            did = str(cand.tags.get("did") or "").lower()
+            if not (vals & stations) and not did:
+                unmarked.append(cand)
+            else:
+                named_here.append(cand)
+        if self.use_stamp_new_here and unmarked:
+            return unmarked[0]
+        pool = unmarked + named_here
+        return pool[0] if pool else None
+
     def _page_stream(self, rec) -> list[str]:
         text = ""
         if self.world is not None:
@@ -834,18 +892,17 @@ class ThreeMemoryAgent:
             self.last_policy = {**self.last_policy, **dec}
             self.policy_traces.append(dec)
             do_write = bool(dec["write"])
-        if not do_write or not rare:
-            return
         station = self._station_name(obs) if self.use_here_match else None
-        stations = set(STATION_NAMES.values())
-        rec = None
-        for cand in rare_recs:
-            vals = {str(v).lower() for v in cand.tags.values() if isinstance(v, str)}
-            other = (vals & stations) - ({station} if station else set())
-            if other:
-                continue
-            rec = cand
-            break
+        new_here = bool(self.use_stamp_new_here and station and self._unknown_here(obs))
+        if not do_write and not new_here:
+            return
+        if not rare and not new_here:
+            return
+        rec = self._pick_stamp_note(rare_recs, station)
+        if rec is None and new_here:
+            if self._commit_rare_unmarked():
+                rare_recs = [r for r in self.store.records() if self._is_rare_in_world(r)]
+                rec = self._pick_stamp_note(rare_recs, station)
         if rec is None:
             return
         vals = {str(v).lower() for v in rec.tags.values() if isinstance(v, str)}
@@ -1087,7 +1144,7 @@ class ThreeMemoryAgent:
                 or getattr(obs, "at_b", False)
                 or getattr(obs, "at_c", False)
             )
-            if at_station:
+            if at_station and not (explore and self._unknown_here(obs)):
                 logits[DialAction.HOLD] += 1.5
                 logits[DialAction.PRESS] -= 0.3
                 logits[DialAction.TUNE] -= 0.3

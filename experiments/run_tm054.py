@@ -166,6 +166,7 @@ def make(
     use_alias_bind: bool = False,
     use_did_stamp: bool = False,
     use_one_bind: bool = False,
+    use_stamp_new_here: bool = False,
 ) -> ThreeMemoryAgent:
     world = ProseLibrary(w_dir) if w_dir is not None else None
     return ThreeMemoryAgent(
@@ -199,6 +200,7 @@ def make(
         use_alias_bind=use_alias_bind,
         use_did_stamp=use_did_stamp,
         use_one_bind=use_one_bind,
+        use_stamp_new_here=use_stamp_new_here,
     )
 
 

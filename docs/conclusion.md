@@ -276,3 +276,7 @@ Two rare words on the useful page. **A** **Store-works**: bind=`push` not `argon
 
 Never-wipe train on the one-bind English recipe. **A** **Fail**: dirty train S still PRESS from `push`, but a C life on that S did not stamp TUNE. **B** **Store-works** on this slice (last-50 0.92); not the jump, not retuned. Details: [`tm062_results.md`](tm062_results.md).
 
+## TM.0.6.3 (new-here stamp / shared return)
+
+A growing English store takes a second station as a new unmarked page. **A** **Store-works**: never-wipe train S still PRESS from `push`; C life on that S stamps `bind=adjust` and TUNE. **B** **Store-works** on this slice (last-50 0.92); not the jump, not retuned. Details: [`tm063_results.md`](tm063_results.md).
+
