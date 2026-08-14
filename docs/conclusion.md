@@ -308,3 +308,7 @@ Same find-novel recipe, but several clutter pages also match the novel-count of 
 
 Do not lock find on the first max-novel page. **A** **Fail**: train S is the whole novel tie (n=4, `push` plus `xenon`/`neon`/`krypton`); C life adds `adjust`. **B** **Store-works** on the motor bar (n=4, last-50 0.96); not the jump, not retuned. Details: [`tm070_results.md`](tm070_results.md).
 
+## TM.0.7.1 (local-alias / shared return)
+
+Bind→did is file-local. **A** **Fail**: retrieve used `xenon`, not `push`. C used `adjust`. **B** **Store-works** on the motor bar (n=4, last-50 0.96); not the jump, not retuned. Details: [`tm071_results.md`](tm071_results.md).
+

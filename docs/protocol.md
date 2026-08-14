@@ -14,7 +14,7 @@ Jumps must get closer to a machine that **could in theory** learn from wiki / En
 |-------|------------------------------------------------------|-----------------------------|
 | How to learn | Find unread data, commit, use after ρ reset — without planted answer integers, a door table, or an English lexicon | — |
 | How to correct | Detect mismatch, revise S (mark/overwrite/drop), retry, keep the correction after ρ reset | — |
-| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first (TM.0.6.0); one bind against a distractor hapax (TM.0.6.1); never-wipe English (TM.0.6.2); new-here stamp (TM.0.6.3); English find without a unique rare token (TM.0.6.4); concurrent bind / block extra hapax here (TM.0.6.5); correct the dirty English store (TM.0.6.6); in-hand new-here (TM.0.6.7); find-novel unread rares vs S (TM.0.6.8); find-novel without a unique two-rare pair (TM.0.6.9); retry the rest of the novel tie (TM.0.7.0) |
+| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first (TM.0.6.0); one bind against a distractor hapax (TM.0.6.1); never-wipe English (TM.0.6.2); new-here stamp (TM.0.6.3); English find without a unique rare token (TM.0.6.4); concurrent bind / block extra hapax here (TM.0.6.5); correct the dirty English store (TM.0.6.6); in-hand new-here (TM.0.6.7); find-novel unread rares vs S (TM.0.6.8); find-novel without a unique two-rare pair (TM.0.6.9); retry the rest of the novel tie (TM.0.7.0); file-local bind→did (TM.0.7.1) |
 | Learn math | Not a calculator in cortex | A later life after some language is already in S |
 
 Four recipe skills, in order: **find / commit / use / correct**. English and math are lives that use those skills. Dumping wiki + algebra into one experiment is illegal.
@@ -34,7 +34,7 @@ Order of recipe jumps (English is a life that uses the skills, not a lexicon in 
 7. No `domain=` switch.
 8. Accumulate S (stop wiping every episode). TM.0.5.5 eval path; TM.0.5.6 never-wipe train.
 9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works (TM.0.5.1). TM.0.5.9: correct the dirty never-wipe store (stop appending once S names here; drop unstamped pages after a real stamp). TM.0.6.6: same correct flags on the English concurrent-bind store.
-10. English life, tiny corpus (TM.0.6.0). One bind per note against a distractor hapax (TM.0.6.1). Never-wipe English on that recipe (TM.0.6.2). New-here stamp so a second station gets an unmarked page (TM.0.6.3). English find without a unique rare token (TM.0.6.4). Concurrent bind: stamp the page in play, block extra hapax at this station (TM.0.6.5). Correct the dirty English store (TM.0.6.6). In-hand new-here: a new station stamps the attended rare page, not the first leftover rare in W (TM.0.6.7). Find-novel: search keeps unread pages that add the most rare tokens S lacks (TM.0.6.8). Find-novel without a unique two-rare pair: several clutter pages also match that novel count (TM.0.6.9). Retry-novel: do not lock find on the first tied page; keep unread max-novel pages vs the whole library (TM.0.7.0). Then more language in S, then a math life.
+10. English life, tiny corpus (TM.0.6.0). One bind per note against a distractor hapax (TM.0.6.1). Never-wipe English on that recipe (TM.0.6.2). New-here stamp so a second station gets an unmarked page (TM.0.6.3). English find without a unique rare token (TM.0.6.4). Concurrent bind: stamp the page in play, block extra hapax at this station (TM.0.6.5). Correct the dirty English store (TM.0.6.6). In-hand new-here: a new station stamps the attended rare page, not the first leftover rare in W (TM.0.6.7). Find-novel: search keeps unread pages that add the most rare tokens S lacks (TM.0.6.8). Find-novel without a unique two-rare pair: several clutter pages also match that novel count (TM.0.6.9). Retry-novel: do not lock find on the first tied page; keep unread max-novel pages vs the whole library (TM.0.7.0). File-local bind→did: a page word aliases a motor only from the retrieved note (TM.0.7.1). Then more language in S, then a math life.
 
 Do not restore digit-copy, filed `action=`/`where=`, the door toy, or a synonym lexicon to rescue a plot.
 
@@ -857,5 +857,21 @@ Recipe: same find-novel + two-rare clutter as TM.0.6.9, but here-only does not f
 | Store-works | Two-rare-clutter English W; small never-wipe S; train A PRESS from `push`; C life A PRESS / C TUNE from `adjust`; wipe-between A HOLD; nonce HOLD | Same without splitting the return |
 
 Do not restore leftover-pile rarity, a unique two-rare pair, or a `push` table in the agent to rescue a plot.
+
+## TM.0.7.1 A local-alias, B shared return
+
+Recipe: same retry-novel dirty store as TM.0.7.0. Bind→did is **file-local**. Dirty S may keep clutter. Retrieve must use `push` / `adjust`. Local-alias **off by default**. Cortex frozen. Not math. Do not retune `n_train`.
+
+**A.** Split. Used bind must be `push` then `adjust`.
+
+**B.** Same `make()`. One `r` = probe A correct.
+
+| ID | A | B |
+|----|---|----|
+| Confound | Cortex moves; global hapax lexicon restored; unique-pair; `push` in the agent; drop `has_code` / `domain=` | same |
+| Fail | Untrained PRESS; retrieve uses clutter hapax; C miss; wipe-between PRESS; nonce PRESS | Untrained PRESS; A miss; C miss; n>4 |
+| Store-works | Dirty multi-rare S; retrieve uses `push` then `adjust`; wipe-between HOLD | Same without split |
+
+Do not restore a global bind→motor table to rescue a plot.
 
 

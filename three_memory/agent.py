@@ -86,6 +86,7 @@ class ThreeMemoryAgent:
         use_in_hand_new_here: bool = False,
         use_find_novel: bool = False,
         use_retry_novel: bool = False,
+        use_local_alias: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -170,6 +171,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_find_novel requires use_search_head")
         if use_retry_novel and not use_find_novel:
             raise ValueError("use_retry_novel requires use_find_novel")
+        if use_local_alias and not use_alias_bind:
+            raise ValueError("use_local_alias requires use_alias_bind")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -232,6 +235,7 @@ class ThreeMemoryAgent:
         self.use_in_hand_new_here = use_in_hand_new_here
         self.use_find_novel = use_find_novel
         self.use_retry_novel = use_retry_novel
+        self.use_local_alias = use_local_alias
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._in_hand_id: str | None = None
@@ -314,6 +318,7 @@ class ThreeMemoryAgent:
             use_in_hand_new_here=self.use_in_hand_new_here,
             use_find_novel=self.use_find_novel,
             use_retry_novel=self.use_retry_novel,
+            use_local_alias=self.use_local_alias,
             domain=self.domain,
         )
 
@@ -738,7 +743,7 @@ class ThreeMemoryAgent:
             return {a.name.lower() for a in DialAction}
         return {a.name.lower() for a in Action}
 
-    def _act_map(self) -> dict[str, int]:
+    def _act_map(self, recs=None) -> dict[str, int]:
         if self.domain == "dial":
             innate = {a.name.lower(): int(a) for a in DialAction}
         else:
@@ -747,7 +752,11 @@ class ThreeMemoryAgent:
             return innate
         m = dict(innate)
         stations = set(STATION_NAMES.values())
-        for rec in self.store.records():
+        if self.use_local_alias:
+            sources = list(recs) if recs is not None else []
+        else:
+            sources = list(self.store.records()) if self.store.enabled else []
+        for rec in sources:
             did = rec.tags.get("did")
             if not isinstance(did, str):
                 continue
@@ -1122,7 +1131,7 @@ class ThreeMemoryAgent:
             if self.use_prose_tokens:
                 val = next((str(r.tags.get(k)) for r in recs if isinstance(r.tags.get(k), str)), "")
                 val = val.lower()
-                is_act = val in self._act_map()
+                is_act = val in self._act_map(recs if self.use_local_alias else None)
                 is_common = (
                     sum(
                         1
@@ -1177,7 +1186,7 @@ class ThreeMemoryAgent:
             key = self._value_tag() if self.use_read else ""
             val = rec.tags.get(key)
             if isinstance(val, str):
-                act = self._act_map().get(val.lower())
+                act = self._act_map([rec] if self.use_local_alias else None).get(val.lower())
                 if act is not None:
                     logits[int(act)] += 3.0
             return
@@ -1280,6 +1289,10 @@ class ThreeMemoryAgent:
                     self.last_policy["here_match"] = apply
         if apply:
             for rec in chosen:
+                bind = rec.tags.get("bind")
+                if isinstance(bind, str):
+                    self.last_policy["used_file"] = getattr(rec, "fact_id", None)
+                    self.last_policy["used_bind"] = bind.lower()
                 self._apply_record_bias(logits, rec, obs)
         return logits
 

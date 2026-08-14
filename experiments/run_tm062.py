@@ -88,6 +88,7 @@ def make(
     use_in_hand_new_here: bool = False,
     use_find_novel: bool = False,
     use_retry_novel: bool = False,
+    use_local_alias: bool = False,
     **kwargs,
 ):
     if not use_event_annotate:
@@ -99,6 +100,7 @@ def make(
         use_in_hand_new_here = False
         use_find_novel = False
         use_retry_novel = False
+        use_local_alias = False
     if kwargs.get("use_here_match") is False:
         use_stamp_new_here = False
         use_block_here = False
@@ -108,6 +110,8 @@ def make(
         use_retry_novel = False
     if not use_find_novel:
         use_retry_novel = False
+    if not use_alias_bind:
+        use_local_alias = False
     if not use_stamp_new_here:
         use_in_hand_new_here = False
     return _make061(
@@ -124,6 +128,7 @@ def make(
         use_in_hand_new_here=use_in_hand_new_here,
         use_find_novel=use_find_novel,
         use_retry_novel=use_retry_novel,
+        use_local_alias=use_local_alias,
         **kwargs,
     )
 
@@ -145,6 +150,7 @@ def _w_flags(w_files: list[str], w_dir: Path) -> dict[str, Any]:
     flags["use_in_hand_new_here"] = False
     flags["use_find_novel"] = False
     flags["use_retry_novel"] = False
+    flags["use_local_alias"] = False
     flags["w_has_p98"] = "p98.md" in w_files
     return flags
 
@@ -715,6 +721,7 @@ def run_arm(
         "use_in_hand_new_here": dummy.use_in_hand_new_here,
         "use_find_novel": dummy.use_find_novel,
         "use_retry_novel": dummy.use_retry_novel,
+        "use_local_alias": dummy.use_local_alias,
         "use_search_head": dummy.use_search_head,
         "use_match_head": dummy.use_match_head,
         "use_qname_head": dummy.use_qname_head,

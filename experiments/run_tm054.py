@@ -171,6 +171,7 @@ def make(
     use_in_hand_new_here: bool = False,
     use_find_novel: bool = False,
     use_retry_novel: bool = False,
+    use_local_alias: bool = False,
 ) -> ThreeMemoryAgent:
     world = ProseLibrary(w_dir) if w_dir is not None else None
     return ThreeMemoryAgent(
@@ -209,6 +210,7 @@ def make(
         use_in_hand_new_here=use_in_hand_new_here,
         use_find_novel=use_find_novel,
         use_retry_novel=use_retry_novel,
+        use_local_alias=use_local_alias,
     )
 
 

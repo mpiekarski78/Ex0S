@@ -72,6 +72,8 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Fail", "Retry-novel was frozen off."
     if not m.get("retry_novel"):
         return "Fail", "Retry-novel was frozen off."
+    if m.get("use_local_alias"):
+        return "Confound", "Local-alias was smuggled onto this slice."
     return None
 
 
@@ -83,6 +85,8 @@ def classify_a(m: dict[str, Any]) -> tuple[str, str]:
         return "Fail", "Retry-novel was frozen off."
     if not m.get("retry_novel"):
         return "Fail", "Retry-novel was frozen off."
+    if m.get("use_local_alias"):
+        return "Confound", "Local-alias was smuggled onto this slice."
     if label == "Store-works":
         return (
             "Store-works",
@@ -97,6 +101,8 @@ def classify_b(m: dict[str, Any]) -> tuple[str, str]:
     m["use_retry_novel"] = saved
     if not saved:
         return "Fail", "Retry-novel was frozen off."
+    if m.get("use_local_alias"):
+        return "Confound", "Local-alias was smuggled onto this slice."
     if (m.get("train_s", {}).get("n") or 0) > MAX_TRAIN_S_FILES:
         return "Fail", "Shared return train S is still stamp-collecting clutter."
     if label == "Store-works":
