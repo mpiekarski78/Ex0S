@@ -320,3 +320,7 @@ After success, drop other same-here notes. **A** **Fail**: search still retrieve
 
 English unread W is 64 pages, 16 two-rare clutter. **A** **Fail**: retrieve used `xenon`; C used `krypton`. **B** **Store-works** on the motor bar (n=2, last-50 0.94); not the jump, not retuned. Details: [`tm080_results.md`](tm080_results.md).
 
+## TM.0.8.1 (one return / motor bar)
+
+One shared return is the recipe. **A** **Fail**: retrieve used `xenon`; C used `neon`. **B** **Store-works** on the motor bar (n=2, last-50 0.94); not the English bar, not retuned. Details: [`tm081_results.md`](tm081_results.md).
+

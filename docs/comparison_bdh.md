@@ -90,6 +90,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.7.1 local-alias | **Fail** / **Store-works** (retrieve used `xenon`; shared return not the jump) |
 | three-memory, TM.0.7.2 keep-steerer | **Fail** / **Store-works** (kept `xenon`, dropped `push`; C used `neon`; shared return not the jump) |
 | three-memory, TM.0.8.0 scale English Open W | **Fail** / **Store-works** (64-page pile; retrieve used `xenon`; shared return not the jump) |
+| three-memory, TM.0.8.1 one return | **Fail** / **Store-works** (split gone; retrieve used `xenon`; motor bar not the English bar) |
 
 ## Honest limits
 
@@ -750,4 +751,15 @@ See [`tm072_results.md`](tm072_results.md).
 | Class | **Fail** | **Store-works** |
 
 See [`tm080_results.md`](tm080_results.md).
+
+## TM.0.8.1 (one return / motor bar)
+
+| Check | A one return | B motor bar |
+|-------|--------------|-------------|
+| trained_split | **false** | **false** |
+| Used bind A / C | **`xenon`** / **`neon`** | — |
+| Train S n files | **2** | **2** |
+| Class | **Fail** | **Store-works** |
+
+See [`tm081_results.md`](tm081_results.md).
 

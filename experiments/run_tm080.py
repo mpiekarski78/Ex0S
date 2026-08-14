@@ -158,6 +158,8 @@ def _require_scale(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Confound", "Useful pages are still the only two-rare pages."
     if (m.get("w_n_two_rare_clutter") or 0) < MIN_TWO_RARE:
         return "Confound", "Need a pile of two-rare clutter, not three late logs."
+    if m.get("one_return_recipe"):
+        return "Confound", "One-return recipe was smuggled onto this slice."
     return None
 
 
