@@ -164,3 +164,17 @@ Held-out: free green life (must find WAIT without a WAIT tuple).
 
 Do not sneak a hidden script. Do not let the policy emit `use_key` / `wait`.
 
+## v11 select among authored notes
+
+One S. Two free lives (red, then green). `n_forced = 0`. W clutter only. Files must be authored, not placed.
+
+Retrieve **select** = tag match on `door=`. Control **dump-all** applies every `action=` bias.
+
+| ID | If |
+|----|----|
+| Confound | Cortex moves; disable-S still correct; answer in W; `n_forced > 0`; probe explores |
+| Fail | Only one file; select red or green wrong; dump-all correct on **both** probes |
+| Store-works | Both files authored; select red `use_key` and green `wait`; dump-all fails at least one probe; empty S / disable-S fail |
+
+Do not hand-write the two tags into S. Do not raise store bias so dump-all also works.
+

@@ -140,3 +140,7 @@ W has no answer file. The policy learns **when** to author a note from a door-op
 
 No forced OPEN→PICK_KEY→USE_KEY. The agent explores percept-legal acts, authors the note if a door opens, then a **greedy** probe after ρ reset. Classification: **Store-works**. `n_forced=0`. Red life was `pick_key … wait … use_key`; green found `wait` without a script. Details: [`v10_results.md`](v10_results.md).
 
+## v11 (select among authored notes)
+
+Two free lives fill one S with `d0.tag` and `d2.tag`. Classification: **Store-works**. Select: red `use_key`, green `wait`. Dump-all: red `wait` (the other life leaks). Empty S and disable-S stay `open`. Details: [`v11_results.md`](v11_results.md).
+

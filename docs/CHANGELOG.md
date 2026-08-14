@@ -17,3 +17,4 @@
 - v8: boxed use-policy may learn; cortex frozen. Features `{s_hit, w_hit}` only. Two-step train (commit then apply after unmount). Red unmount `use_key`; held-out green `wait`; disable-S / empty S `open`. **Store-works**. [`docs/v8_results.md`](v8_results.md).
 - v9: write from a life, not from W. Clutter library has no `d0.tag`/`d2.tag`. Policy learns when to author `{door, action}` from a door-opening. Red → `d0.tag` `use_key`; held-out green → `d2.tag` `wait`. **Store-works**. [`docs/v9_results.md`](v9_results.md).
 - v10: free life, no forced curriculum. ε-greedy over percept affordances; probe greedy. `n_forced=0`. Red sequence was not OPEN→PICK→USE; green found WAIT. **Store-works**. [`docs/v10_results.md`](v10_results.md).
+- v11: two free lives, one S. Authored `d0.tag`+`d2.tag`. Select red `use_key` / green `wait`. Dump-all red **`wait`**. **Store-works**. [`docs/v11_results.md`](v11_results.md).

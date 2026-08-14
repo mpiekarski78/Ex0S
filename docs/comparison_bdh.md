@@ -45,6 +45,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v8 boxed policy | **Store-works** (skill box moves; cortex frozen) |
 | three-memory, v9 write-from-life | **Store-works** (note authored from events; W has no answer) |
 | three-memory, v10 free life | **Store-works** (`n_forced=0`; live then write) |
+| three-memory, v11 select authored notes | **Store-works** (pick the matching life; dump-all mixes lives) |
 
 ## Honest limits
 
@@ -141,3 +142,16 @@ See [`v9_results.md`](v9_results.md).
 | Class | **Store-works** |
 
 See [`v10_results.md`](v10_results.md).
+
+## v11 (select among authored notes)
+
+Two free lives. Files authored, not placed. Select vs dump-all.
+
+| Check | Select | Dump-all |
+|-------|--------|----------|
+| Red | **`use_key`** | **`wait`** |
+| Green | **`wait`** | `wait` |
+| S | `d0.tag`, `d2.tag` | same pile |
+| Class | **Store-works** | control (hurts red) |
+
+See [`v11_results.md`](v11_results.md).
