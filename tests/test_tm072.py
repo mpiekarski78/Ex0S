@@ -56,6 +56,26 @@ def test_071_keeps_both_notes(tmp_path: Path):
     assert "c08" in ids and "p99" in ids
 
 
+def test_072_confounds_scale_smuggle():
+    import experiments.run_tm072 as tm072
+
+    saved = tm072._classify_common071
+    tm072._classify_common071 = lambda m: None
+    try:
+        label, why = tm072.classify_common(
+            {
+                "use_keep_steerer": True,
+                "keep_steerer": True,
+                "w_scale": True,
+                "w_n_distinct_clutter": 64,
+            }
+        )
+    finally:
+        tm072._classify_common071 = saved
+    assert label == "Confound"
+    assert "scale" in why.lower()
+
+
 def test_071_confounds_keep_steerer_smuggle():
     import experiments.run_tm071 as tm071
 
@@ -107,6 +127,7 @@ if __name__ == "__main__":
 
     test_skips_stay_skipped()
     test_071_confounds_keep_steerer_smuggle()
+    test_072_confounds_scale_smuggle()
     for fn in (test_keep_steerer_drops_other_same_here, test_071_keeps_both_notes, test_untrained_holds):
         with tempfile.TemporaryDirectory() as d:
             fn(Path(d))

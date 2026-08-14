@@ -71,6 +71,8 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Fail", "Keep-steerer was frozen off."
     if not m.get("keep_steerer"):
         return "Fail", "Keep-steerer was frozen off."
+    if m.get("w_scale") or (m.get("w_n_distinct_clutter") or 0) >= 64:
+        return "Confound", "English Open W was scaled on this slice."
     return None
 
 
@@ -82,6 +84,8 @@ def classify_a(m: dict[str, Any]) -> tuple[str, str]:
         return "Fail", "Keep-steerer was frozen off."
     if not m.get("keep_steerer"):
         return "Fail", "Keep-steerer was frozen off."
+    if m.get("w_scale") or (m.get("w_n_distinct_clutter") or 0) >= 64:
+        return "Confound", "English Open W was scaled on this slice."
     if label == "Store-works":
         return (
             "Store-works",
@@ -96,6 +100,8 @@ def classify_b(m: dict[str, Any]) -> tuple[str, str]:
     m["use_keep_steerer"] = saved
     if not saved:
         return "Fail", "Keep-steerer was frozen off."
+    if m.get("w_scale") or (m.get("w_n_distinct_clutter") or 0) >= 64:
+        return "Confound", "English Open W was scaled on this slice."
     if (m.get("train_s", {}).get("n") or 0) > MAX_TRAIN_S_FILES:
         return "Fail", "Shared return train S is still stamp-collecting clutter."
     if label == "Store-works":
