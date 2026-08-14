@@ -28,3 +28,4 @@
 - Audit: unknown policy traces no longer train the collect head; `clone_empty` keeps boxed-head flags; v18 now probes empty-S green. Retest still **Store-works** / **Store-works**.
 - v19: A shared value-name (`do=` vs `action=`); B shared place-name (`door=` vs `here=`). Neither side frozen. Both **Store-works**. [`docs/v19_results.md`](v19_results.md).
 - v20: A find unread W (`p99.tag` `{here, action}`); B find vs `door=` junk. Frozen v5 commit; use-gate + match learn. Both **Store-works**. Audit: match now runs before collect; collect no longer wipes `match_alt`. [`docs/v20_results.md`](v20_results.md).
+- v21: A filename-first vs newest among unread `here=` hits; B dump-all vs newest. Query and copy frozen. Recency-swap stays `wait`. Both **Store-works**. [`docs/v21_results.md`](v21_results.md).

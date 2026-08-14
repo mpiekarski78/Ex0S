@@ -55,6 +55,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v18 write do= / here= | **Store-works** / **Store-works** (learn the field name to emit) |
 | three-memory, v19 shared name | **Store-works** / **Store-works** (write and read learn a convention) |
 | three-memory, v20 find in W | **Store-works** / **Store-works** (query `here=`; unread `p99.tag`; junk on `door=` does not leak `use_key`) |
+| three-memory, v21 select among W hits | **Store-works** / **Store-works** (newest `when=` over filename-first or dump-all) |
 
 ## Honest limits
 
@@ -275,3 +276,15 @@ See [`v19_results.md`](v19_results.md).
 | Class | **Store-works** | **Store-works** |
 
 See [`v20_results.md`](v20_results.md).
+
+## v21 (first-file vs dump-all among W hits)
+
+| Check | A first vs newest | B dump vs newest |
+|-------|-------------------|------------------|
+| Untrained | `wait` (`aaa.tag`) | `wait` (both files) |
+| Trained red, unmount W | **`use_key`** (`p99.tag`) | **`use_key`** (`p99.tag` only) |
+| Held-out green | **`wait`** | **`wait`** |
+| Recency swap | `wait` | `wait` |
+| Class | **Store-works** | **Store-works** |
+
+See [`v21_results.md`](v21_results.md).

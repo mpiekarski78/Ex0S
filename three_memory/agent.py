@@ -59,6 +59,8 @@ class ThreeMemoryAgent:
         use_match_head: bool = False,
         use_wkey_head: bool = False,
         use_wplace_head: bool = False,
+        use_wsel_head: bool = False,
+        wsel_dump: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -84,6 +86,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_wkey_head requires use_policy")
         if use_wplace_head and use_policy is None:
             raise ValueError("use_wplace_head requires use_policy")
+        if use_wsel_head and use_policy is None:
+            raise ValueError("use_wsel_head requires use_policy")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if place_key not in ("door", "here"):
@@ -117,6 +121,8 @@ class ThreeMemoryAgent:
         self.use_match_head = use_match_head
         self.use_wkey_head = use_wkey_head
         self.use_wplace_head = use_wplace_head
+        self.use_wsel_head = use_wsel_head
+        self.wsel_dump = wsel_dump
         self._peek: list[FactRecord] = []
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
@@ -170,6 +176,8 @@ class ThreeMemoryAgent:
             use_match_head=self.use_match_head,
             use_wkey_head=self.use_wkey_head,
             use_wplace_head=self.use_wplace_head,
+            use_wsel_head=self.use_wsel_head,
+            wsel_dump=self.wsel_dump,
         )
 
     def _obs_query(self, obs: Obs) -> dict[str, Any] | None:
@@ -230,22 +238,44 @@ class ThreeMemoryAgent:
             return info
         if chosen in ("off", "ignore") or self.world is None or not w_hits:
             return info
-        rec = w_hits[0]
+        picks = self._wsel_picks(w_hits)
         info["taken"] = 1
         if chosen == "commit":
-            copied = FactRecord(
-                fact_id=rec.fact_id,
-                what=rec.what,
-                when=self.t,
-                drive_scores={"collect": 1.0},
-                tags={k: v for k, v in rec.tags.items() if k not in ("source_file", "source")},
-            )
-            copied.tags["source"] = "W->S"
-            if self.store.write(copied):
-                info["committed"] = 1
+            n = 0
+            for rec in picks:
+                if self._commit_w_record(rec):
+                    n += 1
+            info["committed"] = n
         elif chosen == "peek":
-            self._peek = [rec]
+            self._peek = list(picks)
         return info
+
+    def _wsel_picks(self, w_hits: list) -> list:
+        """Which unread W hits to take. Untrained: first file, or all if dump. Alt: newest when=."""
+        if not w_hits:
+            return []
+        if not self.use_wsel_head or self.use_policy is None:
+            return [w_hits[0]]
+        feat = UsePolicy.pick_features(len(w_hits))
+        dec = self.use_policy.decide_wsel(feat, epsilon=self.policy_epsilon, rng=self.policy_rng)
+        self.last_policy = {**self.last_policy, **dec}
+        self.policy_traces.append(dec)
+        if dec["wsel_alt"]:
+            return [max(w_hits, key=self._note_when)]
+        if self.wsel_dump:
+            return list(w_hits)
+        return [w_hits[0]]
+
+    def _commit_w_record(self, rec: FactRecord) -> bool:
+        copied = FactRecord(
+            fact_id=rec.fact_id,
+            what=rec.what,
+            when=self.t,
+            drive_scores={"collect": 1.0},
+            tags={k: v for k, v in rec.tags.items() if k not in ("source_file", "source")},
+        )
+        copied.tags["source"] = "W->S"
+        return self.store.write(copied)
 
     def _pool(self) -> list[FactRecord]:
         recs = list(self.store.records()) if self.store.enabled else []

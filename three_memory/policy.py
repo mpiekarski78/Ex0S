@@ -68,6 +68,9 @@ class UsePolicy:
         self.b_wkey = np.array(-1.2, dtype=np.float64)
         self.w_wplace = rng.normal(0.0, 0.05, size=(self.n_feat,))
         self.b_wplace = np.array(-1.2, dtype=np.float64)
+        # Untrained: keep filename-first / dump-all W hits. Learn newest one.
+        self.w_wsel = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_wsel = np.array(-1.2, dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
@@ -97,6 +100,8 @@ class UsePolicy:
             np.asarray(self.b_wkey).reshape(1),
             self.w_wplace,
             np.asarray(self.b_wplace).reshape(1),
+            self.w_wsel,
+            np.asarray(self.b_wsel).reshape(1),
         )
 
     def weight_hash(self) -> str:
@@ -191,6 +196,23 @@ class UsePolicy:
             "kind": "pick",
             "one": one,
             "p_one": p_one,
+            "logp": logp,
+            "feat": feat.tolist(),
+        }
+
+    def decide_wsel(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        """False: filename-first or dump-all. True: commit the newest W hit only."""
+        p_alt = sigmoid(float(feat @ self.w_wsel + self.b_wsel))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            alt = bool(rng.random() < 0.5)
+        else:
+            alt = bool(p_alt >= 0.5)
+        logp = float(np.log((p_alt if alt else (1.0 - p_alt)) + 1e-12))
+        return {
+            "kind": "wsel",
+            "wsel_alt": alt,
+            "p_alt": p_alt,
             "logp": logp,
             "feat": feat.tolist(),
         }
@@ -379,6 +401,14 @@ class UsePolicy:
                 g = y - p
                 self.w_wplace += lr * g * feat
                 self.b_wplace = np.array(float(self.b_wplace) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
+            if tr.get("kind") == "wsel":
+                p = sigmoid(float(feat @ self.w_wsel + self.b_wsel))
+                y = 1.0 if tr["wsel_alt"] else 0.0
+                g = y - p
+                self.w_wsel += lr * g * feat
+                self.b_wsel = np.array(float(self.b_wsel) + lr * g, dtype=np.float64)
                 self.n_updates += 1
                 continue
             if tr.get("kind") == "pick":

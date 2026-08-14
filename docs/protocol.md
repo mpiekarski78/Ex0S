@@ -306,3 +306,21 @@ Held-out green: unread `{here:2, action:0}` as `p98.tag`. B also has junk `{door
 
 Do not freeze-match `here=` or restore `d0.tag` / the USE_KEY table to rescue a plot.
 
+## v21 A first-file among W hits, B dump-all W hits
+
+v20 found by query name. Collect still kept `w_hits[0]`. v21 freezes `here=` and commit-on-hit. Copy frozen on. Boxed head: filename-first / dump-all vs **newest `when=`**. Features `{n_hits ≥ 2, n_hits ≥ 1}` — no door id, no `action=`. No `d0.tag`. Probe greedy.
+
+**A.** Untrained `aaa.tag` `{here:0, action:0, when:1}` → `wait`. Useful `p99.tag` `when:9`.
+
+**B.** Untrained commits every `here=` hit. Mix → red `wait`.
+
+Held-out green: junk `open` older, `wait` newer. Recency-swap: newest is junk; must not `use_key`.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; `d0`/`d2` in W; empty-S green `wait` | same |
+| Fail | Untrained already `use_key` or newest; green fails; recency-swap `use_key` | dump already `use_key`; both files remain; recency-swap `use_key` |
+| Store-works | Untrained `wait`; unmount red `use_key` from newest; green `wait`; first-file and swap `wait` | Untrained dump `wait`; trained `p99.tag` only; green `wait`; dump and swap `wait` |
+
+Do not freeze-newest or restore filename-first / dump-all to rescue a plot.
+

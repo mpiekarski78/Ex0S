@@ -13,9 +13,9 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after v20: the **split is real on a toy**. Not a general learner. Still genome: two-key name menus `{action, do}` / `{door, here}`, generic `logits[int] += 3.0`, exact match, frozen commit-on-hit, split credit, four discrete acts. Tiny LSTM still needs a taught tool grammar for English. W is a handful of `.tag` files, not Wikipedia. No code, no cameras.
+Honest status after v21: the **split is real on a toy**. Not a general learner. Still genome: two-key name menus `{action, do}` / `{door, here}`, generic `logits[int] += 3.0`, exact match, frozen commit-on-hit, frozen newest-`when=` among W hits, split credit, four discrete acts. Tiny LSTM still needs a taught tool grammar for English. W is a handful of `.tag` files, not Wikipedia. No code, no cameras.
 
-## Result (v0–v20)
+## Result (v0–v21)
 
 v0: [`docs/conclusion.md`](docs/conclusion.md).  
 v1 NOTE-copy: [`docs/v1_results.md`](docs/v1_results.md).  
@@ -38,6 +38,7 @@ v17 read `do=` vs match `here=`: [`docs/v17_results.md`](docs/v17_results.md).
 v18 write `do=` vs write `here=`: [`docs/v18_results.md`](docs/v18_results.md).  
 v19 shared name: [`docs/v19_results.md`](docs/v19_results.md).  
 v20 find in W: [`docs/v20_results.md`](docs/v20_results.md).  
+v21 select among W hits: [`docs/v21_results.md`](docs/v21_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -73,6 +74,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v18 A write do= / B write here= | **Store-works** / **Store-works** (learn field name to emit) |
 | v19 A shared value-name / B shared place-name | **Store-works** / **Store-works** (write and read learn a convention) |
 | v20 A find unread W / B find vs junk | **Store-works** / **Store-works** (query `here=`; commit `p99.tag`; junk on `door=` does not leak `use_key`) |
+| v21 A first-file / B dump-all among W hits | **Store-works** / **Store-works** (newest `when=` over filename-first or dump; recency-swap stays `wait`) |
 
 ## Five pieces
 
@@ -111,6 +113,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | v18 write do= / write here= | **Store-works** / **Store-works** | emit `do=` or `here=`; [`docs/v18_results.md`](docs/v18_results.md) |
 | v19 shared name | **Store-works** / **Store-works** | convention `do=` / `door=`; [`docs/v19_results.md`](docs/v19_results.md) |
 | v20 find in W | **Store-works** / **Store-works** | unread `p99.tag` vs `door=` junk; [`docs/v20_results.md`](docs/v20_results.md) |
+| v21 select among W hits | **Store-works** / **Store-works** | newest vs first/dump; [`docs/v21_results.md`](docs/v21_results.md) |
 
 ## Quick start
 
@@ -137,6 +140,7 @@ python tests/test_v17.py
 python tests/test_v18.py
 python tests/test_v19.py
 python tests/test_v20.py
+python tests/test_v21.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -160,6 +164,7 @@ python -m experiments.run_v17
 python -m experiments.run_v18
 python -m experiments.run_v19
 python -m experiments.run_v20
+python -m experiments.run_v21
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -168,8 +173,8 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v20, train_prior
-docs/             # protocol, comparison, conclusion, v1–v20 results
+experiments/      # run_v0 … run_v21, train_prior
+docs/             # protocol, comparison, conclusion, v1–v21 results
 tests/
 runs/             # gitignored
 checkpoints/      # gitignored (prior.pt)

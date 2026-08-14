@@ -180,3 +180,7 @@ Neither side frozen. Untrained write/read disagree. **A** met on `do=` (writer m
 
 Unread library W, not authored S. Collect is the frozen v5 commit-on-hit rule. **A** finds `{here:0, action:2}` in `p99.tag`. **B** must prefer that page over `door=` junk (`wait`). Both **Store-works**. Untrained `open`. Trained red `use_key` after unmount W; held-out green `wait`. B’s `door=` control copies junk `wait`; junk-only W stays `open`. Cortex unchanged. Details: [`v20_results.md`](v20_results.md).
 
+## v21 (first-file vs dump-all among W hits)
+
+Many unread pages share `here=`. Collect’s filename-first `w_hits[0]` is the wrong prior. **A** learns newest `when=` over `aaa.tag` junk. **B** learns newest over dumping every match. Both **Store-works**. Untrained `wait`. Trained red `use_key` from `p99.tag` after unmount W; held-out green `wait`. Recency-swap (newest is junk) stays `wait`. Cortex unchanged. Details: [`v21_results.md`](v21_results.md).
+
