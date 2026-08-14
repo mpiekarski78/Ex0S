@@ -148,3 +148,7 @@ Two free lives fill one S with `d0.tag` and `d2.tag`. Classification: **Store-wo
 
 A boxed retrieve head chooses select vs dump without door identity. Classification: **Store-works**. Untrained dumps (red `wait`). Trained selects (red `use_key`, green `wait`). Held-out blue life authors `d1.tag` and greedy probe `open`. Dump-all still waits. Cortex unchanged. Details: [`v12_results.md`](v12_results.md).
 
+## v13 (copy `action=` from the file)
+
+A boxed use-gate learns when to copy the file’s integer into motor logits. No USE_KEY/WAIT table on this path. Classification: **Store-works**. Untrained (empty S or planted `d0.tag`) stays `open`. Trained red `use_key`. Held-out green `wait` (integer was never in the head). Dump-all still mixes. Cortex unchanged. Details: [`v13_results.md`](v13_results.md).
+

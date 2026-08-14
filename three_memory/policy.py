@@ -47,6 +47,9 @@ class UsePolicy:
         # Untrained: dump the pile (species prior + mixed notes). Learn to select.
         self.w_retrieve = rng.normal(0.0, 0.05, size=(self.n_feat,))
         self.b_retrieve = np.array(-1.2, dtype=np.float64)
+        # Untrained: do not copy action= from the file into motor logits.
+        self.w_use = rng.normal(0.0, 0.05, size=(self.n_feat,))
+        self.b_use = np.array(-1.2, dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
@@ -61,6 +64,8 @@ class UsePolicy:
             np.asarray(self.b_write).reshape(1),
             self.w_retrieve,
             np.asarray(self.b_retrieve).reshape(1),
+            self.w_use,
+            np.asarray(self.b_use).reshape(1),
         )
 
     def weight_hash(self) -> str:
@@ -120,6 +125,23 @@ class UsePolicy:
             "feat": feat.tolist(),
         }
 
+    def decide_use(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
+        """Gate: copy file action= into logits[action], or ignore the tag."""
+        p_use = sigmoid(float(feat @ self.w_use + self.b_use))
+        rng = rng or np.random.default_rng()
+        if float(rng.random()) < epsilon:
+            use = bool(rng.random() < 0.5)
+        else:
+            use = bool(p_use >= 0.5)
+        logp = float(np.log((p_use if use else (1.0 - p_use)) + 1e-12))
+        return {
+            "kind": "use",
+            "use": use,
+            "p_use": p_use,
+            "logp": logp,
+            "feat": feat.tolist(),
+        }
+
     def decide_write(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
         p_write = sigmoid(float(feat @ self.w_write + self.b_write))
         rng = rng or np.random.default_rng()
@@ -143,6 +165,14 @@ class UsePolicy:
         lr = self.lr * float(advantage)
         for tr in traces:
             feat = np.asarray(tr["feat"], dtype=np.float64)
+            if tr.get("kind") == "use":
+                p = sigmoid(float(feat @ self.w_use + self.b_use))
+                y = 1.0 if tr["use"] else 0.0
+                g = y - p
+                self.w_use += lr * g * feat
+                self.b_use = np.array(float(self.b_use) + lr * g, dtype=np.float64)
+                self.n_updates += 1
+                continue
             if tr.get("kind") == "write":
                 p = sigmoid(float(feat @ self.w_write + self.b_write))
                 y = 1.0 if tr["write"] else 0.0

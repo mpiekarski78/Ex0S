@@ -19,3 +19,4 @@
 - v10: free life, no forced curriculum. ε-greedy over percept affordances; probe greedy. `n_forced=0`. Red sequence was not OPEN→PICK→USE; green found WAIT. **Store-works**. [`docs/v10_results.md`](v10_results.md).
 - v11: two free lives, one S. Authored `d0.tag`+`d2.tag`. Select red `use_key` / green `wait`. Dump-all red **`wait`**. **Store-works**. [`docs/v11_results.md`](v11_results.md).
 - v12: retrieve head learns select vs dump (`{n_store, n_hits}`). Untrained dumps red `wait`; trained selects. Held-out blue `open`. Dump-all still fails. **Store-works**. [`docs/v12_results.md`](v12_results.md).
+- v13: use-gate + generic `logits[int(action)] += 3.0`. Untrained ignores a planted tag (`open`). Trained red `use_key`; held-out green `wait`. **Store-works**. [`docs/v13_results.md`](v13_results.md).

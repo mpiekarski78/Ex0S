@@ -47,6 +47,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v10 free life | **Store-works** (`n_forced=0`; live then write) |
 | three-memory, v11 select authored notes | **Store-works** (pick the matching life; dump-all mixes lives) |
 | three-memory, v12 learn select vs dump | **Store-works** (head learns not to dump; held-out blue `open`) |
+| three-memory, v13 copy action= | **Store-works** (gate learns to read the integer; held-out green `wait`) |
 
 ## Honest limits
 
@@ -169,3 +170,17 @@ Retrieve head. Features are pile-size and match-count, not door id.
 | Class | — | **Store-works** | control |
 
 See [`v12_results.md`](v12_results.md).
+
+## v13 (copy `action=` from the file)
+
+Use-gate. Features are match/no-match, not door id. Copy is generic `logits[int(action)] += 3.0`.
+
+| Check | Untrained | Trained | Dump-all |
+|-------|-----------|---------|----------|
+| Planted `d0.tag` | `open` (gate off) | — | — |
+| Red | `open` | **`use_key`** (`action=2`) | `wait` |
+| Held-out green | — | **`wait`** (`action=0`) | — |
+| Held-out blue | — | **`open`** (`action=1`) | — |
+| Class | — | **Store-works** | control |
+
+See [`v13_results.md`](v13_results.md).

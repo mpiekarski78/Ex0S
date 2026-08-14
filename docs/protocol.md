@@ -190,3 +190,15 @@ Retrieve is a policy head, not a constructor flag. Features `{n_store ≥ 2, n_h
 
 Do not put door id in retrieve features. Do not let the policy emit the motor act.
 
+## v13 generic copy + use gate
+
+v7–v12 apply a frozen USE_KEY/WAIT table. v13 (`use_read=True`): untrained gate off (ignore the tag). When on: `logits[int(action)] += 3.0` only. Features `{s_hit}` — no door id. Train write+use on red free lives. Held-out green/blue. Retrieve frozen select. W has no answer files. Probe greedy. `n_forced=0`.
+
+| ID | If |
+|----|----|
+| Confound | Cortex moves; disable-S still `use_key`; answer in W; `n_forced > 0`; probe explores; door id in use features |
+| Fail | Use-head unchanged; planted tag already `use_key`; red works, green/blue don’t; empty S still `use_key` |
+| Store-works | Cortex frozen; use-head changed; untrained (empty or planted) `open`; trained red `use_key`; held-out green `wait` / blue `open`; empty S / disable-S `open`; dump-all still mixes |
+
+Do not restore the if/elif table on this path. Do not put door id in the use-head. Do not emit `use_key` with no file.
+

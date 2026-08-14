@@ -45,6 +45,7 @@ class ThreeMemoryAgent:
         policy_epsilon: float = 0.0,
         policy_rng: np.random.Generator | None = None,
         explore_epsilon: float = 0.0,
+        use_read: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -54,6 +55,8 @@ class ThreeMemoryAgent:
             raise ValueError("collect_mode=policy requires use_policy")
         if retrieve_policy == "policy" and use_policy is None:
             raise ValueError("retrieve_policy=policy requires use_policy")
+        if use_read and use_policy is None:
+            raise ValueError("use_read requires use_policy")
         cfg = CortexConfig(obs_dim=obs_dim, embed_dim=embed_dim, n_actions=4, seed=cortex_seed)
         self.cortex = FrozenCortex(cfg)
         self.rho = WorkingTrace(RhoConfig(embed_dim=embed_dim))
@@ -69,6 +72,7 @@ class ThreeMemoryAgent:
         self.policy_epsilon = policy_epsilon
         self.policy_rng = policy_rng or np.random.default_rng(0)
         self.explore_epsilon = explore_epsilon
+        self.use_read = use_read
         self._peek: list[FactRecord] = []
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
@@ -211,6 +215,11 @@ class ThreeMemoryAgent:
 
     def _apply_record_bias(self, logits: np.ndarray, rec: FactRecord, obs: Obs) -> None:
         act = rec.tags.get("action")
+        if self.use_read:
+            # Generic copy: the file's integer is the motor index. No USE_KEY/WAIT table.
+            if isinstance(act, (int, np.integer)) and 0 <= int(act) < logits.shape[0]:
+                logits[int(act)] += 3.0
+            return
         if self.native:
             if act == ACT_USE_KEY:
                 logits[Action.USE_KEY] += 3.0
@@ -233,7 +242,7 @@ class ThreeMemoryAgent:
         if rec.tags.get("door") == "blue":
             logits[Action.OPEN] += 2.0
 
-    def _store_bias(self, obs: Obs, *, novelty: float = 0.0) -> np.ndarray:
+    def _store_bias(self, obs: Obs, *, novelty: float = 0.0, record_use: bool = True) -> np.ndarray:
         """Retrieve facts and bias action logits. Knowledge lives in S, not ρ."""
         self.collect(obs, novelty=novelty)
         if self.retrieve_policy == "policy":
@@ -242,6 +251,14 @@ class ThreeMemoryAgent:
         apply = True
         if self.collect_mode == "policy":
             apply = bool(self.last_policy.get("apply", False))
+        elif self.use_read and self.use_policy is not None:
+            hits = self._hits_for(obs)
+            feat = UsePolicy.features(bool(hits), False)
+            dec = self.use_policy.decide_use(feat, epsilon=self.policy_epsilon, rng=self.policy_rng)
+            self.last_policy = {**self.last_policy, **dec}
+            if record_use:
+                self.policy_traces.append(dec)
+            apply = bool(dec["use"])
         if apply:
             for rec in self._hits_for(obs):
                 self._apply_record_bias(logits, rec, obs)
@@ -268,7 +285,8 @@ class ThreeMemoryAgent:
         if at_door:
             logits[Action.OPEN] += 1.5
             logits[Action.USE_KEY] -= 0.5
-        logits = logits + self._store_bias(obs, novelty=novelty)
+        # Probe (explore=False) records the use-gate trace; life does not (write traces only).
+        logits = logits + self._store_bias(obs, novelty=novelty, record_use=not explore)
 
         # Hard constraints from current percept (not knowledge): can't use key without holding it.
         if not obs.has_key:
