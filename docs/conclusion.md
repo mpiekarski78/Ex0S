@@ -200,3 +200,7 @@ Query keys come from files, not `{door, here}`. **A** split and **B** shared ret
 
 Copy keys come from the hit, not `{action, do}`. Query frozen to the files’ place key. **A** split and **B** shared return both **Store-works**. Untrained copies `loc=` and stays `open`. Trained red `use_key` from `act=2` after unmount W; held-out green `wait` (`act=0`, not place code 2). Restored copy menu misses. Use-off stays `open`. Cortex unchanged. Details: [`tm011_results.md`](tm011_results.md).
 
+## TM.0.1.2 (messy retrieve / shared return)
+
+Rank unread files; exact `loc=` / `door=` misses. Useful page `{where:0, action:2, pad:7}`. **A** split and **B** shared return both **Store-works**. Untrained takes clutter `p0.tag` and stays `open`. Trained red `use_key` from `p99.tag` after unmount W; held-out green `wait`. Exact match finds nothing. Use-off stays `open`. Cortex unchanged. Details: [`tm012_results.md`](tm012_results.md).
+

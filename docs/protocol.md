@@ -388,3 +388,19 @@ Query frozen to the files’ place key. Drop the `{action, do}` copy menu. Copy 
 
 Do not restore `{action, do}` or plant `do=` to rescue a plot.
 
+## TM.0.1.2 A messy retrieve, B shared return
+
+No exact `loc=` / `door=` / `here=` query. Rank unread files. Features `{has_code, has_rare}`. Useful page `{where:0, action:2, pad:7}`. Copy frozen `action=`. Cortex frozen. No `d0.tag`. No `when=`. Probe greedy.
+
+**A.** Split: found `action=2` in S / unmount probe.
+
+**B.** Same `make()`. One `r` = unmount probe correct, applied to search and use.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; planted `when=` / `loc=` / `here=`; `d0` in W; empty-S green `wait` | same |
+| Fail | Untrained already `use_key`; green fails; exact `{door, here}` still solves; freeze-search / use-off still `use_key` | Untrained already `use_key`; red stays `open`; last-50 ≈ 0 |
+| Store-works | Untrained `open`; red `use_key` from messy `p99.tag`; green `wait`; exact-match / search-off / use-off fail | Same without splitting the return |
+
+Do not restore exact match or plant `when=` to rescue a plot.
+

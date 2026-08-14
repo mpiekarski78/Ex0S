@@ -79,6 +79,8 @@ class UsePolicy:
         self.w_qname = np.array([1.2, 0.0], dtype=np.float64)
         # Untrained: copy the query key (place code). Learn another integer field in the file.
         self.w_vname = np.array([1.2, 0.0], dtype=np.float64)
+        # Untrained: among unread files, prefer any that carry the current code. Learn rare keys.
+        self.w_search = np.array([1.2, 0.0], dtype=np.float64)
         self.lr = lr
         self.n_updates = 0
         self._hash0 = self.weight_hash()
@@ -114,6 +116,7 @@ class UsePolicy:
             np.asarray(self.b_wcomp).reshape(1),
             self.w_qname,
             self.w_vname,
+            self.w_search,
         )
 
     def weight_hash(self) -> str:
@@ -382,6 +385,35 @@ class UsePolicy:
             "logp": logp,
         }
 
+    def decide_search(
+        self,
+        items: list[tuple[bool, bool]],
+        *,
+        epsilon: float = 0.0,
+        rng: np.random.Generator | None = None,
+    ) -> dict[str, Any]:
+        """Choose one file among a pool. Untrained: any file that carries the current code."""
+        rng = rng or np.random.default_rng()
+        if not items:
+            return {"kind": "search", "idx": 0, "feats": [], "logp": 0.0, "feat": [0.0, 0.0]}
+        feats = np.stack([self.qname_features(c, r) for c, r in items], axis=0)
+        scores = feats @ self.w_search
+        probs = softmax(scores)
+        if float(rng.random()) < epsilon:
+            idx = int(rng.integers(0, len(items)))
+        else:
+            idx = int(np.argmax(scores))
+        logp = float(np.log(probs[idx] + 1e-12))
+        return {
+            "kind": "search",
+            "idx": idx,
+            "feats": feats.tolist(),
+            "feat": feats[idx].tolist(),
+            "has_code": bool(items[idx][0]),
+            "has_rare": bool(items[idx][1]),
+            "logp": logp,
+        }
+
     def decide_match(self, feat: np.ndarray, *, epsilon: float = 0.0, rng: np.random.Generator | None = None) -> dict[str, Any]:
         """False: match door=. True: match here=."""
         p_alt = sigmoid(float(feat @ self.w_match + self.b_match))
@@ -489,6 +521,18 @@ class UsePolicy:
                 grad = -probs
                 grad[idx] += 1.0
                 self.w_vname += lr * (feats.T @ grad)
+                self.n_updates += 1
+                continue
+            if tr.get("kind") == "search":
+                feats = np.asarray(tr.get("feats") or [tr["feat"]], dtype=np.float64)
+                if feats.size == 0:
+                    continue
+                scores = feats @ self.w_search
+                probs = softmax(scores)
+                idx = int(tr["idx"])
+                grad = -probs
+                grad[idx] += 1.0
+                self.w_search += lr * (feats.T @ grad)
                 self.n_updates += 1
                 continue
             feat = np.asarray(tr["feat"], dtype=np.float64)

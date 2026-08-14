@@ -60,6 +60,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, v23 joint wiki / shared return | **Store-works** / **Fail** (no `when=`; split credit load-bearing on unread W) |
 | three-memory, TM.0.1.0 open query names | **Store-works** / **Store-works** (keys from files; `{door, here}` off) |
 | three-memory, TM.0.1.1 open copy names | **Store-works** / **Store-works** (keys from the hit; `{action, do}` off) |
+| three-memory, TM.0.1.2 messy retrieve | **Store-works** / **Store-works** (rank files; exact `loc=`/`door=` misses) |
 
 ## Honest limits
 
@@ -340,3 +341,15 @@ See [`tm010_results.md`](tm010_results.md).
 | Class | **Store-works** | **Store-works** |
 
 See [`tm011_results.md`](tm011_results.md).
+
+## TM.0.1.2 (messy retrieve / shared return)
+
+| Check | A split | B shared return |
+|-------|---------|-----------------|
+| Untrained | `open` (`p0.tag`) | `open` |
+| Trained red, unmount W | **`use_key`** (`where=` `pad=`) | **`use_key`** |
+| Held-out green | **`wait`** | **`wait`** |
+| Train last 50 | 0.96 | 0.82 |
+| Class | **Store-works** | **Store-works** |
+
+See [`tm012_results.md`](tm012_results.md).

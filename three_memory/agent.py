@@ -67,6 +67,7 @@ class ThreeMemoryAgent:
         use_wcomp_head: bool = False,
         use_qname_head: bool = False,
         use_vname_head: bool = False,
+        use_search_head: bool = False,
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
             raise ValueError(retrieve_policy)
@@ -104,6 +105,10 @@ class ThreeMemoryAgent:
             raise ValueError("use_vname_head requires use_policy")
         if use_vname_head and use_key_head:
             raise ValueError("use_vname_head cannot run with the {action, do} copy menu")
+        if use_search_head and use_policy is None:
+            raise ValueError("use_search_head requires use_policy")
+        if use_search_head and (use_match_head or use_qname_head):
+            raise ValueError("use_search_head cannot run with exact query match")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -142,7 +147,9 @@ class ThreeMemoryAgent:
         self.use_wcomp_head = use_wcomp_head
         self.use_qname_head = use_qname_head
         self.use_vname_head = use_vname_head
+        self.use_search_head = use_search_head
         self._peek: list[FactRecord] = []
+        self._search_chosen: list = []
         self.last_policy: dict[str, Any] = {}
         self.policy_traces: list[dict[str, Any]] = []
         self._weight_hash0 = self.cortex.weight_hash()
@@ -200,6 +207,7 @@ class ThreeMemoryAgent:
             use_wcomp_head=self.use_wcomp_head,
             use_qname_head=self.use_qname_head,
             use_vname_head=self.use_vname_head,
+            use_search_head=self.use_search_head,
         )
 
     def _obs_query(self, obs: Obs) -> dict[str, Any] | None:
@@ -278,9 +286,11 @@ class ThreeMemoryAgent:
         if record:
             self.policy_traces.append(dec)
 
-    def collect(self, obs: Obs, *, novelty: float = 0.0) -> dict[str, Any]:
-        query = self._obs_query(obs)
+    def collect(self, obs: Obs, *, novelty: float = 0.0, record: bool = True) -> dict[str, Any]:
         info: dict[str, Any] = {"taken": 0, "committed": 0, "mode": self.collect_mode}
+        if self.use_search_head:
+            return self._collect_search(obs, record=record)
+        query = self._obs_query(obs)
         if query is None:
             return info
         s_hits = self.store.retrieve(query)
@@ -310,6 +320,55 @@ class ThreeMemoryAgent:
                     n += 1
             info["committed"] = n
         elif chosen == "peek":
+            self._peek = list(picks)
+        return info
+
+    def _tag_vals(self, rec) -> list:
+        return [v for k, v in rec.tags.items() if k not in _QNAME_SKIP]
+
+    def _search_picks(self, pool: list, obs: Obs, *, record: bool) -> list:
+        if not pool or self.use_policy is None:
+            return []
+        code = self._door_code(obs)
+        if code is None:
+            return []
+        items = []
+        for rec in pool:
+            ints = [int(v) for v in self._tag_vals(rec) if isinstance(v, (int, np.integer))]
+            has_code = code in ints
+            has_rare = any(
+                sum(1 for o in pool if k in o.tags) < 3
+                for k in rec.tags
+                if k not in _QNAME_SKIP
+            )
+            items.append((has_code, has_rare))
+        dec = self.use_policy.decide_search(
+            items, epsilon=self.policy_epsilon, rng=self.policy_rng
+        )
+        idx = int(dec["idx"])
+        dec["file"] = getattr(pool[idx], "fact_id", str(idx))
+        self.last_policy = {**self.last_policy, **dec}
+        if record:
+            self.policy_traces.append(dec)
+        return [pool[idx]]
+
+    def _collect_search(self, obs: Obs, *, record: bool) -> dict[str, Any]:
+        info: dict[str, Any] = {"taken": 0, "committed": 0, "mode": self.collect_mode}
+        if self.collect_mode in ("off", "ignore") or self.world is None:
+            return info
+        if self._door_code(obs) is None:
+            return info
+        picks = self._search_picks(list(self.world.records()), obs, record=record)
+        if not picks:
+            return info
+        info["taken"] = 1
+        if self.collect_mode == "commit":
+            n = 0
+            for rec in picks:
+                if self._commit_w_record(rec):
+                    n += 1
+            info["committed"] = n
+        elif self.collect_mode == "peek":
             self._peek = list(picks)
         return info
 
@@ -410,6 +469,8 @@ class ThreeMemoryAgent:
         return [hits[int(dec["idx"])]]
 
     def _hits_for(self, obs: Obs) -> list:
+        if self.use_search_head:
+            return list(self._search_chosen)
         pool = self._pool()
         mode = self.retrieve_policy
         if mode == "policy":
@@ -479,6 +540,7 @@ class ThreeMemoryAgent:
 
     def _store_bias(self, obs: Obs, *, novelty: float = 0.0, record_use: bool = True) -> np.ndarray:
         """Retrieve facts and bias action logits. Knowledge lives in S, not ρ."""
+        self._search_chosen = []
         # Match / open-name first so collect's W lookup uses this step's query name, not a stale one.
         if self.use_qname_head:
             self._choose_qname(obs, record=record_use)
@@ -489,7 +551,9 @@ class ThreeMemoryAgent:
             self.last_policy = {**self.last_policy, **dec}
             if record_use:
                 self.policy_traces.append(dec)
-        self.collect(obs, novelty=novelty)
+        self.collect(obs, novelty=novelty, record=record_use)
+        if self.use_search_head:
+            self._search_chosen = self._search_picks(self._pool(), obs, record=record_use)
         if self.retrieve_policy == "policy":
             self._choose_retrieve(obs)
         logits = np.zeros(4, dtype=np.float64)

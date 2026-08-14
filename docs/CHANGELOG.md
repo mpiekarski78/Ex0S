@@ -33,3 +33,4 @@
 - v23: A joint match+complete+use, no `when=` (**Store-works**); B shared return on the same stack (**Fail**, last-50 0, no policy updates). [`docs/v23_results.md`](v23_results.md).
 - TM.0.1.0: open query names from files, not `{door, here}`. A split and B shared return both **Store-works**. [`docs/tm010_results.md`](tm010_results.md).
 - TM.0.1.1: open copy names from the hit, not `{action, do}`. Query frozen to the files’ place key. A split and B shared return both **Store-works**. [`docs/tm011_results.md`](tm011_results.md).
+- TM.0.1.2: messy retrieve — rank unread files; exact `loc=`/`door=` misses. A split and B shared return both **Store-works**. Audit: `where=` is not `here=`. [`docs/tm012_results.md`](tm012_results.md).
