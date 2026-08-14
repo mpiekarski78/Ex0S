@@ -174,6 +174,8 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Fail", "Correct-dirty-S was frozen off."
     if not m.get("correct_dirty_s"):
         return "Fail", "Correct-dirty-S was frozen off."
+    if m.get("use_in_hand_new_here"):
+        return "Confound", "In-hand new-here was smuggled onto this slice."
     return None
 
 
@@ -185,6 +187,8 @@ def classify_a(m: dict[str, Any]) -> tuple[str, str]:
         return "Fail", "Correct-dirty-S was frozen off."
     if not m.get("correct_dirty_s"):
         return "Fail", "Correct-dirty-S was frozen off."
+    if m.get("use_in_hand_new_here"):
+        return "Confound", "In-hand new-here was smuggled onto this slice."
     if (m.get("train_s", {}).get("n") or 0) > MAX_TRAIN_S_FILES:
         return "Fail", "Train S is still stamp-collecting clutter."
     if label == "Store-works":
@@ -201,6 +205,8 @@ def classify_b(m: dict[str, Any]) -> tuple[str, str]:
     _restore_correct(m, saved)
     if not saved[0] or not saved[1]:
         return "Fail", "Correct-dirty-S was frozen off."
+    if m.get("use_in_hand_new_here"):
+        return "Confound", "In-hand new-here was smuggled onto this slice."
     if (m.get("train_s", {}).get("n") or 0) > MAX_TRAIN_S_FILES:
         return "Fail", "Shared return train S is still stamp-collecting clutter."
     if label == "Store-works":

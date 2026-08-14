@@ -83,6 +83,7 @@ class ThreeMemoryAgent:
         use_one_bind: bool = False,
         use_stamp_new_here: bool = False,
         use_block_here: bool = False,
+        use_in_hand_new_here: bool = False,
         domain: str = "door",
     ):
         if retrieve_policy not in ("select", "dump", "policy"):
@@ -161,6 +162,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_block_here requires use_here_match")
         if use_block_here and not use_event_annotate:
             raise ValueError("use_block_here requires use_event_annotate")
+        if use_in_hand_new_here and not use_stamp_new_here:
+            raise ValueError("use_in_hand_new_here requires use_stamp_new_here")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -220,6 +223,7 @@ class ThreeMemoryAgent:
         self.use_one_bind = use_one_bind
         self.use_stamp_new_here = use_stamp_new_here
         self.use_block_here = use_block_here
+        self.use_in_hand_new_here = use_in_hand_new_here
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._in_hand_id: str | None = None
@@ -299,6 +303,7 @@ class ThreeMemoryAgent:
             use_one_bind=self.use_one_bind,
             use_stamp_new_here=self.use_stamp_new_here,
             use_block_here=self.use_block_here,
+            use_in_hand_new_here=self.use_in_hand_new_here,
             domain=self.domain,
         )
 
@@ -853,6 +858,15 @@ class ThreeMemoryAgent:
             return False
         return station not in named
 
+    def _stamp_leftover_new_here(self, station: str | None):
+        """Librarian leftover: first unowned rare in W order. Off when new-here is in-hand only."""
+        if self.use_in_hand_new_here:
+            return None
+        if not self._commit_rare_unmarked():
+            return None
+        rare_recs = [r for r in self.store.records() if self._is_rare_in_world(r)]
+        return self._pick_stamp_note(rare_recs, station)
+
     def _commit_rare_unmarked(self) -> bool:
         """Commit one rare unread page that does not already live in S."""
         if self.world is None or not self.store.enabled:
@@ -952,15 +966,15 @@ class ThreeMemoryAgent:
                 if rec is not None and not self._is_rare_in_world(rec):
                     rec = None
                 if rec is None and new_here:
-                    if self._commit_rare_unmarked():
-                        rare_recs = [r for r in self.store.records() if self._is_rare_in_world(r)]
-                        rec = self._pick_stamp_note(rare_recs, station)
+                    rec = self._stamp_leftover_new_here(station)
+        elif self.use_in_hand_new_here and new_here:
+            rec = self._in_hand_note() or self._commit_in_hand()
+            if rec is not None and not self._is_rare_in_world(rec):
+                rec = None
         else:
             rec = self._pick_stamp_note(rare_recs, station)
             if rec is None and new_here:
-                if self._commit_rare_unmarked():
-                    rare_recs = [r for r in self.store.records() if self._is_rare_in_world(r)]
-                    rec = self._pick_stamp_note(rare_recs, station)
+                rec = self._stamp_leftover_new_here(station)
         if rec is None:
             return
         vals = {str(v).lower() for v in rec.tags.values() if isinstance(v, str)}

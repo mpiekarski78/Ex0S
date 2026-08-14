@@ -292,3 +292,7 @@ Stamp the attended page, then block extra hapax at this station. **A** **Store-w
 
 Here-only + sweep on the English concurrent-bind store. **A** **Fail**: train S is one file `bind=push` (the junk drawer is gone), but C life bound `xenon` not `adjust`. **B** **Store-works** on the motor bar (n=1, last-50 1.00); not the jump, not retuned. Details: [`tm066_results.md`](tm066_results.md).
 
+## TM.0.6.7 (in-hand new-here / shared return)
+
+A new station stamps the attended rare page, not the first leftover rare in W. **A** **Fail**: leftover walk is gone, but C search held `c09` / `neon`, not `p98` / `adjust`. **B** **Store-works** on the motor bar (n=1, last-50 1.00); not the jump, not retuned. Details: [`tm067_results.md`](tm067_results.md).
+

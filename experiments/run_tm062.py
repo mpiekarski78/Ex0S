@@ -85,6 +85,7 @@ def make(
     use_event_annotate: bool = True,
     use_stamp_new_here: bool = False,
     use_block_here: bool = False,
+    use_in_hand_new_here: bool = False,
     **kwargs,
 ):
     if not use_event_annotate:
@@ -93,9 +94,13 @@ def make(
         use_one_bind = False
         use_stamp_new_here = False
         use_block_here = False
+        use_in_hand_new_here = False
     if kwargs.get("use_here_match") is False:
         use_stamp_new_here = False
         use_block_here = False
+        use_in_hand_new_here = False
+    if not use_stamp_new_here:
+        use_in_hand_new_here = False
     return _make061(
         *args,
         use_alias_bind=use_alias_bind,
@@ -107,6 +112,7 @@ def make(
         use_event_annotate=use_event_annotate,
         use_stamp_new_here=use_stamp_new_here,
         use_block_here=use_block_here,
+        use_in_hand_new_here=use_in_hand_new_here,
         **kwargs,
     )
 
@@ -125,6 +131,7 @@ def _w_flags(w_files: list[str], w_dir: Path) -> dict[str, Any]:
     flags["use_commit_here_only"] = False
     flags["use_stamp_new_here"] = False
     flags["use_block_here"] = False
+    flags["use_in_hand_new_here"] = False
     flags["w_has_p98"] = "p98.md" in w_files
     return flags
 
@@ -692,6 +699,7 @@ def run_arm(
         "use_commit_here_only": dummy.use_commit_here_only,
         "use_stamp_new_here": dummy.use_stamp_new_here,
         "use_block_here": dummy.use_block_here,
+        "use_in_hand_new_here": dummy.use_in_hand_new_here,
         "use_search_head": dummy.use_search_head,
         "use_match_head": dummy.use_match_head,
         "use_qname_head": dummy.use_qname_head,

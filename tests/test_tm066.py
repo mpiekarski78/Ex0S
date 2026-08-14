@@ -98,7 +98,7 @@ def test_skips_stay_skipped():
     assert MAX_TRAIN_S_FILES == 4
     a = agent_mod.ThreeMemoryAgent(use_policy=UsePolicy(seed=1), store_enabled=False, cortex_seed=1337)
     assert a.domain == "door" and not a.use_revise_head and not a.use_commit_here_only
-    assert not a.use_block_here
+    assert not a.use_block_here and not a.use_in_hand_new_here
     b = make054(Path("/tmp/tm066_skip_s"), None, UsePolicy(seed=1), enabled=False)
     assert not b.use_revise_head and not b.use_commit_here_only
     c = make060(Path("/tmp/tm066_skip_060"), None, UsePolicy(seed=1), enabled=False)
@@ -115,6 +115,7 @@ def test_skips_stay_skipped():
     assert h.use_block_here and not h.use_revise_head and not h.use_commit_here_only
     i = make(Path("/tmp/tm066_skip_066"), None, UsePolicy(seed=1), enabled=False)
     assert i.use_revise_head and i.use_commit_here_only and i.use_block_here
+    assert not i.use_in_hand_new_here
     j = make059(Path("/tmp/tm066_skip_059"), None, UsePolicy(seed=1), enabled=False)
     assert j.use_revise_head and j.use_commit_here_only and not j.use_block_here
     copy = make(Path("/tmp/tm066_copy"), None, UsePolicy(seed=1), enabled=False, use_here_match=False)
