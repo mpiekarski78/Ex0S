@@ -404,3 +404,19 @@ No exact `loc=` / `door=` / `here=` query. Rank unread files. Features `{has_cod
 
 Do not restore exact match or plant `when=` to rescue a plot.
 
+## TM.0.2.0 A scale of W, B shared return
+
+Same messy search as TM.0.1.2. W has **256** unread `.tag` files. Features `{has_code, has_rare}` unchanged. Useful page `{where:0, action:2, pad:7}`. Copy frozen `action=`. Cortex frozen. No `d0.tag`. No `when=`. Probe greedy. `n_train=10000` (predeclared).
+
+**A.** Split: found `action=2` in S / unmount probe.
+
+**B.** Same `make()`. One `r` = unmount probe correct, applied to search and use.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; disable-S `use_key`; planted `when=` / `loc=` / `here=`; `d0` in W; `w_n < 200`; empty-S green `wait` | same |
+| Fail | Untrained already `use_key`; green fails; exact `{door, here}` still solves; freeze-search / use-off still `use_key` | Untrained already `use_key`; red stays `open`; last-50 ≈ 0 |
+| Store-works | Untrained `open`; red `use_key` from `p99.tag` in 256-file W; green `wait`; exact-match / search-off / use-off fail | Same without splitting the return |
+
+Do not restore exact match, plant `when=`, shrink W, or retune heads to rescue a plot.
+

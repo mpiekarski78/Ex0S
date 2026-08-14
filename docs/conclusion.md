@@ -204,3 +204,7 @@ Copy keys come from the hit, not `{action, do}`. Query frozen to the files’ pl
 
 Rank unread files; exact `loc=` / `door=` misses. Useful page `{where:0, action:2, pad:7}`. **A** split and **B** shared return both **Store-works**. Untrained takes clutter `p0.tag` and stays `open`. Trained red `use_key` from `p99.tag` after unmount W; held-out green `wait`. Exact match finds nothing. Use-off stays `open`. Cortex unchanged. Details: [`tm012_results.md`](tm012_results.md).
 
+## TM.0.2.0 (scale of W / shared return)
+
+Same search recipe; W is **256** messy files. **A** split and **B** shared return both **Store-works**. Untrained takes early clutter with the door code and stays `open`. Trained red `use_key` from `p99.tag` after unmount W; held-out green `wait`. Exact match finds nothing. Use-off stays `open`. Cortex unchanged. `w_n=256`. Details: [`tm020_results.md`](tm020_results.md).
+
