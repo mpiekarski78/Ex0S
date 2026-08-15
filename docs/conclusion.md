@@ -344,3 +344,7 @@ Frozen 0.9.1 genome. Paired counterfactual crossover. World-fact leakage **not o
 
 A stored `X→action` steers only when `X` is in the current stream. **A** **Store-works**: same-S cue switch, crossed HOLDs, 3/3 permuted nonces. **B** **Fail**: no-cue English probe HOLD (n=0); cap not raised. Details: [`tm092_results.md`](tm092_results.md).
 
+## TM.0.9.3 (EVIDENCE / motor bar)
+
+Among applicable rivals, earned support prefers the stronger relation. **A** **Store-works**: unequal follows S; equal HOLD; counterfactual swap; Y dropped by MATCH. **B** **Fail**: no-cue English bar; not retuned. Details: [`tm093_results.md`](tm093_results.md).
+

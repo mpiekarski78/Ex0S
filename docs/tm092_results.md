@@ -34,7 +34,7 @@ Nonce identities, motors, and filenames were permuted across seeds 12345–12347
 
 - MATCH is a genome gate on a Boolean, not a new SGD feature. `policy.py` is unchanged.
 - Historical BOX rerun after 0.9.2 (`runs/2026-08-15_115954_tm091box`): leakage **not observed** 3/3; donor **Pass** 3/3; neutrals still copy (**Fail** 3/3); transfer **Pass** 2/2 evaluable; W3 acquisition 2/3. Compatible label still **Control Fail**. MATCH stayed off. Do not require this battery to turn green.
-- Independent support waits until applicable relations can be ranked.
+- EVIDENCE landed in TM.0.9.3. Do not fix the no-cue English B bar.
 
 ## Reproduce
 

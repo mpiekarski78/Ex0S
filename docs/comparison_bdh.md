@@ -96,6 +96,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.9.1 hyp-survive | **Store-works** / **Fail** (16 supported same-here notes; retrieve used `thallium`; B n=17 stamp-collecting) |
 | three-memory, TM.0.9.BOX leakage | leakage **not observed** / relevance **Fail** (empty HOLD; donor S wins; neutrals blind-copy; transfer 2/2 evaluable; W3 2/3) |
 | three-memory, TM.0.9.2 MATCH | **Store-works** / **Fail** (same-S cue switch; crossed HOLD; no-cue English bar HOLD) |
+| three-memory, TM.0.9.3 EVIDENCE | **Store-works** / **Fail** (earned support; equal HOLD; S-swap follows S) |
 
 ## Honest limits
 
@@ -822,4 +823,13 @@ See [`tm091box_results.md`](tm091box_results.md).
 | Class | **Store-works** | **Fail** |
 
 See [`tm092_results.md`](tm092_results.md).
+
+## TM.0.9.3 (EVIDENCE / motor bar)
+
+| Check | A EVIDENCE | B motor bar |
+|-------|------------|-------------|
+| Unequal / equal / swap | **Pass** / **HOLD** / **Pass** | — |
+| Class | **Store-works** | **Fail** |
+
+See [`tm093_results.md`](tm093_results.md).
 

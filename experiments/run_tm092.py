@@ -210,6 +210,8 @@ def train_match_policy(
 
 
 def classify_a(m: dict[str, Any]) -> tuple[str, str]:
+    if m.get("use_evidence"):
+        return "Confound", "Evidence was smuggled onto this slice."
     if m.get("use_bind_match") is False:
         return "Fail", "Bind-match was frozen off."
     if not m.get("bind_match"):

@@ -176,6 +176,7 @@ def make(
     use_count_search: bool = False,
     use_hyp_survive: bool = False,
     use_bind_match: bool = False,
+    use_evidence: bool = False,
 ) -> ThreeMemoryAgent:
     world = ProseLibrary(w_dir) if w_dir is not None else None
     return ThreeMemoryAgent(
@@ -220,6 +221,7 @@ def make(
         use_count_search=use_count_search,
         use_hyp_survive=use_hyp_survive,
         use_bind_match=use_bind_match,
+        use_evidence=use_evidence,
     )
 
 

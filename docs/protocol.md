@@ -1022,7 +1022,7 @@ Pipeline (first-class, not one ranker):
 |-------|----------|
 | SEARCH | Which candidate memories can I expose? |
 | MATCH | Is this relation's antecedent supported now? |
-| EVIDENCE | What confidence/support does this relation have? (not this slice) |
+| EVIDENCE | Which matching relation deserves belief? (TM.0.9.3) |
 | USE | Let the applicable relation steer |
 
 **Acceptance** (token-agnostic; permute `X`/`Y` strings, `M1`/`M2` motors, filenames, and file order across seeds):
@@ -1046,14 +1046,7 @@ cue Y + only X → PRESS => HOLD
 
 **BOX-MATCH** (new cue-bearing audit; not a mutation of TM.0.9.BOX). Same acceptance on a projected B readout whose observation actually contains the nonce. Empty / no-cue S still HOLD.
 
-After 0.9.2, add nothing else until both controls are rerun:
-
-| Control | Must show |
-|---------|-----------|
-| Historical BOX, unchanged | Old leakage result: empty HOLD; donor S wins; neutrals may still copy (`did`). Not required to turn green. |
-| BOX-MATCH | Matching donors fire; nonmatching donors HOLD; cue switch on the same S flips the motor. |
-
-If both hold: P knows how to use relations, S contains the relations, current experience determines applicability. Only then is EVIDENCE / independent support meaningful.
+After 0.9.2 both controls held (historical BOX leakage unchanged; BOX-MATCH Pass). The no-cue English motor bar is historically informative, not a 0.9.2 acceptance test. Do not weaken MATCH to make it green.
 
 | ID | A | B |
 |----|---|---|
@@ -1061,7 +1054,51 @@ If both hold: P knows how to use relations, S contains the relations, current ex
 | Fail | Matching cue+S does not steer; nonmatching cue still copies `did`; wipe-between PRESS | Untrained PRESS; A miss; C miss; n>4 |
 | Store-works | Same-S cue switch fires the matching motor; crossed single-relation cues HOLD | Same motor bar |
 
-Do not special-case `push`, `flim`, or BOX neutrals. Independent support waits until MATCH exists.
+Do not special-case `push`, `flim`, or BOX neutrals. Do not retune the no-cue English bar.
+
+## TM.0.9.3 A EVIDENCE, B motor bar
+
+Recipe: among relations MATCH has already allowed, prefer the better-supported one. Keep 0.9.1 hypothesis survival — one success does not erase the rival. Not rare(X), not newest(X), not filename(X), not token identity. Cortex frozen. Do not retune `n_train`. Do not overwrite historical BOX or BOX-MATCH. Do not put `+` in cortex.
+
+Insultingly small first battery. Cue `X`. S always has `X→M1`, `X→M2`, and `Y→HOLD` (Y may have enormous support). MATCH must drop Y before EVIDENCE sees anything. Permute `X`/`Y`, `M1`/`M2`, filenames, and file order across seeds.
+
+Three cases:
+
+```text
+A. unequal, earned from outcomes
+   life: M1 succeeds; M2 fails; M1 succeeds
+   inspectable: M1 support=2 contradiction=0; M2 support=0 contradiction=1
+   => M1
+
+B. equal / unresolved
+   M1 support=1 contradiction=0
+   M2 support=1 contradiction=0
+   => no evidence claim from filename/order/token identity
+      (HOLD / unresolved; must not pick a winner)
+
+C. counterfactual evidence swap
+   same P, same cue, same two relations
+   S_a: M1 stronger => M1
+   S_b: M2 stronger => M2
+```
+
+Counts live in S (`wins`/`losses`, also `support`/`contradiction`). Genome compares matching relations; it does not store the accumulated result. Primary run **earns** counts via `_update_chosen_hyp` / outcomes. Initialized counts are a unit fixture only.
+
+After ρ reset, S kept → preference survives. Wipe S → preference disappears.
+
+**A.** One return. All three cases. Both X hypotheses survive. Y never enters the evidence set.
+
+**B.** Same `make()`. Motor bar. n>4 is still stamp-collecting. The no-cue English probe is not this slice's pass bar.
+
+After 0.9.3, rerun historical BOX (non-Confound leakage) and BOX-MATCH (Store-works) before adding anything else.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; `push`/`flim` in the agent; rival deleted after one success; Y ranked by support; equal case won by filename/order | same |
+| Fail | Unequal cue X follows the weaker match; equal case claims a winner; swap does not follow S; rival erased; wipe-between PRESS | Untrained PRESS; n>4 |
+| Store-works | Unequal → stronger X; equal → unresolved; swap follows S; Y dropped by MATCH; ρ-reset keeps S preference; wipe removes it | Same motor bar |
+
+Do not invent a confidence calculus. Independent support is counts on inspectable notes. Arithmetic waits.
 
 
 

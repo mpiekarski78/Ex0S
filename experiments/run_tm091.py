@@ -110,6 +110,8 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return early
     if m.get("use_bind_match"):
         return "Confound", "Bind-match was smuggled onto this slice."
+    if m.get("use_evidence"):
+        return "Confound", "Evidence was smuggled onto this slice."
     if not saved or not m.get("hyp_survive"):
         return "Fail", "Hyp-survive was frozen off."
     return None

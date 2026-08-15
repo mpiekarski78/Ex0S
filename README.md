@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.9.2 (antecedent MATCH). Toy series: v0–v23.
+**Current:** TM.0.9.3 (EVIDENCE). Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.9.2: a stored `X→action` steers only when `X` is in the current stream (**A Store-works**, 3/3 permuted nonces; crossed HOLDs). Genome sees `bind_present_in_current_stream`, not the token. Historical BOX stays the no-cue leakage control and is not required to turn green. **B Fail** (no-cue English probe HOLD; n=0; cap not raised). Next: rerun both controls, then EVIDENCE / independent support — ranking only among applicable relations.
+Honest status after TM.0.9.3: among MATCH-eligible rivals, earned support prefers the stronger `X→M` (**A Store-works**, 3/3; equal evidence HOLD; S-swap flips the motor). Y with support=100 is dropped by MATCH first. Counts live in S, not P. **B Fail** stays — do not green the no-cue English bar. Next: rerun historical BOX, then stop adding machinery until both controls still hold.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -81,6 +81,7 @@ TM.0.9.0 first math life: [`docs/tm090_results.md`](docs/tm090_results.md).
 TM.0.9.1 hyp-survive: [`docs/tm091_results.md`](docs/tm091_results.md).  
 TM.0.9.BOX leakage control: [`docs/tm091box_results.md`](docs/tm091box_results.md).  
 TM.0.9.2 antecedent MATCH: [`docs/tm092_results.md`](docs/tm092_results.md).  
+TM.0.9.3 EVIDENCE: [`docs/tm093_results.md`](docs/tm093_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -157,6 +158,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.9.1 A hyp-survive / B motor bar | **Store-works** / **Fail** (16 supported same-here notes; retrieve used `thallium`; B n=17 stamp-collecting) |
 | TM.0.9.BOX leakage control | leakage **not observed** / donor **Pass** / relevance **Fail** (compatible **Control Fail**; transfer 2/2 evaluable; W3 2/3) |
 | TM.0.9.2 A MATCH / B motor bar | **Store-works** / **Fail** (same-S cue switch; crossed HOLD; no-cue English bar HOLD) |
+| TM.0.9.3 A EVIDENCE / B motor bar | **Store-works** / **Fail** (earned support; equal HOLD; S-swap follows S) |
 
 ## Five pieces
 
@@ -236,6 +238,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.9.1 hyp-survive | **Store-works** / **Fail** | competing hypotheses stay; retrieve used `thallium`; B n=17; [`docs/tm091_results.md`](docs/tm091_results.md) |
 | TM.0.9.BOX leakage | leakage not observed; relevance Fail | empty HOLD; donor S wins; neutrals blind-copy; [`docs/tm091box_results.md`](docs/tm091box_results.md) |
 | TM.0.9.2 MATCH | **Store-works** / **Fail** | cue switch on same S; crossed HOLD; [`docs/tm092_results.md`](docs/tm092_results.md) |
+| TM.0.9.3 EVIDENCE | **Store-works** / **Fail** | earned support; equal unresolved; [`docs/tm093_results.md`](docs/tm093_results.md) |
 
 ## Quick start
 
@@ -303,6 +306,7 @@ python tests/test_tm090.py
 python tests/test_tm091.py
 python tests/test_tm091box.py
 python tests/test_tm092.py
+python tests/test_tm093.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -367,6 +371,7 @@ python -m experiments.run_tm090
 python -m experiments.run_tm091
 python -m experiments.run_tm091box --seeds 12345 12346 12347 --workers 3
 python -m experiments.run_tm092
+python -m experiments.run_tm093
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).

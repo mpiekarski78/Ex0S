@@ -30,7 +30,21 @@ from .tag_store import DocLibrary, ProseLibrary, TagLibrary, prose_token_stream,
 # Bookkeeping tags, not a place-name menu. Query candidates are whatever else the files have.
 # `did` is the act the body just did (not a copy token). `bind` is the one page-word aliased to it.
 _QNAME_SKIP = frozenset(
-    {"source", "source_file", "when", "ok", "what", "did", "bind", "hyp", "trials", "wins", "losses"}
+    {
+        "source",
+        "source_file",
+        "when",
+        "ok",
+        "what",
+        "did",
+        "bind",
+        "hyp",
+        "trials",
+        "wins",
+        "losses",
+        "support",
+        "contradiction",
+    }
 )
 
 
@@ -93,6 +107,7 @@ class ThreeMemoryAgent:
         use_count_search: bool = False,
         use_hyp_survive: bool = False,
         use_bind_match: bool = False,
+        use_evidence: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -190,6 +205,10 @@ class ThreeMemoryAgent:
             raise ValueError("use_hyp_survive requires use_here_match")
         if use_bind_match and not use_alias_bind:
             raise ValueError("use_bind_match requires use_alias_bind")
+        if use_evidence and not use_bind_match:
+            raise ValueError("use_evidence requires use_bind_match")
+        if use_evidence and not use_hyp_survive:
+            raise ValueError("use_evidence requires use_hyp_survive")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -257,6 +276,7 @@ class ThreeMemoryAgent:
         self.use_count_search = use_count_search
         self.use_hyp_survive = use_hyp_survive
         self.use_bind_match = use_bind_match
+        self.use_evidence = use_evidence
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
@@ -345,6 +365,7 @@ class ThreeMemoryAgent:
             use_count_search=self.use_count_search,
             use_hyp_survive=self.use_hyp_survive,
             use_bind_match=self.use_bind_match,
+            use_evidence=self.use_evidence,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -878,6 +899,8 @@ class ThreeMemoryAgent:
             rec.tags["trials"] = 0
             rec.tags["wins"] = 0
             rec.tags["losses"] = 0
+            rec.tags["support"] = 0
+            rec.tags["contradiction"] = 0
 
     def _mark_hyp(self, rec, *, success: bool) -> None:
         if not self.use_hyp_survive or not self.store.enabled:
@@ -890,6 +913,8 @@ class ThreeMemoryAgent:
         else:
             rec.tags["losses"] = int(rec.tags.get("losses") or 0) + 1
             rec.tags["hyp"] = "contradicted"
+        rec.tags["support"] = int(rec.tags.get("wins") or 0)
+        rec.tags["contradiction"] = int(rec.tags.get("losses") or 0)
         self.store.write(rec)
 
     def _update_chosen_hyp(self, *, success: bool) -> None:
@@ -916,6 +941,32 @@ class ThreeMemoryAgent:
         least = min(trials)
         return [r for r, n in zip(live, trials) if n == least]
 
+    def _evidence_score(self, rec) -> tuple[int, int]:
+        """Inspectable (support, -contradiction). No token or filename."""
+        wins = rec.tags.get("support", rec.tags.get("wins"))
+        losses = rec.tags.get("contradiction", rec.tags.get("losses"))
+        w = int(wins) if isinstance(wins, (int, np.integer)) else 0
+        n = int(losses) if isinstance(losses, (int, np.integer)) else 0
+        return (w, -n)
+
+    def _evidence_choose(self, recs: list) -> list:
+        """Unique strict evidence winner. A tie with different dids is unresolved."""
+        if not self.use_evidence or not recs:
+            return recs
+        scored = [(self._evidence_score(r), r) for r in recs]
+        best = max(s for s, _r in scored)
+        winners = [r for s, r in scored if s == best]
+        if len(winners) == 1:
+            return winners
+        dids = {
+            str(r.tags.get("did")).lower()
+            for r in winners
+            if isinstance(r.tags.get("did"), str)
+        }
+        if len(dids) > 1:
+            return []
+        return winners
+
     def _keep_steerer(self, obs) -> None:
         """Drop other same-here notes after a file steered. Not a subject."""
         if not self.use_keep_steerer or not self.store.enabled:
@@ -932,6 +983,9 @@ class ThreeMemoryAgent:
                 continue
             # Success of A does not falsify untested B.
             if self.use_hyp_survive and self._hyp_state(rec) != "contradicted":
+                continue
+            # EVIDENCE needs the contradicted rival to remain inspectable.
+            if self.use_evidence:
                 continue
             if self.store.delete(rec.fact_id):
                 self.n_revised += 1
@@ -1433,11 +1487,19 @@ class ThreeMemoryAgent:
                     apply = any(self._rec_names_here(r, obs) for r in chosen)
                     self.last_policy["here_match"] = apply
         if self.use_bind_match:
-            chosen = self._match_applicable(chosen, obs)
-            present = bool(chosen)
+            matched = self._match_applicable(
+                list(self.store.records()) if self.store.enabled else list(chosen),
+                obs,
+            )
+            present = bool(matched)
             self.last_policy["bind_present_in_current_stream"] = present
-            # Applicable relation steers. Non-matching notes do not.
-            apply = present
+            if self.use_evidence:
+                chosen = self._evidence_choose(matched)
+                self.last_policy["evidence_resolved"] = len(chosen) == 1
+                self.last_policy["evidence_tie"] = bool(matched) and len(chosen) != 1
+            else:
+                chosen = self._match_applicable(chosen, obs)
+            apply = bool(chosen)
         self._last_chosen_ids = []
         if apply:
             for rec in chosen:
