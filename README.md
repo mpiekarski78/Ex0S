@@ -2,7 +2,8 @@
 
 **Repo:** [mpiekarski78/Ex0S](https://github.com/mpiekarski78/Ex0S)  
 **Current:** **Ex0S 0.0.003** (TM.0.11.FAMILY — Frozen Composition). Toy series: v0–v23.  
-**Start here:** [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md) · [`docs/CLAIM.md`](docs/CLAIM.md)
+**Start here:** [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md) · [`docs/CLAIM.md`](docs/CLAIM.md)  
+**License:** Apache-2.0 ([`LICENSE`](LICENSE) · [`NOTICE`](NOTICE)). Cite via [`CITATION.cff`](CITATION.cff). The Ex0S name and logo are project identity, not licensed marks.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -459,6 +460,12 @@ tests/
 runs/             # gitignored
 checkpoints/      # gitignored (prior.pt)
 ```
+
+## License
+
+Code is licensed under the [Apache License 2.0](LICENSE). Attribution lives in [`NOTICE`](NOTICE). Please cite the software with [`CITATION.cff`](CITATION.cff).
+
+The **Ex0S** name, wordmark, and logo are project identity. Apache-2.0 does not grant a trademark license to use them except as reasonable attribution (License §6).
 
 ## What this is not
 
