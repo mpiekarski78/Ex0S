@@ -1,0 +1,264 @@
+{
+  "version": "TM.0.13.KAPPA",
+  "ex0s_under_test": "0.0.003",
+  "earned_next": false,
+  "ctx_encoding": "ksem-sha256-v1",
+  "contract": [
+    "kappa is transient cognitive context, not knowledge",
+    "initialized and advanced only after a selected non-motor relation",
+    "kappa0 = seed(origin); origin = bind of that first non-motor hop",
+    "kappa(t+1) = F(kappa(t), canonical(bind, did))",
+    "payload canonical(bind, did) only \u2014 not fid, here, support, role, motor, context_expect",
+    "order-sensitive, incremental, bounded size",
+    "not written back as a shortcut fact",
+    "raw path need not remain",
+    "SHA-256 is current F realization; ctx_encoding names the memory ABI"
+  ],
+  "ctx_encoding_note": "Once ctx= is persisted in S, changing F makes old memories unreadable. No migration this pass.",
+  "routesig_012_lock_sha": "c81dcb73d2276e58e9eb0012000b8c15ec6c83a5bb6e33248ace23a798c6a987",
+  "routesig_depth_012_lock_sha": "904b31a0ea1c1e3c85ce824498f192cd322788eb0ee10098b16c2d294da9432f",
+  "routesig_identity_012_lock_sha": "3aed4f832096cccd6812992fa0d748399def41b02330487d1ffb09c4a35eb389",
+  "genome_011_lock_sha": "e4202d8402ac2f734a8af922898dfd68ec215f2824470d49ebe9217c534ede92",
+  "known_answer_vectors": {
+    "A_order_a_then_b": {
+      "origin": "x",
+      "hops": [
+        [
+          "x",
+          "q"
+        ],
+        [
+          "q",
+          "a"
+        ],
+        [
+          "a",
+          "q"
+        ],
+        [
+          "q",
+          "b"
+        ],
+        [
+          "b",
+          "q"
+        ],
+        [
+          "q",
+          "y"
+        ]
+      ],
+      "steps": [
+        {
+          "i": 0,
+          "kappa": "9dcd5500b1c96b1d66c148e57d94f06e79ec61255f21f6c236633bcd3ad295ef",
+          "event": "seed",
+          "origin": "x"
+        },
+        {
+          "i": 1,
+          "kappa": "38004164be41fca11c8cce09aebdc0e74ae2cc03801f21b23dfee4d4f5d2e670",
+          "bind": "x",
+          "did": "q",
+          "token_hex": "780071"
+        },
+        {
+          "i": 2,
+          "kappa": "60f0162e3a589c922a1c1b0889d7c5b827b9ba85c200645b4e4b70c34b558929",
+          "bind": "q",
+          "did": "a",
+          "token_hex": "710061"
+        },
+        {
+          "i": 3,
+          "kappa": "6aadfde7f582ed4d7b0592f9fbc368ea4702b23f98df0c3c63b8dbc50daf9e0d",
+          "bind": "a",
+          "did": "q",
+          "token_hex": "610071"
+        },
+        {
+          "i": 4,
+          "kappa": "df81d429253c218ab854d2fdfe40de02526a7322131ce2fbc594864347bfb92e",
+          "bind": "q",
+          "did": "b",
+          "token_hex": "710062"
+        },
+        {
+          "i": 5,
+          "kappa": "9dfb71b167cb8e865535b40459a5cf1b72957f4844698bbd74ea06e693d8ef17",
+          "bind": "b",
+          "did": "q",
+          "token_hex": "620071"
+        },
+        {
+          "i": 6,
+          "kappa": "5c2db83ae7e26263af36734084b03a3612fdeb9eb5c741c2427aaf8142079f54",
+          "bind": "q",
+          "did": "y",
+          "token_hex": "710079"
+        }
+      ]
+    },
+    "B_order_b_then_a": {
+      "origin": "x",
+      "hops": [
+        [
+          "x",
+          "q"
+        ],
+        [
+          "q",
+          "b"
+        ],
+        [
+          "b",
+          "q"
+        ],
+        [
+          "q",
+          "a"
+        ],
+        [
+          "a",
+          "q"
+        ],
+        [
+          "q",
+          "y"
+        ]
+      ],
+      "steps": [
+        {
+          "i": 0,
+          "kappa": "9dcd5500b1c96b1d66c148e57d94f06e79ec61255f21f6c236633bcd3ad295ef",
+          "event": "seed",
+          "origin": "x"
+        },
+        {
+          "i": 1,
+          "kappa": "38004164be41fca11c8cce09aebdc0e74ae2cc03801f21b23dfee4d4f5d2e670",
+          "bind": "x",
+          "did": "q",
+          "token_hex": "780071"
+        },
+        {
+          "i": 2,
+          "kappa": "7e2259702a43e4ba75ac8f23238f56d2116433e4eacab45160abd1e009c67d05",
+          "bind": "q",
+          "did": "b",
+          "token_hex": "710062"
+        },
+        {
+          "i": 3,
+          "kappa": "a8c19e29a2880582b10dd4791d1f20ca302f098cd16c51e456873d4396fd2754",
+          "bind": "b",
+          "did": "q",
+          "token_hex": "620071"
+        },
+        {
+          "i": 4,
+          "kappa": "77067e751ef0d748385f1477e9ff9c1011841587f44a3836cf2851d7337df0ac",
+          "bind": "q",
+          "did": "a",
+          "token_hex": "710061"
+        },
+        {
+          "i": 5,
+          "kappa": "2c3a82bb75267b9dc0cd8238d4aeb1a706b59cb951ec54d3a0f2b1aa9219a1db",
+          "bind": "a",
+          "did": "q",
+          "token_hex": "610071"
+        },
+        {
+          "i": 6,
+          "kappa": "492474fa8228ca715da306e2cc38e173a4fb2a6e9f5dae93dab9678b0a5428c3",
+          "bind": "q",
+          "did": "y",
+          "token_hex": "710079"
+        }
+      ]
+    },
+    "C_depth_shaped": {
+      "origin": "x",
+      "hops": [
+        [
+          "x",
+          "q"
+        ],
+        [
+          "q",
+          "t1"
+        ],
+        [
+          "t1",
+          "t2"
+        ],
+        [
+          "t2",
+          "t3"
+        ],
+        [
+          "t3",
+          "y"
+        ]
+      ],
+      "steps": [
+        {
+          "i": 0,
+          "kappa": "9dcd5500b1c96b1d66c148e57d94f06e79ec61255f21f6c236633bcd3ad295ef",
+          "event": "seed",
+          "origin": "x"
+        },
+        {
+          "i": 1,
+          "kappa": "38004164be41fca11c8cce09aebdc0e74ae2cc03801f21b23dfee4d4f5d2e670",
+          "bind": "x",
+          "did": "q",
+          "token_hex": "780071"
+        },
+        {
+          "i": 2,
+          "kappa": "a7ba781d03ab5063f41cf3047ad217a78ed51ee76c411ad8f2651ad741275136",
+          "bind": "q",
+          "did": "t1",
+          "token_hex": "71007431"
+        },
+        {
+          "i": 3,
+          "kappa": "f7ec93878184d73cf8ccf0041ecbbe7054f2c5427a2e1fe3b2aa4f0473945a57",
+          "bind": "t1",
+          "did": "t2",
+          "token_hex": "7431007432"
+        },
+        {
+          "i": 4,
+          "kappa": "5e0b51dbf6bcb40769cf1ec963f156228ae753ac20b2eaa705135cf743f359ce",
+          "bind": "t2",
+          "did": "t3",
+          "token_hex": "7432007433"
+        },
+        {
+          "i": 5,
+          "kappa": "0c0430452026efbade6441f35330c61098068359f1e67ab05f4746692299fccd",
+          "bind": "t3",
+          "did": "y",
+          "token_hex": "74330079"
+        }
+      ]
+    }
+  },
+  "kappa_module_sha": "d7bfd7549e3e397cc74effd6bfa7873aadeb32e0e38d9bd99c9aabf43ef8e780",
+  "kappa_seed_sha": "52292d2e68fd378f2b26960fc6294a4f65c271a36d1e272b2192002287f4408b",
+  "kappa_step_sha": "58ed010d78387c28c9e22954b9ee8242a6275318bf9a62f46cda973129eb1d29",
+  "edge_sem_sha": "907487b408b8f1480eb21de33227ed64fe8d064ea6e3adb7d4f0dd306be753c9",
+  "route_kappa_sha": "1f7e4eb951086f3074c2e9e43c7c6f7927f82cf132fb09fbb2a8ad9517477c79",
+  "route_kappa_hops_sha": "12fe94f6fd9a954c1c3789ea5dd4096d1cf70419d228e4c47af0043e6fdb8515",
+  "refuse": [
+    "rewrite genome_011.lock",
+    "stamp Ex0S 0.0.004",
+    "encode kappa to motor in genome",
+    "step kappa on motor edges",
+    "hash here/support/role/fid into kappa",
+    "plant family ctx only from the same live function without vectors"
+  ]
+}

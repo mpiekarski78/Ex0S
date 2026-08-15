@@ -109,6 +109,7 @@ class ThreeMemoryAgent:
         use_bind_match: bool = False,
         use_evidence: bool = False,
         use_compose: bool = False,
+        use_context_kappa: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -212,6 +213,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_evidence requires use_hyp_survive")
         if use_compose and not use_evidence:
             raise ValueError("use_compose requires use_evidence")
+        if use_context_kappa and not use_compose:
+            raise ValueError("use_context_kappa requires use_compose")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -281,6 +284,7 @@ class ThreeMemoryAgent:
         self.use_bind_match = use_bind_match
         self.use_evidence = use_evidence
         self.use_compose = use_compose
+        self.use_context_kappa = use_context_kappa
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
@@ -371,6 +375,7 @@ class ThreeMemoryAgent:
             use_bind_match=self.use_bind_match,
             use_evidence=self.use_evidence,
             use_compose=self.use_compose,
+            use_context_kappa=self.use_context_kappa,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -884,70 +889,102 @@ class ThreeMemoryAgent:
             return recs
         return [r for r in recs if self._bind_in_stream(r, obs)]
 
-    def _match_frontier(self, recs: list, frontier: set[str]) -> list:
-        """MATCH against a derived frontier only. Not observation ∪ derived."""
+    def _match_frontier(
+        self, recs: list, frontier: set[str], *, kappa: str | None = None
+    ) -> list:
+        """MATCH against a derived frontier only. Not observation ∪ derived.
+
+        When use_context_kappa and kappa is set: if any eligible fact has ctx,
+        discard all untagged facts and keep only ctx == kappa. Zero matches → [].
+        Caller must pass only unvisited facts — a consumed ctx row must not poison
+        later untagged matches at the same bind. Observation MATCH never uses this.
+        """
         out = []
         for r in recs:
             bind = r.tags.get("bind")
             if isinstance(bind, str) and bind.lower() in frontier:
                 out.append(r)
-        return out
+        if not self.use_context_kappa or kappa is None:
+            return out
+        tagged = [r for r in out if isinstance(r.tags.get("ctx"), str) and r.tags.get("ctx")]
+        if not tagged:
+            return out
+        return [r for r in tagged if str(r.tags.get("ctx")) == kappa]
 
     def _compose_choose(self, obs) -> list:
         """Compose along chosen relations: non-motor did becomes the next frontier.
 
         Act-local only. A fact_id is consumed at most once. No hop cap — bound by |S|.
         Does not write shortcuts into S.
+
+        With use_context_kappa: after each selected non-motor hop, carry κ and
+        match derived facts by ctx. Motor hops never step κ. Hop-1 motor returns
+        without initializing κ.
         """
         if not self.use_compose or not self.store.enabled:
             return []
+        from three_memory.kappa import edge_sem, kappa_seed, kappa_step
+
         store_recs = list(self.store.records())
         motors = self._act_names()
         visited: set[str] = set()
         frontier: set[str] | None = None
+        kappa: str | None = None
         hops = 0
+
+        def _hold(*, evidence_tie: bool = False) -> list:
+            self.last_policy["compose_hold"] = True
+            self.last_policy["evidence_resolved"] = False
+            self.last_policy["evidence_tie"] = evidence_tie
+            self.last_policy["context_kappa"] = kappa
+            if hops:
+                self.last_policy["compose_hops"] = hops
+            return []
+
         # Termination: each fact at most once ⇒ ≤ |S| iterations.
         for _ in range(max(len(store_recs), 1)):
-            if frontier is None:
-                eligible = self._match_applicable(store_recs, obs)
-            else:
-                eligible = self._match_frontier(store_recs, frontier)
-            eligible = [
+            # Visited exclusion before ctx filter: a consumed ctx fact must not
+            # poison "any eligible has ctx" on a later revisit of the same bind.
+            unvisited = [
                 r
-                for r in eligible
+                for r in store_recs
                 if str(getattr(r, "fact_id", "") or "") not in visited
             ]
+            if frontier is None:
+                eligible = self._match_applicable(unvisited, obs)
+            else:
+                eligible = self._match_frontier(unvisited, frontier, kappa=kappa)
             if not eligible:
-                self.last_policy["compose_hold"] = True
-                self.last_policy["evidence_resolved"] = False
-                self.last_policy["evidence_tie"] = False
-                return []
+                return _hold()
             winners = self._evidence_choose(eligible)
             if not winners:
-                self.last_policy["compose_hold"] = True
-                self.last_policy["evidence_resolved"] = False
-                self.last_policy["evidence_tie"] = True
-                return []
+                return _hold(evidence_tie=True)
             rec = winners[0]
             fid = str(getattr(rec, "fact_id", "") or "")
             if fid:
                 visited.add(fid)
             hops += 1
             did = rec.tags.get("did")
+            bind = rec.tags.get("bind")
             if not isinstance(did, str) or not did:
-                self.last_policy["compose_hold"] = True
-                return []
+                return _hold()
             did_l = did.lower()
             if did_l in motors:
                 self.last_policy["compose_hold"] = False
                 self.last_policy["evidence_resolved"] = True
                 self.last_policy["evidence_tie"] = False
                 self.last_policy["compose_hops"] = hops
+                self.last_policy["context_kappa"] = kappa
                 return [rec]
-            # Chosen non-motor consequent is the next MATCH frontier alone.
+            # Selected non-motor consequent: advance κ (if enabled), then frontier.
+            if self.use_context_kappa:
+                if not isinstance(bind, str) or not bind:
+                    return _hold()
+                if kappa is None:
+                    kappa = kappa_seed(bind)
+                kappa = kappa_step(kappa, edge_sem(bind, did))
             frontier = {did_l}
-        self.last_policy["compose_hold"] = True
-        return []
+        return _hold()
 
     def _hyp_state(self, rec) -> str:
         raw = rec.tags.get("hyp")

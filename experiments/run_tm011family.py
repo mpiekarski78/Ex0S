@@ -688,17 +688,158 @@ def _git_has_commit(sha: str) -> bool:
     return out.returncode == 0 and out.stdout.strip() == "commit"
 
 
+def _git_blob_bytes(commit: str, relpath: str) -> bytes | None:
+    """Return file bytes at commit, or None if unavailable."""
+    git_dir = REPO_ROOT / ".git"
+    if not git_dir.exists():
+        p = REPO_ROOT / relpath
+        return p.read_bytes() if p.exists() else None
+    try:
+        out = subprocess.run(
+            ["git", "show", f"{commit}:{relpath}"],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            check=False,
+        )
+    except OSError:
+        return None
+    if out.returncode != 0:
+        return None
+    return out.stdout
+
+
+def _make_source_sha_from_file(src: str) -> str | None:
+    """SHA of `def make` matching inspect.getsource (includes trailing newline)."""
+    import ast
+
+    try:
+        tree = ast.parse(src)
+    except SyntaxError:
+        return None
+    lines = src.splitlines(True)
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef) and node.name == "make":
+            # inspect.getsource uses lineno..end_lineno inclusive with newlines.
+            chunk = "".join(lines[node.lineno - 1 : node.end_lineno])
+            if not chunk:
+                return None
+            return _sha_bytes(chunk.encode())
+    return None
+
+
+def historical_recipe_snapshot(commit: str = ORGANISM_BASELINE_COMMIT) -> dict[str, Any]:
+    """Recipe SHAs as frozen at the 0.0.003 stamp commit."""
+    agent_b = _git_blob_bytes(commit, "three_memory/agent.py")
+    policy_b = _git_blob_bytes(commit, "three_memory/policy.py")
+    cortex_b = _git_blob_bytes(commit, "three_memory/cortex.py")
+    make_b = _git_blob_bytes(commit, "experiments/run_tm011compose.py")
+    if not all(x is not None for x in (agent_b, policy_b, cortex_b, make_b)):
+        return {"error": f"cannot read recipe blobs at {commit}"}
+    make_sha = _make_source_sha_from_file(make_b.decode())
+    if make_sha is None:
+        return {"error": f"cannot extract make() at {commit}"}
+    return {
+        "baseline_commit": commit,
+        "agent_sha": _sha_bytes(agent_b),
+        "policy_sha": _sha_bytes(policy_b),
+        "cortex_sha": _sha_bytes(cortex_b),
+        "make011compose_sha": make_sha,
+    }
+
+
+def verify_historical_freeze(
+    path: Path = FREEZE_LOCK,
+) -> tuple[bool, str, dict[str, Any]]:
+    """genome_011.lock must match recipe files at ORGANISM_BASELINE_COMMIT."""
+    snap: dict[str, Any] = {"version": "TM.0.11.historical"}
+    if not path.exists():
+        return False, "docs/genome_011.lock missing", snap
+    lock = json.loads(path.read_text(encoding="utf-8"))
+    if lock.get("baseline_commit") != ORGANISM_BASELINE_COMMIT:
+        return False, "baseline_commit drifted from ORGANISM_BASELINE_COMMIT", snap
+    if not _git_has_commit(ORGANISM_BASELINE_COMMIT):
+        return False, f"baseline commit {ORGANISM_BASELINE_COMMIT} not in this clone", snap
+    hist = historical_recipe_snapshot()
+    if "error" in hist:
+        return False, hist["error"], snap
+    snap.update(hist)
+    for key in ("agent_sha", "policy_sha", "cortex_sha", "make011compose_sha"):
+        if hist[key] != lock.get(key):
+            return False, f"historical freeze drift: {key}", snap
+    # Apparatus keys still compared to HEAD (must not drift without a deliberate re-freeze).
+    head = freeze_snapshot()
+    for key in (
+        "family_E_generator_sha",
+        "family_F_generator_sha",
+        "family_G_generator_sha",
+        "scorer_sha",
+        "seed_list_sha",
+        "n_feat",
+    ):
+        if head[key] != lock.get(key):
+            return False, f"apparatus drift: {key}", snap
+        snap[key] = head[key]
+    snap["head_agent_sha"] = head["agent_sha"]
+    snap["head_matches_lock_agent"] = head["agent_sha"] == lock.get("agent_sha")
+    return True, "historical 0.0.003 freeze intact", snap
+
+
+def verify_011_compatibility() -> tuple[bool, str, dict[str, Any]]:
+    """HEAD organism with use_context_kappa=False still hosts the 0.0.003 compose recipe."""
+    snap: dict[str, Any] = {"version": "TM.0.11.compatibility"}
+    if not FREEZE_LOCK.exists():
+        return False, "docs/genome_011.lock missing", snap
+    lock = json.loads(FREEZE_LOCK.read_text(encoding="utf-8"))
+    from three_memory import agent as agent_mod
+
+    src = inspect.getsource(agent_mod)
+    for banned in ("use_two_hop", "use_three_hop", "MAX_HOPS", "use_family", "use_lookahead"):
+        if banned in src:
+            return False, f"banned flag in agent.py: {banned}", snap
+    if int(UsePolicy.n_feat) != 2:
+        return False, "UsePolicy.n_feat moved", snap
+    probe_ag = make(
+        REPO_ROOT / "runs" / "_compose_family_lock_probe",
+        None,
+        UsePolicy(seed=1),
+        enabled=False,
+        use_context_kappa=False,
+    )
+    if getattr(probe_ag, "use_context_kappa", False):
+        return False, "011compose make must pass use_context_kappa=False", snap
+    if not probe_ag.use_compose:
+        return False, "011compose make lost use_compose", snap
+    if not probe_ag.use_evidence or not probe_ag.use_bind_match or not probe_ag.use_hyp_survive:
+        return False, "011compose make lost evidence/match/survive", snap
+    if probe_ag.weight_hash() != lock.get("cortex_weight_hash"):
+        return False, "cortex weight hash drifted from genome_011.lock", snap
+    snap["use_compose"] = True
+    snap["use_context_kappa"] = False
+    snap["cortex_weight_hash"] = probe_ag.weight_hash()
+    snap["head_agent_sha"] = _sha_file(REPO_ROOT / "three_memory" / "agent.py")
+    return True, "0.0.003 behavioral compatibility recipe intact", snap
+
+
 def write_freeze_lock(
     path: Path = FREEZE_LOCK, *, baseline_commit: str | None = None
 ) -> dict[str, Any]:
-    """Explicit re-freeze only. Tests and run_family must not call this."""
+    """Explicit re-freeze only. Tests and run_family must not call this.
+
+    Do not call this to absorb a CONTEXT candidate into 0.0.003 — that lock is immutable.
+    """
     snap = freeze_snapshot()
     existing: dict[str, Any] = {}
     if path.exists():
         existing = json.loads(path.read_text(encoding="utf-8"))
     chosen = baseline_commit or existing.get("baseline_commit") or ORGANISM_BASELINE_COMMIT
     snap["baseline_commit"] = chosen
-    ag = make(REPO_ROOT / "runs" / "_compose_family_lock_probe", None, UsePolicy(seed=1), enabled=False)
+    ag = make(
+        REPO_ROOT / "runs" / "_compose_family_lock_probe",
+        None,
+        UsePolicy(seed=1),
+        enabled=False,
+        use_context_kappa=False,
+    )
     snap["cortex_weight_hash"] = ag.weight_hash()
     snap["use_compose"] = bool(ag.use_compose)
     snap["use_evidence"] = bool(ag.use_evidence)
@@ -709,38 +850,21 @@ def write_freeze_lock(
 
 
 def verify_freeze(path: Path = FREEZE_LOCK) -> tuple[bool, str, dict[str, Any]]:
-    """Fail closed on any recipe drift, including agent.py.
+    """Historical freeze + HEAD compatibility. HEAD agent_sha need not match the lock.
 
-    Compose MATCH / evidence / choose live in agent.py. An agent_sha change
-    is a genome change. Do not rewrite `path` from this function or from tests.
+    genome_011.lock is immutable. An agent.py edit is a genome change — reported
+    via head_matches_lock_agent=False — not rewritten into the 0.0.003 lock.
     """
-    snap = freeze_snapshot()
-    if not path.exists():
-        return False, "docs/genome_011.lock missing; write only via --write-lock", snap
-    lock = json.loads(path.read_text(encoding="utf-8"))
-    for key in RECIPE_KEYS:
-        if snap[key] != lock.get(key):
-            return False, f"freeze drift: {key}", snap
-    if lock.get("baseline_commit") != ORGANISM_BASELINE_COMMIT:
-        return False, "baseline_commit drifted from ORGANISM_BASELINE_COMMIT", snap
-    if not _git_has_commit(ORGANISM_BASELINE_COMMIT):
-        return False, f"baseline commit {ORGANISM_BASELINE_COMMIT} not in this clone", snap
-    if int(UsePolicy.n_feat) != 2:
-        return False, "UsePolicy.n_feat moved", snap
-    from three_memory import agent as agent_mod
-
-    src = inspect.getsource(agent_mod)
-    for banned in ("use_two_hop", "use_three_hop", "MAX_HOPS", "use_family", "use_lookahead"):
-        if banned in src:
-            return False, f"banned flag in agent.py: {banned}", snap
-    probe_ag = make(REPO_ROOT / "runs" / "_compose_family_lock_probe", None, UsePolicy(seed=1), enabled=False)
-    if not probe_ag.use_compose:
-        return False, "011compose make lost use_compose", snap
-    if not probe_ag.use_evidence or not probe_ag.use_bind_match or not probe_ag.use_hyp_survive:
-        return False, "011compose make lost evidence/match/survive", snap
-    if probe_ag.weight_hash() != lock.get("cortex_weight_hash"):
-        return False, "cortex weight hash drifted from genome_011.lock", snap
-    return True, "frozen 0.11 compose genome", snap
+    hist_ok, hist_why, hist_snap = verify_historical_freeze(path)
+    if not hist_ok:
+        return False, hist_why, hist_snap
+    compat_ok, compat_why, compat_snap = verify_011_compatibility()
+    snap = {**hist_snap, **compat_snap, "version": "TM.0.11"}
+    if not compat_ok:
+        return False, compat_why, snap
+    if snap.get("head_matches_lock_agent"):
+        return True, "frozen 0.11 compose genome", snap
+    return True, "historical freeze intact; HEAD differs (CONTEXT candidate)", snap
 
 
 def score_world(
@@ -807,6 +931,16 @@ def score_world(
         "seed": world.seed,
         "birth": world.birth,
     }
+
+
+def behavioral_solved_row(row: dict[str, Any]) -> bool:
+    """True if all applicable behavioral measures pass (excludes genome_delta).
+
+    Kept out of score_world so genome_011.lock scorer_sha stays immutable.
+    """
+    measures = row.get("measures") or {}
+    bits = [v for k, v in measures.items() if k != "genome_delta" and v is not None]
+    return all(bits) if bits else True
 
 
 def _run_probes(
@@ -938,6 +1072,8 @@ def aggregate(
     per_family: int = DEFAULT_PER_FAMILY,
     births: int = DEFAULT_BIRTHS,
 ) -> dict[str, Any]:
+    for r in rows:
+        r["behavioral_solved"] = behavioral_solved_row(r)
     by_fam: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for r in rows:
         by_fam[r["family"]].append(r)
@@ -949,6 +1085,12 @@ def aggregate(
             "n": len(chunk),
             "solved": sum(1 for r in chunk if r["solved"]),
             "solved_frac": (sum(1 for r in chunk if r["solved"]) / len(chunk)) if chunk else 0.0,
+            "behavioral_solved": sum(1 for r in chunk if r["behavioral_solved"]),
+            "behavioral_solved_frac": (
+                sum(1 for r in chunk if r["behavioral_solved"]) / len(chunk)
+            )
+            if chunk
+            else 0.0,
             "measures": {m: _rate(chunk, m) for m in MEASURES},
             "missing": sorted({k for r in chunk for k in r.get("missing") or []}),
             "depth": chunk[0]["depth"] if chunk else None,
@@ -958,6 +1100,15 @@ def aggregate(
     developed_frac = (sum(1 for r in developed if r["solved"]) / len(developed)) if developed else 0.0
     holdout_frac = (sum(1 for r in holdout if r["solved"]) / len(holdout)) if holdout else 0.0
     all_frac = (sum(1 for r in rows if r["solved"]) / len(rows)) if rows else 0.0
+    behavioral_frac = (
+        sum(1 for r in rows if r["behavioral_solved"]) / len(rows) if rows else 0.0
+    )
+    developed_beh = (
+        sum(1 for r in developed if r["behavioral_solved"]) / len(developed) if developed else 0.0
+    )
+    holdout_beh = (
+        sum(1 for r in holdout if r["behavioral_solved"]) / len(holdout) if holdout else 0.0
+    )
     expected_n = len(FAMILIES) * DEFAULT_PER_FAMILY * DEFAULT_BIRTHS
     full_battery = (
         seed == DEFAULT_SEED
@@ -996,6 +1147,10 @@ def aggregate(
         "n_worlds": len(rows),
         "solved": sum(1 for r in rows if r["solved"]),
         "solved_frac": all_frac,
+        "behavioral_solved": sum(1 for r in rows if r["behavioral_solved"]),
+        "behavioral_solved_frac": behavioral_frac,
+        "developed_behavioral_solved_frac": developed_beh,
+        "holdout_behavioral_solved_frac": holdout_beh,
         "developed_solved_frac": developed_frac,
         "holdout_solved_frac": holdout_frac,
         "developed_max_depth_solved": _max_depth_solved(developed),
@@ -1022,7 +1177,9 @@ def run_family(
     workers: int = 4,
 ) -> dict[str, Any]:
     run_dir = _run_dir()
-    genome_ok, freeze_why, snap = verify_freeze()
+    freeze_ok, freeze_why, snap = verify_freeze()
+    # genome_delta requires HEAD agent_sha == lock. CONTEXT candidates fail this honestly.
+    genome_ok = bool(freeze_ok and snap.get("head_matches_lock_agent"))
     jobs = []
     for fam, world_seed, b in seed_jobs(seed=seed, per_family=per_family, births=births):
         w_idx = (world_seed - seed) % 1000
@@ -1058,6 +1215,13 @@ def run_family(
     summary["workers"] = workers
     summary["run_dir"] = str(run_dir)
     summary["freeze"] = snap
+    summary["freeze_ok"] = freeze_ok
+    summary["historical_freeze_ok"] = freeze_ok
+    summary["head_matches_lock_agent"] = bool(snap.get("head_matches_lock_agent"))
+    summary["compatibility_label"] = (
+        f"0.0.003 behavioral compatibility: "
+        f"{summary['behavioral_solved']}/{summary['n_worlds']}"
+    )
     (run_dir / "metrics.json").write_text(
         json.dumps({"summary": summary, "rows": rows}, indent=2, default=str) + "\n",
         encoding="utf-8",

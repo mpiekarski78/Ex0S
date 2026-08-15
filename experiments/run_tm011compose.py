@@ -40,10 +40,15 @@ def _run_dir() -> Path:
     return d
 
 
-def make(*args, use_compose: bool = True, **kwargs):
+def make(*args, use_compose: bool = True, use_context_kappa: bool = False, **kwargs):
     if kwargs.get("use_evidence") is False or kwargs.get("use_bind_match") is False:
         use_compose = False
-    return _make094(*args, use_compose=use_compose, **kwargs)
+    if not use_compose:
+        use_context_kappa = False
+    # Explicit: 0.0.003 compose path never enables CONTEXT κ by default.
+    return _make094(
+        *args, use_compose=use_compose, use_context_kappa=use_context_kappa, **kwargs
+    )
 
 
 def permute_compose(seed: int) -> dict[str, Any]:

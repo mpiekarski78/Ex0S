@@ -1236,7 +1236,7 @@ Not a recipe jump. Freeze cortex, `run_tm011compose.make` (compose-on), policy a
 
 Product lineage: **Ex0S 0.0.003 — Frozen Composition** earned on recorded run `runs/2026-08-15_154037_tm011family` (**252/252 generated external-state worlds**, genome delta 0, interventions 0). The battery tests use / revision / composition of planted S, not autonomous acquisition. Stamp rule below remains the gate for any future re-run. A partial smoke battery must not set `ex0s: 0.0.003`.
 
-Freeze is **fail-closed**: `verify_freeze()` compares `agent_sha` (compose lives in `agent.py`) plus policy / cortex / make / hold-out generators / scorer / seed list, and pins `baseline_commit` to `c392aa515b7a3445bb15bc55ad969d971632ea3f`. Tests must not call `write_freeze_lock`. Rewrite the lock only via `python -m experiments.run_tm011family --write-lock --baseline-commit <sha>`.
+Freeze is **fail-closed** on the **historical** recipe at baseline commit `c392aa515b7a3445bb15bc55ad969d971632ea3f` (`docs/genome_011.lock` immutable). HEAD may differ (CONTEXT candidate): report compatibility with `use_context_kappa=False`, not a rewritten 0.0.003 lock. Tests must not call `write_freeze_lock`. Rewrite the lock only via `python -m experiments.run_tm011family --write-lock --baseline-commit <sha>`.
 
 Capacity envelope (not a new stamp): TM.0.11.BOUND · `runs/2026-08-15_163528_tm011bound`. See [`tm011bound_results.md`](tm011bound_results.md).
 
@@ -1531,5 +1531,42 @@ Recorded: [`tm012routesig_identity_results.md`](tm012routesig_identity_results.m
 ### Refuse
 
 Alpha-rename / graph-isomorphism battery; hashing here/support/role into Ksem; rewriting ORDER/DEPTH locks; CONTEXT-in-M this pass; stamping 0.0.004; genome change.
+
+## TM.0.13.CONTEXT first cognitive function in M
+
+Not Ex0S 0.0.004. Install provenance-sensitive composition under `use_context_kappa`. Product stamp stays **0.0.003**. `earned_next` always **false** this pass.
+
+**Blocking:** do **not** rewrite [`genome_011.lock`](genome_011.lock). Split verification:
+
+1. **Historical freeze** — recipe blobs at baseline `c392aa515b7a3445bb15bc55ad969d971632ea3f` match the lock.
+2. **Compatibility** — HEAD with `use_context_kappa=False` hosts 0.0.003 compose behavior (behavioral 252/252 when full FAMILY is run). Do not report HEAD as `genome_delta=0` for TM.0.11.
+
+### κ contract
+
+Frozen in [`kappa_013.lock`](kappa_013.lock):
+
+```text
+κ0 = seed(origin)                         # origin = bind of first non-motor hop
+κ(t+1) = F(κ(t), canonical(bind, did))
+ctx_encoding = ksem-sha256-v1
+```
+
+Known-answer vectors gate `three_memory.kappa`. Family plants `ctx` via independently pinned `reference_route_kappa`. Motor hops never step κ. ctx filter applies only on a **derived** frontier after κ exists. If any eligible fact has `ctx`, discard untagged; zero exact matches → HOLD.
+
+### Locked behavioral family
+
+Apparatus: `experiments/run_tm013context.py` + [`context_013.lock`](context_013.lock) + [`genome_013.lock`](genome_013.lock).
+
+Evidence-causal A-then-B vs B-then-A (support + visited fact_ids). C7 equal-evidence same-κ → HOLD. Wipe / donor / retarget / ρ / fid-rename / support-trap / no-fallback / hop-1 motor / DEPTH hold-out / new-nonce order / feature-off.
+
+### Decisive criterion
+
+Same cue X, same machinery, same frontier Y; different acquired S evidence history → different route → different κ → different contextual motor. Not apparatus dual-traces.
+
+### Refuse
+
+Rewrite `genome_011.lock`; stamp 0.0.004; encode κ→motor in genome; step κ on motor edges; ctx filter on observation MATCH; fallback to untagged when any ctx exists; plant family ctx only from live kappa without reference/vectors; 252-world CONTEXT generator this pass (that is **TM.0.13.FAMILY**).
+
+Recorded: [`tm013context_results.md`](tm013context_results.md).
 
 

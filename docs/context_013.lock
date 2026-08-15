@@ -1,0 +1,42 @@
+{
+  "version": "TM.0.13.CONTEXT",
+  "ex0s_under_test": "0.0.003",
+  "earned_next": false,
+  "ctx_encoding": "ksem-sha256-v1",
+  "seed": 12345,
+  "kappa_013_lock_sha": "b76bd594c9e9fae6cc30b99c48879fe2bd6981326460b4c65683f218a710ad9a",
+  "genome_011_lock_sha": "e4202d8402ac2f734a8af922898dfd68ec215f2824470d49ebe9217c534ede92",
+  "genome_013_lock_sha": "afc4df41647d11c1506349500e1f22ba7f32c566608f57defee461ef9c2e4e0f",
+  "reference_route_kappa_sha": "683b007ed870ce333daa1d3af01e507a4766defafe4dede71cdff900bb313f70",
+  "reference_kappa_seed_sha": "c64b6337fdf1494e890bce97abfe224526d7fb3b135ae79ce36235b70b0276a9",
+  "reference_kappa_step_sha": "916eec9dbbefd8934b5b844395934d0921b5f33303d4e5e1eb46c24824a33590",
+  "reference_edge_sem_sha": "7e518d8f113f89e9832f84e107b94f5fb8ceead887cee224955bc45a165d9ab7",
+  "cell_ids": [
+    "C13_route_order",
+    "C13_c7_tie_hold",
+    "C13_wipe",
+    "C13_donor_revise",
+    "C13_retarget",
+    "C13_reset_rho",
+    "C13_fid_rename",
+    "C13_ctx_beats_untagged",
+    "C13_no_fallback_untagged",
+    "C13_hop1_motor_no_kappa",
+    "C13_visited_ctx_no_poison",
+    "C13_depth_holdout",
+    "C13_new_nonce_order",
+    "C13_feature_off_untagged_wins"
+  ],
+  "n_cells": 14,
+  "n_ok": 14,
+  "refuse": [
+    "rewrite genome_011.lock",
+    "stamp Ex0S 0.0.004",
+    "encode kappa to motor in genome",
+    "step kappa on motor edges",
+    "apply ctx filter on observation MATCH",
+    "fallback to untagged when any ctx exists",
+    "plant family ctx only from live kappa without reference",
+    "252-world CONTEXT generator this pass"
+  ]
+}

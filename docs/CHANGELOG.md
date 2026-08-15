@@ -2,6 +2,7 @@
 
 ## 2026-08-15
 
+- TM.0.13.CONTEXT: first cognitive function in M. Freeze κ (`kappa_013.lock`, `ctx_encoding=ksem-sha256-v1`); carry `(Y,κ)` after non-motor hops; plant ctx via independent `reference_route_kappa`; evidence-causal family **14/14** (post-audit: visited-ctx no poison; in-place revise; fail-closed context lock). `genome_011.lock` immutable. **No Ex0S 0.0.004**; `earned_next` false. Next: TM.0.13.FAMILY. [`docs/tm013context_results.md`](tm013context_results.md).
 - Renamed public repo to [mpiekarski78/Ex0S](https://github.com/mpiekarski78/Ex0S) (was `three-memory`). Lab IDs stay `TM.*`.
 - TM.0.11.FAMILY (**Ex0S 0.0.003 — Frozen Composition**): frozen compose genome vs **252 generated external-state worlds**. **252/252** (A–D 144/144; hold-out E–G 108/108; hold-out depth 4). First-hop D/F only (no lookahead). `no_transitive_shortcuts`. G upstream body hash stable. Genome changes 0; apparatus interventions 0. Hold-out generators preregistered in [`genome_011.lock`](genome_011.lock). [`docs/tm011family_results.md`](tm011family_results.md).
 - License: Apache-2.0 for code ([`LICENSE`](../LICENSE)); [`NOTICE`](../NOTICE) names Marcin Piekarski and Ex0S; [`CITATION.cff`](../CITATION.cff) for credit. Ex0S name/logo stay project identity (not licensed marks).

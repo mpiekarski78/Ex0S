@@ -58,7 +58,7 @@ Ex0S 0.0.003  ←  TM.0.11.FAMILY
 
 Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enough to treat as a lineage, not only a series of demos.
 
-**Next:** TM.0.12.ROUTESIG.IDENTITY done — fid-based κ is storage-row dependent; Ksem tracks `canonical(bind, did)`. Next (no stamp): **freeze the κ contract**, then the first CONTEXT function in M. Do **not** stamp 0.0.004.
+**Next:** TM.0.13.CONTEXT landed — κ frozen (`ksem-sha256-v1`); CONTEXT-on candidate in M; small causal family 13/13; `genome_011.lock` immutable; **no** Ex0S 0.0.004. Next lab: **TM.0.13.FAMILY** (generated worlds). Do **not** stamp 0.0.004 until that survives.
 
 ## Question
 
