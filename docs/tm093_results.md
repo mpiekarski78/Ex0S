@@ -36,6 +36,7 @@ Lives that earned the unequal counts: M1 succeeds, M2 fails, M1 succeeds. Both X
 
 - Evidence is `support`/`contradiction` copied from earned `wins`/`losses`. No confidence calculus. No `+` in cortex.
 - Historical BOX rerun after 0.9.3 (`runs/2026-08-15_125856_tm091box`): leakage **not observed** 3/3; donor **Pass** 3/3; neutrals still copy (**Fail** 3/3); transfer **Pass** 2/2 evaluable; W3 2/3. Compatible label still **Control Fail**. BOX-MATCH already held on the 0.9.2 make inside the 0.9.3 run.
+- REVISION landed in TM.0.9.4 on this same comparison. Do not treat historical BOX neutrals as a current defect.
 
 ## Reproduce
 

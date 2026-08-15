@@ -97,6 +97,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.9.BOX leakage | leakage **not observed** / relevance **Fail** (empty HOLD; donor S wins; neutrals blind-copy; transfer 2/2 evaluable; W3 2/3) |
 | three-memory, TM.0.9.2 MATCH | **Store-works** / **Fail** (same-S cue switch; crossed HOLD; no-cue English bar HOLD) |
 | three-memory, TM.0.9.3 EVIDENCE | **Store-works** / **Fail** (earned support; equal HOLD; S-swap follows S) |
+| three-memory, TM.0.9.4 REVISION | **Store-works** / **Fail** (HOLD→M1→HOLD→M2; mid-reset reverse; order-invariant) |
 
 ## Honest limits
 
@@ -832,4 +833,13 @@ See [`tm092_results.md`](tm092_results.md).
 | Class | **Store-works** | **Fail** |
 
 See [`tm093_results.md`](tm093_results.md).
+
+## TM.0.9.4 (REVISION / motor bar)
+
+| Check | A REVISION | B motor bar |
+|-------|------------|-------------|
+| Walk / mid-reset reverse / order | **HOLD→M1→HOLD→M2** / **Pass** / **Pass** | — |
+| Class | **Store-works** | **Fail** |
+
+See [`tm094_results.md`](tm094_results.md).
 

@@ -348,3 +348,7 @@ A stored `X→action` steers only when `X` is in the current stream. **A** **Sto
 
 Among applicable rivals, earned support prefers the stronger relation. **A** **Store-works**: unequal follows S; equal HOLD; counterfactual swap; Y dropped by MATCH. **B** **Fail**: no-cue English bar; not retuned. Details: [`tm093_results.md`](tm093_results.md).
 
+## TM.0.9.4 (REVISION / motor bar)
+
+Same 0.9.3 comparison. Later outcomes can withdraw and reverse a preference. **A** **Store-works**: HOLD→M1→HOLD→M2; mid-reset then reverse; same final S evidence → same motor. Genome delta 0. **B** **Fail**: no-cue English bar; not retuned. Details: [`tm094_results.md`](tm094_results.md).
+
