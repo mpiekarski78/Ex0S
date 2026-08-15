@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.9.4 (REVISION). Toy series: v0–v23.
+**Current:** TM.0.11 (COMPOSE). Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.9.4: the same competing hypotheses can reverse preference when later outcomes change their inspectable evidence. No new genome — REVISION is the 0.9.3 comparison under a longer life. Walk is HOLD→M1→HOLD→M2. Mid-life ρ reset still lets S keep being edited. Same final S evidence, different order, same motor. **B Fail** stays — do not green the no-cue English bar. Historical BOX neutrals are frozen 0.9.1 behavior, not a current defect. Next: freeze this recipe and throw a family of unseen relation worlds at it.
+Honest status after TM.0.11: two independently acquired relations can be composed at use time without materializing a shortcut in S (**A Store-works**, 3/3; broken/wrong-edge/donor/no-residue/S-stable controls). One primitive — chosen non-motor consequent becomes the next MATCH frontier. Not hop flags. **B Fail** stays. 0.10.FAMILY (252/252 on frozen 0.9.4) still stands. Next: freeze compose and attack depth / branching / revise-downstream — not more epistemic machinery.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -83,6 +83,8 @@ TM.0.9.BOX leakage control: [`docs/tm091box_results.md`](docs/tm091box_results.m
 TM.0.9.2 antecedent MATCH: [`docs/tm092_results.md`](docs/tm092_results.md).  
 TM.0.9.3 EVIDENCE: [`docs/tm093_results.md`](docs/tm093_results.md).  
 TM.0.9.4 REVISION: [`docs/tm094_results.md`](docs/tm094_results.md).  
+TM.0.10.FAMILY frozen relation worlds: [`docs/tm010family_results.md`](docs/tm010family_results.md).  
+TM.0.11 COMPOSE: [`docs/tm011compose_results.md`](docs/tm011compose_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -161,6 +163,8 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.9.2 A MATCH / B motor bar | **Store-works** / **Fail** (same-S cue switch; crossed HOLD; no-cue English bar HOLD) |
 | TM.0.9.3 A EVIDENCE / B motor bar | **Store-works** / **Fail** (earned support; equal HOLD; S-swap follows S) |
 | TM.0.9.4 A REVISION / B motor bar | **Store-works** / **Fail** (HOLD→M1→HOLD→M2; mid-reset reverse; order-invariant) |
+| TM.0.10.FAMILY frozen 0.9.4 | **252/252** worlds (A–D 144/144; hold-out E–G 108/108; genome delta 0) |
+| TM.0.11 A COMPOSE / B motor bar | **Store-works** / **Fail** (X→Y→M1 at use; no shortcut; donors / residue / S-stable) |
 
 ## Five pieces
 
@@ -242,6 +246,8 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.9.2 MATCH | **Store-works** / **Fail** | cue switch on same S; crossed HOLD; [`docs/tm092_results.md`](docs/tm092_results.md) |
 | TM.0.9.3 EVIDENCE | **Store-works** / **Fail** | earned support; equal unresolved; [`docs/tm093_results.md`](docs/tm093_results.md) |
 | TM.0.9.4 REVISION | **Store-works** / **Fail** | HOLD→M1→HOLD→M2; genome delta 0; [`docs/tm094_results.md`](docs/tm094_results.md) |
+| TM.0.10.FAMILY | **252/252** / delta 0 | 7 templates, hold-out E–G; [`docs/tm010family_results.md`](docs/tm010family_results.md) |
+| TM.0.11 COMPOSE | **Store-works** / **Fail** | frontier compose; no shortcut; [`docs/tm011compose_results.md`](docs/tm011compose_results.md) |
 
 ## Quick start
 
@@ -311,6 +317,8 @@ python tests/test_tm091box.py
 python tests/test_tm092.py
 python tests/test_tm093.py
 python tests/test_tm094.py
+python tests/test_tm010family.py
+python tests/test_tm011compose.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -377,6 +385,8 @@ python -m experiments.run_tm091box --seeds 12345 12346 12347 --workers 3
 python -m experiments.run_tm092
 python -m experiments.run_tm093
 python -m experiments.run_tm094
+python -m experiments.run_tm010family --seed 12345 --per-family 12 --births 3 --workers 4
+python -m experiments.run_tm011compose
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).

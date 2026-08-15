@@ -98,6 +98,8 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.9.2 MATCH | **Store-works** / **Fail** (same-S cue switch; crossed HOLD; no-cue English bar HOLD) |
 | three-memory, TM.0.9.3 EVIDENCE | **Store-works** / **Fail** (earned support; equal HOLD; S-swap follows S) |
 | three-memory, TM.0.9.4 REVISION | **Store-works** / **Fail** (HOLD→M1→HOLD→M2; mid-reset reverse; order-invariant) |
+| three-memory, TM.0.10.FAMILY | **252/252** worlds / genome delta 0 (hold-out E–G 108/108) |
+| three-memory, TM.0.11 COMPOSE | **Store-works** / **Fail** (frontier compose; no shortcut; donors / residue) |
 
 ## Honest limits
 
@@ -842,4 +844,23 @@ See [`tm093_results.md`](tm093_results.md).
 | Class | **Store-works** | **Fail** |
 
 See [`tm094_results.md`](tm094_results.md).
+
+## TM.0.10.FAMILY (frozen 0.9.4 relation worlds)
+
+| Check | Family |
+|-------|--------|
+| Developed A–D | **144/144** |
+| Hold-out E–G | **108/108** |
+| Genome changes | **0** |
+
+See [`tm010family_results.md`](tm010family_results.md).
+
+## TM.0.11 (COMPOSE / motor bar)
+
+| Check | A COMPOSE | B motor bar |
+|-------|-----------|-------------|
+| Main / donors / no shortcut | **Pass** / **Pass** / **Pass** | — |
+| Class | **Store-works** | **Fail** |
+
+See [`tm011compose_results.md`](tm011compose_results.md).
 

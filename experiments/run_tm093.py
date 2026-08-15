@@ -227,6 +227,8 @@ def run_evidence_battery(policy: UsePolicy, spec: dict[str, Any], dest: Path) ->
 
 
 def classify_a(m: dict[str, Any]) -> tuple[str, str]:
+    if m.get("use_compose"):
+        return "Confound", "Compose was smuggled onto this slice."
     if m.get("use_evidence") is False:
         return "Fail", "Evidence was frozen off."
     return str(m.get("evidence_classification") or "Fail"), str(m.get("evidence_rationale") or "")

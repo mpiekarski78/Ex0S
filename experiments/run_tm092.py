@@ -210,6 +210,8 @@ def train_match_policy(
 
 
 def classify_a(m: dict[str, Any]) -> tuple[str, str]:
+    if m.get("use_compose"):
+        return "Confound", "Compose was smuggled onto this slice."
     if m.get("use_evidence"):
         return "Confound", "Evidence was smuggled onto this slice."
     if m.get("use_bind_match") is False:

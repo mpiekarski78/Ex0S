@@ -74,6 +74,8 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
         return "Confound", "Bind-match was smuggled onto this slice."
     if m.get("use_evidence"):
         return "Confound", "Evidence was smuggled onto this slice."
+    if m.get("use_compose"):
+        return "Confound", "Compose was smuggled onto this slice."
     if not saved or not m.get("count_search"):
         return "Fail", "Count-search was frozen off."
     return None
