@@ -70,9 +70,9 @@ Claim form for R2: **each tested fixed window of size k fails when the relevant 
 
 **Not:** no finite suffix can ever suffice; SHA-as-genome; full-path necessity; 0.0.004.
 
-## Next (not this pass)
+## Next
 
-**Identity/rename robustness** of κ. Then freeze accumulator contract; only then discuss CONTEXT genome / 0.0.004.
+**ROUTESIG.IDENTITY** landed — see [`tm012routesig_identity_results.md`](tm012routesig_identity_results.md). After IDENTITY: freeze the κ contract; then the first CONTEXT function in M. ALPHA/token rename is a later optional lab.
 
 ## Audit notes (apparatus)
 

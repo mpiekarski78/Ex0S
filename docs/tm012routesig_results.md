@@ -58,7 +58,7 @@ D = distinguishes. Table computed from graph structure (not encoded in the score
 
 ## Next
 
-**ROUTESIG.DEPTH** landed — see [`tm012routesig_depth_results.md`](tm012routesig_depth_results.md). After DEPTH: identity/rename robustness of κ; then freeze accumulator requirements; only then discuss compose carrying `(Y, κ)`.
+**ROUTESIG.DEPTH** and **ROUTESIG.IDENTITY** landed — see [`tm012routesig_depth_results.md`](tm012routesig_depth_results.md), [`tm012routesig_identity_results.md`](tm012routesig_identity_results.md). Next: freeze the κ contract (payload = relation identity); then the first CONTEXT function in M.
 
 ## Audit notes (apparatus)
 

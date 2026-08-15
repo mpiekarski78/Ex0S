@@ -1,0 +1,117 @@
+{
+  "version": "TM.0.12.ROUTESIG.IDENTITY",
+  "phase": "identity",
+  "ex0s_under_test": "0.0.003",
+  "earned_next": false,
+  "seed": 12345,
+  "context_012_lock_sha": "fe7e28f341b63ec3b329b6d618d922222540074dd0e40b1723fdd6496fe1f3ff",
+  "minimap_012_lock_sha": "1f59ae9242d3971c602a5509715bca07e311d50b732c4901a00b1947f76364aa",
+  "pathdisc_012_lock_sha": "47730b1ff9b261463842645d66c7b89ff27b5b2595c3cc5109c2bcd02625ce45",
+  "midpath_012_lock_sha": "f5c47b7332ef8ade91951372440e12b8d80429541428c2b331b12678b259f2ed",
+  "routesig_012_lock_sha": "c81dcb73d2276e58e9eb0012000b8c15ec6c83a5bb6e33248ace23a798c6a987",
+  "routesig_depth_012_lock_sha": "904b31a0ea1c1e3c85ce824498f192cd322788eb0ee10098b16c2d294da9432f",
+  "cells": {
+    "C12A": {
+      "role": "route_identity",
+      "perturbation": "opaque_fid_rename",
+      "holds_fixed": [
+        "bind",
+        "did",
+        "role",
+        "here",
+        "support",
+        "route_order",
+        "motors"
+      ],
+      "varies": [
+        "fid"
+      ],
+      "witness": "frozen C10 via gen_c10"
+    },
+    "C12B": {
+      "role": "route_identity",
+      "perturbation": "same_fid_last_hop_rewrite",
+      "holds_fixed": [
+        "path_fids",
+        "prefix_tokens",
+        "motors"
+      ],
+      "varies": [
+        "last_did",
+        "frontier_token"
+      ],
+      "note": "diagnostic if revision always mints a new fid"
+    }
+  },
+  "candidates": [
+    "Kfid",
+    "Ksem"
+  ],
+  "candidate_meanings": {
+    "Kfid": "rolling F over origin + ordered path fids (storage-row identity)",
+    "Ksem": "same F over origin + ordered canonical(bind, did) (relation identity)"
+  },
+  "ksem_fields": [
+    "bind",
+    "did"
+  ],
+  "ksem_excludes": [
+    "fid",
+    "here",
+    "support",
+    "role",
+    "motor",
+    "context_expect"
+  ],
+  "kappa_reuse": [
+    "kappa_seed(origin)",
+    "kappa_step(previous_kappa, token)",
+    "route_kappa(origin, ordered_tokens)"
+  ],
+  "here": "chb",
+  "support": [
+    1,
+    0
+  ],
+  "validation": [
+    "C12A: bijective disjoint fid rename; structural fields identical",
+    "C12A: path fids differ; path sems identical; nodes and motors identical",
+    "C12B: ordered path fids identical; last semantic hop only differs",
+    "C12B: prefix tokens fixed; not a full token alpha-rename",
+    "C12B: exactly one inherited (bind,did) rewritten; fid kept; Z\u2192motors added",
+    "both C10 traces checked; unique fids; file-order shuffle invariance",
+    "Ksem canonical(bind, did) only \u2014 no here/support/role/fid",
+    "same rolling F as ORDER (live SHA pin); payload differs",
+    "ORDER distinction preserved on both encodings (Ksem route_a != route_b)",
+    "unique directed edges; runtime seed equals locked seed",
+    "raw TraceSpec extractor-only; kappa path tokens only"
+  ],
+  "gen_c10_sha": "e078ee1be9b11f5a2ee6ee5d627a14612be1c3165b4869d9b659eab202cde7d2",
+  "gen_c12a_sha": "7b61f7f63533b7d8a8aa7b516c794664c44604d561164de1608865dec39d54e2",
+  "gen_c12b_sha": "a76cf617e2e4fa24aed493d0078a045d098c721d85c19c918d1550f0bc855e74",
+  "rename_fids_sha": "f69e348158f5d19df6bea0602d366cacfefad52035900527625897eb0d7986aa",
+  "edge_sem_sha": "907487b408b8f1480eb21de33227ed64fe8d064ea6e3adb7d4f0dd306be753c9",
+  "path_edge_sems_sha": "70472713840c6ffabda92c00a681283174e399bcd555bee5e494b418916b52d5",
+  "extract_identity_sha": "fa124de422f44d1e33b2c50021c4f615524e8dc1d57404a511a131e3410492fe",
+  "score_kappa_pair_sha": "0691c9ee9b71a38035101c650302222cd118df08bb6791ea77b62f933d87ea09",
+  "assert_c12a_sha": "4dad948285c4f926a743030f9b00f8b6d7fdb6e0634b4dd158d2ec243d37c882",
+  "assert_c12b_sha": "8fe0690cbd886ab2f1afea602c899a851a8724e2339bf689ab4aacb429133289",
+  "edge_fid_sha": "f1a89f767aed236ebf61d5f68234baa9228c0b59333597c53d250d665940cbb5",
+  "path_edge_fids_sha": "09d68a5a96b1a482f56549e8aec8e8299e873800310d9290edb303d9fe3cc21c",
+  "kappa_seed_sha": "52292d2e68fd378f2b26960fc6294a4f65c271a36d1e272b2192002287f4408b",
+  "kappa_step_sha": "47e82553611b7181510fe9673a60d312dbaf1a703650306357d8b08dd82b527a",
+  "route_kappa_sha": "22d5a827efdb23e86368b1c5bb9ca68bdf50c5127c2e24466a35244741e07509",
+  "trace_spec_sha": "2b449da3328c225800c84204e523448995bc55c06de5e155195f98e1874a0a13",
+  "refuse": [
+    "alpha-rename / graph-isomorphism / token permutation battery",
+    "require identical digest bits after token rename",
+    "hash here/support/role/fid into Ksem",
+    "claim Kfid fails cognition",
+    "rewrite routesig_012.lock / routesig_depth_012.lock",
+    "stamp Ex0S 0.0.004",
+    "genome / agent / CONTEXT-in-M this pass",
+    "path_and_frontier route discovery",
+    "raw TraceSpec as selector input",
+    "SHA-as-genome / full-path necessity"
+  ]
+}

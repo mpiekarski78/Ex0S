@@ -1501,12 +1501,35 @@ Apparatus: `docs/routesig_depth_012.lock` — pins CONTEXT / MINIMAP / PATHDISC 
 
 ### Decisive criterion
 
-If for every k∈[1..8] R2 **collides**, R2x/R3/R4 **distinguish**, and geometry places the differing edge exactly outside suffix-k: each tested fixed window of size k fails when the distinction is k+1 back; rolling κ retains it at constant size. Do **not** conclude “no finite suffix ever,” SHA-as-genome, full-path necessity, or 0.0.004. C11[2] ~ C10 suffix-2 **pattern only**.
+If for every k∈[1..8] R2 **collides**, R2x/R3/R4 **distinguish**, and geometry places the differing edge exactly outside suffix-k: each tested fixed window of size k fails when the distinction is k+1 back; rolling κ retains it at constant size. Do **not** conclude “no finite suffix ever,” SHA-as-genome, full-path necessity, or 0.0.004. C11[2] ~ C10 suffix-2 **pattern only**. Next: **ROUTESIG.IDENTITY**.
 
 Recorded: [`tm012routesig_depth_results.md`](tm012routesig_depth_results.md).
 
 ### Refuse
 
 Single fixed frontier for all k; rewriting ORDER/C10; TraceSpec into κ; identity/rename this pass; stamping 0.0.004; genome change.
+
+## TM.0.12.ROUTESIG.IDENTITY storage-row fid vs relation identity
+
+Not a behavioral scorer and **not** Ex0S 0.0.004. Representation-contract lab: same rolling F as ORDER; compare **payloads**. **C12A** bijectively renames only fids on frozen C10. **C12B** keeps path fids and rewrites the last hop’s `(bind, did)`. Ksem is `canonical(bind, did)` only — not here / support / role / fid.
+
+Apparatus: `docs/routesig_identity_012.lock` — pins CONTEXT / MINIMAP / PATHDISC / MIDPATH / ORDER / DEPTH; reuses `kappa_seed` / `kappa_step` / `route_kappa`; `gen_c10` SHA must match ORDER. Does **not** rewrite prior locks. Scorer compares κ digests only (motors may match).
+
+### Contrast
+
+| ID | Role |
+|----|------|
+| C12A | `route_identity` — opaque fid rename; structure fixed |
+| C12B | `route_identity` — same fid; last hop meaning changed |
+
+### Decisive criterion
+
+If Kfid **differs** on C12A and is **same** on C12B, while Ksem does the inverse: fid-based κ is storage-identity dependent; semantic κ tracks directed relation identity. Do **not** conclude Kfid fails cognition, require alpha-rename digest equality, or stamp 0.0.004. ORDER distinction must still hold on both encodings.
+
+Recorded: [`tm012routesig_identity_results.md`](tm012routesig_identity_results.md).
+
+### Refuse
+
+Alpha-rename / graph-isomorphism battery; hashing here/support/role into Ksem; rewriting ORDER/DEPTH locks; CONTEXT-in-M this pass; stamping 0.0.004; genome change.
 
 
