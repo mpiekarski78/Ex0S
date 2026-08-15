@@ -1,5 +1,6 @@
-# Three-memory (TM) · Ex0S
+# Ex0S · three-memory (TM)
 
+**Repo:** [mpiekarski78/Ex0S](https://github.com/mpiekarski78/Ex0S)  
 **Current:** **Ex0S 0.0.002** (TM.0.11 COMPOSE). Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  

@@ -4,6 +4,8 @@
 
 Pronounce “ex-oh-ess” (or “exos”). The **0** marks the claim: world knowledge is **not** stored in cortex / policy weights.
 
+Public repo: [mpiekarski78/Ex0S](https://github.com/mpiekarski78/Ex0S).
+
 ## What it is
 
 A developmental organism lineage:

@@ -2,7 +2,7 @@
 
 **Date:** 14 August 2026  
 **Classification:** **Store-works**  
-**Code:** [mpiekarski78/three-memory](https://github.com/mpiekarski78/three-memory)  
+**Code:** [mpiekarski78/Ex0S](https://github.com/mpiekarski78/Ex0S)  
 **BDH baseline:** [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) Category B (trace-only)
 
 This is the deliverable for the first three-memory question. Evidence, not a product.
