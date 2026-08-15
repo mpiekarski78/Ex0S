@@ -2,7 +2,7 @@
 
 A frozen CONTEXT recipe over an inspectable relation graph: provenance-sensitive composition at use time.
 
-Not general intelligence. Not open-ended evolution. Not planning. Not a stamped product bump for experience-authored contextual continuations (that candidate is **TM.0.14.ACQUIRE**, frozen, `earned_next=false`).
+Not general intelligence. Not open-ended evolution. Not planning. ACQUIRE/FAMILY show experience can author contextual continuations across generated lives — **product stamp remains 0.0.004** until a human names a bump (`ex0s=null` on FAMILY earn).
 
 ## Claim (defensible — stamped)
 
@@ -13,45 +13,43 @@ Not general intelligence. Not open-ended evolution. Not planning. Not a stamped 
 
 Prior stamps still stand: 0.0.003 Frozen Composition ([`genome_011.lock`](genome_011.lock) immutable).
 
-## Recipe files (CONTEXT-on — must not drift without a new stamp)
+## Recipe files (CONTEXT-on / ACQUIRE-on)
 
 | File | Role |
 |------|------|
-| `three_memory/agent.py` | MATCH, evidence, `_compose_choose` with κ; optional `use_acquire_ctx` |
+| `three_memory/agent.py` | MATCH, evidence, `_compose_choose` with κ; `use_acquire_ctx` |
 | `three_memory/kappa.py` | `ksem-sha256-v1` |
 | `three_memory/policy.py` | boxed P (`n_feat == 2`) |
 | `three_memory/cortex.py` | frozen cortex |
-| `experiments/run_tm011compose.py` `make` | compose-on; pass `use_context_kappa=True` for CONTEXT |
+| `experiments/run_tm011compose.py` `make` | compose-on; kwargs forward acquire |
 
-Locks: [`genome_013.lock`](genome_013.lock), [`kappa_013.lock`](kappa_013.lock), [`family_013.lock`](family_013.lock).  
-Historical 0.0.003: [`genome_011.lock`](genome_011.lock) at `c392aa515b7a3445bb15bc55ad969d971632ea3f`.
+Locks: [`genome_013.lock`](genome_013.lock), [`kappa_013.lock`](kappa_013.lock), [`family_013.lock`](family_013.lock), [`genome_014.lock`](genome_014.lock), [`acquire_014.lock`](acquire_014.lock), [`family_014.lock`](family_014.lock).
 
-## Candidate (not stamped) — TM.0.14.ACQUIRE
+## TM.0.14 lineage (candidate → FAMILY earn)
 
-Experience authors **contextual continuations** over a planted untagged skeleton. Apparatus never writes `ctx=`.  
-**16/16** · [`tm014acquire_results.md`](tm014acquire_results.md) · [`acquire_014.lock`](acquire_014.lock) · [`genome_014.lock`](genome_014.lock) · `earned_next=false`.
+| Lab | Result |
+|-----|--------|
+| ACQUIRE | **16/16** freeze · [`tm014acquire_results.md`](tm014acquire_results.md) |
+| FAMILY | **288/288** · `earned_next=true` · **`ex0s=null`** · [`tm014family_results.md`](tm014family_results.md) |
 
-## What 288/288 means
-
-Generated planted contextual `.tag` worlds with mandatory interventions. The frozen CONTEXT mechanism **operated over 288 external-state configurations**. It did not autonomously acquire those relations from raw events. (Hold-out note: earn run used **fresh sealed hold-out worlds** after an F/H generator evidence-ladder fix — not an organism change.)
+Skeleton edges remain apparatus-planted; contextual continuations are organism-authored from experienced outcomes under generated developmental histories.
 
 ## Explicit absences
 
 | Missing | Where next |
 |---------|------------|
-| Kill-or-earn FAMILY on ACQUIRE candidate | **TM.0.14.FAMILY** |
-| Full skeleton acquisition from life | later |
+| Named product stamp for FAMILY earn | human decision (not auto) |
+| Relational skeleton acquisition from life | **next lab** |
 | Lookahead / backtracking | later |
 | No-cue English motor bar | B Fail (untouched) |
 
 ## Reproduce
 
 ```bash
-python tests/test_tm011family.py
-python tests/test_tm013context.py
 python tests/test_tm013family.py
 python tests/test_tm014acquire.py
-python -m experiments.run_tm013family --verify-sealed
+python tests/test_tm014family.py
+python -m experiments.run_tm014family --verify-sealed
 ```
 
 Paper-style summary: [`CLAIM.md`](CLAIM.md).

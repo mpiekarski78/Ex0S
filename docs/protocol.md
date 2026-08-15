@@ -1632,4 +1632,35 @@ Apparatus `ctx` planting; second κ engine; stale lived retention; teacher suppl
 
 Apparatus: `experiments/run_tm014acquire.py`. Results: [`tm014acquire_results.md`](tm014acquire_results.md).
 
+## TM.0.14.FAMILY kill-or-earn on frozen ACQUIRE
+
+Attack the frozen `use_acquire_ctx` candidate with **generated developmental histories** (not planted ctx). No LOOKAHEAD. No skeleton-from-life. Product stamp naming is **not** done by the runner (`ex0s=null`).
+
+**Preregistered claim:**
+
+> A frozen developmental recipe generalizes across unseen generated life histories by converting experienced outcomes into provenance-sensitive contextual continuations in S, which persist across working-state reset and causally steer later behavior without contextual answers being supplied by the apparatus.
+
+### World seal
+
+Manifest commits full World: `birth`, `primary_life[]`, `counterfactual_life[]`, `donor_life[]`, `probes[]`, `interventions[]`. Scorer must not invent lives after peek.
+
+### Division of labor
+
+Apparatus: skeleton, route/evidence (`cue_prefer`), teacher motor, outcome.  
+Organism: κ, authored `experience_ctx`, evidence, later use.
+
+### Battery
+
+8×12×3=**288**. DEVELOP A–D; HOLDOUT E–H sealed until `--canonical`. Provenance ledger; global measures every world; donor/counterfactual coverage per family; family-specific B/C/D/F/G/H.
+
+### Earn gate
+
+288/288, manifests, ledger `unexpected_ctx_writes=0`, `genome_014` stable → `earned_next=true`, **`ex0s=null`**.
+
+### Refuse
+
+E–H organism answers before canonical; inventing lives in scorer; apparatus `ctx`; teacher Y/κ/path; mid-life stash; LOOKAHEAD; pre-name product version; skeleton-from-life; claiming open exploration.
+
+Apparatus: `experiments/run_tm014family.py`. Results: [`tm014family_results.md`](tm014family_results.md).
+
 

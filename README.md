@@ -64,7 +64,7 @@ Ex0S 0.0.004  ←  TM.0.13.FAMILY
 
 Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enough to treat as a lineage, not only a series of demos.
 
-**Next:** TM.0.14.FAMILY — kill-or-earn on the frozen ACQUIRE candidate (if audit holds). LOOKAHEAD waits.
+**Next:** Acquire the relational skeleton from experience (not LOOKAHEAD). Product stamp naming for FAMILY earn remains a human decision (`ex0s=null`).
 
 ## Question
 
@@ -74,7 +74,7 @@ Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enou
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status: **Ex0S 0.0.004 — Contextual Composition** (TM.0.13.FAMILY **288/288** planted contextual worlds; hold-out sealed until canonical; earn run used **fresh sealed hold-out worlds** after an F/H generator fix). **0.0.003** / **0.0.002** / **0.0.001** still stand. ACQUIRE candidate frozen (**16/16**, not stamped): experience authors contextual continuations over a planted skeleton — [`docs/tm014acquire_results.md`](docs/tm014acquire_results.md). **B Fail** on the no-cue English motor bar stays. See [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md).
+Honest status: **Ex0S 0.0.004 — Contextual Composition** (TM.0.13.FAMILY **288/288** planted contextual worlds). TM.0.14.ACQUIRE **16/16** then FAMILY **288/288** (`earned_next=true`, **`ex0s=null`**) — generated developmental histories author contextual continuations; product stamp unnamed. [`docs/tm014family_results.md`](docs/tm014family_results.md). **B Fail** on the no-cue English motor bar stays. See [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md).
 
 ## Result (v0–v23 toy, TM.0.x)
 
