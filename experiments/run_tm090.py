@@ -68,6 +68,8 @@ def classify_common(m: dict[str, Any]) -> tuple[str, str] | None:
     m["use_count_search"] = saved
     if early:
         return early
+    if m.get("use_hyp_survive"):
+        return "Confound", "Hyp-survive was smuggled onto this slice."
     if not saved or not m.get("count_search"):
         return "Fail", "Count-search was frozen off."
     return None
@@ -77,6 +79,8 @@ def classify_a(m: dict[str, Any]) -> tuple[str, str]:
     saved = _hide(m)
     label, why = _classify_a082(m)
     m["use_count_search"] = saved
+    if m.get("use_hyp_survive"):
+        return "Confound", "Hyp-survive was smuggled onto this slice."
     if not saved or not m.get("count_search"):
         return "Fail", "Count-search was frozen off."
     if label == "Store-works":
@@ -91,6 +95,8 @@ def classify_b(m: dict[str, Any]) -> tuple[str, str]:
     saved = _hide(m)
     label, why = _classify_b082(m)
     m["use_count_search"] = saved
+    if m.get("use_hyp_survive"):
+        return "Confound", "Hyp-survive was smuggled onto this slice."
     if not saved:
         return "Fail", "Count-search was frozen off."
     if (m.get("train_s", {}).get("n") or 0) > MAX_TRAIN_S_FILES:

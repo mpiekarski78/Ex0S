@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.9.0. Toy series: v0–v23.
+**Current:** TM.0.9.BOX (control on frozen 0.9.1). Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.9.0: first math life — search may count unread rares. Search still retrieved `xenon`; C used `neon`. **A Fail**. Motor bar **Store-works** (n=2, last-50 0.94; not the English bar, not retuned). Still genome: stream-first bind, find-novel, retry-novel, local-alias, keep-steerer, one return, one machine, count-search. No `+` in cortex. A pile of logs, not Wikipedia. More math after S holds the right language.
+Honest status after TM.0.9.BOX: boxed weights did **not** absorb `flim→PRESS` vs `flim→TUNE` (empty S HOLD; counterfactual projected S follows the donor). Neutrals still blind-copy any bind→did note → separation **Control Fail**, not Confound. Transfer 2/3 Pass. Genome and protocol locks delta 0. Still not English. Next: unequal support across contexts (0.9.2), after this standing leakage control.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -78,6 +78,8 @@ TM.0.8.0 scale English Open W: [`docs/tm080_results.md`](docs/tm080_results.md).
 TM.0.8.1 one return: [`docs/tm081_results.md`](docs/tm081_results.md).  
 TM.0.8.2 one machine: [`docs/tm082_results.md`](docs/tm082_results.md).  
 TM.0.9.0 first math life: [`docs/tm090_results.md`](docs/tm090_results.md).  
+TM.0.9.1 hyp-survive: [`docs/tm091_results.md`](docs/tm091_results.md).  
+TM.0.9.BOX leakage control: [`docs/tm091box_results.md`](docs/tm091box_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -151,6 +153,8 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.8.1 A one return / B motor bar | **Fail** / **Store-works** (split gone; retrieve used `xenon`; motor bar not the English bar) |
 | TM.0.8.2 A one machine / B motor bar | **Fail** / **Store-works** (no `domain=`; retrieve used `xenon`; motor bar not the English bar) |
 | TM.0.9.0 A count-search / B motor bar | **Fail** / **Store-works** (count unread rares; retrieve used `xenon`; motor bar not the English bar) |
+| TM.0.9.1 A hyp-survive / B motor bar | **Store-works** / **Fail** (16 supported same-here notes; retrieve used `thallium`; B n=17 stamp-collecting) |
+| TM.0.9.BOX leakage control | **Control Fail** (empty HOLD; donor S wins; neutrals blind-copy; not world-fact leak into P) |
 
 ## Five pieces
 
@@ -227,6 +231,8 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.8.1 one return | **Fail** / **Store-works** | split gone; retrieve used `xenon`; [`docs/tm081_results.md`](docs/tm081_results.md) |
 | TM.0.8.2 one machine | **Fail** / **Store-works** | no `domain=`; retrieve used `xenon`; [`docs/tm082_results.md`](docs/tm082_results.md) |
 | TM.0.9.0 first math life | **Fail** / **Store-works** | count unread rares; retrieve used `xenon`; [`docs/tm090_results.md`](docs/tm090_results.md) |
+| TM.0.9.1 hyp-survive | **Store-works** / **Fail** | competing hypotheses stay; retrieve used `thallium`; B n=17; [`docs/tm091_results.md`](docs/tm091_results.md) |
+| TM.0.9.BOX leakage | **Control Fail** | empty HOLD; donor S wins; neutrals blind-copy; [`docs/tm091box_results.md`](docs/tm091box_results.md) |
 
 ## Quick start
 
@@ -291,6 +297,8 @@ python tests/test_tm080.py
 python tests/test_tm081.py
 python tests/test_tm082.py
 python tests/test_tm090.py
+python tests/test_tm091.py
+python tests/test_tm091box.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -347,6 +355,13 @@ python -m experiments.run_tm068
 python -m experiments.run_tm069
 python -m experiments.run_tm070
 python -m experiments.run_tm071
+python -m experiments.run_tm072
+python -m experiments.run_tm080
+python -m experiments.run_tm081
+python -m experiments.run_tm082
+python -m experiments.run_tm090
+python -m experiments.run_tm091
+python -m experiments.run_tm091box --seeds 12345 12346 12347 --workers 3
 ```
 
 Protocol: [`docs/protocol.md`](docs/protocol.md).
@@ -355,7 +370,7 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 
 ```text
 three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010 … run_tm071, train_prior
+experiments/      # run_v0 … run_v23, run_tm010 … run_tm091box, train_prior
 docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.x results
 tests/
 runs/             # gitignored

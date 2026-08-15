@@ -29,7 +29,9 @@ from .tag_store import DocLibrary, ProseLibrary, TagLibrary, prose_token_stream,
 
 # Bookkeeping tags, not a place-name menu. Query candidates are whatever else the files have.
 # `did` is the act the body just did (not a copy token). `bind` is the one page-word aliased to it.
-_QNAME_SKIP = frozenset({"source", "source_file", "when", "ok", "what", "did", "bind"})
+_QNAME_SKIP = frozenset(
+    {"source", "source_file", "when", "ok", "what", "did", "bind", "hyp", "trials", "wins", "losses"}
+)
 
 
 class ThreeMemoryAgent:
@@ -89,6 +91,7 @@ class ThreeMemoryAgent:
         use_local_alias: bool = False,
         use_keep_steerer: bool = False,
         use_count_search: bool = False,
+        use_hyp_survive: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -182,6 +185,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_keep_steerer requires use_here_match")
         if use_count_search and not use_search_head:
             raise ValueError("use_count_search requires use_search_head")
+        if use_hyp_survive and not use_here_match:
+            raise ValueError("use_hyp_survive requires use_here_match")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -247,6 +252,7 @@ class ThreeMemoryAgent:
         self.use_local_alias = use_local_alias
         self.use_keep_steerer = use_keep_steerer
         self.use_count_search = use_count_search
+        self.use_hyp_survive = use_hyp_survive
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
@@ -333,6 +339,7 @@ class ThreeMemoryAgent:
             use_local_alias=self.use_local_alias,
             use_keep_steerer=self.use_keep_steerer,
             use_count_search=self.use_count_search,
+            use_hyp_survive=self.use_hyp_survive,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -541,6 +548,7 @@ class ThreeMemoryAgent:
             here = [r for r in pool if self._rec_names_here(r, obs)]
             if here:
                 pool = here
+                pool = self._prefer_untried(pool)
         code = self._door_code(obs)
         if code is None:
             return []
@@ -813,6 +821,64 @@ class ThreeMemoryAgent:
             if k not in _QNAME_SKIP
         )
 
+    def _hyp_state(self, rec) -> str:
+        raw = rec.tags.get("hyp")
+        if isinstance(raw, str) and raw in ("untried", "supported", "contradicted"):
+            return raw
+        return "untried"
+
+    def _hyp_trials(self, rec) -> int:
+        n = rec.tags.get("trials")
+        if isinstance(n, (int, np.integer)):
+            return int(n)
+        return 0
+
+    def _init_hyp(self, rec) -> None:
+        if not self.use_hyp_survive:
+            return
+        if rec.tags.get("hyp") not in ("untried", "supported", "contradicted"):
+            rec.tags["hyp"] = "untried"
+            rec.tags["trials"] = 0
+            rec.tags["wins"] = 0
+            rec.tags["losses"] = 0
+
+    def _mark_hyp(self, rec, *, success: bool) -> None:
+        if not self.use_hyp_survive or not self.store.enabled:
+            return
+        self._init_hyp(rec)
+        rec.tags["trials"] = self._hyp_trials(rec) + 1
+        if success:
+            rec.tags["wins"] = int(rec.tags.get("wins") or 0) + 1
+            rec.tags["hyp"] = "supported"
+        else:
+            rec.tags["losses"] = int(rec.tags.get("losses") or 0) + 1
+            rec.tags["hyp"] = "contradicted"
+        self.store.write(rec)
+
+    def _update_chosen_hyp(self, *, success: bool) -> None:
+        if not self.use_hyp_survive or not self.store.enabled:
+            return
+        ids = {i for i in self._last_chosen_ids if i}
+        if not ids:
+            return
+        for rec in list(self.store.records()):
+            if rec.fact_id in ids:
+                self._mark_hyp(rec, success=success)
+
+    def _prefer_untried(self, pool: list) -> list:
+        """Same-here exploration: unused hypotheses still carry information."""
+        if not self.use_hyp_survive or not pool:
+            return pool
+        live = [r for r in pool if self._hyp_state(r) != "contradicted"]
+        if not live:
+            live = list(pool)
+        untried = [r for r in live if self._hyp_state(r) == "untried"]
+        if untried:
+            return untried
+        trials = [self._hyp_trials(r) for r in live]
+        least = min(trials)
+        return [r for r, n in zip(live, trials) if n == least]
+
     def _keep_steerer(self, obs) -> None:
         """Drop other same-here notes after a file steered. Not a subject."""
         if not self.use_keep_steerer or not self.store.enabled:
@@ -825,7 +891,12 @@ class ThreeMemoryAgent:
         for rec in list(self.store.records()):
             if rec.fact_id in keep:
                 continue
-            if self._rec_names_here(rec, obs) and self.store.delete(rec.fact_id):
+            if not self._rec_names_here(rec, obs):
+                continue
+            # Success of A does not falsify untested B.
+            if self.use_hyp_survive and self._hyp_state(rec) != "contradicted":
+                continue
+            if self.store.delete(rec.fact_id):
                 self.n_revised += 1
 
     def _chosen_has_act_name(self) -> bool:
@@ -1122,6 +1193,7 @@ class ThreeMemoryAgent:
             rec.tags[f"w{n}"] = station
         if self.use_one_bind and rec.tags.get("did"):
             self._stamp_one_bind(rec)
+        self._init_hyp(rec)
         if self.store.write(rec):
             self.n_annotated += 1
             if self.use_revise_head:
@@ -1455,6 +1527,10 @@ class ThreeMemoryAgent:
 
         if self.use_event_annotate and opened and action_name:
             self._maybe_annotate(str(action_name).lower(), obs)
+        if success is True:
+            self._update_chosen_hyp(success=True)
+        elif success is False:
+            self._update_chosen_hyp(success=False)
         if self.use_keep_steerer and success is True:
             self._keep_steerer(obs)
 

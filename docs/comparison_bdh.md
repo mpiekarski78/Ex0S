@@ -93,6 +93,8 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.8.1 one return | **Fail** / **Store-works** (split gone; retrieve used `xenon`; motor bar not the English bar) |
 | three-memory, TM.0.8.2 one machine | **Fail** / **Store-works** (no `domain=`; retrieve used `xenon`; motor bar not the English bar) |
 | three-memory, TM.0.9.0 first math life | **Fail** / **Store-works** (count unread rares; retrieve used `xenon`; motor bar not the English bar) |
+| three-memory, TM.0.9.1 hyp-survive | **Store-works** / **Fail** (16 supported same-here notes; retrieve used `thallium`; B n=17 stamp-collecting) |
+| three-memory, TM.0.9.BOX leakage | **Control Fail** / transfer **Fail** (empty HOLD; donor S wins; neutrals blind-copy; not world-fact leak into P) |
 
 ## Honest limits
 
@@ -785,4 +787,27 @@ See [`tm082_results.md`](tm082_results.md).
 | Class | **Fail** | **Store-works** |
 
 See [`tm090_results.md`](tm090_results.md).
+
+## TM.0.9.1 (hyp-survive / motor bar)
+
+| Check | A hyp-survive | B motor bar |
+|-------|---------------|-------------|
+| Used bind A / C | **`thallium`** / **`adjust`** | — |
+| Train S n files | **16** | **17** |
+| hyp supported | **16** | **17** |
+| Class | **Store-works** | **Fail** |
+
+See [`tm091_results.md`](tm091_results.md).
+
+## TM.0.9.BOX (boxed-policy leakage)
+
+| Check | Result |
+|-------|--------|
+| Empty S | **HOLD** (no world-fact leak into P) |
+| Pi + S1 / S2 | **PRESS** / **TUNE** (donor wins) |
+| Neutrals | blind-copy `did` → **Control Fail** |
+| Transfer | **Fail** (2/3 Pass) |
+| Genome / protocol delta | **0** |
+
+See [`tm091box_results.md`](tm091box_results.md).
 

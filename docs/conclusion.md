@@ -332,3 +332,11 @@ Body from `n_actions` / percepts, not `domain=`. **A** **Fail**: retrieve used `
 
 Search may count unread rares. No `+` in cortex. **A** **Fail**: retrieve used `xenon`; C used `neon`. **B** **Store-works** on the motor bar (n=2, last-50 0.94); not the English bar, not retuned. Details: [`tm090_results.md`](tm090_results.md).
 
+## TM.0.9.1 (hyp-survive / motor bar)
+
+Success of one same-here bind does not delete an untested rival. **A** **Store-works**: 16 supported notes including `push` and `xenon`; retrieve used `thallium`; C used `adjust`. **B** **Fail** stamp-collecting (n=17); motors still PRESS/TUNE; cap not raised. Details: [`tm091_results.md`](tm091_results.md).
+
+## TM.0.9.BOX (boxed-policy leakage)
+
+Frozen 0.9.1 genome. Paired counterfactual crossover. Separation **Control Fail**: empty S HOLD (no world-fact leak); donor S flips the motor; neutrals blind-copy `did`. Transfer **Fail** (2/3 Pass). Details: [`tm091box_results.md`](tm091box_results.md).
+

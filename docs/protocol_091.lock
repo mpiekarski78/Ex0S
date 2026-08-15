@@ -1,0 +1,21 @@
+{
+  "version": "TM.0.9.1",
+  "n_train": 500,
+  "max_train_s_files": 4,
+  "max_steps": 32,
+  "policy_seed_birth": 7,
+  "policy_lr_train": 0.2,
+  "split": false,
+  "exposure_schedule": {
+    "epsilon_start": 0.45,
+    "epsilon_floor": 0.05,
+    "explore_epsilon_start": 0.55,
+    "explore_epsilon_decay": 0.4
+  },
+  "stopping_criteria": "fixed_n_train",
+  "seeds_recorded": [
+    12345,
+    12346,
+    12347
+  ]
+}
