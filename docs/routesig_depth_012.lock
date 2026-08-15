@@ -1,0 +1,182 @@
+{
+  "version": "TM.0.12.ROUTESIG.DEPTH",
+  "phase": "depth",
+  "ex0s_under_test": "0.0.003",
+  "earned_next": false,
+  "seed": 12345,
+  "context_012_lock_sha": "fe7e28f341b63ec3b329b6d618d922222540074dd0e40b1723fdd6496fe1f3ff",
+  "minimap_012_lock_sha": "1f59ae9242d3971c602a5509715bca07e311d50b732c4901a00b1947f76364aa",
+  "pathdisc_012_lock_sha": "47730b1ff9b261463842645d66c7b89ff27b5b2595c3cc5109c2bcd02625ce45",
+  "midpath_012_lock_sha": "f5c47b7332ef8ade91951372440e12b8d80429541428c2b331b12678b259f2ed",
+  "routesig_012_lock_sha": "c81dcb73d2276e58e9eb0012000b8c15ec6c83a5bb6e33248ace23a798c6a987",
+  "cell_family": "c11_order_depth",
+  "k_family": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "family": {
+    "C11[1]": {
+      "k": 1,
+      "frontier": "T1",
+      "common_tail_edges": 1,
+      "trace_len_nodes": 7,
+      "role": "route_depth",
+      "motors": {
+        "route_a": "press",
+        "route_b": "tune"
+      }
+    },
+    "C11[2]": {
+      "k": 2,
+      "frontier": "T2",
+      "common_tail_edges": 2,
+      "trace_len_nodes": 8,
+      "role": "route_depth",
+      "motors": {
+        "route_a": "press",
+        "route_b": "tune"
+      }
+    },
+    "C11[3]": {
+      "k": 3,
+      "frontier": "T3",
+      "common_tail_edges": 3,
+      "trace_len_nodes": 9,
+      "role": "route_depth",
+      "motors": {
+        "route_a": "press",
+        "route_b": "tune"
+      }
+    },
+    "C11[4]": {
+      "k": 4,
+      "frontier": "T4",
+      "common_tail_edges": 4,
+      "trace_len_nodes": 10,
+      "role": "route_depth",
+      "motors": {
+        "route_a": "press",
+        "route_b": "tune"
+      }
+    },
+    "C11[5]": {
+      "k": 5,
+      "frontier": "T5",
+      "common_tail_edges": 5,
+      "trace_len_nodes": 11,
+      "role": "route_depth",
+      "motors": {
+        "route_a": "press",
+        "route_b": "tune"
+      }
+    },
+    "C11[6]": {
+      "k": 6,
+      "frontier": "T6",
+      "common_tail_edges": 6,
+      "trace_len_nodes": 12,
+      "role": "route_depth",
+      "motors": {
+        "route_a": "press",
+        "route_b": "tune"
+      }
+    },
+    "C11[7]": {
+      "k": 7,
+      "frontier": "T7",
+      "common_tail_edges": 7,
+      "trace_len_nodes": 13,
+      "role": "route_depth",
+      "motors": {
+        "route_a": "press",
+        "route_b": "tune"
+      }
+    },
+    "C11[8]": {
+      "k": 8,
+      "frontier": "T8",
+      "common_tail_edges": 8,
+      "trace_len_nodes": 14,
+      "role": "route_depth",
+      "motors": {
+        "route_a": "press",
+        "route_b": "tune"
+      }
+    }
+  },
+  "candidates": [
+    "R1",
+    "R2",
+    "R2x",
+    "R3",
+    "R4"
+  ],
+  "candidate_meanings": {
+    "R1": "unordered edge membership",
+    "R2": "suffix-k (under test)",
+    "R2x": "suffix-(k+1) geometric diagnostic",
+    "R3": "ordered route identity",
+    "R4": "rolling kappa"
+  },
+  "motors": {
+    "route_a": "press",
+    "route_b": "tune"
+  },
+  "prefix_hops": 5,
+  "here": "chb",
+  "support": [
+    1,
+    0
+  ],
+  "geometry_guards": [
+    "fa[-k:] == fb[-k:]",
+    "fa[-(k+1)] != fb[-(k+1)]",
+    "fa[-(k+1)+1:] == fb[-(k+1)+1:]"
+  ],
+  "validation": [
+    "one shared S; C11[k] frontiers at distinct T_k",
+    "order witness prefixes then common tail of k edges",
+    "same edge-fid set and multiset per k",
+    "geometric R2/R2x placement before scoring",
+    "unique directed edges in S",
+    "same PRESS/TUNE motors for all k",
+    "runtime seed equals locked seed",
+    "raw TraceSpec extractor-only; kappa path-fids only",
+    "TraceSpec construction pin; extract bans path_and_frontier",
+    "path-edge fids subset of shared S",
+    "C11[2] structurally equivalent to C10 suffix-2 condition (pattern only)"
+  ],
+  "gen_c11_store_sha": "1eaffde188cb3bd3546ebf7010ebeed295d9dfc593d8d7992c47370350d46edd",
+  "traces_for_k_sha": "f50c435cd69fd87fcd2a7e91a7154e28c2c5f620f93b4f0d95faa54736e6ae5f",
+  "assert_geometry_k_sha": "8b6da1a6ff6866c4c7875da0a5fa49e84fd3acc9feb044c04c71b182f2fad59e",
+  "extract_depth_sha": "391e1b779f7c59b3be0e3430602839f92038e4573543c5bc9e49f013de2d3fcd",
+  "edge_fid_sha": "f1a89f767aed236ebf61d5f68234baa9228c0b59333597c53d250d665940cbb5",
+  "path_edge_fids_sha": "09d68a5a96b1a482f56549e8aec8e8299e873800310d9290edb303d9fe3cc21c",
+  "kappa_seed_sha": "52292d2e68fd378f2b26960fc6294a4f65c271a36d1e272b2192002287f4408b",
+  "kappa_step_sha": "47e82553611b7181510fe9673a60d312dbaf1a703650306357d8b08dd82b527a",
+  "route_kappa_sha": "22d5a827efdb23e86368b1c5bb9ca68bdf50c5127c2e24466a35244741e07509",
+  "score_contrast_sha": "01faf25e042b5871f3220d6796cbb686198ce04b09ab601602c160150955c678",
+  "relations_content_hash_sha": "a972cd5cab5712948c2f9b6bb5e3e5ea203a7324af25e99854400a60be85ccba",
+  "refuse_answer_derived_fid_sha": "400fc095799e25a12ddaa3f27225b99476c5197872e157ea736ff4a511f2674e",
+  "trace_spec_sha": "2b449da3328c225800c84204e523448995bc55c06de5e155195f98e1874a0a13",
+  "scorer_reuse": "experiments.run_tm012minimap.score_contrast",
+  "kappa_reuse": "experiments.run_tm012routesig",
+  "refuse": [
+    "single fixed frontier for all k",
+    "rewrite routesig_012.lock / C10",
+    "claim C11[2] is the same frozen cell as C10",
+    "universal no-finite-suffix claim",
+    "SHA-as-genome / full-path necessity",
+    "identity/rename battery this pass",
+    "stamp Ex0S 0.0.004",
+    "genome / agent change",
+    "path_and_frontier route discovery",
+    "raw TraceSpec as selector input"
+  ]
+}

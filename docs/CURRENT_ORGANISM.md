@@ -37,7 +37,7 @@ The FAMILY battery planted structured `.tag` relations and reported outcomes ont
 
 | Missing | Where documented |
 |---------|------------------|
-| Contextual / provenance-sensitive composition | TM.0.12 … MIDPATH + ROUTESIG — endpoint provenance insufficient; on C10 edge-set insufficient and **order** necessary; next ROUTESIG.DEPTH |
+| Contextual / provenance-sensitive composition | TM.0.12 … MIDPATH + ROUTESIG + DEPTH — endpoint provenance insufficient; on C10 edge-set insufficient and **order** necessary; fixed windows lose depth-(k+1) distinctions that κ retains; next identity/rename of κ |
 | Lookahead / backtracking | TM.0.11.BOUND `local_optimum_dead_end` |
 | No-cue English motor bar | B Fail (untouched) |
 | Autonomous acquisition from open experience | not yet |
@@ -52,6 +52,7 @@ python tests/test_tm012minimap.py
 python tests/test_tm012pathdisc.py
 python tests/test_tm012midpath.py
 python tests/test_tm012routesig.py
+python tests/test_tm012routesig_depth.py
 ```
 
 Paper-style summary: [`CLAIM.md`](CLAIM.md).

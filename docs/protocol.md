@@ -1479,12 +1479,34 @@ Apparatus: `docs/routesig_012.lock` — pins CONTEXT / MINIMAP / PATHDISC / MIDP
 
 ### Decisive criterion
 
-If R1 **collides** and R3/R4 **distinguish**: the set of traversed relations is insufficient; their order is necessary; an output-blind incremental accumulator can preserve that distinction without the raw path. Do **not** conclude SHA-as-genome or full-path necessity. Next (not this pass): **ROUTESIG.DEPTH**.
+If R1 **collides** and R3/R4 **distinguish**: the set of traversed relations is insufficient; their order is necessary; an output-blind incremental accumulator can preserve that distinction without the raw path. Do **not** conclude SHA-as-genome or full-path necessity. Next: **ROUTESIG.DEPTH**.
 
 Recorded: [`tm012routesig_results.md`](tm012routesig_results.md).
 
 ### Refuse
 
 Non-commutable C10; node-set-only R1; TraceSpec into κ; DEPTH this pass; stamping 0.0.004; genome change.
+
+## TM.0.12.ROUTESIG.DEPTH fixed windows vs rolling κ
+
+Not a behavioral scorer and **not** Ex0S 0.0.004. Representation-contract lab: one shared S with order witness + chain `Q→T1→…→T8`; each **C11[k]** frontiers at **`T_k`** so suffix-k collides and suffix-(k+1) distinguishes for every k∈[1,8]. Motors fixed PRESS/TUNE. Geometric assert before scoring.
+
+Apparatus: `docs/routesig_depth_012.lock` — pins CONTEXT / MINIMAP / PATHDISC / MIDPATH / ORDER (`routesig_012.lock`); reuses κ / `edge_fid`; projected states + motors only. Does **not** rewrite ORDER or earlier locks.
+
+### Contrast
+
+| ID | Role |
+|----|------|
+| C11[k] | `route_depth` — frontier `T_k`; common tail k edges; distinction at depth k+1 |
+
+### Decisive criterion
+
+If for every k∈[1..8] R2 **collides**, R2x/R3/R4 **distinguish**, and geometry places the differing edge exactly outside suffix-k: each tested fixed window of size k fails when the distinction is k+1 back; rolling κ retains it at constant size. Do **not** conclude “no finite suffix ever,” SHA-as-genome, full-path necessity, or 0.0.004. C11[2] ~ C10 suffix-2 **pattern only**.
+
+Recorded: [`tm012routesig_depth_results.md`](tm012routesig_depth_results.md).
+
+### Refuse
+
+Single fixed frontier for all k; rewriting ORDER/C10; TraceSpec into κ; identity/rename this pass; stamping 0.0.004; genome change.
 
 

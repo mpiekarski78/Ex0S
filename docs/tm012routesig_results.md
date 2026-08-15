@@ -6,7 +6,7 @@
 **Run:** `runs/2026-08-15_203835_tm012routesig`  
 **Locks:** [`routesig_012.lock`](routesig_012.lock) · pins CONTEXT + MINIMAP + PATHDISC + MIDPATH (never rewritten)
 
-`earned_next`: **false** — no Ex0S 0.0.004. No organism / genome change. No ROUTESIG.DEPTH this pass.
+`earned_next`: **false** — no Ex0S 0.0.004. No organism / genome change. DEPTH deferred at recording time; now landed separately.
 
 ## Question
 
@@ -56,9 +56,9 @@ D = distinguishes. Table computed from graph structure (not encoded in the score
 
 `kappa_seed(origin)` · `kappa_step(κ, fid)` · `route_kappa(origin, ordered_path_fids)` — never TraceSpec / motor / `context_expect`. Behavioral: same nodes + different motors ⇒ same κ. Shuffle-invariant under unique edges.
 
-## Next (not this pass)
+## Next
 
-**ROUTESIG.DEPTH** — systematic bounded-suffix family. Then freeze accumulator requirements; only then discuss compose carrying `(Y, κ)`.
+**ROUTESIG.DEPTH** landed — see [`tm012routesig_depth_results.md`](tm012routesig_depth_results.md). After DEPTH: identity/rename robustness of κ; then freeze accumulator requirements; only then discuss compose carrying `(Y, κ)`.
 
 ## Audit notes (apparatus)
 
