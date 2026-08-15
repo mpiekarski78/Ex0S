@@ -1457,12 +1457,34 @@ Apparatus: `docs/midpath_012.lock` — pins CONTEXT / MINIMAP / PATHDISC lock SH
 
 ### Decisive criterion
 
-If H3c **collides** and H3b **distinguishes**: endpoint provenance `(token, origin, predecessor)` is insufficient; some interior-route information is necessary. Do **not** conclude store-the-full-path. Next (not this pass): route-signature minimality.
+If H3c **collides** and H3b **distinguishes**: endpoint provenance `(token, origin, predecessor)` is insufficient; some interior-route information is necessary. Do **not** conclude store-the-full-path. Next: **TM.0.12.ROUTESIG** (what a route summary must preserve).
 
 Recorded: [`tm012midpath_results.md`](tm012midpath_results.md).
 
 ### Refuse
 
 Two-store C9; `path_and_frontier` discovery; raw TraceSpec as selector input; modifying MINIMAP for H3c; declaring full path / signature product; stamping 0.0.004; genome change this pass.
+
+## TM.0.12.ROUTESIG route-summary contract (phase 1 — order)
+
+Not a behavioral scorer and **not** Ex0S 0.0.004. Representation-contract lab: compare summary **classes** (endpoint, unordered edge membership, suffix-k=2, ordered identity, rolling κ). C10 uses **commutable loops** so both traces share the same unordered path-edge fid set and differ only in order.
+
+Apparatus: `docs/routesig_012.lock` — pins CONTEXT / MINIMAP / PATHDISC / MIDPATH; κ API `kappa_seed` / `kappa_step` / `route_kappa(origin, ordered_path_fids)` (never TraceSpec/motor); unique `edge_fid`; R2 locked at k=2. Scorer: projected states + motors only.
+
+### Contrast
+
+| ID | Role |
+|----|------|
+| C10 | `route_order` — `(X,Q,A,Q,B,Q,P,Y)` vs `(X,Q,B,Q,A,Q,P,Y)` |
+
+### Decisive criterion
+
+If R1 **collides** and R3/R4 **distinguish**: the set of traversed relations is insufficient; their order is necessary; an output-blind incremental accumulator can preserve that distinction without the raw path. Do **not** conclude SHA-as-genome or full-path necessity. Next (not this pass): **ROUTESIG.DEPTH**.
+
+Recorded: [`tm012routesig_results.md`](tm012routesig_results.md).
+
+### Refuse
+
+Non-commutable C10; node-set-only R1; TraceSpec into κ; DEPTH this pass; stamping 0.0.004; genome change.
 
 

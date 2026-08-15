@@ -1,0 +1,111 @@
+{
+  "version": "TM.0.12.ROUTESIG",
+  "phase": "order",
+  "ex0s_under_test": "0.0.003",
+  "earned_next": false,
+  "seed": 12345,
+  "context_012_lock_sha": "fe7e28f341b63ec3b329b6d618d922222540074dd0e40b1723fdd6496fe1f3ff",
+  "minimap_012_lock_sha": "1f59ae9242d3971c602a5509715bca07e311d50b732c4901a00b1947f76364aa",
+  "pathdisc_012_lock_sha": "47730b1ff9b261463842645d66c7b89ff27b5b2595c3cc5109c2bcd02625ce45",
+  "midpath_012_lock_sha": "f5c47b7332ef8ade91951372440e12b8d80429541428c2b331b12678b259f2ed",
+  "contrast": {
+    "C10": {
+      "cell_id": "c10_order_commutable_loops",
+      "left": {
+        "trace_label": "route_a"
+      },
+      "right": {
+        "trace_label": "route_b"
+      },
+      "role": "route_order",
+      "geometry": {
+        "len": 8,
+        "A": "X \u2192 Q \u2192 A \u2192 Q \u2192 B \u2192 Q \u2192 P \u2192 Y",
+        "B": "X \u2192 Q \u2192 B \u2192 Q \u2192 A \u2192 Q \u2192 P \u2192 Y",
+        "isolates": "order_not_membership"
+      },
+      "note": "same S; same unordered path-edge fid set; different order; raw apparatus trace is extractor-only; unavailable after projection"
+    }
+  },
+  "cell_id": "c10_order_commutable_loops",
+  "role": "route_order",
+  "candidates": [
+    "R0",
+    "R1",
+    "R2",
+    "R3",
+    "R4"
+  ],
+  "candidate_meanings": {
+    "R0": "endpoint (Y, X, P)",
+    "R1": "unordered edge membership (Y, frozenset(path_fids))",
+    "R2": "bounded suffix k=2 (Y, last 2 path_fids)",
+    "R3": "ordered route identity (Y, ordered path_fids)",
+    "R4": "rolling route signature (Y, kappa)"
+  },
+  "suffix_k": 2,
+  "here": "chb",
+  "support": [
+    1,
+    0
+  ],
+  "trace_len": 8,
+  "kappa_api": [
+    "kappa_seed(origin)",
+    "kappa_step(previous_kappa, traversed_fid)",
+    "route_kappa(origin, ordered_path_fids)"
+  ],
+  "kappa_requirements": [
+    "output-blind: kappa must not depend on context_expect, PRESS/TUNE, or Y\u2192motor",
+    "incremental: kappa_step(previous, traversed_fid) only",
+    "raw path unavailable after projection",
+    "deterministic and file-order independent",
+    "no facts in genome",
+    "same route yields same kappa after reload",
+    "differing routes that matter must not collide under R4 on C10",
+    "C7 stays unsolvable because no route difference exists there"
+  ],
+  "validation": [
+    "commutable Q-A / Q-B loops; same unordered path-edge fid set",
+    "same path-edge fid multiset",
+    "ordered path-edge fid sequences differ",
+    "same X/P/Y; same length; same first edge; same last two edges",
+    "same unordered node multiset",
+    "exactly one relation per directed (bind,did) in S (edge_fid)",
+    "all relations share identical here and support (1,0)",
+    "required motors differ with Y\u2192motor edges",
+    "one shared S; path+motor fids \u2286 store",
+    "runtime seed equals locked seed",
+    "raw apparatus trace is extractor-only ground truth; unavailable after projection",
+    "route_kappa never receives TraceSpec / motor / context_expect",
+    "outgoing Y\u2192motor fid inadmissible",
+    "R2 locked at suffix k=2"
+  ],
+  "gen_c10_sha": "e078ee1be9b11f5a2ee6ee5d627a14612be1c3165b4869d9b659eab202cde7d2",
+  "validate_c10_sha": "94ca87a69ee02e8bb99e19b994d3f7e12dbb5b9bf70ad7c2191987fe8936d347",
+  "extract_routesig_sha": "ca6fbb6ccc36365cb84cdc6d8437c901df515987d718516c3d693de2acca9043",
+  "edge_fid_sha": "f1a89f767aed236ebf61d5f68234baa9228c0b59333597c53d250d665940cbb5",
+  "path_edge_fids_sha": "09d68a5a96b1a482f56549e8aec8e8299e873800310d9290edb303d9fe3cc21c",
+  "kappa_seed_sha": "52292d2e68fd378f2b26960fc6294a4f65c271a36d1e272b2192002287f4408b",
+  "kappa_step_sha": "47e82553611b7181510fe9673a60d312dbaf1a703650306357d8b08dd82b527a",
+  "route_kappa_sha": "22d5a827efdb23e86368b1c5bb9ca68bdf50c5127c2e24466a35244741e07509",
+  "score_contrast_sha": "01faf25e042b5871f3220d6796cbb686198ce04b09ab601602c160150955c678",
+  "relations_content_hash_sha": "a972cd5cab5712948c2f9b6bb5e3e5ea203a7324af25e99854400a60be85ccba",
+  "refuse_answer_derived_fid_sha": "400fc095799e25a12ddaa3f27225b99476c5197872e157ea736ff4a511f2674e",
+  "trace_spec_sha": "2b449da3328c225800c84204e523448995bc55c06de5e155195f98e1874a0a13",
+  "scorer_reuse": "experiments.run_tm012minimap.score_contrast",
+  "refuse": [
+    "non-commutable C10 where edge-fid sets differ",
+    "R1 as unordered node names only",
+    "parameterized R2 / DEPTH battery this pass",
+    "passing TraceSpec or motor into kappa_*",
+    "silent first-match find_edge for path fids",
+    "two-store C10",
+    "path_and_frontier route discovery",
+    "raw TraceSpec / nodes as selector input",
+    "declare SHA-256 or full path as product",
+    "stamp Ex0S 0.0.004",
+    "genome / agent change",
+    "rewrite context/minimap/pathdisc/midpath locks"
+  ]
+}

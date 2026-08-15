@@ -50,7 +50,7 @@ D = distinguishes required outputs. Table computed from graph structure (not enc
 - H3c collides on C9 while H3b distinguishes ⇒ no selector whose contextual input is only `(Y,X,P)` can solve both cases from this S.
 - **H3b is a surviving candidate, not the product.** Do **not** conclude “store the full path.”
 - Ladder: C4 kills predecessor alone; C8 kills origin alone; C9 kills origin+predecessor.
-- Next (not this pass): **route-signature minimality** — which interior information can be deleted without required-output collisions.
+- Next (not this pass): **TM.0.12.ROUTESIG** — route-summary contract (phase 1 order landed; see [`tm012routesig_results.md`](tm012routesig_results.md)).
 
 ## Audit notes (apparatus)
 
