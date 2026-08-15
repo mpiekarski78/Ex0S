@@ -53,7 +53,7 @@ Before this recorded run:
 
 ## Next (not this pass)
 
-Preregister a discriminator that **holds origin constant** and changes only path history. If origin collides while path distinguishes, H3a dies. Only then consider a CONTEXT genome.
+Same-S origin-vs-path discriminator landed as **TM.0.12.PATHDISC** ([`tm012pathdisc_results.md`](tm012pathdisc_results.md)): H3a collides; origin alone is insufficient. Next after PATHDISC: test **H3c `(token, origin, pred)`** vs richer path — not genome yet.
 
 ## Reproduce
 

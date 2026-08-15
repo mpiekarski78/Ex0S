@@ -44,7 +44,7 @@
 
 **Reading:** bare-token compose (H0) is sufficient for C0/C1. For every preregistered ambiguity (C2–C7), frozen 0.0.003 collapses to a single frontier decision that cannot track path-dependent continuations. C7 shows the failure is **structural**: two required CONTEXT outputs map to identical frozen state.
 
-This pass does **not** yet rank H1–H3 sufficiency for a future genome — see **TM.0.12.MINIMAP** ([`tm012minimap_results.md`](tm012minimap_results.md)): among preregistered candidates, `(token, origin)` is the least-structured sufficient representation for C2–C6; C7 is unobservable from provenance.
+This pass does **not** yet rank H1–H3 sufficiency for a future genome — see **TM.0.12.MINIMAP** ([`tm012minimap_results.md`](tm012minimap_results.md)): among preregistered candidates, `(token, origin)` is the least-structured sufficient representation for C2–C6; C7 is unobservable from provenance. **TM.0.12.PATHDISC** ([`tm012pathdisc_results.md`](tm012pathdisc_results.md)) then shows origin alone is insufficient on same-S C8.
 
 ## Minimality (apply later)
 

@@ -1,0 +1,56 @@
+{
+  "version": "TM.0.12.PATHDISC",
+  "ex0s_under_test": "0.0.003",
+  "earned_next": false,
+  "seed": 12345,
+  "context_012_lock_sha": "fe7e28f341b63ec3b329b6d618d922222540074dd0e40b1723fdd6496fe1f3ff",
+  "minimap_012_lock_sha": "1f59ae9242d3971c602a5509715bca07e311d50b732c4901a00b1947f76364aa",
+  "contrast": {
+    "C8": {
+      "cell_id": "c8_same_origin_path",
+      "left": {
+        "trace_label": "route_a"
+      },
+      "right": {
+        "trace_label": "route_b"
+      },
+      "role": "origin_vs_path",
+      "note": "same S; apparatus traces; not two stores; not path_and_frontier discovery"
+    }
+  },
+  "cell_id": "c8_same_origin_path",
+  "role": "origin_vs_path",
+  "here": "chb",
+  "support": [
+    1,
+    0
+  ],
+  "validation": [
+    "consecutive hops exist in S",
+    "traces start at locked X end at locked Y",
+    "same origin and frontier",
+    "internal nodes differ",
+    "path nodes are non-motors",
+    "incoming here equal",
+    "path evidence equal",
+    "required motors differ",
+    "required motors in MOTORS with Y\u2192motor edges in S",
+    "one shared S content hash for both traces",
+    "extract_states_from_trace must not call path_and_frontier",
+    "outgoing Y\u2192motor fid inadmissible"
+  ],
+  "gen_c8_sha": "8015a7bd29e03c6e3fa97cf4deb86ae666fb98b04e24588fccdc979ce7686004",
+  "extract_from_trace_sha": "f23dd3e48f1495327a2c032df29480e6c71ff4950171d3013108a68c70333c05",
+  "validate_sha": "824aee068b3ca1ab088c054fd8662e5413fd40c72ac96712d596b5f1bae1ed1e",
+  "scorer_sha": "01faf25e042b5871f3220d6796cbb686198ce04b09ab601602c160150955c678",
+  "scorer_reuse": "experiments.run_tm012minimap.score_contrast",
+  "refuse": [
+    "two-store C8",
+    "path_and_frontier route discovery",
+    "rewrite context_012.lock or minimap_012.lock",
+    "declare full path as product",
+    "implement H3c this pass",
+    "stamp Ex0S 0.0.004",
+    "genome / agent change"
+  ]
+}

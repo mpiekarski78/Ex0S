@@ -1421,3 +1421,25 @@ Recorded: [`tm012minimap_results.md`](tm012minimap_results.md).
 
 Encoding the result table in the scorer; rewriting `context_012.lock`; treating C7 as CONTEXT victory; H4 as omnipotent upper bound; stamping 0.0.004; genome change this pass.
 
+## TM.0.12.PATHDISC same-S origin vs path
+
+Not a behavioral scorer and **not** Ex0S 0.0.004. No `agent.py` / policy / probe. One shared diamond S; two **apparatus-level observed traces** with the same locked origin X and frontier Y and different required motors.
+
+Apparatus: `docs/pathdisc_012.lock` — pins SHA256 of frozen `docs/context_012.lock` and `docs/minimap_012.lock`, C8 validation rules, `gen_c8` / `extract_states_from_trace` / `validate_c8_pair` SHAs. Reuses MINIMAP `score_contrast` with role `origin_vs_path`. **Never rewrite** CONTEXT or MINIMAP locks. **Must not** call `path_and_frontier` to discover a route (that recreates C7).
+
+### Contrast
+
+| ID | Role |
+|----|------|
+| C8 | `origin_vs_path` — same S; traces `(X,A,B,Y)` vs `(X,C,D,Y)` |
+
+### Decisive criterion
+
+If H3a **collides** and H3b **distinguishes**: origin alone is insufficient; some route information beyond origin is necessary. H2 surviving C8 is expected — do **not** conclude store-the-full-path. Next (not this pass): H3c `(token, origin, pred)`.
+
+Recorded: [`tm012pathdisc_results.md`](tm012pathdisc_results.md).
+
+### Refuse
+
+Two-store C8; route discovery via `path_and_frontier`; rewriting CONTEXT/MINIMAP; declaring full path or H3c the product; stamping 0.0.004; genome change this pass.
+
