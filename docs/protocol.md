@@ -1569,4 +1569,36 @@ Rewrite `genome_011.lock`; stamp 0.0.004; encode κ→motor in genome; step κ o
 
 Recorded: [`tm013context_results.md`](tm013context_results.md).
 
+## TM.0.13.FAMILY preregistered kill-or-earn
+
+Attack the frozen CONTEXT-on candidate with generated planted-S worlds. No new mechanism. No LOOKAHEAD.
+
+**Preregistered claim** (before any E–H behavioral contact) — if earned, **Ex0S 0.0.004 — Contextual Composition**:
+
+> A frozen CONTEXT recipe carries bounded provenance-sensitive state through externally acquired relation graphs and uses that state to distinguish otherwise identical frontiers across unseen generated world families, while acquired continuations remain in S and cognitive weights remain unchanged.
+
+### Sealed holdout
+
+| Phase | A–D | E–H |
+|-------|-----|-----|
+| Pre-canonical CI | Behavioral smoke OK | Generator/manifest/oracle hashes only — **no organism answers** |
+| Canonical 288 | Scored | **First** behavioral contact |
+| Post-canonical | Regression | May become regression |
+
+[`family_013.lock`](family_013.lock) pins A–H generators, scorer, earn gate, seed_jobs, holdout world manifests, and genome/kappa/context/011 locks. Editing E–H after peek voids the manifest.
+
+### Battery
+
+8 families × 12 × 3 = **288**. DEVELOP A–D; HOLDOUT E–H. Formal wording: **planted S history** / acquired-state configuration (not experience-developed until TM.0.14 ACQUIRE).
+
+### Earn gate
+
+288 unique jobs, 36/family, manifests match, every mandatory measure non-None, genome_013 start+end, zero errors, holdout green, recipe interventions 0. Smoke never stamps.
+
+### Refuse
+
+E–H organism answers before canonical run; new mechanism; rewrite genome_011 / mid-holdout genome_013 after peek; stamp on partial battery; Abstraction/reasoning label; ACQUIRE this pass.
+
+Apparatus: `experiments/run_tm013family.py`. Results: [`tm013family_results.md`](tm013family_results.md).
+
 

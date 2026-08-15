@@ -1,7 +1,7 @@
 # Ex0S · three-memory (TM)
 
 **Repo:** [mpiekarski78/Ex0S](https://github.com/mpiekarski78/Ex0S)  
-**Current:** **Ex0S 0.0.003** (TM.0.11.FAMILY — Frozen Composition). Toy series: v0–v23.  
+**Current:** **Ex0S 0.0.004** (TM.0.13.FAMILY — Contextual Composition). Toy series: v0–v23.  
 **Start here:** [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md) · [`docs/CLAIM.md`](docs/CLAIM.md)  
 **License:** Apache-2.0 ([`LICENSE`](LICENSE) · [`NOTICE`](NOTICE)). Cite via [`CITATION.cff`](CITATION.cff). The Ex0S name and logo are project identity, not licensed marks.
 
@@ -48,6 +48,11 @@ Ex0S 0.0.002  ←  TM.0.11 COMPOSE
 Ex0S 0.0.003  ←  TM.0.11.FAMILY
         depth / first-hop branch / revise-downstream
         252/252 generated external-state worlds · hold-out depth 4 · genome delta 0
+        │
+        ▼ freeze κ; CONTEXT-on in M; attack with planted contextual worlds
+Ex0S 0.0.004  ←  TM.0.13.FAMILY
+        provenance-sensitive composition across 288 planted contextual worlds
+        hold-out E–H sealed until canonical · genome delta 0
 ```
 
 | Ex0S | Lab | What changed |
@@ -55,10 +60,11 @@ Ex0S 0.0.003  ←  TM.0.11.FAMILY
 | **0.0.001** | TM.0.10.FAMILY (frozen 0.9.4) | Same microscopic relation loop, many worlds, **no genome growth** |
 | **0.0.002** | TM.0.11 COMPOSE | Learned relations become **inputs** to other learned relations at use time |
 | **0.0.003** | TM.0.11.FAMILY (frozen compose) | Frozen compose operates over generated S across **depth, first-hop branching, downstream revision** |
+| **0.0.004** | TM.0.13.FAMILY (frozen CONTEXT) | Frozen CONTEXT recipe distinguishes identical frontiers via bounded κ across **unseen planted contextual worlds** |
 
 Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enough to treat as a lineage, not only a series of demos.
 
-**Next:** TM.0.13.CONTEXT landed — κ frozen (`ksem-sha256-v1`); CONTEXT-on candidate in M; small causal family 13/13; `genome_011.lock` immutable; **no** Ex0S 0.0.004. Next lab: **TM.0.13.FAMILY** (generated worlds). Do **not** stamp 0.0.004 until that survives.
+**Next:** TM.0.14 ACQUIRE — can experience create the contextual relations κ navigates? LOOKAHEAD waits.
 
 ## Question
 
@@ -68,7 +74,7 @@ Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enou
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status: **Ex0S 0.0.003** is a frozen, evidence-aware interpreter over an inspectable relation graph. The FAMILY battery is **252/252 generated external-state worlds** (use / revision / compose of planted S; hold-out depth 4; G revise-downstream with upstream hash stable) — not 252 natural learning problems. **Ex0S 0.0.002** / **0.0.001** still stand. **B Fail** on the no-cue English motor bar stays — do not green it by lookahead or hop flags. See [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md).
+Honest status: **Ex0S 0.0.004 — Contextual Composition** (TM.0.13.FAMILY **288/288** planted contextual worlds; hold-out sealed until canonical). **0.0.003** / **0.0.002** / **0.0.001** still stand. Not experience-authored contextual S — that is TM.0.14 ACQUIRE. **B Fail** on the no-cue English motor bar stays. See [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md).
 
 ## Result (v0–v23 toy, TM.0.x)
 

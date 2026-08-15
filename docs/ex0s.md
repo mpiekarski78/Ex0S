@@ -39,6 +39,8 @@ Ex0S 0.0.001       freeze that recipe; many unseen worlds; genome delta 0
 Ex0S 0.0.002       compose: acquired relations become inputs to other acquired relations
         │
 Ex0S 0.0.003       freeze compose; depth / first-hop branch / revise-downstream
+        │
+Ex0S 0.0.004       freeze CONTEXT; planted contextual worlds; provenance-sensitive compose
 ```
 
 | Ex0S | Lab | Claim |
@@ -46,9 +48,8 @@ Ex0S 0.0.003       freeze compose; depth / first-hop branch / revise-downstream
 | **0.0.001** | TM.0.10.FAMILY (frozen TM.0.9.4) | Fixed relation-learning recipe generalizes across unseen world families; genome delta 0 |
 | **0.0.002** | TM.0.11 COMPOSE | Two independently acquired relations compose at use time without a shortcut in S |
 | **0.0.003** | TM.0.11.FAMILY (frozen TM.0.11) | Frozen compose mechanism operates over generated external-state worlds across unseen depth, first-hop branching, and downstream revision (no shortcuts) |
+| **0.0.004** | TM.0.13.FAMILY (frozen CONTEXT) | Frozen CONTEXT recipe carries bounded provenance-sensitive state through externally acquired relation graphs and distinguishes otherwise identical frontiers across unseen generated world families |
 
-Capacity envelope of 0.0.003 (not a new stamp): [`tm011bound_results.md`](tm011bound_results.md) (TM.0.11.BOUND). BOUND mapped semantic / computational / conceptual envelopes and documented two explicit absences: **contextual provenance** of reused frontier symbols, and **non-local path evaluation** / backtracking.
-
-Representation-search lab (not a stamp): [`tm012context_results.md`](tm012context_results.md) … [`tm012routesig_identity_results.md`](tm012routesig_identity_results.md). First M function (still not a stamp): [`tm013context_results.md`](tm013context_results.md) (TM.0.13.CONTEXT) — κ contract + CONTEXT-on candidate; 13/13 causal family; `genome_011.lock` immutable. Do **not** invent 0.0.004 until **TM.0.13.FAMILY** attacks the candidate with generated worlds; do not pre-name it Abstraction. LOOKAHEAD stays a separate track.
+Capacity envelope of 0.0.003 (not a new stamp): [`tm011bound_results.md`](tm011bound_results.md). Representation search: [`tm012context_results.md`](tm012context_results.md) … IDENTITY. CONTEXT install: [`tm013context_results.md`](tm013context_results.md). Earn run: [`tm013family_results.md`](tm013family_results.md). **Next:** TM.0.14 ACQUIRE. LOOKAHEAD stays separate.
 
 See also: [`README.md`](../README.md), [`tm010family_results.md`](tm010family_results.md), [`tm011compose_results.md`](tm011compose_results.md), [`tm011family_results.md`](tm011family_results.md).

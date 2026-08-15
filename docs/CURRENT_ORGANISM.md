@@ -1,70 +1,50 @@
-# Current organism — Ex0S 0.0.003
+# Current organism — Ex0S 0.0.004
 
-A frozen, evidence-aware interpreter over an inspectable relation graph.
+A frozen CONTEXT recipe over an inspectable relation graph: provenance-sensitive composition at use time.
 
-Not general intelligence. Not open-ended evolution. Not planning.
-
-**Product stamp stays 0.0.003.** TM.0.13.CONTEXT installs a CONTEXT-on **candidate** (`use_context_kappa`) under test — not stamped as Ex0S 0.0.004.
+Not general intelligence. Not open-ended evolution. Not planning. Not experience-authored contextual S (that is TM.0.14 ACQUIRE).
 
 ## Claim (defensible — stamped)
 
-A fixed procedural machine can store world-specific relations outside its weights, causally depend on that store after ρ reset, revise those relations, and compose them without materializing shortcuts.
+> A frozen CONTEXT recipe carries bounded provenance-sensitive state through externally acquired relation graphs and uses that state to distinguish otherwise identical frontiers across unseen generated world families, while acquired continuations remain in S and cognitive weights remain unchanged.
 
-## CONTEXT candidate (not stamped)
+**Lab:** TM.0.13.FAMILY · **Product:** Ex0S 0.0.004 — Contextual Composition  
+**Recorded:** [`tm013family_results.md`](tm013family_results.md) · `runs/2026-08-15_223308_tm013family` · **288/288**
 
-Under `use_context_kappa=True`, M carries transient κ after selected non-motor hops and filters derived frontiers by `ctx`. Locked small family: [`tm013context_results.md`](tm013context_results.md). Locks: [`kappa_013.lock`](kappa_013.lock), [`genome_013.lock`](genome_013.lock), [`context_013.lock`](context_013.lock). `earned_next` false.
+Prior stamps still stand: 0.0.003 Frozen Composition ([`genome_011.lock`](genome_011.lock) immutable).
 
-## Recipe files (0.0.003 historical freeze)
+## Recipe files (CONTEXT-on — must not drift without a new stamp)
 
 | File | Role |
 |------|------|
-| `three_memory/agent.py` | MATCH, evidence, `_compose_choose`, outcome handling |
+| `three_memory/agent.py` | MATCH, evidence, `_compose_choose` with κ |
+| `three_memory/kappa.py` | `ksem-sha256-v1` |
 | `three_memory/policy.py` | boxed P (`n_feat == 2`) |
 | `three_memory/cortex.py` | frozen cortex |
-| `experiments/run_tm011compose.py` `make` | compose-on constructor (`use_context_kappa=False`) |
+| `experiments/run_tm011compose.py` `make` | compose-on; pass `use_context_kappa=True` for CONTEXT |
 
-Lock: [`genome_011.lock`](genome_011.lock) — **immutable**; do not rewrite for CONTEXT.  
-Baseline commit: `c392aa515b7a3445bb15bc55ad969d971632ea3f`  
+Locks: [`genome_013.lock`](genome_013.lock), [`kappa_013.lock`](kappa_013.lock), [`family_013.lock`](family_013.lock).  
+Historical 0.0.003: [`genome_011.lock`](genome_011.lock) at `c392aa515b7a3445bb15bc55ad969d971632ea3f`.
 
-Verify:
+## What 288/288 means
 
-- **Historical:** recipe blobs at baseline commit match `genome_011.lock`
-- **Compatibility:** HEAD with `use_context_kappa=False` still hosts 0.0.003 compose behavior
-
-Rewrite the 0.0.003 lock only with:
-
-```bash
-python -m experiments.run_tm011family --write-lock --baseline-commit <sha>
-```
-
-Tests must not write this lock. CONTEXT-on hashes live in `genome_013.lock`.
-
-## What 252/252 means
-
-The FAMILY battery planted structured `.tag` relations and reported outcomes onto selected fact IDs. The frozen mechanism **operated over 252 generated external-state worlds**. It did not autonomously acquire those relations from raw events. With CONTEXT-on candidate on HEAD, report **behavioral compatibility 252/252** (feature off); do not claim `genome_delta=0` for HEAD vs `genome_011.lock`.
+Generated planted contextual `.tag` worlds with mandatory interventions. The frozen CONTEXT mechanism **operated over 288 external-state configurations**. It did not autonomously acquire those relations from raw events.
 
 ## Explicit absences
 
-| Missing | Where documented |
-|---------|------------------|
-| Stamped provenance-sensitive Ex0S | TM.0.13.CONTEXT candidate only; **TM.0.13.FAMILY** next |
-| Lookahead / backtracking | TM.0.11.BOUND `local_optimum_dead_end` |
+| Missing | Where next |
+|---------|------------|
+| Experience authors contextual S | **TM.0.14 ACQUIRE** |
+| Lookahead / backtracking | later |
 | No-cue English motor bar | B Fail (untouched) |
-| Autonomous acquisition from open experience | not yet |
 
-## Reproduce freeze + unit checks
+## Reproduce
 
 ```bash
 python tests/test_tm011family.py
-python tests/test_tm011bound.py
-python tests/test_tm012context.py
-python tests/test_tm012minimap.py
-python tests/test_tm012pathdisc.py
-python tests/test_tm012midpath.py
-python tests/test_tm012routesig.py
-python tests/test_tm012routesig_depth.py
-python tests/test_tm012routesig_identity.py
 python tests/test_tm013context.py
+python tests/test_tm013family.py
+python -m experiments.run_tm013family --verify-sealed
 ```
 
 Paper-style summary: [`CLAIM.md`](CLAIM.md).
