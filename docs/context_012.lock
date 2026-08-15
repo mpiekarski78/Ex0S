@@ -1,0 +1,150 @@
+{
+  "version": "TM.0.12.CONTEXT",
+  "ex0s_under_test": "0.0.003",
+  "timeout_ms": 30000,
+  "seed": 12345,
+  "seed_list_sha": "96df8a876f64195cab84cf9f4a1ab2103762a98fb8b196e8603165c5fbb937c0",
+  "scorer_sha": "9766f1dcf4831611e978925ae1513d430050cbd987db2f2c2f84c36a53b1157d",
+  "gen_c0_sha": "2b192cb4a29bc591cdb35202c5a337fefd597634227c0fa11b8d0128faa30a0e",
+  "gen_c1_sha": "96883eedf15eb045eafd68b1fd60cd3a5abf7351e1026997171e98b308150ee8",
+  "gen_c2_sha": "ffb40726471b335edf82dac0c2ef324a72ede863491b4fa2d147d66354bc4ab7",
+  "gen_c3_sha": "870d7ed61bd99affd7e02dafea0a5524bd08d779198b3bba5a6aec23eeefb97f",
+  "gen_c4_sha": "89f02b5757eadd5376813c2d237d1dde2116712a1d4cbc05fdd2bb922a261372",
+  "gen_c5_sha": "21bdfdf0db52b95a625afabf738f2b25d7189b7671e919cb784692d60764a2af",
+  "gen_c6_sha": "b8a7824cf74c2a360d685515c3f5c41cbe8dfbb21308382c5446c6ad8c615310",
+  "gen_c7_sha": "9a7999ac29afe7e5ae6a501af6b8e9a466ca8a912fff215f3cac9809c4cbe9fc",
+  "hypotheses": {
+    "H0": {
+      "name": "bare_token",
+      "state": "Y",
+      "role": "baseline"
+    },
+    "H1": {
+      "name": "here_station",
+      "state": "(Y, here)",
+      "role": "structured"
+    },
+    "H2": {
+      "name": "predecessor",
+      "state": "(Y, pred)",
+      "role": "structured"
+    },
+    "H3": {
+      "name": "path_origin",
+      "state": "(Y, origin or path)",
+      "role": "structured"
+    },
+    "H4": {
+      "name": "opaque_fact_id",
+      "state": "(Y, fact_id)",
+      "role": "diagnostic_upper_bound",
+      "note": "Must not become Ex0S 0.0.004"
+    }
+  },
+  "minimality_shape": [
+    "bare_token",
+    "(token, here)",
+    "(token, predecessor)",
+    "(token, path-origin)",
+    "opaque_fact_id"
+  ],
+  "held_out_cells": [
+    "c4_pred_collision",
+    "c5_path_depth",
+    "c7_indistinguish_a",
+    "c7_indistinguish_b"
+  ],
+  "expected_boundary_cells": {
+    "c2_here_split": {
+      "frozen_expects": [
+        "press",
+        "press"
+      ],
+      "context_expects": [
+        "press",
+        "tune"
+      ],
+      "annotation": "expected limit: bind-only; here does not filter at frontier Y",
+      "discriminates": "H1_vs_H0"
+    },
+    "c3_pred_split": {
+      "frozen_expects": [
+        "press",
+        "press"
+      ],
+      "context_expects": [
+        "press",
+        "tune"
+      ],
+      "annotation": "same here; predecessor would distinguish; bind-only collapses",
+      "discriminates": "H2_vs_H1"
+    },
+    "c4_pred_collision": {
+      "frozen_expects": [
+        "press",
+        "press"
+      ],
+      "context_expects": [
+        "press",
+        "tune"
+      ],
+      "annotation": "same pred A; origin cue needed; bind-only \u2192 strong Y edge",
+      "discriminates": "H3_vs_H2"
+    },
+    "c5_path_depth": {
+      "frozen_expects": [
+        "tune",
+        "tune"
+      ],
+      "context_expects": [
+        "tune",
+        "press"
+      ],
+      "annotation": "path length/history lost at bare Y; bind-only \u2192 strong edge",
+      "discriminates": "path_history"
+    },
+    "c6_evidence_trap": {
+      "frozen_expects": [
+        "press",
+        "press"
+      ],
+      "context_expects": [
+        "tune",
+        "press"
+      ],
+      "annotation": "EVIDENCE cannot repair representational collapse",
+      "discriminates": "evidence_vs_provenance"
+    },
+    "c7_indistinguish_a": {
+      "frozen_expects": [
+        "hold"
+      ],
+      "context_expects": [
+        "press"
+      ],
+      "annotation": "indistinguishability witness A: context wants PRESS; frozen state \u21d2 HOLD",
+      "discriminates": "structural_indistinguishability"
+    },
+    "c7_indistinguish_b": {
+      "frozen_expects": [
+        "hold"
+      ],
+      "context_expects": [
+        "tune"
+      ],
+      "annotation": "indistinguishability witness B: context wants TUNE; same frozen state as A",
+      "discriminates": "structural_indistinguishability"
+    }
+  },
+  "within_model_cells": [
+    "c0_unique",
+    "c1_benign_reuse"
+  ],
+  "refuse": [
+    "(token, here) as victory",
+    "GUID / opaque fact_id as Ex0S 0.0.004",
+    "LOOKAHEAD in this battery",
+    "pre-name 0.0.004 Abstraction",
+    "genome cue\u2192motor maps"
+  ]
+}

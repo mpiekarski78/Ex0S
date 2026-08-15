@@ -4,6 +4,8 @@
 
 - Renamed public repo to [mpiekarski78/Ex0S](https://github.com/mpiekarski78/Ex0S) (was `three-memory`). Lab IDs stay `TM.*`.
 - TM.0.11.FAMILY (**Ex0S 0.0.003 — Frozen Composition**): frozen compose genome vs 252 composition worlds. **252/252** (A–D 144/144; hold-out E–G 108/108; hold-out depth 4). First-hop D/F only (no lookahead). `no_transitive_shortcuts`. G upstream body hash stable. Genome changes 0; apparatus interventions 0. Hold-out generators preregistered in [`genome_011.lock`](genome_011.lock). [`docs/tm011family_results.md`](tm011family_results.md).
+- TM.0.11.BOUND: capacity envelope of frozen 0.0.003 — 1-D sweeps, four-class outcomes, preregistered expected boundaries (local-opt HOLD; reuse-A bind-only). Within-model **42/42**; expected boundaries **2/2**; unexpected **0**; no Ex0S 0.0.004. Audit: fixed non-discriminating reuse-A; honest file_order annotation; per-probe timeout. [`docs/tm011bound_results.md`](tm011bound_results.md).
+- TM.0.12.CONTEXT: representation audit of provenance lost at bare-token compose frontiers (H0–H4; C0–C7 incl. indistinguishability witness). Within-model **2/2**; expected boundaries **7/7**; C7 witness confirmed; unexpected **0**; no Ex0S 0.0.004; no genome patch. LOOKAHEAD and \|S\| profile stay separate ([`tm011bound_perf.md`](tm011bound_perf.md)). [`docs/tm012context_results.md`](tm012context_results.md).
 
 ## 2026-08-14
 

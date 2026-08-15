@@ -1236,6 +1236,10 @@ Not a recipe jump. Freeze cortex, `run_tm011compose.make` (compose-on), policy a
 
 Product lineage: **Ex0S 0.0.003 — Frozen Composition** earned on recorded run `runs/2026-08-15_154037_tm011family` (**252/252**, genome delta 0, interventions 0). Stamp rule below remains the gate for any future re-run. A partial smoke battery must not set `ex0s: 0.0.003`.
 
+Capacity envelope (not a new stamp): TM.0.11.BOUND · `runs/2026-08-15_163528_tm011bound`. See [`tm011bound_results.md`](tm011bound_results.md).
+
+Representation audit (not a stamp): TM.0.12.CONTEXT · `runs/2026-08-15_175049_tm012context`. See [`tm012context_results.md`](tm012context_results.md).
+
 ### First-hop evidence only (D/F) — no lookahead
 
 COMPOSE compares evidence only among relations whose bind matches the **current frontier**. It cannot see downstream strength.
@@ -1304,4 +1308,85 @@ Conservative claim if earned:
 > Factorized learned knowledge generalizes under a frozen compositional mechanism across unseen depth, branching, and downstream revision.
 
 Confound: organism edit; hop flags / lookahead; editing E–G after peeking and still calling them hold-outs; stamping 0.0.003 before the recorded run.
+
+## TM.0.11.BOUND capacity envelope of Ex0S 0.0.003
+
+Not a recipe jump and **not** Ex0S 0.0.004. Freeze the 0.11 compose organism (`docs/genome_011.lock`) and attack **generator assumptions** with 1-D sweeps. Deliverable: failure curves and a mapped envelope. `ex0s_under_test: 0.0.003`. `earned_next` always false.
+
+Apparatus lock: `docs/bound_011.lock` (written **before** held-out cells) — generator SHAs, scorer SHA, seed list, `timeout_ms`, held-out cell IDs, **expected-boundary definitions**.
+
+### Four outcome classes
+
+| Class | Meaning | Solved-frac? |
+|-------|---------|--------------|
+| Within-model Pass | Claimed mechanism correct | yes |
+| Unexpected Fail | Claimed mechanism breaks | no |
+| Expected Boundary | Task needs absent machinery | no — `expected_boundary_confirmed` |
+| Resource Boundary | Timeout / memory; correctness not disproved | no |
+
+### Locked distinctions
+
+- **Off-path distractors:** antecedents never on the intended frontier; wrong motor so a MATCH leak Fails.
+- **Same-frontier dead ends:** obey first-hop EVIDENCE. Stronger `X→DEAD` ⇒ HOLD is correct (not Unexpected Fail).
+- **`local_optimum_dead_end` (preregistered Expected Boundary):** `X→DEAD` support 10 vs `X→A` support 2; A eventually reaches PRESS; cue X ⇒ HOLD. Annotation: no lookahead/backtracking.
+- **Reuse-A:** different `here` on same bind — compose frontier is **bind-only**; Expected Boundary if stronger wrong-here wins.
+- **Reuse-B:** same context; first-hop evidence decides (Within-model).
+- **Acquired-edge invariant:** `edges(S) − acquired_edges == ∅` (modulo evidence metadata).
+- **Nasty:** `X→A→B→C→D` with both `D→PRESS` and `D→TUNE` present; revise only D evidence; hundreds of off-path wrong-motor relations; upstream body hashes stable.
+
+### Resource vs semantic
+
+Preregister `timeout_ms` in the bound lock. Record harness `decision_wall_ms`, estimated `facts_examined` (`hops × |S|`), `peak_memory_kb`. Do not call a timeout an Unexpected Fail.
+
+### Refuse
+
+Hop flags / lookahead to green a red semantic cell; stamping 0.0.004; treating local-opt HOLD as Unexpected Fail; same-frontier DEAD in the nasty cell; abstraction this pass.
+
+## TM.0.12.CONTEXT representation audit of Ex0S 0.0.003
+
+Not a recipe jump and **not** Ex0S 0.0.004. Freeze the 0.11 compose organism (`docs/genome_011.lock`). Deliverable: elimination map of provenance hypotheses — what information is lost when compose collapses the frontier to a bare token, and which ambiguities require it.
+
+Apparatus lock: `docs/context_012.lock` (written **before** held-out cells) — generator SHAs, scorer SHA, seed list, hypotheses H0–H4, held-out cell IDs, expected-boundary definitions, **minimality evaluation shape** (for a later genome only).
+
+`ex0s_under_test: 0.0.003`. `earned_next` always **false** this pass.
+
+### Hypotheses (structured vs opaque)
+
+| Id | Claim | Candidate state |
+|----|-------|-----------------|
+| H0 | Bare token sufficient | `Y` |
+| H1 | Station / `here` | `(Y, here)` |
+| H2 | Immediate predecessor | `(Y, pred)` |
+| H3 | Acquisition / path origin | `(Y, origin cue or path)` |
+| H4 | Opaque occurrence / fact id | `(Y, fact_id)` — **diagnostic upper bound only**; must not become the product claim |
+
+Each ambiguity world must make **at least two** hypotheses disagree on the expected motor.
+
+### World family C0–C7
+
+| Cell | Role |
+|------|------|
+| C0 | Unique intermediates — within-model control |
+| C1 | Benign reuse (same continuation) — reuse alone not pathological |
+| C2 | Same token, different `here` — H1 vs H0 |
+| C3 | Same `here`, different predecessor — H2 vs H1 |
+| C4 | Predecessor collision (`…→A→Y` from two origins) — H3 vs H2 |
+| C5 | Path-depth provenance — derivation history |
+| C6 | Evidence trap — EVIDENCE cannot repair collapse |
+| C7 | Indistinguishability witness — structural, not empirical |
+
+C0/C1: Within-model Pass. C2–C7: Expected Boundary under bind-only compose (preregistered frozen motors).
+
+### Minimality (lock now; apply only after a CONTEXT primitive is proposed)
+
+Report which of C2–C7 each of bare token / `(token,here)` / `(token,pred)` / `(token,path-origin)` / opaque fact_id solves. Future genome jump only if the **smallest additional structured state** covers all preregistered ambiguity classes — not GUID-as-004, not `(token,here)`-as-victory from one red cell.
+
+### Refuse
+
+Implementing `(token, here)` and declaring victory; genome maps of cues→motors; LOOKAHEAD in this battery; treating H4 GUID as Ex0S 0.0.004; pre-naming 0.0.004 “Abstraction”; mixing dead-end planning with provenance.
+
+### Deferred (not this pass)
+
+- **LOOKAHEAD** — separate freeze / claim (`TM.*.LOOKAHEAD`).
+- **\|S\| latency** — infrastructure profile + behavioral-equivalence regression on retrieval candidates; see [`tm011bound_perf.md`](tm011bound_perf.md).
 
