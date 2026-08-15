@@ -58,7 +58,7 @@ Ex0S 0.0.003  ←  TM.0.11.FAMILY
 
 Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enough to treat as a lineage, not only a series of demos.
 
-**Next:** TM.0.12.PATHDISC done — same-S C8 kills origin alone (H3a collision; H3b/H2 distinguish). Next lab (no stamp): **H3c = (token, origin, predecessor)** vs richer path signatures. Do **not** stamp 0.0.004; do not implement CONTEXT genome yet.
+**Next:** TM.0.12.MIDPATH done — same-S C9 kills endpoint provenance `(token, origin, pred)`. Next lab (no stamp): **route-signature minimality** (which interior info can be deleted without collisions). Do **not** stamp 0.0.004; do not implement CONTEXT genome yet.
 
 ## Question
 
@@ -143,6 +143,7 @@ TM.0.11.BOUND capacity envelope (0.0.003 under test): [`docs/tm011bound_results.
 TM.0.12.CONTEXT representation audit: [`docs/tm012context_results.md`](docs/tm012context_results.md).
 TM.0.12.MINIMAP distinguishability: [`docs/tm012minimap_results.md`](docs/tm012minimap_results.md).
 TM.0.12.PATHDISC same-S origin vs path: [`docs/tm012pathdisc_results.md`](docs/tm012pathdisc_results.md).
+TM.0.12.MIDPATH endpoint vs interior: [`docs/tm012midpath_results.md`](docs/tm012midpath_results.md).
 Ex0S lineage: [`docs/ex0s.md`](docs/ex0s.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 

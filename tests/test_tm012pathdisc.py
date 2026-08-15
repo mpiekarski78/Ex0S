@@ -170,7 +170,15 @@ def test_computed_table_origin_insufficient():
     claim = summary["claim"]
     assert "Origin alone is insufficient" in claim
     assert "store-the-full-path" in claim or "full path" in claim.lower()
-    assert "H3c" in claim
+    assert "MIDPATH" in claim
+
+
+def test_runtime_seed_must_match_lock():
+    bad = run_pathdisc(seed=99999)
+    assert bad["ok"] is False
+    assert "runtime seed" in bad["why"]
+    assert "locked seed" in bad["why"]
+    assert bad["earned_next"] is False
 
 
 def test_never_stamps_004():
@@ -210,6 +218,7 @@ if __name__ == "__main__":
     test_h3a_collides_h3b_distinguishes()
     test_outgoing_y_motor_fid_inadmissible()
     test_computed_table_origin_insufficient()
+    test_runtime_seed_must_match_lock()
     test_never_stamps_004()
     test_scorer_sha_pinned()
     test_no_write_lock_in_tests_module()

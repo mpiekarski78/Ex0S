@@ -1,0 +1,83 @@
+{
+  "version": "TM.0.12.MIDPATH",
+  "ex0s_under_test": "0.0.003",
+  "earned_next": false,
+  "seed": 12345,
+  "context_012_lock_sha": "fe7e28f341b63ec3b329b6d618d922222540074dd0e40b1723fdd6496fe1f3ff",
+  "minimap_012_lock_sha": "1f59ae9242d3971c602a5509715bca07e311d50b732c4901a00b1947f76364aa",
+  "pathdisc_012_lock_sha": "47730b1ff9b261463842645d66c7b89ff27b5b2595c3cc5109c2bcd02625ce45",
+  "contrast": {
+    "C9": {
+      "cell_id": "c9_same_endpoint_midpath",
+      "left": {
+        "trace_label": "route_a"
+      },
+      "right": {
+        "trace_label": "route_b"
+      },
+      "role": "midpath_vs_endpoint",
+      "geometry": {
+        "len": 4,
+        "A": "X \u2192 A \u2192 P \u2192 Y",
+        "B": "X \u2192 B \u2192 P \u2192 Y",
+        "differs_at": 1
+      },
+      "note": "same S; apparatus traces; raw apparatus trace is extractor-only ground truth; unavailable after projection; not path discovery"
+    }
+  },
+  "cell_id": "c9_same_endpoint_midpath",
+  "role": "midpath_vs_endpoint",
+  "candidates": [
+    "H0",
+    "H1",
+    "H2",
+    "H3a",
+    "H3c",
+    "H3b",
+    "H4"
+  ],
+  "here": "chb",
+  "support": [
+    1,
+    0
+  ],
+  "trace_len": 4,
+  "validation": [
+    "len(A)==len(B)==4",
+    "A[0]==B[0]==X",
+    "A[1]!=B[1]",
+    "A[2]==B[2]==P",
+    "A[3]==B[3]==Y",
+    "all path and motor edges share identical here",
+    "all relations have identical support (1,0)",
+    "required motors differ and exist as Y\u2192motor",
+    "one shared S; both traces' path+motor fids \u2286 store",
+    "runtime seed equals locked seed",
+    "raw apparatus trace is extractor-only ground truth; unavailable after projection",
+    "extract_states_midpath must not call path_and_frontier",
+    "outgoing Y\u2192motor fid inadmissible",
+    "H4 incoming is shared P\u2192Y",
+    "exactly one P\u2192Y edge in S"
+  ],
+  "gen_c9_sha": "ce33dbf1aca520b7be741021b3718d1084a9a78f0d67bc3b4e97ea2aab037dee",
+  "validate_c9_sha": "95fe456f038184a0da7b4394c5a1d09f8ecc18bc5a1aaabd11db2ca01997789f",
+  "midpath_extractor_sha": "24430a13e551b7f8d84d0fc1a99cc760ede1837a1532b98ee528d09922a03339",
+  "score_contrast_sha": "01faf25e042b5871f3220d6796cbb686198ce04b09ab601602c160150955c678",
+  "find_edge_sha": "37ef6cf746aeddae9255abdc7cbef8d2b8d39cda81932ad0fe96133520202437",
+  "relations_content_hash_sha": "a972cd5cab5712948c2f9b6bb5e3e5ea203a7324af25e99854400a60be85ccba",
+  "refuse_answer_derived_fid_sha": "400fc095799e25a12ddaa3f27225b99476c5197872e157ea736ff4a511f2674e",
+  "trace_spec_sha": "2b449da3328c225800c84204e523448995bc55c06de5e155195f98e1874a0a13",
+  "scorer_reuse": "experiments.run_tm012minimap.score_contrast",
+  "refuse": [
+    "two-store C9",
+    "path_and_frontier route discovery",
+    "raw TraceSpec / nodes as selector input",
+    "rewrite context_012.lock / minimap_012.lock / pathdisc_012.lock",
+    "modify MINIMAP CANDIDATE_ORDER or extractor for H3c",
+    "declare full path as product",
+    "ceremonial H3c-only scorer",
+    "implement route-signature product this pass",
+    "stamp Ex0S 0.0.004",
+    "genome / agent change"
+  ]
+}

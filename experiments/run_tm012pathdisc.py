@@ -257,6 +257,7 @@ def apparatus_snapshot() -> dict[str, Any]:
             "required motors differ",
             "required motors in MOTORS with Y→motor edges in S",
             "one shared S content hash for both traces",
+            "runtime seed equals locked seed",
             "extract_states_from_trace must not call path_and_frontier",
             "outgoing Y→motor fid inadmissible",
         ],
@@ -329,6 +330,14 @@ def run_pathdisc(*, seed: int = DEFAULT_SEED) -> dict[str, Any]:
         return {
             "ok": False,
             "why": why,
+            "earned_next": False,
+            "ex0s_under_test": "0.0.003",
+            "table": {},
+        }
+    if seed != snap["seed"]:
+        return {
+            "ok": False,
+            "why": f"runtime seed {seed} != locked seed {snap['seed']}",
             "earned_next": False,
             "ex0s_under_test": "0.0.003",
             "table": {},
@@ -457,8 +466,9 @@ def run_pathdisc(*, seed: int = DEFAULT_SEED) -> dict[str, Any]:
         "Origin alone is insufficient. Some information about the traversed "
         "route beyond origin is necessary. H3b survives as a candidate only; "
         "H2 also distinguishes — do not conclude store-the-full-path. "
-        "C4 kills predecessor alone; C8 kills origin alone. Next candidate "
-        "question (not this pass): H3c=(token, origin, predecessor)."
+        "C4 kills predecessor alone; C8 kills origin alone. Next (not this "
+        "pass): TM.0.12.MIDPATH — falsify endpoint provenance "
+        "(token, origin, predecessor) with same X/P/Y and different interior."
     )
     return {
         "ok": True,

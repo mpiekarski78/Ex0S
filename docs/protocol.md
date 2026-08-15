@@ -1435,11 +1435,34 @@ Apparatus: `docs/pathdisc_012.lock` — pins SHA256 of frozen `docs/context_012.
 
 ### Decisive criterion
 
-If H3a **collides** and H3b **distinguishes**: origin alone is insufficient; some route information beyond origin is necessary. H2 surviving C8 is expected — do **not** conclude store-the-full-path. Next (not this pass): H3c `(token, origin, pred)`.
+If H3a **collides** and H3b **distinguishes**: origin alone is insufficient; some route information beyond origin is necessary. H2 surviving C8 is expected — do **not** conclude store-the-full-path. Next: **TM.0.12.MIDPATH** (falsify endpoint provenance), not a ceremonial H3c scorer.
 
-Recorded: [`tm012pathdisc_results.md`](tm012pathdisc_results.md).
+Recorded: [`tm012pathdisc_results.md`](tm012pathdisc_results.md). Runtime seed must equal locked seed.
 
 ### Refuse
 
 Two-store C8; route discovery via `path_and_frontier`; rewriting CONTEXT/MINIMAP; declaring full path or H3c the product; stamping 0.0.004; genome change this pass.
+
+## TM.0.12.MIDPATH endpoint provenance vs interior
+
+Not a behavioral scorer and **not** Ex0S 0.0.004. No `agent.py` / policy / probe. One shared fork-join S; two **length-4** apparatus traces with the same locked origin X, predecessor P, frontier Y, differing in exactly one interior token.
+
+Apparatus: `docs/midpath_012.lock` — pins CONTEXT / MINIMAP / PATHDISC lock SHAs; C9 geometry; helper source SHAs (`score_contrast`, `find_edge`, `relations_content_hash`, `refuse_answer_derived_fid`, gen/validate/extract). H3c is **MIDPATH-local** — MINIMAP candidate set unchanged. Scorer receives projected states + motors only; raw TraceSpec is extractor-only ground truth.
+
+### Contrast
+
+| ID | Role |
+|----|------|
+| C9 | `midpath_vs_endpoint` — `(X,A,P,Y)` vs `(X,B,P,Y)` |
+
+### Decisive criterion
+
+If H3c **collides** and H3b **distinguishes**: endpoint provenance `(token, origin, predecessor)` is insufficient; some interior-route information is necessary. Do **not** conclude store-the-full-path. Next (not this pass): route-signature minimality.
+
+Recorded: [`tm012midpath_results.md`](tm012midpath_results.md).
+
+### Refuse
+
+Two-store C9; `path_and_frontier` discovery; raw TraceSpec as selector input; modifying MINIMAP for H3c; declaring full path / signature product; stamping 0.0.004; genome change this pass.
+
 

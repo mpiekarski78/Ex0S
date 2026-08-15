@@ -53,7 +53,7 @@ Before this recorded run:
 
 ## Next (not this pass)
 
-Same-S origin-vs-path discriminator landed as **TM.0.12.PATHDISC** ([`tm012pathdisc_results.md`](tm012pathdisc_results.md)): H3a collides; origin alone is insufficient. Next after PATHDISC: test **H3c `(token, origin, pred)`** vs richer path — not genome yet.
+Same-S origin-vs-path discriminator landed as **TM.0.12.PATHDISC**; endpoint provenance falsified as **TM.0.12.MIDPATH** ([`tm012midpath_results.md`](tm012midpath_results.md)). Next after MIDPATH: route-signature minimality — not genome yet.
 
 ## Reproduce
 
