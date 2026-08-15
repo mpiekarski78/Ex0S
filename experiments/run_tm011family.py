@@ -12,6 +12,7 @@ import hashlib
 import inspect
 import json
 import shutil
+import subprocess
 import sys
 import tempfile
 from collections import defaultdict
@@ -636,6 +637,24 @@ def generate_world(family: str, seed: int, birth: int) -> World:
     return FAMILY_GENERATORS[family](seed, birth)
 
 
+# Immutable 0.0.003 organism freeze (TM.0.11.FAMILY stamp commit).
+# Rewrite only via: python -m experiments.run_tm011family --write-lock --baseline-commit <sha>
+ORGANISM_BASELINE_COMMIT = "c392aa515b7a3445bb15bc55ad969d971632ea3f"
+
+RECIPE_KEYS = (
+    "agent_sha",
+    "policy_sha",
+    "cortex_sha",
+    "make011compose_sha",
+    "family_E_generator_sha",
+    "family_F_generator_sha",
+    "family_G_generator_sha",
+    "scorer_sha",
+    "seed_list_sha",
+    "n_feat",
+)
+
+
 def freeze_snapshot() -> dict[str, Any]:
     return {
         "version": "TM.0.11",
@@ -652,8 +671,33 @@ def freeze_snapshot() -> dict[str, Any]:
     }
 
 
-def write_freeze_lock(path: Path = FREEZE_LOCK) -> dict[str, Any]:
+def _git_has_commit(sha: str) -> bool:
+    git_dir = REPO_ROOT / ".git"
+    if not git_dir.exists():
+        return True
+    try:
+        out = subprocess.run(
+            ["git", "cat-file", "-t", sha],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except OSError:
+        return True
+    return out.returncode == 0 and out.stdout.strip() == "commit"
+
+
+def write_freeze_lock(
+    path: Path = FREEZE_LOCK, *, baseline_commit: str | None = None
+) -> dict[str, Any]:
+    """Explicit re-freeze only. Tests and run_family must not call this."""
     snap = freeze_snapshot()
+    existing: dict[str, Any] = {}
+    if path.exists():
+        existing = json.loads(path.read_text(encoding="utf-8"))
+    chosen = baseline_commit or existing.get("baseline_commit") or ORGANISM_BASELINE_COMMIT
+    snap["baseline_commit"] = chosen
     ag = make(REPO_ROOT / "runs" / "_compose_family_lock_probe", None, UsePolicy(seed=1), enabled=False)
     snap["cortex_weight_hash"] = ag.weight_hash()
     snap["use_compose"] = bool(ag.use_compose)
@@ -664,24 +708,23 @@ def write_freeze_lock(path: Path = FREEZE_LOCK) -> dict[str, Any]:
     return snap
 
 
-def verify_freeze() -> tuple[bool, str, dict[str, Any]]:
+def verify_freeze(path: Path = FREEZE_LOCK) -> tuple[bool, str, dict[str, Any]]:
+    """Fail closed on any recipe drift, including agent.py.
+
+    Compose MATCH / evidence / choose live in agent.py. An agent_sha change
+    is a genome change. Do not rewrite `path` from this function or from tests.
+    """
     snap = freeze_snapshot()
-    if not FREEZE_LOCK.exists():
-        return False, "docs/genome_011.lock missing", snap
-    lock = json.loads(FREEZE_LOCK.read_text(encoding="utf-8"))
-    for key in (
-        "policy_sha",
-        "cortex_sha",
-        "make011compose_sha",
-        "family_E_generator_sha",
-        "family_F_generator_sha",
-        "family_G_generator_sha",
-        "scorer_sha",
-        "seed_list_sha",
-        "n_feat",
-    ):
+    if not path.exists():
+        return False, "docs/genome_011.lock missing; write only via --write-lock", snap
+    lock = json.loads(path.read_text(encoding="utf-8"))
+    for key in RECIPE_KEYS:
         if snap[key] != lock.get(key):
             return False, f"freeze drift: {key}", snap
+    if lock.get("baseline_commit") != ORGANISM_BASELINE_COMMIT:
+        return False, "baseline_commit drifted from ORGANISM_BASELINE_COMMIT", snap
+    if not _git_has_commit(ORGANISM_BASELINE_COMMIT):
+        return False, f"baseline commit {ORGANISM_BASELINE_COMMIT} not in this clone", snap
     if int(UsePolicy.n_feat) != 2:
         return False, "UsePolicy.n_feat moved", snap
     from three_memory import agent as agent_mod
@@ -697,9 +740,7 @@ def verify_freeze() -> tuple[bool, str, dict[str, Any]]:
         return False, "011compose make lost evidence/match/survive", snap
     if probe_ag.weight_hash() != lock.get("cortex_weight_hash"):
         return False, "cortex weight hash drifted from genome_011.lock", snap
-    if snap["agent_sha"] == lock.get("agent_sha"):
-        return True, "frozen 0.11 compose genome", snap
-    return True, "frozen 0.11 compose genome (agent grew; compose make still on)", snap
+    return True, "frozen 0.11 compose genome", snap
 
 
 def score_world(
@@ -981,8 +1022,6 @@ def run_family(
     workers: int = 4,
 ) -> dict[str, Any]:
     run_dir = _run_dir()
-    if not FREEZE_LOCK.exists():
-        write_freeze_lock()
     genome_ok, freeze_why, snap = verify_freeze()
     jobs = []
     for fam, world_seed, b in seed_jobs(seed=seed, per_family=per_family, births=births):
@@ -1070,9 +1109,14 @@ def main() -> None:
     p.add_argument("--births", type=int, default=DEFAULT_BIRTHS)
     p.add_argument("--workers", type=int, default=4)
     p.add_argument("--write-lock", action="store_true")
+    p.add_argument(
+        "--baseline-commit",
+        default=None,
+        help="Required identity of a new freeze; omit to preserve existing baseline_commit",
+    )
     args = p.parse_args()
     if args.write_lock:
-        print(json.dumps(write_freeze_lock(), indent=2))
+        print(json.dumps(write_freeze_lock(baseline_commit=args.baseline_commit), indent=2))
         return
     s = run_family(
         seed=args.seed,

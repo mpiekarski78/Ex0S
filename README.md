@@ -1,7 +1,8 @@
 # Ex0S · three-memory (TM)
 
 **Repo:** [mpiekarski78/Ex0S](https://github.com/mpiekarski78/Ex0S)  
-**Current:** **Ex0S 0.0.003** (TM.0.11.FAMILY — Frozen Composition). Toy series: v0–v23.
+**Current:** **Ex0S 0.0.003** (TM.0.11.FAMILY — Frozen Composition). Toy series: v0–v23.  
+**Start here:** [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md) · [`docs/CLAIM.md`](docs/CLAIM.md)
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -42,17 +43,17 @@ Ex0S 0.0.002  ←  TM.0.11 COMPOSE
         independently acquired X→Y and Y→M compose at use
         no shortcut X→M written into S
         │
-        ▼ freeze compose organism; attack with composition worlds
+        ▼ freeze compose organism; attack with generated S worlds
 Ex0S 0.0.003  ←  TM.0.11.FAMILY
         depth / first-hop branch / revise-downstream
-        developed 144/144 · hold-out 108/108 · hold-out depth 4 · genome delta 0
+        252/252 generated external-state worlds · hold-out depth 4 · genome delta 0
 ```
 
 | Ex0S | Lab | What changed |
 |------|-----|----------------|
 | **0.0.001** | TM.0.10.FAMILY (frozen 0.9.4) | Same microscopic relation loop, many worlds, **no genome growth** |
 | **0.0.002** | TM.0.11 COMPOSE | Learned relations become **inputs** to other learned relations at use time |
-| **0.0.003** | TM.0.11.FAMILY (frozen compose) | Frozen composition generalizes across **depth, first-hop branching, downstream revision** |
+| **0.0.003** | TM.0.11.FAMILY (frozen compose) | Frozen compose operates over generated S across **depth, first-hop branching, downstream revision** |
 
 Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enough to treat as a lineage, not only a series of demos.
 
@@ -66,7 +67,7 @@ Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enou
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status: **Ex0S 0.0.003** freezes compose across 252 composition worlds (**252/252**; hold-out depth 4; G revise-downstream with upstream hash stable). **Ex0S 0.0.002** / **0.0.001** still stand. **B Fail** on the no-cue English motor bar stays — do not green it by lookahead or hop flags.
+Honest status: **Ex0S 0.0.003** is a frozen, evidence-aware interpreter over an inspectable relation graph. The FAMILY battery is **252/252 generated external-state worlds** (use / revision / compose of planted S; hold-out depth 4; G revise-downstream with upstream hash stable) — not 252 natural learning problems. **Ex0S 0.0.002** / **0.0.001** still stand. **B Fail** on the no-cue English motor bar stays — do not green it by lookahead or hop flags. See [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md).
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -220,7 +221,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.9.4 A REVISION / B motor bar | **Store-works** / **Fail** (HOLD→M1→HOLD→M2; mid-reset reverse; order-invariant) |
 | TM.0.10.FAMILY frozen 0.9.4 (**Ex0S 0.0.001**) | **252/252** worlds (A–D 144/144; hold-out E–G 108/108; genome delta 0) |
 | TM.0.11 A COMPOSE / B motor bar (**Ex0S 0.0.002**) | **Store-works** / **Fail** (X→Y→M1 at use; no shortcut; donors / residue / S-stable) |
-| TM.0.11.FAMILY frozen compose (**Ex0S 0.0.003**) | **252/252** (A–D 144/144; hold-out E–G 108/108; depth 4; G upstream hash stable) |
+| TM.0.11.FAMILY frozen compose (**Ex0S 0.0.003**) | **252/252** generated S worlds (A–D 144/144; hold-out E–G 108/108; depth 4; G upstream hash stable) |
 
 ## Five pieces
 
@@ -304,7 +305,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.9.4 REVISION | **Store-works** / **Fail** | HOLD→M1→HOLD→M2; genome delta 0; [`docs/tm094_results.md`](docs/tm094_results.md) |
 | TM.0.10.FAMILY (**Ex0S 0.0.001**) | **252/252** / delta 0 | 7 templates, hold-out E–G; [`docs/tm010family_results.md`](docs/tm010family_results.md) |
 | TM.0.11 COMPOSE (**Ex0S 0.0.002**) | **Store-works** / **Fail** | frontier compose; no shortcut; [`docs/tm011compose_results.md`](docs/tm011compose_results.md) |
-| TM.0.11.FAMILY (**Ex0S 0.0.003**) | **252/252** / delta 0 | depth 4 hold-out; first-hop D/F; G revise; [`docs/tm011family_results.md`](docs/tm011family_results.md) |
+| TM.0.11.FAMILY (**Ex0S 0.0.003**) | **252/252** generated S / delta 0 | depth 4 hold-out; first-hop D/F; G revise; [`docs/tm011family_results.md`](docs/tm011family_results.md) |
 
 ## Quick start
 

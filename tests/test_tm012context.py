@@ -27,13 +27,11 @@ from experiments.run_tm012context import (
     run_cell,
     run_context,
     verify_context_lock,
-    write_context_lock,
 )
 from experiments.run_tm011family import verify_freeze as verify_organism
 
 
 def test_locks():
-    write_context_lock()
     ok, why, snap = verify_context_lock()
     assert ok, why
     assert snap["ex0s_under_test"] == "0.0.003"

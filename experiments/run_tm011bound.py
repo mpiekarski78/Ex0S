@@ -1148,8 +1148,6 @@ def _run_dir() -> Path:
 
 def run_bound(*, seed: int = DEFAULT_SEED, workers: int = 4) -> dict[str, Any]:
     run_dir = _run_dir()
-    if not BOUND_LOCK.exists():
-        write_bound_lock()
     organism_ok, org_why, _ = verify_organism_freeze()
     bound_ok, bound_why, bound_snap = verify_bound_lock()
     cells = all_cells(seed)

@@ -362,5 +362,5 @@ Chosen non-motor consequent becomes the next MATCH frontier. **A** **Store-works
 
 ## TM.0.11.FAMILY (frozen composition) — Ex0S 0.0.003
 
-Not a recipe jump. **252/252** composition worlds on the frozen compose genome (developed A–D 144/144; hold-out E–G 108/108; hold-out max depth 4). First-hop evidence only for D/F (no lookahead). `no_transitive_shortcuts`. G: revise-downstream with upstream `X→Y` body hash stable. Genome changes 0; apparatus interventions 0. Hold-out generators preregistered. Details: [`tm011family_results.md`](tm011family_results.md).
+Not a recipe jump. **252/252 generated external-state worlds** on the frozen compose genome (developed A–D 144/144; hold-out E–G 108/108; hold-out max depth 4). The battery tests use / revision / composition of planted S, not autonomous acquisition. First-hop evidence only for D/F (no lookahead). `no_transitive_shortcuts`. G: revise-downstream with upstream `X→Y` body hash stable. Genome changes 0; apparatus interventions 0. Hold-out generators preregistered. Details: [`tm011family_results.md`](tm011family_results.md).
 

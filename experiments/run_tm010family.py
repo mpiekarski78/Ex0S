@@ -98,7 +98,8 @@ def verify_freeze() -> tuple[bool, str, dict[str, Any]]:
     src = inspect.getsource(agent_mod)
     if "use_family" in src or "use_revision" in src:
         return False, "new family/revision flag in agent.py", snap
-    # Agent may grow (e.g. compose default-off). 0.9.4 make must stay compose-off.
+    # 0.0.001 identity is 094 make (compose-off), not later agent.py.
+    # Ex0S 0.0.003 fail-closes on agent_sha — compose lives in agent.py.
     probe_ag = make(REPO_ROOT / "runs" / "_family_lock_probe", None, UsePolicy(seed=1), enabled=False)
     if getattr(probe_ag, "use_compose", False):
         return False, "094 make enabled compose; 0.10 freeze is no longer 0.9.4", snap
@@ -685,8 +686,6 @@ def run_family(
     workers: int = 4,
 ) -> dict[str, Any]:
     run_dir = _run_dir()
-    if not FREEZE_LOCK.exists():
-        write_freeze_lock()
     genome_ok, freeze_why, snap = verify_freeze()
     jobs = []
     for i, fam in enumerate(FAMILIES):

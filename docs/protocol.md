@@ -1234,7 +1234,9 @@ After 0.11, TM.0.11.FAMILY attacked this primitive (Ex0S 0.0.003). Do not add lo
 
 Not a recipe jump. Freeze cortex, `run_tm011compose.make` (compose-on), policy architecture, features, and training protocol. **No organism edits during the recorded run.** Hold-out generators E–G are **preregistered** (hashed into `docs/genome_011.lock` with `scorer_sha` and `seed_list_sha`). Do not edit E–G after seeing results; if apparatus must change, that version is no longer the untouched hold-out (E2–G2 or record an intervention).
 
-Product lineage: **Ex0S 0.0.003 — Frozen Composition** earned on recorded run `runs/2026-08-15_154037_tm011family` (**252/252**, genome delta 0, interventions 0). Stamp rule below remains the gate for any future re-run. A partial smoke battery must not set `ex0s: 0.0.003`.
+Product lineage: **Ex0S 0.0.003 — Frozen Composition** earned on recorded run `runs/2026-08-15_154037_tm011family` (**252/252 generated external-state worlds**, genome delta 0, interventions 0). The battery tests use / revision / composition of planted S, not autonomous acquisition. Stamp rule below remains the gate for any future re-run. A partial smoke battery must not set `ex0s: 0.0.003`.
+
+Freeze is **fail-closed**: `verify_freeze()` compares `agent_sha` (compose lives in `agent.py`) plus policy / cortex / make / hold-out generators / scorer / seed list, and pins `baseline_commit` to `c392aa515b7a3445bb15bc55ad969d971632ea3f`. Tests must not call `write_freeze_lock`. Rewrite the lock only via `python -m experiments.run_tm011family --write-lock --baseline-commit <sha>`.
 
 Capacity envelope (not a new stamp): TM.0.11.BOUND · `runs/2026-08-15_163528_tm011bound`. See [`tm011bound_results.md`](tm011bound_results.md).
 
@@ -1305,7 +1307,7 @@ Headline: solved-frac (all / develop / hold-out); **max unseen depth solved**; g
 
 Conservative claim if earned:
 
-> Factorized learned knowledge generalizes under a frozen compositional mechanism across unseen depth, branching, and downstream revision.
+> A frozen compose mechanism correctly operates over generated external-state worlds across unseen depth, branching, and downstream revision, without materializing shortcuts.
 
 Confound: organism edit; hop flags / lookahead; editing E–G after peeking and still calling them hold-outs; stamping 0.0.003 before the recorded run.
 

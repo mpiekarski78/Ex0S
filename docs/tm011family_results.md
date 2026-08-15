@@ -32,7 +32,9 @@ All independent measures **1.000** (`compose_depth`, `no_transitive_shortcuts`, 
 
 ## What this shows
 
-Factorized learned knowledge generalizes under a frozen compositional mechanism across unseen depth, first-hop branching, and downstream revision.
+The frozen mechanism correctly **operated over 252 generated external-state worlds** (structured `.tag` relations planted in S; `_earn` reports outcomes on selected fact IDs). That is property-based testing of use, revision, and composition — not 252 independent natural learning problems.
+
+Factorized relations in S compose under a frozen mechanism across unseen depth, first-hop branching, and downstream revision.
 
 - **E:** developed max depth 3; hold-out depth 4; no hop flag added.
 - **D/F:** first-hop evidence only — stronger `X→Y` vs `X→Z`; equal first-hop → HOLD. Downstream-stronger traps did not win (no lookahead).
@@ -48,9 +50,11 @@ Before the recorded run above:
 
 ## What this does not show
 
+- Autonomous acquisition of `bind→did` from raw events (harness-authored S)
 - Planning / lookahead over downstream evidence
 - English / motor-bar progress (B Fail untouched)
 - New epistemic machinery (confidence, decay, hop caps)
+- Contextual / provenance-sensitive composition (see TM.0.12.CONTEXT)
 
 ## Reproduce
 

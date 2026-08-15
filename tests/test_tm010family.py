@@ -18,7 +18,6 @@ from experiments.run_tm010family import (
     generate_world,
     run_family,
     verify_freeze,
-    write_freeze_lock,
 )
 from experiments.run_tm094 import make as make094
 from three_memory import agent as agent_mod
@@ -26,10 +25,9 @@ from three_memory.policy import UsePolicy
 
 
 def test_frozen_094_genome():
-    if not (REPO_ROOT / "docs" / "genome_094.lock").exists():
-        write_freeze_lock()
     ok, why, _snap = verify_freeze()
     assert ok, why
+    assert (REPO_ROOT / "docs" / "genome_094.lock").exists()
     ag = make094(Path("/tmp/tm010_094"), None, UsePolicy(seed=1), enabled=False)
     assert ag.use_evidence and ag.use_bind_match and ag.use_hyp_survive
     assert UsePolicy.n_feat == 2

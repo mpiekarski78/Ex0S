@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import inspect
+import json
 import sys
 import tempfile
 from pathlib import Path
@@ -14,6 +15,8 @@ from experiments.run_tm011compose import make as make011
 from experiments.run_tm011family import (
     DEVELOP,
     HOLDOUT,
+    ORGANISM_BASELINE_COMMIT,
+    RECIPE_KEYS,
     generate_family_C,
     generate_family_D,
     generate_family_F,
@@ -24,7 +27,6 @@ from experiments.run_tm011family import (
     run_one,
     transitive_forbidden,
     verify_freeze,
-    write_freeze_lock,
     write_world_s,
 )
 from experiments.run_tm094 import make as make094
@@ -33,14 +35,20 @@ from three_memory.policy import UsePolicy
 
 
 def test_frozen_011_compose_genome():
-    write_freeze_lock()
     ok, why, snap = verify_freeze()
     assert ok, why
+    assert why == "frozen 0.11 compose genome"
+    assert "agent grew" not in why
     assert "family_E_generator_sha" in snap
     assert "family_F_generator_sha" in snap
     assert "family_G_generator_sha" in snap
     assert "scorer_sha" in snap
     assert "seed_list_sha" in snap
+    lock = json.loads((REPO_ROOT / "docs" / "genome_011.lock").read_text(encoding="utf-8"))
+    assert lock["baseline_commit"] == ORGANISM_BASELINE_COMMIT
+    assert lock["agent_sha"] == snap["agent_sha"]
+    for key in RECIPE_KEYS:
+        assert snap[key] == lock[key]
     ag = make011(Path("/tmp/tm011family_011"), None, UsePolicy(seed=1), enabled=False)
     assert ag.use_compose and ag.use_evidence and ag.use_bind_match
     assert not make094(Path("/tmp/tm011family_094"), None, UsePolicy(seed=1), enabled=False).use_compose
@@ -48,6 +56,17 @@ def test_frozen_011_compose_genome():
     src = inspect.getsource(agent_mod)
     for banned in ("use_two_hop", "use_three_hop", "MAX_HOPS", "use_lookahead"):
         assert banned not in src
+
+
+def test_verify_fails_closed_on_agent_sha(tmp_path: Path):
+    src = REPO_ROOT / "docs" / "genome_011.lock"
+    dest = tmp_path / "genome_011.lock"
+    lock = json.loads(src.read_text(encoding="utf-8"))
+    lock["agent_sha"] = "0" * 64
+    dest.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
+    ok, why, _ = verify_freeze(dest)
+    assert not ok
+    assert why == "freeze drift: agent_sha"
 
 
 def test_holdout_split_and_depths():
@@ -165,6 +184,8 @@ def test_g_upstream_hash_stable(tmp_path: Path):
 
 if __name__ == "__main__":
     test_frozen_011_compose_genome()
+    with tempfile.TemporaryDirectory() as d:
+        test_verify_fails_closed_on_agent_sha(Path(d))
     test_holdout_split_and_depths()
     test_transitive_forbidden_3hop()
     test_first_hop_df_not_lookahead()

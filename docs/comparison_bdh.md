@@ -100,7 +100,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.9.4 REVISION | **Store-works** / **Fail** (HOLD→M1→HOLD→M2; mid-reset reverse; order-invariant) |
 | three-memory, TM.0.10.FAMILY (**Ex0S 0.0.001**) | **252/252** worlds / genome delta 0 (hold-out E–G 108/108) |
 | three-memory, TM.0.11 COMPOSE (**Ex0S 0.0.002**) | **Store-works** / **Fail** (frontier compose; no shortcut; donors / residue) |
-| three-memory, TM.0.11.FAMILY (**Ex0S 0.0.003**) | **252/252** worlds / genome delta 0 (hold-out depth 4; G upstream stable) |
+| three-memory, TM.0.11.FAMILY (**Ex0S 0.0.003**) | **252/252** generated S worlds / genome delta 0 (hold-out depth 4; G upstream stable) |
 
 ## Honest limits
 

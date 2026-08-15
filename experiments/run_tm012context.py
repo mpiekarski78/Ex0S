@@ -836,8 +836,6 @@ def _run_dir() -> Path:
 
 def run_context(*, seed: int = DEFAULT_SEED, workers: int = 4) -> dict[str, Any]:
     run_dir = _run_dir()
-    if not CONTEXT_LOCK.exists():
-        write_context_lock()
     organism_ok, org_why, _ = verify_organism_freeze()
     context_ok, ctx_why, ctx_snap = verify_context_lock()
     cells = all_cells(seed)

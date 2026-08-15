@@ -45,7 +45,7 @@ Ex0S 0.0.003       freeze compose; depth / first-hop branch / revise-downstream
 |------|-----|-------|
 | **0.0.001** | TM.0.10.FAMILY (frozen TM.0.9.4) | Fixed relation-learning recipe generalizes across unseen world families; genome delta 0 |
 | **0.0.002** | TM.0.11 COMPOSE | Two independently acquired relations compose at use time without a shortcut in S |
-| **0.0.003** | TM.0.11.FAMILY (frozen TM.0.11) | Factorized learned knowledge generalizes under frozen composition across unseen depth, first-hop branching, and downstream revision |
+| **0.0.003** | TM.0.11.FAMILY (frozen TM.0.11) | Frozen compose mechanism operates over generated external-state worlds across unseen depth, first-hop branching, and downstream revision (no shortcuts) |
 
 Capacity envelope of 0.0.003 (not a new stamp): [`tm011bound_results.md`](tm011bound_results.md) (TM.0.11.BOUND). BOUND mapped semantic / computational / conceptual envelopes and documented two explicit absences: **contextual provenance** of reused frontier symbols, and **non-local path evaluation** / backtracking.
 

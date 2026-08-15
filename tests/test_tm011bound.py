@@ -22,14 +22,12 @@ from experiments.run_tm011bound import (
     run_bound,
     run_cell,
     verify_bound_lock,
-    write_bound_lock,
     write_world_s,
 )
 from experiments.run_tm011family import verify_freeze as verify_organism
 
 
 def test_locks():
-    write_bound_lock()
     ok, why, snap = verify_bound_lock()
     assert ok, why
     assert "local_optimum_dead_end" in snap["expected_boundary_cells"]
