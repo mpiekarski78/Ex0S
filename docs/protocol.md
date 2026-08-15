@@ -1392,3 +1392,32 @@ Implementing `(token, here)` and declaring victory; genome maps of cues→motors
 - **LOOKAHEAD** — separate freeze / claim (`TM.*.LOOKAHEAD`).
 - **\|S\| latency** — infrastructure profile + behavioral-equivalence regression on retrieval candidates; see [`tm011bound_perf.md`](tm011bound_perf.md).
 
+## TM.0.12.MINIMAP representation distinguishability
+
+Not a behavioral scorer and **not** Ex0S 0.0.004. No `agent.py` / policy / probe. For each **preregistered** contrast in `docs/minimap_012.lock`, ask whether a candidate representation assigns different states when required CONTEXT motors differ.
+
+Apparatus: `docs/minimap_012.lock` — pins SHA256 of frozen `docs/context_012.lock`, contrast IDs, extractor SHAs, C7 zero-length sentinels, H4 incoming-only rule. Independently rechecks C0–C7 generator SHAs against `context_012.lock`. **Never rewrite** `context_012.lock`.
+
+### Contrasts
+
+| ID | Role |
+|----|------|
+| C0 | Positive control — H0 must distinguish |
+| C1 | Benign — `COLLISION_ALLOWED` |
+| C2–C6 | CONTEXT **victory set** |
+| C7 | `UNOBSERVABLE_FROM_PROVENANCE` (cross-cell; excluded from victory) |
+
+### Candidates
+
+H0 token · H1 + arrival-here · H2 + predecessor · H3a + origin · H3b + full path · H4 incoming fact_id (diagnostic; outgoing answer fid inadmissible).
+
+### Claim form
+
+If H3a distinguishes C2–C6 and no less-structured preregistered candidate does: **least-structured sufficient candidate representation** in the preregistered set — not global minimality.
+
+Recorded: [`tm012minimap_results.md`](tm012minimap_results.md).
+
+### Refuse
+
+Encoding the result table in the scorer; rewriting `context_012.lock`; treating C7 as CONTEXT victory; H4 as omnipotent upper bound; stamping 0.0.004; genome change this pass.
+

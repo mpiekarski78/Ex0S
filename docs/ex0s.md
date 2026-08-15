@@ -49,6 +49,6 @@ Ex0S 0.0.003       freeze compose; depth / first-hop branch / revise-downstream
 
 Capacity envelope of 0.0.003 (not a new stamp): [`tm011bound_results.md`](tm011bound_results.md) (TM.0.11.BOUND). BOUND mapped semantic / computational / conceptual envelopes and documented two explicit absences: **contextual provenance** of reused frontier symbols, and **non-local path evaluation** / backtracking.
 
-Next lab (not a stamp): [`tm012context_results.md`](tm012context_results.md) (TM.0.12.CONTEXT) — representation audit of what provenance is missing. Do **not** invent 0.0.004 until a minimal structured CONTEXT primitive is earned; do not pre-name it Abstraction. LOOKAHEAD stays a separate track.
+Next lab (not a stamp): [`tm012context_results.md`](tm012context_results.md) (TM.0.12.CONTEXT) — representation audit; [`tm012minimap_results.md`](tm012minimap_results.md) (TM.0.12.MINIMAP) — distinguishability: among preregistered candidates, `(token, origin)` is least-structured sufficient for C2–C6; C7 unobservable. Do **not** invent 0.0.004 until a minimal CONTEXT primitive is earned after an origin-vs-path discriminator; do not pre-name it Abstraction. LOOKAHEAD stays a separate track.
 
 See also: [`README.md`](../README.md), [`tm010family_results.md`](tm010family_results.md), [`tm011compose_results.md`](tm011compose_results.md), [`tm011family_results.md`](tm011family_results.md).

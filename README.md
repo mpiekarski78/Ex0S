@@ -58,7 +58,7 @@ Ex0S 0.0.003  ←  TM.0.11.FAMILY
 
 Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enough to treat as a lineage, not only a series of demos.
 
-**Next:** TM.0.12.CONTEXT — representation audit of provenance lost when compose collapses the frontier to a bare token. Freeze Ex0S **0.0.003**; do **not** stamp 0.0.004; do not pre-name 0.0.004 “Abstraction.” Candidate later claim (if earned): context-preserving composition.
+**Next:** TM.0.12.MINIMAP done — origin is the least-structured sufficient **candidate** for locked C2–C6. Next lab (no stamp): same-origin / different-path discriminator. Do **not** stamp 0.0.004; do not implement CONTEXT genome yet.
 
 ## Question
 
@@ -141,6 +141,7 @@ TM.0.11 COMPOSE (**Ex0S 0.0.002**): [`docs/tm011compose_results.md`](docs/tm011c
 TM.0.11.FAMILY frozen composition (**Ex0S 0.0.003**): [`docs/tm011family_results.md`](docs/tm011family_results.md).  
 TM.0.11.BOUND capacity envelope (0.0.003 under test): [`docs/tm011bound_results.md`](docs/tm011bound_results.md).
 TM.0.12.CONTEXT representation audit: [`docs/tm012context_results.md`](docs/tm012context_results.md).
+TM.0.12.MINIMAP distinguishability: [`docs/tm012minimap_results.md`](docs/tm012minimap_results.md).
 Ex0S lineage: [`docs/ex0s.md`](docs/ex0s.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 

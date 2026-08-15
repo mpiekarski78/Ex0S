@@ -37,7 +37,7 @@ The FAMILY battery planted structured `.tag` relations and reported outcomes ont
 
 | Missing | Where documented |
 |---------|------------------|
-| Contextual / provenance-sensitive composition | TM.0.12.CONTEXT |
+| Contextual / provenance-sensitive composition | TM.0.12.CONTEXT + MINIMAP — origin least-structured candidate on C2–C6; C7 unobservable |
 | Lookahead / backtracking | TM.0.11.BOUND `local_optimum_dead_end` |
 | No-cue English motor bar | B Fail (untouched) |
 | Autonomous acquisition from open experience | not yet |

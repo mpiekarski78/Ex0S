@@ -1,0 +1,182 @@
+{
+  "version": "TM.0.12.MINIMAP",
+  "ex0s_under_test": "0.0.003",
+  "earned_next": false,
+  "seed": 12345,
+  "seed_list_sha": "96df8a876f64195cab84cf9f4a1ab2103762a98fb8b196e8603165c5fbb937c0",
+  "context_012_lock_sha": "fe7e28f341b63ec3b329b6d618d922222540074dd0e40b1723fdd6496fe1f3ff",
+  "contrasts": {
+    "C0": {
+      "left": {
+        "cell_id": "c0_unique",
+        "probe_label": "cue_x"
+      },
+      "right": {
+        "cell_id": "c0_unique",
+        "probe_label": "cue_z"
+      },
+      "role": "positive_control"
+    },
+    "C1": {
+      "left": {
+        "cell_id": "c1_benign_reuse",
+        "probe_label": "cue_x"
+      },
+      "right": {
+        "cell_id": "c1_benign_reuse",
+        "probe_label": "cue_z"
+      },
+      "role": "benign"
+    },
+    "C2": {
+      "left": {
+        "cell_id": "c2_here_split",
+        "probe_label": "cue_x"
+      },
+      "right": {
+        "cell_id": "c2_here_split",
+        "probe_label": "cue_z"
+      },
+      "role": "provenance"
+    },
+    "C3": {
+      "left": {
+        "cell_id": "c3_pred_split",
+        "probe_label": "cue_x"
+      },
+      "right": {
+        "cell_id": "c3_pred_split",
+        "probe_label": "cue_z"
+      },
+      "role": "provenance"
+    },
+    "C4": {
+      "left": {
+        "cell_id": "c4_pred_collision",
+        "probe_label": "cue_x"
+      },
+      "right": {
+        "cell_id": "c4_pred_collision",
+        "probe_label": "cue_z"
+      },
+      "role": "provenance"
+    },
+    "C5": {
+      "left": {
+        "cell_id": "c5_path_depth",
+        "probe_label": "cue_x_short"
+      },
+      "right": {
+        "cell_id": "c5_path_depth",
+        "probe_label": "cue_z_long"
+      },
+      "role": "provenance"
+    },
+    "C6": {
+      "left": {
+        "cell_id": "c6_evidence_trap",
+        "probe_label": "cue_x"
+      },
+      "right": {
+        "cell_id": "c6_evidence_trap",
+        "probe_label": "cue_z"
+      },
+      "role": "provenance"
+    },
+    "C7": {
+      "left": {
+        "cell_id": "c7_indistinguish_a",
+        "probe_label": "cue_y"
+      },
+      "right": {
+        "cell_id": "c7_indistinguish_b",
+        "probe_label": "cue_y"
+      },
+      "role": "unobservable_from_provenance"
+    }
+  },
+  "candidates": {
+    "H0": {
+      "name": "token",
+      "state": "(Y,)"
+    },
+    "H1": {
+      "name": "token_plus_here",
+      "state": "(Y, incoming.here)"
+    },
+    "H2": {
+      "name": "token_plus_predecessor",
+      "state": "(Y, incoming.bind)"
+    },
+    "H3a": {
+      "name": "token_plus_origin",
+      "state": "(Y, path_start)"
+    },
+    "H3b": {
+      "name": "token_plus_full_path",
+      "state": "(Y, (n0,...,Y))"
+    },
+    "H4": {
+      "name": "token_plus_incoming_fact_id",
+      "state": "(Y, incoming.fid)",
+      "role": "incoming_fact_identity_diagnostic",
+      "note": "Not an upper bound; C4 shares A\u2192Y so H4 collides"
+    }
+  },
+  "zero_length_sentinels": {
+    "NO_INCOMING_HERE": "NO_INCOMING_HERE",
+    "NO_INCOMING_FID": "NO_INCOMING_FID",
+    "H0": [
+      "Y"
+    ],
+    "H1": [
+      "Y",
+      "NO_INCOMING_HERE"
+    ],
+    "H2": [
+      "Y",
+      "Y"
+    ],
+    "H3a": [
+      "Y",
+      "Y"
+    ],
+    "H3b": [
+      "Y",
+      [
+        "Y"
+      ]
+    ],
+    "H4": [
+      "Y",
+      "NO_INCOMING_FID"
+    ],
+    "note": "Cue is Y; no incoming edge. Exact sentinels \u2014 no None."
+  },
+  "victory_contrasts": [
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6"
+  ],
+  "h4_rule": {
+    "kind": "incoming_fact_identity_diagnostic",
+    "outgoing_answer_fid": "inadmissible_answer_id",
+    "note": "C4 shares A\u2192Y; incoming fid collides. Not an upper bound."
+  },
+  "c7_classification": "UNOBSERVABLE_FROM_PROVENANCE",
+  "extractor_sha": "856dab5da0fb26bb3b6942050d4d22da1839fc258a757bd62d3c9f917ddc4be2",
+  "path_sha": "deec56341f4ebdca1894e37bc442865ae11748842042e5eaec934565c71e5ebe",
+  "scorer_sha": "01faf25e042b5871f3220d6796cbb686198ce04b09ab601602c160150955c678",
+  "contrast_def_sha": "a494fe40e5b06ba47469ca732baf625e9e33fcdfc892bba166c4bc88f387e7b4",
+  "refuse": [
+    "rewrite context_012.lock",
+    "probe 0.0.003 for this table",
+    "encode result table in scorer",
+    "C7 as CONTEXT victory",
+    "outgoing fact_id as representation",
+    "stamp Ex0S 0.0.004",
+    "genome / agent change"
+  ]
+}
