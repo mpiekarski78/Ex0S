@@ -1228,5 +1228,80 @@ Not “reasoning.” Not “symbolic intelligence.”
 | Fail | Main chain HOLD; broken chain steers; donor ignores S; direct edge appears; residue fires; wipe still PRESS | n>4 |
 | Store-works | Cue X composes to motor; all controls; S unchanged | Same motor bar |
 
-After 0.11, a frozen-compose family (depth / branches / revise-downstream) may attack this primitive. Do not start it until this battery is honest.
+After 0.11, TM.0.11.FAMILY attacked this primitive (Ex0S 0.0.003). Do not add lookahead or hop flags because the family was green.
+
+## TM.0.11.FAMILY frozen composition worlds — Ex0S 0.0.003
+
+Not a recipe jump. Freeze cortex, `run_tm011compose.make` (compose-on), policy architecture, features, and training protocol. **No organism edits during the recorded run.** Hold-out generators E–G are **preregistered** (hashed into `docs/genome_011.lock` with `scorer_sha` and `seed_list_sha`). Do not edit E–G after seeing results; if apparatus must change, that version is no longer the untouched hold-out (E2–G2 or record an intervention).
+
+Product lineage: **Ex0S 0.0.003 — Frozen Composition** earned on recorded run `runs/2026-08-15_154037_tm011family` (**252/252**, genome delta 0, interventions 0). Stamp rule below remains the gate for any future re-run. A partial smoke battery must not set `ex0s: 0.0.003`.
+
+### First-hop evidence only (D/F) — no lookahead
+
+COMPOSE compares evidence only among relations whose bind matches the **current frontier**. It cannot see downstream strength.
+
+```text
+Correct D / unequal F:
+  X -> Y   stronger
+  X -> Z   weaker
+  Y -> PRESS
+  Z -> TUNE   (even with huge support)
+  cue X => PRESS
+
+Correct F tie:
+  X -> Y  1/0
+  X -> Z  1/0
+  => HOLD at first hop
+
+Forbidden trap (not a pass condition):
+  X->Y equal X->Z, but Y->PRESS stronger than Z->TUNE
+  expecting PRESS  — that is planning/lookahead, a new primitive
+```
+
+### Families
+
+| Fam | Split | Template |
+|-----|-------|----------|
+| A | developed | 2-hop baseline |
+| B | developed | 3-hop |
+| C | developed | irrelevant high-support off-path |
+| D | developed | competing first-hop mids |
+| E | hold-out | 4-hop unseen depth |
+| F | hold-out | first-hop branch / tie HOLD |
+| G | hold-out | revise-downstream; upstream body hash stable |
+
+### `no_transitive_shortcuts`
+
+S may contain only acquired edges. For `X→A→B→PRESS`, require absent: `X→B`, `A→PRESS`, `X→PRESS` (and every skip on longer chains). Stronger than “no X→motor” alone.
+
+### Family G (centerpiece)
+
+```text
+learn:  X -> Y ; Y -> PRESS
+probe:  X => PRESS
+revise only downstream: Y->PRESS loses; Y->TUNE gains
+        (X -> Y body hash unchanged)
+probe:  X => TUNE
+never:  X -> PRESS / X -> TUNE shortcuts
+```
+
+### Measures
+
+`compose_depth`, `no_transitive_shortcuts`, `match_drops_junk`, `evidence_branch`, `tie_hold`, `revise_downstream`, `upstream_stability`, `reset_continuity`, `s_necessity`, `permutation_invariance`, `genome_delta`.
+
+Headline: solved-frac (all / develop / hold-out); **max unseen depth solved**; genome changes; apparatus interventions.
+
+### Stamp hierarchy
+
+| Outcome | Ex0S 0.0.003 |
+|---------|--------------|
+| Only A–D | not stamped |
+| E green, F or G fail | not stamped (depth note only) |
+| A–D and E–G green, delta 0, interventions 0 | **Frozen Composition** earned |
+
+Conservative claim if earned:
+
+> Factorized learned knowledge generalizes under a frozen compositional mechanism across unseen depth, branching, and downstream revision.
+
+Confound: organism edit; hop flags / lookahead; editing E–G after peeking and still calling them hold-outs; stamping 0.0.003 before the recorded run.
 

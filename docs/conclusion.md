@@ -360,3 +360,7 @@ Not a recipe jump. **252/252** procedural worlds solved on the frozen 0.9.4 geno
 
 Chosen non-motor consequent becomes the next MATCH frontier. **A** **Store-works**: cue X composes `X→Y` then `Y→M1`; broken/wrong-edge HOLD; donors follow S; no shortcut; no residue; S hash stable. **B** **Fail**: no-cue English bar; not retuned. Details: [`tm011compose_results.md`](tm011compose_results.md).
 
+## TM.0.11.FAMILY (frozen composition) — Ex0S 0.0.003
+
+Not a recipe jump. **252/252** composition worlds on the frozen compose genome (developed A–D 144/144; hold-out E–G 108/108; hold-out max depth 4). First-hop evidence only for D/F (no lookahead). `no_transitive_shortcuts`. G: revise-downstream with upstream `X→Y` body hash stable. Genome changes 0; apparatus interventions 0. Hold-out generators preregistered. Details: [`tm011family_results.md`](tm011family_results.md).
+

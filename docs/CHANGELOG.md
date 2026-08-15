@@ -3,6 +3,7 @@
 ## 2026-08-15
 
 - Renamed public repo to [mpiekarski78/Ex0S](https://github.com/mpiekarski78/Ex0S) (was `three-memory`). Lab IDs stay `TM.*`.
+- TM.0.11.FAMILY (**Ex0S 0.0.003 — Frozen Composition**): frozen compose genome vs 252 composition worlds. **252/252** (A–D 144/144; hold-out E–G 108/108; hold-out depth 4). First-hop D/F only (no lookahead). `no_transitive_shortcuts`. G upstream body hash stable. Genome changes 0; apparatus interventions 0. Hold-out generators preregistered in [`genome_011.lock`](genome_011.lock). [`docs/tm011family_results.md`](tm011family_results.md).
 
 ## 2026-08-14
 
@@ -78,3 +79,4 @@
 - TM.0.10.FAMILY (**Ex0S 0.0.001**): frozen 0.9.4 genome vs 252 procedural relation worlds. **252/252** solved (developed A–D 144/144; hold-out E–G 108/108). Genome changes 0. Independent measures all 1.000. Not English, not composition. [`docs/tm010family_results.md`](tm010family_results.md).
 - TM.0.11 (**Ex0S 0.0.002**): COMPOSE — chosen non-motor consequent becomes next MATCH frontier. A **Store-works** (2-hop; donors; no shortcut; no residue; S stable). B motor bar **Fail** (no-cue English bar; not retuned). [`docs/tm011compose_results.md`](tm011compose_results.md).
 - Ex0S lineage table: [`docs/ex0s.md`](ex0s.md).
+- TM.0.11.FAMILY (**Ex0S 0.0.003**): see 2026-08-15 entry above.

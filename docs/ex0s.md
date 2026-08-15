@@ -37,11 +37,14 @@ TM.0.9.1–0.9.4     build the relation loop (survival → MATCH → evidence �
 Ex0S 0.0.001       freeze that recipe; many unseen worlds; genome delta 0
         │
 Ex0S 0.0.002       compose: acquired relations become inputs to other acquired relations
+        │
+Ex0S 0.0.003       freeze compose; depth / first-hop branch / revise-downstream
 ```
 
 | Ex0S | Lab | Claim |
 |------|-----|-------|
 | **0.0.001** | TM.0.10.FAMILY (frozen TM.0.9.4) | Fixed relation-learning recipe generalizes across unseen world families; genome delta 0 |
 | **0.0.002** | TM.0.11 COMPOSE | Two independently acquired relations compose at use time without a shortcut in S |
+| **0.0.003** | TM.0.11.FAMILY (frozen TM.0.11) | Factorized learned knowledge generalizes under frozen composition across unseen depth, first-hop branching, and downstream revision |
 
-See also: [`README.md`](../README.md), [`tm010family_results.md`](tm010family_results.md), [`tm011compose_results.md`](tm011compose_results.md).
+See also: [`README.md`](../README.md), [`tm010family_results.md`](tm010family_results.md), [`tm011compose_results.md`](tm011compose_results.md), [`tm011family_results.md`](tm011family_results.md).
