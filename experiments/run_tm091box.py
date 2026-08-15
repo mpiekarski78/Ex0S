@@ -123,25 +123,34 @@ def verify_genome_lock() -> tuple[bool, str]:
     policy_sha = _sha_file(REPO_ROOT / "three_memory" / "policy.py")
     cortex_sha = _sha_file(REPO_ROOT / "three_memory" / "cortex.py")
     make_sha = _sha_bytes(inspect.getsource(make).encode())
-    if agent_sha != lock["agent_sha"]:
-        return False, "agent.py drifted from genome_091.lock"
     if policy_sha != lock["policy_sha"]:
         return False, "policy.py drifted from genome_091.lock"
     if cortex_sha != lock["cortex_sha"]:
         return False, "cortex.py drifted from genome_091.lock"
     if make_sha != lock["make_sha"]:
         return False, "run_tm091.make drifted from genome_091.lock"
+    if agent_sha != lock["agent_sha"]:
+        # 0.9.2 may add bind_match default-off. Historical BOX still uses 091 make.
+        from three_memory.policy import UsePolicy
+
+        probe_ag = make(REPO_ROOT / "runs" / "_box_lock_probe", None, UsePolicy(seed=1), enabled=False)
+        if getattr(probe_ag, "use_bind_match", False):
+            return False, "091 make enabled bind_match; historical BOX is no longer 0.9.1"
+        if probe_ag.cortex.weight_hash() != lock["cortex_weight_hash"]:
+            return False, "cortex weight hash drifted from genome_091.lock"
     features_sha = _sha_bytes(json.dumps(lock["features"], separators=(",", ":")).encode())
     outputs_sha = _sha_bytes(json.dumps(lock["outputs"], separators=(",", ":")).encode())
     flags_sha = _sha_bytes(json.dumps(lock["flags"], separators=(",", ":")).encode())
     if features_sha != lock["features_sha"] or outputs_sha != lock["outputs_sha"] or flags_sha != lock["flags_sha"]:
         return False, "feature/output/flag lists drifted inside genome_091.lock"
-    blob = (
-        agent_sha + policy_sha + cortex_sha + make_sha + features_sha + outputs_sha + flags_sha
-    ).encode()
-    if _sha_bytes(blob) != lock["source_tree"]:
-        return False, "source_tree mismatch in genome_091.lock"
-    return True, "genome lock ok"
+    if agent_sha == lock["agent_sha"]:
+        blob = (
+            agent_sha + policy_sha + cortex_sha + make_sha + features_sha + outputs_sha + flags_sha
+        ).encode()
+        if _sha_bytes(blob) != lock["source_tree"]:
+            return False, "source_tree mismatch in genome_091.lock"
+        return True, "genome lock ok"
+    return True, "genome lock ok (agent grew; 091 make bind_match off)"
 
 
 def verify_protocol_lock(*, n_train: int, max_steps: int) -> tuple[bool, str]:
@@ -529,12 +538,25 @@ def classify_separation(cell: dict[str, Any]) -> tuple[str, str]:
     )
 
 
+def _s3_ok(cell: dict[str, Any]) -> bool | None:
+    if "s3_ok" in cell:
+        return bool(cell["s3_ok"])
+    proj = (cell.get("projections") or {}).get("S3") or {}
+    if "ok" in proj:
+        return bool(proj.get("ok"))
+    return None
+
+
 def classify_transfer(cell: dict[str, Any]) -> tuple[str, str]:
-    """Separate axis: can Pi use S3 / can P3 use S1/S2?"""
-    results = cell.get("transfer") or {}
+    """Cross-world use-S given a valid store. Missing S3 is not a transfer miss."""
+    raw = cell.get("transfer")
+    results = raw if isinstance(raw, dict) else {}
+    if not results:
+        results = cell.get("transfer_probes") or {}
     if not results:
         return "Fail", "Transfer matrix missing."
-    # Require P1/P2 to follow S3 when S3 has blen→PRESS projected, and P3 to follow S1/S2.
+    if _s3_ok(cell) is False:
+        return "Unevaluable", "No valid S3; W3 acquisition missed the nonce bind."
     ok = True
     why_bits: list[str] = []
     for key, need in (
@@ -548,8 +570,42 @@ def classify_transfer(cell: dict[str, Any]) -> tuple[str, str]:
             ok = False
             why_bits.append(f"{key}={got}")
     if ok:
-        return "Pass", "Cross-world transfer: Pi follows Sj including novel S3."
-    return "Fail", "Cross-world transfer miss: " + ", ".join(why_bits)
+        return "Pass", "Cross-world use-S: Pi follows Sj including novel S3."
+    return "Fail", "Cross-world use-S miss: " + ", ".join(why_bits)
+
+
+def score_box_measures(cell: dict[str, Any]) -> dict[str, Any]:
+    """Five-measure readout. Compatible separation label stays classify_separation."""
+
+    def act(block: dict[str, Any], key: str) -> str:
+        return _motor((block.get(key) or {}).get("action_name") or "hold")
+
+    p1 = cell.get("P1") or {}
+    p2 = cell.get("P2") or {}
+    e1, e2 = act(p1, "empty"), act(p2, "empty")
+    leak = (e1 == "press" and e2 == "tune") or (e1 == "tune" and e2 == "press")
+    donor_ok = (
+        act(p1, "S1") == "press"
+        and act(p2, "S1") == "press"
+        and act(p1, "S2") == "tune"
+        and act(p2, "S2") == "tune"
+    )
+    neutrals = [
+        act(p1, "neutral_PRESS"),
+        act(p2, "neutral_PRESS"),
+        act(p1, "neutral_TUNE"),
+        act(p2, "neutral_TUNE"),
+    ]
+    xfer, xwhy = classify_transfer(cell)
+    s3 = _s3_ok(cell)
+    return {
+        "world_fact_leakage": "Observed" if leak else "Not observed",
+        "counterfactual_donor": "Pass" if donor_ok else "Fail",
+        "neutral_relevance": "Pass" if all(m == "hold" for m in neutrals) else "Fail",
+        "transfer": xfer,
+        "transfer_rationale": xwhy,
+        "w3_acquired": bool(s3),
+    }
 
 
 def _find_bind_did(s_dir: Path, bind: str) -> str | None:
@@ -771,6 +827,7 @@ def run_paired_seed(
     write_neutral_readout(n_tune, bind=NEUTRAL_TUNE_BIND, did="tune")
 
     acquisition_ok = bool(p1_s1.get("ok") and p2_s2.get("ok"))
+    s3_ok = bool(p3_s3.get("ok"))
 
     P0 = birth_policy(seed=7, lr=0.2)
     P1 = trained["W1"]["policy"]
@@ -804,6 +861,7 @@ def run_paired_seed(
         "protocol_lock_hash": protocol_lock_hash(),
         "cortex_unchanged": all(trained[w]["cortex_unchanged"] for w in ("W1", "W2", "W3")),
         "acquisition_ok": acquisition_ok,
+        "s3_ok": s3_ok,
         "projections": {
             "S1": p1_s1,
             "S2": p2_s2,
@@ -825,11 +883,12 @@ def run_paired_seed(
         "transfer_probes": transfer_probes,
     }
     sep, sep_why = classify_separation(cell)
-    xfer, xfer_why = classify_transfer({"transfer": transfer_probes})
+    xfer, xfer_why = classify_transfer({"transfer": transfer_probes, "s3_ok": s3_ok})
     cell["separation"] = sep
     cell["separation_rationale"] = sep_why
     cell["transfer"] = xfer
     cell["transfer_rationale"] = xfer_why
+    cell["measures"] = score_box_measures({**cell, "transfer": transfer_probes})
     return cell
 
 
@@ -854,16 +913,34 @@ def _aggregate(cells: list[dict[str, Any]]) -> dict[str, Any]:
         sep = "Inconclusive"
         why = f"Mixed separation labels: {seps}"
     xfers = [c["transfer"] for c in cells]
-    if all(x == "Pass" for x in xfers):
-        xfer, xwhy = "Pass", "All seeds transfer."
+    evaluable = [x for x in xfers if x != "Unevaluable"]
+    n_eval = len(evaluable)
+    n_xfer_pass = sum(1 for x in evaluable if x == "Pass")
+    if n_eval == 0:
+        xfer, xwhy = "Unevaluable", "No valid S3 on any seed."
+    elif n_xfer_pass == n_eval:
+        xfer, xwhy = "Pass", f"Pass on all evaluable stores ({n_xfer_pass}/{n_eval})."
     else:
-        xfer, xwhy = "Fail", f"Transfer labels: {xfers}"
+        xfer, xwhy = "Fail", f"Evaluable transfer {n_xfer_pass}/{n_eval}; labels: {xfers}"
+    measures = [c.get("measures") or {} for c in cells]
+    n = len(cells) or 1
+    n_leak = sum(1 for m in measures if m.get("world_fact_leakage") == "Not observed")
+    n_donor = sum(1 for m in measures if m.get("counterfactual_donor") == "Pass")
+    n_neut_fail = sum(1 for m in measures if m.get("neutral_relevance") == "Fail")
+    n_w3 = sum(1 for m in measures if m.get("w3_acquired"))
     return {
         "separation": sep,
         "separation_rationale": why,
         "transfer": xfer,
         "transfer_rationale": xwhy,
         "per_seed": seps,
+        "measures": {
+            "world_fact_leakage": f"Not observed, {n_leak}/{n} seeds" if n_leak == n else f"{n_leak}/{n} seeds not observed",
+            "counterfactual_donor": f"Pass, {n_donor}/{n}",
+            "neutral_relevance": f"Fail, {n_neut_fail}/{n}" if n_neut_fail else f"Pass, {n - n_neut_fail}/{n}",
+            "transfer_evaluable": f"{xfer}, {n_xfer_pass}/{n_eval}" if n_eval else xfer,
+            "w3_acquisition": f"{n_w3}/{n}",
+        },
     }
 
 
@@ -914,6 +991,7 @@ def run_tm091box(
         "separation_rationale": agg["separation_rationale"],
         "transfer": agg["transfer"],
         "transfer_rationale": agg["transfer_rationale"],
+        "measures": agg["measures"],
         "cells": cells,
     }
     # JSON-safe: drop live policy objects already removed; ensure probes serializable
@@ -921,10 +999,17 @@ def run_tm091box(
     (run_dir / "summary.md").write_text(
         f"""# TM.0.9.BOX boxed-policy leakage
 
-| Axis | Result |
-|------|--------|
-| Separation | **{out['separation']}** |
-| Transfer | **{out['transfer']}** |
+Historical leakage control. Cue is which projected note is mounted, not a `flim` token in the observation. Do not require this battery to turn green after MATCH.
+
+Compatible label: separation **{out['separation']}**; transfer **{out['transfer']}**.
+
+| Measure | Result |
+|---------|--------|
+| World-fact leakage | {out['measures']['world_fact_leakage']} |
+| Counterfactual donor control | {out['measures']['counterfactual_donor']} |
+| Neutral relevance control | {out['measures']['neutral_relevance']} |
+| Cross-world use-S, evaluable stores | {out['measures']['transfer_evaluable']} |
+| W3 acquisition robustness | {out['measures']['w3_acquisition']} |
 
 Separation: {out['separation_rationale']}
 
@@ -960,6 +1045,7 @@ def main() -> None:
             {
                 "separation": m["separation"],
                 "transfer": m["transfer"],
+                "measures": m["measures"],
                 "seeds": m["seeds"],
                 "run_dir": m["run_dir"],
                 "genome_delta": m["genome_delta"],

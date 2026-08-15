@@ -92,6 +92,7 @@ class ThreeMemoryAgent:
         use_keep_steerer: bool = False,
         use_count_search: bool = False,
         use_hyp_survive: bool = False,
+        use_bind_match: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -187,6 +188,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_count_search requires use_search_head")
         if use_hyp_survive and not use_here_match:
             raise ValueError("use_hyp_survive requires use_here_match")
+        if use_bind_match and not use_alias_bind:
+            raise ValueError("use_bind_match requires use_alias_bind")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -253,6 +256,7 @@ class ThreeMemoryAgent:
         self.use_keep_steerer = use_keep_steerer
         self.use_count_search = use_count_search
         self.use_hyp_survive = use_hyp_survive
+        self.use_bind_match = use_bind_match
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
@@ -340,6 +344,7 @@ class ThreeMemoryAgent:
             use_keep_steerer=self.use_keep_steerer,
             use_count_search=self.use_count_search,
             use_hyp_survive=self.use_hyp_survive,
+            use_bind_match=self.use_bind_match,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -549,6 +554,11 @@ class ThreeMemoryAgent:
             if here:
                 pool = here
                 pool = self._prefer_untried(pool)
+        if self.use_bind_match:
+            matched = self._match_applicable(pool, obs)
+            if not matched:
+                return []
+            pool = matched
         code = self._door_code(obs)
         if code is None:
             return []
@@ -820,6 +830,33 @@ class ThreeMemoryAgent:
             for k, v in rec.tags.items()
             if k not in _QNAME_SKIP
         )
+
+    def _current_stream(self, obs) -> set[str]:
+        """Tokens in the current observation. Never S note text."""
+        out: set[str] = set()
+        raw = getattr(obs, "tokens", None)
+        if raw:
+            out |= {str(t).lower() for t in raw if t}
+        if self.world is not None and self._in_hand_id:
+            rec = next(
+                (r for r in self.world.records() if getattr(r, "fact_id", None) == self._in_hand_id),
+                None,
+            )
+            if rec is not None:
+                out |= {w.lower() for w in prose_tokens(getattr(rec, "what", "") or "")}
+        return out
+
+    def _bind_in_stream(self, rec, obs) -> bool:
+        bind = rec.tags.get("bind")
+        if not isinstance(bind, str) or not bind:
+            return False
+        return bind.lower() in self._current_stream(obs)
+
+    def _match_applicable(self, recs: list, obs) -> list:
+        """Boolean gate: bind_present_in_current_stream. No token identity."""
+        if not self.use_bind_match:
+            return recs
+        return [r for r in recs if self._bind_in_stream(r, obs)]
 
     def _hyp_state(self, rec) -> str:
         raw = rec.tags.get("hyp")
@@ -1281,6 +1318,13 @@ class ThreeMemoryAgent:
             self.policy_traces.append(dec)
 
     def _apply_record_bias(self, logits: np.ndarray, rec: FactRecord, obs: Obs) -> None:
+        if self.use_bind_match:
+            did = rec.tags.get("did")
+            if isinstance(did, str):
+                aid = {a.name.lower(): int(a) for a in self._body_enum()}.get(did.lower())
+                if aid is not None:
+                    logits[int(aid)] += 3.0
+                    return
         if self.use_prose_tokens:
             key = self._value_tag() if self.use_read else ""
             val = rec.tags.get(key)
@@ -1348,6 +1392,8 @@ class ThreeMemoryAgent:
         logits = np.zeros(self.n_actions, dtype=np.float64)
         apply = True
         hits = self._hits_for(obs)
+        if self.use_bind_match:
+            hits = self._match_applicable(hits, obs)
         chosen = hits
         if self.use_pick and self.use_policy is not None:
             feat = UsePolicy.pick_features(len(hits))
@@ -1386,6 +1432,12 @@ class ThreeMemoryAgent:
                     # File is a fact about *this* station, not a global motor.
                     apply = any(self._rec_names_here(r, obs) for r in chosen)
                     self.last_policy["here_match"] = apply
+        if self.use_bind_match:
+            chosen = self._match_applicable(chosen, obs)
+            present = bool(chosen)
+            self.last_policy["bind_present_in_current_stream"] = present
+            # Applicable relation steers. Non-matching notes do not.
+            apply = present
         self._last_chosen_ids = []
         if apply:
             for rec in chosen:

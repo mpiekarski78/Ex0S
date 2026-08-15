@@ -6,7 +6,7 @@ Species prior (in the agent) prefers HOLD — wrong on A and C — so empty S fa
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import IntEnum
 from typing import Any
 
@@ -45,6 +45,8 @@ class DialObs:
     at_c: bool = False
     last_failed: bool = False
     last_ok: bool = False
+    # Not a cortex input. MATCH reads this; vector() must stay bit-identical.
+    tokens: frozenset[str] = field(default_factory=frozenset)
 
     def vector(self, dim: int = 16) -> np.ndarray:
         bits = [self.at_a, self.at_b, self.at_c, self.last_failed, self.last_ok]

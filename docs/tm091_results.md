@@ -35,7 +35,7 @@ S after A train still has `p99` (`bind=push`, `hyp=supported`) and `c08` (`bind=
 
 - Survival is not meaning. `push` and `xenon` (and `thallium`, `neon`, …) are equally supported on this world.
 - Keeping every successful same-here note grows S. That is why B Fails. Do not raise `MAX_TRAIN_S_FILES`.
-- Next needs a world where independent support can be unequal (TM.0.9.2), then a world that can contradict (TM.0.9.3).
+- Next is first-class antecedent MATCH (TM.0.9.2), not unequal support. Independent-support / contradiction work waits until a stored relation only applies when its bind is in the current observation.
 
 ## Reproduce
 

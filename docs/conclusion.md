@@ -338,5 +338,9 @@ Success of one same-here bind does not delete an untested rival. **A** **Store-w
 
 ## TM.0.9.BOX (boxed-policy leakage)
 
-Frozen 0.9.1 genome. Paired counterfactual crossover. Separation **Control Fail**: empty S HOLD (no world-fact leak); donor S flips the motor; neutrals blind-copy `did`. Transfer **Fail** (2/3 Pass). Details: [`tm091box_results.md`](tm091box_results.md).
+Frozen 0.9.1 genome. Paired counterfactual crossover. World-fact leakage **not observed** (empty HOLD, 3/3); donor S flips the motor (3/3). Neutrals blind-copy `did` → relevance Fail; compatible label **Control Fail**. Cross-world use-S **Pass** on evaluable stores (2/2); W3 acquisition 2/3. Historical BOX is the no-cue leakage control and is not rewritten for MATCH. Details: [`tm091box_results.md`](tm091box_results.md).
+
+## TM.0.9.2 (antecedent MATCH / motor bar)
+
+A stored `X→action` steers only when `X` is in the current stream. **A** **Store-works**: same-S cue switch, crossed HOLDs, 3/3 permuted nonces. **B** **Fail**: no-cue English probe HOLD (n=0); cap not raised. Details: [`tm092_results.md`](tm092_results.md).
 

@@ -92,6 +92,7 @@ def make(
     use_keep_steerer: bool = False,
     use_count_search: bool = False,
     use_hyp_survive: bool = False,
+    use_bind_match: bool = False,
     **kwargs,
 ):
     if not use_event_annotate:
@@ -107,12 +108,14 @@ def make(
         use_keep_steerer = False
         use_count_search = False
         use_hyp_survive = False
+        use_bind_match = False
     if kwargs.get("use_here_match") is False:
         use_stamp_new_here = False
         use_block_here = False
         use_in_hand_new_here = False
         use_keep_steerer = False
         use_hyp_survive = False
+        use_bind_match = False
     if kwargs.get("use_search_head") is False:
         use_find_novel = False
         use_retry_novel = False
@@ -121,6 +124,7 @@ def make(
         use_retry_novel = False
     if not use_alias_bind:
         use_local_alias = False
+        use_bind_match = False
     if not use_stamp_new_here:
         use_in_hand_new_here = False
     return _make061(
@@ -141,6 +145,7 @@ def make(
         use_keep_steerer=use_keep_steerer,
         use_count_search=use_count_search,
         use_hyp_survive=use_hyp_survive,
+        use_bind_match=use_bind_match,
         **kwargs,
     )
 
@@ -166,6 +171,7 @@ def _w_flags(w_files: list[str], w_dir: Path) -> dict[str, Any]:
     flags["use_keep_steerer"] = False
     flags["use_count_search"] = False
     flags["use_hyp_survive"] = False
+    flags["use_bind_match"] = False
     flags["w_has_p98"] = "p98.md" in w_files
     return flags
 
@@ -740,6 +746,7 @@ def run_arm(
         "use_keep_steerer": dummy.use_keep_steerer,
         "use_count_search": dummy.use_count_search,
         "use_hyp_survive": dummy.use_hyp_survive,
+        "use_bind_match": dummy.use_bind_match,
         "use_search_head": dummy.use_search_head,
         "use_match_head": dummy.use_match_head,
         "use_qname_head": dummy.use_qname_head,

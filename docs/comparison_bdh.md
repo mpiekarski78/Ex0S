@@ -94,7 +94,8 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.8.2 one machine | **Fail** / **Store-works** (no `domain=`; retrieve used `xenon`; motor bar not the English bar) |
 | three-memory, TM.0.9.0 first math life | **Fail** / **Store-works** (count unread rares; retrieve used `xenon`; motor bar not the English bar) |
 | three-memory, TM.0.9.1 hyp-survive | **Store-works** / **Fail** (16 supported same-here notes; retrieve used `thallium`; B n=17 stamp-collecting) |
-| three-memory, TM.0.9.BOX leakage | **Control Fail** / transfer **Fail** (empty HOLD; donor S wins; neutrals blind-copy; not world-fact leak into P) |
+| three-memory, TM.0.9.BOX leakage | leakage **not observed** / relevance **Fail** (empty HOLD; donor S wins; neutrals blind-copy; transfer 2/2 evaluable; W3 2/3) |
+| three-memory, TM.0.9.2 MATCH | **Store-works** / **Fail** (same-S cue switch; crossed HOLD; no-cue English bar HOLD) |
 
 ## Honest limits
 
@@ -803,11 +804,22 @@ See [`tm091_results.md`](tm091_results.md).
 
 | Check | Result |
 |-------|--------|
-| Empty S | **HOLD** (no world-fact leak into P) |
-| Pi + S1 / S2 | **PRESS** / **TUNE** (donor wins) |
-| Neutrals | blind-copy `did` → **Control Fail** |
-| Transfer | **Fail** (2/3 Pass) |
+| World-fact leakage | **Not observed**, 3/3 |
+| Counterfactual donor | **Pass**, 3/3 |
+| Neutral relevance | **Fail**, 3/3 (compatible **Control Fail**) |
+| Cross-world use-S, evaluable | **Pass**, 2/2 |
+| W3 acquisition | **2/3** (12347 missed `blen`; not transfer) |
 | Genome / protocol delta | **0** |
 
 See [`tm091box_results.md`](tm091box_results.md).
+
+## TM.0.9.2 (antecedent MATCH / motor bar)
+
+| Check | A MATCH | B motor bar |
+|-------|---------|-------------|
+| Same-S cue switch | **Pass** (3/3 permuted) | — |
+| Crossed single-relation | **HOLD** | — |
+| Class | **Store-works** | **Fail** |
+
+See [`tm092_results.md`](tm092_results.md).
 

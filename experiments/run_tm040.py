@@ -191,9 +191,16 @@ def make(
     )
 
 
-def probe(agent: ThreeMemoryAgent, scenario: str, seed: int) -> dict[str, Any]:
+def probe(
+    agent: ThreeMemoryAgent,
+    scenario: str,
+    seed: int,
+    tokens: frozenset[str] | set[str] | list[str] | None = None,
+) -> dict[str, Any]:
     world = ChannelDialWorld(seed=seed)
     obs = world.reset(scenario)
+    if tokens:
+        obs.tokens = frozenset(str(t).lower() for t in tokens)
     action, meta = agent.act(obs, update_rho=False, explore=False)
     result = world.step(int(action), scenario)
     need = CORRECT[world.channel]

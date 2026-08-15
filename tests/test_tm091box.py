@@ -21,6 +21,7 @@ from experiments.run_tm091box import (
     clone_policy,
     birth_policy,
     project_to_readout,
+    score_box_measures,
     verify_genome_lock,
     verify_protocol_lock,
     write_neutral_readout,
@@ -210,6 +211,45 @@ def test_transfer_separate_from_separation():
     assert sep == "Store-works"
 
 
+def test_missing_s3_is_unevaluable_not_transfer_fail():
+    label, why = classify_transfer(
+        {
+            "s3_ok": False,
+            "transfer": {
+                "P1_S3": {"action_name": "hold"},
+                "P2_S3": {"action_name": "hold"},
+                "P3_S1": {"action_name": "press"},
+                "P3_S2": {"action_name": "tune"},
+            },
+        }
+    )
+    assert label == "Unevaluable"
+    assert "s3" in why.lower() or "acquisition" in why.lower()
+
+
+def test_measures_split_leakage_from_relevance():
+    c = _cell()
+    c["P1"]["neutral_PRESS"] = {"action_name": "press"}
+    c["P2"]["neutral_PRESS"] = {"action_name": "press"}
+    c["P1"]["neutral_TUNE"] = {"action_name": "tune"}
+    c["P2"]["neutral_TUNE"] = {"action_name": "tune"}
+    c["s3_ok"] = True
+    c["transfer"] = {
+        "P1_S3": {"action_name": "press"},
+        "P2_S3": {"action_name": "press"},
+        "P3_S1": {"action_name": "press"},
+        "P3_S2": {"action_name": "tune"},
+    }
+    m = score_box_measures(c)
+    assert m["world_fact_leakage"] == "Not observed"
+    assert m["counterfactual_donor"] == "Pass"
+    assert m["neutral_relevance"] == "Fail"
+    assert m["transfer"] == "Pass"
+    assert m["w3_acquired"] is True
+    sep, _ = classify_separation(c)
+    assert sep == "Control Fail"
+
+
 def test_p0_press_not_fail_for_separation():
     # P0 is not part of classify_separation; only P1/P2.
     sep, _ = classify_separation(_cell())
@@ -228,6 +268,8 @@ if __name__ == "__main__":
     test_classify_confound_follows_training_world()
     test_classify_fail_cannot_use_s()
     test_transfer_separate_from_separation()
+    test_missing_s3_is_unevaluable_not_transfer_fail()
+    test_measures_split_leakage_from_relevance()
     test_p0_press_not_fail_for_separation()
     with tempfile.TemporaryDirectory() as d:
         test_projection_canonical_and_same_filename(Path(d))

@@ -12,9 +12,9 @@ Jumps must get closer to a machine that **could in theory** learn from wiki / En
 
 | Layer | In the recipe (frozen cortex + boxed heads + S/W/ρ) | In experience (later lives) |
 |-------|------------------------------------------------------|-----------------------------|
-| How to learn | Find unread data, commit, use after ρ reset — without planted answer integers, a door table, or an English lexicon | — |
+| How to learn | Find unread data, commit, use after ρ reset — without planted answer integers, a door table, or an English lexicon. A stored relation may steer only when its antecedent is in the current observation (TM.0.9.2) | — |
 | How to correct | Detect mismatch, revise S (mark/overwrite/drop), retry, keep the correction after ρ reset. Evidence about A must not remove untested B (TM.0.9.1) | — |
-| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first (TM.0.6.0); one bind against a distractor hapax (TM.0.6.1); never-wipe English (TM.0.6.2); new-here stamp (TM.0.6.3); English find without a unique rare token (TM.0.6.4); concurrent bind / block extra hapax here (TM.0.6.5); correct the dirty English store (TM.0.6.6); in-hand new-here (TM.0.6.7); find-novel unread rares vs S (TM.0.6.8); find-novel without a unique two-rare pair (TM.0.6.9); retry the rest of the novel tie (TM.0.7.0); file-local bind→did (TM.0.7.1); keep the note that steered (TM.0.7.2); scale English Open W (TM.0.8.0); one shared return as the recipe (TM.0.8.1); one machine, no domain= (TM.0.8.2); keep untested competing hypotheses (TM.0.9.1) |
+| Learn English | Genome may know **streams of symbols exist** and that the body has named acts. It may not know this corpus is English or that a synonym means a motor | A later life over English pages, tiny corpus first (TM.0.6.0); one bind against a distractor hapax (TM.0.6.1); never-wipe English (TM.0.6.2); new-here stamp (TM.0.6.3); English find without a unique rare token (TM.0.6.4); concurrent bind / block extra hapax here (TM.0.6.5); correct the dirty English store (TM.0.6.6); in-hand new-here (TM.0.6.7); find-novel unread rares vs S (TM.0.6.8); find-novel without a unique two-rare pair (TM.0.6.9); retry the rest of the novel tie (TM.0.7.0); file-local bind→did (TM.0.7.1); keep the note that steered (TM.0.7.2); scale English Open W (TM.0.8.0); one shared return as the recipe (TM.0.8.1); one machine, no domain= (TM.0.8.2); keep untested competing hypotheses (TM.0.9.1); boxed-policy leakage control (TM.0.9.BOX); antecedent MATCH (TM.0.9.2) |
 | Learn math | Not a calculator in cortex. Genome may count a stream (TM.0.9.0) | A later life after some language is already in S |
 
 Four recipe skills, in order: **find / commit / use / correct**. English and math are lives that use those skills. Dumping wiki + algebra into one experiment is illegal.
@@ -34,7 +34,7 @@ Order of recipe jumps (English is a life that uses the skills, not a lexicon in 
 7. No `domain=` switch.
 8. Accumulate S (stop wiping every episode). TM.0.5.5 eval path; TM.0.5.6 never-wipe train.
 9. Correct: wrong commit, world says no, revise S, ρ reset, corrected file works (TM.0.5.1). TM.0.5.9: correct the dirty never-wipe store (stop appending once S names here; drop unstamped pages after a real stamp). TM.0.6.6: same correct flags on the English concurrent-bind store.
-10. English life, tiny corpus (TM.0.6.0). One bind per note against a distractor hapax (TM.0.6.1). Never-wipe English on that recipe (TM.0.6.2). New-here stamp so a second station gets an unmarked page (TM.0.6.3). English find without a unique rare token (TM.0.6.4). Concurrent bind: stamp the page in play, block extra hapax at this station (TM.0.6.5). Correct the dirty English store (TM.0.6.6). In-hand new-here: a new station stamps the attended rare page, not the first leftover rare in W (TM.0.6.7). Find-novel: search keeps unread pages that add the most rare tokens S lacks (TM.0.6.8). Find-novel without a unique two-rare pair: several clutter pages also match that novel count (TM.0.6.9). Retry-novel: do not lock find on the first tied page; keep unread max-novel pages vs the whole library (TM.0.7.0). File-local bind→did: a page word aliases a motor only from the retrieved note (TM.0.7.1). Keep-steerer: after success, drop other same-here notes (TM.0.7.2). Scale English Open W: 64 documents, more two-rare clutter (TM.0.8.0). One shared return is the recipe: look and it-worked share one signal (TM.0.8.1). One machine: body from n_actions / percepts, not domain= (TM.0.8.2). First math life: search may count unread rares, not + in cortex (TM.0.9.0). Keep untested competing hypotheses: success of A does not delete untested B (TM.0.9.1). Then more language in S, then more math.
+10. English life, tiny corpus (TM.0.6.0). One bind per note against a distractor hapax (TM.0.6.1). Never-wipe English on that recipe (TM.0.6.2). New-here stamp so a second station gets an unmarked page (TM.0.6.3). English find without a unique rare token (TM.0.6.4). Concurrent bind: stamp the page in play, block extra hapax at this station (TM.0.6.5). Correct the dirty English store (TM.0.6.6). In-hand new-here: a new station stamps the attended rare page, not the first leftover rare in W (TM.0.6.7). Find-novel: search keeps unread pages that add the most rare tokens S lacks (TM.0.6.8). Find-novel without a unique two-rare pair: several clutter pages also match that novel count (TM.0.6.9). Retry-novel: do not lock find on the first tied page; keep unread max-novel pages vs the whole library (TM.0.7.0). File-local bind→did: a page word aliases a motor only from the retrieved note (TM.0.7.1). Keep-steerer: after success, drop other same-here notes (TM.0.7.2). Scale English Open W: 64 documents, more two-rare clutter (TM.0.8.0). One shared return is the recipe: look and it-worked share one signal (TM.0.8.1). One machine: body from n_actions / percepts, not domain= (TM.0.8.2). First math life: search may count unread rares, not + in cortex (TM.0.9.0). Keep untested competing hypotheses: success of A does not delete untested B (TM.0.9.1). Boxed-policy leakage control (TM.0.9.BOX). Antecedent MATCH: a stored X→action steers only when X is in the current observation (TM.0.9.2). Then evidence / independent support, then more language in S, then more math.
 
 Do not restore digit-copy, filed `action=`/`where=`, the door toy, or a synonym lexicon to rescue a plot.
 
@@ -974,14 +974,19 @@ Do not require `push` to win, and do not raise `MAX_TRAIN_S_FILES` to rescue a p
 
 Not a recipe jump. Frozen TM.0.9.1 genome and development protocol. Apparatus only: randomized nonce worlds, paired births, canonical B readout projection, P×S matrix, parallel CPU workers.
 
+**Meaning (frozen):** location-of-information control. The B readout has **no nonce cue** — the cue is which projected note is mounted. Do not change this probe later to test MATCH. Do not require this battery to turn green after 0.9.2.
+
 **Question:** do world-specific bind→did associations live in S, or leak into boxed weights?
 
-**Two axes** (do not soup them):
+**Measures** (do not soup them). Compatible separation label may stay Control Fail:
 
-| Axis | Required? | Meaning |
-|------|-----------|---------|
-| Separation | yes | `flim→motor` is not recoverable from P alone; counterfactual projected S flips the motor |
-| Transfer | reported | can a trained use-S skill read an unseen symbol family (`blen`/`nork`)? |
+| Measure | Meaning |
+|---------|---------|
+| World-fact leakage | empty S reconstructs a world-specific map (Confound if P1/P2 empty motors oppose) |
+| Counterfactual donor control | `Pi + S1 → PRESS`, `Pi + S2 → TUNE` |
+| Neutral relevance control | accessible `wibble→press` / `tork→tune` must not fire without a current cue — reported, not the leakage question |
+| Cross-world use-S, evaluable stores | can a trained use-S skill read a valid unseen store? Missing S3 is **Unevaluable**, not Fail |
+| W3 acquisition robustness | did W3 bind `blen`? Separate from transfer |
 
 **Lethal pair** (station B, innate HOLD; cue is which projected note is mounted):
 
@@ -1001,10 +1006,62 @@ Not a recipe jump. Frozen TM.0.9.1 genome and development protocol. Apparatus on
 | Confound | No-S behavior covaries with training-world mapping; or Pi+Sj follows training world; or cortex/genome/protocol moved |
 | Control Fail | Reproducible world-independent motor bias on empty/neutral |
 | Inconclusive | Asymmetric/inconsistent no-S behavior |
-| Fail | Cannot use valid projected Si; acquisition missing; wipe/disable regressions |
+| Fail | Cannot use valid projected Si; wipe/disable regressions |
 | Store-works | Separation holds on every paired seed |
+| Unevaluable (transfer only) | No valid S3; do not call this a transfer miss |
 
-Transfer is Pass/Fail beside separation. Do not require `used_bind == "flim"`. Do not edit organism files for CUDA (that is TM.INFRA.GPU later).
+Do not require `used_bind == "flim"`. Do not raise `n_train` to force W3 3/3. Do not edit organism files for CUDA (that is TM.INFRA.GPU later).
+
+## TM.0.9.2 A antecedent MATCH, B motor bar
+
+Recipe: a stored `X→action` may steer only when `X` is supported by the **current observation**. Not rare(X), not newest(X), not filename(X). `use_here_match` is place-match only; this slice adds the missing bind-side symmetry. Genome may expose a Boolean `bind_present_in_current_stream`. It must not receive `bind_token_id` or a list of known action words. Cortex frozen. Do not retune `n_train`. Do not overwrite historical BOX.
+
+Pipeline (first-class, not one ranker):
+
+| Stage | Question |
+|-------|----------|
+| SEARCH | Which candidate memories can I expose? |
+| MATCH | Is this relation's antecedent supported now? |
+| EVIDENCE | What confidence/support does this relation have? (not this slice) |
+| USE | Let the applicable relation steer |
+
+**Acceptance** (token-agnostic; permute `X`/`Y` strings, `M1`/`M2` motors, filenames, and file order across seeds):
+
+```text
+stream contains X
+S: X → PRESS, Y → TUNE
+=> PRESS
+
+stream contains Y
+same S
+=> TUNE
+
+cue X + only Y → TUNE  => HOLD
+cue Y + only X → PRESS => HOLD
+```
+
+**A.** One return. After a free life, that battery holds for arbitrary nonces.
+
+**B.** Same `make()`. Motor bar. n>4 is still stamp-collecting.
+
+**BOX-MATCH** (new cue-bearing audit; not a mutation of TM.0.9.BOX). Same acceptance on a projected B readout whose observation actually contains the nonce. Empty / no-cue S still HOLD.
+
+After 0.9.2, add nothing else until both controls are rerun:
+
+| Control | Must show |
+|---------|-----------|
+| Historical BOX, unchanged | Old leakage result: empty HOLD; donor S wins; neutrals may still copy (`did`). Not required to turn green. |
+| BOX-MATCH | Matching donors fire; nonmatching donors HOLD; cue switch on the same S flips the motor. |
+
+If both hold: P knows how to use relations, S contains the relations, current experience determines applicability. Only then is EVIDENCE / independent support meaningful.
+
+| ID | A | B |
+|----|---|---|
+| Confound | Cortex moves; `push`/`flim`/`wibble` in the agent; bind token-id feature; historical BOX probe rewritten | same |
+| Fail | Matching cue+S does not steer; nonmatching cue still copies `did`; wipe-between PRESS | Untrained PRESS; A miss; C miss; n>4 |
+| Store-works | Same-S cue switch fires the matching motor; crossed single-relation cues HOLD | Same motor bar |
+
+Do not special-case `push`, `flim`, or BOX neutrals. Independent support waits until MATCH exists.
 
 
 
