@@ -1,5 +1,6 @@
 # TM.0.10.FAMILY results: frozen 0.9.4 vs relation worlds
 
+**Ex0S:** **0.0.001**  
 **Date:** 15 August 2026  
 **Regime:** not a recipe jump  
 **Run:** `runs/2026-08-15_144235_tm010family`  
@@ -72,7 +73,7 @@ It does **not** show:
 
 It does show: once the loop (alternatives → survival → MATCH → evidence → choice → revision) is in place, renaming, reordering, adding junk, sharing motors, separating lives, breaking ties, and reversing twice did not require a new recipe.
 
-Composition landed in TM.0.11 as a separate recipe jump (frontier re-entry). Do not fold compose into this freeze.
+Composition landed in TM.0.11 as **Ex0S 0.0.002** (frontier re-entry). Do not fold compose into this freeze.
 
 ## Reproduce
 

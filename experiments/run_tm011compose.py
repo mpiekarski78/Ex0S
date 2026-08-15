@@ -385,6 +385,7 @@ def run_tm011compose(seed: int = 12345, n_train: int = 500, max_steps: int = 32)
     )
     out = {
         "version": "TM.0.11",
+        "ex0s": "0.0.002",
         "seed": seed,
         "n_train": n_train,
         "run_dir": str(run_dir),
@@ -394,7 +395,7 @@ def run_tm011compose(seed: int = 12345, n_train: int = 500, max_steps: int = 32)
     }
     (run_dir / "metrics.json").write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8")
     (run_dir / "summary.md").write_text(
-        f"""# TM.0.11 A COMPOSE vs B motor bar
+        f"""# TM.0.11 A COMPOSE vs B motor bar · Ex0S 0.0.002
 
 | Arm | Classification |
 |-----|----------------|

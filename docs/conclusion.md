@@ -352,11 +352,11 @@ Among applicable rivals, earned support prefers the stronger relation. **A** **S
 
 Same 0.9.3 comparison. Later outcomes can withdraw and reverse a preference. **A** **Store-works**: HOLD→M1→HOLD→M2; mid-reset then reverse; same final S evidence → same motor. Genome delta 0. **B** **Fail**: no-cue English bar; not retuned. Details: [`tm094_results.md`](tm094_results.md).
 
-## TM.0.10.FAMILY (frozen 0.9.4 relation worlds)
+## TM.0.10.FAMILY (frozen 0.9.4 relation worlds) — Ex0S 0.0.001
 
 Not a recipe jump. **252/252** procedural worlds solved on the frozen 0.9.4 genome (developed A–D 144/144; hold-out E–G 108/108). Genome changes 0. Independent measures all 1.000. This is structural generality inside the 0.9.4 claim, not English and not composition. Details: [`tm010family_results.md`](tm010family_results.md).
 
-## TM.0.11 (COMPOSE / motor bar)
+## TM.0.11 (COMPOSE / motor bar) — Ex0S 0.0.002
 
 Chosen non-motor consequent becomes the next MATCH frontier. **A** **Store-works**: cue X composes `X→Y` then `Y→M1`; broken/wrong-edge HOLD; donors follow S; no shortcut; no residue; S hash stable. **B** **Fail**: no-cue English bar; not retuned. Details: [`tm011compose_results.md`](tm011compose_results.md).
 

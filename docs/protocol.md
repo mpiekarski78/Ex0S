@@ -1,5 +1,7 @@
 # Three-memory experiment protocol (v0)
 
+Product lineage: **Ex0S** — acquired state lives outside cognitive weights. See [`docs/ex0s.md`](ex0s.md). Lab experiment IDs stay `TM.*`.
+
 ## Question
 
 > Can frozen innate drives + learning rules fill an **inspectable** world-knowledge store from experience, such that facts **survive reset of the working trace** — while the trace alone does not?
@@ -1138,9 +1140,9 @@ Order invariance: two life sequences with the same final `(support, contradictio
 
 After 0.9.4, consider a fixed-genome world family (delta 0) before more epistemic machinery.
 
-## TM.0.10.FAMILY frozen-genome relation worlds
+## TM.0.10.FAMILY frozen-genome relation worlds — Ex0S 0.0.001
 
-Not a recipe jump. New experimental regime. Freeze cortex, the 0.9.4 genome (`run_tm094.make`), policy architecture, features, optimizer, and training protocol. **No organism edits during the recorded run.** If a world fails, record the missing capability before touching anything.
+Not a recipe jump. New experimental regime. Freeze cortex, the 0.9.4 genome (`run_tm094.make`), policy architecture, features, optimizer, and training protocol. **No organism edits during the recorded run.** If a world fails, record the missing capability before touching anything. Product lineage: **Ex0S 0.0.001**.
 
 Relation learning only. No English semantics, math, large corpora, embeddings, source trust, or confidence calculus.
 
@@ -1186,9 +1188,9 @@ Developer intervention counter: world classes attempted / solved on the frozen g
 
 Confound: any edit to `agent.py`, `policy.py`, `cortex.py`, `UsePolicy.n_feat`, or 0.9.4 `make()` during the recorded family.
 
-## TM.0.11 A COMPOSE, B motor bar
+## TM.0.11 A COMPOSE, B motor bar — Ex0S 0.0.002
 
-Recipe jump: **one** compose primitive. A chosen non-motor consequent becomes the next MATCH frontier. Visited `fact_id`s are excluded before EVIDENCE. No hop cap (bound by `|S|`). No accumulated `observation ∪ derived` as MATCH input. Act-local frontier only. Do not write `X→motor` into S. Not `use_two_hop`. Cortex frozen. `policy.py` unchanged. Do not retune `n_train`. Historical BOX not rewritten.
+Recipe jump: **one** compose primitive. A chosen non-motor consequent becomes the next MATCH frontier. Visited `fact_id`s are excluded before EVIDENCE. No hop cap (bound by `|S|`). No accumulated `observation ∪ derived` as MATCH input. Act-local frontier only. Do not write `X→motor` into S. Not `use_two_hop`. Cortex frozen. `policy.py` unchanged. Do not retune `n_train`. Historical BOX not rewritten. Product lineage: **Ex0S 0.0.002**.
 
 ```text
 Life 1:  X -> Y

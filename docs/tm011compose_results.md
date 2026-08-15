@@ -1,5 +1,6 @@
 # TM.0.11 results: COMPOSE / motor bar
 
+**Ex0S:** **0.0.002**  
 **Date:** 15 August 2026  
 **Classification:** **A Store-works** · **B Fail**  
 **Run:** `runs/2026-08-15_145626_tm011`

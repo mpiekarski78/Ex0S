@@ -35,7 +35,7 @@ Early revision lives: M1+, M1+, M2− → M1 (2/0 vs 0/1). Reset ρ. Continue: M
 
 - No probabilities. No Bayesian vocabulary. No decay. No weighted recency. No source trust. No `evidence_score = support - contradiction` in cortex. The existing `(support, -contradiction)` comparison already reverses.
 - Historical BOX neutrals remain frozen 0.9.1 behavior (no cue, MATCH off). They are not a current capability defect. Genome delta 0 means that probe cannot have changed. BOX-MATCH is the current-organism relevance control and still holds.
-- Next is a fixed-genome world family, not more epistemic machinery. TM.0.10.FAMILY landed: 252/252 on this freeze.
+- Next is a fixed-genome world family, not more epistemic machinery. TM.0.10.FAMILY landed as **Ex0S 0.0.001**: 252/252 on this freeze.
 
 ## Reproduce
 

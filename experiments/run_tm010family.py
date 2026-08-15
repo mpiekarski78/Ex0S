@@ -655,6 +655,7 @@ def aggregate(rows: list[dict[str, Any]], *, genome_ok: bool, freeze_why: str) -
     }
     return {
         "version": "TM.0.10.FAMILY",
+        "ex0s": "0.0.001",
         "genome_ok": genome_ok,
         "genome_why": freeze_why,
         "n_worlds": len(rows),
@@ -732,7 +733,7 @@ def run_family(
         for m in MEASURES
     )
     (run_dir / "summary.md").write_text(
-        f"""# TM.0.10.FAMILY
+        f"""# TM.0.10.FAMILY · Ex0S 0.0.001
 
 Genome: {freeze_why}
 Worlds solved: **{summary['solved']}/{summary['n_worlds']}** ({summary['solved_frac']:.3f})
