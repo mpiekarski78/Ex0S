@@ -173,6 +173,7 @@ def make(
     use_retry_novel: bool = False,
     use_local_alias: bool = False,
     use_keep_steerer: bool = False,
+    use_count_search: bool = False,
 ) -> ThreeMemoryAgent:
     world = ProseLibrary(w_dir) if w_dir is not None else None
     return ThreeMemoryAgent(
@@ -214,6 +215,7 @@ def make(
         use_retry_novel=use_retry_novel,
         use_local_alias=use_local_alias,
         use_keep_steerer=use_keep_steerer,
+        use_count_search=use_count_search,
     )
 
 

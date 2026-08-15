@@ -92,6 +92,7 @@ Full table: [`v1_results.md`](v1_results.md).
 | three-memory, TM.0.8.0 scale English Open W | **Fail** / **Store-works** (64-page pile; retrieve used `xenon`; shared return not the jump) |
 | three-memory, TM.0.8.1 one return | **Fail** / **Store-works** (split gone; retrieve used `xenon`; motor bar not the English bar) |
 | three-memory, TM.0.8.2 one machine | **Fail** / **Store-works** (no `domain=`; retrieve used `xenon`; motor bar not the English bar) |
+| three-memory, TM.0.9.0 first math life | **Fail** / **Store-works** (count unread rares; retrieve used `xenon`; motor bar not the English bar) |
 
 ## Honest limits
 
@@ -774,4 +775,14 @@ See [`tm081_results.md`](tm081_results.md).
 | Class | **Fail** | **Store-works** |
 
 See [`tm082_results.md`](tm082_results.md).
+
+## TM.0.9.0 (first math life / motor bar)
+
+| Check | A count-search | B motor bar |
+|-------|----------------|-------------|
+| Used bind A / C | **`xenon`** / **`neon`** | — |
+| Train S n files | **2** | **2** |
+| Class | **Fail** | **Store-works** |
+
+See [`tm090_results.md`](tm090_results.md).
 

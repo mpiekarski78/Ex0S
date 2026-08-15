@@ -1,6 +1,6 @@
 # Three-memory (TM)
 
-**Current:** TM.0.8.2. Toy series: v0–v23.
+**Current:** TM.0.9.0. Toy series: v0–v23.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
 > BDH baseline (Category B — short-term adaptive memory): [mpiekarski78/bdh](https://github.com/mpiekarski78/bdh) · [conclusion](https://github.com/mpiekarski78/bdh/blob/main/docs/conclusion.md)
@@ -15,7 +15,7 @@ BDH showed that a working trace ρ is useful in-session and gone after reset. Th
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status after TM.0.8.2: one machine, no `domain=` switch. Search still retrieved `xenon`; C used `neon`. **A Fail**. Motor bar **Store-works** (n=2, last-50 0.94; not the English bar, not retuned). Still genome: stream-first bind, find-novel, retry-novel, local-alias, keep-steerer, one return, `{has_code, has_rare}`, five acts. A pile of logs, not Wikipedia. Math is a later life.
+Honest status after TM.0.9.0: first math life — search may count unread rares. Search still retrieved `xenon`; C used `neon`. **A Fail**. Motor bar **Store-works** (n=2, last-50 0.94; not the English bar, not retuned). Still genome: stream-first bind, find-novel, retry-novel, local-alias, keep-steerer, one return, one machine, count-search. No `+` in cortex. A pile of logs, not Wikipedia. More math after S holds the right language.
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -77,6 +77,7 @@ TM.0.7.2 keep-steerer: [`docs/tm072_results.md`](docs/tm072_results.md).
 TM.0.8.0 scale English Open W: [`docs/tm080_results.md`](docs/tm080_results.md).  
 TM.0.8.1 one return: [`docs/tm081_results.md`](docs/tm081_results.md).  
 TM.0.8.2 one machine: [`docs/tm082_results.md`](docs/tm082_results.md).  
+TM.0.9.0 first math life: [`docs/tm090_results.md`](docs/tm090_results.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
 | Check | Outcome |
@@ -149,6 +150,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.8.0 A scale English Open W / B shared return | **Fail** / **Store-works** (64-page pile; retrieve used `xenon`; shared return not the jump) |
 | TM.0.8.1 A one return / B motor bar | **Fail** / **Store-works** (split gone; retrieve used `xenon`; motor bar not the English bar) |
 | TM.0.8.2 A one machine / B motor bar | **Fail** / **Store-works** (no `domain=`; retrieve used `xenon`; motor bar not the English bar) |
+| TM.0.9.0 A count-search / B motor bar | **Fail** / **Store-works** (count unread rares; retrieve used `xenon`; motor bar not the English bar) |
 
 ## Five pieces
 
@@ -224,6 +226,7 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.8.0 scale English Open W | **Fail** / **Store-works** | 64-page pile; retrieve used `xenon`; [`docs/tm080_results.md`](docs/tm080_results.md) |
 | TM.0.8.1 one return | **Fail** / **Store-works** | split gone; retrieve used `xenon`; [`docs/tm081_results.md`](docs/tm081_results.md) |
 | TM.0.8.2 one machine | **Fail** / **Store-works** | no `domain=`; retrieve used `xenon`; [`docs/tm082_results.md`](docs/tm082_results.md) |
+| TM.0.9.0 first math life | **Fail** / **Store-works** | count unread rares; retrieve used `xenon`; [`docs/tm090_results.md`](docs/tm090_results.md) |
 
 ## Quick start
 
@@ -287,6 +290,7 @@ python tests/test_tm072.py
 python tests/test_tm080.py
 python tests/test_tm081.py
 python tests/test_tm082.py
+python tests/test_tm090.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1

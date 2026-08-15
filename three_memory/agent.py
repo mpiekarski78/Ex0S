@@ -88,6 +88,7 @@ class ThreeMemoryAgent:
         use_retry_novel: bool = False,
         use_local_alias: bool = False,
         use_keep_steerer: bool = False,
+        use_count_search: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -179,6 +180,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_local_alias requires use_alias_bind")
         if use_keep_steerer and not use_here_match:
             raise ValueError("use_keep_steerer requires use_here_match")
+        if use_count_search and not use_search_head:
+            raise ValueError("use_count_search requires use_search_head")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -243,6 +246,7 @@ class ThreeMemoryAgent:
         self.use_retry_novel = use_retry_novel
         self.use_local_alias = use_local_alias
         self.use_keep_steerer = use_keep_steerer
+        self.use_count_search = use_count_search
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
@@ -328,6 +332,7 @@ class ThreeMemoryAgent:
             use_retry_novel=self.use_retry_novel,
             use_local_alias=self.use_local_alias,
             use_keep_steerer=self.use_keep_steerer,
+            use_count_search=self.use_count_search,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -544,6 +549,7 @@ class ThreeMemoryAgent:
         for i, rec in enumerate(pool):
             ints = [int(v) for v in self._tag_vals(rec) if isinstance(v, (int, np.integer))]
             has_code = code in ints
+            has_novel = self._full_world_novel_count(rec) > 0
             has_rare = any(
                 sum(1 for o in pool if k in o.tags) < 3
                 for k in rec.tags
@@ -552,7 +558,8 @@ class ThreeMemoryAgent:
             if (self.use_prose_ints or self.use_prose_tokens) and not has_rare:
                 words = pool_words[i]
                 has_rare = any(sum(1 for ws in pool_words if w in ws) < 3 for w in words)
-            items.append((has_code, has_rare))
+            # Count of unread rares is cardinality, not + in cortex.
+            items.append((has_novel if self.use_count_search else has_code, has_rare))
         dec = self.use_policy.decide_search(
             items, epsilon=self.policy_epsilon, rng=self.policy_rng
         )

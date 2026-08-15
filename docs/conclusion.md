@@ -328,3 +328,7 @@ One shared return is the recipe. **A** **Fail**: retrieve used `xenon`; C used `
 
 Body from `n_actions` / percepts, not `domain=`. **A** **Fail**: retrieve used `xenon`; C used `neon`. **B** **Store-works** on the motor bar (n=2, last-50 0.94); not the English bar, not retuned. Details: [`tm082_results.md`](tm082_results.md).
 
+## TM.0.9.0 (first math life / motor bar)
+
+Search may count unread rares. No `+` in cortex. **A** **Fail**: retrieve used `xenon`; C used `neon`. **B** **Store-works** on the motor bar (n=2, last-50 0.94); not the English bar, not retuned. Details: [`tm090_results.md`](tm090_results.md).
+

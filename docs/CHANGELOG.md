@@ -65,3 +65,4 @@
 - TM.0.8.0: scale English Open W — 64 distinct pages, 16 two-rare clutter. A **Fail** (retrieve used `xenon`; C used `krypton`); B shared return **Store-works** on the motor bar (not retuned). [`docs/tm080_results.md`](tm080_results.md).
 - TM.0.8.1: one return is the recipe — split find/mark/use is gone. A **Fail** (retrieve used `xenon`; C used `neon`); B motor bar **Store-works** (not retuned). [`docs/tm081_results.md`](tm081_results.md).
 - TM.0.8.2: one machine — body from `n_actions` / percepts, not `domain=`. A **Fail** (retrieve used `xenon`; C used `neon`); B motor bar **Store-works** (not retuned). [`docs/tm082_results.md`](tm082_results.md).
+- TM.0.9.0: first math life — search may count unread rares, not `+` in cortex. A **Fail** (retrieve used `xenon`; C used `neon`); B motor bar **Store-works** (not retuned). [`docs/tm090_results.md`](tm090_results.md).
