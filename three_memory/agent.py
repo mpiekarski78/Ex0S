@@ -110,6 +110,7 @@ class ThreeMemoryAgent:
         use_evidence: bool = False,
         use_compose: bool = False,
         use_context_kappa: bool = False,
+        use_acquire_ctx: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -215,6 +216,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_compose requires use_evidence")
         if use_context_kappa and not use_compose:
             raise ValueError("use_context_kappa requires use_compose")
+        if use_acquire_ctx and not use_context_kappa:
+            raise ValueError("use_acquire_ctx requires use_context_kappa")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -285,11 +288,15 @@ class ThreeMemoryAgent:
         self.use_evidence = use_evidence
         self.use_compose = use_compose
         self.use_context_kappa = use_context_kappa
+        self.use_acquire_ctx = use_acquire_ctx
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
         self._in_hand_id: str | None = None
         self._w_skip: set[str] = set()
+        self._lived_kappa: str | None = None
+        self._lived_bind: str | None = None
+        self._lived_pending: bool = False
         self.n_revised = 0
         self.n_annotated = 0
         self.last_policy: dict[str, Any] = {}
@@ -302,15 +309,23 @@ class ThreeMemoryAgent:
     def weights_unchanged(self) -> bool:
         return self.weight_hash() == self._weight_hash0
 
+    def _clear_lived_context(self) -> None:
+        """One-shot lived (κ, bind) from compose — never survive a new act/outcome."""
+        self._lived_kappa = None
+        self._lived_bind = None
+        self._lived_pending = False
+
     def reset_rho(self) -> None:
         self.rho.reset()
         self._peek = []
         self._w_skip = set()
         self._in_hand_id = None
+        self._clear_lived_context()
 
     def reset_store(self) -> None:
         self.store.reset()
         self._peek = []
+        self._clear_lived_context()
 
     def reset_life(self) -> None:
         self.reset_rho()
@@ -376,6 +391,7 @@ class ThreeMemoryAgent:
             use_evidence=self.use_evidence,
             use_compose=self.use_compose,
             use_context_kappa=self.use_context_kappa,
+            use_acquire_ctx=self.use_acquire_ctx,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -920,7 +936,13 @@ class ThreeMemoryAgent:
         With use_context_kappa: after each selected non-motor hop, carry κ and
         match derived facts by ctx. Motor hops never step κ. Hop-1 motor returns
         without initializing κ.
+
+        With use_acquire_ctx: retain the compose-local (κ, frontier bind) when a
+        non-motor hop advances κ so observe_outcome can author a contextual
+        continuation after a HOLD. No second κ engine.
         """
+        if self.use_acquire_ctx:
+            self._clear_lived_context()
         if not self.use_compose or not self.store.enabled:
             return []
         from three_memory.kappa import edge_sem, kappa_seed, kappa_step
@@ -975,6 +997,9 @@ class ThreeMemoryAgent:
                 self.last_policy["evidence_tie"] = False
                 self.last_policy["compose_hops"] = hops
                 self.last_policy["context_kappa"] = kappa
+                if self.use_acquire_ctx:
+                    # Motor selected — acquisition is not pending from this act.
+                    self._clear_lived_context()
                 return [rec]
             # Selected non-motor consequent: advance κ (if enabled), then frontier.
             if self.use_context_kappa:
@@ -983,9 +1008,86 @@ class ThreeMemoryAgent:
                 if kappa is None:
                     kappa = kappa_seed(bind)
                 kappa = kappa_step(kappa, edge_sem(bind, did))
+                if self.use_acquire_ctx:
+                    self._lived_kappa = kappa
+                    self._lived_bind = did_l
+                    self._lived_pending = True
             frontier = {did_l}
         return _hold()
 
+    def _acquire_motors(self) -> set[str]:
+        """Motors that may author contextual continuations (not HOLD/IDLE/WAIT)."""
+        skip = {"hold", "idle", "wait"}
+        return {m for m in self._act_names() if m not in skip}
+
+    def _find_experience_ctx(
+        self, bind: str, did: str, ctx: str
+    ) -> FactRecord | None:
+        bl, dl = bind.lower(), did.lower()
+        for rec in self.store.records():
+            if str(rec.tags.get("source") or "") != "experience_ctx":
+                continue
+            if str(rec.tags.get("bind") or "").lower() != bl:
+                continue
+            if str(rec.tags.get("did") or "").lower() != dl:
+                continue
+            if str(rec.tags.get("ctx") or "") != ctx:
+                continue
+            return rec
+        return None
+
+    def _apply_acquire_ctx(self, *, success: bool | None, action_name: str | None) -> None:
+        """Author/revise contextual continuation from one-shot lived compose state.
+
+        Consumes lived context at most once. Harness must not supply bind/κ.
+        """
+        if not self.use_acquire_ctx or not self.store.enabled:
+            return
+        pending = self._lived_pending
+        bind = self._lived_bind
+        kappa = self._lived_kappa
+        if not pending or not isinstance(bind, str) or not bind:
+            return
+        if not isinstance(kappa, str) or not kappa:
+            return
+        if success is None or not isinstance(action_name, str) or not action_name:
+            return
+        motor = action_name.lower()
+        if motor not in self._acquire_motors():
+            return
+        existing = self._find_experience_ctx(bind, motor, kappa)
+        if success is True:
+            if existing is None:
+                tags: dict[str, Any] = {
+                    "bind": bind,
+                    "did": motor,
+                    "ctx": kappa,
+                    "source": "experience_ctx",
+                    "here": "chb",
+                    "w0": bind,
+                    "hyp": "supported",
+                    "trials": 1,
+                    "wins": 1,
+                    "losses": 0,
+                    "support": 1,
+                    "contradiction": 0,
+                }
+                n = len(self.store.records())
+                fid = f"acq_{n:04d}_{bind}_{motor}"
+                rec = FactRecord(
+                    fact_id=fid,
+                    what=encode_tags(tags),
+                    when=int(self.t),
+                    drive_scores={},
+                    tags=tags,
+                )
+                self.store.write(rec)
+            else:
+                self._mark_hyp(existing, success=True)
+            return
+        # Failure: revise existing matching hyp only — never manufacture negatives.
+        if existing is not None:
+            self._mark_hyp(existing, success=False)
     def _hyp_state(self, rec) -> str:
         raw = rec.tags.get("hyp")
         if isinstance(raw, str) and raw in ("untried", "supported", "contradicted"):
@@ -1637,6 +1739,9 @@ class ThreeMemoryAgent:
         return logits
 
     def act(self, obs: Obs, *, update_rho: bool = True, explore: bool = False) -> tuple[int, dict[str, Any]]:
+        # One-shot lived context: every new act/composition attempt clears prior pending.
+        if self.use_acquire_ctx:
+            self._clear_lived_context()
         vec = obs.vector(self.cortex.config.obs_dim)
         predicted = self.rho.predict()
         embed = self.cortex.encode(vec)
@@ -1761,6 +1866,15 @@ class ThreeMemoryAgent:
             self._update_chosen_hyp(success=True)
         elif success is False:
             self._update_chosen_hyp(success=False)
+        # Contextual continuation from compose-lived (κ, bind). Consume once; always clear.
+        try:
+            self._apply_acquire_ctx(
+                success=success,
+                action_name=str(action_name).lower() if isinstance(action_name, str) else None,
+            )
+        finally:
+            if self.use_acquire_ctx:
+                self._clear_lived_context()
         if self.use_keep_steerer and success is True:
             self._keep_steerer(obs)
 

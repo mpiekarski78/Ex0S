@@ -52,7 +52,7 @@ Formal causal headline (planted-S wording):
 
 E–H world manifests were cryptographically committed in `family_013.lock` **before** organism answers. CI only hash/schema/oracle-checks E–H.
 
-**Apparatus note (not a genome change):** the first canonical attempt (`runs/2026-08-15_223141_tm013family`) failed F (0/36) and part of H because the cycle generator left equal-evidence ties at `q`. Holdout generators F/H were fixed (evidence ladder `qa/qb > qz > qy`), **fresh holdout manifests** were written (prior peek invalidated), and the recorded earn run is `223308` — first behavioral contact with the committed worlds that earned the stamp.
+**Apparatus note (not a genome change):** the first canonical attempt (`runs/2026-08-15_223141_tm013family`) failed F (0/36) and part of H because the cycle generator left equal-evidence ties at `q`. Holdout generators F/H were fixed (evidence ladder `qa/qb > qz > qy`), **fresh sealed hold-out worlds** were committed (prior peek invalidated), and the recorded earn run is `223308` — first behavioral contact with those committed worlds.
 
 ## Audit fixes (post-earn)
 

@@ -96,6 +96,7 @@ def make(
     use_evidence: bool = False,
     use_compose: bool = False,
     use_context_kappa: bool = False,
+    use_acquire_ctx: bool = False,
     **kwargs,
 ):
     if not use_event_annotate:
@@ -115,6 +116,7 @@ def make(
         use_evidence = False
         use_compose = False
         use_context_kappa = False
+        use_acquire_ctx = False
     if kwargs.get("use_here_match") is False:
         use_stamp_new_here = False
         use_block_here = False
@@ -125,6 +127,7 @@ def make(
         use_evidence = False
         use_compose = False
         use_context_kappa = False
+        use_acquire_ctx = False
     if kwargs.get("use_search_head") is False:
         use_find_novel = False
         use_retry_novel = False
@@ -140,6 +143,8 @@ def make(
         use_compose = False
     if not use_compose:
         use_context_kappa = False
+    if not use_context_kappa:
+        use_acquire_ctx = False
     if not use_stamp_new_here:
         use_in_hand_new_here = False
     return _make061(
@@ -164,6 +169,7 @@ def make(
         use_evidence=use_evidence,
         use_compose=use_compose,
         use_context_kappa=use_context_kappa,
+        use_acquire_ctx=use_acquire_ctx,
         **kwargs,
     )
 

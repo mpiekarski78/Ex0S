@@ -1601,4 +1601,35 @@ E–H organism answers before canonical run; new mechanism; rewrite genome_011 /
 
 Apparatus: `experiments/run_tm013family.py`. Results: [`tm013family_results.md`](tm013family_results.md).
 
+## TM.0.14.ACQUIRE experience authors contextual continuations
+
+Not a product stamp. `earned_next` always **false** this pass. No FAMILY. No LOOKAHEAD. Do not name Ex0S 0.0.005.
+
+**Claim (candidate):**
+
+> A frozen developmental recipe can use experienced outcomes to author provenance-sensitive contextual continuations into S over an existing relational skeleton, then later use κ to select those organism-authored continuations after ρ reset, without contextual answers being planted by the apparatus.
+
+### Binding rules
+
+- Apparatus plants **untagged skeleton only** (`X→A→Y`, `X→B→Y`). Skeleton writer **runtime-refuses** `ctx`.
+- Organism retains compose-local `(κ, frontier)` on HOLD — **one κ engine**, no second lived F.
+- Lived context is **one-shot**: clear on act start, compose start, `reset_rho`, newborn, after every `observe_outcome`.
+- Teacher may pass **only** motor + outcome. Never Y, κ, path, or destination.
+- `run_tm011compose.py` stays the CONTEXT forwarder; `make_acquire()` in `run_tm014acquire.py` sets `use_acquire_ctx=True`.
+- `genome_013` / `kappa_013` / `family_013` / `genome_011` are not rewritten. `genome_014` pins the ACQUIRE candidate.
+
+### Battery
+
+D0–D15 (16 cells): birth delta, life A/B, ρ/newborn, wipe, contextual-row swap, exact evidence math, tie HOLD, fid/order, no apparatus ctx, oracle score-only, weights/no shortcuts, nasty five (stale κ, non-motor, unseen fail, …).
+
+### Decisive criterion
+
+File-level developmental delta: before life, no contextual motors in S; after life A/B, organism-authored `Y→PRESS ctx=κA` and `Y→TUNE ctx=κB`; post-ρ probes select them. Not planted dual-traces. Not full-graph acquisition from raw life.
+
+### Refuse
+
+Apparatus `ctx` planting; second κ engine; stale lived retention; teacher supplying Y/κ/path; rewriting 0.0.003/0.0.004 locks; modifying `run_tm011compose.py` without need; LOOKAHEAD; FAMILY / 288 worlds; stamping or pre-naming 0.0.005; claiming skeleton acquisition from life.
+
+Apparatus: `experiments/run_tm014acquire.py`. Results: [`tm014acquire_results.md`](tm014acquire_results.md).
+
 

@@ -790,7 +790,6 @@ def verify_genome_013(path: Path = GENOME_013_LOCK) -> tuple[bool, str, dict[str
         return False, "docs/genome_013.lock missing", snap
     lock = json.loads(path.read_text(encoding="utf-8"))
     for key in (
-        "agent_sha",
         "policy_sha",
         "cortex_sha",
         "kappa_sha",
@@ -804,12 +803,15 @@ def verify_genome_013(path: Path = GENOME_013_LOCK) -> tuple[bool, str, dict[str
     ):
         if snap.get(key) != lock.get(key):
             return False, f"genome_013 drift: {key}", snap
+    # agent_sha is a historical CONTEXT freeze pin — HEAD may add ACQUIRE later.
+    if not lock.get("agent_sha"):
+        return False, "genome_013 missing historical agent_sha", snap
     if not snap.get("clone_empty_copies_flag"):
         return False, "clone_empty missing use_context_kappa", snap
     # Immutable 0.11 lock content must not have been rewritten.
     if _sha_file(GENOME_011_LOCK) != lock.get("genome_011_lock_sha"):
         return False, "genome_011.lock rewritten", snap
-    return True, "genome_013 CONTEXT-on candidate intact", snap
+    return True, "genome_013 CONTEXT-on candidate intact (agent historical)", snap
 
 
 def context_lock_snapshot(rows: list[dict[str, Any]]) -> dict[str, Any]:
