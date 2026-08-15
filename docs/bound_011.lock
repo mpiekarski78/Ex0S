@@ -1,0 +1,34 @@
+{
+  "version": "TM.0.11.BOUND",
+  "ex0s_under_test": "0.0.003",
+  "timeout_ms": 30000,
+  "memory_note": "rss via resource.getrusage; soft ceiling advisory only",
+  "seed": 12345,
+  "seed_list_sha": "138064272c1de2007bd25fb7d7749807110500e1fdd630d42d1ce1b70e0d6ff3",
+  "scorer_sha": "3bf85008b5a1564ea7bf0e574aeb1412e602772d6993bfceb25ab665457ee5d4",
+  "gen_depth_sha": "93f9d920f030fd1fdc0864f85d2b4455ba312933fcb848fb3280ce786f31e517",
+  "gen_ssize_sha": "1d68ff2e2a5625c2a79ede95fb457483d5c9d157f289def8cb88060de01e5b77",
+  "gen_branch_sha": "ff7b906f2a4dc85240e3cab3ccea51235cf328d83a610365e5c73aa1c8d40fd5",
+  "gen_distractors_sha": "b047ab612b43534d1221bd5996431022a48152ad141c117a763b584ca85bfb6b",
+  "gen_nasty_sha": "07bb6e2b837e63f00aff32d1cb7bded755eb0f1cd70d0977dd6c0abca0a337f3",
+  "gen_local_opt_sha": "b3b97352a513d0ddedb0677957f7a388f6a098a6dde59a6e19600cc63f1cd97e",
+  "gen_reuse_a_sha": "f8076cfc8cfb70724843cf5e058fa6f64e7202dd0b26e807b40da39976ab0aed",
+  "gen_revise_far_sha": "68be88e9db2199f88cb8d2660e190d366b8b6f3f7f122354ff06ac90fe0c11bb",
+  "held_out_cells": [
+    "depth_16",
+    "depth_20",
+    "ssize_d5_n1000",
+    "nasty",
+    "local_optimum_dead_end"
+  ],
+  "expected_boundary_cells": {
+    "local_optimum_dead_end": {
+      "expect_motor": "hold",
+      "annotation": "not a compose bug; expected limit: no lookahead/backtracking"
+    },
+    "reuse_a": {
+      "expect": "strong wrong-here path wins (bind-only); here-filter would pick weak same-here path",
+      "annotation": "expected limit: compose frontier is bind-only (no here filter)"
+    }
+  }
+}
