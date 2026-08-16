@@ -1,0 +1,200 @@
+{
+  "version": "TM.0.23.CORTEX.V7.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "ec10c03",
+  "neural_mechanism_changed": false,
+  "candidate_v7_sha": "259fd327f224309668a5c07064ea1e4a86ecae1462271e2a7dd38f3325b45f4e",
+  "neural_cortex_sha": "7b67f187e5ed2eb7745ab33280807b2e56d20107be9eb4b265a1b9a825d3e17b",
+  "gate_sha": "2559fa2b79db3908922490e395ff539c5afca6f9d10ecf562472f6ec238ac6a1",
+  "audit_sha": "a954e5d5cb7fe4815774653b6ee5b77fb9856f19a109dabe50594fc08a0111f9",
+  "c4": {
+    "ok": true,
+    "pref_a": true,
+    "stale_ok": true,
+    "pref_b": true,
+    "restore_a": true,
+    "counts_before": {
+      "h_d6d045e64b97": 11
+    },
+    "counts_stale": {
+      "h_d6d045e64b97": 4
+    },
+    "counts_revised": {
+      "h_0212ab081a3e": 10
+    },
+    "counts_restored": {
+      "h_d6d045e64b97": 11
+    }
+  },
+  "tally": {
+    "n_lives": 32,
+    "d1_floors": 23,
+    "d1_ok": 13,
+    "d1_always_hold": 7,
+    "d1_floors_but_frozen_ge_trained": 9,
+    "d1_frozen_within_1_of_trained": 5,
+    "d2_floors": 27,
+    "d2_ok": 6,
+    "d2_holds_below_5": 5,
+    "d2_floors_but_beneficial_tie": 9,
+    "n_pair_clear": 0
+  },
+  "hold_traces": [
+    {
+      "pair_id": 2,
+      "role": "main",
+      "b_op_act": 0.85,
+      "w_op_act_l1_birth": 6.3457132354212735,
+      "w_op_act_l1_after_30": 6.347542468054185,
+      "w_act_query_l1_after_30": 0.2513388717211203,
+      "frozen_counts_after_30": {
+        "h_5ff0dc9b2da7": 27
+      }
+    },
+    {
+      "pair_id": 5,
+      "role": "main",
+      "b_op_act": 0.85,
+      "w_op_act_l1_birth": 6.209122067809863,
+      "w_op_act_l1_after_30": 6.207813970933817,
+      "w_act_query_l1_after_30": 0.12656181418166168,
+      "frozen_counts_after_30": {
+        "h_4dda9b34e83b": 21
+      }
+    },
+    {
+      "pair_id": 6,
+      "role": "main",
+      "b_op_act": 0.85,
+      "w_op_act_l1_birth": 5.954636221450652,
+      "w_op_act_l1_after_30": 5.955038743325033,
+      "w_act_query_l1_after_30": 0.1722971998284294,
+      "frozen_counts_after_30": {
+        "h_c523c7c68959": 19
+      }
+    }
+  ],
+  "ranked": [
+    {
+      "id": "c4_revision_retained",
+      "claim": "C4 still revises A\u2192B after 40 post-swap episodes. Preserve this.",
+      "ok": true,
+      "evidence": {
+        "pref_a": true,
+        "stale_ok": true,
+        "pref_b": true,
+        "restore_a": true,
+        "counts_before": {
+          "h_d6d045e64b97": 11
+        },
+        "counts_revised": {
+          "h_0212ab081a3e": 10
+        }
+      }
+    },
+    {
+      "id": "population_learning_already_shown",
+      "claim": "v7 boundary C5/C6 population greens show consequence-dependent initial learning at the grain the contract asked. The 0/16 is not evidence that learning is absent.",
+      "ok": true,
+      "evidence": {
+        "c5_n_trained_beats_frozen": 30,
+        "c5_mean_delta": 0.23593749999999997,
+        "c6_slot_effect": -0.007535278205457296,
+        "c6_label_effect": 0.035000086494902605
+      }
+    },
+    {
+      "id": "d1_d2_extras_wrong_grain",
+      "claim": "Per-life strict > after a 30-episode teach compares two similar policies on n=40 apply_event probes. That is the inverse of treating 6>4 as learning.",
+      "ok": false,
+      "evidence": {
+        "n_lives": 32,
+        "d1_floors": 23,
+        "d1_ok": 13,
+        "d1_always_hold": 7,
+        "d1_floors_but_frozen_ge_trained": 9,
+        "d1_frozen_within_1_of_trained": 5,
+        "d2_floors": 27,
+        "d2_ok": 6,
+        "d2_holds_below_5": 5,
+        "d2_floors_but_beneficial_tie": 9,
+        "n_pair_clear": 0
+      }
+    },
+    {
+      "id": "always_hold_remains",
+      "claim": "7/32 lives still D1 press=0/harm=0 after W_op skip. Skip did not extinguish HOLD on every seed.",
+      "ok": false,
+      "evidence": {
+        "n_always_hold": 7,
+        "traces": [
+          {
+            "pair_id": 2,
+            "role": "main",
+            "b_op_act": 0.85,
+            "w_op_act_l1_birth": 6.3457132354212735,
+            "w_op_act_l1_after_30": 6.347542468054185,
+            "w_act_query_l1_after_30": 0.2513388717211203,
+            "frozen_counts_after_30": {
+              "h_5ff0dc9b2da7": 27
+            }
+          },
+          {
+            "pair_id": 5,
+            "role": "main",
+            "b_op_act": 0.85,
+            "w_op_act_l1_birth": 6.209122067809863,
+            "w_op_act_l1_after_30": 6.207813970933817,
+            "w_act_query_l1_after_30": 0.12656181418166168,
+            "frozen_counts_after_30": {
+              "h_4dda9b34e83b": 21
+            }
+          },
+          {
+            "pair_id": 6,
+            "role": "main",
+            "b_op_act": 0.85,
+            "w_op_act_l1_birth": 5.954636221450652,
+            "w_op_act_l1_after_30": 5.955038743325033,
+            "w_act_query_l1_after_30": 0.1722971998284294,
+            "frozen_counts_after_30": {
+              "h_c523c7c68959": 19
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "worlds_not_seed_derived",
+      "claim": "pair_seeds(pair_id) is independent of the sealed eval seed. v8 gate must derive lives from the commitment.",
+      "ok": false
+    }
+  ],
+  "v8_authorized_only_if_this_lock": true,
+  "authorize_v8": [
+    "retain v6/v7 motor geometry and C4 snapshot / zero W_act_query / handle-keyed vectors / skip W_op and motor-query when body_adv\u22480",
+    "do not retune neural so every frozen life fails deterministic D1",
+    "replace per-life D1/D2 strict count > with population-grain paired extras from birth weights, same frozen-probe measure",
+    "derive narrow-gate lives from the sealed eval seed (not the frozen 10_000+97 table)",
+    "pin pushed git commit SHA in the reveal lock",
+    "keep absolute D1/D2 floors and always-HOLD fail",
+    "no neural change authorized beyond retaining v7 skip_act_cost \u2014 remaining HOLD is a seed-wise exploration failure, not a new credit law"
+  ],
+  "refuse": [
+    "edit-and-rescore v7",
+    "DEVELOP.v7",
+    "soften floors",
+    "edit docs/cortex_architecture_contract.md",
+    "open D0\u2013D12 before a later isolated gate \u226513/16"
+  ],
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  }
+}

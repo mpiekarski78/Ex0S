@@ -1982,3 +1982,9 @@ Outcome: C4 retained; population C5 **30/32** mean Δ≈0.24; population C6 slot
 
 Key locks: [`cortex_v7_stat_contract.lock`](cortex_v7_stat_contract.lock), [`cortex_diagnosis.v6.lock`](cortex_diagnosis.v6.lock), [`cortex.candidate.v7.lock`](cortex.candidate.v7.lock), [`cortex_mact_boundary.v7.lock`](cortex_mact_boundary.v7.lock), [`cortex_v7_gate.lock`](cortex_v7_gate.lock). Results: [`tm023cortex_v7_gate_results.md`](tm023cortex_v7_gate_results.md).
 
+## TM.0.23.CORTEX.V7 audit → isolated V8
+
+Canonical main `ec10c03` (not `97691cd`). V7 gate **0/16** stands. Adversarial audit ([`cortex_v7_gate.audit.lock`](cortex_v7_gate.audit.lock)): no soft clear; floors unsoftened; no DEVELOP.v7. Contract-literal extras were still per-life strict `>` after a 30-episode teach, mixing frozen-probe birth with `score_d1` apply_event counts. Sealed commitment did not derive worlds (`pair_seeds` is `10000+97·id`). Reveal pinned file SHA, not git commit.
+
+Diagnosis ([`cortex_diagnosis.v7.lock`](cortex_diagnosis.v7.lock)): **C4 retained**; population C5/C6 already green; 9 D1 extras fail with frozen ≥ trained (5 within 1 count); sampled “always-HOLD” lives still ACT on frozen probes after 30 teach. No neural change authorized. v8 must change scorer grain and seed-derived worlds only. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

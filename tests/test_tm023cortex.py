@@ -304,6 +304,19 @@ def test_v7_stat_diagnosis_and_no_develop() -> None:
     if iso8.exists():
         iso = json.loads(iso8.read_text(encoding="utf-8"))
         assert "DEVELOP.v7 on any worlds" in iso["refuse"]
+    audit_p = REPO_ROOT / "docs" / "cortex_v7_gate.audit.lock"
+    if audit_p.exists():
+        audit = json.loads(audit_p.read_text(encoding="utf-8"))
+        assert audit["historical_lock_rewritten"] is False
+        assert audit["contract_literal_result_stands"] is True
+        assert audit["n_pair_clear"] == 0
+        assert audit["gate_sha"] == sha(REPO_ROOT / "docs" / "cortex_v7_gate.lock")
+    diag7 = REPO_ROOT / "docs" / "cortex_diagnosis.v7.lock"
+    if diag7.exists():
+        d7 = json.loads(diag7.read_text(encoding="utf-8"))
+        assert d7["neural_mechanism_changed"] is False
+        assert d7["c4"]["ok"] is True
+        assert d7["v8_authorized_only_if_this_lock"] is True
     from three_memory.neural_cortex import MOTOR_ACT_TOKENS
 
     assert list(MOTOR_ACT_TOKENS) == []

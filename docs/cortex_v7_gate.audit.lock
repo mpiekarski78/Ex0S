@@ -1,0 +1,115 @@
+{
+  "version": "TM.0.23.CORTEX.V7.GATE.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "gate_sha": "2559fa2b79db3908922490e395ff539c5afca6f9d10ecf562472f6ec238ac6a1",
+  "failure_sha": "73a0914b228dfe3283d8439926bb9c9216f42d5c3a11138bff1c6d6327792c62",
+  "candidate_v7_sha": "259fd327f224309668a5c07064ea1e4a86ecae1462271e2a7dd38f3325b45f4e",
+  "neural_sha": "7b67f187e5ed2eb7745ab33280807b2e56d20107be9eb4b265a1b9a825d3e17b",
+  "claimed_clear": false,
+  "n_pair_clear": 0,
+  "contract_literal_result_stands": true,
+  "contract_honest_population_intent": false,
+  "findings": [
+    {
+      "id": "historical_locks_byte_identical",
+      "ok": true,
+      "note": "v6 gate/boundary files present and not replaced by v7 scoring"
+    },
+    {
+      "id": "v1_architecture_untouched",
+      "ok": true
+    },
+    {
+      "id": "no_develop_v7",
+      "ok": true
+    },
+    {
+      "id": "floors_not_softened",
+      "ok": true,
+      "d1": "press>=3 and press>harm",
+      "d2": "holds>=5 and beneficial>=3"
+    },
+    {
+      "id": "motor_act_tokens_empty",
+      "ok": true
+    },
+    {
+      "id": "homeostatic_delta_banned",
+      "ok": true
+    },
+    {
+      "id": "live_neural_matches_v7_candidate",
+      "ok": true
+    },
+    {
+      "id": "commitment_distinct_from_v6",
+      "ok": true
+    },
+    {
+      "id": "reveal_commitment_matches_prereg",
+      "ok": true
+    },
+    {
+      "id": "pair_seeds_independent_of_sealed_commitment",
+      "ok": false,
+      "present": true,
+      "why": "v2\u2013v7 gate worlds are a frozen pair_id table, not a function of the sealed eval seed. Fresh commitment did not create fresh worlds."
+    },
+    {
+      "id": "reveal_pins_git_commit_sha",
+      "ok": false,
+      "why": "Reveal pins candidate file SHA only. Mission requires the pushed git commit SHA before reveal."
+    },
+    {
+      "id": "d1_birth_and_trained_same_probe",
+      "ok": false,
+      "why": "Birth press is a frozen no-physics probe; trained/frozen D1 press comes from score_d1 apply_event probes. Same n, different measurement."
+    },
+    {
+      "id": "plasticity_off_from_birth_weights",
+      "ok": false,
+      "why": "Gate teaches 30 episodes, then clones for plasticity-off. C5 requires identical birth weights and only plasticity differing across the teach. Freeze-after-30 compares two already-trained policies."
+    },
+    {
+      "id": "d1_d2_extras_are_population_grain",
+      "ok": false,
+      "why": "C5/C6 were population tests; D1/D2 extras are still one-life strict > on n=40. A 29 vs 29 or 26 vs 27 flip is the inverse of treating 6>4 as learning."
+    },
+    {
+      "id": "no_scorer_soft_clear",
+      "ok": true,
+      "why": "Historical 0/16 is not a false clear."
+    },
+    {
+      "id": "tally_from_frozen_lock",
+      "ok": true,
+      "n_lives": 32,
+      "d1_floors": 23,
+      "d1_ok": 13,
+      "d1_always_hold": 7,
+      "d1_floors_but_frozen_ge_trained": 9,
+      "d1_frozen_within_1_of_trained": 5,
+      "d2_floors": 27,
+      "d2_ok": 6,
+      "d2_holds_below_5": 5,
+      "d2_floors_but_beneficial_tie": 9,
+      "n_pair_clear": 0
+    }
+  ],
+  "consequence": {
+    "develop_v7": "refused",
+    "rescore_v7": "refused",
+    "next": "isolated_v8",
+    "refuse": [
+      "rewrite docs/cortex_v7_gate.lock",
+      "edit-and-rescore candidate v7 on revealed v7 worlds",
+      "open DEVELOP.v7",
+      "open full D0\u2013D12",
+      "soften D1/D2 floors"
+    ]
+  },
+  "note": "0/16 stands under the frozen per-life extras. Those extras are the same single-trajectory grain the v7 contract was written to retire. Population C5/C6 on the boundary were green. Fix scorers/world derivation for v8 only."
+}
