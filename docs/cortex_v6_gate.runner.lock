@@ -1,0 +1,49 @@
+{
+  "version": "TM.0.23.CORTEX.V6.GATE.RUNNER",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eval_revealed": false,
+  "gate_contract_sha": "2e25cb470328e24d3c25319033ee4f9e7b3fa7025b8349b0796e29ca97caff2c",
+  "architecture_amendment_sha": "7c1792fc77e4d7d466f4fa2cd04e2d9aa156efe7b9ef67f92b70491977758415",
+  "diagnosis_v5_sha": "c26cee7e1f1b452cf9fd14938c7e2a265e74380d9a25f4ad73177f6c6fd346c3",
+  "stages": [
+    "D0",
+    "D1",
+    "D2"
+  ],
+  "thresholds": {
+    "D1": {
+      "press_min": 3,
+      "press_gt_harm": true,
+      "cf_differs": true
+    },
+    "D2": {
+      "holds_min": 5,
+      "beneficial_min": 3,
+      "rho_reset_preserves_weights": true
+    },
+    "D0": {
+      "n_probes": 64,
+      "p0": 0.5,
+      "alpha": 0.01
+    },
+    "pair_clear_requires": "main_D1_and_D2_and_twin_D1_and_D2",
+    "gate_clear_min_pairs": 13,
+    "n_pairs": 16
+  },
+  "scorer_sha": "c32a453aaab0a8820fda0f41d24918f827dad8e378fb6f6da1853420a1ef7f7d",
+  "gate_module": "experiments.cortex_v6_gate",
+  "gate_module_sha": "523fc3c101a3a3a380fc953bbf4de818f0d14308269dbea9596ceaca8e1d28e5",
+  "candidate_interface": {
+    "factory": "experiments.run_tm023cortex.make_cortex",
+    "actuator_api": "bind_actuators([opaque_handle_id, ...])",
+    "note": "interface only \u2014 no candidate SHA"
+  },
+  "refuse": [
+    "pin candidate SHA before v6 birth",
+    "pin eval fixture before reveal",
+    "D3-D12 in this gate",
+    "soften thresholds"
+  ]
+}

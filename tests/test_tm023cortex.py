@@ -170,14 +170,15 @@ def test_diag_and_v4_gate() -> None:
     assert gate["earned_next"] is False
     assert gate["ex0s"] is None
     assert gate["product"] == "0.0.004"
-    # versioned candidates preserved; live points at latest candidate (v5)
+    # versioned candidates preserved; live points at latest candidate (v6)
     assert (REPO_ROOT / "docs" / "cortex.candidate.v1.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v2.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v3.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v4.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v5.lock").exists()
+    assert (REPO_ROOT / "docs" / "cortex.candidate.v6.lock").exists()
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
-    assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V5"
+    assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V6"
     # isolation: failed v2/v3 gates frozen; no full D battery on gate worlds
     assert (REPO_ROOT / "docs" / "cortex_v2_gate.failure.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex_v3_gate.failure.lock").exists()
@@ -210,6 +211,7 @@ def test_motor_abi_v5() -> None:
         assert hasattr(ag, "bind_actuators")
         ag.bind_actuators(["h_a", "h_b"])
         assert "h_a" not in ag.vocab
+        assert abs(float((ag.motor_vocab["h_a"] ** 2).sum() ** 0.5) - 1.0) < 1e-6
         v = ag.motor_vocab["h_a"].copy()
         ag.bind_actuators(["h_b", "h_a"])
         assert (ag.motor_vocab["h_a"] == v).all()
@@ -242,6 +244,50 @@ def test_mact_boundary_and_v5_gate_failure() -> None:
     iso = json.loads((REPO_ROOT / "docs" / "cortex_v6.isolation.lock").read_text(encoding="utf-8"))
     assert "DEVELOP.v5 on any worlds" in iso["refuse"]
     assert not (REPO_ROOT / "docs" / "cortex_development.v5.lock").exists()
+
+
+def test_v6_diagnosis_boundary_and_gate_failure() -> None:
+    diag = json.loads((REPO_ROOT / "docs" / "cortex_diagnosis.v5.lock").read_text(encoding="utf-8"))
+    assert diag["v6_authorized_only_if_this_lock"] is True
+    assert "no_consequence_neutrality" in diag["v6_boundary_must_require"]
+    v5p = json.loads((REPO_ROOT / "docs" / "cortex_v5.prereg.lock").read_text(encoding="utf-8"))
+    v6p = json.loads((REPO_ROOT / "docs" / "cortex_v6.prereg.lock").read_text(encoding="utf-8"))
+    assert v6p["eval_seed_commitment"] != v5p["eval_seed_commitment"]
+    mact = json.loads((REPO_ROOT / "docs" / "cortex_mact_boundary.v6.lock").read_text(encoding="utf-8"))
+    audit_p = REPO_ROOT / "docs" / "cortex_mact_boundary.v6.audit.lock"
+    assert mact["all_controls_green"] is True
+    assert mact["n_ok"] == 8
+    audit = json.loads(audit_p.read_text(encoding="utf-8"))
+    assert audit["historical_lock_rewritten"] is False
+    assert audit["contract_honest_all_green"] is False
+    assert audit["mact_v6_lock_sha"] == sha(REPO_ROOT / "docs" / "cortex_mact_boundary.v6.lock")
+    c4 = next(c for c in mact["controls"] if c["id"] == "C4_consequence_swap_timed")
+    assert c4["stale_ok"] is True
+    assert c4["pref_b"] is True
+    assert c4.get("counts_stale") == c4.get("counts_before")
+    gate = json.loads((REPO_ROOT / "docs" / "cortex_v6_gate.lock").read_text(encoding="utf-8"))
+    assert gate["sensorimotor_association_gate_clear"] is False
+    assert gate["battery"]["n_pair_clear"] < 13
+    fail = json.loads((REPO_ROOT / "docs" / "cortex_v6_gate.failure.lock").read_text(encoding="utf-8"))
+    assert fail["n_pair_clear"] == gate["battery"]["n_pair_clear"]
+    iso = json.loads((REPO_ROOT / "docs" / "cortex_v7.isolation.lock").read_text(encoding="utf-8"))
+    assert "DEVELOP.v6 on any worlds" in iso["refuse"]
+    assert not (REPO_ROOT / "docs" / "cortex_development.v6.lock").exists()
+
+
+def test_verify_v6_gate_cli() -> None:
+    from experiments.run_tm023cortex import verify_v6_gate
+
+    v = verify_v6_gate()
+    assert v["ok"] is True, v
+    assert v.get("pending") is False
+    assert v["sensorimotor_association_gate_clear"] is False
+    assert v["refuse_develop_before_clear"] is True
+    assert v["boundary_v6_claimed_green"] is True
+    assert v["boundary_v6_contract_honest_green"] is False
+    before = sha(REPO_ROOT / "docs" / "cortex_v6_gate.lock")
+    verify_v6_gate()
+    assert sha(REPO_ROOT / "docs" / "cortex_v6_gate.lock") == before
 
 
 def test_verify_v5_gate_cli() -> None:
@@ -353,6 +399,8 @@ if __name__ == "__main__":
     test_motor_abi_v5()
     test_mact_boundary_and_v5_gate_failure()
     test_verify_v5_gate_cli()
+    test_v6_diagnosis_boundary_and_gate_failure()
+    test_verify_v6_gate_cli()
     test_sealed_not_used_in_smoke()
     test_sanity_live()
     print("test_tm023cortex: ok")

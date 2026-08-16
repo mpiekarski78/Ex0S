@@ -1,0 +1,139 @@
+{
+  "version": "TM.0.23.CORTEX.MACT.BOUNDARY.RESULT.V6",
+  "lab": "TM.0.23.CORTEX.MACT.BOUNDARY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "candidate": "docs/cortex.candidate.v6.lock",
+  "candidate_sha": "ebcf9e80d09b348b15637982ac0e94f8e4c2d2fd0f7c5841ba40d00387f29f27",
+  "diagnosis_v5": "docs/cortex_diagnosis.v5.lock",
+  "all_controls_green": true,
+  "n_ok": 8,
+  "n_controls": 8,
+  "controls": [
+    {
+      "id": "C1_env_exposed_handles",
+      "ok": true,
+      "planted_tokens": [],
+      "birth_motor_keys": [],
+      "why": null
+    },
+    {
+      "id": "C2_spellings_not_neural_input",
+      "ok": true,
+      "leaked_into_vocab": [],
+      "handles": [
+        "h_10f20bc9a2c2",
+        "h_27671f1b01db",
+        "h_2b192f65e5e8",
+        "h_e19c58af3813"
+      ],
+      "why": null
+    },
+    {
+      "id": "C3_twin_independent_rename_vectorize",
+      "ok": true,
+      "handle_ids_differ": true,
+      "has_motor_rng": true,
+      "press_vectors_equal": false,
+      "rebind_restores": true,
+      "why": null
+    },
+    {
+      "id": "C4_consequence_swap_timed",
+      "ok": true,
+      "swap_revise_episodes": 40,
+      "pref_a": true,
+      "stale_ok": true,
+      "pref_b": true,
+      "restore_a": true,
+      "counts_before": {
+        "h_d6d045e64b97": 6
+      },
+      "counts_stale": {
+        "h_d6d045e64b97": 6
+      },
+      "counts_revised": {
+        "h_0212ab081a3e": 6
+      },
+      "counts_restored": {
+        "h_d6d045e64b97": 6
+      },
+      "why": null
+    },
+    {
+      "id": "C5_plasticity_off",
+      "ok": true,
+      "press": 10,
+      "harm": 9,
+      "w_act_query_before": 0.0,
+      "w_act_query_after": 0.0,
+      "b_op_act": 0.85,
+      "op_cost_act": 0.05,
+      "why": null
+    },
+    {
+      "id": "C6_no_consequence",
+      "ok": true,
+      "runs": [
+        {
+          "order": [
+            "h_0ecc8cfefc2e",
+            "h_85cdd2db69ba"
+          ],
+          "counts": {
+            "h_0ecc8cfefc2e": 6,
+            "h_85cdd2db69ba": 4
+          },
+          "first_slot_systematic": true,
+          "d1_shaped": true,
+          "extreme_8_0": false
+        },
+        {
+          "order": [
+            "h_85cdd2db69ba",
+            "h_0ecc8cfefc2e"
+          ],
+          "counts": {
+            "h_0ecc8cfefc2e": 6,
+            "h_85cdd2db69ba": 4
+          },
+          "first_slot_systematic": false,
+          "d1_shaped": true,
+          "extreme_8_0": false
+        }
+      ],
+      "why": null
+    },
+    {
+      "id": "C7_distractor_motors",
+      "ok": true,
+      "counts": {
+        "h_8d5cd885c1e7": 2,
+        "h_4dda9b34e83b": 15
+      },
+      "distractor": "h_distr_28f7",
+      "why": null
+    },
+    {
+      "id": "C8_shuffled_credit",
+      "ok": true,
+      "counts": {
+        "h_5fe8f8af7adf": 7,
+        "h_cba422d4de35": 2,
+        "h_cea3207c4288": 5,
+        "h_aeab02f61cdb": 6
+      },
+      "why": null
+    }
+  ],
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "note": "v6 boundary: exchangeable slots, frozen swap probe, no-consequence neutrality."
+}

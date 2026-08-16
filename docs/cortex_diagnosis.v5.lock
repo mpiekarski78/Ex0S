@@ -1,0 +1,234 @@
+{
+  "version": "TM.0.23.CORTEX.V5.DIAGNOSIS",
+  "lab": "TM.0.23.CORTEX.V5.DIAG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "neural_mechanism_changed": false,
+  "candidate_v5_sha": "e1d2cf4293dc9003959fb385c50605678ba97922aaa4b43a850626ab5875116e",
+  "neural_cortex_sha": "27f111fb35a7bee83b154f87cb77c74c710d23ad009f24998fddb0d170ad56b4",
+  "asymmetry": {
+    "n_organisms": 32,
+    "motor_seeds_unique": true,
+    "n_motor_seeds": 32,
+    "vector_collisions": 0,
+    "slot0_birth_argmax": 3,
+    "slot0_birth_argmax_rate": 0.09375,
+    "vec_norm_mean": 5.676883536893458,
+    "vec_norm_std": 0.7366114438738643,
+    "vectors_unnormalized": true,
+    "bind_order_preferred_after_neutral_teach": [
+      true,
+      true
+    ],
+    "bind_order_runs": [
+      {
+        "bind_order": [
+          "h_0ecc8cfefc2e",
+          "h_85cdd2db69ba"
+        ],
+        "counts": {
+          "h_0ecc8cfefc2e": 14
+        },
+        "first_slot_preferred": true,
+        "press_count": 14,
+        "harm_count": 0
+      },
+      {
+        "bind_order": [
+          "h_85cdd2db69ba",
+          "h_0ecc8cfefc2e"
+        ],
+        "counts": {
+          "h_85cdd2db69ba": 14
+        },
+        "first_slot_preferred": true,
+        "press_count": 0,
+        "harm_count": 14
+      }
+    ],
+    "beneficial_slot_counterbalance": [
+      {
+        "beneficial_in_slot0": true,
+        "bind_order": [
+          "h_0ecc8cfefc2e",
+          "h_85cdd2db69ba"
+        ],
+        "counts": {
+          "h_0ecc8cfefc2e": 15
+        },
+        "press": 15,
+        "harm": 0
+      },
+      {
+        "beneficial_in_slot0": false,
+        "bind_order": [
+          "h_85cdd2db69ba",
+          "h_0ecc8cfefc2e"
+        ],
+        "counts": {
+          "h_0ecc8cfefc2e": 18,
+          "h_85cdd2db69ba": 2
+        },
+        "press": 18,
+        "harm": 2
+      }
+    ],
+    "c6_pair3_replay": {
+      "handles_in_bind_order": [
+        "h_0ecc8cfefc2e",
+        "h_85cdd2db69ba",
+        "h_309a972ed9c2",
+        "h_9976916103f3"
+      ],
+      "birth_argmax_slot": 2,
+      "birth_argmax_handle": "h_309a972ed9c2",
+      "birth_margin": 0.23528885066796618,
+      "birth_by_slot": [
+        {
+          "slot": 0,
+          "handle": "h_0ecc8cfefc2e",
+          "cos": -0.0955202735194136,
+          "vec_norm": 5.20553867889615,
+          "unit_cos": -0.0955202735194136
+        },
+        {
+          "slot": 1,
+          "handle": "h_85cdd2db69ba",
+          "cos": -0.37297808036307306,
+          "vec_norm": 6.283472770125538,
+          "unit_cos": -0.37297808036307306
+        },
+        {
+          "slot": 2,
+          "handle": "h_309a972ed9c2",
+          "cos": 0.1397685771485526,
+          "vec_norm": 6.725199720462371,
+          "unit_cos": 0.1397685771485526
+        },
+        {
+          "slot": 3,
+          "handle": "h_9976916103f3",
+          "cos": -0.09695948761504415,
+          "vec_norm": 6.258825863529641,
+          "unit_cos": -0.09695948761504415
+        }
+      ],
+      "post_teach_counts": {
+        "h_0ecc8cfefc2e": 8,
+        "h_309a972ed9c2": 3,
+        "h_9976916103f3": 3
+      },
+      "press": 8,
+      "harm": 0
+    }
+  },
+  "swap_timing": {
+    "pref_a_before_swap": true,
+    "counts_learned": {
+      "h_d6d045e64b97": 14
+    },
+    "immediate_first_op": "HOLD",
+    "immediate_first_token": null,
+    "immediate_first_is_A": false,
+    "immediate_first_is_B": false,
+    "immediate_frozen_counts": {
+      "h_d6d045e64b97": 4
+    },
+    "immediate_frozen_pref_A": true,
+    "immediate_contaminated_counts": {
+      "h_d6d045e64b97": 3,
+      "h_0212ab081a3e": 4
+    },
+    "immediate_contaminated_pref_B": true,
+    "later_counts": {
+      "h_d6d045e64b97": 9,
+      "h_0212ab081a3e": 8
+    },
+    "pref_b_after_teach": false,
+    "restore_counts": {
+      "h_d6d045e64b97": 13
+    },
+    "physics_or_future_leak_into_first_selection": false,
+    "stale_probe_contaminated_by_inprobe_consequences": true,
+    "credit_assignment_fails_to_revise": true
+  },
+  "ranked_root_causes": [
+    {
+      "id": "bind_order_neutral_preference",
+      "claim": "After no-consequence teaching, the first-bound handle is preferred \u2014 slot/order bias, not physics.",
+      "evidence": {
+        "runs": [
+          {
+            "bind_order": [
+              "h_0ecc8cfefc2e",
+              "h_85cdd2db69ba"
+            ],
+            "counts": {
+              "h_0ecc8cfefc2e": 14
+            },
+            "first_slot_preferred": true,
+            "press_count": 14,
+            "harm_count": 0
+          },
+          {
+            "bind_order": [
+              "h_85cdd2db69ba",
+              "h_0ecc8cfefc2e"
+            ],
+            "counts": {
+              "h_85cdd2db69ba": 14
+            },
+            "first_slot_preferred": true,
+            "press_count": 0,
+            "harm_count": 14
+          }
+        ]
+      }
+    },
+    {
+      "id": "unnormalized_motor_vectors",
+      "claim": "Motor-registry vectors are N(0,1) not unit-normalized (cosine is scale-invariant; norms still vary).",
+      "evidence": {
+        "norm_mean": 5.676883536893458,
+        "norm_std": 0.7366114438738643
+      }
+    },
+    {
+      "id": "stale_probe_applies_new_consequences",
+      "claim": "Old C4 immediate 20-probe used apply_event under swapped physics, so credit+body leaked into the 'stale' window.",
+      "evidence": {
+        "first_frozen_is_A": false,
+        "contaminated_pref_B": true
+      }
+    },
+    {
+      "id": "credit_fails_post_swap_revision",
+      "claim": "Immediate frozen probe stays A but 40 post-swap episodes do not move preference to B.",
+      "evidence": {
+        "later": {
+          "h_d6d045e64b97": 9,
+          "h_0212ab081a3e": 8
+        }
+      }
+    }
+  ],
+  "v6_authorized_only_if_this_lock": true,
+  "v6_boundary_must_require": [
+    "exchangeable_motor_slots",
+    "unit_motor_vectors",
+    "tiebreak_independent_of_bind_order",
+    "exact_credit_to_selected_motor_vector_snapshot",
+    "no_consequence_neutrality",
+    "frozen_immediate_swap_probe_no_new_consequence",
+    "evidence_driven_post_swap_revision",
+    "per_organism_motor_rng"
+  ],
+  "refuse": [
+    "edit-and-rescore v5 on revealed gate worlds",
+    "open DEVELOP.v5",
+    "open DEVELOP.v6 before v6 D1\u2013D2 \u226513/16",
+    "soften D1/D2 thresholds"
+  ],
+  "note": "Observational. Authorizes isolated v6 apparatus; does not implement v6."
+}

@@ -187,9 +187,21 @@ def curriculum_tokens(seeds: LifeSeeds) -> dict[str, str]:
     }
 
 
-def bind_life_actuators(ag: NeuralCortex, toks: dict[str, str]) -> list[str]:
-    """Attach opaque motor handles via cortex-internal motor-registry RNG."""
+def bind_life_actuators(
+    ag: NeuralCortex,
+    toks: dict[str, str],
+    seeds: LifeSeeds | None = None,
+) -> list[str]:
+    """Attach opaque motor handles via cortex-internal motor-registry RNG.
+
+    Bind order is shuffled from seed_motor so slot index is not a role cue.
+    """
     handles = [toks[r] for r in MOTOR_ROLES]
+    if seeds is not None:
+        rng = np.random.default_rng(int(seeds.seed_motor) ^ 0x51A7)
+        order = list(handles)
+        rng.shuffle(order)
+        handles = order
     if not hasattr(ag, "bind_actuators"):
         raise RuntimeError("candidate lacks bind_actuators — refuse planted lexicon path")
     ag.bind_actuators(handles)
@@ -290,7 +302,7 @@ def run_one_life(
 
     # D0 at birth (before actuator binding)
     stages["D0"] = score_d0(ag, seeds, toks)
-    bind_life_actuators(ag, toks)
+    bind_life_actuators(ag, toks, seeds)
 
     # early child checkpoint after light teaching
     teach_loop(

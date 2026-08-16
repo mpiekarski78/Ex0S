@@ -1,0 +1,88 @@
+{
+  "version": "TM.0.23.CORTEX.MACT.BOUNDARY.V6.AUDIT",
+  "lab": "TM.0.23.CORTEX.MACT.BOUNDARY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "mact_v6_lock": "docs/cortex_mact_boundary.v6.lock",
+  "mact_v6_lock_sha": "85142779643e86071d58d01d74e0f5fceb2fbd918741cd636f60ce12c68ef3f2",
+  "contract": "docs/cortex_mact_boundary_contract.md",
+  "diagnosis_v5": "docs/cortex_diagnosis.v5.lock",
+  "historical_lock_rewritten": false,
+  "claimed_all_controls_green": true,
+  "contract_honest_all_green": false,
+  "findings": [
+    {
+      "id": "C4_frozen_swap_timing",
+      "ok": true,
+      "contract": "frozen immediate probe still A; 40 teach; then B; restore A",
+      "recorded": {
+        "pref_a": true,
+        "stale_ok": true,
+        "pref_b": true,
+        "restore_a": true,
+        "stale_equals_before": true,
+        "probe_n_recorded": 20,
+        "contract_pref_probe_n": 40
+      },
+      "why": null
+    },
+    {
+      "id": "C5_pass_rule_substituted",
+      "ok": false,
+      "contract": "freeze plasticity; learning-dependent D1/D2 portions fail",
+      "recorded": {
+        "press": 10,
+        "harm": 9,
+        "w_act_query_before": 0.0,
+        "w_act_query_after": 0.0
+      },
+      "d1_shaped_under_plasticity_off": true,
+      "softened_bar": "W_act_query unchanged and not press>=8 harm==0 (after score_d1 passed)",
+      "why": "Recorded press=10>harm=9 is D1-shaped with plasticity off. Pass used a substituted weight-norm rule after score_d1 was green."
+    },
+    {
+      "id": "C6_preference_bar_raised",
+      "ok": false,
+      "contract": "no handle gains systematic preference (D1-shaped: press>=3 and press>harm)",
+      "press": "h_0ecc8cfefc2e",
+      "harm": "h_85cdd2db69ba",
+      "runs": [
+        {
+          "order": [
+            "h_0ecc8cfefc2e",
+            "h_85cdd2db69ba"
+          ],
+          "press": 6,
+          "harm": 4,
+          "d1_shaped": true
+        },
+        {
+          "order": [
+            "h_85cdd2db69ba",
+            "h_0ecc8cfefc2e"
+          ],
+          "press": 6,
+          "harm": 4,
+          "d1_shaped": true
+        }
+      ],
+      "softened_bar": "extreme 8\u20130 or first-slot>=8 both orders",
+      "why": "Recorded press=6>harm=4 in both bind orders is systematic under the frozen D1-shaped bar. Pass used an 8\u20130 bar after a prior red."
+    }
+  ],
+  "consequence": {
+    "boundary_green_prerequisite_honestly_met": false,
+    "v6_gate_result_stands": true,
+    "n_pair_clear": 7,
+    "develop_v6": "refused",
+    "next": "isolated_v7",
+    "refuse": [
+      "rewrite docs/cortex_mact_boundary.v6.lock",
+      "edit-and-rescore candidate v6 on revealed v6 gate worlds",
+      "open DEVELOP.v6",
+      "open full D0\u2013D12"
+    ]
+  },
+  "note": "Append-only honesty audit. Historical v6 boundary lock left immutable. C4 frozen swap timing is evidenced (stale==before, then B). C5/C6 claimed greens do not match the frozen contract."
+}

@@ -1956,3 +1956,13 @@ Outcome: historical boundary lock claimed **8/8**; contract-honest audit finds *
 
 Key locks: [`cortex_mact_boundary.lock`](cortex_mact_boundary.lock), [`cortex_mact_boundary.v5.lock`](cortex_mact_boundary.v5.lock), [`cortex.candidate.v5.lock`](cortex.candidate.v5.lock), [`cortex_v5_gate.lock`](cortex_v5_gate.lock), [`cortex_v5_gate.failure.lock`](cortex_v5_gate.failure.lock). Results: [`tm023cortex_v5_gate_results.md`](tm023cortex_v5_gate_results.md).
 
+## TM.0.23.CORTEX.V5 diagnosis → isolated V6
+
+Diagnose two v5 failures before any v6 design. **No-consequence asymmetry:** motor RNG unique per organism; birth slot-0 ACT-query argmax is not the bias; after neutral teaching the first-bound / first-sampled vector wins 14–0; unnormalized vectors; uniform ACT-cost credit collapses cosines. **Swap timing:** frozen immediate probe stays A; old `apply_event` stale window already prefers B (in-probe leak); 40 post-swap episodes do not revise to B.
+
+V6 authorized only by [`cortex_diagnosis.v5.lock`](cortex_diagnosis.v5.lock). Boundary must require exchangeable motor slots, exact credit to the selected motor-vector snapshot, no-consequence neutrality, and evidence-driven post-swap revision. Then: v6 candidate → all boundary greens → fresh sealed D1–D2 ≥13/16 → only then a later full D0–D12 commitment. Do not reopen the full battery before that.
+
+Outcome: historical boundary lock claimed **8/8**; contract-honest audit finds **C5/C6 red** ([`cortex_mact_boundary.v6.audit.lock`](cortex_mact_boundary.v6.audit.lock)). C4 frozen swap timing is evidenced. Narrow gate **7/16** — **fail**. DEVELOP.v6 **refused**. Frozen failure + [`cortex_v7.isolation.lock`](cortex_v7.isolation.lock). Do not edit-rescore v6 on revealed worlds. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Key locks: [`cortex_diagnosis.v5.lock`](cortex_diagnosis.v5.lock), [`cortex.candidate.v6.lock`](cortex.candidate.v6.lock), [`cortex_mact_boundary.v6.lock`](cortex_mact_boundary.v6.lock), [`cortex_v6_gate.lock`](cortex_v6_gate.lock), [`cortex_v6_gate.failure.lock`](cortex_v6_gate.failure.lock). Results: [`tm023cortex_v6_gate_results.md`](tm023cortex_v6_gate_results.md).
+

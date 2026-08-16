@@ -165,7 +165,8 @@ class NeuralCortex:
         self.b_op = torch.zeros(len(OPS), dtype=self.dtype, device=self.device)
         self.b_op[OPS.index("ACT")] = 0.85
         self.W_emit_query = self._randn(g.d_sym, g.n, g.n)
-        self.W_act_query = self._randn(g.d_sym, g.n, g.n)
+        # v6: no motor evidence at birth — zeros keep ACT a tie (rng_motor), not a geometry lottery
+        self.W_act_query = torch.zeros(g.d_sym, g.n, dtype=self.dtype, device=self.device)
         self.W_write = self._randn(g.d_sym, g.n, g.n)
         self.W_att = self._randn(g.d_sym, g.n, g.n)
         self.W_body = self._randn(g.n, g.d_body, g.d_body)  # frozen
@@ -257,9 +258,13 @@ class NeuralCortex:
             if hid in self._motor_registry:
                 vec = self._motor_registry[hid].copy()
             else:
-                vec = self.rng_motor.normal(0.0, 1.0, size=self.genome.d_sym).astype(
-                    np.float64
-                )
+                # Handle-keyed: bind order must not permute the vector identity.
+                material = f"{int(self.genome.seed_motor):d}\0{hid}".encode()
+                seed = int.from_bytes(hashlib.sha256(material).digest()[:8], "little")
+                rng = np.random.default_rng(seed)
+                raw = rng.normal(0.0, 1.0, size=self.genome.d_sym).astype(np.float64)
+                nrm = float(np.linalg.norm(raw)) + 1e-12
+                vec = (raw / nrm).astype(np.float64)
                 self._motor_registry[hid] = vec.copy()
             self.motor_vocab[hid] = vec
             # deliberately do NOT insert into self.vocab (not neural sensory input)
@@ -335,22 +340,24 @@ class NeuralCortex:
         *,
         lexicon: dict[str, np.ndarray] | None = None,
         require_thresh: bool = True,
+        rng: np.random.Generator | None = None,
     ) -> str | None:
         pool = lexicon if lexicon is not None else self.vocab
         if not pool:
             return None
         q = self._from_t(query)
         qn = np.linalg.norm(q) + 1e-12
-        best_tok = None
-        best = -1.0
+        scored: list[tuple[float, str]] = []
         for tok, v in pool.items():
             cos = float(np.dot(q, v) / (qn * (np.linalg.norm(v) + 1e-12)))
-            if cos > best:
-                best = cos
-                best_tok = tok
+            scored.append((cos, tok))
+        best = max(c for c, _t in scored)
         if require_thresh and best < self.genome.cos_thresh:
             return None
-        return best_tok
+        ties = sorted(t for c, t in scored if abs(c - best) <= 1e-12)
+        if rng is not None and len(ties) > 1:
+            return str(rng.choice(ties))
+        return ties[0]
 
     def _do_retrieve(self) -> None:
         q = self.W_att @ self.rho
@@ -412,10 +419,12 @@ class NeuralCortex:
                 continue
             if op == "ACT":
                 # v2: argmax over M_act only; never force HOLD on cosine miss
+                # v6: tie-break via motor RNG (exchangeable slots)
                 tok = self._best_token(
                     self.W_act_query @ self.rho,
                     lexicon=self.motor_vocab,
                     require_thresh=False,
+                    rng=self.rng_motor,
                 )
                 if tok is None:
                     chosen_op = "HOLD"
@@ -445,6 +454,9 @@ class NeuralCortex:
             self.memory.write(rec)
 
         s_hat = self._from_t(self.W_pred @ self.rho)
+        motor_vec = None
+        if chosen_op == "ACT" and chosen_token and chosen_token in self.motor_vocab:
+            motor_vec = self.motor_vocab[chosen_token].copy()
         out = {
             "op": chosen_op,
             "token": chosen_token,
@@ -454,6 +466,7 @@ class NeuralCortex:
             "body": body.copy(),
             "cost": float(OP_COST[chosen_op]),
             "retrieved": applied_retrieve,
+            "motor_vec": motor_vec,
         }
         self.last_action = out
         self.last_s_hat = s_hat
@@ -465,11 +478,11 @@ class NeuralCortex:
         p = self._pending
         eps = s_t - p["s_hat"]
         body_prev = p["body"]
-        adv = float(
+        body_adv = float(
             np.linalg.norm(body_prev - BODY_SETPOINT)
             - np.linalg.norm(body_t - BODY_SETPOINT)
-            - p["cost"]
         )
+        adv = body_adv - p["cost"]
         rho_elig = self._to_t(p["rho_elig"])
         # directed prediction
         self.W_pred = self.W_pred + self.genome.eta_pred * torch.outer(
@@ -480,20 +493,23 @@ class NeuralCortex:
         e_op[OPS.index(p["op"])] = 1.0
         self.W_op = self.W_op + self.genome.eta_act * adv * torch.outer(e_op, rho_elig)
         # v4: b_op frozen (non-plastic)
+        # v6: motor-query credit only when body consequences differ; use selected snapshot
         if p["token"] is not None and p["op"] in ("EMIT", "ACT"):
-            if p["op"] == "ACT" and p["token"] in self.motor_vocab:
-                # Credit the motor-registry vector — never _vocab_vec (would leak
-                # handle strings into sensory vocab and train the wrong embedding).
-                tok_v = self._to_t(self.motor_vocab[p["token"]])
-            else:
-                tok_v = self._to_t(self._vocab_vec(p["token"]))
-            mat_name = "W_emit_query" if p["op"] == "EMIT" else "W_act_query"
-            W = getattr(self, mat_name)
-            setattr(
-                self,
-                mat_name,
-                W + self.genome.eta_act * adv * torch.outer(tok_v, rho_elig),
-            )
+            skip_motor = p["op"] == "ACT" and abs(body_adv) < 1e-9
+            if not skip_motor:
+                if p["op"] == "ACT" and p.get("motor_vec") is not None:
+                    tok_v = self._to_t(np.asarray(p["motor_vec"], dtype=np.float64))
+                elif p["op"] == "ACT" and p["token"] in self.motor_vocab:
+                    tok_v = self._to_t(self.motor_vocab[p["token"]])
+                else:
+                    tok_v = self._to_t(self._vocab_vec(p["token"]))
+                mat_name = "W_emit_query" if p["op"] == "EMIT" else "W_act_query"
+                W = getattr(self, mat_name)
+                setattr(
+                    self,
+                    mat_name,
+                    W + self.genome.eta_act * adv * torch.outer(tok_v, rho_elig),
+                )
         self._clip_and_consolidate()
         self._pending = None
         return {"adv": adv, "pred_err": float(np.linalg.norm(eps))}
@@ -575,6 +591,9 @@ class NeuralCortex:
             "s_hat": action["s_hat"],
             "body": body.copy(),
             "cost": action["cost"],
+            "motor_vec": None
+            if action.get("motor_vec") is None
+            else np.asarray(action["motor_vec"], dtype=np.float64).copy(),
         }
         self.prev_interaction = ix
         self.last_body = body.copy()
@@ -640,10 +659,17 @@ class NeuralCortex:
             "pending": None
             if self._pending is None
             else {
-                **{k: v for k, v in self._pending.items() if k not in ("rho_elig", "s_hat", "body")},
+                **{
+                    k: v
+                    for k, v in self._pending.items()
+                    if k not in ("rho_elig", "s_hat", "body", "motor_vec")
+                },
                 "rho_elig": np.asarray(self._pending["rho_elig"]).tolist(),
                 "s_hat": np.asarray(self._pending["s_hat"]).tolist(),
                 "body": np.asarray(self._pending["body"]).tolist(),
+                "motor_vec": None
+                if self._pending.get("motor_vec") is None
+                else np.asarray(self._pending["motor_vec"]).tolist(),
             },
             "vocab": {k: v.tolist() for k, v in self.vocab.items()},
             "motor_vocab": {k: v.tolist() for k, v in self.motor_vocab.items()},
@@ -718,6 +744,9 @@ class NeuralCortex:
                 "s_hat": np.asarray(pend["s_hat"], dtype=np.float64),
                 "body": np.asarray(pend["body"], dtype=np.float64),
                 "cost": float(pend["cost"]),
+                "motor_vec": None
+                if pend.get("motor_vec") is None
+                else np.asarray(pend["motor_vec"], dtype=np.float64),
             }
         self.memory.restore(snap.get("S") or [])
         g = self.genome
