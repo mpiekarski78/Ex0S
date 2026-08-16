@@ -2002,3 +2002,7 @@ v9 apparatus (scorer-only, no candidate SHA): [`cortex_v9_stat_contract.lock`](c
 
 Candidate (this cycle, before reveal): [`cortex.candidate.v9.lock`](cortex.candidate.v9.lock) reuses neural SHA `7b67f187…`. Population C4 + C5 (30/32, mean Δ≈0.24) + C6 green. Reveal must pin the pushed candidate git SHA.
 
+Outcome: candidate `bd94241` revealed after a clean push. Fresh seed-derived D1–D2 **6/16** — **fail**. D1 floors **32/32** (v8 press=0 lure gone); extras 23/32; D2 21/32. [`cortex_v9_gate.failure.lock`](cortex_v9_gate.failure.lock) + [`cortex_v10.isolation.lock`](cortex_v10.isolation.lock). **DEVELOP.v9 refused.** Do not edit-rescore v9. Full D0–D12 not opened.
+
+Diagnosis ([`cortex_diagnosis.v9.lock`](cortex_diagnosis.v9.lock)): remaining D1 reds are per-life extras against high birth baselines, not missing press-vs-harm learning. Residual D2 `holds<5` in 5 lives. Floor-only pairs 11/16. Not the same miss as v8. v10 may score gate extras as a C5-style population while keeping floors. Neural unchanged.
+

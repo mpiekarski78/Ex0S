@@ -1,0 +1,55 @@
+{
+  "version": "TM.0.23.CORTEX.V9.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "bd94241",
+  "neural_mechanism_changed": false,
+  "v10_authorized_only_if_this_lock": true,
+  "c4_retained": true,
+  "population_c5_c6_green": true,
+  "gate_n_pair_clear": 6,
+  "d1_ok": 23,
+  "d1_floors": 32,
+  "d1_press0": 0,
+  "d2_ok": 21,
+  "d2_floors": 27,
+  "floor_only_pair_clears_diagnostic": 11,
+  "hold_is_wrong_name": true,
+  "same_architectural_reason_as_v8": false,
+  "claim": "v9 2-handle D1 bind did what v8 diagnosis authorized: press=0 is gone and every life prefers press over harm on frozen probes. Remaining D1 reds are per-life extras against a high birth baseline (p_birth up to 0.50), not missing motor learning. C5 already scores that population effect. Residual D2 reds are holds<5 in 5 action-prone lives plus the same per-life extra grain. Floor-only pairs are 11/16, still below 13. This is not v8 get/drop capture and not a new credit law.",
+  "d1_extra_fails": [
+    {"pair_id": 3, "role": "twin", "press": 8, "harm": 0, "p_birth": 0.15, "p_trained": 0.2, "p_frozen": 0.2},
+    {"pair_id": 4, "role": "main", "press": 17, "harm": 0, "p_birth": 0.325, "p_trained": 0.425, "p_frozen": 0.2},
+    {"pair_id": 4, "role": "twin", "press": 6, "harm": 0, "p_birth": 0.125, "p_trained": 0.15, "p_frozen": 0.15},
+    {"pair_id": 8, "role": "twin", "press": 9, "harm": 0, "p_birth": 0.225, "p_trained": 0.225, "p_frozen": 0.125},
+    {"pair_id": 9, "role": "main", "press": 14, "harm": 0, "p_birth": 0.225, "p_trained": 0.35, "p_frozen": 0.25},
+    {"pair_id": 10, "role": "main", "press": 9, "harm": 0, "p_birth": 0.175, "p_trained": 0.225, "p_frozen": 0.15},
+    {"pair_id": 10, "role": "twin", "press": 17, "harm": 0, "p_birth": 0.25, "p_trained": 0.425, "p_frozen": 0.325},
+    {"pair_id": 13, "role": "main", "press": 22, "harm": 0, "p_birth": 0.5, "p_trained": 0.55, "p_frozen": 0.25},
+    {"pair_id": 15, "role": "main", "press": 3, "harm": 0, "p_birth": 0.075, "p_trained": 0.075, "p_frozen": 0.1}
+  ],
+  "d2_hold_fails": [
+    {"pair_id": 2, "role": "twin", "holds": 4, "beneficial": 16},
+    {"pair_id": 3, "role": "main", "holds": 2, "beneficial": 13},
+    {"pair_id": 5, "role": "twin", "holds": 3, "beneficial": 18},
+    {"pair_id": 12, "role": "main", "holds": 1, "beneficial": 11},
+    {"pair_id": 13, "role": "twin", "holds": 2, "beneficial": 16}
+  ],
+  "authorize_v10": [
+    "retain v7/v8/v9 neural unchanged",
+    "keep D1 press+harm bind and absolute floors (press>=3, press>harm, holds>=5, beneficial>=3)",
+    "score gate extras as a paired population (majority + mean delta) matching frozen C5, not a per-life 0.10 veto against high birth baselines",
+    "keep life_delta_min=0.10 as the population mean-delta floor",
+    "keep sealed-seed worlds and git-pinned reveal",
+    "do not retune neural so every frozen life fails deterministic D1",
+    "do not soften press>=3 or holds>=5"
+  ],
+  "refuse": [
+    "edit-and-rescore v9",
+    "DEVELOP.v9",
+    "new credit law this cycle",
+    "open D0–D12 before a later isolated gate ≥13/16",
+    "treat v7/v8/v9 as the same architectural miss"
+  ]
+}

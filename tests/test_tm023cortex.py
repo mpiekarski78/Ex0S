@@ -354,6 +354,18 @@ def test_v9_candidate_boundary_pending_gate() -> None:
     v8p = json.loads((REPO_ROOT / "docs" / "cortex_v8.prereg.lock").read_text(encoding="utf-8"))
     assert prereg["eval_seed_commitment"] != v8p["eval_seed_commitment"]
     assert prereg["d1_bind"] == ["press", "harm"]
+    gate_p = REPO_ROOT / "docs" / "cortex_v9_gate.lock"
+    if gate_p.exists():
+        gate = json.loads(gate_p.read_text(encoding="utf-8"))
+        assert gate["sensorimotor_association_gate_clear"] is False
+        assert gate["battery"]["n_pair_clear"] == 6
+        assert gate["battery"]["d1_bind"] == ["press", "harm"]
+        assert gate["battery"]["stage_ok_counts"]["D0"] == 32
+        assert not (REPO_ROOT / "docs" / "cortex_development.v9.lock").exists()
+        fail = json.loads((REPO_ROOT / "docs" / "cortex_v9_gate.failure.lock").read_text(encoding="utf-8"))
+        assert fail["n_pair_clear"] == 6
+        iso = json.loads((REPO_ROOT / "docs" / "cortex_v10.isolation.lock").read_text(encoding="utf-8"))
+        assert "DEVELOP.v9 on any worlds" in iso["refuse"]
 
 
 def test_verify_v7_gate_cli() -> None:

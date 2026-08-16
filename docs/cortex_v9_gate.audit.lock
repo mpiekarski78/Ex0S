@@ -1,0 +1,90 @@
+{
+  "version": "TM.0.23.CORTEX.V9.GATE.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "gate_sha": "d44730e4e38b0e453196b740268b5d56fd296e615f6490b10a0d9bb2f23b66ee",
+  "failure_sha": "567b796cf0573e2c0eeb63839941708e10704102221072c0a9c3b539fe24e416",
+  "n_pair_clear": 6,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git_commit",
+      "ok": true,
+      "candidate_git_sha": "bd94241eedd75e97d7e0ff9654cf7ba7e06df535"
+    },
+    {
+      "id": "worlds_from_sealed_seed",
+      "ok": true,
+      "domain": "TM023.V9."
+    },
+    {
+      "id": "d1_bind_press_harm_only",
+      "ok": true
+    },
+    {
+      "id": "d1_press0_eliminated",
+      "ok": true,
+      "press0": 0,
+      "d1_floors": 32,
+      "d1_ok": 23,
+      "note": "Authorized 2-handle D1 bind removed the v8 get/drop lure. Every life has press>=3 and press>harm. Remaining D1 reds are extras only."
+    },
+    {
+      "id": "d1_extras_false_negatives",
+      "ok": true,
+      "note": "9 D1 extras fail with floors green. Several have high p_birth (0.15-0.50) so p_trained-p_birth < 0.10 even when harm=0. This is a birth-baseline lottery, not absent press-vs-harm learning. Not a soft clear."
+    },
+    {
+      "id": "d2_holds_real",
+      "ok": true,
+      "d2_floors": 27,
+      "d2_ok": 21,
+      "holds_lt_5": 5,
+      "note": "5 lives fail holds>=5 with high beneficial ACT. Residual D2 uncertainty miss. 6 further D2 extras fail with floors green."
+    },
+    {
+      "id": "no_soft_clear",
+      "ok": true
+    },
+    {
+      "id": "no_develop_v9",
+      "ok": true
+    },
+    {
+      "id": "floors_unsoftened",
+      "ok": true,
+      "press_min": 3,
+      "holds_min": 5,
+      "life_delta_min": 0.1
+    },
+    {
+      "id": "neural_unchanged",
+      "ok": true,
+      "neural_cortex_sha": "7b67f187e5ed2eb7745ab33280807b2e56d20107be9eb4b265a1b9a825d3e17b"
+    },
+    {
+      "id": "no_capability_shortcuts",
+      "ok": true
+    },
+    {
+      "id": "historical_locks_byte_identical",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "develop_v9": "refused",
+    "rescore_v9": "refused",
+    "next": "isolated_v10",
+    "refuse": [
+      "rewrite docs/cortex_v9_gate.lock",
+      "edit-and-rescore candidate v9 on revealed v9 worlds",
+      "open DEVELOP.v9",
+      "open full D0–D12",
+      "soften D1/D2 floors"
+    ]
+  },
+  "note": "6/16 stands. Get/drop lure is gone (D1 floors 32/32). Gate still red on per-life extras and residual D2 holds. Floor-only pairs would be 11/16, still <13. Not the same diagnosis as v8 press=0."
+}

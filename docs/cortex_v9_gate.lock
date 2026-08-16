@@ -1,0 +1,2674 @@
+{
+  "version": "TM.0.23.CORTEX.V9.GATE.RESULT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "sensorimotor_association_gate_clear": false,
+  "battery": {
+    "n_pairs": 16,
+    "n_pair_clear": 6,
+    "stage_ok_counts": {
+      "D0": 32,
+      "D1": 23,
+      "D2": 21
+    },
+    "d0_fails": 0,
+    "d0_total": 32,
+    "systematic_d0_fail": false,
+    "thresholds": {
+      "D1": {
+        "press_min": 3,
+        "press_gt_harm": true,
+        "cf_differs": true
+      },
+      "D2": {
+        "holds_min": 5,
+        "beneficial_min": 3,
+        "rho_reset_preserves_weights": true
+      },
+      "D0": {
+        "n_probes": 64,
+        "p0": 0.5,
+        "alpha": 0.01
+      },
+      "pair_clear_requires": "main_D1_and_D2_and_twin_D1_and_D2",
+      "gate_clear_min_pairs": 13,
+      "n_pairs": 16
+    },
+    "worlds": "sealed_eval_seed",
+    "d1_bind": [
+      "press",
+      "harm"
+    ],
+    "sensorimotor_association_gate_clear": false,
+    "pairs": [
+      {
+        "pair_id": 0,
+        "main": {
+          "role": "main",
+          "pair_id": 0,
+          "tokens": {
+            "press": "h_9ce9eb0d45a7",
+            "harm": "h_69576f7c8f86",
+            "get": "h_3a393fcb99bd",
+            "drop": "h_a7bcfd13ce51",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 7,
+              "hold_n": 63,
+              "decisive": 7,
+              "rate": 0.0,
+              "foil_rate": 0.109375,
+              "p_value": 1.0,
+              "foil_p_value": 0.9999999999954856,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 17,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.2,
+              "p_trained": 0.425,
+              "p_frozen": 0.225,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 8,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 19,
+              "counts": {
+                "h_9ce9eb0d45a7": 19
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.45,
+              "p_ben_frozen": 0.225,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.55,
+              "assoc_frozen": 0.04999999999999999,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 0,
+          "tokens": {
+            "press": "h_18aceaa4af63",
+            "harm": "h_fd1790324ea1",
+            "get": "h_dae8fbe1e7b5",
+            "drop": "h_623cfa24aa34",
+            "a": "tw_4f376d35_a",
+            "b": "tw_9ca80e6e_b",
+            "c": "tw_72dd5694_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 2,
+              "foil_hits": 1,
+              "hold_n": 64,
+              "decisive": 3,
+              "rate": 0.03125,
+              "foil_rate": 0.015625,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 23,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.125,
+              "p_trained": 0.575,
+              "p_frozen": 0.275,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 12,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 17,
+              "counts": {
+                "h_18aceaa4af63": 17
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.575,
+              "p_ben_frozen": 0.25,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.45,
+              "assoc_frozen": -0.04999999999999999,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "pair_clear": true
+      },
+      {
+        "pair_id": 1,
+        "main": {
+          "role": "main",
+          "pair_id": 1,
+          "tokens": {
+            "press": "h_1071481a437a",
+            "harm": "h_c31ae68fafd2",
+            "get": "h_9627ede38be5",
+            "drop": "h_854a58fb8001",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 17,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.075,
+              "p_trained": 0.425,
+              "p_frozen": 0.075,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 12,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 12,
+              "counts": {
+                "h_1071481a437a": 12
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.475,
+              "p_ben_frozen": 0.125,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.4,
+              "assoc_frozen": 0.0,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 1,
+          "tokens": {
+            "press": "h_35a22ef108d9",
+            "harm": "h_a815d7f7a545",
+            "get": "h_e6a052a605cd",
+            "drop": "h_57626bc285da",
+            "a": "tw_f3829abc_a",
+            "b": "tw_fcfb667d_b",
+            "c": "tw_31b2b889_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 23,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.3,
+              "p_trained": 0.575,
+              "p_frozen": 0.35,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 5,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 13,
+              "counts": {
+                "h_57626bc285da": 1,
+                "h_35a22ef108d9": 13
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.575,
+              "p_ben_frozen": 0.325,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.7,
+              "assoc_frozen": -0.050000000000000044,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "pair_clear": true
+      },
+      {
+        "pair_id": 2,
+        "main": {
+          "role": "main",
+          "pair_id": 2,
+          "tokens": {
+            "press": "h_83bdad452525",
+            "harm": "h_e3c675ef7e36",
+            "get": "h_dc27d591e944",
+            "drop": "h_85d01934a059",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 25,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.225,
+              "p_trained": 0.625,
+              "p_frozen": 0.15,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 9,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 13,
+              "counts": {
+                "h_83bdad452525": 13
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.575,
+              "p_ben_frozen": 0.15,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.55,
+              "assoc_frozen": 0.0,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 2,
+          "tokens": {
+            "press": "h_6f2bd71b815f",
+            "harm": "h_ef5a954cc408",
+            "get": "h_119deac1d84b",
+            "drop": "h_22054cf623d9",
+            "a": "tw_75d5ba18_a",
+            "b": "tw_79cc56de_b",
+            "c": "tw_62166aaa_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 10,
+              "foil_hits": 0,
+              "hold_n": 61,
+              "decisive": 10,
+              "rate": 0.15625,
+              "foil_rate": 0.0,
+              "p_value": 0.9999999982288884,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 23,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.3,
+              "p_trained": 0.575,
+              "p_frozen": 0.3,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 4,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 16,
+              "counts": {
+                "h_ef5a954cc408": 1,
+                "h_119deac1d84b": 6,
+                "h_6f2bd71b815f": 10
+              },
+              "floors_ok": false,
+              "p_ben_trained": 0.575,
+              "p_ben_frozen": 0.275,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.85,
+              "assoc_frozen": 0.0,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "pair_clear": false
+      },
+      {
+        "pair_id": 3,
+        "main": {
+          "role": "main",
+          "pair_id": 3,
+          "tokens": {
+            "press": "h_eb7e187b67c9",
+            "harm": "h_f7f68a4fdbc7",
+            "get": "h_840437bfeb3d",
+            "drop": "h_6b0dc6d84dd9",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 63,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 23,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.2,
+              "p_trained": 0.575,
+              "p_frozen": 0.175,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 2,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 13,
+              "counts": {
+                "h_6b0dc6d84dd9": 1,
+                "h_f7f68a4fdbc7": 1,
+                "h_840437bfeb3d": 12,
+                "h_eb7e187b67c9": 1
+              },
+              "floors_ok": false,
+              "p_ben_trained": 0.55,
+              "p_ben_frozen": 0.225,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.7,
+              "assoc_frozen": 0.0,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 3,
+          "tokens": {
+            "press": "h_8999311e8613",
+            "harm": "h_84cce01a6dc0",
+            "get": "h_bef9c1092e2a",
+            "drop": "h_c5d0651a3c4e",
+            "a": "tw_43ab1843_a",
+            "b": "tw_325ab205_b",
+            "c": "tw_5572ca4e_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 14,
+              "foil_hits": 0,
+              "hold_n": 56,
+              "decisive": 14,
+              "rate": 0.21875,
+              "foil_rate": 0.0,
+              "p_value": 0.9999990595189219,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "floors_ok": true,
+              "press": 8,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.15,
+              "p_trained": 0.2,
+              "p_frozen": 0.2,
+              "trained_gt_birth": false,
+              "trained_gt_frozen": false,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 9,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 11,
+              "counts": {
+                "h_8999311e8613": 11
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.225,
+              "p_ben_frozen": 0.175,
+              "trained_gt_frozen": false,
+              "assoc_trained": 0.25,
+              "assoc_frozen": 0.09999999999999999,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "pair_clear": false
+      },
+      {
+        "pair_id": 4,
+        "main": {
+          "role": "main",
+          "pair_id": 4,
+          "tokens": {
+            "press": "h_ca67e91204bf",
+            "harm": "h_5e92ede321d3",
+            "get": "h_253d1fd917d4",
+            "drop": "h_1441073bf242",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "floors_ok": true,
+              "press": 17,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.325,
+              "p_trained": 0.425,
+              "p_frozen": 0.2,
+              "trained_gt_birth": false,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 7,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 17,
+              "counts": {
+                "h_ca67e91204bf": 17
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.425,
+              "p_ben_frozen": 0.125,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.55,
+              "assoc_frozen": -0.1,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 4,
+          "tokens": {
+            "press": "h_d011fe14c83e",
+            "harm": "h_e568dd904d12",
+            "get": "h_4068a8205954",
+            "drop": "h_ef684e5d916d",
+            "a": "tw_eb339e08_a",
+            "b": "tw_bdda9fed_b",
+            "c": "tw_22a703e4_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 11,
+              "hold_n": 64,
+              "decisive": 11,
+              "rate": 0.0,
+              "foil_rate": 0.171875,
+              "p_value": 1.0,
+              "foil_p_value": 0.9999999900175089,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "floors_ok": true,
+              "press": 6,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.125,
+              "p_trained": 0.15,
+              "p_frozen": 0.15,
+              "trained_gt_birth": false,
+              "trained_gt_frozen": false,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 21,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 5,
+              "counts": {
+                "h_4068a8205954": 2,
+                "h_d011fe14c83e": 3
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.15,
+              "p_ben_frozen": 0.175,
+              "trained_gt_frozen": false,
+              "assoc_trained": 0.3,
+              "assoc_frozen": -0.15,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "pair_clear": false
+      },
+      {
+        "pair_id": 5,
+        "main": {
+          "role": "main",
+          "pair_id": 5,
+          "tokens": {
+            "press": "h_eb8bf108d497",
+            "harm": "h_54dd7da8b3e1",
+            "get": "h_1b09508937b2",
+            "drop": "h_42f6fb4d875a",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 7,
+              "hold_n": 61,
+              "decisive": 7,
+              "rate": 0.0,
+              "foil_rate": 0.109375,
+              "p_value": 1.0,
+              "foil_p_value": 0.9999999999954856,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 15,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.2,
+              "p_trained": 0.375,
+              "p_frozen": 0.075,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 13,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 5,
+              "counts": {
+                "h_1b09508937b2": 1,
+                "h_eb8bf108d497": 4
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.425,
+              "p_ben_frozen": 0.1,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.35,
+              "assoc_frozen": 0.05000000000000002,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 5,
+          "tokens": {
+            "press": "h_38733f65cb31",
+            "harm": "h_e613e5c8d7c4",
+            "get": "h_1dedf56ce30b",
+            "drop": "h_eaa7bc40593a",
+            "a": "tw_070c0588_a",
+            "b": "tw_b74ede54_b",
+            "c": "tw_547f9ed3_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 1,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 1,
+              "rate": 0.015625,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 23,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.4,
+              "p_trained": 0.575,
+              "p_frozen": 0.25,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 3,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 18,
+              "counts": {
+                "h_38733f65cb31": 18
+              },
+              "floors_ok": false,
+              "p_ben_trained": 0.575,
+              "p_ben_frozen": 0.25,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.65,
+              "assoc_frozen": 0.05000000000000002,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "pair_clear": false
+      },
+      {
+        "pair_id": 6,
+        "main": {
+          "role": "main",
+          "pair_id": 6,
+          "tokens": {
+            "press": "h_25b3a1e7901e",
+            "harm": "h_80cdbc733b68",
+            "get": "h_38ed6bc3ba8d",
+            "drop": "h_d1308f83c85b",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 8,
+              "hold_n": 64,
+              "decisive": 8,
+              "rate": 0.0,
+              "foil_rate": 0.125,
+              "p_value": 1.0,
+              "foil_p_value": 0.9999999999618093,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 16,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.1,
+              "p_trained": 0.4,
+              "p_frozen": 0.125,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 15,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 13,
+              "counts": {
+                "h_25b3a1e7901e": 13
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.35,
+              "p_ben_frozen": 0.125,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.25,
+              "assoc_frozen": 0.0,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 6,
+          "tokens": {
+            "press": "h_efe41a621fbd",
+            "harm": "h_1d2ddb2e662c",
+            "get": "h_e81f965629dc",
+            "drop": "h_21942e72fb84",
+            "a": "tw_5c36df89_a",
+            "b": "tw_8372f50a_b",
+            "c": "tw_e3e60326_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 2,
+              "hold_n": 62,
+              "decisive": 2,
+              "rate": 0.0,
+              "foil_rate": 0.03125,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 27,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.225,
+              "p_trained": 0.675,
+              "p_frozen": 0.25,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 5,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 14,
+              "counts": {
+                "h_1d2ddb2e662c": 1,
+                "h_21942e72fb84": 1,
+                "h_e81f965629dc": 6,
+                "h_efe41a621fbd": 8
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.7,
+              "p_ben_frozen": 0.275,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.5,
+              "assoc_frozen": 0.04999999999999999,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "pair_clear": true
+      },
+      {
+        "pair_id": 7,
+        "main": {
+          "role": "main",
+          "pair_id": 7,
+          "tokens": {
+            "press": "h_ac5abcfe8b5e",
+            "harm": "h_6c471f95006e",
+            "get": "h_2e8c751ec7ea",
+            "drop": "h_ad44cb880eed",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 62,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 25,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.4,
+              "p_trained": 0.625,
+              "p_frozen": 0.25,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 6,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 12,
+              "counts": {
+                "h_ad44cb880eed": 1,
+                "h_ac5abcfe8b5e": 12
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.55,
+              "p_ben_frozen": 0.25,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.7,
+              "assoc_frozen": 0.0,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 7,
+          "tokens": {
+            "press": "h_53b17260f653",
+            "harm": "h_fe1bed89bba8",
+            "get": "h_d6acffb39089",
+            "drop": "h_f182f1b1742a",
+            "a": "tw_3657da6e_a",
+            "b": "tw_6d92c497_b",
+            "c": "tw_f26f3b76_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 21,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.15,
+              "p_trained": 0.525,
+              "p_frozen": 0.225,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 8,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 18,
+              "counts": {
+                "h_53b17260f653": 18
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.575,
+              "p_ben_frozen": 0.25,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.5,
+              "assoc_frozen": -0.04999999999999999,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "pair_clear": true
+      },
+      {
+        "pair_id": 8,
+        "main": {
+          "role": "main",
+          "pair_id": 8,
+          "tokens": {
+            "press": "h_0fcf07ea0794",
+            "harm": "h_985f45bf4cb6",
+            "get": "h_f86067ac7904",
+            "drop": "h_ff30d112d038",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 1,
+              "foil_hits": 0,
+              "hold_n": 63,
+              "decisive": 1,
+              "rate": 0.015625,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 16,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.225,
+              "p_trained": 0.4,
+              "p_frozen": 0.175,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 15,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 5,
+              "counts": {
+                "h_f86067ac7904": 4,
+                "h_0fcf07ea0794": 1
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.375,
+              "p_ben_frozen": 0.225,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.45,
+              "assoc_frozen": 0.04999999999999999,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 8,
+          "tokens": {
+            "press": "h_723faa0acbef",
+            "harm": "h_beb151426631",
+            "get": "h_4f6edf26a557",
+            "drop": "h_815f7e91848e",
+            "a": "tw_512adcb7_a",
+            "b": "tw_4de89358_b",
+            "c": "tw_0f625cfc_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "floors_ok": true,
+              "press": 9,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.225,
+              "p_trained": 0.225,
+              "p_frozen": 0.125,
+              "trained_gt_birth": false,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 18,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 12,
+              "counts": {
+                "h_723faa0acbef": 12
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.225,
+              "p_ben_frozen": 0.15,
+              "trained_gt_frozen": false,
+              "assoc_trained": 0.4,
+              "assoc_frozen": -0.15000000000000002,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "pair_clear": false
+      },
+      {
+        "pair_id": 9,
+        "main": {
+          "role": "main",
+          "pair_id": 9,
+          "tokens": {
+            "press": "h_8bd54bdee8b8",
+            "harm": "h_42571f269770",
+            "get": "h_a98e94892f35",
+            "drop": "h_245e4805ed1f",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "floors_ok": true,
+              "press": 14,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.225,
+              "p_trained": 0.35,
+              "p_frozen": 0.25,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": false,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 6,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 11,
+              "counts": {
+                "h_245e4805ed1f": 1,
+                "h_a98e94892f35": 5,
+                "h_8bd54bdee8b8": 6
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.35,
+              "p_ben_frozen": 0.25,
+              "trained_gt_frozen": false,
+              "assoc_trained": 0.6,
+              "assoc_frozen": 0.04999999999999999,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 9,
+          "tokens": {
+            "press": "h_c6d08e7ed6a4",
+            "harm": "h_ed3fd82328dc",
+            "get": "h_f907470843da",
+            "drop": "h_b098d278de4b",
+            "a": "tw_63388fb8_a",
+            "b": "tw_8c03b9ee_b",
+            "c": "tw_e41a48f1_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 17,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.2,
+              "p_trained": 0.425,
+              "p_frozen": 0.275,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 11,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 14,
+              "counts": {
+                "h_c6d08e7ed6a4": 14
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.425,
+              "p_ben_frozen": 0.275,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.55,
+              "assoc_frozen": -0.09999999999999998,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "pair_clear": false
+      },
+      {
+        "pair_id": 10,
+        "main": {
+          "role": "main",
+          "pair_id": 10,
+          "tokens": {
+            "press": "h_af82227e5b7f",
+            "harm": "h_c7ba7c37f9a1",
+            "get": "h_e7218e1198d1",
+            "drop": "h_a88a7d6b6624",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 1,
+              "hold_n": 63,
+              "decisive": 1,
+              "rate": 0.0,
+              "foil_rate": 0.015625,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "floors_ok": true,
+              "press": 9,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.175,
+              "p_trained": 0.225,
+              "p_frozen": 0.15,
+              "trained_gt_birth": false,
+              "trained_gt_frozen": false,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 10,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 7,
+              "counts": {
+                "h_af82227e5b7f": 7
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.2,
+              "p_ben_frozen": 0.175,
+              "trained_gt_frozen": false,
+              "assoc_trained": 0.3,
+              "assoc_frozen": 0.05,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 10,
+          "tokens": {
+            "press": "h_613cd085d938",
+            "harm": "h_6654dc68a363",
+            "get": "h_2054f96fe0c2",
+            "drop": "h_b57946e72f8d",
+            "a": "tw_9c9741a4_a",
+            "b": "tw_e986b3f3_b",
+            "c": "tw_efcca0f5_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 63,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "floors_ok": true,
+              "press": 17,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.25,
+              "p_trained": 0.425,
+              "p_frozen": 0.325,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": false,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 18,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 11,
+              "counts": {
+                "h_613cd085d938": 11
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.475,
+              "p_ben_frozen": 0.25,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.5,
+              "assoc_frozen": -0.05,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "pair_clear": false
+      },
+      {
+        "pair_id": 11,
+        "main": {
+          "role": "main",
+          "pair_id": 11,
+          "tokens": {
+            "press": "h_374fa6f3d483",
+            "harm": "h_91e752cd2e23",
+            "get": "h_91791f1120cb",
+            "drop": "h_52596d4fec6d",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 2,
+              "hold_n": 63,
+              "decisive": 2,
+              "rate": 0.0,
+              "foil_rate": 0.03125,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 23,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.175,
+              "p_trained": 0.575,
+              "p_frozen": 0.25,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 8,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 16,
+              "counts": {
+                "h_52596d4fec6d": 1,
+                "h_374fa6f3d483": 16
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.525,
+              "p_ben_frozen": 0.25,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.25,
+              "assoc_frozen": -0.09999999999999999,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 11,
+          "tokens": {
+            "press": "h_61fb0a008d71",
+            "harm": "h_02c231c6007c",
+            "get": "h_21feaed3b208",
+            "drop": "h_c872a892a01c",
+            "a": "tw_6f5c1f9b_a",
+            "b": "tw_1531f872_b",
+            "c": "tw_6ae95aa4_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 15,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.225,
+              "p_trained": 0.375,
+              "p_frozen": 0.175,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 14,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 18,
+              "counts": {
+                "h_61fb0a008d71": 18
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.35,
+              "p_ben_frozen": 0.2,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.4,
+              "assoc_frozen": -0.15000000000000002,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "pair_clear": true
+      },
+      {
+        "pair_id": 12,
+        "main": {
+          "role": "main",
+          "pair_id": 12,
+          "tokens": {
+            "press": "h_a693ee6570d9",
+            "harm": "h_d83f7883916a",
+            "get": "h_4c0b1760e8d6",
+            "drop": "h_667b70806589",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 31,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.275,
+              "p_trained": 0.775,
+              "p_frozen": 0.275,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 1,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 11,
+              "counts": {
+                "h_a693ee6570d9": 11
+              },
+              "floors_ok": false,
+              "p_ben_trained": 0.725,
+              "p_ben_frozen": 0.3,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.65,
+              "assoc_frozen": 0.09999999999999998,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 12,
+          "tokens": {
+            "press": "h_7b7667014cb5",
+            "harm": "h_1c18723761a6",
+            "get": "h_f3a23e70e51c",
+            "drop": "h_40d746f2bf5f",
+            "a": "tw_670ae416_a",
+            "b": "tw_f4b2bbf5_b",
+            "c": "tw_9c89164c_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 2,
+              "foil_hits": 3,
+              "hold_n": 62,
+              "decisive": 5,
+              "rate": 0.03125,
+              "foil_rate": 0.046875,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 15,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.225,
+              "p_trained": 0.375,
+              "p_frozen": 0.2,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 7,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 7,
+              "counts": {
+                "h_f3a23e70e51c": 6,
+                "h_7b7667014cb5": 1
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.375,
+              "p_ben_frozen": 0.225,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.1,
+              "assoc_frozen": 0.0,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "pair_clear": false
+      },
+      {
+        "pair_id": 13,
+        "main": {
+          "role": "main",
+          "pair_id": 13,
+          "tokens": {
+            "press": "h_5a1952194388",
+            "harm": "h_fc2dd5408312",
+            "get": "h_d763659b6670",
+            "drop": "h_a253d1c30344",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 9,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 9,
+              "rate": 0.140625,
+              "foil_rate": 0.0,
+              "p_value": 0.9999999997218665,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "floors_ok": true,
+              "press": 22,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.5,
+              "p_trained": 0.55,
+              "p_frozen": 0.25,
+              "trained_gt_birth": false,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 7,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 13,
+              "counts": {
+                "h_a253d1c30344": 1,
+                "h_5a1952194388": 13
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.5,
+              "p_ben_frozen": 0.25,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.35,
+              "assoc_frozen": -0.15,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 13,
+          "tokens": {
+            "press": "h_7067b33108a3",
+            "harm": "h_eebf19783f4f",
+            "get": "h_98a5d36f5652",
+            "drop": "h_0d292459379b",
+            "a": "tw_12fe1e6c_a",
+            "b": "tw_ead8ab81_b",
+            "c": "tw_f29a6603_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 59,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 22,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.375,
+              "p_trained": 0.55,
+              "p_frozen": 0.325,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 2,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 16,
+              "counts": {
+                "h_eebf19783f4f": 1,
+                "h_7067b33108a3": 16
+              },
+              "floors_ok": false,
+              "p_ben_trained": 0.525,
+              "p_ben_frozen": 0.375,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.6,
+              "assoc_frozen": 0.0,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "pair_clear": false
+      },
+      {
+        "pair_id": 14,
+        "main": {
+          "role": "main",
+          "pair_id": 14,
+          "tokens": {
+            "press": "h_b16439df50c7",
+            "harm": "h_707659a0aa21",
+            "get": "h_910b40cb09d1",
+            "drop": "h_edef2b2a063b",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 2,
+              "foil_hits": 0,
+              "hold_n": 62,
+              "decisive": 2,
+              "rate": 0.03125,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 20,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.1,
+              "p_trained": 0.5,
+              "p_frozen": 0.325,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 10,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 17,
+              "counts": {
+                "h_910b40cb09d1": 14,
+                "h_b16439df50c7": 3
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.5,
+              "p_ben_frozen": 0.35,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.6,
+              "assoc_frozen": 0.09999999999999998,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 14,
+          "tokens": {
+            "press": "h_740ef78f6e2c",
+            "harm": "h_28ec26053546",
+            "get": "h_ba301a7ce8da",
+            "drop": "h_4adf702984a5",
+            "a": "tw_c43ff520_a",
+            "b": "tw_a941281b_b",
+            "c": "tw_98e2a071_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 26,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.175,
+              "p_trained": 0.65,
+              "p_frozen": 0.35,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 6,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 19,
+              "counts": {
+                "h_ba301a7ce8da": 19
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.625,
+              "p_ben_frozen": 0.375,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.7,
+              "assoc_frozen": 0.04999999999999999,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "pair_clear": true
+      },
+      {
+        "pair_id": 15,
+        "main": {
+          "role": "main",
+          "pair_id": 15,
+          "tokens": {
+            "press": "h_a267bebca3de",
+            "harm": "h_e49bd4c58f68",
+            "get": "h_6ab147b6ba14",
+            "drop": "h_ad926ea0b1f1",
+            "a": "sym_a",
+            "b": "sym_b",
+            "c": "sym_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "floors_ok": true,
+              "press": 3,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.075,
+              "p_trained": 0.075,
+              "p_frozen": 0.1,
+              "trained_gt_birth": false,
+              "trained_gt_frozen": false,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 14,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 13,
+              "counts": {
+                "h_a267bebca3de": 13
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.075,
+              "p_ben_frozen": 0.1,
+              "trained_gt_frozen": false,
+              "assoc_trained": 0.2,
+              "assoc_frozen": 0.0,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": false,
+          "eligible_pair_member": false
+        },
+        "twin": {
+          "role": "twin",
+          "pair_id": 15,
+          "tokens": {
+            "press": "h_74d80c95fd56",
+            "harm": "h_a2c325b46a01",
+            "get": "h_9f3b6ccebf70",
+            "drop": "h_f82a773925a4",
+            "a": "tw_82e25618_a",
+            "b": "tw_2fd02113_b",
+            "c": "tw_a9e7eff4_c"
+          },
+          "d1_bind": [
+            "press",
+            "harm"
+          ],
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "foil_rate": 0.0,
+              "p_value": 1.0,
+              "foil_p_value": 1.0,
+              "above_chance": false,
+              "foil_above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": true,
+              "floors_ok": true,
+              "press": 29,
+              "harm": 0,
+              "cf_differs": true,
+              "p_birth": 0.425,
+              "p_trained": 0.725,
+              "p_frozen": 0.475,
+              "trained_gt_birth": true,
+              "trained_gt_frozen": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": true,
+              "holds_during_conflict": 6,
+              "rho_reset_preserves_weights": true,
+              "beneficial_act": 17,
+              "counts": {
+                "h_f82a773925a4": 2,
+                "h_a2c325b46a01": 1,
+                "h_74d80c95fd56": 17
+              },
+              "floors_ok": true,
+              "p_ben_trained": 0.7,
+              "p_ben_frozen": 0.475,
+              "trained_gt_frozen": true,
+              "assoc_trained": 0.7,
+              "assoc_frozen": 0.0,
+              "assoc_ok": true,
+              "life_delta_min": 0.1,
+              "probe": "frozen"
+            }
+          },
+          "d0_ok": true,
+          "d1_d2_ok": true,
+          "eligible_pair_member": true
+        },
+        "pair_clear": false
+      }
+    ]
+  },
+  "candidate_v9_sha": "e3b4d59e8b47859d3d06fee0a9358f275a6d0a8ba175ecb2d8885d320913a496",
+  "candidate_git_sha": "bd94241eedd75e97d7e0ff9654cf7ba7e06df535",
+  "reveal_sha": "04a125b0983b5b81a9fd6f77dc909bb169267353e2358642619f0afe2b4146d8",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "device": "cuda",
+  "note": "Narrow D1\u2013D2 under v9 press/harm D1 bind. Full D0\u2013D12 stays closed unless \u226513/16."
+}
