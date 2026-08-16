@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.V8 diagnosis:** D1 press=0 lives still ACT; they lock onto get/drop which also improves body_adv. C5 already learns press vs harm on two handles. [`cortex_diagnosis.v8.lock`](cortex_diagnosis.v8.lock) authorizes a scorer-only v9 D1 bind of press+harm. No neural change. Do not rescore v8. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V8 gate fail:** Candidate `40680fb` revealed after a clean push (git SHA pinned). Seed-derived D1–D2 **1/16** — **not clear**. D1 extras now match floors (21/32); remaining reds are always-HOLD. D2 14/32. [`cortex_v8_gate.failure.lock`](cortex_v8_gate.failure.lock) + [`cortex_v9.isolation.lock`](cortex_v9.isolation.lock). **DEVELOP.v8 refused.** Do not edit-rescore v8. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V8 candidate:** Reuses frozen v7 neural under the v8 scorer contract. Nine sanity + math audit pass. Population C4/C5/C6 green. [`cortex.candidate.v8.lock`](cortex.candidate.v8.lock). No reveal in this commit. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V8 apparatus:** Scorer-only cycle authorized by v7 diagnosis. Frozen population extras from birth weights, `life_delta_min=0.10`, sealed-seed worlds, reveal must pin git commit. No neural edit. No candidate SHA. [`cortex_v8.prereg.lock`](cortex_v8.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

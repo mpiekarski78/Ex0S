@@ -1,0 +1,36 @@
+{
+  "version": "TM.0.23.CORTEX.V8.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "d804b27",
+  "neural_mechanism_changed": false,
+  "v9_authorized_only_if_this_lock": true,
+  "c4_retained": true,
+  "population_c5_c6_green": true,
+  "gate_n_pair_clear": 1,
+  "d1_ok": 21,
+  "d1_press0": 11,
+  "hold_is_wrong_name": true,
+  "claim": "D1 press=0 lives still ACT during 80 teach. They lock onto get/drop (positive body_adv) so frozen-probe press stays 0. C5 already shows press-vs-harm learning on a 2-handle world. The 4-handle D1 bind is a lure, not a missing credit law.",
+  "traces": [
+    {"pair_id": 3, "role": "twin", "ops": {"STOP": 34, "ACT": 30, "HOLD": 16}, "press_acts": 0, "other_acts": 30},
+    {"pair_id": 5, "role": "main", "ops": {"STOP": 39, "HOLD": 11, "ACT": 30}, "press_acts": 1, "other_acts": 29},
+    {"pair_id": 5, "role": "twin", "ops": {"HOLD": 16, "ACT": 42, "STOP": 22}, "press_acts": 6, "other_acts": 36},
+    {"pair_id": 6, "role": "main", "ops": {"HOLD": 39, "ACT": 33, "STOP": 8}, "press_acts": 7, "other_acts": 26}
+  ],
+  "authorize_v9": [
+    "retain v7/v8 neural unchanged",
+    "D1 bind and extras use only press+harm (same world as C5)",
+    "D2 may bind the full motor set after D1",
+    "keep floors, life_delta_min=0.10, sealed-seed worlds, git-pinned reveal",
+    "do not retune neural so every frozen life fails deterministic D1",
+    "do not soften press>=3"
+  ],
+  "refuse": [
+    "edit-and-rescore v8",
+    "DEVELOP.v8",
+    "new credit law this cycle",
+    "open D0–D12 before a later isolated gate ≥13/16"
+  ]
+}
