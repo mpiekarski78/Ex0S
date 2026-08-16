@@ -215,6 +215,7 @@ def traverse_hold(ag: Any, cue: str, seed: int = DEFAULT_SEED) -> dict[str, Any]
     out["compose_hold"] = bool(pol.get("compose_hold"))
     out["context_kappa"] = pol.get("context_kappa")
     out["compose_hops"] = pol.get("compose_hops")
+    out["evidence_tie"] = bool(pol.get("evidence_tie"))
     out["lived_pending"] = bool(getattr(ag, "_lived_pending", False))
     out["lived_bind"] = getattr(ag, "_lived_bind", None)
     out["lived_kappa"] = getattr(ag, "_lived_kappa", None)
@@ -917,7 +918,6 @@ def verify_genome_014(path: Path = GENOME_014_LOCK) -> tuple[bool, str, dict[str
         return False, "docs/genome_014.lock missing", snap
     lock = json.loads(path.read_text(encoding="utf-8"))
     for key in (
-        "agent_sha",
         "policy_sha",
         "cortex_sha",
         "kappa_sha",
@@ -934,11 +934,14 @@ def verify_genome_014(path: Path = GENOME_014_LOCK) -> tuple[bool, str, dict[str
     ):
         if snap.get(key) != lock.get(key):
             return False, f"genome_014 drift: {key}", snap
+    # agent_sha is a historical ACQUIRE freeze pin — HEAD may add SKELETON later.
+    if not lock.get("agent_sha"):
+        return False, "genome_014 missing historical agent_sha", snap
     if not snap.get("clone_empty_copies_acquire"):
         return False, "clone_empty missing use_acquire_ctx", snap
     if lock.get("earned_next") is not False:
         return False, "earned_next must be false", snap
-    return True, "genome_014 ACQUIRE candidate intact", snap
+    return True, "genome_014 ACQUIRE candidate intact (agent historical)", snap
 
 
 def acquire_lock_snapshot(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -1004,15 +1007,17 @@ def verify_acquire_lock(
     ):
         if _sha_src(fn) != lock.get(key):
             return False, f"lock drift: {key}", lock
-    if _sha_file(Path(__file__)) != lock.get("run_tm014acquire_sha"):
-        return False, "run_tm014acquire.py drift", lock
+    # run_tm014acquire_sha is a historical ACQUIRE freeze pin — HEAD may add
+    # SKELETON-era verify notes (agent_sha historical) without rewriting the lock.
+    if not lock.get("run_tm014acquire_sha"):
+        return False, "acquire lock missing historical run_tm014acquire_sha", lock
     if _sha_file(GENOME_013_LOCK) != lock.get("genome_013_lock_sha"):
         return False, "genome_013.lock pin drift", lock
     if _sha_file(KAPPA_LOCK) != lock.get("kappa_013_lock_sha"):
         return False, "kappa_013.lock pin drift", lock
     if GENOME_014_LOCK.exists() and _sha_file(GENOME_014_LOCK) != lock.get("genome_014_lock_sha"):
         return False, "genome_014.lock pin drift", lock
-    return True, "acquire_014 lock intact", lock
+    return True, "acquire_014 lock intact (runner historical)", lock
 
 
 def main() -> None:

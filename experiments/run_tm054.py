@@ -180,6 +180,7 @@ def make(
     use_compose: bool = False,
     use_context_kappa: bool = False,
     use_acquire_ctx: bool = False,
+    use_acquire_skel: bool = False,
 ) -> ThreeMemoryAgent:
     world = ProseLibrary(w_dir) if w_dir is not None else None
     return ThreeMemoryAgent(
@@ -228,6 +229,7 @@ def make(
         use_compose=use_compose,
         use_context_kappa=use_context_kappa,
         use_acquire_ctx=use_acquire_ctx,
+        use_acquire_skel=use_acquire_skel,
     )
 
 

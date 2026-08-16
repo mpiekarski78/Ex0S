@@ -2,7 +2,8 @@
 
 ## 2026-08-16
 
-- **TM.0.14.FAMILY** kill-or-earn on frozen ACQUIRE: **288/288** generated developmental histories (A–D 144/144; E–H 144/144 sealed). Provenance ledger; full World manifests. `earned_next=true`, **`ex0s=null`** (no product stamp named). Audit: no invented lives; behavioral CF; oracle press↔κa/tune↔κb; hop depth; earn pins lock row SHAs + seed. [`docs/tm014family_results.md`](tm014family_results.md). Next: acquire the relational skeleton (not LOOKAHEAD).
+- **TM.0.15.SKELETON** observed-transition acquisition: apparatus emits `[X,A,Y]` via `observe_symbol`; organism authors `experience_skel` adjacency, then compose+ACQUIRE contextual continuation over that path. Dual-strip causality; reachability invariants; competing support (no invented contradiction). Battery **16/16**. `earned_next=false`, `ex0s=null`. Audit: D7 evidence_tie; D11 real order permute; D12 teacher keys; D1/D6 causality; ledger across cells. Prereg [`skeleton_015.prereg.lock`](skeleton_015.prereg.lock) before freeze. Not latent map discovery. [`docs/tm015skeleton_results.md`](tm015skeleton_results.md).
+- **TM.0.14.FAMILY** kill-or-earn on frozen ACQUIRE: **288/288** generated developmental histories (A–D 144/144; E–H 144/144 sealed). Provenance ledger; full World manifests. `earned_next=true`, **`ex0s=null`** (no product stamp named). Audit: no invented lives; behavioral CF; oracle press↔κa/tune↔κb; hop depth; earn pins lock row SHAs + seed. [`docs/tm014family_results.md`](tm014family_results.md).
 - **TM.0.14.ACQUIRE** (candidate): experience authors contextual continuations (`source=experience_ctx`) over a planted untagged skeleton. Apparatus never writes `ctx=`. One-shot lived compose κ. Brutal battery **16/16**. [`docs/tm014acquire_results.md`](tm014acquire_results.md).
 
 ## 2026-08-15

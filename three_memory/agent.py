@@ -111,6 +111,7 @@ class ThreeMemoryAgent:
         use_compose: bool = False,
         use_context_kappa: bool = False,
         use_acquire_ctx: bool = False,
+        use_acquire_skel: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -218,6 +219,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_context_kappa requires use_compose")
         if use_acquire_ctx and not use_context_kappa:
             raise ValueError("use_acquire_ctx requires use_context_kappa")
+        if use_acquire_skel and not use_acquire_ctx:
+            raise ValueError("use_acquire_skel requires use_acquire_ctx")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -289,6 +292,7 @@ class ThreeMemoryAgent:
         self.use_compose = use_compose
         self.use_context_kappa = use_context_kappa
         self.use_acquire_ctx = use_acquire_ctx
+        self.use_acquire_skel = use_acquire_skel
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
@@ -297,6 +301,7 @@ class ThreeMemoryAgent:
         self._lived_kappa: str | None = None
         self._lived_bind: str | None = None
         self._lived_pending: bool = False
+        self._skel_prev: str | None = None
         self.n_revised = 0
         self.n_annotated = 0
         self.last_policy: dict[str, Any] = {}
@@ -315,17 +320,23 @@ class ThreeMemoryAgent:
         self._lived_bind = None
         self._lived_pending = False
 
+    def _clear_skel_prev(self) -> None:
+        """Transient symbol adjacency — cleared on ρ reset / newborn (fresh agent)."""
+        self._skel_prev = None
+
     def reset_rho(self) -> None:
         self.rho.reset()
         self._peek = []
         self._w_skip = set()
         self._in_hand_id = None
         self._clear_lived_context()
+        self._clear_skel_prev()
 
     def reset_store(self) -> None:
         self.store.reset()
         self._peek = []
         self._clear_lived_context()
+        self._clear_skel_prev()
 
     def reset_life(self) -> None:
         self.reset_rho()
@@ -392,6 +403,7 @@ class ThreeMemoryAgent:
             use_compose=self.use_compose,
             use_context_kappa=self.use_context_kappa,
             use_acquire_ctx=self.use_acquire_ctx,
+            use_acquire_skel=self.use_acquire_skel,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -959,8 +971,7 @@ class ThreeMemoryAgent:
             self.last_policy["evidence_resolved"] = False
             self.last_policy["evidence_tie"] = evidence_tie
             self.last_policy["context_kappa"] = kappa
-            if hops:
-                self.last_policy["compose_hops"] = hops
+            self.last_policy["compose_hops"] = hops
             return []
 
         # Termination: each fact at most once ⇒ ≤ |S| iterations.
@@ -1088,6 +1099,93 @@ class ThreeMemoryAgent:
         # Failure: revise existing matching hyp only — never manufacture negatives.
         if existing is not None:
             self._mark_hyp(existing, success=False)
+
+    def observe_symbol(self, token: str) -> dict[str, Any]:
+        """Observed-transition channel: temporal symbols → durable skeleton adjacency.
+
+        Apparatus emits a symbol sequence. Organism keeps one transient prev and
+        authors prev→token as source=experience_skel (no ctx; did must not be motor).
+        Separate sensory channel from motor-outcome teaching. Cleared by reset_rho.
+        """
+        out: dict[str, Any] = {
+            "ok": False,
+            "wrote": False,
+            "updated": False,
+            "prev": self._skel_prev,
+            "token": None,
+            "why": "",
+        }
+        if not self.use_acquire_skel or not self.store.enabled:
+            out["why"] = "skel_off"
+            return out
+        if not isinstance(token, str) or not token.strip():
+            out["why"] = "empty_token"
+            return out
+        tok = token.strip().lower()
+        out["token"] = tok
+        motors = self._acquire_motors() | {"hold", "idle", "wait"}
+        prev = self._skel_prev
+        if prev is None:
+            self._skel_prev = tok
+            out["ok"] = True
+            out["why"] = "seed_prev"
+            return out
+        # Adjacency write only when both ends are non-motor relational symbols.
+        if prev in motors or tok in motors:
+            self._skel_prev = tok
+            out["ok"] = True
+            out["why"] = "skip_motor_symbol"
+            return out
+        existing = self._find_experience_skel(prev, tok)
+        if existing is None:
+            tags: dict[str, Any] = {
+                "bind": prev,
+                "did": tok,
+                "source": "experience_skel",
+                "here": "chb",
+                "w0": prev,
+                "hyp": "supported",
+                "trials": 1,
+                "wins": 1,
+                "losses": 0,
+                "support": 1,
+                "contradiction": 0,
+            }
+            if "ctx" in tags:
+                raise ValueError("experience_skel refuses ctx")
+            n = len(self.store.records())
+            fid = f"skel_{n:04d}_{prev}_{tok}"
+            rec = FactRecord(
+                fact_id=fid,
+                what=encode_tags(tags),
+                when=int(self.t),
+                drive_scores={},
+                tags=tags,
+            )
+            self.store.write(rec)
+            out["wrote"] = True
+        else:
+            self._mark_hyp(existing, success=True)
+            out["updated"] = True
+        self._skel_prev = tok
+        out["ok"] = True
+        out["why"] = "authored" if out["wrote"] else "bumped"
+        return out
+
+    def _find_experience_skel(self, bind: str, did: str) -> FactRecord | None:
+        bl, dl = bind.lower(), did.lower()
+        for rec in self.store.records():
+            if str(rec.tags.get("source") or "") != "experience_skel":
+                continue
+            if isinstance(rec.tags.get("ctx"), str) and rec.tags.get("ctx"):
+                continue
+            if str(rec.tags.get("bind") or "").lower() != bl:
+                continue
+            if str(rec.tags.get("did") or "").lower() != dl:
+                continue
+            return rec
+        return None
+
     def _hyp_state(self, rec) -> str:
         raw = rec.tags.get("hyp")
         if isinstance(raw, str) and raw in ("untried", "supported", "contradicted"):

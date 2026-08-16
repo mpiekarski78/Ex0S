@@ -69,7 +69,7 @@ E–H world manifests (full World: birth + primary/counterfactual/donor lives + 
 
 ## Next
 
-Acquire the **relational skeleton** itself (not LOOKAHEAD). Product stamp naming remains a human decision.
+Acquire the **relational skeleton** itself via observed-transition acquisition (TM.0.15.SKELETON — done). Next interesting attack: unstructured/ambiguous events. Product stamp naming remains a human decision.
 
 ## Reproduce
 

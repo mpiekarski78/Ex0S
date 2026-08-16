@@ -1663,4 +1663,38 @@ E–H organism answers before canonical; inventing lives in scorer; apparatus `c
 
 Apparatus: `experiments/run_tm014family.py`. Results: [`tm014family_results.md`](tm014family_results.md).
 
+## TM.0.15.SKELETON observed-transition acquisition
+
+Not a product stamp. `earned_next` always **false** this pass. No FAMILY. No LOOKAHEAD. Do not name Ex0S 0.0.005.
+
+**Label:** observed-transition acquisition — **not** latent relation discovery.
+
+**Preregistered claim:**
+
+> A frozen developmental recipe can convert an observed sequence of relational transitions into durable skeleton edges in S, then compose over those organism-authored edges to rebuild κ and author provenance-sensitive contextual continuations, without the apparatus writing the skeleton or contextual answers into S.
+
+### Binding rules
+
+- Observation ABI: **`observe_symbol(token)`** — apparatus emits `[X, A, Y]`; organism keeps one transient `prev` and authors adjacency `source=experience_skel` (no `ctx`; `did` not motor).
+- Separate sensory channel from `teacher_outcome` / `observe_outcome` (motor + outcome only; `info` keys ⊆ `{action}`).
+- `reset_rho` / newborn clear `prev`. Stale adjacency refused.
+- Reachability invariants: birth X cannot reach Y; after experience X can reach Y; after strip `experience_skel` X cannot reach Y.
+- Dual-strip: skel-only strip → HOLD; ctx-only strip → HOLD; restore both → PRESS.
+- Competing support only — no invented relation contradiction/retraction.
+- Frozen ACQUIRE `use_acquire_ctx` reused for D8–D9 over organism-authored skeleton only.
+- Prereg: [`skeleton_015.prereg.lock`](skeleton_015.prereg.lock) before coding. Freeze: [`genome_015.lock`](genome_015.lock) + [`skeleton_015.lock`](skeleton_015.lock) after 16/16. Do not rewrite 0.14/0.13/0.11 locks.
+
+### Battery
+
+D0–D15 (16 cells): birth unreachable, symbol life, diamond, ρ/newborn, dual-strip, skel swap, competing support, ctx-over-authored, ρ+ctx probe, fid/order, channel contract, oracle score-only, weights/no shortcut, stale prev.
+
+### Decisive criterion
+
+File-level developmental delta: before life, no route X→Y; after `observe_symbol` stream, organism-authored `X→A`/`A→Y`; compose rebuilds κ; teacher PRESS authors `Y→PRESS ctx=κA`; post-ρ probe PRESS. Dual-strip proves both layers necessary. Observed sequence supplies transition structure — Ex0S has **not** inferred latent relations from unstructured sensory experience.
+
+### Refuse
+
+Pair-event ABI as binding channel; smuggling skeleton through teacher/`observe_outcome`; claiming latent discovery / “inferred the map”; inventing relation contradiction from `X→B`; D0 without reachability; single-strip D5; apparatus planting target skeleton or `ctx`; LOOKAHEAD; FAMILY 288; stamp 0.0.005; putting freeze SHAs into the prereg lock.
+
+Apparatus: `experiments/run_tm015skeleton.py`. Results: [`tm015skeleton_results.md`](tm015skeleton_results.md).
 

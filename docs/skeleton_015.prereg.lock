@@ -1,0 +1,143 @@
+{
+  "version": "TM.0.15.SKELETON.PREREG",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "label": "observed-transition acquisition",
+  "preregistered_claim": "A frozen developmental recipe can convert an observed sequence of relational transitions into durable skeleton edges in S, then compose over those organism-authored edges to rebuild κ and author provenance-sensitive contextual continuations, without the apparatus writing the skeleton or contextual answers into S.",
+  "observation_abi": "observe_symbol",
+  "observation_abi_note": "Apparatus emits a temporal symbol sequence; organism keeps one transient prev and authors adjacency. Not pair hops. Not latent relation discovery.",
+  "provenance": {
+    "experience_skel": {
+      "source": "experience_skel",
+      "ctx": "absent",
+      "did_not_motor": true
+    },
+    "experience_ctx": {
+      "source": "experience_ctx",
+      "ctx": "present",
+      "did_is_motor": true
+    },
+    "ledger_keys": [
+      "observed_symbols",
+      "created_skel_rows",
+      "updated_skel_rows",
+      "created_ctx_rows",
+      "unexpected_skel_writes",
+      "unexpected_ctx_writes"
+    ]
+  },
+  "reachability_invariants": [
+    "birth: experience_skel rows == 0; target authored rows == 0; X cannot reach Y through S",
+    "after experience: expected experience_skel rows exist; X can reach Y",
+    "after strip experience_skel: X cannot reach Y again"
+  ],
+  "n_cells": 16,
+  "cell_ids": [
+    "D0_birth_unreachable",
+    "D1_symbol_life",
+    "D2_diamond_coexist",
+    "D3_reset_rho",
+    "D4_newborn_reload",
+    "D5_dual_strip",
+    "D6_skel_swap",
+    "D7_competing_support",
+    "D8_ctx_over_authored",
+    "D9_rho_ctx_probe",
+    "D10_rename_fid",
+    "D11_storage_order",
+    "D12_channel_contract",
+    "D13_oracle_score_only",
+    "D14_weights_no_shortcut",
+    "D15_stale_prev"
+  ],
+  "cell_earn_kill": {
+    "D0_birth_unreachable": {
+      "earn": "no experience_skel; no target authored rows; X cannot reach Y",
+      "kill": "any X→Y path / residual planted map"
+    },
+    "D1_symbol_life": {
+      "earn": "[X,A,Y] authors X→A and A→Y (experience_skel, no ctx); X can reach Y",
+      "kill": "apparatus wrote edges; missing hop; pair-event smuggling"
+    },
+    "D2_diamond_coexist": {
+      "earn": "both routes coexist (X→A→Y and X→B→Y)",
+      "kill": "second life wipes first"
+    },
+    "D3_reset_rho": {
+      "earn": "authored skeleton persists; compose still reaches Y",
+      "kill": "lost after reset_rho"
+    },
+    "D4_newborn_reload": {
+      "earn": "same after clone_empty + TagStore reload",
+      "kill": "lost after newborn"
+    },
+    "D5_dual_strip": {
+      "earn": "strip skel only → HOLD; strip ctx only → HOLD; restore both → PRESS",
+      "kill": "either layer alone suffices"
+    },
+    "D6_skel_swap": {
+      "earn": "swap only experience_skel bytes → routes follow memory",
+      "kill": "follows filename/order"
+    },
+    "D7_competing_support": {
+      "earn": "repeat bumps support; competitor does not retract; unequal → choose; equal → HOLD",
+      "kill": "invented contradiction / retraction"
+    },
+    "D8_ctx_over_authored": {
+      "earn": "over authored skeleton only, HOLD at Y, teacher PRESS → Y→PRESS ctx=κA",
+      "kill": "needs planted residual map"
+    },
+    "D9_rho_ctx_probe": {
+      "earn": "post-ρ / newborn probe X → PRESS",
+      "kill": "HOLD / wrong motor"
+    },
+    "D10_rename_fid": {
+      "earn": "fid rename invariant",
+      "kill": "identity = filename"
+    },
+    "D11_storage_order": {
+      "earn": "shuffle storage order invariant",
+      "kill": "identity = order"
+    },
+    "D12_channel_contract": {
+      "earn": "observe_symbol ≠ observe_outcome; teacher keys ⊆ {action}",
+      "kill": "path/Y/κ/from/to in teacher info"
+    },
+    "D13_oracle_score_only": {
+      "earn": "score-only; never writes S",
+      "kill": "oracle plants edges"
+    },
+    "D14_weights_no_shortcut": {
+      "earn": "cortex hash stable; no X→motor; skel did not motor",
+      "kill": "shortcut or weight move"
+    },
+    "D15_stale_prev": {
+      "earn": "observe X; reset_ρ; observe A authors nothing; no stream → no write; noise → no write; fail unseen motor → no negative swarm",
+      "kill": "stale adjacency or wrong write"
+    }
+  },
+  "genome_014_lock_sha": "1384287f70515a681e2cdfd4ccc1267fb6f18764d24b3619b7e6a6612bab3174",
+  "acquire_014_lock_sha": "e6fbe36852411e9c687565e54088d464efc69d6a766fe79186b5d5461c4d9383",
+  "family_014_lock_sha": "dd92135c53d39db0e0e809de541c6a8afd178242118c0231e959622732da1c74",
+  "kappa_013_lock_sha": "b76bd594c9e9fae6cc30b99c48879fe2bd6981326460b4c65683f218a710ad9a",
+  "genome_011_lock_sha": "e4202d8402ac2f734a8af922898dfd68ec215f2824470d49ebe9217c534ede92",
+  "refuse": [
+    "pair-event ABI as binding channel (observe_hop)",
+    "smuggle skeleton through observe_outcome / teacher info",
+    "claim latent relation discovery or organism inferred the map",
+    "invent relation contradiction / retraction from X→B",
+    "score D0 as target edges absent without X-unreachable-Y",
+    "single-strip D5 (one learned layer)",
+    "apparatus writing target skeleton or ctx into S",
+    "mid-life plant of an X→Y path",
+    "residual planted diamond at birth",
+    "second kappa engine",
+    "LOOKAHEAD",
+    "FAMILY / 288 worlds this pass",
+    "stamp or pre-name Ex0S 0.0.005",
+    "rewrite genome_014 / acquire_014 / family_014 / kappa_013 / genome_011",
+    "put final mechanism/cell SHAs into this prereg lock"
+  ],
+  "note": "Preregistration only. genome_015.lock and skeleton_015.lock written after 16/16 with real SHAs. Do not rewrite this file to match the implementation."
+}
