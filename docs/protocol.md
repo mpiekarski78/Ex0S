@@ -2030,3 +2030,9 @@ Outcome: candidate `0d17abb` revealed after a clean push. Fresh seed-derived D1�
 
 Diagnosis ([`cortex_diagnosis.v11.lock`](cortex_diagnosis.v11.lock)): first honest contradiction window. Ten lives under-HOLD after a physics swap. v12 may add one generic surprise→HOLD response. Do not lower `holds>=5`.
 
+## TM.0.23.CORTEX.V11 audit → isolated V12
+
+Canonical main `eaef78a`. V11 gate **6/16** stands. Do not edit-rescore v11. **DEVELOP.v11 refused.** Full D0–D12 stays closed.
+
+v12 apparatus: [`cortex_v12_stat_contract.lock`](cortex_v12_stat_contract.lock), [`cortex_v12_architecture_amendment.lock`](cortex_v12_architecture_amendment.lock), [`cortex_v12.prereg.lock`](cortex_v12.prereg.lock). Authorizes surprise→HOLD after this freeze is on `origin/main`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
