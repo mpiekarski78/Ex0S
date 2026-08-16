@@ -1,0 +1,408 @@
+{
+  "version": "TM.0.23.CORTEX.DEVELOP.RUNNER",
+  "lab": "TM.0.23.CORTEX.DEVELOP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eval_revealed": false,
+  "phenotype_contract": "docs/cortex_development_contract.md",
+  "phenotype_contract_sha": "bed92ea44d57725be16718176464c2987cf04b8a6ba10facced69cea5adde221",
+  "d0_chance": {
+    "n_probes": 64,
+    "p0": 0.5,
+    "alpha": 0.01,
+    "test": "one_sided_binomial_target_preference",
+    "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+  },
+  "stages": [
+    "D0",
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7",
+    "D8",
+    "D9",
+    "D10",
+    "D11",
+    "D12"
+  ],
+  "n_pairs": 16,
+  "earn_threshold": ">=13/16",
+  "maturation_threshold": ">=14/16",
+  "development_seed_table": [
+    {
+      "pair_id": 0,
+      "main": {
+        "pair_id": 0,
+        "role": "main",
+        "seed_birth": 10001,
+        "seed_registry": 10002,
+        "seed_source": 10003,
+        "seed_action": 10004,
+        "seed_permute": 10005
+      },
+      "twin": {
+        "pair_id": 0,
+        "role": "twin",
+        "seed_birth": 10011,
+        "seed_registry": 10012,
+        "seed_source": 10013,
+        "seed_action": 10014,
+        "seed_permute": 10015
+      }
+    },
+    {
+      "pair_id": 1,
+      "main": {
+        "pair_id": 1,
+        "role": "main",
+        "seed_birth": 10098,
+        "seed_registry": 10099,
+        "seed_source": 10100,
+        "seed_action": 10101,
+        "seed_permute": 10102
+      },
+      "twin": {
+        "pair_id": 1,
+        "role": "twin",
+        "seed_birth": 10108,
+        "seed_registry": 10109,
+        "seed_source": 10110,
+        "seed_action": 10111,
+        "seed_permute": 10112
+      }
+    },
+    {
+      "pair_id": 2,
+      "main": {
+        "pair_id": 2,
+        "role": "main",
+        "seed_birth": 10195,
+        "seed_registry": 10196,
+        "seed_source": 10197,
+        "seed_action": 10198,
+        "seed_permute": 10199
+      },
+      "twin": {
+        "pair_id": 2,
+        "role": "twin",
+        "seed_birth": 10205,
+        "seed_registry": 10206,
+        "seed_source": 10207,
+        "seed_action": 10208,
+        "seed_permute": 10209
+      }
+    },
+    {
+      "pair_id": 3,
+      "main": {
+        "pair_id": 3,
+        "role": "main",
+        "seed_birth": 10292,
+        "seed_registry": 10293,
+        "seed_source": 10294,
+        "seed_action": 10295,
+        "seed_permute": 10296
+      },
+      "twin": {
+        "pair_id": 3,
+        "role": "twin",
+        "seed_birth": 10302,
+        "seed_registry": 10303,
+        "seed_source": 10304,
+        "seed_action": 10305,
+        "seed_permute": 10306
+      }
+    },
+    {
+      "pair_id": 4,
+      "main": {
+        "pair_id": 4,
+        "role": "main",
+        "seed_birth": 10389,
+        "seed_registry": 10390,
+        "seed_source": 10391,
+        "seed_action": 10392,
+        "seed_permute": 10393
+      },
+      "twin": {
+        "pair_id": 4,
+        "role": "twin",
+        "seed_birth": 10399,
+        "seed_registry": 10400,
+        "seed_source": 10401,
+        "seed_action": 10402,
+        "seed_permute": 10403
+      }
+    },
+    {
+      "pair_id": 5,
+      "main": {
+        "pair_id": 5,
+        "role": "main",
+        "seed_birth": 10486,
+        "seed_registry": 10487,
+        "seed_source": 10488,
+        "seed_action": 10489,
+        "seed_permute": 10490
+      },
+      "twin": {
+        "pair_id": 5,
+        "role": "twin",
+        "seed_birth": 10496,
+        "seed_registry": 10497,
+        "seed_source": 10498,
+        "seed_action": 10499,
+        "seed_permute": 10500
+      }
+    },
+    {
+      "pair_id": 6,
+      "main": {
+        "pair_id": 6,
+        "role": "main",
+        "seed_birth": 10583,
+        "seed_registry": 10584,
+        "seed_source": 10585,
+        "seed_action": 10586,
+        "seed_permute": 10587
+      },
+      "twin": {
+        "pair_id": 6,
+        "role": "twin",
+        "seed_birth": 10593,
+        "seed_registry": 10594,
+        "seed_source": 10595,
+        "seed_action": 10596,
+        "seed_permute": 10597
+      }
+    },
+    {
+      "pair_id": 7,
+      "main": {
+        "pair_id": 7,
+        "role": "main",
+        "seed_birth": 10680,
+        "seed_registry": 10681,
+        "seed_source": 10682,
+        "seed_action": 10683,
+        "seed_permute": 10684
+      },
+      "twin": {
+        "pair_id": 7,
+        "role": "twin",
+        "seed_birth": 10690,
+        "seed_registry": 10691,
+        "seed_source": 10692,
+        "seed_action": 10693,
+        "seed_permute": 10694
+      }
+    },
+    {
+      "pair_id": 8,
+      "main": {
+        "pair_id": 8,
+        "role": "main",
+        "seed_birth": 10777,
+        "seed_registry": 10778,
+        "seed_source": 10779,
+        "seed_action": 10780,
+        "seed_permute": 10781
+      },
+      "twin": {
+        "pair_id": 8,
+        "role": "twin",
+        "seed_birth": 10787,
+        "seed_registry": 10788,
+        "seed_source": 10789,
+        "seed_action": 10790,
+        "seed_permute": 10791
+      }
+    },
+    {
+      "pair_id": 9,
+      "main": {
+        "pair_id": 9,
+        "role": "main",
+        "seed_birth": 10874,
+        "seed_registry": 10875,
+        "seed_source": 10876,
+        "seed_action": 10877,
+        "seed_permute": 10878
+      },
+      "twin": {
+        "pair_id": 9,
+        "role": "twin",
+        "seed_birth": 10884,
+        "seed_registry": 10885,
+        "seed_source": 10886,
+        "seed_action": 10887,
+        "seed_permute": 10888
+      }
+    },
+    {
+      "pair_id": 10,
+      "main": {
+        "pair_id": 10,
+        "role": "main",
+        "seed_birth": 10971,
+        "seed_registry": 10972,
+        "seed_source": 10973,
+        "seed_action": 10974,
+        "seed_permute": 10975
+      },
+      "twin": {
+        "pair_id": 10,
+        "role": "twin",
+        "seed_birth": 10981,
+        "seed_registry": 10982,
+        "seed_source": 10983,
+        "seed_action": 10984,
+        "seed_permute": 10985
+      }
+    },
+    {
+      "pair_id": 11,
+      "main": {
+        "pair_id": 11,
+        "role": "main",
+        "seed_birth": 11068,
+        "seed_registry": 11069,
+        "seed_source": 11070,
+        "seed_action": 11071,
+        "seed_permute": 11072
+      },
+      "twin": {
+        "pair_id": 11,
+        "role": "twin",
+        "seed_birth": 11078,
+        "seed_registry": 11079,
+        "seed_source": 11080,
+        "seed_action": 11081,
+        "seed_permute": 11082
+      }
+    },
+    {
+      "pair_id": 12,
+      "main": {
+        "pair_id": 12,
+        "role": "main",
+        "seed_birth": 11165,
+        "seed_registry": 11166,
+        "seed_source": 11167,
+        "seed_action": 11168,
+        "seed_permute": 11169
+      },
+      "twin": {
+        "pair_id": 12,
+        "role": "twin",
+        "seed_birth": 11175,
+        "seed_registry": 11176,
+        "seed_source": 11177,
+        "seed_action": 11178,
+        "seed_permute": 11179
+      }
+    },
+    {
+      "pair_id": 13,
+      "main": {
+        "pair_id": 13,
+        "role": "main",
+        "seed_birth": 11262,
+        "seed_registry": 11263,
+        "seed_source": 11264,
+        "seed_action": 11265,
+        "seed_permute": 11266
+      },
+      "twin": {
+        "pair_id": 13,
+        "role": "twin",
+        "seed_birth": 11272,
+        "seed_registry": 11273,
+        "seed_source": 11274,
+        "seed_action": 11275,
+        "seed_permute": 11276
+      }
+    },
+    {
+      "pair_id": 14,
+      "main": {
+        "pair_id": 14,
+        "role": "main",
+        "seed_birth": 11359,
+        "seed_registry": 11360,
+        "seed_source": 11361,
+        "seed_action": 11362,
+        "seed_permute": 11363
+      },
+      "twin": {
+        "pair_id": 14,
+        "role": "twin",
+        "seed_birth": 11369,
+        "seed_registry": 11370,
+        "seed_source": 11371,
+        "seed_action": 11372,
+        "seed_permute": 11373
+      }
+    },
+    {
+      "pair_id": 15,
+      "main": {
+        "pair_id": 15,
+        "role": "main",
+        "seed_birth": 11456,
+        "seed_registry": 11457,
+        "seed_source": 11458,
+        "seed_action": 11459,
+        "seed_permute": 11460
+      },
+      "twin": {
+        "pair_id": 15,
+        "role": "twin",
+        "seed_birth": 11466,
+        "seed_registry": 11467,
+        "seed_source": 11468,
+        "seed_action": 11469,
+        "seed_permute": 11470
+      }
+    }
+  ],
+  "original_candidate": "docs/cortex.candidate.lock",
+  "original_candidate_sha": "60df20ec89249a550f54ab45b85c42e8d8e1da9f401035e027b7b414afb587cd",
+  "sanity_amendment": "docs/cortex_sanity_spec.amendment.lock",
+  "sanity_amendment_sha": "c7bae7a816e13e4226e5d7d0f00856a0d40a84d4e76479623f033d7ad6ab50ff",
+  "original_prereg_sha": "cdf41c1543464d9ca70b67c5b6cd97554ca3086ce1f46af981ced59c217b4784",
+  "eval_seed_commitment": "4d76ecd69fabcdf5d39f321049405be32f444bd8c2954f9157fe6f0d7e07343e",
+  "generator_lock": "docs/cortex_world_generator.lock",
+  "generator_sha": "7a38a0cdd0568333365a5e4e59fcadcdde8553f105fd49f56255f9cc15295956",
+  "world_kernel": "experiments.run_tm023cortex.physics",
+  "world_kernel_sha": "068db6a5cd9c64c3de4e26e333bed000b64d3839fc72839439359c79766e66e3",
+  "runner": "experiments.run_tm023cortex",
+  "runner_sha": "e6e4ece766e30374192012006e45f6539f25c23cf0181df89f9baf79f231dcb8",
+  "life_module": "experiments.cortex_develop_life",
+  "life_module_sha": "c9ac567d26291b6360ecd2232d80cbafcabf4de8818cf686180df57b6be9803b",
+  "scorer_sha": "c9ac567d26291b6360ecd2232d80cbafcabf4de8818cf686180df57b6be9803b",
+  "neural_cortex_sha": "d21e8280c9f426a1bbaacf49ba4b3220fbbf863027966eada8017770ebdb2f0b",
+  "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
+  "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
+  "gpu_env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "refuse": [
+    "pin eval fixture before reveal",
+    "rewrite cortex.prereg.lock or cortex.candidate.lock",
+    "neural mechanism change",
+    "adaptive teaching from scorer failures",
+    "earned_next=true or non-null ex0s",
+    "stamp 0.0.005 in this pass"
+  ],
+  "note": "Frozen before eval reveal. Does not pin cortex_world_eval.json."
+}

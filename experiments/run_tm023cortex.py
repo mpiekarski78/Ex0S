@@ -1,7 +1,8 @@
 """TM.0.23.CORTEX: developmental artificial cortex apparatus.
 
 Phase A: contracts/worlds/preregs. Phase B: make_cortex + unscored sanity.
-Product stays 0.0.004; earned_next=false; ex0s=null. No D scoring this pass.
+Phase C (DEVELOP): freeze runner before reveal; score D0–D12 without neural edits.
+Product stays 0.0.004; earned_next=false; ex0s=null.
 """
 
 from __future__ import annotations
@@ -40,6 +41,16 @@ BIRTH_LOCK = REPO_ROOT / "docs" / "cortex_birth.lock"
 CANDIDATE_LOCK = REPO_ROOT / "docs" / "cortex.candidate.lock"
 CANDIDATE_V1 = REPO_ROOT / "docs" / "cortex.candidate.v1.lock"
 RESULTS_MD = REPO_ROOT / "docs" / "tm023cortex_results.md"
+SANITY_AMENDMENT = REPO_ROOT / "docs" / "cortex_sanity_spec.amendment.lock"
+DEV_CONTRACT = REPO_ROOT / "docs" / "cortex_development_contract.md"
+DEV_RUNNER_LOCK = REPO_ROOT / "docs" / "cortex_development.runner.lock"
+EVAL_REVEAL_LOCK = REPO_ROOT / "docs" / "cortex_eval_reveal.lock"
+DEV_PREREG = REPO_ROOT / "docs" / "cortex_development.prereg.lock"
+DEV_LOCK = REPO_ROOT / "docs" / "cortex_development.lock"
+WALL_LOCK = REPO_ROOT / "docs" / "cortex_wall.lock"
+FIXTURE_EVAL = REPO_ROOT / "docs" / "cortex_world_eval.json"
+LIFE_PY = REPO_ROOT / "experiments" / "cortex_develop_life.py"
+SCORERS_PY = REPO_ROOT / "experiments" / "cortex_develop_scorers.py"
 
 PHENOTYPE_PATHS = [
     "docs/CURRENT_ORGANISM.md",
@@ -587,13 +598,17 @@ def sanity_advantage(tmp: Path, device: str = "cpu") -> dict[str, Any]:
         )
     )
     adv_h = float(out_h.get("metrics", {}).get("adv") or 0.0)
-    ok = out["ok"] and adv > 0.0 and delta > 1e-9 and adv_h < 0.0
+    beneficial = adv > 0.0 and delta > 1e-9
+    harmful = adv_h < 0.0
+    ok = bool(out["ok"] and beneficial and harmful)
     return {
         "id": "advantage_path",
         "ok": ok,
         "adv_good": adv,
         "adv_bad": adv_h,
         "delta": delta,
+        "beneficial_increases_responsible_action_probability": beneficial,
+        "harmful_decreases_responsible_action_probability": harmful,
     }
 
 
@@ -906,35 +921,382 @@ def run_sanity(*, write_birth: bool = False, write_candidate: bool = False) -> d
 
 def _write_results(summary: dict[str, Any]) -> None:
     lines = [
-        "# TM.0.23.CORTEX results: developmental artificial cortex (birth pass)",
+        "# TM.0.23.CORTEX results: developmental artificial cortex",
         "",
-        "**Ex0S under test:** **0.0.004** (not a new stamp)",
-        "**Lab:** TM.0.23.CORTEX",
+        "**Ex0S under test / product:** **0.0.004** (not a new stamp)",
+        "**Lab:** TM.0.23.CORTEX / TM.0.23.CORTEX.DEVELOP",
         f"**ok (sanity):** `{summary.get('ok')}`",
         f"**learning_law_ok:** `{summary.get('learning_law_ok')}`",
         "",
         "Locks: [`cortex.prereg.lock`](cortex.prereg.lock) · "
         "[`cortex_wall.prereg.lock`](cortex_wall.prereg.lock) · "
         "[`cortex_birth.lock`](cortex_birth.lock) · "
-        "[`cortex.candidate.lock`](cortex.candidate.lock)",
+        "[`cortex.candidate.lock`](cortex.candidate.lock) · "
+        "[`cortex_sanity_spec.amendment.lock`](cortex_sanity_spec.amendment.lock)",
         "",
-        "`earned_next`: **false** — no Ex0S 0.0.005. Product stamp remains **0.0.004**.",
+        "`earned_next`: **false** · `ex0s`: **null** · product remains **0.0.004**.",
         "",
-        "## This pass",
-        "",
-        "Architecture contract, worlds, preregs, CPU/GPU birth substrate, and unscored "
-        "learning-law sanity. **No D0–D12 scoring.**",
-        "",
-        "## Sanity",
+        "## Birth sanity",
         "",
     ]
     for r in summary.get("results") or []:
         lines.append(f"- `{r.get('id')}`: **{'pass' if r.get('ok') else 'fail'}**")
     lines += [
         "",
-        "## Next",
+        "## DEVELOP",
         "",
-        "Human/math audit of birth; then D0–D12 developmental scoring on a later pass.",
+        "See development locks and eligibility fields after `--life --write-lock`.",
+        "",
+    ]
+    RESULTS_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def verify_sanity_amendment() -> tuple[bool, str, dict[str, Any]]:
+    if not SANITY_AMENDMENT.exists():
+        return False, "missing cortex_sanity_spec.amendment.lock", {}
+    am = json.loads(SANITY_AMENDMENT.read_text(encoding="utf-8"))
+    if am.get("neural_mechanism_changed") is not False:
+        return False, "amendment claims mechanism changed", am
+    if _sha_file(PREREG) != am.get("original_prereg_sha"):
+        return False, "prereg SHA drift vs amendment", am
+    if _sha_file(CANDIDATE_LOCK) != am.get("original_candidate_sha"):
+        return False, "candidate SHA drift vs amendment", am
+    if _sha_file(BIRTH_LOCK) != am.get("original_birth_sha"):
+        return False, "birth SHA drift vs amendment", am
+    if _sha_file(NEURAL_PY) != json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8")).get(
+        "neural_cortex_sha"
+    ):
+        return False, "neural_cortex.py changed vs candidate", am
+    if _sha_file(MEMORY_PY) != json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8")).get(
+        "cortex_memory_sha"
+    ):
+        return False, "cortex_memory.py changed vs candidate", am
+    ll = am.get("learning_law_tests") or []
+    acc = am.get("accelerator_tests") or []
+    if ll != [
+        "order_ab_ba",
+        "prediction",
+        "advantage_path",
+        "exploration",
+        "write_retrieve",
+        "checkpoint",
+        "rho_reset",
+        "scorer_isolation",
+    ]:
+        return False, "learning_law_tests mismatch", am
+    if acc != ["cpu_gpu"]:
+        return False, "accelerator_tests mismatch", am
+    adv = (am.get("birth_evidence") or {}).get("advantage_path") or {}
+    if not adv.get("beneficial_increases_responsible_action_probability"):
+        return False, "advantage beneficial assertion missing", am
+    if not adv.get("harmful_decreases_responsible_action_probability"):
+        return False, "advantage harmful assertion missing", am
+    if not am.get("all_sanity_ok"):
+        return False, "all_sanity_ok false", am
+    return True, "sanity amendment intact", am
+
+
+def verify_pre_reveal() -> dict[str, Any]:
+    ok_a, why_a, am = verify_sanity_amendment()
+    if not ok_a:
+        return {"ok": False, "why": why_a}
+    if not DEV_RUNNER_LOCK.exists():
+        return {"ok": False, "why": "missing cortex_development.runner.lock"}
+    runner = json.loads(DEV_RUNNER_LOCK.read_text(encoding="utf-8"))
+    if runner.get("eval_revealed") is not False:
+        return {"ok": False, "why": "runner lock already marked revealed"}
+    if "eval_fixture_sha" in runner:
+        return {"ok": False, "why": "runner lock must not pin eval fixture before reveal"}
+    if runner.get("original_candidate_sha") != _sha_file(CANDIDATE_LOCK):
+        return {"ok": False, "why": "runner lock candidate SHA mismatch"}
+    if runner.get("sanity_amendment_sha") != _sha_file(SANITY_AMENDMENT):
+        return {"ok": False, "why": "runner lock amendment SHA mismatch"}
+    # all nine from birth
+    birth = json.loads(BIRTH_LOCK.read_text(encoding="utf-8"))
+    by_id = {}
+    for r in birth.get("results") or []:
+        by_id.setdefault(r["id"], r)
+    missing = [i for i in (am.get("all_nine") or []) if i not in by_id or not by_id[i].get("ok")]
+    if missing:
+        return {"ok": False, "why": f"birth missing/failing sanity: {missing}"}
+    learning_law_ok = all(by_id[i].get("ok") for i in am["learning_law_tests"])
+    gpu_ready = learning_law_ok and by_id.get("cpu_gpu", {}).get("ok")
+    return {
+        "ok": True,
+        "why": "pre-reveal gate clear",
+        "learning_law_ok": learning_law_ok,
+        "gpu_scoring_ready": bool(gpu_ready),
+        "all_sanity_ok": True,
+        "runner_sha": _sha_file(DEV_RUNNER_LOCK),
+        "amendment_sha": _sha_file(SANITY_AMENDMENT),
+    }
+
+
+def freeze_runner_lock() -> dict[str, Any]:
+    ok_a, why_a, am = verify_sanity_amendment()
+    if not ok_a:
+        raise RuntimeError(why_a)
+    if not DEV_CONTRACT.exists():
+        raise RuntimeError("missing cortex_development_contract.md")
+    from experiments.cortex_develop_life import (
+        d0_chance_spec,
+        development_seed_table,
+    )
+
+    cand = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    prereg = json.loads(PREREG.read_text(encoding="utf-8"))
+    lock = {
+        "version": "TM.0.23.CORTEX.DEVELOP.RUNNER",
+        "lab": "TM.0.23.CORTEX.DEVELOP",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eval_revealed": False,
+        "phenotype_contract": "docs/cortex_development_contract.md",
+        "phenotype_contract_sha": _sha_file(DEV_CONTRACT),
+        "d0_chance": d0_chance_spec(),
+        "stages": [f"D{i}" for i in range(13)],
+        "n_pairs": 16,
+        "earn_threshold": prereg["stats"]["earn_threshold"],
+        "maturation_threshold": prereg["stats"]["maturation_threshold"],
+        "development_seed_table": development_seed_table(16),
+        "original_candidate": "docs/cortex.candidate.lock",
+        "original_candidate_sha": _sha_file(CANDIDATE_LOCK),
+        "sanity_amendment": "docs/cortex_sanity_spec.amendment.lock",
+        "sanity_amendment_sha": _sha_file(SANITY_AMENDMENT),
+        "original_prereg_sha": _sha_file(PREREG),
+        "eval_seed_commitment": prereg["eval_seed_commitment"],
+        "generator_lock": "docs/cortex_world_generator.lock",
+        "generator_sha": _sha_file(GEN_LOCK),
+        "world_kernel": "experiments.run_tm023cortex.physics",
+        "world_kernel_sha": _sha_src(physics),
+        "runner": "experiments.run_tm023cortex",
+        "runner_sha": _sha_file(Path(__file__)),
+        "life_module": "experiments.cortex_develop_life",
+        "life_module_sha": _sha_file(LIFE_PY),
+        "scorer_module": "experiments.cortex_develop_scorers",
+        "scorer_sha": _sha_file(SCORERS_PY),
+        "audit_note": "v4 scorer re-freeze after R2 audit (D5/D9/D11/D12 non-vacuous); v1–v3 locks preserved",
+        "neural_cortex_sha": cand["neural_cortex_sha"],
+        "cortex_memory_sha": cand["cortex_memory_sha"],
+        "make_cortex_sha": cand["make_cortex_sha"],
+        "gpu_env": cand.get("env"),
+        "refuse": [
+            "pin eval fixture before reveal",
+            "rewrite cortex.prereg.lock or cortex.candidate.lock",
+            "neural mechanism change",
+            "adaptive teaching from scorer failures",
+            "earned_next=true or non-null ex0s",
+            "stamp 0.0.005 in this pass",
+        ],
+        "note": "Frozen before eval reveal. Does not pin cortex_world_eval.json.",
+    }
+    DEV_RUNNER_LOCK.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
+    return {"ok": True, "path": str(DEV_RUNNER_LOCK), "sha": _sha_file(DEV_RUNNER_LOCK)}
+
+
+def reveal_eval() -> dict[str, Any]:
+    gate = verify_pre_reveal()
+    if not gate.get("ok"):
+        raise RuntimeError(gate.get("why"))
+    if not gate.get("gpu_scoring_ready"):
+        raise RuntimeError("gpu_scoring_ready required for reveal/score path")
+    if not SEALED_EVAL.exists():
+        raise RuntimeError("missing sealed eval secrets")
+    sealed = json.loads(SEALED_EVAL.read_text(encoding="utf-8"))
+    seed_hex = sealed["seed_hex"]
+    salt_hex = sealed["salt_hex"]
+    seed_b = bytes.fromhex(seed_hex)
+    salt_b = bytes.fromhex(salt_hex)
+    if len(seed_b) != 32 or len(salt_b) != 32:
+        raise RuntimeError("seed/salt must be 256-bit")
+    commitment = _sha_bytes(seed_b + salt_b)
+    prereg = json.loads(PREREG.read_text(encoding="utf-8"))
+    if commitment != prereg["eval_seed_commitment"]:
+        raise RuntimeError("commitment mismatch")
+    from experiments.cortex_develop_life import generate_eval_fixture, hygiene_eval
+
+    fixture = generate_eval_fixture(seed_hex, salt_hex)
+    hy = hygiene_eval(fixture)
+    if not hy["ok"]:
+        raise RuntimeError(f"eval hygiene failed: {hy['issues']}")
+    FIXTURE_EVAL.write_text(json.dumps(fixture, indent=2) + "\n", encoding="utf-8")
+
+    # scorer_only isolation smoke
+    with tempfile.TemporaryDirectory(prefix="reveal_iso_") as tmp:
+        ag = make_cortex(Path(tmp) / "s")
+        bad = ag.observe(
+            {
+                "interaction_token": "i",
+                "source_token": "s",
+                "ordered_symbols": ["a"],
+                "observable_state": [],
+                "body_state": [0.5, 0.2, 0.5, 0.0],
+                "correct": True,
+            }
+        )
+        iso_ok = bad.get("why") == "banned_key"
+
+    reveal = {
+        "version": "TM.0.23.CORTEX.EVAL.REVEAL",
+        "lab": "TM.0.23.CORTEX.DEVELOP",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "seed_hex": seed_hex,
+        "salt_hex": salt_hex,
+        "eval_seed_commitment": commitment,
+        "commitment_verified": True,
+        "generator_sha": _sha_file(GEN_LOCK),
+        "evaluation_fixture": "docs/cortex_world_eval.json",
+        "evaluation_fixture_sha": _sha_file(FIXTURE_EVAL),
+        "runner_lock": "docs/cortex_development.runner.lock",
+        "runner_lock_sha": _sha_file(DEV_RUNNER_LOCK),
+        "scorer_sha": _sha_file(SCORERS_PY),
+        "scorer_only_isolation_ok": iso_ok,
+        "hygiene": hy,
+        "supersedes": "docs/cortex_eval_reveal.v1.lock",
+        "note": "Seed/salt republished after scorer audit re-freeze; commitment unchanged; neural unchanged.",
+    }
+    EVAL_REVEAL_LOCK.write_text(json.dumps(reveal, indent=2) + "\n", encoding="utf-8")
+
+    compose = {
+        "version": "TM.0.23.CORTEX.DEVELOP.PREREG",
+        "lab": "TM.0.23.CORTEX.DEVELOP",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "composition_of": [
+            "docs/cortex_development.runner.lock",
+            "docs/cortex_eval_reveal.lock",
+        ],
+        "runner_lock_sha": _sha_file(DEV_RUNNER_LOCK),
+        "eval_reveal_sha": _sha_file(EVAL_REVEAL_LOCK),
+        "original_candidate_sha": _sha_file(CANDIDATE_LOCK),
+        "sanity_amendment_sha": _sha_file(SANITY_AMENDMENT),
+        "evaluation_fixture_sha": _sha_file(FIXTURE_EVAL),
+        "eval_seed_commitment": commitment,
+        "scorer_sha": _sha_file(SCORERS_PY),
+        "supersedes": "docs/cortex_development.prereg.v1.lock",
+        "note": "Composition after scorer audit. Does not rewrite birth candidate. Same eval commitment.",
+    }
+    DEV_PREREG.write_text(json.dumps(compose, indent=2) + "\n", encoding="utf-8")
+    return {
+        "ok": True,
+        "commitment_verified": True,
+        "eval_fixture_sha": _sha_file(FIXTURE_EVAL),
+        "reveal_sha": _sha_file(EVAL_REVEAL_LOCK),
+        "develop_prereg_sha": _sha_file(DEV_PREREG),
+        "scorer_only_isolation_ok": iso_ok,
+    }
+
+
+def run_develop_score(
+    *,
+    n_pairs: int = 16,
+    device: str | None = None,
+    write_lock: bool = False,
+    smoke_pairs: int | None = None,
+) -> dict[str, Any]:
+    if not DEV_PREREG.exists():
+        raise RuntimeError("score requires cortex_development.prereg.lock (reveal first)")
+    # refuse neural drift
+    cand = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    if _sha_file(NEURAL_PY) != cand["neural_cortex_sha"]:
+        raise RuntimeError("neural_cortex.py changed after candidate — new commitment required")
+    if _sha_file(MEMORY_PY) != cand["cortex_memory_sha"]:
+        raise RuntimeError("cortex_memory.py changed after candidate — new commitment required")
+    from experiments.cortex_develop_life import (
+        diagnostic_capacity_smoke,
+        diagnostic_wall,
+        run_battery,
+    )
+
+    dev = device or ("cuda" if torch.cuda.is_available() else "cpu")
+    n = smoke_pairs if smoke_pairs is not None else n_pairs
+    pair_ids = list(range(n))
+    battery = run_battery(n_pairs=n, device=dev, pair_ids=pair_ids)
+    capacity = diagnostic_capacity_smoke(device=dev if n <= 2 else "cpu")
+    wall = diagnostic_wall(device="cpu")
+    summary = {
+        "version": "TM.0.23.CORTEX.DEVELOP",
+        "lab": "TM.0.23.CORTEX.DEVELOP",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "development_gate_clear": battery["development_gate_clear"],
+        "eligible_for_000005": battery["eligible_for_000005"],
+        "battery": battery,
+        "capacity_diagnostic": capacity,
+        "wall_diagnostic": wall,
+        "develop_prereg_sha": _sha_file(DEV_PREREG),
+        "runner_lock_sha": _sha_file(DEV_RUNNER_LOCK),
+        "eval_reveal_sha": _sha_file(EVAL_REVEAL_LOCK),
+        "candidate_sha": _sha_file(CANDIDATE_LOCK),
+        "neural_cortex_sha": _sha_file(NEURAL_PY),
+        "cortex_memory_sha": _sha_file(MEMORY_PY),
+        "life_module_sha": _sha_file(LIFE_PY),
+        "env": torch_env(),
+        "note": "DEVELOP scored. Product stamp unchanged. Wall/capacity diagnostic only.",
+    }
+    if write_lock:
+        DEV_LOCK.write_text(json.dumps(summary, indent=2, default=str) + "\n", encoding="utf-8")
+        wall_lock = {
+            "version": "TM.0.23.CORTEX.WALL",
+            "lab": "TM.0.23.CORTEX.WALL",
+            "product": "0.0.004",
+            "earned_next": False,
+            "ex0s": None,
+            "diagnostic": True,
+            "need_not_fully_pass": True,
+            "cannot_negate_development_gate": True,
+            "wall_prereg_sha": _sha_file(PREREG_WALL),
+            "result": wall,
+            "development_gate_clear": battery["development_gate_clear"],
+        }
+        WALL_LOCK.write_text(json.dumps(wall_lock, indent=2, default=str) + "\n", encoding="utf-8")
+        _write_develop_results(summary)
+        summary["locks_written"] = True
+    return summary
+
+
+def _write_develop_results(summary: dict[str, Any]) -> None:
+    b = summary.get("battery") or {}
+    lines = [
+        "# TM.0.23.CORTEX.DEVELOP results",
+        "",
+        f"**product:** `{summary.get('product')}`",
+        f"**development_gate_clear:** `{summary.get('development_gate_clear')}`",
+        f"**eligible_for_000005:** `{summary.get('eligible_for_000005')}`",
+        f"**earned_next:** `{summary.get('earned_next')}`",
+        f"**ex0s:** `{summary.get('ex0s')}`",
+        "",
+        f"Pairs clear: **{b.get('n_pair_clear')}/{b.get('n_pairs')}** · "
+        f"Maturation: **{b.get('n_maturation')}/{b.get('n_pairs')}**",
+        "",
+        "Locks: [`cortex_sanity_spec.amendment.lock`](cortex_sanity_spec.amendment.lock) · "
+        "[`cortex_development.runner.lock`](cortex_development.runner.lock) · "
+        "[`cortex_eval_reveal.lock`](cortex_eval_reveal.lock) · "
+        "[`cortex_development.prereg.lock`](cortex_development.prereg.lock) · "
+        "[`cortex_development.lock`](cortex_development.lock) · "
+        "[`cortex_wall.lock`](cortex_wall.lock)",
+        "",
+        "## Stage pass counts (main+twin)",
+        "",
+    ]
+    for k, v in (b.get("stage_pass_counts_main_and_twin") or {}).items():
+        lines.append(f"- `{k}`: {v}")
+    wall = summary.get("wall_diagnostic") or {}
+    lines += [
+        "",
+        "## Diagnostic wall",
+        "",
+        f"first_fail_neural_wall: `{wall.get('first_fail_neural_wall')}` "
+        "(need not pass; cannot negate development gate)",
+        "",
+        "## Note",
+        "",
+        "Neural organism unchanged vs candidate. Capacity/wall diagnostic only.",
         "",
     ]
     RESULTS_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -947,6 +1309,14 @@ def main() -> None:
     ap.add_argument("--sanity", action="store_true")
     ap.add_argument("--write-birth", action="store_true")
     ap.add_argument("--write-candidate", action="store_true")
+    ap.add_argument("--verify-sanity-amendment", action="store_true")
+    ap.add_argument("--freeze-runner", action="store_true")
+    ap.add_argument("--verify-pre-reveal", action="store_true")
+    ap.add_argument("--reveal-eval", action="store_true")
+    ap.add_argument("--life", action="store_true")
+    ap.add_argument("--write-lock", action="store_true")
+    ap.add_argument("--smoke-pairs", type=int, default=None)
+    ap.add_argument("--device", type=str, default=None)
     args = ap.parse_args()
 
     if args.write_phase_a:
@@ -955,6 +1325,32 @@ def main() -> None:
     if args.verify_prereg:
         ok, why, lock = verify_prereg()
         print(json.dumps({"ok": ok, "why": why, "lab": lock.get("lab")}, indent=2))
+        return
+    if args.verify_sanity_amendment:
+        ok, why, am = verify_sanity_amendment()
+        print(json.dumps({"ok": ok, "why": why, "all_sanity_ok": am.get("all_sanity_ok")}, indent=2))
+        return
+    if args.freeze_runner:
+        print(json.dumps(freeze_runner_lock(), indent=2))
+        return
+    if args.verify_pre_reveal:
+        print(json.dumps(verify_pre_reveal(), indent=2))
+        return
+    if args.reveal_eval:
+        print(json.dumps(reveal_eval(), indent=2))
+        return
+    if args.life:
+        print(
+            json.dumps(
+                run_develop_score(
+                    device=args.device,
+                    write_lock=args.write_lock,
+                    smoke_pairs=args.smoke_pairs,
+                ),
+                indent=2,
+                default=str,
+            )
+        )
         return
     if args.sanity or args.write_birth or args.write_candidate:
         print(

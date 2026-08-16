@@ -1,0 +1,4643 @@
+{
+  "version": "TM.0.23.CORTEX.DEVELOP",
+  "lab": "TM.0.23.CORTEX.DEVELOP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "development_gate_clear": false,
+  "eligible_for_000005": false,
+  "battery": {
+    "n_pairs": 16,
+    "n_pair_clear": 0,
+    "n_maturation": 0,
+    "development_gate_clear": false,
+    "eligible_for_000005": false,
+    "earned_next": false,
+    "ex0s": null,
+    "product": "0.0.004",
+    "stage_pass_counts_main_and_twin": {
+      "D0": 27,
+      "D1": 0,
+      "D2": 0,
+      "D3": 32,
+      "D4": 32,
+      "D5": 32,
+      "D6": 32,
+      "D7": 32,
+      "D8": 0,
+      "D9": 32,
+      "D10": 0,
+      "D11": 32,
+      "D12": 32
+    },
+    "pairs": [
+      {
+        "pair_id": 0,
+        "main": {
+          "pair_id": 0,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 62,
+              "decisive": 0,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 25,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 16
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 99,
+              "content_norm": 2.7298890630810484
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 12,
+              "counts": {
+                "sym_fact": 1,
+                "sym_unknown_x": 1,
+                "sym_b": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 17,
+              "emits": 7,
+              "holds": 11
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 8
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {
+                "sym_fact": 1
+              }
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 218
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_2473085d_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "74f22e0ed80b2c833b3fa8d01e6f63f1b678ccfd0ff599dd9114d8c7ccb9d2aa",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 0,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_2473085d_a",
+            "foil": "tw_4aaee6bf_foil",
+            "emit1": "tw_f0d4d4f3_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 63,
+              "decisive": 0,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 21,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 16
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 177,
+              "content_norm": 2.6026274907470097
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 13,
+              "counts": {
+                "tw_5f9fa11b_ground": 1,
+                "tw_4daee5ca_unknown_x": 3
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 9,
+              "emits": 3,
+              "holds": 21
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {
+                "tw_f0d4d4f3_emit1": 1
+              },
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 387
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_2473085d_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "223b218c0304541e88a6f649126d1c49f47c950e0942d8534ff261dfaf3ddb32",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 1,
+        "main": {
+          "pair_id": 1,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 3,
+              "foil_hits": 0,
+              "hold_n": 61,
+              "decisive": 3,
+              "rate": 1.0,
+              "p_value": 0.125,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 27,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 16
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 69,
+              "content_norm": 2.451932505618313
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 14,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 6,
+              "emits": 2,
+              "holds": 24
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 141
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_a9d6f4bf_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "836e6b33f5efbb6c5abbedc4c5863edc3550e8ee6419601abbd5feacfcd37000",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 1,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_a9d6f4bf_a",
+            "foil": "tw_dbba7e83_foil",
+            "emit1": "tw_a896f27c_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 1,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 1,
+              "rate": 1.0,
+              "p_value": 0.5,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 22,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 12
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 166,
+              "content_norm": 3.894214948954565
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 18,
+              "emits": 5,
+              "holds": 12
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 405
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_a9d6f4bf_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "4e7c0a6cac1eec0cc16439ebf30543ef52be2d146a433c76f66dec1608cc99d6",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 2,
+        "main": {
+          "pair_id": 2,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 7,
+              "foil_hits": 6,
+              "hold_n": 58,
+              "decisive": 13,
+              "rate": 0.5384615384615384,
+              "p_value": 0.5,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 17,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 13
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 130,
+              "content_norm": 2.4069844635167854
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 10,
+              "counts": {
+                "sym_c": 1,
+                "sym_unknown_x": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 18,
+              "emits": 4,
+              "holds": 9
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 8
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {
+                "sym_domain2": 1,
+                "sym_unknown_x": 1
+              },
+              "counts_new": {
+                "sym_domain2": 1,
+                "sym_comp_x": 1
+              }
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 289
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_76ebc677_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "88678aa07e2597325dae5333efe780e623797e1851790a1eeeaf6385d00a56a0",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 2,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_76ebc677_a",
+            "foil": "tw_bbdb1344_foil",
+            "emit1": "tw_4d2c137a_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 2,
+              "foil_hits": 0,
+              "hold_n": 62,
+              "decisive": 2,
+              "rate": 1.0,
+              "p_value": 0.25,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 27,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 12
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 180,
+              "content_norm": 2.839451806436502
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 13,
+              "counts": {
+                "tw_e7afa18c_fact": 2,
+                "tw_0ca952a3_rel_r": 1,
+                "tw_ad1e4bdd_unknown_x": 2
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 9,
+              "emits": 1,
+              "holds": 21
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 400
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_76ebc677_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "6aadd6343c6faaafec05c511fda40de7be4403b58566b3b9793b9b983718f1e9",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 3,
+        "main": {
+          "pair_id": 3,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 21,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 16
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 102,
+              "content_norm": 2.0808724261209175
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 8,
+              "emits": 2,
+              "holds": 22
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {
+                "sym_domain2": 1
+              },
+              "counts_new": {
+                "sym_ground": 1
+              }
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 163
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_c6b7d8dc_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "e5a4a7336daa0e1fb7c107d555719bbcec065ea29d9020163c6e0308ef693ccf",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 3,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_c6b7d8dc_a",
+            "foil": "tw_5055fd20_foil",
+            "emit1": "tw_ec8a3bcd_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 4,
+              "hold_n": 48,
+              "decisive": 4,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 14,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 10
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 261,
+              "content_norm": 3.2384051996346956
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 14,
+              "emits": 2,
+              "holds": 15
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 505
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_c6b7d8dc_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "f111bcb258b9fc18c858a983a07b560d4b04fc2326230a3e4d2a56e754f06f9c",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 4,
+        "main": {
+          "pair_id": 4,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 1,
+              "hold_n": 63,
+              "decisive": 1,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 22,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 15
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 245,
+              "content_norm": 2.555368727311379
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 14,
+              "counts": {
+                "sym_fact": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 9,
+              "emits": 1,
+              "holds": 20
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 9
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {
+                "sym_rel_l": 1,
+                "sym_comp_z": 1
+              },
+              "counts_new": {
+                "sym_comp_z": 1
+              }
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 359
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_3334e76c_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "82fd1cb71f5774bd8ffc04c6460c3d809e2336a5033f9dceeaf656bfbd9e8ba2",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 4,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_3334e76c_a",
+            "foil": "tw_bf5fec86_foil",
+            "emit1": "tw_fc8e451c_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 2,
+              "hold_n": 57,
+              "decisive": 2,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 16,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 7
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 93,
+              "content_norm": 2.3600035768031025
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {
+                "tw_9710a39f_unknown_x": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 22,
+              "emits": 2,
+              "holds": 6
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 9
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 185
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_3334e76c_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "68b110623925734ba3cd05d866ac83f9729db8f96ce3e3abfb3a4ef09e8c22c7",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 5,
+        "main": {
+          "pair_id": 5,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 4,
+              "foil_hits": 6,
+              "hold_n": 57,
+              "decisive": 10,
+              "rate": 0.4,
+              "p_value": 0.828125,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 21,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 12
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 208,
+              "content_norm": 2.458233491092946
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 13,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 7,
+              "emits": 2,
+              "holds": 23
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 416
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_3410fba8_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "d1d4b6e31f44516469d1dacc939c93e318c1926529775d2ea7e98306cff7d609",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 5,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_3410fba8_a",
+            "foil": "tw_6dfd2d09_foil",
+            "emit1": "tw_4a38ced7_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 1,
+              "foil_hits": 3,
+              "hold_n": 51,
+              "decisive": 4,
+              "rate": 0.25,
+              "p_value": 0.9375,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 25,
+              "rho_reset_preserves_weights": true,
+              "counts": {
+                "tw_ba2cc405_b": 1,
+                "tw_6dfd2d09_foil": 1
+              }
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 15
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 72,
+              "content_norm": 3.742463410882901
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 4,
+              "emits": 1,
+              "holds": 25
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {
+                "tw_f5016454_domain2": 1
+              },
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 141
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_3410fba8_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "5ee08a9a5ebdb4021f2a5c5a5d59ebede39d85a09d50c877e5aa0138d2898b0e",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 6,
+        "main": {
+          "pair_id": 6,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 5,
+              "foil_hits": 1,
+              "hold_n": 50,
+              "decisive": 6,
+              "rate": 0.8333333333333334,
+              "p_value": 0.109375,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 28,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 16
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 86,
+              "content_norm": 3.545913804048364
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {
+                "sym_ground": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 8,
+              "emits": 3,
+              "holds": 22
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 162
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_365ab63a_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "8780afaea1aadeccdd1c3cc4bb3ae1d14778a63cc73f8400da94a19633e32ef9",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 6,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_365ab63a_a",
+            "foil": "tw_247d6e41_foil",
+            "emit1": "tw_4cf10a97_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 27,
+              "hold_n": 49,
+              "decisive": 27,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 22,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 9
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 549,
+              "content_norm": 3.3646660634440706
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {
+                "tw_e4551dc5_fact": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 14,
+              "emits": 5,
+              "holds": 11
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 9
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {
+                "tw_33ad4115_emit2": 1
+              },
+              "counts_new": {
+                "tw_33ad4115_emit2": 2
+              }
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 998
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_365ab63a_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "25ea27f38073ce2175b4f417bdfcfed61b7752d321a838f15dbe2b94442c8848",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 7,
+        "main": {
+          "pair_id": 7,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 1,
+              "foil_hits": 5,
+              "hold_n": 62,
+              "decisive": 6,
+              "rate": 0.16666666666666666,
+              "p_value": 0.984375,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 25,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 17
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 141,
+              "content_norm": 1.7759515447218177
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 7,
+              "emits": 2,
+              "holds": 21
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 7
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 302
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_99ffabca_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "9d57b2498a99df4fdd761d510ea8ad77480aa044c3e6bc51dbbc4c77f6ba7845",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 7,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_99ffabca_a",
+            "foil": "tw_520d7a07_foil",
+            "emit1": "tw_ac3c2ccc_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": false,
+              "target_hits": 12,
+              "foil_hits": 1,
+              "hold_n": 56,
+              "decisive": 13,
+              "rate": 0.9230769230769231,
+              "p_value": 0.001708984375,
+              "above_chance": true,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 14,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 9
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 101,
+              "content_norm": 2.103256279883335
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 13,
+              "counts": {
+                "tw_33b9938f_unknown_x": 2
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 16,
+              "emits": 3,
+              "holds": 11
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {
+                "tw_5455b944_comp_y": 1
+              }
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 202
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_99ffabca_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D0",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "b63ad3461f72163f6b79d4f2a1b77a8e6fbb5ac42516c35b1cd174d916f149f8",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 8,
+        "main": {
+          "pair_id": 8,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 50,
+              "decisive": 0,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 16,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 12
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 136,
+              "content_norm": 2.667894694131975
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 13,
+              "counts": {
+                "sym_distr": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 13,
+              "emits": 6,
+              "holds": 15
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 256
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_96fce545_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "dd05a9f46d1cbaf69621de5eb160fc2d0ac0f5fbf78c39a2a9d8b00184dd11cb",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 8,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_96fce545_a",
+            "foil": "tw_94fc1a93_foil",
+            "emit1": "tw_2498417f_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 64,
+              "decisive": 0,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 25,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 18
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 158,
+              "content_norm": 2.092096381752166
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 13,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 6,
+              "emits": 1,
+              "holds": 24
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 297
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_96fce545_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "360f87039b7594bec5adb8ba1212fc3e520b8e24e555c97721229a6de665f7c0",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 9,
+        "main": {
+          "pair_id": 9,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 14,
+              "foil_hits": 4,
+              "hold_n": 51,
+              "decisive": 18,
+              "rate": 0.7777777777777778,
+              "p_value": 0.01544189453125,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 19,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 8
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 106,
+              "content_norm": 2.8376996805029853
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 18,
+              "emits": 5,
+              "holds": 12
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 224
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_b02177df_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "4f613658e4014f7988f12ae2de30f366bd7c37fd1f722ce5a075402e86beff00",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 9,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_b02177df_a",
+            "foil": "tw_d6079326_foil",
+            "emit1": "tw_8c4b44f8_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 63,
+              "decisive": 0,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 13,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 8
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 169,
+              "content_norm": 3.686165620308147
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 19,
+              "emits": 0,
+              "holds": 11
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 479
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_b02177df_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "7ce57599787a9709c5b76a40be59e9777ec82b84bf335c23c9bd8a4f24df0922",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 10,
+        "main": {
+          "pair_id": 10,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 1,
+              "foil_hits": 0,
+              "hold_n": 62,
+              "decisive": 1,
+              "rate": 1.0,
+              "p_value": 0.5,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 26,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 16
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 123,
+              "content_norm": 2.493509397079227
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 13,
+              "counts": {
+                "sym_ground": 2,
+                "st_idle": 1,
+                "sym_distr": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 5,
+              "emits": 1,
+              "holds": 25
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 260
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_25ba8f48_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "8c34b50867730277b77631ce56ad0a15eb1475031bd477fe6d8972dc4a07c6a0",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 10,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_25ba8f48_a",
+            "foil": "tw_29c4dff7_foil",
+            "emit1": "tw_1e87f331_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": false,
+              "target_hits": 17,
+              "foil_hits": 3,
+              "hold_n": 58,
+              "decisive": 20,
+              "rate": 0.85,
+              "p_value": 0.0012884140014648438,
+              "above_chance": true,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 13,
+              "rho_reset_preserves_weights": true,
+              "counts": {
+                "tw_b952774d_b": 1
+              }
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 10
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 122,
+              "content_norm": 1.9278375312414484
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 13,
+              "counts": {
+                "tw_d191d300_unknown_x": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 11,
+              "emits": 3,
+              "holds": 17
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 258
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_25ba8f48_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D0",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "69017f75c0ce0a9ddebca03907d7e94dd7f0b0e276705e6bc94076f5ffd1ec29",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 11,
+        "main": {
+          "pair_id": 11,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 1,
+              "foil_hits": 0,
+              "hold_n": 63,
+              "decisive": 1,
+              "rate": 1.0,
+              "p_value": 0.5,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 24,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 15
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 44,
+              "content_norm": 2.1935698851719607
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {
+                "sym_a": 1,
+                "st_idle": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 12,
+              "emits": 3,
+              "holds": 15
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {
+                "sym_domain2": 1
+              },
+              "counts_new": {
+                "sym_a": 1,
+                "sym_emit2": 1
+              }
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 108
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_10569a84_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "09333f4bfaa839ea17ba90b2b5610b0165c8656295215625232841b2db989788",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 11,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_10569a84_a",
+            "foil": "tw_f5b4f4b1_foil",
+            "emit1": "tw_4428da58_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 1,
+              "hold_n": 63,
+              "decisive": 1,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 27,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 16
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 85,
+              "content_norm": 2.235063587486594
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {
+                "tw_2a981567_distr": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 6,
+              "emits": 0,
+              "holds": 21
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 9
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 205
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_10569a84_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "13618d9a66169204871f6eb1496147ef5591335c650475914ce5ef9b4acba8db",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 12,
+        "main": {
+          "pair_id": 12,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 11,
+              "hold_n": 52,
+              "decisive": 11,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 23,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 17
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 173,
+              "content_norm": 2.7018394889837505
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 14,
+              "counts": {
+                "sym_unknown_x": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 5,
+              "emits": 0,
+              "holds": 24
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 363
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_189ad30d_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "f5ef9925a2cc6c9a988421d3c3147889cbb0e67b080280e05015db8ba120d00d",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 12,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_189ad30d_a",
+            "foil": "tw_ba326e7e_foil",
+            "emit1": "tw_d9871000_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 2,
+              "foil_hits": 5,
+              "hold_n": 61,
+              "decisive": 7,
+              "rate": 0.2857142857142857,
+              "p_value": 0.9375,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 20,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 18
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 217,
+              "content_norm": 2.325860271822405
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 14,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 6,
+              "emits": 3,
+              "holds": 24
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 417
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_189ad30d_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "1711a09ca3eb9794d21d93476f9609a13fea0e647b86cca1c377ed5e07abc6f2",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 13,
+        "main": {
+          "pair_id": 13,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": false,
+              "target_hits": 13,
+              "foil_hits": 0,
+              "hold_n": 58,
+              "decisive": 13,
+              "rate": 1.0,
+              "p_value": 0.0001220703125,
+              "above_chance": true,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 23,
+              "rho_reset_preserves_weights": true,
+              "counts": {
+                "sym_a": 1
+              }
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 16
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 83,
+              "content_norm": 2.2456907040714316
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {
+                "sym_unknown_x": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 7,
+              "emits": 0,
+              "holds": 23
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 197
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_fb97c629_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D0",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "21e4dee43675abf5f01549198f376932aa2f0b883c00337215ed5d25f52f07f1",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 13,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_fb97c629_a",
+            "foil": "tw_1b1f4cfa_foil",
+            "emit1": "tw_5380d228_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 4,
+              "foil_hits": 8,
+              "hold_n": 54,
+              "decisive": 12,
+              "rate": 0.3333333333333333,
+              "p_value": 0.927001953125,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 26,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 15
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 91,
+              "content_norm": 1.808099111082171
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 13,
+              "counts": {
+                "tw_ba4f87cb_ground": 1,
+                "tw_1b1f4cfa_foil": 1,
+                "tw_2866698e_rel_r": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 7,
+              "emits": 3,
+              "holds": 21
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 203
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_fb97c629_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "564eddc0ca6001a33039e9f39dbfaab95bd453fdd59746a868db6d990299626b",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 14,
+        "main": {
+          "pair_id": 14,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": false,
+              "target_hits": 9,
+              "foil_hits": 0,
+              "hold_n": 55,
+              "decisive": 9,
+              "rate": 1.0,
+              "p_value": 0.001953125,
+              "above_chance": true,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 17,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 8
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 255,
+              "content_norm": 2.4009174778940023
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 14,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 17,
+              "emits": 7,
+              "holds": 13
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 499
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_2e37c58d_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D0",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "373ab97fb2cfacbec097e343da093e892fbcda1b692c24eb3e0c42af19f1998b",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 14,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_2e37c58d_a",
+            "foil": "tw_c27df46a_foil",
+            "emit1": "tw_3f15196a_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 0,
+              "hold_n": 57,
+              "decisive": 0,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 15,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 12
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 131,
+              "content_norm": 3.0974172140737566
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 12,
+              "counts": {
+                "tw_7ee526a7_distr": 2,
+                "tw_4e43e296_fact": 1,
+                "tw_8e2e367b_ground": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 7,
+              "emits": 3,
+              "holds": 21
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 9
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {
+                "tw_7ee526a7_distr": 1
+              },
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 230
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_2e37c58d_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "9f6705e69bbe920c629024f4b9c623e7d3f9935aa92b9b7c498f9ba7f23d87dd",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      },
+      {
+        "pair_id": 15,
+        "main": {
+          "pair_id": 15,
+          "role": "main",
+          "tokens": {
+            "a": "sym_a",
+            "foil": "sym_foil",
+            "emit1": "sym_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": false,
+              "target_hits": 24,
+              "foil_hits": 0,
+              "hold_n": 54,
+              "decisive": 24,
+              "rate": 1.0,
+              "p_value": 5.960464477539063e-08,
+              "above_chance": true,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 21,
+              "rho_reset_preserves_weights": true,
+              "counts": {}
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 14
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 167,
+              "content_norm": 2.6770110540434784
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 15,
+              "counts": {}
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 7,
+              "emits": 3,
+              "holds": 19
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 9
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {}
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 319
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_cdee8bf1_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D0",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "540c23cf8f93403c3dab442592ca04d5bb2eb7f7fa18ae948e7b2a5c7c79bd5c",
+          "age": 989
+        },
+        "twin": {
+          "pair_id": 15,
+          "role": "twin",
+          "tokens": {
+            "a": "tw_cdee8bf1_a",
+            "foil": "tw_7fbb2529_foil",
+            "emit1": "tw_bb65772a_emit1"
+          },
+          "stages": {
+            "D0": {
+              "stage": "D0",
+              "ok": true,
+              "target_hits": 0,
+              "foil_hits": 2,
+              "hold_n": 57,
+              "decisive": 2,
+              "rate": 0.0,
+              "p_value": 1.0,
+              "above_chance": false,
+              "s_empty": true,
+              "preloaded": false,
+              "chance": {
+                "n_probes": 64,
+                "p0": 0.5,
+                "alpha": 0.01,
+                "test": "one_sided_binomial_target_preference",
+                "pass_rule": "fail_to_reject_H0_at_alpha_and_empty_S_and_no_preloaded_targets"
+              }
+            },
+            "D1": {
+              "stage": "D1",
+              "ok": false,
+              "press": 0,
+              "harm": 0,
+              "cf_differs": true
+            },
+            "D2": {
+              "stage": "D2",
+              "ok": false,
+              "holds_during_conflict": 10,
+              "rho_reset_preserves_weights": true,
+              "counts": {
+                "st_idle": 1
+              }
+            },
+            "D3": {
+              "stage": "D3",
+              "ok": true,
+              "holds": 7
+            },
+            "D4": {
+              "stage": "D4",
+              "ok": true,
+              "stripped": true,
+              "donor_ok": true,
+              "n_writes": 77,
+              "content_norm": 1.9938715019984639
+            },
+            "D5": {
+              "stage": "D5",
+              "ok": true,
+              "unknown_holds": 13,
+              "counts": {
+                "tw_cc6c1960_unknown_x": 1
+              }
+            },
+            "D6": {
+              "stage": "D6",
+              "ok": true,
+              "stops": 19,
+              "emits": 3,
+              "holds": 8
+            },
+            "D7": {
+              "stage": "D7",
+              "ok": true,
+              "terminal_ops": 10
+            },
+            "D8": {
+              "stage": "D8",
+              "ok": false,
+              "target_hits": 0,
+              "withheld": true
+            },
+            "D9": {
+              "stage": "D9",
+              "ok": true,
+              "activity": 20,
+              "counts_old": {},
+              "counts_new": {
+                "tw_f6122137_domain2": 1,
+                "tw_cc6c1960_unknown_x": 1
+              }
+            },
+            "D10": {
+              "stage": "D10",
+              "ok": false,
+              "child_score": 0.0,
+              "adult_score": 0.0,
+              "rho_reset_preserves_weights": true
+            },
+            "D12": {
+              "stage": "D12",
+              "ok": true,
+              "forks": {
+                "strip_facts": {
+                  "ok": true,
+                  "skill_retained": true
+                },
+                "birth_cortex_adult_s": {
+                  "ok": true,
+                  "n_s": 155
+                },
+                "donor_s": {
+                  "ok": true
+                },
+                "donor_cortex_fresh_s": {
+                  "ok": true
+                },
+                "reset_w_keep_s": {
+                  "ok": true
+                },
+                "reset_rho_only": {
+                  "ok": true
+                }
+              }
+            },
+            "D11": {
+              "stage": "D11",
+              "ok": true,
+              "twin_token_a": "tw_cdee8bf1_a"
+            }
+          },
+          "last_stage_clear": "D12",
+          "first_fail": "D1",
+          "d10_adult_gt_child": false,
+          "all_required_clear": false,
+          "device": "cuda",
+          "weight_hash": "c514f0cdcb44ec9c93893b7adce1bc08094e26dd2526ee86d04d095e04902287",
+          "age": 989
+        },
+        "pair_clear": false,
+        "maturation_main": false,
+        "maturation_twin": false,
+        "maturation_pair": false
+      }
+    ],
+    "device": "cuda"
+  },
+  "capacity_diagnostic": {
+    "diagnostic": true,
+    "architecture_birth_smoke": [
+      {
+        "n": 32,
+        "ok": true,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        }
+      },
+      {
+        "n": 64,
+        "ok": true,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        }
+      }
+    ],
+    "eligibility_relevant": false
+  },
+  "wall_diagnostic": {
+    "diagnostic": true,
+    "need_not_fully_pass": true,
+    "first_fail_neural_wall": "W_persist",
+    "results": [
+      {
+        "id": "W_persist",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      },
+      {
+        "id": "W_inquire",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      },
+      {
+        "id": "W_reliability",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      },
+      {
+        "id": "W_perspective",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      },
+      {
+        "id": "W_interpret",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      },
+      {
+        "id": "W_honesty",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      }
+    ],
+    "eligibility_relevant": false,
+    "cannot_negate_development_gate": true
+  },
+  "develop_prereg_sha": "8a66665f97b2d0517ce1aa24a7b170e3992d93745a1319b1e4a3819b50b3500f",
+  "runner_lock_sha": "a55eb2a43fdff421bc3f4fdf0609be13435681e3a88e95b9c5d2e6b6abceb597",
+  "eval_reveal_sha": "f9499b9e4ae324971d004c6ec1c42628dac8861c11cb9314365e61811443ba0c",
+  "candidate_sha": "60df20ec89249a550f54ab45b85c42e8d8e1da9f401035e027b7b414afb587cd",
+  "neural_cortex_sha": "d21e8280c9f426a1bbaacf49ba4b3220fbbf863027966eada8017770ebdb2f0b",
+  "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
+  "life_module_sha": "c9ac567d26291b6360ecd2232d80cbafcabf4de8818cf686180df57b6be9803b",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "note": "DEVELOP scored. Product stamp unchanged. Wall/capacity diagnostic only."
+}

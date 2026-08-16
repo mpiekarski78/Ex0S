@@ -1,0 +1,21 @@
+{
+  "version": "TM.0.23.CORTEX.DEVELOP.SCORER.AUDIT.R2",
+  "lab": "TM.0.23.CORTEX.DEVELOP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "neural_mechanism_changed": false,
+  "eval_seed_commitment_unchanged": true,
+  "superseded_results": [
+    "docs/cortex_development.v2.lock",
+    "docs/cortex_development.v3.lock"
+  ],
+  "bugs_fixed": [
+    "D9 floor too low (3/20 nonhold); now retention vs pre-new-domain baseline and >=8/20 both domains",
+    "D11 always passed via both_fail_d8; now requires cross-lexicon twin_own > twin_on_main_spelling",
+    "D5 margin 0.05 noise; now known>=0.30 and +0.15 vs unknown",
+    "D12 reset_w / birth forks measured S count after skill probes polluted S; probe on clones; competence uses press/get not nonhold",
+    "D12 vacuous 0==0 skill comparisons passed all forks without developmental competence; now requires mature press/get >=3 and strict skill decreases where contract demands"
+  ],
+  "note": "Append-only second audit. Same commitment; apparatus re-freeze before rescore. v3 lock is interim soft-D12 rescore preserved before non-vacuous D12 fix."
+}

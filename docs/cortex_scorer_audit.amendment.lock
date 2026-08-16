@@ -1,0 +1,21 @@
+{
+  "version": "TM.0.23.CORTEX.DEVELOP.SCORER.AUDIT",
+  "lab": "TM.0.23.CORTEX.DEVELOP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "neural_mechanism_changed": false,
+  "eval_seed_commitment_unchanged": true,
+  "original_candidate_unchanged": true,
+  "superseded_results": "docs/cortex_development.v1.lock",
+  "superseded_runner": "docs/cortex_development.runner.v1.lock",
+  "bugs_fixed": [
+    "D3–D7/D9 false positives from exploration-noise thresholds (holds>=1, activity>=5, stops+holds>=1)",
+    "D4 passed on API strip/donor without recall-buffer behavioral check",
+    "D11 passed on rename alone without independence evidence",
+    "D12 forks passed on weight-hash identity alone without behavioral probes",
+    "last_stage_clear continued past first_fail (now contiguous from D0)"
+  ],
+  "scorer_module": "experiments.cortex_develop_scorers",
+  "note": "Append-only audit. Same sealed commitment; apparatus re-freeze required before rescore."
+}

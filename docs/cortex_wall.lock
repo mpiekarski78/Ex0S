@@ -1,0 +1,81 @@
+{
+  "version": "TM.0.23.CORTEX.WALL",
+  "lab": "TM.0.23.CORTEX.WALL",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "diagnostic": true,
+  "need_not_fully_pass": true,
+  "cannot_negate_development_gate": true,
+  "wall_prereg_sha": "f03ae4c5d55b87bdad6316e2a1be2ccc1804d315b0b97bd24ff680e2140de44d",
+  "result": {
+    "diagnostic": true,
+    "need_not_fully_pass": true,
+    "first_fail_neural_wall": "W_persist",
+    "results": [
+      {
+        "id": "W_persist",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      },
+      {
+        "id": "W_inquire",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      },
+      {
+        "id": "W_reliability",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      },
+      {
+        "id": "W_perspective",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      },
+      {
+        "id": "W_interpret",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      },
+      {
+        "id": "W_honesty",
+        "ok": false,
+        "action": {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        "why": "diagnostic_expected_fail"
+      }
+    ],
+    "eligibility_relevant": false,
+    "cannot_negate_development_gate": true
+  },
+  "development_gate_clear": false
+}

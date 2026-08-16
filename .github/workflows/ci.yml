@@ -47,3 +47,5 @@ jobs:
           python tests/test_tm021perspective.py
           python tests/test_tm022interpret.py
           python tests/test_tm023cortex.py
+          python -m experiments.run_tm023cortex --verify-prereg
+          python -m experiments.run_tm023cortex --verify-sanity-amendment

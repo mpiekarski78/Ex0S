@@ -1930,7 +1930,13 @@ Freeze order locked: architecture contract → world generator + develop/validat
 
 Genome (summary): sequential sensory microticks (no mean-pool); directed prediction `ε = s_t − ŝ_{t−1}`; three-factor action credit from body_state vs setpoint minus op cost; internal motor loop `T_max=8`; retrieval buffer; separate `rng_source` vectors; `body_state` from frozen world physics only.
 
-Birth sanity **pass** (`learning_law_ok=true`). Torch pin in birth lock: `2.13.0+cu130` / CUDA 13.0 / NVIDIA GB10. D0–D12 later.
+Birth sanity **pass** (`learning_law_ok=true`). Torch pin in birth lock: `2.13.0+cu130` / CUDA 13.0 / NVIDIA GB10.
 
-Contract: [`cortex_architecture_contract.md`](cortex_architecture_contract.md). Prereg: [`cortex.prereg.lock`](cortex.prereg.lock), [`cortex_wall.prereg.lock`](cortex_wall.prereg.lock). Locks: [`cortex_birth.lock`](cortex_birth.lock), [`cortex.candidate.lock`](cortex.candidate.lock). Apparatus: `experiments/run_tm023cortex.py`. Results: [`tm023cortex_results.md`](tm023cortex_results.md).
+## TM.0.23.CORTEX.DEVELOP — score D0–D12 on frozen candidate
+
+Append-only [`cortex_sanity_spec.amendment.lock`](cortex_sanity_spec.amendment.lock) (does **not** rewrite birth prereg/candidate). Eight `learning_law_tests` + accelerator `cpu_gpu`. Runner lock before reveal; [`cortex_eval_reveal.lock`](cortex_eval_reveal.lock) publishes seed/salt; composition [`cortex_development.prereg.lock`](cortex_development.prereg.lock).
+
+Scored 16 main/twin pairs on GPU. Fields: `development_gate_clear`, `eligible_for_000005`, `earned_next=false`, `ex0s=null`, `product=0.0.004`. Capacity + neural parity wall diagnostic only. D12 cortex/S forks required; social-wall failure cannot negate a cleared neural gate.
+
+Contract: [`cortex_development_contract.md`](cortex_development_contract.md). Locks: [`cortex_development.runner.lock`](cortex_development.runner.lock), [`cortex_eval_reveal.lock`](cortex_eval_reveal.lock), [`cortex_development.prereg.lock`](cortex_development.prereg.lock), [`cortex_development.lock`](cortex_development.lock), [`cortex_wall.lock`](cortex_wall.lock). Apparatus: `experiments/run_tm023cortex.py` + `experiments/cortex_develop_life.py`. Results: [`tm023cortex_results.md`](tm023cortex_results.md).
 

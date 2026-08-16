@@ -1,0 +1,24 @@
+{
+  "version": "TM.0.23.CORTEX.EVAL.REVEAL",
+  "lab": "TM.0.23.CORTEX.DEVELOP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "seed_hex": "dbab629b58dae4fff3e72e0d24a85a8dd2023a1f246e26ab5b33051f42c5c6d0",
+  "salt_hex": "6d7e303d07104e64944e912af157362efc2708b494a3033fbf6bacfd09e36d7b",
+  "eval_seed_commitment": "4d76ecd69fabcdf5d39f321049405be32f444bd8c2954f9157fe6f0d7e07343e",
+  "commitment_verified": true,
+  "generator_sha": "7a38a0cdd0568333365a5e4e59fcadcdde8553f105fd49f56255f9cc15295956",
+  "evaluation_fixture": "docs/cortex_world_eval.json",
+  "evaluation_fixture_sha": "d1bd38eca48d9ea619c9abb6f41e734216f6b46eddae39f3e3aaf9d0c753792b",
+  "runner_lock": "docs/cortex_development.runner.lock",
+  "runner_lock_sha": "d66ddb5d3a938ec68b9c79cdef8b24aa14d6defc4fc69d817d1c2365b7316cfe",
+  "scorer_sha": "6a6456286a0dab1ad108ce80bd4971e9c38418d575693bad617a297e19fa96eb",
+  "scorer_only_isolation_ok": true,
+  "hygiene": {
+    "ok": true,
+    "issues": []
+  },
+  "supersedes": "docs/cortex_eval_reveal.v1.lock",
+  "note": "Seed/salt republished after scorer audit re-freeze; commitment unchanged; neural unchanged."
+}

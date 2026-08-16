@@ -68,7 +68,7 @@ LIFEWALL: one interleaved lifetime + twin on frozen PERSIST-on clears through 32
 | Evidence-source predictive accuracy | RELIABILITY cleared through **R12** [`tm020reliability_results.md`](tm020reliability_results.md); contract [`reliability_evidence_contract.md`](reliability_evidence_contract.md); wall hint: honesty |
 | Source exposure / report alignment | PERSPECTIVE cleared through **P12** [`tm021perspective_results.md`](tm021perspective_results.md); contract [`perspective_evidence_contract.md`](perspective_evidence_contract.md); wall hint: comprehension |
 | Behaviorally evidenced interpretation | INTERPRET cleared through **J15** [`tm022interpret_results.md`](tm022interpret_results.md); contract [`interpret_evidence_contract.md`](interpret_evidence_contract.md); wall hint: honesty |
-| Developmental artificial cortex (D-life earn) | CORTEX birth + sanity frozen [`tm023cortex_results.md`](tm023cortex_results.md); contract [`cortex_architecture_contract.md`](cortex_architecture_contract.md); D scoring later |
+| Developmental artificial cortex (0.0.005 eligibility) | CORTEX DEVELOP scored [`tm023cortex_results.md`](tm023cortex_results.md); gate not cleared; contract [`cortex_development_contract.md`](cortex_development_contract.md) |
 | Anonymous features / sensory encoders / pixels | later |
 | Lookahead / backtracking | later |
 | No-cue English motor bar | B Fail (untouched) |
@@ -105,6 +105,7 @@ python -m experiments.run_tm020reliability --verify-prereg
 python -m experiments.run_tm021perspective --verify-prereg
 python -m experiments.run_tm022interpret --verify-prereg
 python -m experiments.run_tm023cortex --verify-prereg
+python -m experiments.run_tm023cortex --verify-sanity-amendment
 ```
 
 Paper-style summary: [`CLAIM.md`](CLAIM.md).

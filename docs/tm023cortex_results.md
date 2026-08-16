@@ -1,52 +1,37 @@
-# TM.0.23.CORTEX results: developmental artificial cortex (birth pass)
+# TM.0.23.CORTEX.DEVELOP results
 
-**Ex0S under test:** **0.0.004** (not a new stamp)
-**Lab:** TM.0.23.CORTEX
-**ok (sanity):** `True`
-**learning_law_ok:** `True`
+**product:** `0.0.004`
+**development_gate_clear:** `False`
+**eligible_for_000005:** `False`
+**earned_next:** `False`
+**ex0s:** `None`
 
-Locks: [`cortex.prereg.lock`](cortex.prereg.lock) · [`cortex_wall.prereg.lock`](cortex_wall.prereg.lock) · [`cortex_birth.lock`](cortex_birth.lock) · [`cortex.candidate.lock`](cortex.candidate.lock)
+Pairs clear: **0/16** · Maturation: **0/16**
 
-`earned_next`: **false** — no Ex0S 0.0.005. Product stamp remains **0.0.004**.
+Locks: [`cortex_sanity_spec.amendment.lock`](cortex_sanity_spec.amendment.lock) · [`cortex_development.runner.lock`](cortex_development.runner.lock) · [`cortex_eval_reveal.lock`](cortex_eval_reveal.lock) · [`cortex_development.prereg.lock`](cortex_development.prereg.lock) · [`cortex_development.lock`](cortex_development.lock) · [`cortex_wall.lock`](cortex_wall.lock)
 
-## This pass
+## Stage pass counts (main+twin)
 
-Architecture contract, worlds, preregs, CPU/GPU birth substrate, and unscored learning-law sanity. **No D0–D12 scoring.**
+- `D0`: 32
+- `D1`: 0
+- `D2`: 0
+- `D3`: 14
+- `D4`: 0
+- `D5`: 4
+- `D6`: 5
+- `D7`: 0
+- `D8`: 0
+- `D9`: 12
+- `D10`: 0
+- `D11`: 4
+- `D12`: 0
 
-## Environment pin (birth)
+## Diagnostic wall
 
-- `torch`: `2.13.0+cu130`
-- `torch.version.cuda`: `13.0`
-- device: `NVIDIA GB10`
-- cuDNN: `92000`
-- python: `3.12.3`
+first_fail_neural_wall: `W_persist` (need not pass; cannot negate development gate)
 
-## Sanity
+## Note
 
-- `order_ab_ba`: **pass** — `[A,B]` vs `[B,A]` different sensory `ρ` trajectories
-- `prediction`: **pass** — repeated transitions reduce `||ε||` under directed `W_pred`
-- `advantage_path`: **pass** — beneficial body transition raises responsible-action logit path; harmful lowers
-- `exploration`: **pass** — `rng_action` visits alternative ops under uncertainty
-- `write_retrieve`: **pass** — WRITE then RETRIEVE changes later trajectory vs no-write
-- `checkpoint`: **pass** — CPU continuation reproduces actions / RNG draws
-- `rho_reset`: **pass** — slow weights kept; fast activity + retrieval buffer cleared
-- `scorer_isolation`: **pass** — `scorer_only` never reaches cortex / memory / body / action updates
-- `cpu_gpu`: **pass** — same discrete ops on frozen short trajectory (tolerances documented in birth lock)
+Neural organism unchanged vs candidate. Capacity/wall diagnostic only.
 
-## Human / math audit (birth)
-
-Checked against [`cortex_architecture_contract.md`](cortex_architecture_contract.md):
-
-1. Credit order: previous-action update from `eligibility_(t-1)` completes before current sensory microticks.
-2. Sensory path is sequential (START + source → symbols → END → STATE sum); no message mean-pool.
-3. `body_state` is four physics floats; setpoint `[1,0,1,0]`; advantage uses `||body−body*||` delta minus op `cost`.
-4. Motor loop `T_max=8`; ops `{RETRIEVE,WRITE,EMIT,ACT,STOP,HOLD}`; RETRIEVE fills next-tick buffer; WRITE visible after commit.
-5. Four RNG streams checkpointed; main/twin independent registry+source seeds.
-6. Factory isolation: `make_cortex` does not import `make_interpret` / `ThreeMemoryAgent`.
-7. Held-out secrets stay sealed locally; only `eval_seed_commitment` is in prereg; smoke does not open sealed seed.
-
-Audit conclusion: learning-law sanity is sufficient for candidate freeze. **Not** a D-life earn; **not** a product stamp.
-
-## Next
-
-D0–D12 developmental scoring on a later pass (architecture-lane separate births; mature forks from n=64 only).
+**Scorer audit R2:** prior results preserved as [`cortex_development.v1.lock`](cortex_development.v1.lock) / [`.v2.lock`](cortex_development.v2.lock) / [`.v3.lock`](cortex_development.v3.lock). Fixes in [`cortex_develop_scorers.py`](../experiments/cortex_develop_scorers.py); see [`cortex_scorer_audit.amendment.lock`](cortex_scorer_audit.amendment.lock) and [`cortex_scorer_audit.r2.amendment.lock`](cortex_scorer_audit.r2.amendment.lock). Same eval commitment; contiguous `last_stage_clear`. Soft stages closed: D9 retention floor, D11 cross-lexicon, D5 known/unknown margin, D12 non-vacuous skill forks.

@@ -1,0 +1,756 @@
+{
+  "version": "TM.0.23.CORTEX.WORLDS.EVAL",
+  "body_setpoint": [
+    1.0,
+    0.0,
+    1.0,
+    0.0
+  ],
+  "worlds": [
+    {
+      "world_id": "eval_0",
+      "split": "eval",
+      "organism_events": [
+        {
+          "op": "observe",
+          "event": {
+            "interaction_token": "eval_0_ix0",
+            "source_token": "src_eval_0",
+            "ordered_symbols": [
+              "ev_0_0_476189",
+              "ev_0_1_191789"
+            ],
+            "observable_state": [
+              "st_idle"
+            ],
+            "body_state": [
+              0.5,
+              0.25,
+              0.5,
+              0.0
+            ]
+          }
+        }
+      ],
+      "scorer_only": {
+        "latent_structure": {
+          "act_effects": {
+            "press": {
+              "state": [
+                "st_pressed"
+              ],
+              "delta": [
+                0.25,
+                -0.1,
+                0.15,
+                0.0
+              ]
+            },
+            "harm": {
+              "state": [
+                "st_hurt"
+              ],
+              "delta": [
+                -0.35,
+                0.45,
+                -0.15,
+                0.0
+              ]
+            },
+            "idle": {
+              "state": [
+                "st_idle"
+              ],
+              "delta": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "get": {
+              "state": [
+                "st_got"
+              ],
+              "delta": [
+                0.1,
+                0.0,
+                0.2,
+                0.0
+              ]
+            },
+            "drop": {
+              "state": [
+                "st_drop"
+              ],
+              "delta": [
+                -0.05,
+                0.05,
+                -0.2,
+                0.0
+              ]
+            }
+          }
+        },
+        "held_out": true,
+        "target_compose": [
+          "ev_0_0_476189",
+          "ev_0_1_191789",
+          "ev_0_2_740101"
+        ]
+      }
+    },
+    {
+      "world_id": "eval_1",
+      "split": "eval",
+      "organism_events": [
+        {
+          "op": "observe",
+          "event": {
+            "interaction_token": "eval_1_ix0",
+            "source_token": "src_eval_1",
+            "ordered_symbols": [
+              "ev_1_0_421953",
+              "ev_1_1_385426"
+            ],
+            "observable_state": [
+              "st_idle"
+            ],
+            "body_state": [
+              0.5,
+              0.25,
+              0.5,
+              0.0
+            ]
+          }
+        }
+      ],
+      "scorer_only": {
+        "latent_structure": {
+          "act_effects": {
+            "press": {
+              "state": [
+                "st_pressed"
+              ],
+              "delta": [
+                0.25,
+                -0.1,
+                0.15,
+                0.0
+              ]
+            },
+            "harm": {
+              "state": [
+                "st_hurt"
+              ],
+              "delta": [
+                -0.35,
+                0.45,
+                -0.15,
+                0.0
+              ]
+            },
+            "idle": {
+              "state": [
+                "st_idle"
+              ],
+              "delta": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "get": {
+              "state": [
+                "st_got"
+              ],
+              "delta": [
+                0.1,
+                0.0,
+                0.2,
+                0.0
+              ]
+            },
+            "drop": {
+              "state": [
+                "st_drop"
+              ],
+              "delta": [
+                -0.05,
+                0.05,
+                -0.2,
+                0.0
+              ]
+            }
+          }
+        },
+        "held_out": true,
+        "target_compose": [
+          "ev_1_0_421953",
+          "ev_1_1_385426",
+          "ev_1_2_288382"
+        ]
+      }
+    },
+    {
+      "world_id": "eval_2",
+      "split": "eval",
+      "organism_events": [
+        {
+          "op": "observe",
+          "event": {
+            "interaction_token": "eval_2_ix0",
+            "source_token": "src_eval_2",
+            "ordered_symbols": [
+              "ev_2_0_903599",
+              "ev_2_1_483245"
+            ],
+            "observable_state": [
+              "st_idle"
+            ],
+            "body_state": [
+              0.5,
+              0.25,
+              0.5,
+              0.0
+            ]
+          }
+        }
+      ],
+      "scorer_only": {
+        "latent_structure": {
+          "act_effects": {
+            "press": {
+              "state": [
+                "st_pressed"
+              ],
+              "delta": [
+                0.25,
+                -0.1,
+                0.15,
+                0.0
+              ]
+            },
+            "harm": {
+              "state": [
+                "st_hurt"
+              ],
+              "delta": [
+                -0.35,
+                0.45,
+                -0.15,
+                0.0
+              ]
+            },
+            "idle": {
+              "state": [
+                "st_idle"
+              ],
+              "delta": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "get": {
+              "state": [
+                "st_got"
+              ],
+              "delta": [
+                0.1,
+                0.0,
+                0.2,
+                0.0
+              ]
+            },
+            "drop": {
+              "state": [
+                "st_drop"
+              ],
+              "delta": [
+                -0.05,
+                0.05,
+                -0.2,
+                0.0
+              ]
+            }
+          }
+        },
+        "held_out": true,
+        "target_compose": [
+          "ev_2_0_903599",
+          "ev_2_1_483245",
+          "ev_2_2_412375"
+        ]
+      }
+    },
+    {
+      "world_id": "eval_3",
+      "split": "eval",
+      "organism_events": [
+        {
+          "op": "observe",
+          "event": {
+            "interaction_token": "eval_3_ix0",
+            "source_token": "src_eval_3",
+            "ordered_symbols": [
+              "ev_3_0_161937",
+              "ev_3_1_137642"
+            ],
+            "observable_state": [
+              "st_idle"
+            ],
+            "body_state": [
+              0.5,
+              0.25,
+              0.5,
+              0.0
+            ]
+          }
+        }
+      ],
+      "scorer_only": {
+        "latent_structure": {
+          "act_effects": {
+            "press": {
+              "state": [
+                "st_pressed"
+              ],
+              "delta": [
+                0.25,
+                -0.1,
+                0.15,
+                0.0
+              ]
+            },
+            "harm": {
+              "state": [
+                "st_hurt"
+              ],
+              "delta": [
+                -0.35,
+                0.45,
+                -0.15,
+                0.0
+              ]
+            },
+            "idle": {
+              "state": [
+                "st_idle"
+              ],
+              "delta": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "get": {
+              "state": [
+                "st_got"
+              ],
+              "delta": [
+                0.1,
+                0.0,
+                0.2,
+                0.0
+              ]
+            },
+            "drop": {
+              "state": [
+                "st_drop"
+              ],
+              "delta": [
+                -0.05,
+                0.05,
+                -0.2,
+                0.0
+              ]
+            }
+          }
+        },
+        "held_out": true,
+        "target_compose": [
+          "ev_3_0_161937",
+          "ev_3_1_137642",
+          "ev_3_2_59287"
+        ]
+      }
+    },
+    {
+      "world_id": "eval_4",
+      "split": "eval",
+      "organism_events": [
+        {
+          "op": "observe",
+          "event": {
+            "interaction_token": "eval_4_ix0",
+            "source_token": "src_eval_4",
+            "ordered_symbols": [
+              "ev_4_0_517442",
+              "ev_4_1_979768"
+            ],
+            "observable_state": [
+              "st_idle"
+            ],
+            "body_state": [
+              0.5,
+              0.25,
+              0.5,
+              0.0
+            ]
+          }
+        }
+      ],
+      "scorer_only": {
+        "latent_structure": {
+          "act_effects": {
+            "press": {
+              "state": [
+                "st_pressed"
+              ],
+              "delta": [
+                0.25,
+                -0.1,
+                0.15,
+                0.0
+              ]
+            },
+            "harm": {
+              "state": [
+                "st_hurt"
+              ],
+              "delta": [
+                -0.35,
+                0.45,
+                -0.15,
+                0.0
+              ]
+            },
+            "idle": {
+              "state": [
+                "st_idle"
+              ],
+              "delta": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "get": {
+              "state": [
+                "st_got"
+              ],
+              "delta": [
+                0.1,
+                0.0,
+                0.2,
+                0.0
+              ]
+            },
+            "drop": {
+              "state": [
+                "st_drop"
+              ],
+              "delta": [
+                -0.05,
+                0.05,
+                -0.2,
+                0.0
+              ]
+            }
+          }
+        },
+        "held_out": true,
+        "target_compose": [
+          "ev_4_0_517442",
+          "ev_4_1_979768",
+          "ev_4_2_917275"
+        ]
+      }
+    },
+    {
+      "world_id": "eval_5",
+      "split": "eval",
+      "organism_events": [
+        {
+          "op": "observe",
+          "event": {
+            "interaction_token": "eval_5_ix0",
+            "source_token": "src_eval_5",
+            "ordered_symbols": [
+              "ev_5_0_342616",
+              "ev_5_1_12335"
+            ],
+            "observable_state": [
+              "st_idle"
+            ],
+            "body_state": [
+              0.5,
+              0.25,
+              0.5,
+              0.0
+            ]
+          }
+        }
+      ],
+      "scorer_only": {
+        "latent_structure": {
+          "act_effects": {
+            "press": {
+              "state": [
+                "st_pressed"
+              ],
+              "delta": [
+                0.25,
+                -0.1,
+                0.15,
+                0.0
+              ]
+            },
+            "harm": {
+              "state": [
+                "st_hurt"
+              ],
+              "delta": [
+                -0.35,
+                0.45,
+                -0.15,
+                0.0
+              ]
+            },
+            "idle": {
+              "state": [
+                "st_idle"
+              ],
+              "delta": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "get": {
+              "state": [
+                "st_got"
+              ],
+              "delta": [
+                0.1,
+                0.0,
+                0.2,
+                0.0
+              ]
+            },
+            "drop": {
+              "state": [
+                "st_drop"
+              ],
+              "delta": [
+                -0.05,
+                0.05,
+                -0.2,
+                0.0
+              ]
+            }
+          }
+        },
+        "held_out": true,
+        "target_compose": [
+          "ev_5_0_342616",
+          "ev_5_1_12335",
+          "ev_5_2_61547"
+        ]
+      }
+    },
+    {
+      "world_id": "eval_6",
+      "split": "eval",
+      "organism_events": [
+        {
+          "op": "observe",
+          "event": {
+            "interaction_token": "eval_6_ix0",
+            "source_token": "src_eval_6",
+            "ordered_symbols": [
+              "ev_6_0_521825",
+              "ev_6_1_87078"
+            ],
+            "observable_state": [
+              "st_idle"
+            ],
+            "body_state": [
+              0.5,
+              0.25,
+              0.5,
+              0.0
+            ]
+          }
+        }
+      ],
+      "scorer_only": {
+        "latent_structure": {
+          "act_effects": {
+            "press": {
+              "state": [
+                "st_pressed"
+              ],
+              "delta": [
+                0.25,
+                -0.1,
+                0.15,
+                0.0
+              ]
+            },
+            "harm": {
+              "state": [
+                "st_hurt"
+              ],
+              "delta": [
+                -0.35,
+                0.45,
+                -0.15,
+                0.0
+              ]
+            },
+            "idle": {
+              "state": [
+                "st_idle"
+              ],
+              "delta": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "get": {
+              "state": [
+                "st_got"
+              ],
+              "delta": [
+                0.1,
+                0.0,
+                0.2,
+                0.0
+              ]
+            },
+            "drop": {
+              "state": [
+                "st_drop"
+              ],
+              "delta": [
+                -0.05,
+                0.05,
+                -0.2,
+                0.0
+              ]
+            }
+          }
+        },
+        "held_out": true,
+        "target_compose": [
+          "ev_6_0_521825",
+          "ev_6_1_87078",
+          "ev_6_2_298586"
+        ]
+      }
+    },
+    {
+      "world_id": "eval_7",
+      "split": "eval",
+      "organism_events": [
+        {
+          "op": "observe",
+          "event": {
+            "interaction_token": "eval_7_ix0",
+            "source_token": "src_eval_7",
+            "ordered_symbols": [
+              "ev_7_0_282545",
+              "ev_7_1_380166"
+            ],
+            "observable_state": [
+              "st_idle"
+            ],
+            "body_state": [
+              0.5,
+              0.25,
+              0.5,
+              0.0
+            ]
+          }
+        }
+      ],
+      "scorer_only": {
+        "latent_structure": {
+          "act_effects": {
+            "press": {
+              "state": [
+                "st_pressed"
+              ],
+              "delta": [
+                0.25,
+                -0.1,
+                0.15,
+                0.0
+              ]
+            },
+            "harm": {
+              "state": [
+                "st_hurt"
+              ],
+              "delta": [
+                -0.35,
+                0.45,
+                -0.15,
+                0.0
+              ]
+            },
+            "idle": {
+              "state": [
+                "st_idle"
+              ],
+              "delta": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "get": {
+              "state": [
+                "st_got"
+              ],
+              "delta": [
+                0.1,
+                0.0,
+                0.2,
+                0.0
+              ]
+            },
+            "drop": {
+              "state": [
+                "st_drop"
+              ],
+              "delta": [
+                -0.05,
+                0.05,
+                -0.2,
+                0.0
+              ]
+            }
+          }
+        },
+        "held_out": true,
+        "target_compose": [
+          "ev_7_0_282545",
+          "ev_7_1_380166",
+          "ev_7_2_730074"
+        ]
+      }
+    }
+  ],
+  "note": "Materialized after candidate reveal. scorer_only must not enter observe."
+}

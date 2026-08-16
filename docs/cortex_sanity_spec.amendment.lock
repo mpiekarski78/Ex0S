@@ -1,0 +1,101 @@
+{
+  "version": "TM.0.23.CORTEX.SANITY.AMENDMENT",
+  "lab": "TM.0.23.CORTEX.DEVELOP",
+  "ex0s_under_test": "0.0.004",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "original_prereg": "docs/cortex.prereg.lock",
+  "original_prereg_sha": "cdf41c1543464d9ca70b67c5b6cd97554ca3086ce1f46af981ced59c217b4784",
+  "original_candidate": "docs/cortex.candidate.lock",
+  "original_candidate_sha": "60df20ec89249a550f54ab45b85c42e8d8e1da9f401035e027b7b414afb587cd",
+  "original_birth": "docs/cortex_birth.lock",
+  "original_birth_sha": "1d85d0cced451498d0dafd1af557e5d82fa8458c449bd33e4533e13cbed32013",
+  "learning_law_tests": [
+    "order_ab_ba",
+    "prediction",
+    "advantage_path",
+    "exploration",
+    "write_retrieve",
+    "checkpoint",
+    "rho_reset",
+    "scorer_isolation"
+  ],
+  "accelerator_tests": [
+    "cpu_gpu"
+  ],
+  "all_nine": [
+    "order_ab_ba",
+    "prediction",
+    "advantage_path",
+    "exploration",
+    "write_retrieve",
+    "checkpoint",
+    "rho_reset",
+    "scorer_isolation",
+    "cpu_gpu"
+  ],
+  "gate_semantics": {
+    "learning_law_ok": "all eight learning_law_tests",
+    "gpu_scoring_ready": "learning_law_ok && cpu_gpu",
+    "all_sanity_ok": "all nine"
+  },
+  "birth_evidence": {
+    "order_ab_ba": {
+      "birth_result_index": 0,
+      "ok": true,
+      "rho_distance": 3.7743755729802553
+    },
+    "prediction": {
+      "birth_result_index": 1,
+      "ok": true,
+      "early": 5.3961599266956695,
+      "late": 5.042530782032212
+    },
+    "advantage_path": {
+      "birth_result_index": 2,
+      "ok": true,
+      "adv_good": 0.5033296378372909,
+      "adv_bad": -2.732050807568877,
+      "delta": 0.03665604005850057,
+      "beneficial_increases_responsible_action_probability": true,
+      "harmful_decreases_responsible_action_probability": true,
+      "note": "Two explicit assertions; not a single hidden Boolean. Reconfirmed on frozen neural code without mechanism change."
+    },
+    "exploration": {
+      "birth_result_index": 3,
+      "ok": true,
+      "ops": ["ACT", "HOLD", "STOP"]
+    },
+    "write_retrieve": {
+      "birth_result_index": 4,
+      "ok": true,
+      "buf_norm": 6.697039384248343
+    },
+    "checkpoint": {
+      "birth_result_index": 5,
+      "ok": true
+    },
+    "rho_reset": {
+      "birth_result_index": 6,
+      "ok": true
+    },
+    "scorer_isolation": {
+      "birth_result_index": 7,
+      "ok": true
+    },
+    "cpu_gpu": {
+      "birth_result_index": 8,
+      "ok": true,
+      "device": "NVIDIA GB10",
+      "class": "accelerator_test"
+    }
+  },
+  "learning_law_ok": true,
+  "gpu_scoring_ready": true,
+  "all_sanity_ok": true,
+  "neural_mechanism_changed": false,
+  "eval_revealed": false,
+  "scored_lives_run": false,
+  "note": "Append-only amendment resolving pre-score 9-versus-10 ambiguity. Birth plan listed ten numbered checks; beneficial+harmful both live under advantage_path as two assertions; nine unique IDs = eight learning-law + cpu_gpu accelerator. Does not rewrite cortex.prereg.lock or cortex.candidate.lock from 915049c."
+}
