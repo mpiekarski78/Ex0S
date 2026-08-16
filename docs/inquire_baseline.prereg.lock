@@ -1,0 +1,25 @@
+{
+  "version": "TM.0.19.INQUIRE.BASELINE.PREREG",
+  "lab": "TM.0.19.INQUIRE",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "not_a_product_stamp": true,
+  "preregistered_claim": "Frozen SEQUENCE (make_sequence) still answers when evidence uniquely supports a referent, but equal-hypothesis ambiguity remains HOLD with inquire off \u2014 no spontaneous questioning.",
+  "fixture": "docs/inquire_fixture.json",
+  "fixture_sha": "c15055b2f3f6abd5ca9d13cacf955f85299fc6af0c8d0df253e790582e0af67b",
+  "phase_a": {
+    "factory": "experiments.run_tm018sequence.make_sequence",
+    "agent_edits_permitted": false,
+    "inquire_flag": false
+  },
+  "prior_lock_shas": {
+    "sequence.lock": "fcd4ead764bceea8b872808655d3526713d05e4e0e12d6ad35107d550d5db10c"
+  },
+  "refuse": [
+    "editing agent.py in Phase A",
+    "teacher callback",
+    "question templates",
+    "earned_next=true or non-null ex0s"
+  ]
+}

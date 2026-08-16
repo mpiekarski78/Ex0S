@@ -1,0 +1,60 @@
+{
+  "version": "TM.0.19.INQUIRE.WALL.PREREG",
+  "lab": "TM.0.19.INQUIRE.WALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "On frozen make_inquire, a preregistered wall probes conflicting teachers, partial reliability, changing rules, unanswered questions, budget limits, and interruptions. Need not fully pass; first_fail_wall diagnoses the next primitive.",
+  "fixture": "docs/inquire_fixture.json",
+  "fixture_sha": "c15055b2f3f6abd5ca9d13cacf955f85299fc6af0c8d0df253e790582e0af67b",
+  "fixture_section": "wall",
+  "factory": "experiments.run_tm019inquire.make_inquire",
+  "mechanism_changes_permitted": false,
+  "need_not_fully_pass": true,
+  "probe_ids": [
+    "W_conflict_teachers",
+    "W_partial_reliable",
+    "W_changing_rules",
+    "W_unanswered",
+    "W_budget",
+    "W_interrupt"
+  ],
+  "probes": [
+    {
+      "id": "W_conflict_teachers",
+      "note": "conflicting teachers",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_partial_reliable",
+      "note": "partially reliable sources",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_changing_rules",
+      "note": "changing rules",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_unanswered",
+      "note": "unanswered questions",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_budget",
+      "note": "limited inquiry budget",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_interrupt",
+      "note": "interruptions",
+      "expect_may_fail": true
+    }
+  ],
+  "refuse": [
+    "rewriting this prereg after seeing inquire results",
+    "adding mechanism during wall",
+    "earned_next=true or non-null ex0s"
+  ],
+  "note": "Frozen before candidate.lock. inquire_wall.lock records results only."
+}

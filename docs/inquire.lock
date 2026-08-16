@@ -1,0 +1,215 @@
+{
+  "version": "TM.0.19.INQUIRE",
+  "lab": "TM.0.19.INQUIRE",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "last_stage_clear": "I12",
+  "life_last_stage_clear": "I12",
+  "first_fail_stage": null,
+  "first_fail": null,
+  "failure_family": null,
+  "main_ok": true,
+  "twin_ok": true,
+  "capacity": {
+    "ok": true,
+    "lanes": {
+      "hypotheses_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 2,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 120,
+              "n_plan_timings": 2,
+              "p50_plan_s": 0.0009842091239988804,
+              "p95_plan_s": 0.00195467472076416
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 130,
+              "n_plan_timings": 2,
+              "p50_plan_s": 0.001101730391383171,
+              "p95_plan_s": 0.0021860040724277496
+            }
+          },
+          {
+            "rung": 8,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 150,
+              "n_plan_timings": 2,
+              "p50_plan_s": 0.0013684420846402645,
+              "p95_plan_s": 0.0027124518528580666
+            }
+          },
+          {
+            "rung": 16,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 190,
+              "n_plan_timings": 2,
+              "p50_plan_s": 0.0020278189331293106,
+              "p95_plan_s": 0.004016390070319176
+            }
+          }
+        ]
+      },
+      "depth_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 1,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 120,
+              "n_plan_timings": 1,
+              "p50_plan_s": 0.0,
+              "p95_plan_s": 0.0
+            }
+          },
+          {
+            "rung": 2,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 138,
+              "n_plan_timings": 1,
+              "p50_plan_s": 0.0,
+              "p95_plan_s": 0.0
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 238,
+              "n_plan_timings": 1,
+              "p50_plan_s": 0.0,
+              "p95_plan_s": 0.0
+            }
+          }
+        ]
+      },
+      "age_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 100,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 120,
+              "n_plan_timings": 2,
+              "p50_plan_s": 0.0010056179016828537,
+              "p95_plan_s": 0.001997123472392559
+            }
+          },
+          {
+            "rung": 1000,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 120,
+              "n_plan_timings": 2,
+              "p50_plan_s": 0.0009905453771352768,
+              "p95_plan_s": 0.00196697935461998
+            }
+          },
+          {
+            "rung": 10000,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 120,
+              "n_plan_timings": 2,
+              "p50_plan_s": 0.0010268096812069416,
+              "p95_plan_s": 0.002039507031440735
+            }
+          }
+        ]
+      },
+      "source_count_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 1,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 116,
+              "n_plan_timings": 2,
+              "p50_plan_s": 0.0009728651493787766,
+              "p95_plan_s": 0.001932978630065918
+            }
+          },
+          {
+            "rung": 2,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 120,
+              "n_plan_timings": 2,
+              "p50_plan_s": 0.000986841507256031,
+              "p95_plan_s": 0.0019596992060542107
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 128,
+              "n_plan_timings": 2,
+              "p50_plan_s": 0.0010685776360332966,
+              "p95_plan_s": 0.0021205469965934753
+            }
+          }
+        ]
+      }
+    }
+  },
+  "wall_metrics": {
+    "main": {
+      "s_row_count": 231,
+      "n_plan_timings": 15,
+      "p50_plan_s": 0.0022903401404619217,
+      "p95_plan_s": 0.003988694399595261
+    },
+    "twin": {
+      "s_row_count": 116,
+      "n_plan_timings": 2,
+      "p50_plan_s": 0.0009588492102921009,
+      "p95_plan_s": 0.0019046906381845474
+    }
+  },
+  "fixture_sha": "c15055b2f3f6abd5ca9d13cacf955f85299fc6af0c8d0df253e790582e0af67b",
+  "inquire_baseline_prereg_sha": "9534a74f1443014e3d703ed3c9e1f9498411daffce58218054963c38376ff67a",
+  "inquire_mech_prereg_sha": "48bdfd5c96b37ee935ce62f1ebebb89baf813b0766d391b87a55a72d948360d5",
+  "inquire_wall_prereg_sha": "6fb465c7bd5b87c3286a2fad55f044db58704e1a8bdfa2af4daea5d088f5a0ef",
+  "candidate_sha": "213d13925c47ded399c7a5ab6f1e8ac20aa760dc49f39cf8dc8efb3231fc655f",
+  "agent_sha": "1d58c37412dccdb08ced5aedf7383602c4bb4f9026767050d0cfa278e95d0186",
+  "run_tm019inquire_sha": "6362ac586092eb138115e827d9fd75960650fcc0ffe8d83462c634c1f206bfa6",
+  "refuse": [
+    "teacher callback inside plan_inquiry",
+    "route LOOKAHEAD / multi-step search",
+    "reliability weighting in candidate",
+    "earned_next=true or non-null ex0s / Ex0S 1.0",
+    "silently replacing inquire.candidate.lock"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "version": "TM.0.19.INQUIRE.WALL",
+  "lab": "TM.0.19.INQUIRE.WALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": false,
+  "scored_probes_ok": true,
+  "need_not_fully_pass": true,
+  "first_fail_wall": {
+    "id": "W_conflict_teachers",
+    "ok": false,
+    "actual": "deferred_next_primitive",
+    "note": "conflicting teachers"
+  },
+  "next_primitive_hint": "conflicting teachers",
+  "probes": [
+    {
+      "id": "W_conflict_teachers",
+      "ok": false,
+      "actual": "deferred_next_primitive",
+      "note": "conflicting teachers"
+    },
+    {
+      "id": "W_partial_reliable",
+      "ok": false,
+      "actual": "deferred_next_primitive",
+      "note": "partially reliable sources"
+    },
+    {
+      "id": "W_changing_rules",
+      "ok": false,
+      "actual": "deferred_next_primitive",
+      "note": "changing rules"
+    },
+    {
+      "id": "W_unanswered",
+      "ok": true,
+      "actual": "HOLD",
+      "note": "unanswered questions"
+    },
+    {
+      "id": "W_budget",
+      "ok": true,
+      "actual": "budget_exhausted",
+      "note": "limited inquiry budget"
+    },
+    {
+      "id": "W_interrupt",
+      "ok": true,
+      "actual": "ANSWER",
+      "note": "interruptions"
+    }
+  ],
+  "fixture_sha": "c15055b2f3f6abd5ca9d13cacf955f85299fc6af0c8d0df253e790582e0af67b",
+  "inquire_wall_prereg_sha": "6fb465c7bd5b87c3286a2fad55f044db58704e1a8bdfa2af4daea5d088f5a0ef",
+  "inquire_lock_sha": "cf8949a51ea9f6465f5db2c7627980d386fcf2e7219d6f5cd3f174d85f24354f",
+  "agent_sha": "1d58c37412dccdb08ced5aedf7383602c4bb4f9026767050d0cfa278e95d0186",
+  "run_tm019inquire_sha": "6362ac586092eb138115e827d9fd75960650fcc0ffe8d83462c634c1f206bfa6",
+  "note": "Results only. Do not rewrite wall prereg. Deferred = source reliability / deeper planning / goals."
+}

@@ -1882,3 +1882,13 @@ Phase A baseline PASS. Sequence unit cells **6/6**. Life cleared through **E12**
 
 Prereg: [`sequence_baseline.prereg.lock`](sequence_baseline.prereg.lock), [`sequence_mech.prereg.lock`](sequence_mech.prereg.lock), [`sequence_dialogue.prereg.lock`](sequence_dialogue.prereg.lock). Contract: [`sequence_evidence_contract.md`](sequence_evidence_contract.md). Fixture: [`sequence_fixture.json`](sequence_fixture.json). Locks: [`sequence_baseline.lock`](sequence_baseline.lock), [`sequence.candidate.lock`](sequence.candidate.lock), [`sequence_mech.lock`](sequence_mech.lock), [`sequence.lock`](sequence.lock), [`sequence_dialogue.lock`](sequence_dialogue.lock). Apparatus: `experiments/run_tm018sequence.py`. Results: [`tm018sequence_results.md`](tm018sequence_results.md).
 
+## TM.0.19.INQUIRE — active evidence acquisition
+
+Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=null`. Not 0.0.005 / FAMILY / Ex0S 1.0. Bounded **one-step** epistemic lookahead (not route LOOKAHEAD). No LLM, question templates, harness prediction tables, or teacher callback inside `plan_inquiry`.
+
+Stacks on frozen SEQUENCE via `make_sequence`. One package: (A) baseline confident-ANSWER / ambiguous-HOLD with inquire off; (B) default-off `use_inquire` / `plan_inquiry` / `experience_inquire` (plans/traces only; consequences via ordinary grounding); minimax partition value then locked cost; budget **8**; (C) I0–I12 + twin + unconfounded capacity lanes; wall preregistered before candidate score (results-only lock; reliability deferred).
+
+Phase A baseline PASS. Inquire unit cells **6/6**. Life cleared through **I12** (capacity launch). Wall: scored probes pass; `first_fail_wall=W_conflict_teachers` → next primitive **source reliability**.
+
+Prereg: [`inquire_baseline.prereg.lock`](inquire_baseline.prereg.lock), [`inquire_mech.prereg.lock`](inquire_mech.prereg.lock), [`inquire_wall.prereg.lock`](inquire_wall.prereg.lock). Contract: [`inquire_evidence_contract.md`](inquire_evidence_contract.md). Fixture: [`inquire_fixture.json`](inquire_fixture.json). Locks: [`inquire_baseline.lock`](inquire_baseline.lock), [`inquire.candidate.lock`](inquire.candidate.lock), [`inquire_mech.lock`](inquire_mech.lock), [`inquire.lock`](inquire.lock), [`inquire_wall.lock`](inquire_wall.lock). Apparatus: `experiments/run_tm019inquire.py`. Results: [`tm019inquire_results.md`](tm019inquire_results.md).
+

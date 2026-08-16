@@ -64,7 +64,7 @@ Ex0S 0.0.004  ←  TM.0.13.FAMILY
 
 Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enough to treat as a lineage, not only a series of demos.
 
-**Next:** discuss capability naming for SYMBOLWORLD only if desired; product stamp stays a human decision (`ex0s=null`). No Ex0S 1.0.
+**Next:** wall hint after INQUIRE is **source reliability** (conflicting / partially reliable teachers). Product stamp stays a human decision (`ex0s=null`). No Ex0S 1.0.
 
 ## Question
 
@@ -74,7 +74,7 @@ Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enou
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status: **Ex0S 0.0.004 — Contextual Composition** (TM.0.13.FAMILY **288/288** planted contextual worlds). TM.0.14.ACQUIRE **16/16** then FAMILY **288/288** (`earned_next=true`, **`ex0s=null`**). TM.0.15.SKELETON **16/16** observed-transition acquisition (`earned_next=false`). TM.0.16.RELATE **16/16** candidate relations under ambiguity (`earned_next=false`). TM.0.16.ALIASWALL **6/6** opaque-alias Kill on frozen RELATE (`earned_next=false`). TM.0.16.ALIASFINGER **7/7** opt-in behavioral fingerprints complete Kill routes without rewriting `experience_skel`. TM.0.16.GAPWALL **6/6** measures empty-event skip, episode loss, distractor fragmentation, and two-peer HOLD on that frozen organism (`earned_next=false`, **`ex0s=null`**). Continuity-evidence contract: [`docs/continuity_evidence_contract.md`](docs/continuity_evidence_contract.md). TM.0.16.PERSIST **9/9** opt-in mark-continuity persistence under that contract (`earned_next=false`, **`ex0s=null`**). TM.0.16.LIFEWALL cleared through **32** concurrent histories on one interleaved lifetime + twin (`earned_next=false`, **`ex0s=null`**). TM.0.17.SYMBOLWORLD cleared through **S10** grounded symbolic learning (`earned_next=false`, **`ex0s=null`**). **B Fail** on the no-cue English motor bar stays. See [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md).
+Honest status: **Ex0S 0.0.004 — Contextual Composition** (TM.0.13.FAMILY **288/288** planted contextual worlds). TM.0.14.ACQUIRE **16/16** then FAMILY **288/288** (`earned_next=true`, **`ex0s=null`**). TM.0.15.SKELETON **16/16** observed-transition acquisition (`earned_next=false`). TM.0.16.RELATE **16/16** candidate relations under ambiguity (`earned_next=false`). TM.0.16.ALIASWALL **6/6** opaque-alias Kill on frozen RELATE (`earned_next=false`). TM.0.16.ALIASFINGER **7/7** opt-in behavioral fingerprints complete Kill routes without rewriting `experience_skel`. TM.0.16.GAPWALL **6/6** measures empty-event skip, episode loss, distractor fragmentation, and two-peer HOLD on that frozen organism (`earned_next=false`, **`ex0s=null`**). Continuity-evidence contract: [`docs/continuity_evidence_contract.md`](docs/continuity_evidence_contract.md). TM.0.16.PERSIST **9/9** opt-in mark-continuity persistence under that contract (`earned_next=false`, **`ex0s=null`**). TM.0.16.LIFEWALL cleared through **32** concurrent histories on one interleaved lifetime + twin (`earned_next=false`, **`ex0s=null`**). TM.0.17.SYMBOLWORLD cleared through **S10** grounded symbolic learning (`earned_next=false`, **`ex0s=null`**). TM.0.18.SEQUENCE cleared through **E12** grounded symbolic expression (`earned_next=false`, **`ex0s=null`**). TM.0.19.INQUIRE cleared through **I12** active evidence acquisition; wall → source reliability (`earned_next=false`, **`ex0s=null`**). **B Fail** on the no-cue English motor bar stays. See [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md).
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -153,6 +153,9 @@ TM.0.12.MIDPATH endpoint vs interior: [`docs/tm012midpath_results.md`](docs/tm01
 TM.0.12.ROUTESIG order (phase 1): [`docs/tm012routesig_results.md`](docs/tm012routesig_results.md).
 TM.0.12.ROUTESIG.DEPTH fixed windows vs κ: [`docs/tm012routesig_depth_results.md`](docs/tm012routesig_depth_results.md).
 TM.0.12.ROUTESIG.IDENTITY storage-row vs relation identity: [`docs/tm012routesig_identity_results.md`](docs/tm012routesig_identity_results.md).
+TM.0.17.SYMBOLWORLD grounded symbolic learning (S10): [`docs/tm017symbolworld_results.md`](docs/tm017symbolworld_results.md).
+TM.0.18.SEQUENCE grounded symbolic expression (E12): [`docs/tm018sequence_results.md`](docs/tm018sequence_results.md).
+TM.0.19.INQUIRE active evidence acquisition (I12): [`docs/tm019inquire_results.md`](docs/tm019inquire_results.md).
 Ex0S lineage: [`docs/ex0s.md`](docs/ex0s.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
@@ -390,6 +393,8 @@ python tests/test_tm093.py
 python tests/test_tm094.py
 python tests/test_tm010family.py
 python tests/test_tm011compose.py
+python tests/test_tm018sequence.py
+python tests/test_tm019inquire.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1

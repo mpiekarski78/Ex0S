@@ -1,0 +1,48 @@
+{
+  "version": "TM.0.19.INQUIRE.MECH.PREREG",
+  "lab": "TM.0.19.INQUIRE.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "An opt-in recipe may derive competing hypotheses from factorized S evidence, score one-step epistemic partition value then locked cost, and return plan_inquiry \u2192 ANSWER | PROBE_ATOMS | SYMBOLIC_ACTION | HOLD without calling the teacher. Host-executed consequences enter ordinary grounding channels; experience_inquire stores plans/traces only. Budget 8; scored depth \u2264 4; inquiry metadata alone never substitutes for world evidence.",
+  "flag": "use_inquire",
+  "flag_default": false,
+  "requires": "use_symbol_sequence",
+  "source": "experience_inquire",
+  "plan_abi": "plan_inquiry",
+  "channel_key_rule_plan": "set(info)=={context_atoms,input_symbols}",
+  "channel_key_rule_trace": "set(info)=={context_atoms,input_symbols,probe_kind,probe_atoms,predicted_partition,cost,phase}",
+  "statuses": [
+    "ANSWER",
+    "PROBE_ATOMS",
+    "SYMBOLIC_ACTION",
+    "HOLD"
+  ],
+  "value_metric": "value(p)=|H|-max_bucket; then min locked cost; unique winner else HOLD",
+  "inquire_budget": 8,
+  "scored_depth_max": 4,
+  "cost_ask": 2,
+  "cost_experiment": 5,
+  "epistemic": "one_step_replan",
+  "dual_memory": true,
+  "factory": "experiments.run_tm019inquire.make_inquire",
+  "cell_ids": [
+    "U0_flag_off",
+    "U1_reject",
+    "U2_equal_hyp",
+    "U3_zero_value",
+    "U4_confident",
+    "U5_dual_memory"
+  ],
+  "refuse": [
+    "candidate SHAs in this prereg",
+    "teacher callback inside plan_inquiry",
+    "harness prediction tables as organism input",
+    "question templates / correct_question",
+    "route LOOKAHEAD / multi-step search",
+    "reliability weighting in candidate",
+    "earned_next=true or non-null ex0s"
+  ],
+  "expression": "PROBE_ATOMS/SYMBOLIC_ACTION require unique emit_sequence(ctx, probe_atoms)==probe_atoms else HOLD cannot_express",
+  "i7_support_arithmetic": "conflict host answer applies result=failure to each live cue\u2194hyp row; net support via _grounding_support; observed factor excluded; no unique hyp \u2192 HOLD"
+}

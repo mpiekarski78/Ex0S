@@ -117,6 +117,7 @@ class ThreeMemoryAgent:
         use_continuity_mark: bool = False,
         use_symbol_ground: bool = False,
         use_symbol_sequence: bool = False,
+        use_inquire: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -240,6 +241,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_symbol_ground requires use_acquire_relate")
         if use_symbol_sequence and not use_symbol_ground:
             raise ValueError("use_symbol_sequence requires use_symbol_ground")
+        if use_inquire and not use_symbol_sequence:
+            raise ValueError("use_inquire requires use_symbol_sequence")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -317,6 +320,11 @@ class ThreeMemoryAgent:
         self.use_continuity_mark = use_continuity_mark
         self.use_symbol_ground = use_symbol_ground
         self.use_symbol_sequence = use_symbol_sequence
+        self.use_inquire = use_inquire
+        self.inquire_budget = 8
+        self.inquire_cost_ask = 2
+        self.inquire_cost_experiment = 5
+        self._inquire_probes_used = 0
         self.first_internal_fail: dict[str, Any] | None = None
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
@@ -447,6 +455,7 @@ class ThreeMemoryAgent:
             use_continuity_mark=self.use_continuity_mark,
             use_symbol_ground=self.use_symbol_ground,
             use_symbol_sequence=self.use_symbol_sequence,
+            use_inquire=self.use_inquire,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -2498,6 +2507,344 @@ class ThreeMemoryAgent:
         out["first_internal_fail"] = fail
         out["why"] = "cap_hold"
         return out
+
+    def observe_inquire_trace(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """Author experience_inquire plan/trace rows only (not world consequences)."""
+        required = {
+            "context_atoms",
+            "input_symbols",
+            "probe_kind",
+            "probe_atoms",
+            "predicted_partition",
+            "cost",
+            "phase",
+        }
+        allowed_kinds = {"ask", "experiment"}
+        allowed_phases = {"propose", "observed"}
+        out: dict[str, Any] = {"ok": False, "wrote": False, "why": ""}
+        if not self.use_inquire or not self.store.enabled:
+            out["why"] = "inquire_off"
+            return out
+        if not isinstance(info, dict) or set(info.keys()) != required:
+            out["why"] = "exact_key_reject"
+            return out
+        kind = str(info["probe_kind"]).strip().lower()
+        phase = str(info["phase"]).strip().lower()
+        if kind not in allowed_kinds or phase not in allowed_phases:
+            out["why"] = "kind_or_phase_reject"
+            return out
+        ctx = [str(x).strip().lower() for x in info["context_atoms"] if str(x).strip()]
+        inp = [str(x).strip().lower() for x in info["input_symbols"] if str(x).strip()]
+        atoms = [str(x).strip().lower() for x in info["probe_atoms"] if str(x).strip()]
+        part = str(info["predicted_partition"]).strip().lower()
+        try:
+            cost = int(info["cost"])
+        except (TypeError, ValueError):
+            out["why"] = "bad_cost"
+            return out
+        if not ctx or not inp or not atoms or not part or cost < 0:
+            out["why"] = "empty_field"
+            return out
+        if any("|" in x for x in ctx + inp + atoms):
+            out["why"] = "pipe_in_token"
+            return out
+        tags: dict[str, Any] = {
+            "context_atoms": "|".join(sorted(ctx)),
+            "input_symbols": "|".join(inp),
+            "probe_kind": kind,
+            "probe_atoms": "|".join(atoms),
+            "predicted_partition": part,
+            "cost": cost,
+            "phase": phase,
+            "source": "experience_inquire",
+            "hyp": "supported",
+            "support": 1,
+        }
+        n = len(self.store.records())
+        fid = f"inquire_{n:04d}_{kind}_{phase}"
+        rec = FactRecord(
+            fact_id=fid,
+            what=encode_tags(tags),
+            when=int(self.t),
+            drive_scores={},
+            tags=tags,
+        )
+        self.store.write(rec)
+        out["ok"] = True
+        out["wrote"] = True
+        out["why"] = "authored"
+        return out
+
+    def _inquire_rows(self) -> list[FactRecord]:
+        return [
+            r
+            for r in self.store.records()
+            if str(r.tags.get("source") or "") == "experience_inquire"
+        ]
+
+    def _inquire_cue(self, input_symbols: Sequence[str]) -> str | None:
+        toks = [str(x).strip().lower() for x in input_symbols if str(x).strip()]
+        if not toks:
+            return None
+        # Last contentful token is the cue (e.g. what/is/dax → dax; dax → dax)
+        return toks[-1]
+
+    def _inquire_hypotheses(self, cue: str, *, min_support: int) -> list[str]:
+        scores = self._grounding_support().get(cue) or {}
+        if not scores:
+            return []
+        ranked = sorted(scores.items(), key=lambda kv: (-kv[1], kv[0]))
+        best = ranked[0][1]
+        if best < min_support:
+            return []
+        return [tok for tok, sc in ranked if sc == best and sc >= min_support]
+
+    def _inquire_factors(self, referent: str, *, min_support: int) -> set[str]:
+        """Factors attested for a referent: grounding rows with symbol=referent."""
+        out: set[str] = set()
+        bag = self._grounding_support().get(referent) or {}
+        for paired, sc in bag.items():
+            if sc >= min_support:
+                out.add(paired)
+        return out
+
+    def _inquire_predicted_outcome(self, hyp: str, factor: str, *, min_support: int) -> str:
+        factors = self._inquire_factors(hyp, min_support=min_support)
+        return "yes" if factor in factors else "no"
+
+    def _inquire_probe_candidates(
+        self, hyps: Sequence[str], *, min_support: int
+    ) -> list[dict[str, Any]]:
+        """Generate ask/experiment probes from factor disagreement + S-justified predictions."""
+        if len(hyps) < 2:
+            return []
+        factor_sets = {h: self._inquire_factors(h, min_support=min_support) for h in hyps}
+        all_factors: set[str] = set()
+        for fs in factor_sets.values():
+            all_factors |= fs
+        # Disagreement: factor not shared by all hyps
+        disagree = [
+            f
+            for f in sorted(all_factors)
+            if any(f in factor_sets[h] for h in hyps)
+            and any(f not in factor_sets[h] for h in hyps)
+        ]
+        cands: list[dict[str, Any]] = []
+        for factor in disagree:
+            # Justified prediction: every hyp has a definite yes/no from S factors
+            partition: dict[str, list[str]] = {}
+            justified = True
+            for h in hyps:
+                # Require positive factor evidence somewhere for this factor among hyps
+                # Outcome is yes/no from membership; always justified if factor appears in union
+                o = self._inquire_predicted_outcome(h, factor, min_support=min_support)
+                partition.setdefault(o, []).append(h)
+            if not justified:
+                continue
+            value = len(hyps) - max(len(v) for v in partition.values())
+            if value <= 0:
+                continue
+            part_key = "|".join(
+                f"{o}:{','.join(sorted(hs))}" for o, hs in sorted(partition.items())
+            )
+            cands.append(
+                {
+                    "kind": "ask",
+                    "atoms": ["ask", factor],
+                    "factor": factor,
+                    "value": value,
+                    "cost": int(self.inquire_cost_ask),
+                    "partition": part_key,
+                }
+            )
+            # Experiment variant: same partition, different cost (from S: if act_* linked to factor)
+            act = f"do_{factor}"
+            # Only offer experiment if S has grounding for the action token
+            act_scores = self._grounding_support().get(act) or {}
+            if any(sc >= min_support for sc in act_scores.values()) or any(
+                int((self._grounding_support().get(h) or {}).get(act, 0)) >= min_support
+                for h in hyps
+            ):
+                cands.append(
+                    {
+                        "kind": "experiment",
+                        "atoms": ["act", factor],
+                        "factor": factor,
+                        "value": value,
+                        "cost": int(self.inquire_cost_experiment),
+                        "partition": part_key,
+                    }
+                )
+        return cands
+
+    def _inquire_already_resolved_factor(self, cue: str, factor: str) -> bool:
+        """True if inquire trace already observed this factor probe for cue inputs containing cue."""
+        for rec in self._inquire_rows():
+            if str(rec.tags.get("phase") or "") != "observed":
+                continue
+            atoms = str(rec.tags.get("probe_atoms") or "")
+            if factor in atoms.split("|"):
+                return True
+        return False
+
+    def _inquire_render_probe(
+        self,
+        context_atoms: Sequence[str],
+        probe_atoms: Sequence[str],
+        *,
+        min_support: int = 2,
+    ) -> list[str] | None:
+        """Render probe via frozen emit_sequence. None → cannot ask (HOLD)."""
+        want = [str(x).strip().lower() for x in probe_atoms if str(x).strip()]
+        if not want:
+            return None
+        # Probe identity is the intended atom list used as emit input_symbols.
+        rendered = self.emit_sequence(
+            list(context_atoms), want, min_support=min_support
+        )
+        seq = rendered.get("sequence")
+        if not seq:
+            return None
+        got = [str(x).strip().lower() for x in seq if str(x).strip()]
+        if got != want:
+            return None
+        return got
+
+    def plan_inquiry(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """One-step epistemic plan: ANSWER | PROBE_ATOMS | SYMBOLIC_ACTION | HOLD.
+
+        Does not call the teacher. Host executes probes and writes consequences via
+        ordinary observation ABIs, then calls plan_inquiry again.
+        PROBE_ATOMS / SYMBOLIC_ACTION require unique render via frozen emit_sequence.
+        """
+        required = {"context_atoms", "input_symbols"}
+        out: dict[str, Any] = {
+            "ok": True,
+            "status": "HOLD",
+            "answer_symbols": None,
+            "probe_atoms": None,
+            "action_symbol": None,
+            "why": "hold",
+            "value": None,
+            "cost": None,
+        }
+        if not self.use_inquire:
+            out["why"] = "inquire_off"
+            return out
+        if not isinstance(info, dict) or set(info.keys()) != required:
+            out["why"] = "exact_key_reject"
+            out["ok"] = False
+            return out
+        ctx = [str(x).strip().lower() for x in info["context_atoms"] if str(x).strip()]
+        inp = [str(x).strip().lower() for x in info["input_symbols"] if str(x).strip()]
+        if not ctx or not inp:
+            out["why"] = "empty_probe"
+            return out
+        min_support = 2
+        cue = self._inquire_cue(inp)
+        if cue is None:
+            out["why"] = "no_cue"
+            return out
+        hyps = self._inquire_hypotheses(cue, min_support=min_support)
+        if not hyps:
+            out["why"] = "no_hypotheses"
+            return out
+        if len(hyps) == 1:
+            out["status"] = "ANSWER"
+            out["answer_symbols"] = [hyps[0]]
+            out["why"] = "unique_hypothesis"
+            return out
+        # Ambiguous: need a justified discriminating probe
+        if self._inquire_probes_used >= int(self.inquire_budget):
+            out["why"] = "budget_exhausted"
+            return out
+        cands = self._inquire_probe_candidates(hyps, min_support=min_support)
+        # Drop probes already observed
+        cands = [
+            c
+            for c in cands
+            if not self._inquire_already_resolved_factor(cue, c["factor"])
+        ]
+        # Expression gate: only probes uniquely renderable by emit_sequence
+        expressible: list[dict[str, Any]] = []
+        for c in cands:
+            rendered = self._inquire_render_probe(
+                ctx, c["atoms"], min_support=min_support
+            )
+            if rendered is None:
+                continue
+            row = dict(c)
+            row["rendered"] = rendered
+            expressible.append(row)
+        if not expressible:
+            out["why"] = "cannot_express" if cands else "no_justified_probe"
+            return out
+        cands = expressible
+        # Max value, then min cost; unique winner required
+        best_val = max(c["value"] for c in cands)
+        top = [c for c in cands if c["value"] == best_val]
+        best_cost = min(c["cost"] for c in top)
+        winners = [c for c in top if c["cost"] == best_cost]
+        # Unique by (kind, atoms) — if multiple distinct probes tie, HOLD
+        keys = {(w["kind"], tuple(w["atoms"])) for w in winners}
+        if len(keys) != 1:
+            out["why"] = "probe_tie"
+            return out
+        w = winners[0]
+        probe_atoms = list(w["rendered"])
+        # Record propose trace
+        self.observe_inquire_trace(
+            {
+                "context_atoms": ctx,
+                "input_symbols": inp,
+                "probe_kind": w["kind"],
+                "probe_atoms": probe_atoms,
+                "predicted_partition": w["partition"],
+                "cost": w["cost"],
+                "phase": "propose",
+            }
+        )
+        out["value"] = w["value"]
+        out["cost"] = w["cost"]
+        if w["kind"] == "ask":
+            out["status"] = "PROBE_ATOMS"
+            out["probe_atoms"] = probe_atoms
+            out["why"] = "discriminating_ask"
+        else:
+            out["status"] = "SYMBOLIC_ACTION"
+            out["action_symbol"] = probe_atoms[-1] if probe_atoms else None
+            out["probe_atoms"] = probe_atoms
+            out["why"] = "discriminating_experiment"
+        return out
+
+    def note_inquire_observation(
+        self,
+        *,
+        context_atoms: Sequence[str],
+        input_symbols: Sequence[str],
+        probe_kind: str,
+        probe_atoms: Sequence[str],
+        cost: int,
+        predicted_partition: str = "observed",
+    ) -> None:
+        """Host marks that a proposed probe was executed (trace only)."""
+        if not self.use_inquire:
+            return
+        self._inquire_probes_used += 1
+        self.observe_inquire_trace(
+            {
+                "context_atoms": list(context_atoms),
+                "input_symbols": list(input_symbols),
+                "probe_kind": probe_kind,
+                "probe_atoms": list(probe_atoms),
+                "predicted_partition": predicted_partition,
+                "cost": int(cost),
+                "phase": "observed",
+            }
+        )
+
+    def reset_inquire_budget(self) -> None:
+        self._inquire_probes_used = 0
 
     def _find_experience_skel(self, bind: str, did: str) -> FactRecord | None:
         bl, dl = bind.lower(), did.lower()

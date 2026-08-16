@@ -1,0 +1,51 @@
+{
+  "version": "TM.0.19.INQUIRE.MECH",
+  "lab": "TM.0.19.INQUIRE.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "n_pass": 6,
+  "n_cells": 6,
+  "cells": [
+    {
+      "cell": "U0_flag_off",
+      "ok": true,
+      "actual": "HOLD",
+      "why": "pass"
+    },
+    {
+      "cell": "U1_reject",
+      "ok": true,
+      "actual": "exact_key_reject",
+      "why": "pass"
+    },
+    {
+      "cell": "U2_equal_hyp",
+      "ok": true,
+      "actual": "ANSWER",
+      "why": "pass"
+    },
+    {
+      "cell": "U3_zero_value",
+      "ok": true,
+      "actual": "HOLD",
+      "why": "pass"
+    },
+    {
+      "cell": "U4_confident",
+      "ok": true,
+      "actual": "ANSWER",
+      "why": "pass"
+    },
+    {
+      "cell": "U5_dual_memory",
+      "ok": true,
+      "actual": "ANSWER",
+      "why": "pass"
+    }
+  ],
+  "agent_sha": "1d58c37412dccdb08ced5aedf7383602c4bb4f9026767050d0cfa278e95d0186",
+  "candidate_sha": "213d13925c47ded399c7a5ab6f1e8ac20aa760dc49f39cf8dc8efb3231fc655f",
+  "run_tm019inquire_sha": "6362ac586092eb138115e827d9fd75960650fcc0ffe8d83462c634c1f206bfa6"
+}
