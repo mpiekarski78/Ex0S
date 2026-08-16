@@ -114,7 +114,10 @@ def test_birth_and_candidate_frozen() -> None:
     assert CANDIDATE_LOCK.exists()
     assert CANDIDATE_V1.exists()
     cand = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
-    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V11":
+    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V12":
+        v12_birth = json.loads((REPO_ROOT / "docs" / "cortex_v12_birth.lock").read_text(encoding="utf-8"))
+        assert v12_birth["learning_law_ok"] is True
+    elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V11":
         v11_birth = json.loads((REPO_ROOT / "docs" / "cortex_v11_birth.lock").read_text(encoding="utf-8"))
         assert v11_birth["learning_law_ok"] is True
     elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V10":
@@ -194,12 +197,15 @@ def test_diag_and_v4_gate() -> None:
     assert (REPO_ROOT / "docs" / "cortex.candidate.v5.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v6.lock").exists()
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    v12 = REPO_ROOT / "docs" / "cortex.candidate.v12.lock"
     v11 = REPO_ROOT / "docs" / "cortex.candidate.v11.lock"
     v10 = REPO_ROOT / "docs" / "cortex.candidate.v10.lock"
     v9 = REPO_ROOT / "docs" / "cortex.candidate.v9.lock"
     v8 = REPO_ROOT / "docs" / "cortex.candidate.v8.lock"
     v7 = REPO_ROOT / "docs" / "cortex.candidate.v7.lock"
-    if v11.exists():
+    if v12.exists():
+        assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V12"
+    elif v11.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V11"
     elif v10.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V10"
@@ -354,7 +360,6 @@ def test_v9_candidate_boundary_pending_gate() -> None:
     assert cand["version"] == "TM.0.23.CORTEX.CANDIDATE.V9"
     assert cand["earned_next"] is False
     assert cand["ex0s"] is None
-    assert cand["neural_cortex_sha"] == sha(NEURAL_PY)
     v7 = json.loads((REPO_ROOT / "docs" / "cortex.candidate.v7.lock").read_text(encoding="utf-8"))
     assert cand["neural_cortex_sha"] == v7["neural_cortex_sha"]
     mact = json.loads((REPO_ROOT / "docs" / "cortex_mact_boundary.v9.lock").read_text(encoding="utf-8"))
@@ -497,6 +502,38 @@ def test_verify_v11_gate_cli() -> None:
         assert gate["battery"]["stage_ok_counts"]["D1"] == 32
         iso = json.loads((REPO_ROOT / "docs" / "cortex_v12.isolation.lock").read_text(encoding="utf-8"))
         assert "DEVELOP.v11 on any worlds" in iso["refuse"]
+
+
+def test_v12_candidate_boundary_pending_gate() -> None:
+    cand_p = REPO_ROOT / "docs" / "cortex.candidate.v12.lock"
+    if not cand_p.exists():
+        return
+    cand = json.loads(cand_p.read_text(encoding="utf-8"))
+    assert cand["version"] == "TM.0.23.CORTEX.CANDIDATE.V12"
+    assert cand["earned_next"] is False
+    assert cand["ex0s"] is None
+    assert cand["neural_cortex_sha"] == sha(NEURAL_PY)
+    v11 = json.loads((REPO_ROOT / "docs" / "cortex.candidate.v11.lock").read_text(encoding="utf-8"))
+    assert cand["neural_cortex_sha"] != v11["neural_cortex_sha"]
+    mact = json.loads((REPO_ROOT / "docs" / "cortex_mact_boundary.v12.lock").read_text(encoding="utf-8"))
+    assert mact["all_required_green"] is True
+    required = {"C4_consequence_swap_timed", "C5_plasticity_necessity", "C6_no_consequence_population"}
+    assert required.issubset({c["id"] for c in mact["controls"] if c.get("ok")})
+    assert not (REPO_ROOT / "docs" / "cortex_development.v12.lock").exists()
+    prereg = json.loads((REPO_ROOT / "docs" / "cortex_v12.prereg.lock").read_text(encoding="utf-8"))
+    v11p = json.loads((REPO_ROOT / "docs" / "cortex_v11.prereg.lock").read_text(encoding="utf-8"))
+    assert prereg["eval_seed_commitment"] != v11p["eval_seed_commitment"]
+    assert prereg["authorized_law"] == "surprise_conflict_hold"
+    assert prereg["d2_conflict"] == "swapped_press_harm"
+    gate_p = REPO_ROOT / "docs" / "cortex_v12_gate.lock"
+    if gate_p.exists():
+        gate = json.loads(gate_p.read_text(encoding="utf-8"))
+        if gate["sensorimotor_association_gate_clear"]:
+            assert gate["battery"]["n_pair_clear"] >= 13
+        else:
+            assert not (REPO_ROOT / "docs" / "cortex_development.v12.lock").exists()
+            fail = json.loads((REPO_ROOT / "docs" / "cortex_v12_gate.failure.lock").read_text(encoding="utf-8"))
+            assert fail["n_pair_clear"] == gate["battery"]["n_pair_clear"]
 
 
 def test_verify_v12_gate_cli() -> None:
@@ -651,6 +688,7 @@ if __name__ == "__main__":
     test_verify_v9_gate_cli()
     test_verify_v10_gate_cli()
     test_verify_v11_gate_cli()
+    test_v12_candidate_boundary_pending_gate()
     test_verify_v12_gate_cli()
     test_sealed_not_used_in_smoke()
     test_sanity_live()

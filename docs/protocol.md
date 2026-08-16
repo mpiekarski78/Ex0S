@@ -2036,3 +2036,5 @@ Canonical main `eaef78a`. V11 gate **6/16** stands. Do not edit-rescore v11. **D
 
 v12 apparatus: [`cortex_v12_stat_contract.lock`](cortex_v12_stat_contract.lock), [`cortex_v12_architecture_amendment.lock`](cortex_v12_architecture_amendment.lock), [`cortex_v12.prereg.lock`](cortex_v12.prereg.lock). Authorizes surprise→HOLD after this freeze is on `origin/main`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle, before reveal): [`cortex.candidate.v12.lock`](cortex.candidate.v12.lock) neural SHA `63096393…`. Opposite-sign ACT body-advantage sets a one-step HOLD bias and a plastic HOLD-vs-ACT update. Population C4 + C5 (30/32, mean Δ≈0.24) + C6 green. Reveal must pin the pushed candidate git SHA.
+
