@@ -1,0 +1,119 @@
+{
+  "version": "TM.0.23.CORTEX.MACT.BOUNDARY.RESULT.V4",
+  "lab": "TM.0.23.CORTEX.MACT.BOUNDARY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "candidate": "docs/cortex.candidate.v4.lock",
+  "candidate_sha": "ac692f935f49ae8adb7c0c386c2c907b524f3a7693976502d652f087056e36c4",
+  "runner_sha": "4910b768db25c050f65a4fdacadf8dd98edaea6ef37b79811d495df21e1c2ff5",
+  "contract_sha": "2bc041dc925196023d595d73434501dd0f892df14f9fe563f3f00001fd5435bd",
+  "all_controls_green": false,
+  "n_ok": 0,
+  "n_controls": 8,
+  "controls": [
+    {
+      "id": "C1_env_exposed_handles",
+      "ok": false,
+      "planted_tokens": [
+        "harm",
+        "press"
+      ],
+      "birth_motor_keys": [
+        "harm",
+        "press"
+      ],
+      "why": "planted_motor_dictionary_in_genome"
+    },
+    {
+      "id": "C2_spellings_not_neural_input",
+      "ok": false,
+      "in_vocab_at_birth": [
+        "press",
+        "harm"
+      ],
+      "why": "handle_spellings_in_sensory_vocab"
+    },
+    {
+      "id": "C3_twin_independent_rename_vectorize",
+      "ok": false,
+      "handle_ids_differ": false,
+      "has_motor_rng": false,
+      "press_vectors_equal": false,
+      "main_press": "press",
+      "twin_press": "press",
+      "why": "shared_literals_or_no_motor_rng"
+    },
+    {
+      "id": "C4_consequence_swap_timed",
+      "ok": false,
+      "swap_revise_episodes": 40,
+      "pref_a": true,
+      "stale_ok": true,
+      "pref_b": false,
+      "restore_a": true,
+      "counts_before": {
+        "press": 21,
+        "harm": 1
+      },
+      "counts_stale": {
+        "press": 13
+      },
+      "counts_revised": {
+        "harm": 3,
+        "press": 18
+      },
+      "counts_restored": {
+        "press": 18,
+        "harm": 1
+      },
+      "why": "swap_revision_or_restore_failed"
+    },
+    {
+      "id": "C5_plasticity_off",
+      "ok": false,
+      "d1_ok": true,
+      "press": 21,
+      "b_op_act": 0.85,
+      "op_cost_act": 0.05,
+      "why": "learning_still_passes_or_bias_missing"
+    },
+    {
+      "id": "C6_no_consequence",
+      "ok": false,
+      "counts": {
+        "harm": 3,
+        "press": 8
+      },
+      "why": "systematic_preference_without_consequences"
+    },
+    {
+      "id": "C7_distractor_motors",
+      "ok": false,
+      "can_bind_actuators": false,
+      "motor_keys": [
+        "harm",
+        "press"
+      ],
+      "why": "v4_fixed_lexicon_cannot_offer_distractor_handles"
+    },
+    {
+      "id": "C8_shuffled_credit",
+      "ok": false,
+      "counts": {
+        "harm": 3,
+        "press": 21
+      },
+      "why": "actuator_reinforced_under_shuffled_credit"
+    }
+  ],
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "note": "V4 planted motor dictionary. Expected reds on C1\u2013C3/C7. Boundary hygiene only \u2014 does not transfer D1\u2013D2 gate credit."
+}

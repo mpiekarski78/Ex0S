@@ -1,0 +1,179 @@
+{
+  "version": "TM.0.23.CORTEX.V5.BIRTH",
+  "lab": "TM.0.23.CORTEX.V5",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "architecture_amendment_sha": "2ae47996eb8a2736587fd5163086da378c37182ba8a278d405f0c93cddbe0b32",
+  "learning_law_ok": true,
+  "gpu_scoring_ready": true,
+  "all_sanity_ok": true,
+  "sanity_results": [
+    {
+      "id": "order_ab_ba",
+      "ok": true,
+      "rho_distance": 3.7743755729802553
+    },
+    {
+      "id": "prediction",
+      "ok": true,
+      "early": 5.3961599266956695,
+      "late": 5.000022836449047
+    },
+    {
+      "id": "advantage_path",
+      "ok": true,
+      "adv_good": 0.5033296378372909,
+      "adv_bad": -2.732050807568877,
+      "delta": 0.10996812017550174,
+      "beneficial_increases_responsible_action_probability": true,
+      "harmful_decreases_responsible_action_probability": true
+    },
+    {
+      "id": "exploration",
+      "ok": true,
+      "ops": [
+        "HOLD",
+        "STOP"
+      ]
+    },
+    {
+      "id": "write_retrieve",
+      "ok": true,
+      "buf_norm": 6.697039384248343
+    },
+    {
+      "id": "checkpoint",
+      "ok": true,
+      "cont": [
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        }
+      ],
+      "cont2": [
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        }
+      ]
+    },
+    {
+      "id": "rho_reset",
+      "ok": true
+    },
+    {
+      "id": "scorer_isolation",
+      "ok": true
+    },
+    {
+      "id": "cpu_gpu",
+      "ok": true,
+      "cpu_ops": [
+        "HOLD",
+        "HOLD",
+        "HOLD",
+        "HOLD",
+        "HOLD"
+      ],
+      "gpu_ops": [
+        "HOLD",
+        "HOLD",
+        "HOLD",
+        "HOLD",
+        "HOLD"
+      ],
+      "device": "NVIDIA GB10"
+    },
+    {
+      "id": "order_ab_ba",
+      "ok": true,
+      "rho_distance": 3.7743755729802557
+    }
+  ],
+  "neural_cortex_sha": "27f111fb35a7bee83b154f87cb77c74c710d23ad009f24998fddb0d170ad56b4",
+  "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
+  "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "genome": {
+    "n": 64,
+    "d_sym": 32,
+    "k_s": 8,
+    "d_body": 4,
+    "d_x": 293,
+    "p_connect": 0.1,
+    "t_max": 8,
+    "tau": 1.0,
+    "cos_thresh": 0.15,
+    "eta_pred": 0.05,
+    "eta_act": 0.15,
+    "beta": 0.01,
+    "clip": 2.0,
+    "seed_birth": 12345,
+    "seed_registry": 22222,
+    "seed_source": 33333,
+    "seed_action": 44444,
+    "seed_permute": 55555,
+    "seed_motor": 66666,
+    "dtype": "float64",
+    "body_setpoint": [
+      1.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    "ops": [
+      "RETRIEVE",
+      "WRITE",
+      "EMIT",
+      "ACT",
+      "STOP",
+      "HOLD"
+    ],
+    "op_cost": {
+      "RETRIEVE": 1.0,
+      "WRITE": 1.0,
+      "EMIT": 1.0,
+      "ACT": 0.05,
+      "STOP": 0.0,
+      "HOLD": 0.0
+    }
+  },
+  "checks": {
+    "motor_act_tokens_empty": true,
+    "birth_motor_vocab_empty": true,
+    "b_op_act": 0.85,
+    "op_cost_act": 0.05,
+    "bind_actuators": true
+  },
+  "note": "v5 birth after bind_actuators ABI + nine sanity. Audit before candidate.v5."
+}

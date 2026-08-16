@@ -1,0 +1,56 @@
+{
+  "version": "TM.0.23.CORTEX.V5.GATE.RUNNER",
+  "lab": "TM.0.23.CORTEX.V5.GATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eval_revealed": false,
+  "gate_contract": "docs/cortex_v5_gate_contract.md",
+  "gate_contract_sha": "179dfe9fe0604d14efb5bd19314d258657d248b0beacf63550cadf45b38c7c55",
+  "architecture_amendment_lock": "docs/cortex_v5_architecture_amendment.lock",
+  "architecture_amendment_sha": "2ae47996eb8a2736587fd5163086da378c37182ba8a278d405f0c93cddbe0b32",
+  "stages": [
+    "D0",
+    "D1",
+    "D2"
+  ],
+  "thresholds": {
+    "D1": {
+      "press_min": 3,
+      "press_gt_harm": true,
+      "cf_differs": true
+    },
+    "D2": {
+      "holds_min": 5,
+      "beneficial_min": 3,
+      "rho_reset_preserves_weights": true
+    },
+    "D0": {
+      "n_probes": 64,
+      "p0": 0.5,
+      "alpha": 0.01
+    },
+    "pair_clear_requires": "main_D1_and_D2_and_twin_D1_and_D2",
+    "gate_clear_min_pairs": 13,
+    "n_pairs": 16
+  },
+  "scorer_module": "experiments.cortex_develop_scorers",
+  "scorer_sha": "c32a453aaab0a8820fda0f41d24918f827dad8e378fb6f6da1853420a1ef7f7d",
+  "gate_module": "experiments.cortex_v5_gate",
+  "gate_module_sha": "b2df3e02962f06898828e71b7b94250b3ed547d4a826fc30814ae159092491a1",
+  "candidate_interface": {
+    "factory": "experiments.run_tm023cortex.make_cortex",
+    "class": "NeuralCortex",
+    "actuator_api": "bind_actuators([opaque_handle_id, ...])",
+    "note": "Pins interface only \u2014 no candidate SHA (v5 may not exist at freeze)"
+  },
+  "refuse": [
+    "pin candidate SHA before v5 birth",
+    "pin eval fixture before reveal",
+    "D3-D12 in this gate",
+    "soften thresholds",
+    "reuse v4 commitment/worlds",
+    "edit-and-rescore on revealed v5 worlds"
+  ],
+  "note": "Frozen as v5 apparatus. Thresholds match v2/v4 pair-clear rule."
+}

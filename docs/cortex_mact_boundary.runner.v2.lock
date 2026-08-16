@@ -1,0 +1,28 @@
+{
+  "version": "TM.0.23.CORTEX.MACT.BOUNDARY.RUNNER.V2",
+  "lab": "TM.0.23.CORTEX.MACT.BOUNDARY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "contract": "docs/cortex_mact_boundary_contract.md",
+  "contract_sha": "2bc041dc925196023d595d73434501dd0f892df14f9fe563f3f00001fd5435bd",
+  "boundary_module": "experiments.cortex_mact_boundary",
+  "boundary_module_sha": "c42a2b0e913c954c8d944ac79e8431677567ed21f68e5e2ee90feb057f53e633",
+  "architecture_amendment_lock": "docs/cortex_v5_architecture_amendment.lock",
+  "architecture_amendment_sha": "2ae47996eb8a2736587fd5163086da378c37182ba8a278d405f0c93cddbe0b32",
+  "supersedes_runner": "docs/cortex_mact_boundary.runner.lock",
+  "v1_runner_sha": "4910b768db25c050f65a4fdacadf8dd98edaea6ef37b79811d495df21e1c2ff5",
+  "swap_revise_episodes": 40,
+  "candidate_interface": {
+    "factory": "experiments.run_tm023cortex.make_cortex",
+    "class": "NeuralCortex",
+    "actuator_api": "bind_actuators([opaque_handle_id, ...])",
+    "note": "v2 runner targets generic motor-registry ABI; does not pin candidate SHA"
+  },
+  "refuse": [
+    "rewrite v1 runner.lock",
+    "pin candidate SHA before v5 birth",
+    "soften controls"
+  ],
+  "note": "Frozen before / with v5 neural ABI. v1 runner remains immutable."
+}

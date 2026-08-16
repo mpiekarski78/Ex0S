@@ -25,17 +25,33 @@ D0_ALPHA = 0.01
 
 STAGES = [f"D{i}" for i in range(13)]
 
+# Role → physical effect templates (physics only)
+ROLE_ACT_EFFECTS = {
+    "press": {"state": ["st_pressed"], "delta": [0.25, -0.1, 0.15, 0.0]},
+    "harm": {"state": ["st_hurt"], "delta": [-0.35, 0.45, -0.15, 0.0]},
+    "idle": {"state": ["st_idle"], "delta": [0.0, 0.0, 0.0, 0.0]},
+    "get": {"state": ["st_got"], "delta": [0.1, 0.0, 0.2, 0.0]},
+    "drop": {"state": ["st_drop"], "delta": [-0.05, 0.05, -0.2, 0.0]},
+}
+
+MOTOR_ROLES = ("press", "harm", "get", "drop")
+
 DEFAULT_LATENT = {
-    "act_effects": {
-        "press": {"state": ["st_pressed"], "delta": [0.25, -0.1, 0.15, 0.0]},
-        "harm": {"state": ["st_hurt"], "delta": [-0.35, 0.45, -0.15, 0.0]},
-        "idle": {"state": ["st_idle"], "delta": [0.0, 0.0, 0.0, 0.0]},
-        "get": {"state": ["st_got"], "delta": [0.1, 0.0, 0.2, 0.0]},
-        "drop": {"state": ["st_drop"], "delta": [-0.05, 0.05, -0.2, 0.0]},
-    }
+    "act_effects": {k: dict(v) for k, v in ROLE_ACT_EFFECTS.items()}
 }
 
 BODY0 = [0.5, 0.25, 0.5, 0.0]
+
+
+def motor_latent(toks: dict[str, str]) -> dict[str, Any]:
+    effects = {
+        toks[role]: dict(ROLE_ACT_EFFECTS[role])
+        for role in MOTOR_ROLES
+        if role in toks
+    }
+    idle_id = toks.get("idle", "idle")
+    effects[idle_id] = dict(ROLE_ACT_EFFECTS["idle"])
+    return {"act_effects": effects}
 
 
 class SeedLike(Protocol):
@@ -113,8 +129,10 @@ def teach_loop(
     source: str = "src_teach",
     latent: dict[str, Any] | None = None,
     body0: list[float] | None = None,
+    toks: dict[str, str] | None = None,
 ) -> list[float]:
-    latent = latent or DEFAULT_LATENT
+    if latent is None:
+        latent = motor_latent(toks) if toks else DEFAULT_LATENT
     body = list(body0 or BODY0)
     state = ["st_idle"]
     rng = np.random.default_rng(seeds.seed_permute)
@@ -134,7 +152,15 @@ def teach_loop(
     return body
 
 
-def _act_token_counts(ag: NeuralCortex, toks: dict[str, str], n: int, cue: list[str]) -> dict[str, int]:
+def _act_token_counts(
+    ag: NeuralCortex,
+    toks: dict[str, str],
+    n: int,
+    cue: list[str],
+    *,
+    latent: dict[str, Any] | None = None,
+) -> dict[str, int]:
+    lat = latent or motor_latent(toks)
     counts: dict[str, int] = {}
     body = list(BODY0)
     state = ["st_idle"]
@@ -146,7 +172,7 @@ def _act_token_counts(ag: NeuralCortex, toks: dict[str, str], n: int, cue: list[
             symbols=cue,
             state=state,
             body=body,
-            latent=DEFAULT_LATENT,
+            latent=lat,
         )
         act = out.get("action") or {}
         if act.get("op") == "ACT" and act.get("token"):
@@ -154,7 +180,16 @@ def _act_token_counts(ag: NeuralCortex, toks: dict[str, str], n: int, cue: list[
     return counts
 
 
-def _op_histogram(ag: NeuralCortex, n: int, cue: list[str], *, prefix: str = "oph") -> dict[str, int]:
+def _op_histogram(
+    ag: NeuralCortex,
+    n: int,
+    cue: list[str],
+    *,
+    prefix: str = "oph",
+    latent: dict[str, Any] | None = None,
+    toks: dict[str, str] | None = None,
+) -> dict[str, int]:
+    lat = latent or (motor_latent(toks) if toks else DEFAULT_LATENT)
     hist: dict[str, int] = {}
     body = list(BODY0)
     state = ["st_idle"]
@@ -166,7 +201,7 @@ def _op_histogram(ag: NeuralCortex, n: int, cue: list[str], *, prefix: str = "op
             symbols=cue,
             state=state,
             body=body,
-            latent=DEFAULT_LATENT,
+            latent=lat,
         )
         op = (out.get("action") or {}).get("op") or "NONE"
         hist[op] = hist.get(op, 0) + 1
@@ -259,19 +294,21 @@ def score_d0(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[st
 
 
 def score_d1(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[str, Any]:
-    teach_loop(ag, seeds, n=80, symbols_fn=lambda i, rng: [toks["a"], toks["b"]])
-    counts = _act_token_counts(ag, toks, 40, [toks["a"]])
-    press = counts.get("press", 0)
-    harm = counts.get("harm", 0)
-    s1, b1 = physics(BODY0, "press", DEFAULT_LATENT)
-    s2, b2 = physics(BODY0, "harm", DEFAULT_LATENT)
+    lat = motor_latent(toks)
+    teach_loop(ag, seeds, toks=toks, n=80, symbols_fn=lambda i, rng: [toks["a"], toks["b"]], latent=lat)
+    counts = _act_token_counts(ag, toks, 40, [toks["a"]], latent=lat)
+    press = counts.get(toks["press"], 0)
+    harm = counts.get(toks["harm"], 0)
+    s1, b1 = physics(BODY0, toks["press"], lat)
+    s2, b2 = physics(BODY0, toks["harm"], lat)
     cf_differs = (s1 != s2) or (b1 != b2)
     ok = press >= 3 and press > harm and cf_differs
     return {"stage": "D1", "ok": ok, "press": press, "harm": harm, "cf_differs": cf_differs}
 
 
 def score_d2(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[str, Any]:
-    teach_loop(ag, seeds, n=60, symbols_fn=lambda i, rng: [toks["c"]])
+    lat = motor_latent(toks)
+    teach_loop(ag, seeds, toks=toks, n=60, symbols_fn=lambda i, rng: [toks["c"]], latent=lat)
     body = list(BODY0)
     state = ["st_idle"]
     holds = 0
@@ -283,16 +320,16 @@ def score_d2(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[st
             symbols=[toks["c"]],
             state=state,
             body=body,
-            latent=DEFAULT_LATENT,
+            latent=lat,
         )
         if (out.get("action") or {}).get("op") == "HOLD":
             holds += 1
     w_before = ag.weight_hash()
     ag.reset_rho()
     w_after = ag.weight_hash()
-    teach_loop(ag, seeds, n=40, symbols_fn=lambda i, rng: [toks["c"]])
-    counts = _act_token_counts(ag, toks, 30, [toks["c"]])
-    beneficial = counts.get("press", 0) + counts.get("get", 0)
+    teach_loop(ag, seeds, toks=toks, n=40, symbols_fn=lambda i, rng: [toks["c"]], latent=lat)
+    counts = _act_token_counts(ag, toks, 30, [toks["c"]], latent=lat)
+    beneficial = counts.get(toks["press"], 0) + counts.get(toks["get"], 0)
     rho_ok = w_before == w_after
     ok = rho_ok and beneficial >= 3 and holds >= 5
     return {
@@ -309,6 +346,7 @@ def score_d3(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[st
     teach_loop(
         ag,
         seeds,
+        toks=toks,
         n=80,
         symbols_fn=lambda i, rng: [toks["rel_l"], toks["rel_r"]]
         if i % 3
@@ -353,7 +391,7 @@ def score_d3(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[st
 
 
 def score_d4(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[str, Any]:
-    teach_loop(ag, seeds, n=40, symbols_fn=lambda i, rng: [toks["fact"]])
+    teach_loop(ag, seeds, toks=toks, n=40, symbols_fn=lambda i, rng: [toks["fact"]])
     wrote = [
         r
         for r in ag.memory.records()
@@ -365,7 +403,7 @@ def score_d4(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[st
     content = list(wrote[-1].content)
     content_norm = float(np.linalg.norm(content))
     ag.reset_rho()
-    teach_loop(ag, seeds, n=20, symbols_fn=lambda i, rng: [toks["distr"]])
+    teach_loop(ag, seeds, toks=toks, n=20, symbols_fn=lambda i, rng: [toks["distr"]])
     ag.reset_rho()
     persisted = fact_id in {r.fact_id for r in ag.memory.records()}
     ag.memory.delete(fact_id)
@@ -407,7 +445,7 @@ def score_d4(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[st
 
 
 def score_d5(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[str, Any]:
-    teach_loop(ag, seeds, n=50, symbols_fn=lambda i, rng: [toks["ground"]])
+    teach_loop(ag, seeds, toks=toks, n=50, symbols_fn=lambda i, rng: [toks["ground"]])
     unknown = _tok("sym", seeds, "unknown_x")
     unknown_holds = 0
     n_u = 20
@@ -444,6 +482,7 @@ def score_d6(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[st
     teach_loop(
         ag,
         seeds,
+        toks=toks,
         n=60,
         symbols_fn=lambda i, rng: [toks["emit1"]] if i % 2 == 0 else [toks["emit1"], toks["emit2"]],
     )
@@ -476,6 +515,7 @@ def score_d7(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[st
         teach_loop(
             ag,
             seeds,
+            toks=toks,
             n=15,
             symbols_fn=lambda i, rng, L=L: [toks["emit1"]] * min(L, 2)
             + ([toks["emit2"]] if L >= 2 else []),
@@ -531,8 +571,8 @@ def score_d8(
     *,
     withheld: bool = True,
 ) -> dict[str, Any]:
-    teach_loop(ag, seeds, n=40, symbols_fn=lambda i, rng: [toks["comp_x"], toks["comp_y"]])
-    teach_loop(ag, seeds, n=40, symbols_fn=lambda i, rng: [toks["comp_y"], toks["comp_z"]])
+    teach_loop(ag, seeds, toks=toks, n=40, symbols_fn=lambda i, rng: [toks["comp_x"], toks["comp_y"]])
+    teach_loop(ag, seeds, toks=toks, n=40, symbols_fn=lambda i, rng: [toks["comp_y"], toks["comp_z"]])
     hits = 0
     for i in range(25):
         out = ag.observe(
@@ -553,7 +593,7 @@ def score_d8(
 
 def score_d9(ag: NeuralCortex, seeds: SeedLike, toks: dict[str, str]) -> dict[str, Any]:
     old_before = _nonhold_count(ag, 20, [toks["a"]], prefix="d9ob")
-    teach_loop(ag, seeds, n=40, symbols_fn=lambda i, rng: [toks["domain2"]])
+    teach_loop(ag, seeds, toks=toks, n=40, symbols_fn=lambda i, rng: [toks["domain2"]])
     old_nonhold = _nonhold_count(ag, 20, [toks["a"]], prefix="d9old")
     new_nonhold = _nonhold_count(ag, 20, [toks["domain2"]], prefix="d9new")
     # Retention: both domains active above exploration floor; old domain not collapsed after new teaching.
@@ -583,7 +623,7 @@ def score_d10(
             ag2 = make_cortex(Path(tmp) / "s", genome=seeds.genome(), device=ag.device)
             ag2.load_checkpoint(ckpt)
             counts = _act_token_counts(ag2, toks, 30, [toks["a"]])
-            return float(counts.get("press", 0) + counts.get("get", 0))
+            return float(counts.get(toks["press"], 0) + counts.get(toks["get"], 0))
 
     child_s = probe_score(child_ckpt)
     adult_s = probe_score(mature_ckpt)
@@ -673,7 +713,7 @@ def score_d12_forks(
         mprobe = make_cortex(root / "s0", genome=seeds.genome(), device=device)
         mprobe.load_checkpoint(mature_ckpt)
         mc = _act_token_counts(mprobe, toks, 20, [toks["a"]])
-        mature_skill = float(mc.get("press", 0) + mc.get("get", 0))
+        mature_skill = float(mc.get(toks["press"], 0) + mc.get(toks["get"], 0))
         # Vacuous 0==0 skill comparisons are not developmental evidence.
         has_skill = mature_skill >= 3.0
 
@@ -686,7 +726,7 @@ def score_d12_forks(
         a_probe = make_cortex(root / "s1p", genome=seeds.genome(), device=device)
         a_probe.load_checkpoint(a.checkpoint())
         ac = _act_token_counts(a_probe, toks, 20, [toks["a"]])
-        strip_skill = float(ac.get("press", 0) + ac.get("get", 0))
+        strip_skill = float(ac.get(toks["press"], 0) + ac.get(toks["get"], 0))
         results["strip_facts"] = {
             "ok": has_skill
             and len(a.memory.records()) == 0
@@ -711,7 +751,7 @@ def score_d12_forks(
             for k, v in (mature_ckpt.get("vocab") or {}).items()
         }
         bc = _act_token_counts(b_probe, toks, 20, [toks["a"]])
-        birth_skill = float(bc.get("press", 0) + bc.get("get", 0))
+        birth_skill = float(bc.get(toks["press"], 0) + bc.get(toks["get"], 0))
         results["birth_cortex_adult_s"] = {
             "ok": has_skill
             and b.weight_hash() != mature_wh
@@ -764,7 +804,7 @@ def score_d12_forks(
         e_probe = make_cortex(root / "s5p", genome=seeds.genome(), device=device)
         e_probe.load_checkpoint(mature_ckpt)
         before_c = _act_token_counts(e_probe, toks, 20, [toks["a"]])
-        skill_before = float(before_c.get("press", 0) + before_c.get("get", 0))
+        skill_before = float(before_c.get(toks["press"], 0) + before_c.get(toks["get"], 0))
         e.reset_cortex()
         e.memory.restore(s_keep)
         s_ok = len(e.memory.records()) == len(s_keep)
@@ -772,7 +812,7 @@ def score_d12_forks(
         e_after = make_cortex(root / "s5a", genome=seeds.genome(), device=device)
         e_after.load_checkpoint(e.checkpoint())
         after_c = _act_token_counts(e_after, toks, 20, [toks["a"]])
-        skill_after = float(after_c.get("press", 0) + after_c.get("get", 0))
+        skill_after = float(after_c.get(toks["press"], 0) + after_c.get(toks["get"], 0))
         results["reset_w_keep_s"] = {
             "ok": has_skill
             and weights_changed
@@ -794,7 +834,7 @@ def score_d12_forks(
         f_probe = make_cortex(root / "s6p", genome=seeds.genome(), device=device)
         f_probe.load_checkpoint(f.checkpoint())
         fc = _act_token_counts(f_probe, toks, 20, [toks["a"]])
-        rho_skill = float(fc.get("press", 0) + fc.get("get", 0))
+        rho_skill = float(fc.get(toks["press"], 0) + fc.get(toks["get"], 0))
         results["reset_rho_only"] = {
             "ok": has_skill
             and f.weight_hash() == wh

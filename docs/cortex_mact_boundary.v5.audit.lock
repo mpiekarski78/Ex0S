@@ -1,0 +1,62 @@
+{
+  "version": "TM.0.23.CORTEX.MACT.BOUNDARY.V5.AUDIT",
+  "lab": "TM.0.23.CORTEX.MACT.BOUNDARY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "mact_v5_lock": "docs/cortex_mact_boundary.v5.lock",
+  "mact_v5_lock_sha": "1a3969865d792553a83c9d204e0417ceac2a170351d8c9cfb7d33472c8e7e13a",
+  "contract": "docs/cortex_mact_boundary_contract.md",
+  "historical_lock_rewritten": false,
+  "claimed_all_controls_green": true,
+  "contract_honest_all_green": false,
+  "findings": [
+    {
+      "id": "C4_stale_required",
+      "ok": false,
+      "contract": "stale_ok: still prefer A on immediate 20 probes; preference must not flip merely because physics changed",
+      "recorded": {
+        "stale_held_a_permitted": false,
+        "counts_stale": {
+          "h_0212ab081a3e": 5,
+          "h_d6d045e64b97": 2
+        }
+      },
+      "why": "Immediate preference flip after swap (B=5, A=2). Runner later dropped stale_ok from the pass conjunction."
+    },
+    {
+      "id": "C6_preference_bar_raised",
+      "ok": false,
+      "contract": "no handle gains systematic preference (D1-shaped: press>=3 and press>harm)",
+      "recorded_counts": {
+        "h_0ecc8cfefc2e": 8,
+        "h_309a972ed9c2": 3,
+        "h_9976916103f3": 3
+      },
+      "role_map": {
+        "press": "h_0ecc8cfefc2e",
+        "harm": "h_85cdd2db69ba",
+        "get": "h_309a972ed9c2",
+        "drop": "h_9976916103f3"
+      },
+      "press": 8,
+      "harm": 0,
+      "original_systematic": true,
+      "softened_bar": "max>=10 and abs(press-harm)>=5",
+      "why": "Recorded press=8>harm=0 is systematic under the frozen D1-shaped bar. Pass used a raised bar after a prior red."
+    }
+  ],
+  "consequence": {
+    "boundary_green_prerequisite_honestly_met": false,
+    "v5_gate_result_stands": true,
+    "n_pair_clear": 4,
+    "develop_v5": "refused",
+    "next": "isolated_v6",
+    "refuse": [
+      "rewrite docs/cortex_mact_boundary.v5.lock",
+      "edit-and-rescore candidate v5 on revealed v5 gate worlds",
+      "open DEVELOP.v5"
+    ]
+  },
+  "note": "Append-only honesty audit. Historical v5 boundary lock left immutable. C1\u2013C3/C5/C7 ABI hygiene still evidenced. C4/C6 claimed greens do not match the frozen contract."
+}

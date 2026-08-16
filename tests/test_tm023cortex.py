@@ -170,13 +170,14 @@ def test_diag_and_v4_gate() -> None:
     assert gate["earned_next"] is False
     assert gate["ex0s"] is None
     assert gate["product"] == "0.0.004"
-    # versioned candidates preserved; live points at v4
+    # versioned candidates preserved; live points at latest candidate (v5)
     assert (REPO_ROOT / "docs" / "cortex.candidate.v1.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v2.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v3.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v4.lock").exists()
+    assert (REPO_ROOT / "docs" / "cortex.candidate.v5.lock").exists()
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
-    assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V4"
+    assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V5"
     # isolation: failed v2/v3 gates frozen; no full D battery on gate worlds
     assert (REPO_ROOT / "docs" / "cortex_v2_gate.failure.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex_v3_gate.failure.lock").exists()
@@ -185,10 +186,8 @@ def test_diag_and_v4_gate() -> None:
 
 
 def test_verify_v4_gate_cli() -> None:
-    from experiments.run_tm023cortex import verify_v4_gate, write_v4_math_audit
+    from experiments.run_tm023cortex import verify_v4_gate
 
-    audit = write_v4_math_audit(write_lock=True)
-    assert audit["ok"] is True, audit
     v = verify_v4_gate()
     assert v["ok"] is True, v
     assert v["sensorimotor_association_gate_clear"] is True
@@ -198,15 +197,63 @@ def test_verify_v4_gate_cli() -> None:
     assert sha(REPO_ROOT / "docs" / "cortex_v4_gate.lock") == before
 
 
-def test_motor_lexicon_v4() -> None:
+def test_motor_abi_v5() -> None:
+    from three_memory.neural_cortex import MOTOR_ACT_TOKENS, OPS, OP_COST
+
+    assert list(MOTOR_ACT_TOKENS) == []
     with tempfile.TemporaryDirectory(prefix="tm023_mot_") as tmp:
         ag = make_cortex(Path(tmp) / "s")
-        assert set(ag.motor_vocab.keys()) == {"press", "harm"}
-        from three_memory.neural_cortex import OPS, OP_COST
-
+        assert ag.motor_vocab == {}
         assert OP_COST["ACT"] == 0.05
         assert float(ag.b_op[OPS.index("ACT")]) == 0.85
         assert "b_op" not in ag._plastic_names
+        assert hasattr(ag, "bind_actuators")
+        ag.bind_actuators(["h_a", "h_b"])
+        assert "h_a" not in ag.vocab
+        v = ag.motor_vocab["h_a"].copy()
+        ag.bind_actuators(["h_b", "h_a"])
+        assert (ag.motor_vocab["h_a"] == v).all()
+
+
+def test_mact_boundary_and_v5_gate_failure() -> None:
+    mact_v4 = REPO_ROOT / "docs" / "cortex_mact_boundary.lock"
+    mact_v5 = REPO_ROOT / "docs" / "cortex_mact_boundary.v5.lock"
+    audit_p = REPO_ROOT / "docs" / "cortex_mact_boundary.v5.audit.lock"
+    assert mact_v4.exists()
+    assert mact_v5.exists()
+    assert audit_p.exists()
+    v4 = json.loads(mact_v4.read_text(encoding="utf-8"))
+    assert v4["all_controls_green"] is False  # planted dictionary reds
+    v5 = json.loads(mact_v5.read_text(encoding="utf-8"))
+    # Historical lock is immutable; honesty is in the append-only audit.
+    assert v5["all_controls_green"] is True
+    assert v5["n_ok"] == 8
+    audit = json.loads(audit_p.read_text(encoding="utf-8"))
+    assert audit["historical_lock_rewritten"] is False
+    assert audit["contract_honest_all_green"] is False
+    assert audit["mact_v5_lock_sha"] == sha(mact_v5)
+    c4 = next(c for c in v5["controls"] if c["id"] == "C4_consequence_swap_timed")
+    assert c4.get("stale_held_a_permitted") is False
+    gate = json.loads((REPO_ROOT / "docs" / "cortex_v5_gate.lock").read_text(encoding="utf-8"))
+    assert gate["sensorimotor_association_gate_clear"] is False
+    assert gate["battery"]["n_pair_clear"] < 13
+    fail = json.loads((REPO_ROOT / "docs" / "cortex_v5_gate.failure.lock").read_text(encoding="utf-8"))
+    assert fail["next"] == "isolated_v6"
+    iso = json.loads((REPO_ROOT / "docs" / "cortex_v6.isolation.lock").read_text(encoding="utf-8"))
+    assert "DEVELOP.v5 on any worlds" in iso["refuse"]
+    assert not (REPO_ROOT / "docs" / "cortex_development.v5.lock").exists()
+
+
+def test_verify_v5_gate_cli() -> None:
+    from experiments.run_tm023cortex import verify_v5_gate
+
+    v = verify_v5_gate()
+    assert v["ok"] is True, v
+    assert v["sensorimotor_association_gate_clear"] is False
+    assert v["refuse_develop_v5"] is True
+    before = sha(REPO_ROOT / "docs" / "cortex_v5_gate.lock")
+    verify_v5_gate()
+    assert sha(REPO_ROOT / "docs" / "cortex_v5_gate.lock") == before
 
 
 def test_runner_lock_no_eval_fixture_pin() -> None:
@@ -303,7 +350,9 @@ if __name__ == "__main__":
     test_scorer_audit_v1_preserved()
     test_diag_and_v4_gate()
     test_verify_v4_gate_cli()
-    test_motor_lexicon_v4()
+    test_motor_abi_v5()
+    test_mact_boundary_and_v5_gate_failure()
+    test_verify_v5_gate_cli()
     test_sealed_not_used_in_smoke()
     test_sanity_live()
     print("test_tm023cortex: ok")

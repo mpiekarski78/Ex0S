@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-08-17
+
+- **TM.0.23.CORTEX.M_act → V5 audit:** Historical [`cortex_mact_boundary.v5.lock`](cortex_mact_boundary.v5.lock) claimed 8/8 green. Contract-honest reread: **C4** flipped immediately after swap (stale_ok required); **C6** press=8>harm=0 under the frozen D1-shaped bar (pass used a raised bar). Append-only [`cortex_mact_boundary.v5.audit.lock`](cortex_mact_boundary.v5.audit.lock). Runner C4/C6 restored to contract for later cycles. `--verify-v5-gate` pins failure + no DEVELOP.v5. Historical locks not rewritten. `earned_next=false`; `ex0s=null`; product **0.0.004**.
+- **TM.0.23.CORTEX.M_act → V5 → gate fail:** Frozen M_act boundary contract + v1 runner; scored planted v4 with expected reds ([`cortex_mact_boundary.lock`](cortex_mact_boundary.lock)). V5 apparatus (amendment, boundary runner.v2, gate runner, sealed narrow commitment) then `bind_actuators([opaque_handle_id,…])` + internal motor-registry RNG; ACT credit uses motor vectors (no sensory leak). Nine sanity → birth → audit → [`cortex.candidate.v5.lock`](cortex.candidate.v5.lock). Boundary lock claimed 8/8 (see audit). Narrow D1–D2 re-earn on fresh worlds **4/16** — **not clear**. Frozen [`cortex_v5_gate.failure.lock`](cortex_v5_gate.failure.lock) + [`cortex_v6.isolation.lock`](cortex_v6.isolation.lock). **DEVELOP.v5 refused.** Do not edit-rescore v5 on revealed worlds. `earned_next=false`; `ex0s=null`; product **0.0.004**.
+
 ## 2026-08-16
 
 - **TM.0.23.CORTEX.DIAG→V4 audit:** fixed diag `b_op`-aware softmax; refuse clobber of v1 `cortex_diag.lock` when diagnosing later candidates; machine math audit + `--verify-v4-gate` (pair-clear consistency, no soft D1/D2, refuse gate rewrite); CI verifies v4 gate. Retest **13/16** clear matches frozen lock. Product **0.0.004**.

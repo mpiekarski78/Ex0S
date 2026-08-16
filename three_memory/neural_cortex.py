@@ -19,14 +19,13 @@ from torch import Tensor
 from three_memory.cortex_memory import CortexMemory, CortexRecord
 
 OPS = ("RETRIEVE", "WRITE", "EMIT", "ACT", "STOP", "HOLD")
-# v2 amendment: dedicated ACT motor lexicon (not grown from sensory symbols)
-# v3 amendment: ACT targets restricted to press/harm only
-MOTOR_ACT_TOKENS = ("press", "harm")
+# v5: no birth-planted motor dictionary; actuators bind via bind_actuators([...])
+MOTOR_ACT_TOKENS: tuple[str, ...] = ()
 OP_COST = {
     "RETRIEVE": 1.0,
     "WRITE": 1.0,
     "EMIT": 1.0,
-    "ACT": 0.05,  # v3 amendment (was 0.1 in v2; 1.0 in v1)
+    "ACT": 0.05,  # generic low ACT cost (defensible innate tendency)
     "STOP": 0.0,
     "HOLD": 0.0,
 }
@@ -75,6 +74,7 @@ class GenomeConfig:
     seed_source: int = 33333
     seed_action: int = 44444
     seed_permute: int = 55555
+    seed_motor: int = 66666
     dtype: str = "float64"
 
     @property
@@ -101,6 +101,7 @@ class GenomeConfig:
             "seed_source": self.seed_source,
             "seed_action": self.seed_action,
             "seed_permute": self.seed_permute,
+            "seed_motor": self.seed_motor,
             "dtype": self.dtype,
             "body_setpoint": BODY_SETPOINT.tolist(),
             "ops": list(OPS),
@@ -146,15 +147,13 @@ class NeuralCortex:
         self.rng_source = np.random.default_rng(g.seed_source)
         self.rng_action = np.random.default_rng(g.seed_action)
         self.rng_permute = np.random.default_rng(g.seed_permute)
+        self.rng_motor = np.random.default_rng(g.seed_motor)
 
         self.vocab: dict[str, np.ndarray] = {}
         self.sources: dict[str, np.ndarray] = {}
-        # v2: birth-time motor lexicon M_act (diagnosis motor_lexicon_absent)
+        # v5: empty at birth; bind_actuators fills motor_vocab from motor-registry RNG
         self.motor_vocab: dict[str, np.ndarray] = {}
-        for tok in MOTOR_ACT_TOKENS:
-            vec = self.rng_registry.normal(0.0, 1.0, size=g.d_sym).astype(np.float64)
-            self.motor_vocab[tok] = vec
-            self.vocab[tok] = vec
+        self._motor_registry: dict[str, np.ndarray] = {}
 
         self.M = self._init_mask()
         self.W_rec = self._init_masked_rec()
@@ -236,6 +235,36 @@ class NeuralCortex:
 
     def _from_t(self, x: Tensor) -> np.ndarray:
         return x.detach().cpu().numpy().astype(np.float64)
+
+    def bind_actuators(self, handle_ids: list[str]) -> dict[str, Any]:
+        """Universal actuator surface: opaque handle IDs → internal motor-registry vectors.
+
+        Forbidden: runner-supplied vectors. Handle strings never enter sensory vocab.
+        Rebinding the same handle restores its previously assigned vector.
+        """
+        if not isinstance(handle_ids, (list, tuple)):
+            raise TypeError("bind_actuators requires a list of opaque handle id strings")
+        bound: list[str] = []
+        self.motor_vocab = {}
+        for raw in handle_ids:
+            if isinstance(raw, dict):
+                raise TypeError(
+                    "bind_actuators forbids {id, vector} objects — cortex samples vectors"
+                )
+            hid = str(raw)
+            if not hid or hid != hid.strip():
+                raise ValueError(f"invalid actuator handle: {raw!r}")
+            if hid in self._motor_registry:
+                vec = self._motor_registry[hid].copy()
+            else:
+                vec = self.rng_motor.normal(0.0, 1.0, size=self.genome.d_sym).astype(
+                    np.float64
+                )
+                self._motor_registry[hid] = vec.copy()
+            self.motor_vocab[hid] = vec
+            # deliberately do NOT insert into self.vocab (not neural sensory input)
+            bound.append(hid)
+        return {"bound": bound, "n": len(bound)}
 
     # --- registries ---
 
@@ -452,7 +481,12 @@ class NeuralCortex:
         self.W_op = self.W_op + self.genome.eta_act * adv * torch.outer(e_op, rho_elig)
         # v4: b_op frozen (non-plastic)
         if p["token"] is not None and p["op"] in ("EMIT", "ACT"):
-            tok_v = self._to_t(self._vocab_vec(p["token"]))
+            if p["op"] == "ACT" and p["token"] in self.motor_vocab:
+                # Credit the motor-registry vector — never _vocab_vec (would leak
+                # handle strings into sensory vocab and train the wrong embedding).
+                tok_v = self._to_t(self.motor_vocab[p["token"]])
+            else:
+                tok_v = self._to_t(self._vocab_vec(p["token"]))
             mat_name = "W_emit_query" if p["op"] == "EMIT" else "W_act_query"
             W = getattr(self, mat_name)
             setattr(
@@ -613,6 +647,7 @@ class NeuralCortex:
             },
             "vocab": {k: v.tolist() for k, v in self.vocab.items()},
             "motor_vocab": {k: v.tolist() for k, v in self.motor_vocab.items()},
+            "motor_registry": {k: v.tolist() for k, v in self._motor_registry.items()},
             "sources": {k: v.tolist() for k, v in self.sources.items()},
             "v_start": self.v_start.tolist(),
             "v_end": self.v_end.tolist(),
@@ -623,6 +658,7 @@ class NeuralCortex:
                 "source": _np_state(self.rng_source),
                 "action": _np_state(self.rng_action),
                 "permute": _np_state(self.rng_permute),
+                "motor": _np_state(self.rng_motor),
             },
         }
 
@@ -659,12 +695,15 @@ class NeuralCortex:
                 k: np.asarray(v, dtype=np.float64) for k, v in mv.items()
             }
         else:
-            # migrate: recover M_act keys from vocab if present
-            self.motor_vocab = {
-                k: self.vocab[k].copy()
-                for k in MOTOR_ACT_TOKENS
-                if k in self.vocab
+            self.motor_vocab = {}
+        mr = snap.get("motor_registry")
+        if mr:
+            self._motor_registry = {
+                k: np.asarray(v, dtype=np.float64) for k, v in mr.items()
             }
+        else:
+            # migrate: registry from motor_vocab snapshot
+            self._motor_registry = {k: v.copy() for k, v in self.motor_vocab.items()}
         self.sources = {
             k: np.asarray(v, dtype=np.float64) for k, v in (snap.get("sources") or {}).items()
         }
@@ -682,12 +721,15 @@ class NeuralCortex:
             }
         self.memory.restore(snap.get("S") or [])
         g = self.genome
+        if "seed_motor" in (snap.get("genome") or {}):
+            g.seed_motor = int(snap["genome"]["seed_motor"])
         rs = snap.get("rng") or {}
         self.rng_birth = _restore_rng(g.seed_birth, rs.get("birth"))
         self.rng_registry = _restore_rng(g.seed_registry, rs.get("registry"))
         self.rng_source = _restore_rng(g.seed_source, rs.get("source"))
         self.rng_action = _restore_rng(g.seed_action, rs.get("action"))
         self.rng_permute = _restore_rng(g.seed_permute, rs.get("permute"))
+        self.rng_motor = _restore_rng(g.seed_motor, rs.get("motor"))
 
     def weight_hash(self) -> str:
         h = hashlib.sha256()

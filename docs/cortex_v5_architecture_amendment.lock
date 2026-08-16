@@ -1,0 +1,31 @@
+{
+  "version": "TM.0.23.CORTEX.V5.ARCHITECTURE.AMENDMENT",
+  "lab": "TM.0.23.CORTEX.MACT.BOUNDARY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "v1_architecture_contract": "docs/cortex_architecture_contract.md",
+  "v1_architecture_contract_sha": "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2",
+  "amendment_md": "docs/cortex_v5_architecture_amendment.md",
+  "amendment_md_sha": "4fc7e758ec1de975f260435585e67f0de136ec43098198e8f1461f6bdc7b7091",
+  "mact_boundary_result_sha": "877ca3c1cdac72f36925f5b12830581cfc6e08b8e8e656400acfa9781a1db259",
+  "changes_authorized": [
+    "remove_birth_MOTOR_ACT_TOKENS_planting",
+    "bind_actuators_opaque_handle_ids",
+    "internal_motor_registry_RNG",
+    "seed_motor_separate_streams",
+    "handles_never_sensory_vocab"
+  ],
+  "forbidden_api": "bind_actuators([{id, vector}, ...])",
+  "retain": [
+    "b_op[ACT]=0.85 frozen",
+    "OP_COST[ACT]=0.05"
+  ],
+  "refuse": [
+    "edit docs/cortex_architecture_contract.md",
+    "soften D1/D2 scorers",
+    "runner-supplied motor vectors",
+    "reuse v4 gate worlds"
+  ],
+  "note": "Frozen as v5 apparatus. Original v1 contract untouched."
+}

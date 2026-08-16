@@ -76,6 +76,14 @@ V4_GATE_LOCK = REPO_ROOT / "docs" / "cortex_v4_gate.lock"
 V4_PREREG = REPO_ROOT / "docs" / "cortex_v4.prereg.lock"
 V4_MATH_AUDIT = REPO_ROOT / "docs" / "cortex_v4_math_audit.lock"
 V4_CLEAR_NOTE = REPO_ROOT / "docs" / "cortex_v4_gate.clear.note.lock"
+CANDIDATE_V5 = REPO_ROOT / "docs" / "cortex.candidate.v5.lock"
+V5_GATE_LOCK = REPO_ROOT / "docs" / "cortex_v5_gate.lock"
+V5_GATE_FAIL = REPO_ROOT / "docs" / "cortex_v5_gate.failure.lock"
+V5_ISOLATION = REPO_ROOT / "docs" / "cortex_v6.isolation.lock"
+MACT_V4_LOCK = REPO_ROOT / "docs" / "cortex_mact_boundary.lock"
+MACT_V5_LOCK = REPO_ROOT / "docs" / "cortex_mact_boundary.v5.lock"
+MACT_V5_AUDIT = REPO_ROOT / "docs" / "cortex_mact_boundary.v5.audit.lock"
+DEV_V5_LOCK = REPO_ROOT / "docs" / "cortex_development.v5.lock"
 
 PHENOTYPE_PATHS = [
     "docs/CURRENT_ORGANISM.md",
@@ -1716,12 +1724,18 @@ def write_v4_math_audit(*, write_lock: bool = True) -> dict[str, Any]:
         "note": "Append-only audit of live v4 organism. Does not rewrite candidate.v4.lock.",
     }
     if write_lock:
+        if V4_MATH_AUDIT.exists():
+            raise RuntimeError("cortex_v4_math_audit.lock exists — refuse rewrite")
         V4_MATH_AUDIT.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
     return out
 
 
 def verify_v4_gate() -> dict[str, Any]:
-    """Verify frozen v4 gate result integrity without re-scoring."""
+    """Verify frozen v4 gate result integrity without re-scoring.
+
+    Live neural may be a later candidate (v5+); integrity is pairwise among
+    frozen v4 locks, not against the live tree.
+    """
     if not V4_GATE_LOCK.exists():
         return {"ok": False, "why": "missing cortex_v4_gate.lock"}
     if not CANDIDATE_V4.exists():
@@ -1732,12 +1746,10 @@ def verify_v4_gate() -> dict[str, Any]:
         return {"ok": False, "why": "product drift"}
     if gate.get("earned_next") is not False or gate.get("ex0s") is not None:
         return {"ok": False, "why": "earned_next/ex0s drift"}
-    if _sha_file(NEURAL_PY) != gate.get("neural_cortex_sha"):
-        return {"ok": False, "why": "neural drifted since gate score — refuse silent rescore; new cycle"}
-    if _sha_file(MEMORY_PY) != gate.get("cortex_memory_sha"):
-        return {"ok": False, "why": "memory drifted since gate score"}
-    if _sha_file(NEURAL_PY) != cand.get("neural_cortex_sha"):
-        return {"ok": False, "why": "live neural != candidate v4"}
+    if gate.get("neural_cortex_sha") != cand.get("neural_cortex_sha"):
+        return {"ok": False, "why": "gate/candidate v4 neural SHA mismatch"}
+    if gate.get("cortex_memory_sha") != cand.get("cortex_memory_sha"):
+        return {"ok": False, "why": "gate/candidate v4 memory SHA mismatch"}
     battery = gate.get("battery") or {}
     if battery.get("n_pair_clear", 0) < 13:
         return {"ok": False, "why": "n_pair_clear < 13"}
@@ -1762,17 +1774,76 @@ def verify_v4_gate() -> dict[str, Any]:
     note = json.loads(V4_CLEAR_NOTE.read_text(encoding="utf-8"))
     if "new full-development eval commitment" not in json.dumps(note):
         return {"ok": False, "why": "clear note missing full-dev isolation"}
-    # refuse edit-rescore: gate lock must not be rewritten by this verifier
-    audit = write_v4_math_audit(write_lock=True)
-    if not audit.get("ok"):
-        return {"ok": False, "why": "math audit failed", "audit": audit}
+    live_matches_v4 = _sha_file(NEURAL_PY) == cand.get("neural_cortex_sha")
     return {
         "ok": True,
         "why": "v4 gate integrity ok",
         "sensorimotor_association_gate_clear": True,
         "n_pair_clear": battery.get("n_pair_clear"),
-        "math_audit_ok": True,
+        "live_neural_matches_v4": live_matches_v4,
         "refuse_rewrite": True,
+    }
+
+
+def verify_v5_gate() -> dict[str, Any]:
+    """Verify frozen v5 gate failure + boundary-audit integrity. Does not rescore."""
+    if not V5_GATE_LOCK.exists():
+        return {"ok": False, "why": "missing cortex_v5_gate.lock"}
+    if not CANDIDATE_V5.exists():
+        return {"ok": False, "why": "missing cortex.candidate.v5.lock"}
+    if not V5_GATE_FAIL.exists():
+        return {"ok": False, "why": "missing cortex_v5_gate.failure.lock"}
+    if not V5_ISOLATION.exists():
+        return {"ok": False, "why": "missing cortex_v6.isolation.lock"}
+    if not MACT_V4_LOCK.exists():
+        return {"ok": False, "why": "missing cortex_mact_boundary.lock"}
+    if not MACT_V5_LOCK.exists():
+        return {"ok": False, "why": "missing cortex_mact_boundary.v5.lock"}
+    if not MACT_V5_AUDIT.exists():
+        return {"ok": False, "why": "missing cortex_mact_boundary.v5.audit.lock"}
+    if DEV_V5_LOCK.exists():
+        return {"ok": False, "why": "DEVELOP.v5 lock exists after gate fail — refuse"}
+    gate = json.loads(V5_GATE_LOCK.read_text(encoding="utf-8"))
+    cand = json.loads(CANDIDATE_V5.read_text(encoding="utf-8"))
+    fail = json.loads(V5_GATE_FAIL.read_text(encoding="utf-8"))
+    audit = json.loads(MACT_V5_AUDIT.read_text(encoding="utf-8"))
+    mact_v4 = json.loads(MACT_V4_LOCK.read_text(encoding="utf-8"))
+    mact_v5 = json.loads(MACT_V5_LOCK.read_text(encoding="utf-8"))
+    if gate.get("product") != "0.0.004":
+        return {"ok": False, "why": "product drift"}
+    if gate.get("earned_next") is not False or gate.get("ex0s") is not None:
+        return {"ok": False, "why": "earned_next/ex0s drift"}
+    if gate.get("sensorimotor_association_gate_clear"):
+        return {"ok": False, "why": "v5 gate lock claims clear"}
+    if int((gate.get("battery") or {}).get("n_pair_clear") or 0) >= 13:
+        return {"ok": False, "why": "n_pair_clear >= 13 but not marked fail"}
+    if fail.get("gate_sha") != _sha_file(V5_GATE_LOCK):
+        return {"ok": False, "why": "failure lock gate_sha mismatch"}
+    if fail.get("next") != "isolated_v6":
+        return {"ok": False, "why": "failure next is not isolated_v6"}
+    if _sha_file(NEURAL_PY) != cand.get("neural_cortex_sha"):
+        return {"ok": False, "why": "live neural != candidate v5"}
+    if mact_v4.get("all_controls_green") is not False:
+        return {"ok": False, "why": "v4 boundary must remain red"}
+    if audit.get("contract_honest_all_green") is not False:
+        return {"ok": False, "why": "v5 boundary audit must record contract-honest reds"}
+    if audit.get("mact_v5_lock_sha") != _sha_file(MACT_V5_LOCK):
+        return {"ok": False, "why": "audit pin != historical v5 boundary lock"}
+    # pair-clear consistency on frozen result
+    for p in (gate.get("battery") or {}).get("pairs") or []:
+        m, t = p["main"], p["twin"]
+        expect = m["d0_ok"] and t["d0_ok"] and m["d1_d2_ok"] and t["d1_d2_ok"]
+        if bool(p.get("pair_clear")) != expect:
+            return {"ok": False, "why": f"pair_clear inconsistent pair {p.get('pair_id')}"}
+    return {
+        "ok": True,
+        "why": "v5 gate failure integrity ok",
+        "sensorimotor_association_gate_clear": False,
+        "n_pair_clear": (gate.get("battery") or {}).get("n_pair_clear"),
+        "boundary_v5_claimed_green": mact_v5.get("all_controls_green"),
+        "boundary_v5_contract_honest_green": False,
+        "refuse_rewrite": True,
+        "refuse_develop_v5": True,
     }
 
 
@@ -1796,9 +1867,12 @@ def main() -> None:
     ap.add_argument("--reveal-v2-eval", action="store_true")
     ap.add_argument("--v2-gate", action="store_true")
     ap.add_argument("--verify-v4-gate", action="store_true")
+    ap.add_argument("--verify-v5-gate", action="store_true")
     ap.add_argument("--v4-math-audit", action="store_true")
     ap.add_argument("--write-v2-birth", action="store_true")
     ap.add_argument("--write-candidate-v2", action="store_true")
+    ap.add_argument("--freeze-mact-boundary-runner", action="store_true")
+    ap.add_argument("--mact-boundary", action="store_true")
     ap.add_argument("--write-lock", action="store_true")
     ap.add_argument("--smoke-pairs", type=int, default=None)
     ap.add_argument("--device", type=str, default=None)
@@ -1836,8 +1910,27 @@ def main() -> None:
     if args.verify_v4_gate:
         print(json.dumps(verify_v4_gate(), indent=2, default=str))
         return
+    if args.verify_v5_gate:
+        print(json.dumps(verify_v5_gate(), indent=2, default=str))
+        return
     if args.v4_math_audit:
         print(json.dumps(write_v4_math_audit(write_lock=True), indent=2, default=str))
+        return
+    if args.freeze_mact_boundary_runner:
+        from experiments.cortex_mact_boundary import freeze_boundary_runner_v1
+
+        print(json.dumps(freeze_boundary_runner_v1(), indent=2))
+        return
+    if args.mact_boundary:
+        from experiments.cortex_mact_boundary import run_boundary_v4
+
+        print(
+            json.dumps(
+                run_boundary_v4(write_lock=args.write_lock),
+                indent=2,
+                default=str,
+            )
+        )
         return
     if args.reveal_v2_eval:
         print(json.dumps(reveal_v2_eval(), indent=2))

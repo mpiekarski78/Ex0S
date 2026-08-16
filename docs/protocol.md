@@ -1948,3 +1948,11 @@ Outcome: v2 gate **2/16** fail → v3 **11/16** fail → v4 **13/16** **clear** 
 
 Key locks: [`cortex_diagnosis.lock`](cortex_diagnosis.lock), [`cortex_v4_architecture_amendment.lock`](cortex_v4_architecture_amendment.lock), [`cortex_v4_gate.lock`](cortex_v4_gate.lock), [`cortex.candidate.v4.lock`](cortex.candidate.v4.lock). Results: [`tm023cortex_v4_gate_results.md`](tm023cortex_v4_gate_results.md).
 
+## TM.0.23.CORTEX.M_act → V5 → isolated V6
+
+V4 cleared D1–D2 only with a **planted** `press`/`harm` motor dictionary — that credit does **not** transfer. Freeze M_act boundary contract + v1 runner; document expected reds on frozen v4. Freeze v5 apparatus (actuator ABI amendment, boundary runner.v2, D1/D2 thresholds, sealed narrow commitment) before scoring candidate v5. Implement `bind_actuators([opaque_handle_id,…])` with internal motor-registry RNG (handles never sensory input). Boundary controls must all be green; then re-earn D1–D2 on **fresh** worlds (≥13/16) before DEVELOP.v5.
+
+Outcome: historical boundary lock claimed **8/8**; contract-honest audit finds **C4/C6 red** ([`cortex_mact_boundary.v5.audit.lock`](cortex_mact_boundary.v5.audit.lock)). Narrow gate **4/16** — **fail**. DEVELOP.v5 **refused**. Frozen failure + [`cortex_v6.isolation.lock`](cortex_v6.isolation.lock). Do not edit-rescore v5 on revealed worlds. Next: isolated v6 cycle. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Key locks: [`cortex_mact_boundary.lock`](cortex_mact_boundary.lock), [`cortex_mact_boundary.v5.lock`](cortex_mact_boundary.v5.lock), [`cortex.candidate.v5.lock`](cortex.candidate.v5.lock), [`cortex_v5_gate.lock`](cortex_v5_gate.lock), [`cortex_v5_gate.failure.lock`](cortex_v5_gate.failure.lock). Results: [`tm023cortex_v5_gate_results.md`](tm023cortex_v5_gate_results.md).
+

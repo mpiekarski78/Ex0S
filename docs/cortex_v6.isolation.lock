@@ -1,0 +1,27 @@
+{
+  "version": "TM.0.23.CORTEX.V6.ISOLATION",
+  "lab": "TM.0.23.CORTEX.V5.GATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "v5 narrow D1–D2 gate failed (4/16 < 13/16)",
+  "v5_gate_failure_lock": "docs/cortex_v5_gate.failure.lock",
+  "v5_gate_lock": "docs/cortex_v5_gate.lock",
+  "v5_reveal_lock": "docs/cortex_v5_eval_reveal.lock",
+  "refuse": [
+    "DEVELOP.v5 on any worlds",
+    "edit-and-rescore candidate v5 on revealed v5 gate worlds",
+    "transfer v4 or v5 partial credit"
+  ],
+  "next_cycle": {
+    "name": "isolated_v6",
+    "requires": [
+      "new architecture amendment (not edit of v5 against revealed worlds)",
+      "new birth + candidate.v6.lock",
+      "new sealed commitment ≠ v5 gate ≠ DEVELOP",
+      "re-earn M_act boundary greens",
+      "fresh narrow D1–D2 gate ≥13/16 before any DEVELOP.v6"
+    ]
+  },
+  "note": "DEVELOP.v5 not opened. Historical locks immutable. Product remains 0.0.004."
+}

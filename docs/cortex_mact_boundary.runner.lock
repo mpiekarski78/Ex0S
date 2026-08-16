@@ -1,0 +1,27 @@
+{
+  "version": "TM.0.23.CORTEX.MACT.BOUNDARY.RUNNER.V1",
+  "lab": "TM.0.23.CORTEX.MACT.BOUNDARY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "contract": "docs/cortex_mact_boundary_contract.md",
+  "contract_sha": "2bc041dc925196023d595d73434501dd0f892df14f9fe563f3f00001fd5435bd",
+  "boundary_module": "experiments.cortex_mact_boundary",
+  "boundary_module_sha": "77118db34613219fd192a26d8ab6af0ee5e8addf01193b620ab2215acea769aa",
+  "swap_revise_episodes": 40,
+  "candidate_under_test": "docs/cortex.candidate.v4.lock",
+  "candidate_v4_sha": "ac692f935f49ae8adb7c0c386c2c907b524f3a7693976502d652f087056e36c4",
+  "neural_cortex_sha": "49c7653db0e5ea36cc88f237d2603e0bde7571bf57be00f6ded9bd2e455e9892",
+  "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
+  "candidate_interface": {
+    "factory": "experiments.run_tm023cortex.make_cortex",
+    "class": "NeuralCortex",
+    "note": "v1 runner targets planted MOTOR_ACT_TOKENS API"
+  },
+  "refuse": [
+    "rewrite this lock after freeze",
+    "soften D1/D2 scorers",
+    "neural edits before documenting v4 reds"
+  ],
+  "note": "Frozen before v5 apparatus. Do not mutate after scoring v4."
+}

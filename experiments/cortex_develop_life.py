@@ -30,17 +30,36 @@ D0_ALPHA = 0.01
 
 STAGES = [f"D{i}" for i in range(13)]
 
-DEFAULT_LATENT = {
-    "act_effects": {
-        "press": {"state": ["st_pressed"], "delta": [0.25, -0.1, 0.15, 0.0]},
-        "harm": {"state": ["st_hurt"], "delta": [-0.35, 0.45, -0.15, 0.0]},
-        "idle": {"state": ["st_idle"], "delta": [0.0, 0.0, 0.0, 0.0]},
-        "get": {"state": ["st_got"], "delta": [0.1, 0.0, 0.2, 0.0]},
-        "drop": {"state": ["st_drop"], "delta": [-0.05, 0.05, -0.2, 0.0]},
-    }
+# Role → physical effect templates (physics only; cortex never sees role names as innate lexicon)
+ROLE_ACT_EFFECTS = {
+    "press": {"state": ["st_pressed"], "delta": [0.25, -0.1, 0.15, 0.0]},
+    "harm": {"state": ["st_hurt"], "delta": [-0.35, 0.45, -0.15, 0.0]},
+    "idle": {"state": ["st_idle"], "delta": [0.0, 0.0, 0.0, 0.0]},
+    "get": {"state": ["st_got"], "delta": [0.1, 0.0, 0.2, 0.0]},
+    "drop": {"state": ["st_drop"], "delta": [-0.05, 0.05, -0.2, 0.0]},
 }
 
 BODY0 = [0.5, 0.25, 0.5, 0.0]
+
+MOTOR_ROLES = ("press", "harm", "get", "drop")
+
+
+def motor_latent(toks: dict[str, str]) -> dict[str, Any]:
+    """Map opaque handle IDs → frozen physics effects (environment-side only)."""
+    effects = {
+        toks[role]: dict(ROLE_ACT_EFFECTS[role])
+        for role in MOTOR_ROLES
+        if role in toks
+    }
+    idle_id = toks.get("idle", "idle")
+    effects[idle_id] = dict(ROLE_ACT_EFFECTS["idle"])
+    return {"act_effects": effects}
+
+
+# Backward-compatible alias for fixtures that still use literal press/harm keys
+DEFAULT_LATENT = {
+    "act_effects": {k: dict(v) for k, v in ROLE_ACT_EFFECTS.items()}
+}
 
 
 def _binom_sf(k: int, n: int, p: float) -> float:
@@ -75,6 +94,7 @@ class LifeSeeds:
     seed_source: int
     seed_action: int
     seed_permute: int
+    seed_motor: int = 0
 
     def genome(self) -> GenomeConfig:
         return GenomeConfig(
@@ -83,6 +103,7 @@ class LifeSeeds:
             seed_source=self.seed_source,
             seed_action=self.seed_action,
             seed_permute=self.seed_permute,
+            seed_motor=self.seed_motor or (self.seed_registry ^ 0x4D07),
         )
 
 
@@ -97,6 +118,7 @@ def pair_seeds(pair_id: int) -> tuple[LifeSeeds, LifeSeeds]:
         seed_source=base + 3,
         seed_action=base + 4,
         seed_permute=base + 5,
+        seed_motor=base + 6,
     )
     twin = LifeSeeds(
         pair_id=pair_id,
@@ -106,6 +128,7 @@ def pair_seeds(pair_id: int) -> tuple[LifeSeeds, LifeSeeds]:
         seed_source=base + 13,
         seed_action=base + 14,
         seed_permute=base + 15,
+        seed_motor=base + 16,
     )
     return main, twin
 
@@ -133,6 +156,12 @@ def _tok(prefix: str, seeds: LifeSeeds, name: str) -> str:
     return f"tw_{h}_{name}"
 
 
+def _motor_handle(seeds: LifeSeeds, role: str) -> str:
+    """Opaque environment handle ID (not English meaning; not neural input)."""
+    h = hashlib.sha256(f"motor:{seeds.seed_registry}:{role}".encode()).hexdigest()[:12]
+    return f"h_{h}"
+
+
 def curriculum_tokens(seeds: LifeSeeds) -> dict[str, str]:
     return {
         "a": _tok("sym", seeds, "a"),
@@ -150,11 +179,21 @@ def curriculum_tokens(seeds: LifeSeeds) -> dict[str, str]:
         "comp_z": _tok("sym", seeds, "comp_z"),
         "domain2": _tok("sym", seeds, "domain2"),
         "foil": _tok("sym", seeds, "foil"),
-        "press": "press",
-        "harm": "harm",
-        "get": "get",
-        "drop": "drop",
+        "press": _motor_handle(seeds, "press"),
+        "harm": _motor_handle(seeds, "harm"),
+        "get": _motor_handle(seeds, "get"),
+        "drop": _motor_handle(seeds, "drop"),
+        "idle": _motor_handle(seeds, "idle"),
     }
+
+
+def bind_life_actuators(ag: NeuralCortex, toks: dict[str, str]) -> list[str]:
+    """Attach opaque motor handles via cortex-internal motor-registry RNG."""
+    handles = [toks[r] for r in MOTOR_ROLES]
+    if not hasattr(ag, "bind_actuators"):
+        raise RuntimeError("candidate lacks bind_actuators — refuse planted lexicon path")
+    ag.bind_actuators(handles)
+    return handles
 
 
 def apply_event(
@@ -249,11 +288,18 @@ def run_one_life(
     toks = curriculum_tokens(seeds)
     stages: dict[str, Any] = {}
 
-    # D0 at birth
+    # D0 at birth (before actuator binding)
     stages["D0"] = score_d0(ag, seeds, toks)
+    bind_life_actuators(ag, toks)
 
     # early child checkpoint after light teaching
-    teach_loop(ag, seeds, n=30, symbols_fn=lambda i, rng: [toks["a"], toks["b"]])
+    teach_loop(
+        ag,
+        seeds,
+        n=30,
+        symbols_fn=lambda i, rng: [toks["a"], toks["b"]],
+        latent=motor_latent(toks),
+    )
     child_ckpt = ag.checkpoint()
 
     stages["D1"] = score_d1(ag, seeds, toks)
@@ -275,6 +321,7 @@ def run_one_life(
         seed_source=seeds.seed_source,
         seed_action=seeds.seed_action,
         seed_permute=seeds.seed_permute,
+        seed_motor=seeds.seed_motor,
     )
     stages["D12"] = score_d12_forks(ag, seeds, toks, birth_g, device)
 

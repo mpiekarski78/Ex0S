@@ -1,0 +1,117 @@
+{
+  "version": "TM.0.23.CORTEX.MACT.BOUNDARY.RESULT.V5",
+  "lab": "TM.0.23.CORTEX.MACT.BOUNDARY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "candidate": "docs/cortex.candidate.v5.lock",
+  "candidate_sha": "e1d2cf4293dc9003959fb385c50605678ba97922aaa4b43a850626ab5875116e",
+  "runner_v2_sha": "0e7727768bdc8c733495d88007c9dbfc57d64ee0c85390e9ccfe00e40cab4ccd",
+  "contract_sha": "2bc041dc925196023d595d73434501dd0f892df14f9fe563f3f00001fd5435bd",
+  "all_controls_green": true,
+  "n_ok": 8,
+  "n_controls": 8,
+  "controls": [
+    {
+      "id": "C1_env_exposed_handles",
+      "ok": true,
+      "planted_tokens": [],
+      "birth_motor_keys": [],
+      "why": null
+    },
+    {
+      "id": "C2_spellings_not_neural_input",
+      "ok": true,
+      "leaked_into_vocab": [],
+      "handles": [
+        "h_10f20bc9a2c2",
+        "h_27671f1b01db",
+        "h_2b192f65e5e8",
+        "h_e19c58af3813"
+      ],
+      "why": null
+    },
+    {
+      "id": "C3_twin_independent_rename_vectorize",
+      "ok": true,
+      "handle_ids_differ": true,
+      "has_motor_rng": true,
+      "press_vectors_equal": false,
+      "rebind_restores": true,
+      "why": null
+    },
+    {
+      "id": "C4_consequence_swap_timed",
+      "ok": true,
+      "swap_revise_episodes": 40,
+      "pref_a": true,
+      "stale_held_a_permitted": false,
+      "pref_b": true,
+      "restore_a": true,
+      "counts_before": {
+        "h_d6d045e64b97": 14
+      },
+      "counts_stale": {
+        "h_0212ab081a3e": 5,
+        "h_d6d045e64b97": 2
+      },
+      "counts_revised": {
+        "h_0212ab081a3e": 12,
+        "h_d6d045e64b97": 1
+      },
+      "counts_restored": {
+        "h_0212ab081a3e": 1,
+        "h_d6d045e64b97": 12
+      },
+      "why": null
+    },
+    {
+      "id": "C5_plasticity_off",
+      "ok": true,
+      "d1_ok": false,
+      "press": 0,
+      "b_op_act": 0.85,
+      "op_cost_act": 0.05,
+      "why": null
+    },
+    {
+      "id": "C6_no_consequence",
+      "ok": true,
+      "counts": {
+        "h_0ecc8cfefc2e": 8,
+        "h_309a972ed9c2": 3,
+        "h_9976916103f3": 3
+      },
+      "why": null
+    },
+    {
+      "id": "C7_distractor_motors",
+      "ok": true,
+      "counts": {
+        "h_8d5cd885c1e7": 1,
+        "h_4dda9b34e83b": 5
+      },
+      "distractor": "h_distr_28f7",
+      "why": null
+    },
+    {
+      "id": "C8_shuffled_credit",
+      "ok": true,
+      "counts": {
+        "h_cba422d4de35": 10,
+        "h_cea3207c4288": 14,
+        "h_5fe8f8af7adf": 1
+      },
+      "why": null
+    }
+  ],
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "note": "Boundary hygiene on generic motor ABI. Does not prove D1\u2013D2 competence."
+}
