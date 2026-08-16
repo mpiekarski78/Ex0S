@@ -2024,3 +2024,5 @@ Canonical main `4d70290`. V10 gate **8/16** stands. Do not edit-rescore v10. **D
 
 v11 apparatus (scorer-only, no candidate SHA): [`cortex_v11_stat_contract.lock`](cortex_v11_stat_contract.lock), [`cortex_v11_architecture_amendment.lock`](cortex_v11_architecture_amendment.lock), [`cortex_v11.prereg.lock`](cortex_v11.prereg.lock). D2 HOLD is counted while press/harm physics are swapped. Neural remains candidate v7–v10 until a later birth/candidate commit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle, before reveal): [`cortex.candidate.v11.lock`](cortex.candidate.v11.lock) reuses neural SHA `7b67f187…`. Population C4/C5/C6 green. Reveal must pin the pushed candidate git SHA.
+
