@@ -1,19 +1,17 @@
 {
-  "version": "TM.0.23.CORTEX.CANDIDATE.V9",
+  "version": "TM.0.23.CORTEX.V9.BIRTH",
   "product": "0.0.004",
   "earned_next": false,
   "ex0s": null,
-  "factory": "experiments.run_tm023cortex.make_cortex",
-  "supersedes_v8_sha": "f89da0514b26cd7f568e0d745fbbc1de7c5fd77bf80911ce637680d635e041e3",
-  "v9_birth_sha": "a7fbc49687b8ba266192db3cd02e339572f561c5e7c3465fe6d3d212ca52a54e",
-  "architecture_amendment_sha": "dcfac7450c0f19b5950bb00c47adfbbce9b3f4d9c9876717f590de06fdbdc13e",
   "diagnosis_v8_sha": "213c055d1fc8b4f13b0c1f73b81a6d0612826f465b525ee6ca2ebbc5000c2517",
   "stat_contract_sha": "12f9de0aa915e90f6c306d61dac36010f5660eb871c5e30d481a512f0da4ad3c",
-  "math_audit_sha": "cbb3616b097b8a128aaf503e9a85a98b2171cabe6c10534bbcff81339510caf6",
+  "architecture_amendment_sha": "dcfac7450c0f19b5950bb00c47adfbbce9b3f4d9c9876717f590de06fdbdc13e",
   "learning_law_ok": true,
   "gpu_scoring_ready": true,
   "all_sanity_ok": true,
   "neural_cortex_sha": "7b67f187e5ed2eb7745ab33280807b2e56d20107be9eb4b265a1b9a825d3e17b",
+  "retains_v7_neural_sha": "7b67f187e5ed2eb7745ab33280807b2e56d20107be9eb4b265a1b9a825d3e17b",
+  "retains_v8_neural_sha": "7b67f187e5ed2eb7745ab33280807b2e56d20107be9eb4b265a1b9a825d3e17b",
   "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
   "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
   "env": {
@@ -68,5 +66,11 @@
       "HOLD": 0.0
     }
   },
-  "note": "Candidate v9 reuses v7/v8 neural under the v9 D1 press/harm scorer contract. Must re-earn D1\u2013D2. No DEVELOP yet."
+  "checks": {
+    "unit_motor": true,
+    "bind_n": 2,
+    "b_op_act": 0.85,
+    "op_cost_act": 0.05
+  },
+  "note": "Scorer-only cycle. Neural unchanged from candidates v7/v8."
 }

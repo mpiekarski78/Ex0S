@@ -114,7 +114,10 @@ def test_birth_and_candidate_frozen() -> None:
     assert CANDIDATE_LOCK.exists()
     assert CANDIDATE_V1.exists()
     cand = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
-    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V8":
+    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V9":
+        v9_birth = json.loads((REPO_ROOT / "docs" / "cortex_v9_birth.lock").read_text(encoding="utf-8"))
+        assert v9_birth["learning_law_ok"] is True
+    elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V8":
         v8_birth = json.loads((REPO_ROOT / "docs" / "cortex_v8_birth.lock").read_text(encoding="utf-8"))
         assert v8_birth["learning_law_ok"] is True
     elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V7":
@@ -185,9 +188,12 @@ def test_diag_and_v4_gate() -> None:
     assert (REPO_ROOT / "docs" / "cortex.candidate.v5.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v6.lock").exists()
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    v9 = REPO_ROOT / "docs" / "cortex.candidate.v9.lock"
     v8 = REPO_ROOT / "docs" / "cortex.candidate.v8.lock"
     v7 = REPO_ROOT / "docs" / "cortex.candidate.v7.lock"
-    if v8.exists():
+    if v9.exists():
+        assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V9"
+    elif v8.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V8"
     elif v7.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V7"
@@ -326,6 +332,28 @@ def test_v7_stat_diagnosis_and_no_develop() -> None:
     from three_memory.neural_cortex import MOTOR_ACT_TOKENS
 
     assert list(MOTOR_ACT_TOKENS) == []
+
+
+def test_v9_candidate_boundary_pending_gate() -> None:
+    cand_p = REPO_ROOT / "docs" / "cortex.candidate.v9.lock"
+    if not cand_p.exists():
+        return
+    cand = json.loads(cand_p.read_text(encoding="utf-8"))
+    assert cand["version"] == "TM.0.23.CORTEX.CANDIDATE.V9"
+    assert cand["earned_next"] is False
+    assert cand["ex0s"] is None
+    assert cand["neural_cortex_sha"] == sha(NEURAL_PY)
+    v7 = json.loads((REPO_ROOT / "docs" / "cortex.candidate.v7.lock").read_text(encoding="utf-8"))
+    assert cand["neural_cortex_sha"] == v7["neural_cortex_sha"]
+    mact = json.loads((REPO_ROOT / "docs" / "cortex_mact_boundary.v9.lock").read_text(encoding="utf-8"))
+    assert mact["all_required_green"] is True
+    required = {"C4_consequence_swap_timed", "C5_plasticity_necessity", "C6_no_consequence_population"}
+    assert required.issubset({c["id"] for c in mact["controls"] if c.get("ok")})
+    assert not (REPO_ROOT / "docs" / "cortex_development.v9.lock").exists()
+    prereg = json.loads((REPO_ROOT / "docs" / "cortex_v9.prereg.lock").read_text(encoding="utf-8"))
+    v8p = json.loads((REPO_ROOT / "docs" / "cortex_v8.prereg.lock").read_text(encoding="utf-8"))
+    assert prereg["eval_seed_commitment"] != v8p["eval_seed_commitment"]
+    assert prereg["d1_bind"] == ["press", "harm"]
 
 
 def test_verify_v7_gate_cli() -> None:
@@ -520,6 +548,7 @@ if __name__ == "__main__":
     test_v6_diagnosis_boundary_and_gate_failure()
     test_verify_v6_gate_cli()
     test_v7_stat_diagnosis_and_no_develop()
+    test_v9_candidate_boundary_pending_gate()
     test_verify_v7_gate_cli()
     test_verify_v8_gate_cli()
     test_verify_v9_gate_cli()
