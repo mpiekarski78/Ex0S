@@ -1,0 +1,181 @@
+{
+  "version": "TM.0.16.GAPWALL.PREREG",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "label": "continuity capacity wall on frozen ALIASFINGER-on",
+  "preregistered_claim": "Measure where frozen ALIASFINGER-on preserves an event frontier across a gap, where an episode boundary destroys it, and where multiple equally supported reappearances force HOLD. This wall does not supply or test an object-continuity mechanism.",
+  "bounded_fact_if_expected": "An empty visible event may be skipped by the existing event observer, but that behavior is empty-event skip semantics, not learned object continuity; episode boundaries remove the frontier, distractors are ordinary events, and two equal post-gap candidates remain ambiguous.",
+  "lab": "TM.0.16.GAPWALL",
+  "not_a_product_stamp": true,
+  "not_tm017": true,
+  "organism": {
+    "factory": "experiments.run_tm016aliasfinger.make_finger",
+    "use_alias_fingerprint": true,
+    "use_acquire_relate": true,
+    "agent_edits_permitted": false,
+    "continuity_mechanism_present": false
+  },
+  "known_baseline": {
+    "empty_visible_why": "empty_visible",
+    "empty_visible_writes": 0,
+    "empty_visible_updates": 0,
+    "empty_visible_retains_rel_prev_visible": true,
+    "end_event_episode_clears_rel_prev_visible": true,
+    "honest_label_for_any_empty_gap_bridge": "empty_event_skip_semantics",
+    "refuse_label": "learned_object_continuity"
+  },
+  "tokens": {
+    "origin": "a",
+    "mid": "b",
+    "dest": "c",
+    "distractor": "d",
+    "candidate_1": "u1",
+    "candidate_2": "u2"
+  },
+  "isolation": {
+    "fresh_organism_per_cell": true,
+    "empty_S": true,
+    "reset_rho_before_probe": true,
+    "no_shared_state_across_cells": true
+  },
+  "query_protocol": {
+    "cue": "a",
+    "teacher": "off",
+    "probe": "traverse_hold",
+    "report_lived_bind": true,
+    "report_evidence_winner": true,
+    "report_edge_support": true
+  },
+  "n_cells": 6,
+  "cell_ids": [
+    "G0_adjacent",
+    "G1_empty_skip",
+    "G2_episode_gap",
+    "G3_distractor",
+    "G4_one_reappear",
+    "G5_two_reappear"
+  ],
+  "fixtures": {
+    "G0_adjacent": {
+      "episodes": [
+        [["a"], ["b"], ["c"]],
+        [["a"], ["b"], ["c"]],
+        [["a"], ["b"], ["c"]]
+      ],
+      "end_each_episode": true,
+      "intent": "Adjacent non-empty stable-token route; continuity is not at issue.",
+      "scorer": {
+        "edge_support": {"a->b": 3, "b->c": 3},
+        "evidence_winner": {"a": "b", "b": "c"},
+        "query_lived_bind": "c",
+        "unique_route_completion": true,
+        "honest_label": "adjacent_baseline"
+      }
+    },
+    "G1_empty_skip": {
+      "episodes": [
+        [["a"], [], ["b"], ["c"]]
+      ],
+      "end_each_episode": true,
+      "intent": "An empty event occurs inside a route and the next non-empty event is paired with the pre-gap bag by existing skip semantics.",
+      "scorer": {
+        "gap_result": {"ok": true, "why": "empty_visible", "wrote": 0, "updated": 0},
+        "edge_support": {"a->b": 1, "b->c": 1},
+        "query_lived_bind": "c",
+        "unique_route_completion": true,
+        "empty_event_skip_semantics": true,
+        "object_continuity_claim": false
+      }
+    },
+    "G2_episode_gap": {
+      "episodes": [
+        [["a"]],
+        [["a"]]
+      ],
+      "end_each_episode": true,
+      "intent": "The same token reappears only after end_event_episode clears the event frontier.",
+      "scorer": {
+        "edge_support": {"a->a": 0},
+        "evidence_winner": {"a": null},
+        "query_motor": "HOLD",
+        "query_lived_bind": null,
+        "cross_episode_bridge": false,
+        "inherited_episode_frontier": false
+      }
+    },
+    "G3_distractor": {
+      "episodes": [
+        [["a"], ["d"], ["a"]]
+      ],
+      "end_each_episode": true,
+      "intent": "A visible distractor is an ordinary event; the apparatus must not privilege the two appearances of a.",
+      "scorer": {
+        "edge_support": {"a->d": 1, "d->a": 1, "a->a": 0},
+        "distractor_edges_authored": true,
+        "direct_continuity_privileged": false,
+        "unique_route_completion": false,
+        "query_motor": "HOLD",
+        "honest_report": "fragmented_through_distractor"
+      }
+    },
+    "G4_one_reappear": {
+      "episodes": [
+        [["a"], [], ["u1"]]
+      ],
+      "end_each_episode": true,
+      "intent": "After an empty skipped event, exactly one opaque candidate is visible.",
+      "scorer": {
+        "gap_result": {"ok": true, "why": "empty_visible", "wrote": 0, "updated": 0},
+        "edge_support": {"a->u1": 1},
+        "evidence_winner": {"a": "u1"},
+        "record_unique_assignment_or_hold": true,
+        "measurement_only": true,
+        "honest_label_if_unique": "single_candidate_selected_by_empty_event_skip",
+        "object_continuity_claim": false
+      }
+    },
+    "G5_two_reappear": {
+      "episodes": [
+        [["a"], [], ["u1", "u2"]]
+      ],
+      "end_each_episode": true,
+      "intent": "After an empty skipped event, two opaque candidates have equal raw support.",
+      "scorer": {
+        "gap_result": {"ok": true, "why": "empty_visible", "wrote": 0, "updated": 0},
+        "edge_support": {"a->u1": 1, "a->u2": 1},
+        "evidence_winner": {"a": null},
+        "query_motor": "HOLD",
+        "query_lived_bind_not_in": ["u1", "u2"],
+        "unique_assignment": false,
+        "irreducible_ambiguity": true,
+        "fail_closed_on_unique_peer": true
+      }
+    }
+  },
+  "prior_lock_shas": {
+    "alias_finger.lock": "025f9983aaaf946275bbf6c75f9b621e0c3652417894e7c24a43a4acda03dd23",
+    "alias_finger.candidate.lock": "86b20b7ee6bfc5caa6a39184ab895d913112f510397e0281120d8eb7522404f8",
+    "alias_evidence.prereg.lock": "8c1385f588df7de52bc4be6515bad934c3b708bc61b0fb61855a486ed957d39a",
+    "genome_016.lock": "76a28d983d02af27d711a44cc8079c5fac50e4a72ebf137cf3790a92d0d09e98",
+    "relate_016.lock": "756750d4469177c72fdcea48f1b1b691366dbf4843edd2215b69170c5621f829"
+  },
+  "refuse": [
+    "editing three_memory/agent.py",
+    "editing RELATE or ALIASFINGER implementations or locks",
+    "editing docs/alias_evidence.prereg.lock",
+    "calling empty-event skip semantics learned object continuity",
+    "continuity-evidence contract files this pass",
+    "persistence flag or candidate this pass",
+    "FAMILY",
+    "LOOKAHEAD",
+    "pixels",
+    "TM.0.17 name",
+    "product stamp 0.0.005",
+    "earned_next=true",
+    "non-null ex0s",
+    "GAPWALL runner SHA in this prereg",
+    "agent.py SHA in this prereg"
+  ],
+  "note": "Wall probe only. Write gap_wall.lock after the six frozen cells have been run. Do not rewrite this prereg to match observed outcomes or implementation artifacts. G4 is explicitly a measurement cell; a unique result would be reported only as empty-event skip behavior."
+}
