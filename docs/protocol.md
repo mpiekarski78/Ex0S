@@ -1994,3 +1994,9 @@ Outcome: candidate `40680fb` revealed after a clean push. Population C4/C5/C6 gr
 
 Diagnosis ([`cortex_diagnosis.v8.lock`](cortex_diagnosis.v8.lock)): those press=0 lives ACT get/drop (positive body_adv). v9 may bind only press+harm for D1, matching C5. Neural unchanged.
 
+## TM.0.23.CORTEX.V8 audit → isolated V9
+
+Canonical main `8474d9d`. V8 gate **1/16** stands. Do not edit-rescore v8. **DEVELOP.v8 refused.** Full D0–D12 stays closed.
+
+v9 apparatus (scorer-only, no candidate SHA): [`cortex_v9_stat_contract.lock`](cortex_v9_stat_contract.lock), [`cortex_v9_architecture_amendment.lock`](cortex_v9_architecture_amendment.lock), [`cortex_v9.prereg.lock`](cortex_v9.prereg.lock). D1 bind/teach/probe is press+harm only. Floors, `life_delta_min=0.10`, sealed-seed worlds, and git-pinned reveal are retained. Neural remains candidate v7/v8 until a later birth/candidate commit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
