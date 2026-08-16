@@ -1698,3 +1698,34 @@ Pair-event ABI as binding channel; smuggling skeleton through teacher/`observe_o
 
 Apparatus: `experiments/run_tm015skeleton.py`. Results: [`tm015skeleton_results.md`](tm015skeleton_results.md).
 
+---
+
+## TM.0.16.RELATE — candidate relations under ambiguity
+
+**Lab bookkeeping** (not a product stamp). Product under test remains **Ex0S 0.0.004**. `earned_next=false`. `ex0s=null`. No LOOKAHEAD. No FAMILY 288. No pixels.
+
+### Claim
+
+> A frozen developmental recipe can accumulate candidate relations across repeated ambiguous multi-symbol event streams and use converging evidence to select an invariant relational route for later composition, while surface distractor relations remain inspectable competing hypotheses, without the apparatus choosing which visible-symbol transitions should control behavior.
+
+### Binding ABI
+
+- `observe_event({"visible": [...], "focus": ...})` — authoring reads **`visible` only**; **MUST NOT read `focus`**
+- All-pairs `prev_visible × curr_visible` → `experience_skel` (incl. self-pairs `Q→Q`); normalize strip/lower/dedupe/sort; skip motors; **no prune**
+- `end_event_episode()` clears only `_rel_prev_visible` (not S/ρ/κ). Lives accumulate without requiring `reset_rho`. `reset_rho` / newborn also clear the same transient.
+- Compose already picks the unique `(support, -contradiction)` winner and HOLDs on ties. Losers remain in S.
+
+### Battery
+
+D0–D15 (16 cells): birth; one ambiguous HOLD; varying clutter winner+losers; full route; surface invariant; counterfactual latent; ρ; newborn; dual-strip; focus-not-oracle; irreducible tie; episode boundary; fid/order; channel+oracle; weights; nasty.
+
+### Decisive criterion
+
+One ambiguous life with equal competitors → HOLD. Repeated lives with invariant X→A→Y under varying clutter → unique winners control compose; losers stay inspectable. Same latent / different surfaces → same behavior. Different latent X→B→Y → different behavior. Focus permutation → identical S and behavior. `end_event_episode` prevents cross-life Y→X seams.
+
+### Refuse
+
+Pruning losers; `support>=N` earn flags; RELATE reading focus; cross-life Y→X via leftover prev; harness `setattr` to clear transients; requiring `reset_rho` between lives; universal one-observation ban; pair-hop/`observe_symbol` as binding channel; FAMILY 288; LOOKAHEAD; pixels; stamp 0.0.005; rewriting prior locks; freeze SHAs in prereg.
+
+Apparatus: `experiments/run_tm016relate.py`. Results: [`tm016relate_results.md`](tm016relate_results.md). Prereg: [`relate_016.prereg.lock`](relate_016.prereg.lock). Freeze: [`genome_016.lock`](genome_016.lock) + [`relate_016.lock`](relate_016.lock).
+

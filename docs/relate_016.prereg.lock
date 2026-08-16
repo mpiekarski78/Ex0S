@@ -1,0 +1,140 @@
+{
+  "version": "TM.0.16.RELATE.PREREG",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "label": "candidate relations under ambiguity",
+  "preregistered_claim": "A frozen developmental recipe can accumulate candidate relations across repeated ambiguous multi-symbol event streams and use converging evidence to select an invariant relational route for later composition, while surface distractor relations remain inspectable competing hypotheses, without the apparatus choosing which visible-symbol transitions should control behavior.",
+  "observation_abi": "observe_event",
+  "observation_abi_note": "Authoring reads event.visible only. MUST NOT read event.focus. All-pairs prev_visible x curr_visible into experience_skel. No prune. end_event_episode clears RELATE transient only.",
+  "episode_boundary_api": "end_event_episode",
+  "candidate_rule": {
+    "normalize": "strip + lower; dedupe via set; sorted",
+    "valid": "non-motor nonempty symbols",
+    "pairs": "every ordered pair in prev_visible x curr_visible including self-pairs",
+    "source": "experience_skel",
+    "reads_focus": false,
+    "prune_losers": false
+  },
+  "provenance": {
+    "experience_skel": {
+      "source": "experience_skel",
+      "ctx": "absent",
+      "did_not_motor": true
+    },
+    "experience_ctx": {
+      "source": "experience_ctx",
+      "ctx": "present",
+      "did_is_motor": true
+    }
+  },
+  "n_cells": 16,
+  "cell_ids": [
+    "D0_birth_unreachable",
+    "D1_ambiguous_exposure_hold",
+    "D2_varying_clutter_winner",
+    "D3_full_route_resolves",
+    "D4_surface_invariant",
+    "D5_counterfactual_latent",
+    "D6_reset_rho",
+    "D7_newborn_reload",
+    "D8_dual_strip",
+    "D9_focus_not_relation_oracle",
+    "D10_irreducible_ambiguity",
+    "D11_episode_boundary",
+    "D12_fid_storage_order",
+    "D13_channel_oracle",
+    "D14_weights_no_shortcut",
+    "D15_nasty"
+  ],
+  "cell_earn_kill": {
+    "D0_birth_unreachable": {
+      "earn": "unreachable X→Y; no experience_skel",
+      "kill": "residual planted map"
+    },
+    "D1_ambiguous_exposure_hold": {
+      "earn": "candidate cloud; equally supported competitors → HOLD",
+      "kill": "unique route from one ambiguous life"
+    },
+    "D2_varying_clutter_winner": {
+      "earn": "X→A operational winner; losers remain in S",
+      "kill": "prune / clutter wins"
+    },
+    "D3_full_route_resolves": {
+      "earn": "X→A→Y unique winners; compose reaches Y",
+      "kill": "unresolved / wrong winner"
+    },
+    "D4_surface_invariant": {
+      "earn": "different surfaces, same invariant → same behavior",
+      "kill": "surfaces dictate different maps"
+    },
+    "D5_counterfactual_latent": {
+      "earn": "X→B→Y → different behavior",
+      "kill": "same as D4"
+    },
+    "D6_reset_rho": {
+      "earn": "earned selection persists after reset_rho",
+      "kill": "lost after reset_rho"
+    },
+    "D7_newborn_reload": {
+      "earn": "same after clone_empty + TagStore",
+      "kill": "lost after newborn"
+    },
+    "D8_dual_strip": {
+      "earn": "skel-only HOLD; ctx-only HOLD; restore PRESS",
+      "kill": "one layer alone suffices"
+    },
+    "D9_focus_not_relation_oracle": {
+      "earn": "same visible, focus XAY/QRS/random → identical skel rows, supports, compose",
+      "kill": "focus changes relations"
+    },
+    "D10_irreducible_ambiguity": {
+      "earn": "repeated {X}→{A,Q}→{Y} → equal X→A and X→Q → evidence_tie HOLD",
+      "kill": "picks A"
+    },
+    "D11_episode_boundary": {
+      "earn": "end_event_episode prevents cross-life edges; reset_rho/newborn clear transient",
+      "kill": "Y→X seam edges"
+    },
+    "D12_fid_storage_order": {
+      "earn": "rename/permute filenames; PRESS still",
+      "kill": "identity = filename/order"
+    },
+    "D13_channel_oracle": {
+      "earn": "observe_event ≠ observe_outcome; teacher {action}; oracle score-only",
+      "kill": "path smuggle / oracle writes S"
+    },
+    "D14_weights_no_shortcut": {
+      "earn": "cortex hash stable; no X→motor",
+      "kill": "shortcut or weight move"
+    },
+    "D15_nasty": {
+      "earn": "empty visible no write; duplicate/case/whitespace normalize; motors skipped; stale after ρ; provenance unexpected=0",
+      "kill": "extra votes / stale / motors"
+    }
+  },
+  "genome_015_lock_sha": "16b2ec9c157c24f4877b96c9ad7b3badb9cb06d449012cd3d3a493735e2063f7",
+  "skeleton_015_lock_sha": "45a19d73d8003783bc09b3b0063c74c384962fcaff3575afb71bd01f114338f6",
+  "genome_014_lock_sha": "1384287f70515a681e2cdfd4ccc1267fb6f18764d24b3619b7e6a6612bab3174",
+  "acquire_014_lock_sha": "e6fbe36852411e9c687565e54088d464efc69d6a766fe79186b5d5461c4d9383",
+  "family_014_lock_sha": "dd92135c53d39db0e0e809de541c6a8afd178242118c0231e959622732da1c74",
+  "kappa_013_lock_sha": "b76bd594c9e9fae6cc30b99c48879fe2bd6981326460b4c65683f218a710ad9a",
+  "genome_011_lock_sha": "e4202d8402ac2f734a8af922898dfd68ec215f2824470d49ebe9217c534ede92",
+  "refuse": [
+    "pruning losers or support>=N earn flags",
+    "RELATE reading focus (answer channel)",
+    "cross-life Y→X via leftover _rel_prev_visible",
+    "harness setattr to clear transients",
+    "requiring reset_rho between lives to accumulate",
+    "universal one-observation ban",
+    "pair-hop / observe_symbol as the 0.16 binding channel",
+    "FAMILY / 288 worlds this pass",
+    "LOOKAHEAD",
+    "pixels / raw audio / text streams",
+    "stamp or pre-name Ex0S 0.0.005",
+    "rewrite genome_015 / skeleton_015 / genome_014 / acquire_014 / family_014",
+    "put final mechanism/cell SHAs into this prereg lock",
+    "claim vision/hearing or Platonic map discovery"
+  ],
+  "note": "Preregistration only. genome_016.lock and relate_016.lock written after 16/16 with real SHAs. Do not rewrite this file to match the implementation."
+}

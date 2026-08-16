@@ -112,6 +112,7 @@ class ThreeMemoryAgent:
         use_context_kappa: bool = False,
         use_acquire_ctx: bool = False,
         use_acquire_skel: bool = False,
+        use_acquire_relate: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -221,6 +222,12 @@ class ThreeMemoryAgent:
             raise ValueError("use_acquire_ctx requires use_context_kappa")
         if use_acquire_skel and not use_acquire_ctx:
             raise ValueError("use_acquire_skel requires use_acquire_ctx")
+        if use_acquire_relate and not use_acquire_skel:
+            raise ValueError("use_acquire_relate requires use_acquire_skel")
+        if use_acquire_relate and not use_hyp_survive:
+            raise ValueError("use_acquire_relate requires use_hyp_survive")
+        if use_acquire_relate and not use_evidence:
+            raise ValueError("use_acquire_relate requires use_evidence")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -293,6 +300,7 @@ class ThreeMemoryAgent:
         self.use_context_kappa = use_context_kappa
         self.use_acquire_ctx = use_acquire_ctx
         self.use_acquire_skel = use_acquire_skel
+        self.use_acquire_relate = use_acquire_relate
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
@@ -302,6 +310,7 @@ class ThreeMemoryAgent:
         self._lived_bind: str | None = None
         self._lived_pending: bool = False
         self._skel_prev: str | None = None
+        self._rel_prev_visible: list[str] | None = None
         self.n_revised = 0
         self.n_annotated = 0
         self.last_policy: dict[str, Any] = {}
@@ -324,6 +333,16 @@ class ThreeMemoryAgent:
         """Transient symbol adjacency — cleared on ρ reset / newborn (fresh agent)."""
         self._skel_prev = None
 
+    def _clear_rel_prev_visible(self) -> None:
+        """RELATE episode transient — cleared by end_event_episode / reset_rho / newborn."""
+        self._rel_prev_visible = None
+
+    def end_event_episode(self) -> dict[str, Any]:
+        """Clear only RELATE transient event state. Not S, ρ, or κ."""
+        had = self._rel_prev_visible is not None
+        self._clear_rel_prev_visible()
+        return {"ok": True, "cleared": had}
+
     def reset_rho(self) -> None:
         self.rho.reset()
         self._peek = []
@@ -331,12 +350,14 @@ class ThreeMemoryAgent:
         self._in_hand_id = None
         self._clear_lived_context()
         self._clear_skel_prev()
+        self._clear_rel_prev_visible()
 
     def reset_store(self) -> None:
         self.store.reset()
         self._peek = []
         self._clear_lived_context()
         self._clear_skel_prev()
+        self._clear_rel_prev_visible()
 
     def reset_life(self) -> None:
         self.reset_rho()
@@ -404,6 +425,7 @@ class ThreeMemoryAgent:
             use_context_kappa=self.use_context_kappa,
             use_acquire_ctx=self.use_acquire_ctx,
             use_acquire_skel=self.use_acquire_skel,
+            use_acquire_relate=self.use_acquire_relate,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -1171,6 +1193,95 @@ class ThreeMemoryAgent:
         out["ok"] = True
         out["why"] = "authored" if out["wrote"] else "bumped"
         return out
+
+    def _normalize_visible(self, visible: Any) -> list[str]:
+        """Strip/lower/dedupe/sort; drop motors and empties. Never reads focus."""
+        motors = self._acquire_motors() | {"hold", "idle", "wait"}
+        out: set[str] = set()
+        if not isinstance(visible, (list, tuple, set, frozenset)):
+            return []
+        for x in visible:
+            if not isinstance(x, str):
+                continue
+            tok = x.strip().lower()
+            if not tok or tok in motors:
+                continue
+            out.add(tok)
+        return sorted(out)
+
+    def observe_event(self, event: dict[str, Any] | None) -> dict[str, Any]:
+        """Ambiguous multi-symbol events → candidate experience_skel cloud.
+
+        Reads event['visible'] only. MUST NOT read event['focus'].
+        All-pairs prev_visible × curr_visible (incl. self-pairs). No prune.
+        """
+        result: dict[str, Any] = {
+            "ok": False,
+            "wrote": 0,
+            "updated": 0,
+            "visible": [],
+            "why": "",
+        }
+        if not self.use_acquire_relate or not self.store.enabled:
+            result["why"] = "relate_off"
+            return result
+        if not isinstance(event, dict):
+            result["why"] = "bad_event"
+            return result
+        # Binding: visible only — never touch focus.
+        curr = self._normalize_visible(event.get("visible"))
+        result["visible"] = list(curr)
+        if not curr:
+            result["ok"] = True
+            result["why"] = "empty_visible"
+            # Still advance? Plan: empty visible no write. Do not update prev with empty
+            # (keeps prior episode state until end_event_episode / non-empty event).
+            return result
+        prev = self._rel_prev_visible
+        if prev is None:
+            self._rel_prev_visible = list(curr)
+            result["ok"] = True
+            result["why"] = "seed_prev_visible"
+            return result
+        wrote = 0
+        updated = 0
+        for a in prev:
+            for b in curr:
+                existing = self._find_experience_skel(a, b)
+                if existing is None:
+                    tags: dict[str, Any] = {
+                        "bind": a,
+                        "did": b,
+                        "source": "experience_skel",
+                        "here": "chb",
+                        "w0": a,
+                        "hyp": "supported",
+                        "trials": 1,
+                        "wins": 1,
+                        "losses": 0,
+                        "support": 1,
+                        "contradiction": 0,
+                    }
+                    n = len(self.store.records())
+                    fid = f"skel_{n:04d}_{a}_{b}"
+                    rec = FactRecord(
+                        fact_id=fid,
+                        what=encode_tags(tags),
+                        when=int(self.t),
+                        drive_scores={},
+                        tags=tags,
+                    )
+                    self.store.write(rec)
+                    wrote += 1
+                else:
+                    self._mark_hyp(existing, success=True)
+                    updated += 1
+        self._rel_prev_visible = list(curr)
+        result["ok"] = True
+        result["wrote"] = wrote
+        result["updated"] = updated
+        result["why"] = "authored" if wrote or updated else "noop"
+        return result
 
     def _find_experience_skel(self, bind: str, did: str) -> FactRecord | None:
         bl, dl = bind.lower(), did.lower()

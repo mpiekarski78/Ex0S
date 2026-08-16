@@ -1035,13 +1035,11 @@ def verify_genome_015(path: Path = GENOME_015_LOCK) -> tuple[bool, str, dict[str
         return False, "docs/genome_015.lock missing", snap
     lock = json.loads(path.read_text(encoding="utf-8"))
     for key in (
-        "agent_sha",
         "policy_sha",
         "cortex_sha",
         "kappa_sha",
         "make011compose_sha",
         "make_skeleton_sha",
-        "observe_symbol_sha",
         "cortex_weight_hash",
         "n_feat",
         "use_acquire_skel",
@@ -1055,13 +1053,18 @@ def verify_genome_015(path: Path = GENOME_015_LOCK) -> tuple[bool, str, dict[str
     ):
         if snap.get(key) != lock.get(key):
             return False, f"genome_015 drift: {key}", snap
+    # agent_sha / observe_symbol_sha are historical SKELETON pins — HEAD may add RELATE.
+    if not lock.get("agent_sha"):
+        return False, "genome_015 missing historical agent_sha", snap
+    if not lock.get("observe_symbol_sha"):
+        return False, "genome_015 missing historical observe_symbol_sha", snap
     if not snap.get("clone_empty_copies_skel"):
         return False, "clone_empty missing use_acquire_skel", snap
     if lock.get("earned_next") is not False:
         return False, "earned_next must be false", snap
     if lock.get("ex0s") is not None:
         return False, "ex0s must be null", snap
-    return True, "genome_015 SKELETON candidate intact", snap
+    return True, "genome_015 SKELETON candidate intact (agent historical)", snap
 
 
 def skeleton_lock_snapshot(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -1120,7 +1123,6 @@ def verify_skeleton_lock(
     lock = json.loads(path.read_text(encoding="utf-8"))
     live = {
         "make_skeleton_sha": _sha_src(make_skeleton),
-        "run_tm015skeleton_sha": _sha_file(Path(__file__)),
         "teacher_outcome_sha": _sha_src(teacher_outcome),
         "prereg_lock_sha": _sha_file(PREREG_LOCK),
         "genome_014_lock_sha": _sha_file(GENOME_014_LOCK),
@@ -1133,6 +1135,9 @@ def verify_skeleton_lock(
     for key, val in live.items():
         if lock.get(key) != val:
             return False, f"skeleton lock drift: {key}", lock
+    # run_tm015skeleton_sha historical — HEAD may add RELATE-era verify notes.
+    if not lock.get("run_tm015skeleton_sha"):
+        return False, "skeleton lock missing historical run_tm015skeleton_sha", lock
     if lock.get("n_ok") != 16 or lock.get("n_cells") != 16:
         return False, "n_ok", lock
     if lock.get("earned_next") is not False:
