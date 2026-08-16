@@ -49,7 +49,9 @@ def test_alias_wall_battery_and_lock():
     assert by["W1_kill"]["cue"] != "x"
     assert by["W1_kill"]["lived_bind"] != "wift"
     assert all(v == 1 for v in by["W1_kill"]["supports"].values())
-    assert by["W0_control"]["s_dir"] != by["W1_kill"]["s_dir"]
+    assert all(v == 0 for v in by["W1_kill"]["seam_supports"].values())
+    s_dirs = [by[cell]["s_dir"] for cell in CELL_IDS]
+    assert len(s_dirs) == len(set(s_dirs)) == 6
     assert by["W2_schedule_twin"]["canon_match"] is True
     assert by["W4_map_isolation"]["has_alias_visible"] is True
     assert by["W4_map_isolation"]["no_latent_in_s"] is True

@@ -22,7 +22,7 @@ This does **not** claim aliases are learnably equivalent. Object continuity / ga
 | Control | stable `x,a,y` | unique winners; `lived_bind=y` |
 | Kill | pinned opaque aliases (`kelm/norb/wift`, …) | support=1 per mapped instance; motor HOLD |
 
-Each cell: fresh `make_relate`, empty S, reset ρ. Isolates Control from Kill.
+Each cell: fresh `make_relate`, fresh `UsePolicy`, empty S, reset ρ. All six S directories are distinct. W1 also asserts support=0 for every edge that would appear if an episode boundary leaked across lives.
 
 ## Battery
 

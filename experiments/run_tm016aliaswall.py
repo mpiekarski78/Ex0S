@@ -145,6 +145,20 @@ def latent_path_edges(table: Sequence[dict[str, str]] = KILL_ALIAS_TABLE) -> lis
     return edges
 
 
+def cross_life_seam_edges(
+    lives: Sequence[Sequence[Sequence[str]]],
+) -> list[tuple[str, str]]:
+    """Edges that would be authored if an episode boundary leaked between lives."""
+    edges: list[tuple[str, str]] = []
+    for prev_life, next_life in zip(lives, lives[1:]):
+        if not prev_life or not next_life:
+            continue
+        for a in prev_life[-1]:
+            for b in next_life[0]:
+                edges.append((str(a).lower(), str(b).lower()))
+    return edges
+
+
 def fresh_world(tmp: Path, name: str, policy: UsePolicy) -> tuple[Path, Any]:
     """Isolated empty S + new make_relate + reset ρ."""
     s = tmp / name
@@ -199,6 +213,11 @@ def cell_w1_kill(tmp: Path, policy: UsePolicy) -> dict[str, Any]:
     path_edges = latent_path_edges()
     supports = {f"{a}->{b}": edge_support(s, a, b) for a, b in path_edges}
     support_ok = all(v == 1 for v in supports.values())
+    seam_supports = {
+        f"{a}->{b}": edge_support(s, a, b)
+        for a, b in cross_life_seam_edges(kill_lives)
+    }
+    seam_ok = all(v == 0 for v in seam_supports.values())
 
     tokens = [t for row in KILL_ALIAS_TABLE for t in (row["origin"], row["mid"], row["dest"])]
     distinct_ok = len(tokens) == len(set(tokens)) == 9
@@ -224,11 +243,20 @@ def cell_w1_kill(tmp: Path, policy: UsePolicy) -> dict[str, Any]:
     lived_ok = lived_l != target
     cue_ok = cue != "x" and cue == qrow["origin"]
 
-    ok = support_ok and distinct_ok and no_shared_edge and motor_ok and lived_ok and cue_ok
+    ok = (
+        support_ok
+        and seam_ok
+        and distinct_ok
+        and no_shared_edge
+        and motor_ok
+        and lived_ok
+        and cue_ok
+    )
     return _cell(
         "W1_kill",
         ok,
         supports=supports,
+        seam_supports=seam_supports,
         distinct_tokens=distinct_ok,
         motor=motor,
         lived_bind=lived_l,
@@ -241,7 +269,8 @@ def cell_w1_kill(tmp: Path, policy: UsePolicy) -> dict[str, Any]:
 
 
 def cell_w2_schedule_twin(tmp: Path, policy: UsePolicy) -> dict[str, Any]:
-    # No organism needed — pure schedule check (still isolated tmp for convention)
+    # Pure evaluator check, but preserve the preregistered per-cell birth isolation.
+    s, _ag = fresh_world(tmp, "w2", policy)
     kill_lives = kill_schedule_from_table()
     amap = alias_to_role_map()
     canon = normalize_bags(canonicalize_schedule(kill_lives, amap))
@@ -259,10 +288,12 @@ def cell_w2_schedule_twin(tmp: Path, policy: UsePolicy) -> dict[str, Any]:
         sizes_ctrl=sizes_ctrl,
         canon_match=canon == control,
         query_life=QUERY_LIFE,
+        s_dir=str(s.resolve()),
     )
 
 
 def cell_w3_opacity(tmp: Path, policy: UsePolicy) -> dict[str, Any]:
+    s, _ag = fresh_world(tmp, "w3", policy)
     tokens = [t for row in KILL_ALIAS_TABLE for t in (row["origin"], row["mid"], row["dest"])]
     equal_len = all(len(t) == 4 for t in tokens)
     unique = len(set(tokens)) == 9
@@ -287,6 +318,7 @@ def cell_w3_opacity(tmp: Path, policy: UsePolicy) -> dict[str, Any]:
         equal_len=equal_len,
         unique=unique,
         role_leaks=role_leaks,
+        s_dir=str(s.resolve()),
     )
 
 
@@ -334,6 +366,7 @@ def cell_w4_map_isolation(tmp: Path, policy: UsePolicy) -> dict[str, Any]:
         has_alias_visible=has_alias_visible,
         no_latent_in_s=no_latent_in_s,
         new_abi=new_abi,
+        s_dir=str(s.resolve()),
     )
 
 
@@ -371,6 +404,7 @@ def cell_w5_no_mechanism(tmp: Path, policy: UsePolicy) -> dict[str, Any]:
         genome_016=g_why,
         clean=clean,
         banned_hit=sorted(defined & banned_defs),
+        s_dir=str(s.resolve()),
     )
 
 
@@ -388,11 +422,12 @@ CELLS: Sequence[Callable[[Path, UsePolicy], dict[str, Any]]] = (
 
 
 def run_alias_wall(*, seed: int = DEFAULT_SEED, write_locks: bool = False) -> dict[str, Any]:
-    policy = UsePolicy(seed=seed)
     rows: list[dict[str, Any]] = []
     with tempfile.TemporaryDirectory(prefix="tm016alias_") as tmp:
         root = Path(tmp)
         for fn in CELLS:
+            # Same frozen initial weights, distinct mutable policy/organism state per cell.
+            policy = UsePolicy(seed=seed)
             rows.append(fn(root, policy))
 
     n_ok = sum(1 for r in rows if r.get("ok"))
