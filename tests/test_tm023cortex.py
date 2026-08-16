@@ -343,6 +343,22 @@ def test_verify_v7_gate_cli() -> None:
         assert (REPO_ROOT / "docs" / "cortex_v7_gate.failure.lock").exists()
 
 
+def test_verify_v8_gate_cli() -> None:
+    from experiments.run_tm023cortex import verify_v8_gate
+
+    v = verify_v8_gate()
+    assert v["ok"] is True, v
+    if not (REPO_ROOT / "docs" / "cortex.candidate.v8.lock").exists() or not (
+        REPO_ROOT / "docs" / "cortex_v8_gate.lock"
+    ).exists():
+        assert v.get("pending") is True
+        return
+    assert v.get("pending") is False
+    before = sha(REPO_ROOT / "docs" / "cortex_v8_gate.lock")
+    verify_v8_gate()
+    assert sha(REPO_ROOT / "docs" / "cortex_v8_gate.lock") == before
+
+
 def test_verify_v6_gate_cli() -> None:
     from experiments.run_tm023cortex import verify_v6_gate
 
@@ -471,6 +487,7 @@ if __name__ == "__main__":
     test_verify_v6_gate_cli()
     test_v7_stat_diagnosis_and_no_develop()
     test_verify_v7_gate_cli()
+    test_verify_v8_gate_cli()
     test_sealed_not_used_in_smoke()
     test_sanity_live()
     print("test_tm023cortex: ok")

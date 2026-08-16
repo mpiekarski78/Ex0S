@@ -1988,3 +1988,5 @@ Canonical main `ec10c03` (not `97691cd`). V7 gate **0/16** stands. Adversarial a
 
 Diagnosis ([`cortex_diagnosis.v7.lock`](cortex_diagnosis.v7.lock)): **C4 retained**; population C5/C6 already green; 9 D1 extras fail with frozen ≥ trained (5 within 1 count); sampled “always-HOLD” lives still ACT on frozen probes after 30 teach. No neural change authorized. v8 must change scorer grain and seed-derived worlds only. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+v8 apparatus (scorer-only, no candidate SHA): [`cortex_v8_stat_contract.lock`](cortex_v8_stat_contract.lock), [`cortex_v8_architecture_amendment.lock`](cortex_v8_architecture_amendment.lock), [`cortex_v8.prereg.lock`](cortex_v8.prereg.lock). Lives from sealed eval seed; extras from birth-weight frozen probes with `life_delta_min=0.10`. Neural remains candidate v7 until a later birth/candidate commit.
+

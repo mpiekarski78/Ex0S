@@ -1,0 +1,41 @@
+{
+  "version": "TM.0.23.CORTEX.V8.STAT.CONTRACT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "v1_architecture_contract_sha": "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2",
+  "stat_md_sha": "4586ffba5d0759c97342d24025d1f5788f49a1ff0e881edf618fe6b6d670ce6c",
+  "gate_md_sha": "e4439c3c8a9460376844c7b2274c5c576cf353171f01a507552f226451277a6c",
+  "diagnosis_v7_sha": "f3f85ec455866fd52be7a6cc4d40e18819d070a12102bb2b92e4959333b1565e",
+  "audit_v7_sha": "a954e5d5cb7fe4815774653b6ee5b77fb9856f19a109dabe50594fc08a0111f9",
+  "v7_neural_sha": "7b67f187e5ed2eb7745ab33280807b2e56d20107be9eb4b265a1b9a825d3e17b",
+  "neural_sha_at_freeze": "7b67f187e5ed2eb7745ab33280807b2e56d20107be9eb4b265a1b9a825d3e17b",
+  "neural_change_authorized": false,
+  "thresholds": {
+    "n_pairs": 32,
+    "n_probes": 40,
+    "teach_n": 80,
+    "majority_min": 24,
+    "mean_delta_min": 0.1,
+    "life_delta_min": 0.1,
+    "max_nuisance_abs": 0.15,
+    "perm_n": 9999,
+    "perm_alpha": 0.05,
+    "d1_floors": {
+      "press_min": 3,
+      "press_gt_harm": true
+    },
+    "d2_floors": {
+      "holds_min": 5,
+      "beneficial_min": 3
+    },
+    "gate_clear_min_pairs": 13
+  },
+  "refuse": [
+    "soften D1/D2 floors",
+    "edit docs/cortex_architecture_contract.md",
+    "edit-and-rescore v7",
+    "neural retune this cycle",
+    "open D0\u2013D12 before v8 gate \u226513/16"
+  ]
+}
