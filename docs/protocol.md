@@ -1770,3 +1770,30 @@ The apparatus channel is limited to `alias`, `probe_context`, `action`, and `obs
 Future outcomes are preregistered as A0 wall → HOLD; A1 one witness → HOLD; A2 two independent witnesses → equivalence permitted; A3 collision → keep separate; A4 swap → follow evidence; A5 contradiction → split or HOLD; A6 reset ρ / wipe S / donor swap → equivalence follows S only. “Permitted” is not a green result in this pass.
 
 Prereg: [`alias_evidence.prereg.lock`](alias_evidence.prereg.lock). One-page contract: [`alias_evidence_contract.md`](alias_evidence_contract.md). Mechanism work may begin only after this contract is frozen. Gap persistence / object continuity stays separate.
+
+## TM.0.16.ALIASFINGER — fingerprint candidate (hardened)
+
+Lab bookkeeping only. Product stays **0.0.004**. `earned_next=false`. `ex0s=null` even on 7/7. Not TM.0.17.
+
+### Contract
+
+Immutable evidence rule in [`alias_evidence.prereg.lock`](alias_evidence.prereg.lock). Mechanism prereg [`alias_finger.prereg.lock`](alias_finger.prereg.lock) pins contract SHA + ALIASWALL/genome_016/relate_016 + A0–A6. No candidate SHAs in prereg.
+
+### Mechanism (opt-in)
+
+- Flag `use_alias_fingerprint` (requires RELATE). Default false.
+- ABI: `observe_alias_probe` with `set(info) == {alias, probe_context, action, observed_outcome}`.
+- Store `source=experience_fingerprint`. Conflicted contexts retain both witnesses and block pairing.
+- Pair after ≥2 non-conflicted shared contexts; pairwise cliques only (no transitive merge).
+- Use-time projection aggregates clique support, picks unique destination class, follows unique raw edge from current alias. Raw `experience_skel` untouched.
+
+### Battery
+
+A0 wall HOLD; A1 weak HOLD; A2 convergent behavioral completion + strip→HOLD; A3 collision HOLD; A4 fresh swap follows evidence; A5 contradiction HOLD; A6 ρ-retain / strip / donor-swap causality.
+
+### Order
+
+Candidate lock [`alias_finger.candidate.lock`](alias_finger.candidate.lock) before score; freeze [`alias_finger.lock`](alias_finger.lock) after 7/7. Never rewrite candidate after the scored run.
+
+Apparatus: `experiments/run_tm016aliasfinger.py`. Results: [`tm016aliasfinger_results.md`](tm016aliasfinger_results.md).
+

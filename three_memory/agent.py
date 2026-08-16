@@ -113,6 +113,7 @@ class ThreeMemoryAgent:
         use_acquire_ctx: bool = False,
         use_acquire_skel: bool = False,
         use_acquire_relate: bool = False,
+        use_alias_fingerprint: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -228,6 +229,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_acquire_relate requires use_hyp_survive")
         if use_acquire_relate and not use_evidence:
             raise ValueError("use_acquire_relate requires use_evidence")
+        if use_alias_fingerprint and not use_acquire_relate:
+            raise ValueError("use_alias_fingerprint requires use_acquire_relate")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -301,6 +304,7 @@ class ThreeMemoryAgent:
         self.use_acquire_ctx = use_acquire_ctx
         self.use_acquire_skel = use_acquire_skel
         self.use_acquire_relate = use_acquire_relate
+        self.use_alias_fingerprint = use_alias_fingerprint
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
@@ -426,6 +430,7 @@ class ThreeMemoryAgent:
             use_acquire_ctx=self.use_acquire_ctx,
             use_acquire_skel=self.use_acquire_skel,
             use_acquire_relate=self.use_acquire_relate,
+            use_alias_fingerprint=self.use_alias_fingerprint,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -1011,7 +1016,7 @@ class ThreeMemoryAgent:
                 eligible = self._match_frontier(unvisited, frontier, kappa=kappa)
             if not eligible:
                 return _hold()
-            winners = self._evidence_choose(eligible)
+            winners = self._compose_select(eligible, frontier)
             if not winners:
                 return _hold(evidence_tie=True)
             rec = winners[0]
@@ -1047,6 +1052,200 @@ class ThreeMemoryAgent:
                     self._lived_pending = True
             frontier = {did_l}
         return _hold()
+
+    def _compose_select(self, eligible: list, frontier: set[str] | None) -> list:
+        """Evidence choose, optionally via pairwise fingerprint projection.
+
+        When fingerprint rows exist, projection failure is HOLD — never fall back
+        to raw evidence (that would complete Control routes under ambiguous cliques).
+        With the flag on but no fingerprint rows yet, raw evidence still applies (A0).
+        """
+        if self.use_alias_fingerprint and self._fingerprint_rows():
+            return self._fingerprint_project_eligible(eligible, frontier)
+        return self._evidence_choose(eligible)
+
+    def _fingerprint_rows(self) -> list[FactRecord]:
+        return [
+            r
+            for r in self.store.records()
+            if str(r.tags.get("source") or "") == "experience_fingerprint"
+        ]
+
+    def _fingerprint_witnesses(self, alias: str) -> dict[str, list[tuple[str, str]]]:
+        """probe_context → list of (action, outcome) witnesses for alias."""
+        al = alias.lower()
+        out: dict[str, list[tuple[str, str]]] = {}
+        for rec in self._fingerprint_rows():
+            if str(rec.tags.get("alias") or "").lower() != al:
+                continue
+            ctx = str(rec.tags.get("probe_context") or "")
+            act = str(rec.tags.get("action") or "").lower()
+            outcome = str(rec.tags.get("observed_outcome") or "").lower()
+            if not ctx or not act or not outcome:
+                continue
+            out.setdefault(ctx, []).append((act, outcome))
+        return out
+
+    def _fingerprint_conflicted_contexts(self, alias: str) -> set[str]:
+        wit = self._fingerprint_witnesses(alias)
+        return {ctx for ctx, rows in wit.items() if len(set(rows)) > 1}
+
+    def _fingerprint_context_signature(
+        self, alias: str, ctx: str
+    ) -> tuple[str, str] | None:
+        """Unique (action, outcome) for a non-conflicted context, else None."""
+        rows = self._fingerprint_witnesses(alias).get(ctx) or []
+        uniq = set(rows)
+        if len(uniq) != 1:
+            return None
+        return next(iter(uniq))
+
+    def _fingerprint_pair_ok(self, a: str, b: str) -> bool:
+        """≥2 non-conflicted shared contexts with identical (action, outcome)."""
+        if a.lower() == b.lower():
+            return True
+        wa = self._fingerprint_witnesses(a)
+        wb = self._fingerprint_witnesses(b)
+        ca = self._fingerprint_conflicted_contexts(a)
+        cb = self._fingerprint_conflicted_contexts(b)
+        shared = 0
+        for ctx in set(wa) & set(wb):
+            if ctx in ca or ctx in cb:
+                continue
+            sa = self._fingerprint_context_signature(a, ctx)
+            sb = self._fingerprint_context_signature(b, ctx)
+            if sa is None or sb is None or sa != sb:
+                continue
+            shared += 1
+            if shared >= 2:
+                return True
+        return False
+
+    def _fingerprint_clique(self, alias: str) -> set[str] | None:
+        """Pairwise-qualified clique containing alias, or None if ambiguous.
+
+        Peers that pair with alias must also pair with each other. Overlapping
+        non-clique structure → None (HOLD).
+        """
+        u = alias.lower()
+        aliases = {
+            str(r.tags.get("alias") or "").lower()
+            for r in self._fingerprint_rows()
+            if isinstance(r.tags.get("alias"), str) and r.tags.get("alias")
+        }
+        aliases.add(u)
+        peers = {v for v in aliases if v != u and self._fingerprint_pair_ok(u, v)}
+        clique = {u} | peers
+        for a in clique:
+            for b in clique:
+                if a >= b:
+                    continue
+                if not self._fingerprint_pair_ok(a, b):
+                    return None
+        return clique
+
+    def _fingerprint_dest_class_key(self, dest: str) -> frozenset[str] | None:
+        cl = self._fingerprint_clique(dest)
+        if cl is None:
+            return None
+        return frozenset(cl)
+
+    def _skel_out_edges(self, bind: str) -> list[FactRecord]:
+        bl = bind.lower()
+        motors = self._act_names()
+        out: list[FactRecord] = []
+        for rec in self.store.records():
+            if str(rec.tags.get("source") or "") != "experience_skel":
+                continue
+            if isinstance(rec.tags.get("ctx"), str) and rec.tags.get("ctx"):
+                continue
+            if str(rec.tags.get("bind") or "").lower() != bl:
+                continue
+            did = rec.tags.get("did")
+            if not isinstance(did, str) or not did:
+                continue
+            if did.lower() in motors:
+                continue
+            out.append(rec)
+        return out
+
+    def _project_from_alias(self, alias: str) -> FactRecord | None:
+        """Aggregate clique support → unique dest class → unique raw edge from alias."""
+        clique = self._fingerprint_clique(alias)
+        if clique is None:
+            return None
+        # dest_class_key → aggregated (support, -contradiction)
+        class_scores: dict[frozenset[str], tuple[int, int]] = {}
+        class_members: dict[frozenset[str], set[str]] = {}
+        for peer in clique:
+            for rec in self._skel_out_edges(peer):
+                did = str(rec.tags.get("did")).lower()
+                dkey = self._fingerprint_dest_class_key(did)
+                if dkey is None:
+                    return None
+                w, neg_c = self._evidence_score(rec)
+                prev = class_scores.get(dkey)
+                if prev is None:
+                    class_scores[dkey] = (w, neg_c)
+                else:
+                    class_scores[dkey] = (prev[0] + w, prev[1] + neg_c)
+                class_members.setdefault(dkey, set()).add(did)
+        if not class_scores:
+            return None
+        best = max(class_scores.values())
+        winners = [k for k, sc in class_scores.items() if sc == best]
+        if len(winners) != 1:
+            return None
+        dest_class = class_members[winners[0]]
+        raw = [
+            rec
+            for rec in self._skel_out_edges(alias)
+            if str(rec.tags.get("did")).lower() in dest_class
+        ]
+        if len(raw) != 1:
+            return None
+        return raw[0]
+
+    def _fingerprint_project_eligible(
+        self, eligible: list, frontier: set[str] | None
+    ) -> list:
+        """Return projected winners, or [] for HOLD. Never invites raw fallback."""
+        if not eligible:
+            return []
+        if frontier is not None:
+            if len(frontier) != 1:
+                return []
+            u = next(iter(frontier))
+            rec = self._project_from_alias(u)
+            if rec is None:
+                return []
+            fid = str(getattr(rec, "fact_id", "") or "")
+            elig_ids = {str(getattr(r, "fact_id", "") or "") for r in eligible}
+            if fid and fid not in elig_ids:
+                return []
+            return [rec]
+
+        binds = {
+            str(r.tags.get("bind")).lower()
+            for r in eligible
+            if isinstance(r.tags.get("bind"), str) and r.tags.get("bind")
+        }
+        if not binds:
+            return []
+        projected: list = []
+        for u in sorted(binds):
+            rec = self._project_from_alias(u)
+            if rec is None:
+                # Ambiguous clique / non-unique dest → HOLD (do not skip to another bind).
+                return []
+            fid = str(getattr(rec, "fact_id", "") or "")
+            elig_ids = {str(getattr(r, "fact_id", "") or "") for r in eligible}
+            if fid and fid not in elig_ids:
+                return []
+            projected.append(rec)
+        if not projected:
+            return []
+        return self._evidence_choose(projected)
 
     def _acquire_motors(self) -> set[str]:
         """Motors that may author contextual continuations (not HOLD/IDLE/WAIT)."""
@@ -1282,6 +1481,91 @@ class ThreeMemoryAgent:
         result["updated"] = updated
         result["why"] = "authored" if wrote or updated else "noop"
         return result
+
+    def observe_alias_probe(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """Behavioral fingerprint channel. Exact key set only; never writes roles/maps.
+
+        Duplicate exact (alias, probe_context, action, observed_outcome) bumps support;
+        that context still counts once toward pairing. Different action/outcome in the
+        same (alias, probe_context) retains both and marks the context conflicted.
+        """
+        required = {"alias", "probe_context", "action", "observed_outcome"}
+        out: dict[str, Any] = {
+            "ok": False,
+            "wrote": False,
+            "updated": False,
+            "why": "",
+        }
+        if not self.use_alias_fingerprint or not self.store.enabled:
+            out["why"] = "fingerprint_off"
+            return out
+        if not isinstance(info, dict):
+            out["why"] = "bad_info"
+            return out
+        if set(info.keys()) != required:
+            out["why"] = "exact_key_reject"
+            return out
+        alias_raw = info["alias"]
+        ctx_raw = info["probe_context"]
+        act_raw = info["action"]
+        out_raw = info["observed_outcome"]
+        if not all(isinstance(x, str) and x.strip() for x in (alias_raw, ctx_raw, act_raw, out_raw)):
+            out["why"] = "empty_field"
+            return out
+        alias = alias_raw.strip().lower()
+        ctx = ctx_raw.strip()
+        action = act_raw.strip().lower()
+        outcome = out_raw.strip().lower()
+        # Exact duplicate → bump support.
+        existing = None
+        for rec in self._fingerprint_rows():
+            if str(rec.tags.get("alias") or "").lower() != alias:
+                continue
+            if str(rec.tags.get("probe_context") or "") != ctx:
+                continue
+            if str(rec.tags.get("action") or "").lower() != action:
+                continue
+            if str(rec.tags.get("observed_outcome") or "").lower() != outcome:
+                continue
+            existing = rec
+            break
+        if existing is not None:
+            self._mark_hyp(existing, success=True)
+            out["ok"] = True
+            out["updated"] = True
+            out["why"] = "bumped"
+            return out
+        tags: dict[str, Any] = {
+            "alias": alias,
+            "probe_context": ctx,
+            "action": action,
+            "observed_outcome": outcome,
+            "source": "experience_fingerprint",
+            "hyp": "supported",
+            "trials": 1,
+            "wins": 1,
+            "losses": 0,
+            "support": 1,
+            "contradiction": 0,
+        }
+        # Refuse role / map contamination in authored tags.
+        for banned in ("role", "equivalence_class", "canonical_token", "role_alias_map", "bind", "did", "ctx"):
+            if banned in tags:
+                raise ValueError(f"experience_fingerprint refuses {banned}")
+        n = len(self.store.records())
+        fid = f"fp_{n:04d}_{alias}_{ctx}"
+        rec = FactRecord(
+            fact_id=fid,
+            what=encode_tags(tags),
+            when=int(self.t),
+            drive_scores={},
+            tags=tags,
+        )
+        self.store.write(rec)
+        out["ok"] = True
+        out["wrote"] = True
+        out["why"] = "authored"
+        return out
 
     def _find_experience_skel(self, bind: str, did: str) -> FactRecord | None:
         bl, dl = bind.lower(), did.lower()

@@ -1,0 +1,102 @@
+{
+  "version": "TM.0.16.ALIASFINGER.PREREG",
+  "lab": "TM.0.16.ALIASFINGER",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "not_tm017": true,
+  "label": "opt-in behavioral fingerprint candidate under frozen alias-evidence contract",
+  "preregistered_claim": "An opt-in recipe can author raw behavioral fingerprint evidence from exact observe_alias_probe tuples and apply pairwise-qualified equivalence as a derived compose view so that convergent fingerprints complete an ALIASWALL Kill route without rewriting experience_skel, while weak, colliding, contradictory, or stripped evidence HOLDs.",
+  "observation_abi": "observe_alias_probe",
+  "channel_key_rule": "set(info) == {alias, probe_context, action, observed_outcome}",
+  "source": "experience_fingerprint",
+  "pairing": {
+    "min_shared_nonconflicted_contexts": 2,
+    "duplicate_same_tuple": "bump_support_context_counts_once",
+    "conflict_same_context": "retain_both_mark_conflicted_blocks_pair",
+    "transitive_merge": false,
+    "projection": "pairwise_clique_then_unique_raw_edge_from_current_alias"
+  },
+  "kill_alias_table": [
+    {"life": 1, "origin": "kelm", "mid": "norb", "dest": "wift"},
+    {"life": 2, "origin": "jasp", "mid": "clud", "dest": "vemq"},
+    {"life": 3, "origin": "doth", "mid": "praq", "dest": "hunz"}
+  ],
+  "probe_contexts": ["ctx_alpha", "ctx_beta", "ctx_gamma"],
+  "default_action": "press",
+  "default_outcome": "success",
+  "query_life": 1,
+  "query_cue": "kelm",
+  "query_target": "wift",
+  "cell_ids": [
+    "A0_wall",
+    "A1_weak",
+    "A2_convergent",
+    "A3_collision",
+    "A4_swap",
+    "A5_contradiction",
+    "A6_causality"
+  ],
+  "cell_fixtures": {
+    "A0_wall": {
+      "lives": "aliaswall_kill_schedule",
+      "fingerprints": [],
+      "expect": {"motor": "hold", "lived_bind_ne": "wift"}
+    },
+    "A1_weak": {
+      "lives": "aliaswall_kill_schedule",
+      "fingerprints": "one_shared_context_all_origins_mids_dests",
+      "expect": {"motor": "hold", "lived_bind_ne": "wift"}
+    },
+    "A2_convergent": {
+      "lives": "aliaswall_kill_schedule",
+      "fingerprints": "two_shared_contexts_all_role_groups",
+      "expect": {
+        "lived_bind": "wift",
+        "lived_pending": true,
+        "strip_fingerprints_restores_hold": true
+      }
+    },
+    "A3_collision": {
+      "lives": "aliaswall_kill_schedule",
+      "fingerprints": "ctx_alpha_match_ctx_beta_mismatch_on_second_origin",
+      "expect": {"motor": "hold", "no_pair_origins": true}
+    },
+    "A4_swap": {
+      "lives": "aliaswall_kill_schedule",
+      "fingerprints": "fresh_counterfactual_swap_origin_groups",
+      "expect": {"behavior_follows_swapped_evidence": true}
+    },
+    "A5_contradiction": {
+      "lives": "aliaswall_kill_schedule",
+      "fingerprints": "two_match_then_conflict_same_context",
+      "expect": {"motor": "hold", "conflicted_context": true}
+    },
+    "A6_causality": {
+      "lives": "aliaswall_kill_schedule",
+      "fingerprints": "two_shared_contexts_all_role_groups",
+      "expect": {
+        "reset_rho_retains_completion": true,
+        "strip_fingerprint_only_hold": true,
+        "swap_fingerprint_donors_follow_s": true
+      }
+    }
+  },
+  "alias_evidence_prereg_sha": "8c1385f588df7de52bc4be6515bad934c3b708bc61b0fb61855a486ed957d39a",
+  "alias_wall_lock_sha": "9439b9936c69b32afb8d0a1104ff9b2f530908940cd0eccf4396cee4d071ad8a",
+  "genome_016_lock_sha": "76a28d983d02af27d711a44cc8079c5fac50e4a72ebf137cf3790a92d0d09e98",
+  "relate_016_lock_sha": "756750d4469177c72fdcea48f1b1b691366dbf4843edd2215b69170c5621f829",
+  "refuse": [
+    "rewrite alias_evidence.prereg.lock",
+    "candidate SHAs in this prereg",
+    "subset key checks",
+    "overwrite contradictory witnesses",
+    "implicit transitive pooling",
+    "destructive skel canonicalization",
+    "A2 diagnostic-only",
+    "A4 late inject into same S",
+    "A6 whole-S wipe only",
+    "TM.0.17 / 0.0.005 / FAMILY / LOOKAHEAD / pixels / object continuity"
+  ],
+  "note": "Prereg only. Write alias_finger.candidate.lock before scoring; never put candidate SHAs here."
+}

@@ -99,6 +99,7 @@ def make(
     use_acquire_ctx: bool = False,
     use_acquire_skel: bool = False,
     use_acquire_relate: bool = False,
+    use_alias_fingerprint: bool = False,
     **kwargs,
 ):
     if not use_event_annotate:
@@ -121,6 +122,7 @@ def make(
         use_acquire_ctx = False
         use_acquire_skel = False
         use_acquire_relate = False
+        use_alias_fingerprint = False
     if kwargs.get("use_here_match") is False:
         use_stamp_new_here = False
         use_block_here = False
@@ -134,6 +136,7 @@ def make(
         use_acquire_ctx = False
         use_acquire_skel = False
         use_acquire_relate = False
+        use_alias_fingerprint = False
     if kwargs.get("use_search_head") is False:
         use_find_novel = False
         use_retry_novel = False
@@ -155,6 +158,8 @@ def make(
         use_acquire_skel = False
     if not use_acquire_skel:
         use_acquire_relate = False
+    if not use_acquire_relate:
+        use_alias_fingerprint = False
     if not use_stamp_new_here:
         use_in_hand_new_here = False
     return _make061(
@@ -182,6 +187,7 @@ def make(
         use_acquire_ctx=use_acquire_ctx,
         use_acquire_skel=use_acquire_skel,
         use_acquire_relate=use_acquire_relate,
+        use_alias_fingerprint=use_alias_fingerprint,
         **kwargs,
     )
 

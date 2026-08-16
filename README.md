@@ -64,7 +64,7 @@ Ex0S 0.0.004  ←  TM.0.13.FAMILY
 
 Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enough to treat as a lineage, not only a series of demos.
 
-**Next:** specify observable evidence for cross-episode alias equivalence — behavioral fingerprints under multiple independent probe contexts. Contract only; no mechanism or earn yet. Product stays **0.0.004** (`earned_next=false`, `ex0s=null`).
+**Next:** Gap persistence / object continuity (separate from alias fingerprints). Product stamp naming for FAMILY earn remains a human decision (`ex0s=null`).
 
 ## Question
 
@@ -74,7 +74,7 @@ Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enou
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status: **Ex0S 0.0.004 — Contextual Composition** (TM.0.13.FAMILY **288/288** planted contextual worlds). TM.0.14.ACQUIRE **16/16** then FAMILY **288/288** (`earned_next=true`, **`ex0s=null`**). TM.0.15.SKELETON **16/16** observed-transition acquisition (`earned_next=false`). TM.0.16.RELATE **16/16** candidate relations under ambiguity (`earned_next=false`). TM.0.16.ALIASWALL **6/6** opaque-alias Kill on frozen RELATE (`earned_next=false`) — symbol equivalence is still external. [`docs/tm016aliaswall_results.md`](docs/tm016aliaswall_results.md). **B Fail** on the no-cue English motor bar stays. See [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md).
+Honest status: **Ex0S 0.0.004 — Contextual Composition** (TM.0.13.FAMILY **288/288** planted contextual worlds). TM.0.14.ACQUIRE **16/16** then FAMILY **288/288** (`earned_next=true`, **`ex0s=null`**). TM.0.15.SKELETON **16/16** observed-transition acquisition (`earned_next=false`). TM.0.16.RELATE **16/16** candidate relations under ambiguity (`earned_next=false`). TM.0.16.ALIASWALL **6/6** opaque-alias Kill on frozen RELATE (`earned_next=false`). TM.0.16.ALIASFINGER **7/7** opt-in behavioral fingerprints complete Kill routes without rewriting `experience_skel` (`earned_next=false`, **`ex0s=null`**). [`docs/tm016aliasfinger_results.md`](docs/tm016aliasfinger_results.md). **B Fail** on the no-cue English motor bar stays. See [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md).
 
 ## Result (v0–v23 toy, TM.0.x)
 

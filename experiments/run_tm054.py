@@ -182,6 +182,7 @@ def make(
     use_acquire_ctx: bool = False,
     use_acquire_skel: bool = False,
     use_acquire_relate: bool = False,
+    use_alias_fingerprint: bool = False,
 ) -> ThreeMemoryAgent:
     world = ProseLibrary(w_dir) if w_dir is not None else None
     return ThreeMemoryAgent(
@@ -232,6 +233,7 @@ def make(
         use_acquire_ctx=use_acquire_ctx,
         use_acquire_skel=use_acquire_skel,
         use_acquire_relate=use_acquire_relate,
+        use_alias_fingerprint=use_alias_fingerprint,
     )
 
 

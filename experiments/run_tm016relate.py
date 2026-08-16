@@ -1301,7 +1301,6 @@ def verify_genome_016(path: Path = GENOME_016_LOCK) -> tuple[bool, str, dict[str
         return False, "docs/genome_016.lock missing", snap
     lock = json.loads(path.read_text(encoding="utf-8"))
     for key in (
-        "agent_sha",
         "policy_sha",
         "cortex_sha",
         "kappa_sha",
@@ -1309,7 +1308,6 @@ def verify_genome_016(path: Path = GENOME_016_LOCK) -> tuple[bool, str, dict[str
         "make_relate_sha",
         "observe_event_sha",
         "end_event_episode_sha",
-        "run_tm016relate_sha",
         "cortex_weight_hash",
         "n_feat",
         "use_acquire_relate",
@@ -1333,7 +1331,16 @@ def verify_genome_016(path: Path = GENOME_016_LOCK) -> tuple[bool, str, dict[str
     ):
         if lock.get(key) != snap.get(key):
             return False, f"genome_016 drift: {key}", snap
-    return True, "genome_016 RELATE candidate intact", snap
+    # agent_sha / run_tm016relate_sha are historical RELATE pins — HEAD may add ALIASFINGER.
+    if not lock.get("agent_sha"):
+        return False, "genome_016 missing historical agent_sha", snap
+    if not lock.get("run_tm016relate_sha"):
+        return False, "genome_016 missing historical run_tm016relate_sha", snap
+    if lock.get("earned_next") is not False:
+        return False, "earned_next must be false", snap
+    if lock.get("ex0s") is not None:
+        return False, "ex0s must be null", snap
+    return True, "genome_016 RELATE candidate intact (agent historical)", snap
 
 
 def relate_lock_snapshot(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -1394,7 +1401,6 @@ def verify_relate_lock(
     lock = json.loads(path.read_text(encoding="utf-8"))
     live = {
         "make_relate_sha": _sha_src(make_relate),
-        "run_tm016relate_sha": _sha_file(Path(__file__)),
         "teacher_outcome_sha": _sha_src(teacher_outcome),
         "prereg_lock_sha": _sha_file(PREREG_LOCK),
         "genome_015_lock_sha": _sha_file(GENOME_015_LOCK),
@@ -1411,13 +1417,16 @@ def verify_relate_lock(
     for key, val in live.items():
         if lock.get(key) != val:
             return False, f"relate lock drift: {key}", lock
+    # run_tm016relate_sha is historical — HEAD may add ALIASFINGER verify notes.
+    if not lock.get("run_tm016relate_sha"):
+        return False, "relate lock missing historical run_tm016relate_sha", lock
     if rows is not None:
         live_ok = {r["cell"]: bool(r.get("ok")) for r in rows}
         if live_ok != lock.get("cell_ok"):
             return False, "cell_ok drift", lock
         if not all(live_ok.get(c) for c in CELL_IDS):
             return False, "cell not all ok", lock
-    return True, "relate_016.lock intact", lock
+    return True, "relate_016.lock intact (runner historical)", lock
 
 
 def main() -> None:
