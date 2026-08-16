@@ -1,0 +1,227 @@
+{
+  "version": "TM.0.18.SEQUENCE",
+  "lab": "TM.0.18.SEQUENCE",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "last_stage_clear": "E12",
+  "life_last_stage_clear": "E11",
+  "first_fail_stage": null,
+  "first_fail": null,
+  "first_internal_fail": null,
+  "failure_family": null,
+  "main_ok": true,
+  "twin_ok": true,
+  "capacity": {
+    "ok": true,
+    "lanes": {
+      "vocab_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 8,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 80,
+              "n_emit_timings": 1,
+              "p50_emit_s": 8.318480104207993e-05,
+              "p95_emit_s": 8.318480104207993e-05,
+              "complete_utterance_latency_s": 8.318480104207993e-05,
+              "evidence_rows_examined_p50": 80.0
+            }
+          },
+          {
+            "rung": 32,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 320,
+              "n_emit_timings": 1,
+              "p50_emit_s": 0.0002789124846458435,
+              "p95_emit_s": 0.0002789124846458435,
+              "complete_utterance_latency_s": 0.0002789124846458435,
+              "evidence_rows_examined_p50": 320.0
+            }
+          },
+          {
+            "rung": 128,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 1280,
+              "n_emit_timings": 1,
+              "p50_emit_s": 0.0010662097483873367,
+              "p95_emit_s": 0.0010662097483873367,
+              "complete_utterance_latency_s": 0.0010662097483873367,
+              "evidence_rows_examined_p50": 1280.0
+            }
+          },
+          {
+            "rung": 512,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 5120,
+              "n_emit_timings": 1,
+              "p50_emit_s": 0.004928505979478359,
+              "p95_emit_s": 0.004928505979478359,
+              "complete_utterance_latency_s": 0.004928505979478359,
+              "evidence_rows_examined_p50": 5120.0
+            }
+          }
+        ]
+      },
+      "length_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 1,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 192,
+              "n_emit_timings": 1,
+              "p50_emit_s": 0.00013409554958343506,
+              "p95_emit_s": 0.00013409554958343506,
+              "complete_utterance_latency_s": 0.00013409554958343506,
+              "evidence_rows_examined_p50": 192.0
+            }
+          },
+          {
+            "rung": 2,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 190,
+              "n_emit_timings": 1,
+              "p50_emit_s": 0.00016836822032928467,
+              "p95_emit_s": 0.00016836822032928467,
+              "complete_utterance_latency_s": 0.00016836822032928467,
+              "evidence_rows_examined_p50": 190.0
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 186,
+              "n_emit_timings": 1,
+              "p50_emit_s": 0.00023119989782571793,
+              "p95_emit_s": 0.00023119989782571793,
+              "complete_utterance_latency_s": 0.00023119989782571793,
+              "evidence_rows_examined_p50": 186.0
+            }
+          },
+          {
+            "rung": 8,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 178,
+              "n_emit_timings": 1,
+              "p50_emit_s": 0.00035001710057258606,
+              "p95_emit_s": 0.00035001710057258606,
+              "complete_utterance_latency_s": 0.00035001710057258606,
+              "evidence_rows_examined_p50": 178.0
+            }
+          },
+          {
+            "rung": 16,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 162,
+              "n_emit_timings": 1,
+              "p50_emit_s": 0.0005645938217639923,
+              "p95_emit_s": 0.0005645938217639923,
+              "complete_utterance_latency_s": 0.0005645938217639923,
+              "evidence_rows_examined_p50": 162.0
+            }
+          }
+        ]
+      },
+      "age_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 100,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 80,
+              "n_emit_timings": 1,
+              "p50_emit_s": 7.494445890188217e-05,
+              "p95_emit_s": 7.494445890188217e-05,
+              "complete_utterance_latency_s": 7.494445890188217e-05,
+              "evidence_rows_examined_p50": 80.0
+            }
+          },
+          {
+            "rung": 1000,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 80,
+              "n_emit_timings": 1,
+              "p50_emit_s": 7.476750761270523e-05,
+              "p95_emit_s": 7.476750761270523e-05,
+              "complete_utterance_latency_s": 7.476750761270523e-05,
+              "evidence_rows_examined_p50": 80.0
+            }
+          },
+          {
+            "rung": 10000,
+            "ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 80,
+              "n_emit_timings": 1,
+              "p50_emit_s": 7.987208664417267e-05,
+              "p95_emit_s": 7.987208664417267e-05,
+              "complete_utterance_latency_s": 7.987208664417267e-05,
+              "evidence_rows_examined_p50": 80.0
+            }
+          }
+        ]
+      }
+    }
+  },
+  "wall_metrics": {
+    "main": {
+      "s_row_count": 176,
+      "n_emit_timings": 12,
+      "p50_emit_s": 7.521640509366989e-05,
+      "p95_emit_s": 0.00012054387480020523,
+      "complete_utterance_latency_s": 0.00024323631078004837,
+      "evidence_rows_examined_p50": 84.0
+    },
+    "twin": {
+      "s_row_count": 132,
+      "n_emit_timings": 5,
+      "p50_emit_s": 4.3472275137901306e-05,
+      "p95_emit_s": 0.0013943230733275414,
+      "complete_utterance_latency_s": 0.0005702221766114235,
+      "evidence_rows_examined_p50": 50.0
+    }
+  },
+  "fixture_sha": "faf6ead38b576820263a5538d0074dc99cc25c27abfd40a2193c109b965fc604",
+  "sequence_baseline_prereg_sha": "2d4f9e3b71d084d159cb356aa6facc145abb2379934ae46ea3548612860e0e79",
+  "sequence_mech_prereg_sha": "3f65dd2cb58092c8f80cdc6a9779b13fc01a881cb448f3fa5f3ce9dd9315000f",
+  "sequence_dialogue_prereg_sha": "3c84ba109d34c38de7b1bf77a75152d9dafd5f6294d0fe3ef557ebde24e562f6",
+  "candidate_sha": "0e19ed3689435a05c3e1045c5ff3441f0108f2f06c00709f6c39449281041d3e",
+  "agent_sha": "cbc0567d27ec2432092f9c6284d9d540f02dc0a98cef434f354bcbd3ecbb63e1",
+  "run_tm018sequence_sha": "3a2ad88b5d62f050ed697d260ecac6b3506a3c0eb0d7f062b68b5b8d95876103",
+  "refuse": [
+    "mechanism changes between stages",
+    "scene IDs / grammar slots / menus-as-speech",
+    "partial-credit prefixes",
+    "earned_next=true or non-null ex0s / Ex0S 1.0",
+    "rewriting sequence_dialogue.prereg.lock after score"
+  ]
+}

@@ -1872,3 +1872,13 @@ Phase A baseline PASS. Grounding unit cells **6/6**. Developmental life cleared 
 
 Prereg: [`symbol_world.prereg.lock`](symbol_world.prereg.lock), [`symbol_ground.prereg.lock`](symbol_ground.prereg.lock). Contract: [`grounding_evidence_contract.md`](grounding_evidence_contract.md). Fixture: [`symbol_world_fixture.json`](symbol_world_fixture.json). Locks: [`symbol_world_baseline.lock`](symbol_world_baseline.lock), [`symbol_ground.candidate.lock`](symbol_ground.candidate.lock), [`symbol_ground.lock`](symbol_ground.lock), [`symbol_world.lock`](symbol_world.lock). Apparatus: `experiments/run_tm017symbolworld.py`. Results: [`tm017symbolworld_results.md`](tm017symbolworld_results.md).
 
+## TM.0.18.SEQUENCE — grounded symbolic expression
+
+Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=null`. Not 0.0.005 / FAMILY / LOOKAHEAD / Ex0S 1.0. No LLM, dictionary, grammar labels, templates, scene→answer IDs, or planted English.
+
+Stacks on frozen SYMBOLWORLD via `make_symbol_ground`. One package: (A) baseline select-OK / construct-HOLD; (B) default-off `use_symbol_sequence` / `observe_sequence_step` / `emit_sequence` over `experience_sequence` (factorized `context_atoms`, evidenced STOP, atomic HOLD, cap=64); (C) expressive life E0–E12 + reverse-order twin + unconfounded capacity lanes; dialogue wall preregistered before candidate score (results-only lock).
+
+Phase A baseline PASS. Sequence unit cells **6/6**. Life cleared through **E12** (life probes through **E11**; E12 = capacity launch; vocab lane **8→32→128→512**). Dialogue wall recorded separately.
+
+Prereg: [`sequence_baseline.prereg.lock`](sequence_baseline.prereg.lock), [`sequence_mech.prereg.lock`](sequence_mech.prereg.lock), [`sequence_dialogue.prereg.lock`](sequence_dialogue.prereg.lock). Contract: [`sequence_evidence_contract.md`](sequence_evidence_contract.md). Fixture: [`sequence_fixture.json`](sequence_fixture.json). Locks: [`sequence_baseline.lock`](sequence_baseline.lock), [`sequence.candidate.lock`](sequence.candidate.lock), [`sequence_mech.lock`](sequence_mech.lock), [`sequence.lock`](sequence.lock), [`sequence_dialogue.lock`](sequence_dialogue.lock). Apparatus: `experiments/run_tm018sequence.py`. Results: [`tm018sequence_results.md`](tm018sequence_results.md).
+

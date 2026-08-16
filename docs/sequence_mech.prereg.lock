@@ -1,0 +1,50 @@
+{
+  "version": "TM.0.18.SEQUENCE.MECH.PREREG",
+  "lab": "TM.0.18.SEQUENCE.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "An opt-in recipe may author raw sequence-step rows into experience_sequence from exact observe_sequence_step tuples over factorized context atoms, input symbols, and output prefix, and at use time recompute unique next_operation emit|stop (with next_symbol on emit) so emit_sequence constructs a variable-length utterance or returns atomic HOLD. No scene IDs, grammar slots, menus, or complete-response lookup. STOP placement is evidenced. Cap=64 does not reveal expected length.",
+  "observation_abi": "observe_sequence_step",
+  "emission_abi": "emit_sequence",
+  "channel_key_rule": "set(info)=={context_atoms,input_symbols,prefix,next_operation,next_symbol,result}",
+  "context_atoms_rule": "factorized sorted observable/grounded atoms only; forbid scene_id and hash(complete_scene)",
+  "source": "experience_sequence",
+  "flag": "use_symbol_sequence",
+  "flag_default": false,
+  "requires": "use_symbol_ground",
+  "factory": "experiments.run_tm018sequence.make_sequence",
+  "emit_cap": 64,
+  "min_support": 2,
+  "atomic_emission": true,
+  "stop_evidenced": true,
+  "cell_ids": [
+    "U0_flag_off",
+    "U1_reject",
+    "U2_one_word",
+    "U3_tie",
+    "U4_strip",
+    "U5_donor"
+  ],
+  "isolation_forks": [
+    "strip_sequence_retain_grounding",
+    "strip_grounding_retain_sequence",
+    "fp_cont_only",
+    "donor_sequence",
+    "sequence_rows_do_not_pass_select_grounded",
+    "grounding_rows_are_not_next_token_demos"
+  ],
+  "refuse": [
+    "candidate SHAs in this prereg",
+    "noun_slot / verb_slot / subject / object",
+    "complete-response lookup",
+    "partial-credit prefixes",
+    "earned_next=true or non-null ex0s"
+  ],
+  "result_values": [
+    "success",
+    "failure",
+    "correction"
+  ],
+  "composition": "single_atom_nearest_context_substitution_when_exact_absent"
+}

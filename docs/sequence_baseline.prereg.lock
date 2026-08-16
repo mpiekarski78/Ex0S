@@ -1,0 +1,28 @@
+{
+  "version": "TM.0.18.SEQUENCE.BASELINE.PREREG",
+  "lab": "TM.0.18.SEQUENCE",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "not_a_product_stamp": true,
+  "preregistered_claim": "Frozen SYMBOLWORLD (make_symbol_ground) can select a bounded learned word but cannot construct an unseen variable-length utterance; unknown or ambiguous construction requests remain HOLD. No sequence mechanism in Phase A.",
+  "fixture": "docs/sequence_fixture.json",
+  "fixture_sha": "faf6ead38b576820263a5538d0074dc99cc25c27abfd40a2193c109b965fc604",
+  "phase_a": {
+    "factory": "experiments.run_tm017symbolworld.make_symbol_ground",
+    "agent_edits_permitted": false,
+    "sequence_flag": false
+  },
+  "prior_lock_shas": {
+    "symbol_world.lock": "df648c1e35d843b7abd6b7add47860f20ecec184fa699a4cca8a170c2320d1f2",
+    "symbol_ground.lock": "0e3c532d3cf72fc730c3372107eb614c316a764bf46d25b5b17d538af77bd6a7",
+    "persist.lock": "56554929d0ee82e637ef715e6122829adb79812e177b607b5af93829cd3cf0b2"
+  },
+  "refuse": [
+    "editing agent.py in Phase A",
+    "scene IDs / answer hashes",
+    "run-time curriculum generation",
+    "earned_next=true or non-null ex0s",
+    "LLM / grammar templates / menus-as-speech"
+  ]
+}

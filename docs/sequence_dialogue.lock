@@ -1,0 +1,65 @@
+{
+  "version": "TM.0.18.SEQUENCE.DIALOGUE",
+  "lab": "TM.0.18.SEQUENCE.DIALOGUE",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "need_not_fully_pass": true,
+  "first_fail_dialogue": null,
+  "probes": [
+    {
+      "id": "D_unknown",
+      "ok": true,
+      "expected": "HOLD",
+      "actual": null,
+      "note": "unknown must HOLD"
+    },
+    {
+      "id": "D_recall_ball",
+      "ok": true,
+      "expected": [
+        "ball"
+      ],
+      "actual": [
+        "ball"
+      ],
+      "note": "earlier event reference"
+    },
+    {
+      "id": "D_who_after",
+      "ok": true,
+      "expected": [
+        "mira"
+      ],
+      "actual": [
+        "mira"
+      ],
+      "note": "correction/reference after delay"
+    },
+    {
+      "id": "D_two_relation",
+      "ok": true,
+      "expected": [
+        "mira"
+      ],
+      "actual": [
+        "mira"
+      ],
+      "note": "two learned relations"
+    },
+    {
+      "id": "D_contradict_hold",
+      "ok": true,
+      "expected": "HOLD",
+      "actual": null,
+      "note": "equal contradicting demos in dialogue world"
+    }
+  ],
+  "fixture_sha": "faf6ead38b576820263a5538d0074dc99cc25c27abfd40a2193c109b965fc604",
+  "sequence_dialogue_prereg_sha": "3c84ba109d34c38de7b1bf77a75152d9dafd5f6294d0fe3ef557ebde24e562f6",
+  "sequence_lock_sha": "fcd4ead764bceea8b872808655d3526713d05e4e0e12d6ad35107d550d5db10c",
+  "agent_sha": "cbc0567d27ec2432092f9c6284d9d540f02dc0a98cef434f354bcbd3ecbb63e1",
+  "run_tm018sequence_sha": "3a2ad88b5d62f050ed697d260ecac6b3506a3c0eb0d7f062b68b5b8d95876103",
+  "note": "Results only. Do not rewrite dialogue prereg."
+}

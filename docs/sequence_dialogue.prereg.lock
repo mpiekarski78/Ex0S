@@ -1,0 +1,107 @@
+{
+  "version": "TM.0.18.SEQUENCE.DIALOGUE.PREREG",
+  "lab": "TM.0.18.SEQUENCE.DIALOGUE",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "On frozen make_sequence, a preregistered dialogue wall probes delayed correction, earlier-event reference, two-relation questions, interruption/topic return, contradiction, and unknown HOLD. Need not fully pass; first_fail_dialogue diagnoses the next missing primitive. Fixture frozen before candidate score.",
+  "fixture": "docs/sequence_fixture.json",
+  "fixture_sha": "faf6ead38b576820263a5538d0074dc99cc25c27abfd40a2193c109b965fc604",
+  "fixture_section": "dialogue",
+  "factory": "experiments.run_tm018sequence.make_sequence",
+  "mechanism_changes_permitted": false,
+  "need_not_fully_pass": true,
+  "probe_ids": [
+    "D_unknown",
+    "D_recall_ball",
+    "D_who_after",
+    "D_two_relation",
+    "D_contradict_hold"
+  ],
+  "refuse": [
+    "rewriting this prereg after seeing sequence results",
+    "adding mechanism during dialogue wall",
+    "earned_next=true or non-null ex0s"
+  ],
+  "note": "Frozen before candidate.lock. sequence_dialogue.lock records results only.",
+  "probes": [
+    {
+      "id": "D_unknown",
+      "context_atoms": [
+        "zzz"
+      ],
+      "input_symbols": [
+        "ask"
+      ],
+      "expect": "HOLD",
+      "note": "unknown must HOLD"
+    },
+    {
+      "id": "D_recall_ball",
+      "context_atoms": [
+        "cat_ball",
+        "feat_round"
+      ],
+      "input_symbols": [
+        "describe"
+      ],
+      "expect_seq": [
+        "ball"
+      ],
+      "note": "earlier event reference"
+    },
+    {
+      "id": "D_who_after",
+      "context_atoms": [
+        "ent_mira",
+        "act_take",
+        "cat_ball",
+        "feat_red"
+      ],
+      "input_symbols": [
+        "who"
+      ],
+      "expect_seq": [
+        "mira"
+      ],
+      "setup": "interference",
+      "note": "correction/reference after delay"
+    },
+    {
+      "id": "D_two_relation",
+      "context_atoms": [
+        "ent_mira",
+        "act_take",
+        "cat_ball",
+        "feat_red"
+      ],
+      "input_symbols": [
+        "who"
+      ],
+      "expect_seq": [
+        "mira"
+      ],
+      "followup": {
+        "input_symbols": [
+          "what"
+        ],
+        "expect_seq": [
+          "ball"
+        ]
+      },
+      "note": "two learned relations"
+    },
+    {
+      "id": "D_contradict_hold",
+      "context_atoms": [
+        "ent_mira",
+        "cat_ball"
+      ],
+      "input_symbols": [
+        "describe"
+      ],
+      "expect": "HOLD",
+      "note": "equal contradicting demos in dialogue world"
+    }
+  ]
+}

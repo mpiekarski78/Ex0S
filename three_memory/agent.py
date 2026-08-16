@@ -116,6 +116,7 @@ class ThreeMemoryAgent:
         use_alias_fingerprint: bool = False,
         use_continuity_mark: bool = False,
         use_symbol_ground: bool = False,
+        use_symbol_sequence: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -237,6 +238,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_continuity_mark requires use_acquire_relate")
         if use_symbol_ground and not use_acquire_relate:
             raise ValueError("use_symbol_ground requires use_acquire_relate")
+        if use_symbol_sequence and not use_symbol_ground:
+            raise ValueError("use_symbol_sequence requires use_symbol_ground")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -313,6 +316,8 @@ class ThreeMemoryAgent:
         self.use_alias_fingerprint = use_alias_fingerprint
         self.use_continuity_mark = use_continuity_mark
         self.use_symbol_ground = use_symbol_ground
+        self.use_symbol_sequence = use_symbol_sequence
+        self.first_internal_fail: dict[str, Any] | None = None
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
@@ -441,6 +446,7 @@ class ThreeMemoryAgent:
             use_alias_fingerprint=self.use_alias_fingerprint,
             use_continuity_mark=self.use_continuity_mark,
             use_symbol_ground=self.use_symbol_ground,
+            use_symbol_sequence=self.use_symbol_sequence,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -2051,6 +2057,447 @@ class ThreeMemoryAgent:
             tags=tags,
         )
         return [rec]
+
+    def observe_sequence_step(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """Author one next-operation demonstration into experience_sequence.
+
+        Exact keys only. Factorized context_atoms — no scene IDs / grammar slots.
+        """
+        required = {
+            "context_atoms",
+            "input_symbols",
+            "prefix",
+            "next_operation",
+            "next_symbol",
+            "result",
+        }
+        allowed_ops = {"emit", "stop"}
+        allowed_results = {"success", "failure", "correction"}
+        banned_keys = {
+            "scene_id",
+            "scene",
+            "noun_slot",
+            "verb_slot",
+            "subject",
+            "object",
+            "role",
+            "grammar",
+            "expect",
+            "answer",
+            "english",
+            "gloss",
+        }
+        out: dict[str, Any] = {
+            "ok": False,
+            "wrote": False,
+            "why": "",
+        }
+        if not self.use_symbol_sequence or not self.store.enabled:
+            out["why"] = "sequence_off"
+            return out
+        if not isinstance(info, dict):
+            out["why"] = "bad_info"
+            return out
+        if set(info.keys()) & banned_keys:
+            out["why"] = "banned_field"
+            return out
+        if set(info.keys()) != required:
+            out["why"] = "exact_key_reject"
+            return out
+        ctx_raw = info["context_atoms"]
+        inp_raw = info["input_symbols"]
+        pref_raw = info["prefix"]
+        op_raw = info["next_operation"]
+        sym_raw = info["next_symbol"]
+        result_raw = info["result"]
+        if not isinstance(ctx_raw, (list, tuple)) or not isinstance(inp_raw, (list, tuple)):
+            out["why"] = "bad_list"
+            return out
+        if not isinstance(pref_raw, (list, tuple)):
+            out["why"] = "bad_prefix"
+            return out
+        if not isinstance(op_raw, str) or not isinstance(result_raw, str):
+            out["why"] = "bad_scalar"
+            return out
+        if not isinstance(sym_raw, str):
+            out["why"] = "bad_symbol"
+            return out
+        op = op_raw.strip().lower()
+        result = result_raw.strip().lower()
+        if op not in allowed_ops or result not in allowed_results:
+            out["why"] = "op_or_result_reject"
+            return out
+        # Forbid scene-handle smuggling inside atoms
+        atoms = [str(x).strip().lower() for x in ctx_raw if str(x).strip()]
+        inputs = [str(x).strip().lower() for x in inp_raw if str(x).strip()]
+        prefix = [str(x).strip().lower() for x in pref_raw if str(x).strip()]
+        if any(a.startswith("scene_") or a.startswith("hash(") for a in atoms):
+            out["why"] = "scene_id_refuse"
+            return out
+        if not atoms or not inputs:
+            out["why"] = "empty_context_or_input"
+            return out
+        symbol = sym_raw.strip().lower()
+        if op == "emit":
+            if not symbol:
+                out["why"] = "emit_needs_symbol"
+                return out
+        else:
+            symbol = ""
+        if any("|" in x for x in atoms + inputs + prefix + ([symbol] if symbol else [])):
+            out["why"] = "pipe_in_token"
+            return out
+        tags: dict[str, Any] = {
+            "context_atoms": "|".join(sorted(atoms)),
+            "input_symbols": "|".join(inputs),
+            "prefix": "|".join(prefix),
+            "next_operation": op,
+            "next_symbol": symbol,
+            "result": result,
+            "source": "experience_sequence",
+            "hyp": "supported",
+            "support": 1,
+        }
+        for banned in banned_keys:
+            if banned in tags:
+                raise ValueError(f"experience_sequence refuses {banned}")
+        n = len(self.store.records())
+        fid = f"seq_{n:04d}_{op}_{symbol or 'stop'}"
+        rec = FactRecord(
+            fact_id=fid,
+            what=encode_tags(tags),
+            when=int(self.t),
+            drive_scores={},
+            tags=tags,
+        )
+        self.store.write(rec)
+        out["ok"] = True
+        out["wrote"] = True
+        out["why"] = "authored"
+        return out
+
+    def _sequence_rows(self) -> list[FactRecord]:
+        return [
+            r
+            for r in self.store.records()
+            if str(r.tags.get("source") or "") == "experience_sequence"
+        ]
+
+    @staticmethod
+    def _seq_split(raw: Any) -> list[str]:
+        if raw is None:
+            return []
+        if isinstance(raw, (list, tuple)):
+            return [str(x).strip().lower() for x in raw if str(x).strip()]
+        text = str(raw).strip()
+        if not text or text == "[]":
+            return []
+        # Tolerate legacy stringified lists from accidental list writes
+        if text.startswith("[") and text.endswith("]"):
+            inner = text[1:-1].strip()
+            if not inner:
+                return []
+            parts = []
+            for chunk in inner.split(","):
+                parts.append(chunk.strip().strip("'").strip('"').lower())
+            return [p for p in parts if p]
+        return [p for p in text.split("|") if p]
+
+    def _sequence_atom_to_symbol(self, *, min_support: int = 2) -> dict[str, str]:
+        """paired atom → unique symbol via inverted grounding support."""
+        scores = self._grounding_support()
+        atom_votes: dict[str, dict[str, int]] = {}
+        for sym, bag in scores.items():
+            for atom, sc in bag.items():
+                if sc <= 0:
+                    continue
+                atom_votes.setdefault(atom, {})[sym] = int(
+                    atom_votes.setdefault(atom, {}).get(sym, 0)
+                ) + int(sc)
+        out: dict[str, str] = {}
+        for atom, bag in atom_votes.items():
+            ranked = sorted(bag.items(), key=lambda kv: (-kv[1], kv[0]))
+            if not ranked or ranked[0][1] < min_support:
+                continue
+            if len(ranked) > 1 and ranked[1][1] == ranked[0][1]:
+                continue
+            out[atom] = ranked[0][0]
+        return out
+
+    def _sequence_symbol_to_atom(self, *, min_support: int = 2) -> dict[str, str]:
+        out: dict[str, str] = {}
+        for sym, bag in self._grounding_support().items():
+            ranked = sorted(bag.items(), key=lambda kv: (-kv[1], kv[0]))
+            if not ranked or ranked[0][1] < min_support:
+                continue
+            if len(ranked) > 1 and ranked[1][1] == ranked[0][1]:
+                continue
+            out[sym] = ranked[0][0]
+        return out
+
+    def _sequence_next_votes(
+        self,
+        context_atoms: Sequence[str],
+        input_symbols: Sequence[str],
+        prefix: Sequence[str],
+    ) -> dict[tuple[str, str], int]:
+        ctx = "|".join(sorted(str(x).strip().lower() for x in context_atoms if str(x).strip()))
+        inp = "|".join(str(x).strip().lower() for x in input_symbols if str(x).strip())
+        pref = "|".join(str(x).strip().lower() for x in prefix if str(x).strip())
+        votes: dict[tuple[str, str], int] = {}
+        for rec in self._sequence_rows():
+            rctx = str(rec.tags.get("context_atoms") or "")
+            rinp = str(rec.tags.get("input_symbols") or "")
+            rpref = str(rec.tags.get("prefix") or "")
+            # normalize list-shaped leftovers
+            if rctx.startswith("["):
+                rctx = "|".join(self._seq_split(rctx))
+            if rinp.startswith("["):
+                rinp = "|".join(self._seq_split(rinp))
+            if rpref.startswith("["):
+                rpref = "|".join(self._seq_split(rpref))
+            if rctx != ctx or rinp != inp or rpref != pref:
+                continue
+            op = str(rec.tags.get("next_operation") or "").lower()
+            sym = str(rec.tags.get("next_symbol") or "").lower()
+            result = str(rec.tags.get("result") or "success").lower()
+            if result == "failure":
+                delta = -1
+            else:
+                delta = 1
+            key = (op, sym)
+            votes[key] = int(votes.get(key, 0)) + delta
+        return votes
+
+    def _sequence_unique_next(
+        self,
+        context_atoms: Sequence[str],
+        input_symbols: Sequence[str],
+        prefix: Sequence[str],
+        *,
+        min_support: int,
+    ) -> tuple[str, str] | None:
+        votes = self._sequence_next_votes(context_atoms, input_symbols, prefix)
+        ranked = sorted(votes.items(), key=lambda kv: (-kv[1], kv[0][0], kv[0][1]))
+        if not ranked or ranked[0][1] < min_support:
+            return None
+        if len(ranked) > 1 and ranked[1][1] == ranked[0][1]:
+            return None
+        return ranked[0][0]
+
+    def _sequence_complete_demos(
+        self, input_symbols: Sequence[str], *, min_support: int
+    ) -> list[tuple[tuple[str, ...], tuple[str, ...]]]:
+        """Reconstruct complete (context, sequence) demos with enough STOP support."""
+        inp = [str(x).strip().lower() for x in input_symbols if str(x).strip()]
+        # Collect contexts that have stop votes
+        contexts: set[tuple[str, ...]] = set()
+        for rec in self._sequence_rows():
+            if self._seq_split(rec.tags.get("input_symbols")) != inp:
+                continue
+            contexts.add(tuple(self._seq_split(rec.tags.get("context_atoms"))))
+        demos: list[tuple[tuple[str, ...], tuple[str, ...]]] = []
+        seen: set[tuple[tuple[str, ...], tuple[str, ...]]] = set()
+        for ctx in contexts:
+            seq: list[str] = []
+            ok = True
+            for _ in range(64):
+                nxt = self._sequence_unique_next(ctx, inp, seq, min_support=min_support)
+                if nxt is None:
+                    ok = False
+                    break
+                op, sym = nxt
+                if op == "stop":
+                    break
+                if op != "emit" or not sym:
+                    ok = False
+                    break
+                seq.append(sym)
+            else:
+                ok = False
+            if ok and seq:
+                key = (ctx, tuple(seq))
+                if key not in seen:
+                    seen.add(key)
+                    demos.append(key)
+        return demos
+
+    def _sequence_compose(
+        self,
+        context_atoms: Sequence[str],
+        input_symbols: Sequence[str],
+        *,
+        min_support: int,
+    ) -> list[str] | None:
+        """Nearest same-size single-atom context substitution; unique template only.
+
+        Multi-atom remaps are refused (sorted zip would be an arbitrary grammar).
+        Requires overlap == |C|-1 (exactly one differing atom).
+        """
+        C = tuple(sorted(str(x).strip().lower() for x in context_atoms if str(x).strip()))
+        demos = self._sequence_complete_demos(input_symbols, min_support=min_support)
+        if not demos:
+            return None
+        sym2atom = self._sequence_symbol_to_atom(min_support=min_support)
+        atom2sym = self._sequence_atom_to_symbol(min_support=min_support)
+        Cset = set(C)
+        best_overlap = -1
+        candidates: list[list[str]] = []
+        for ctx, seq in demos:
+            cset = set(ctx)
+            if len(ctx) != len(C):
+                continue
+            overlap = len(cset & Cset)
+            only_d = sorted(cset - Cset)
+            only_q = sorted(Cset - cset)
+            # Exactly one atom substitution (or identical — unused because exact path wins).
+            if len(only_d) != len(only_q):
+                continue
+            if len(only_d) > 1:
+                continue
+            if overlap != len(C) - len(only_d):
+                continue
+            if only_d and overlap != len(C) - 1:
+                continue
+            mapping = {a: a for a in (cset & Cset)}
+            for a, b in zip(only_d, only_q):
+                mapping[a] = b
+            out_seq: list[str] = []
+            ok = True
+            for tok in seq:
+                atom = sym2atom.get(tok)
+                if atom is None:
+                    ok = False
+                    break
+                mapped = mapping.get(atom)
+                if mapped is None:
+                    ok = False
+                    break
+                word = atom2sym.get(mapped)
+                if word is None:
+                    ok = False
+                    break
+                out_seq.append(word)
+            if not ok or not out_seq:
+                continue
+            if overlap > best_overlap:
+                best_overlap = overlap
+                candidates = [out_seq]
+            elif overlap == best_overlap:
+                if out_seq not in candidates:
+                    candidates.append(out_seq)
+        if best_overlap < 0 or len(candidates) != 1:
+            return None
+        return candidates[0]
+
+    def emit_sequence(
+        self,
+        context_atoms: Sequence[str],
+        input_symbols: Sequence[str],
+        *,
+        min_support: int = 2,
+        cap: int = 64,
+    ) -> dict[str, Any]:
+        """Construct a full utterance or atomic HOLD. Records first_internal_fail."""
+        out: dict[str, Any] = {
+            "ok": True,
+            "sequence": None,
+            "why": "hold",
+            "first_internal_fail": None,
+        }
+        self.first_internal_fail = None
+        if not self.use_symbol_sequence:
+            out["why"] = "sequence_off"
+            return out
+        if not self._sequence_rows():
+            out["why"] = "no_rows"
+            return out
+        # Grounding gate: sequence alone is not enough once grounding channel exists.
+        if not self._grounding_rows():
+            out["why"] = "no_grounding"
+            return out
+        atoms = [str(x).strip().lower() for x in context_atoms if str(x).strip()]
+        inputs = [str(x).strip().lower() for x in input_symbols if str(x).strip()]
+        if not atoms or not inputs:
+            out["why"] = "empty_probe"
+            return out
+        if any(a.startswith("scene_") for a in atoms):
+            out["why"] = "scene_id_refuse"
+            return out
+        # Every context atom must be attested as a grounded paired token.
+        paired_ok = set()
+        for bag in self._grounding_support().values():
+            for atom, sc in bag.items():
+                if sc > 0:
+                    paired_ok.add(atom)
+        missing = [a for a in atoms if a not in paired_ok]
+        if missing:
+            out["why"] = "ungrounded_context"
+            return out
+
+        prefix: list[str] = []
+        used_compose = False
+        for step in range(int(cap)):
+            nxt = self._sequence_unique_next(atoms, inputs, prefix, min_support=min_support)
+            if nxt is None:
+                if step == 0 and not prefix:
+                    composed = self._sequence_compose(
+                        atoms, inputs, min_support=min_support
+                    )
+                    if composed is None:
+                        fail = {
+                            "step": step,
+                            "expected_op": "unique",
+                            "actual": None,
+                            "why": "no_unique_next",
+                        }
+                        self.first_internal_fail = fail
+                        out["first_internal_fail"] = fail
+                        out["why"] = "no_unique_next"
+                        return out
+                    # Validate composed sequence has evidenced STOP via remapped exact path
+                    # by accepting composition atomically when unique.
+                    used_compose = True
+                    out["sequence"] = list(composed)
+                    out["why"] = "compose"
+                    return out
+                fail = {
+                    "step": step,
+                    "prefix": list(prefix),
+                    "expected_op": "unique",
+                    "actual": None,
+                    "why": "ambiguous_or_missing",
+                }
+                self.first_internal_fail = fail
+                out["first_internal_fail"] = fail
+                out["why"] = "atomic_hold"
+                return out
+            op, sym = nxt
+            if op == "stop":
+                out["sequence"] = list(prefix)
+                out["why"] = "exact" if not used_compose else "compose"
+                return out
+            if op != "emit" or not sym:
+                fail = {
+                    "step": step,
+                    "expected_op": "emit",
+                    "actual": op,
+                    "symbol": sym,
+                }
+                self.first_internal_fail = fail
+                out["first_internal_fail"] = fail
+                out["why"] = "bad_op"
+                return out
+            prefix.append(sym)
+        fail = {
+            "step": int(cap),
+            "prefix": list(prefix),
+            "why": "cap_without_stop",
+        }
+        self.first_internal_fail = fail
+        out["first_internal_fail"] = fail
+        out["why"] = "cap_hold"
+        return out
 
     def _find_experience_skel(self, bind: str, did: str) -> FactRecord | None:
         bl, dl = bind.lower(), did.lower()
