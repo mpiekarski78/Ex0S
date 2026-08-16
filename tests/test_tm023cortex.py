@@ -562,6 +562,25 @@ def test_verify_v12_gate_cli() -> None:
         assert "DEVELOP.v12 on any worlds" in iso["refuse"]
 
 
+def test_verify_v13_gate_cli() -> None:
+    from experiments.run_tm023cortex import verify_v13_gate
+
+    v = verify_v13_gate()
+    assert v["ok"] is True, v
+    if not (REPO_ROOT / "docs" / "cortex.candidate.v13.lock").exists() or not (
+        REPO_ROOT / "docs" / "cortex_v13_gate.lock"
+    ).exists():
+        assert v.get("pending") is True
+        return
+    assert v.get("pending") is False
+    if v["sensorimotor_association_gate_clear"]:
+        assert v["n_pair_clear"] >= 13
+    else:
+        assert v["refuse_develop_before_clear"] is True
+        assert (REPO_ROOT / "docs" / "cortex_v13_gate.failure.lock").exists()
+        assert not (REPO_ROOT / "docs" / "cortex_development.v13.lock").exists()
+
+
 def test_verify_v6_gate_cli() -> None:
     from experiments.run_tm023cortex import verify_v6_gate
 
@@ -697,6 +716,7 @@ if __name__ == "__main__":
     test_verify_v11_gate_cli()
     test_v12_candidate_boundary_pending_gate()
     test_verify_v12_gate_cli()
+    test_verify_v13_gate_cli()
     test_sealed_not_used_in_smoke()
     test_sanity_live()
     print("test_tm023cortex: ok")

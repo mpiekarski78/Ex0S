@@ -2044,5 +2044,7 @@ Diagnosis ([`cortex_diagnosis.v12.lock`](cortex_diagnosis.v12.lock)): same remai
 
 ## TM.0.23.CORTEX.V12 audit → isolated V13
 
-Canonical main `8236dbc`. V12 gate **12/16** stands. Do not edit-rescore v12. **DEVELOP.v12 refused.** Full D0–D12 stays closed.
+Canonical main `2a99035`. V12 gate **12/16** stands. Do not edit-rescore v12. **DEVELOP.v12 refused.** Full D0–D12 stays closed.
+
+v13 apparatus: [`cortex_v13_stat_contract.lock`](cortex_v13_stat_contract.lock), [`cortex_v13_architecture_amendment.lock`](cortex_v13_architecture_amendment.lock), [`cortex_v13.prereg.lock`](cortex_v13.prereg.lock). Authorizes a slow advantage baseline after this freeze is on `origin/main`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
