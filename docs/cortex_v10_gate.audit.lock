@@ -1,0 +1,86 @@
+{
+  "version": "TM.0.23.CORTEX.V10.GATE.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "gate_sha": "2aad169cd1b2a517294637e656054c74229bd064c04db48d9f3df48dfc91e695",
+  "failure_sha": "61c75518493b5ed0133b8ce5cd93e518c50a787a069827076e03a7e2a1c9b098",
+  "n_pair_clear": 8,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git_commit",
+      "ok": true,
+      "candidate_git_sha": "e0b98d749b22350e4528b0580422762f1b335b2d"
+    },
+    {
+      "id": "worlds_from_sealed_seed",
+      "ok": true,
+      "domain": "TM023.V10."
+    },
+    {
+      "id": "d1_floors_and_population_green",
+      "ok": true,
+      "d1_ok": 32,
+      "population_d1": true,
+      "n_trained_beats_birth": 27,
+      "n_trained_beats_frozen": 30,
+      "mean_delta_birth": 0.253125,
+      "mean_delta_frozen": 0.26015625
+    },
+    {
+      "id": "d2_population_green",
+      "ok": true,
+      "population_d2": true,
+      "n_assoc_ok": 32
+    },
+    {
+      "id": "pair_reds_are_d2_holds_only",
+      "ok": true,
+      "d2_ok": 23,
+      "d2_hold_fails": 9,
+      "note": "All eight failed pairs fail only D2 holds>=5. Those lives have high beneficial ACT (11-25)."
+    },
+    {
+      "id": "d2_hold_window_has_no_contradiction",
+      "ok": true,
+      "note": "score_d2 counts HOLD over 30 apply_event steps that reuse the same motor latent as the 60-episode teach. No swap, no mixed evidence. The floor therefore punishes decisive learned ACT, not missing uncertainty under contradiction."
+    },
+    {
+      "id": "no_soft_clear",
+      "ok": true
+    },
+    {
+      "id": "no_develop_v10",
+      "ok": true
+    },
+    {
+      "id": "floors_unsoftened_this_score",
+      "ok": true
+    },
+    {
+      "id": "neural_unchanged",
+      "ok": true,
+      "neural_cortex_sha": "7b67f187e5ed2eb7745ab33280807b2e56d20107be9eb4b265a1b9a825d3e17b"
+    },
+    {
+      "id": "historical_locks_byte_identical",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "develop_v10": "refused",
+    "rescore_v10": "refused",
+    "next": "isolated_v11",
+    "refuse": [
+      "rewrite docs/cortex_v10_gate.lock",
+      "edit-and-rescore candidate v10 on revealed v10 worlds",
+      "open DEVELOP.v10",
+      "open full D0–D12",
+      "drop holds>=5 without moving it onto contradictory evidence"
+    ]
+  },
+  "note": "8/16 stands. Population extras and D1 floors are green. Remaining wall is the mis-instrumented D2 HOLD window."
+}

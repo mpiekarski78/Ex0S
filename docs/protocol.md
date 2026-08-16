@@ -2014,3 +2014,7 @@ v10 apparatus (scorer-only, no candidate SHA): [`cortex_v10_stat_contract.lock`]
 
 Candidate (this cycle, before reveal): [`cortex.candidate.v10.lock`](cortex.candidate.v10.lock) reuses neural SHA `7b67f187…`. Population C4 + C5 (30/32, mean Δ≈0.24) + C6 green. Reveal must pin the pushed candidate git SHA.
 
+Outcome: candidate `e0b98d7` revealed after a clean push. Fresh seed-derived D1–D2 **8/16** — **fail**. D1 32/32; population extras green. [`cortex_v10_gate.failure.lock`](cortex_v10_gate.failure.lock) + [`cortex_v11.isolation.lock`](cortex_v11.isolation.lock). **DEVELOP.v10 refused.** Do not edit-rescore v10. Full D0–D12 not opened.
+
+Diagnosis ([`cortex_diagnosis.v10.lock`](cortex_diagnosis.v10.lock)): remaining pair reds are D2 `holds>=5` after consistent teaching. The HOLD window has no contradictory physics. v11 may count HOLD on a swapped-latent window without dropping `holds>=5`. Neural unchanged.
+

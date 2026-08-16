@@ -1,0 +1,48 @@
+{
+  "version": "TM.0.23.CORTEX.V10.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "e0b98d7",
+  "neural_mechanism_changed": false,
+  "v11_authorized_only_if_this_lock": true,
+  "c4_retained": true,
+  "population_c5_c6_green": true,
+  "gate_n_pair_clear": 8,
+  "d1_ok": 32,
+  "d1_population_ok": true,
+  "d2_ok": 23,
+  "d2_population_ok": true,
+  "same_architectural_reason_as_v9": false,
+  "claim": "v10 population extras did what v9 diagnosis authorized: D1 32/32 and both population extras green. The eight pair reds are only D2 holds>=5 after consistent cue-c teaching. score_d2's 30-step HOLD window reuses the same latent — there is no contradictory evidence — so decisive learned ACT is scored as a D2 miss. Phenotype D2 requires HOLD under contradiction, then revision. This is a scorer-instrument miss, not a missing credit law and not v8 get/drop or v9 extras grain.",
+  "d2_hold_fails": [
+    {"pair_id": 1, "role": "main", "holds": 3, "beneficial": 11},
+    {"pair_id": 2, "role": "twin", "holds": 2, "beneficial": 25},
+    {"pair_id": 5, "role": "twin", "holds": 3, "beneficial": 15},
+    {"pair_id": 7, "role": "main", "holds": 4, "beneficial": 21},
+    {"pair_id": 11, "role": "twin", "holds": 4, "beneficial": 18},
+    {"pair_id": 13, "role": "main", "holds": 4, "beneficial": 24},
+    {"pair_id": 13, "role": "twin", "holds": 4, "beneficial": 21},
+    {"pair_id": 14, "role": "main", "holds": 2, "beneficial": 20},
+    {"pair_id": 15, "role": "main", "holds": 4, "beneficial": 14}
+  ],
+  "authorize_v11": [
+    "retain v7–v10 neural unchanged",
+    "keep D1 press+harm floors and v10 population extras",
+    "do not edit experiments/cortex_develop_scorers.py score_d2",
+    "new D2 HOLD window must present contradictory physics (swapped act effects) before counting HOLD",
+    "keep holds>=5 on that contradictory window",
+    "keep beneficial>=3 and rho_ok",
+    "retain C4 revision as the revision check",
+    "new sealed commitment ≠ v10 ≠ DEVELOP",
+    "do not drop the uncertainty requirement",
+    "do not retune neural so every frozen life fails deterministic D1"
+  ],
+  "refuse": [
+    "edit-and-rescore v10",
+    "DEVELOP.v10",
+    "new credit law this cycle",
+    "open D0–D12 before a later isolated gate ≥13/16",
+    "treat v8/v9/v10 as the same architectural miss"
+  ]
+}

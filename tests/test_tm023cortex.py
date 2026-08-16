@@ -459,6 +459,13 @@ def test_verify_v10_gate_cli() -> None:
         assert v["refuse_develop_before_clear"] is True
         assert (REPO_ROOT / "docs" / "cortex_v10_gate.failure.lock").exists()
         assert not (REPO_ROOT / "docs" / "cortex_development.v10.lock").exists()
+        gate = json.loads((REPO_ROOT / "docs" / "cortex_v10_gate.lock").read_text(encoding="utf-8"))
+        assert gate["battery"]["n_pair_clear"] == 8
+        assert gate["battery"]["stage_ok_counts"]["D1"] == 32
+        assert gate["battery"]["population_d1"]["ok"] is True
+        assert gate["battery"]["population_d2"]["ok"] is True
+        iso = json.loads((REPO_ROOT / "docs" / "cortex_v11.isolation.lock").read_text(encoding="utf-8"))
+        assert "DEVELOP.v10 on any worlds" in iso["refuse"]
 
 
 def test_verify_v6_gate_cli() -> None:

@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.V10 gate fail:** Candidate `e0b98d7` revealed after a clean push (git SHA pinned). Seed-derived D1–D2 **8/16** — **not clear**. D1 32/32 and both population extras green. Pair reds are D2 `holds>=5` after a no-contradiction window. [`cortex_v10_gate.failure.lock`](cortex_v10_gate.failure.lock) + [`cortex_v11.isolation.lock`](cortex_v11.isolation.lock). **DEVELOP.v10 refused.** Do not edit-rescore v10. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V10 candidate:** Reuses frozen v7/v8/v9 neural under the v10 population-extras contract. Nine sanity + math audit pass. Population C4/C5/C6 green. [`cortex.candidate.v10.lock`](cortex.candidate.v10.lock). No reveal in this commit. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V10 apparatus:** Scorer-only population extras matching C5. D1 press/harm floors retained. Frozen commitment, no neural edit, no candidate SHA. [`cortex_v10.prereg.lock`](cortex_v10.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V9 gate fail:** Candidate `bd94241` revealed after a clean push (git SHA pinned). Seed-derived D1–D2 **6/16** — **not clear**. D1 floors **32/32** (press=0 gone); D1 extras 23/32; D2 21/32 (floors 27/32). [`cortex_v9_gate.failure.lock`](cortex_v9_gate.failure.lock) + [`cortex_v10.isolation.lock`](cortex_v10.isolation.lock). **DEVELOP.v9 refused.** Do not edit-rescore v9. `earned_next=false`; `ex0s=null`; product **0.0.004**.
