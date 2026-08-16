@@ -1990,3 +1990,5 @@ Diagnosis ([`cortex_diagnosis.v7.lock`](cortex_diagnosis.v7.lock)): **C4 retaine
 
 v8 apparatus (scorer-only, no candidate SHA): [`cortex_v8_stat_contract.lock`](cortex_v8_stat_contract.lock), [`cortex_v8_architecture_amendment.lock`](cortex_v8_architecture_amendment.lock), [`cortex_v8.prereg.lock`](cortex_v8.prereg.lock). Lives from sealed eval seed; extras from birth-weight frozen probes with `life_delta_min=0.10`. Neural remains candidate v7 until a later birth/candidate commit.
 
+Outcome: candidate `40680fb` revealed after a clean push. Population C4/C5/C6 green. Fresh seed-derived D1–D2 **1/16** — **fail**. D1 floors and extras now match (21/32); remaining D1 reds are `press=0`. D2 14/32. [`cortex_v8_gate.failure.lock`](cortex_v8_gate.failure.lock) + [`cortex_v9.isolation.lock`](cortex_v9.isolation.lock). **DEVELOP.v8 refused.** Do not edit-rescore v8. Full D0–D12 not opened.
+

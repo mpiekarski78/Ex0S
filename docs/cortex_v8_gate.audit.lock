@@ -1,0 +1,51 @@
+{
+  "version": "TM.0.23.CORTEX.V8.GATE.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "gate_sha": "5ca7564e428f67292befa51279d37581daececd464b7f0d7c2e3062b0f692619",
+  "n_pair_clear": 1,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git_commit",
+      "ok": true,
+      "candidate_git_sha": "40680fbc9913a084580cb20984639f2b2a3ec365"
+    },
+    {
+      "id": "worlds_from_sealed_seed",
+      "ok": true
+    },
+    {
+      "id": "d1_floors_match_extras",
+      "ok": true,
+      "d1_floors": 21,
+      "d1_ok": 21,
+      "note": "When D1 floors pass, birth-weight frozen-probe extras also pass. Remaining D1 reds are press=0."
+    },
+    {
+      "id": "no_soft_clear",
+      "ok": true
+    },
+    {
+      "id": "no_develop_v8",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "develop_v8": "refused",
+    "rescore_v8": "refused",
+    "next": "isolated_v9",
+    "refuse": [
+      "rewrite docs/cortex_v8_gate.lock",
+      "edit-and-rescore candidate v8 on revealed v8 worlds",
+      "open DEVELOP.v8",
+      "open full D0\u2013D12",
+      "soften D1/D2 floors"
+    ]
+  },
+  "note": "1/16 stands. Scorer grain is now contract-honest. Remaining fail is seed-wise always-HOLD / D2 holds, not 1-count extras.",
+  "failure_sha": "d2264c5289e46fcf82210cc8095b9cf083781a38c6487137da15c20ec74e8baa"
+}
