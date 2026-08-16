@@ -1,0 +1,59 @@
+{
+  "version": "TM.0.16.ALIASWALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "label": "cross-episode alias equivalence wall on frozen RELATE",
+  "preregistered_claim": "With RELATE fixed, replacing repeated route symbols with fresh opaque aliases disperses support across disjoint edges; no reusable relation survives, so compose remains HOLD despite repetition of the same latent route.",
+  "cell_ids": [
+    "W0_control",
+    "W1_kill",
+    "W2_schedule_twin",
+    "W3_opacity",
+    "W4_map_isolation",
+    "W5_no_mechanism"
+  ],
+  "cell_ok": {
+    "W0_control": true,
+    "W1_kill": true,
+    "W2_schedule_twin": true,
+    "W3_opacity": true,
+    "W4_map_isolation": true,
+    "W5_no_mechanism": true
+  },
+  "kill_alias_table": [
+    {
+      "life": 1,
+      "origin": "kelm",
+      "mid": "norb",
+      "dest": "wift"
+    },
+    {
+      "life": 2,
+      "origin": "jasp",
+      "mid": "clud",
+      "dest": "vemq"
+    },
+    {
+      "life": 3,
+      "origin": "doth",
+      "mid": "praq",
+      "dest": "hunz"
+    }
+  ],
+  "query_life": 1,
+  "run_tm016aliaswall_sha": "147cddb92a04741c56079c8c95b153033d9a9b5296aa26bf68d3f8090bcf204e",
+  "prereg_lock_sha": "916dfb6de8c37c19eb255d215604152a2b8709b270862da03ca72378bac5eacf",
+  "genome_016_lock_sha": "76a28d983d02af27d711a44cc8079c5fac50e4a72ebf137cf3790a92d0d09e98",
+  "relate_016_lock_sha": "756750d4469177c72fdcea48f1b1b691366dbf4843edd2215b69170c5621f829",
+  "refuse": [
+    "operand identity / object continuity",
+    "occlusion / gap persistence",
+    "earn alias equivalence this pass",
+    "alias machinery in organism",
+    "unpinned RNG aliases",
+    "shared S between Control and Kill",
+    "TM.0.17",
+    "FAMILY / LOOKAHEAD / pixels / 0.0.005"
+  ]
+}

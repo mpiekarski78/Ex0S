@@ -1729,3 +1729,31 @@ Pruning losers; `support>=N` earn flags; RELATE reading focus; cross-life Y→X 
 
 Apparatus: `experiments/run_tm016relate.py`. Results: [`tm016relate_results.md`](tm016relate_results.md). Prereg: [`relate_016.prereg.lock`](relate_016.prereg.lock). Freeze: [`genome_016.lock`](genome_016.lock) + [`relate_016.lock`](relate_016.lock).
 
+---
+
+## TM.0.16.ALIASWALL — alias-equivalence wall on frozen RELATE
+
+**Lab bookkeeping** (not a product stamp; **not TM.0.17**). Product under test remains **Ex0S 0.0.004**. `earned_next=false`. `ex0s=null`. No organism change. No alias machinery.
+
+### Claim
+
+> With RELATE fixed, replacing repeated route symbols with fresh opaque aliases disperses support across disjoint edges; no reusable relation survives, so compose remains HOLD despite repetition of the same latent route.
+
+### Bounded fact
+
+Frozen RELATE succeeds only when symbol equivalence is supplied externally; repetition of latent structure alone does not currently produce reusable relations. Not learnable equivalence. Not object continuity / occlusion.
+
+### Paired probe
+
+- **Control:** stable `x,a,y` across lives → unique winners; compose reaches Y.
+- **Kill:** preregistered opaque equal-length aliases (`kelm/norb/wift`, …) → every mapped latent transition support=1; motor HOLD; `lived_bind ≠` query-life target alias.
+- Each cell: fresh `make_relate`, empty S, reset ρ.
+- Alias values may appear in `visible`; role→alias association must not enter metadata / teacher / S / kwargs.
+- W2: evaluator-only canonicalize Kill → exact Control schedule.
+
+### Refuse
+
+Earn this pass; TM.0.17; organism alias machinery; unpinned RNG; shared S; cue=`x` on Kill; W1 success by unpinned diagnostics; FAMILY; LOOKAHEAD; pixels; 0.0.005; ALIASWALL artifact SHAs in prereg (prior 016 lock SHAs required).
+
+Apparatus: `experiments/run_tm016aliaswall.py`. Results: [`tm016aliaswall_results.md`](tm016aliaswall_results.md). Prereg: [`alias_wall.prereg.lock`](alias_wall.prereg.lock). Freeze: [`alias_wall.lock`](alias_wall.lock).
+

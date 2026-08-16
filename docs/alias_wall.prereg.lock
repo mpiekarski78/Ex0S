@@ -1,0 +1,101 @@
+{
+  "version": "TM.0.16.ALIASWALL.PREREG",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "label": "cross-episode alias equivalence wall on frozen RELATE",
+  "preregistered_claim": "With RELATE fixed, replacing repeated route symbols with fresh opaque aliases disperses support across disjoint edges; no reusable relation survives, so compose remains HOLD despite repetition of the same latent route.",
+  "bounded_fact": "Frozen RELATE succeeds only when symbol equivalence is supplied externally; repetition of latent structure alone does not currently produce reusable relations.",
+  "lab": "TM.0.16.ALIASWALL",
+  "not_a_product_stamp": true,
+  "not_tm017": true,
+  "isolation": {
+    "fresh_organism_per_cell": true,
+    "empty_S": true,
+    "reset_rho": true,
+    "no_shared_state_across_cells": true
+  },
+  "query_protocol": {
+    "query_life": 1,
+    "reset_rho_before_probe": true,
+    "cue": "origin token as shown to the organism in query life",
+    "control_cue": "x",
+    "kill_cue": "kelm",
+    "kill_target_alias": "wift",
+    "teacher": "off",
+    "refuse_cue_x_on_kill": true
+  },
+  "control_schedule": [
+    [["x", "q"], ["a", "q"], ["y", "q"]],
+    [["x", "r"], ["a", "r"], ["y", "s"]],
+    [["x", "t"], ["a", "u"], ["y", "v"]]
+  ],
+  "kill_alias_table": [
+    {"life": 1, "origin": "kelm", "mid": "norb", "dest": "wift"},
+    {"life": 2, "origin": "jasp", "mid": "clud", "dest": "vemq"},
+    {"life": 3, "origin": "doth", "mid": "praq", "dest": "hunz"}
+  ],
+  "kill_schedule": [
+    [["kelm", "q"], ["norb", "q"], ["wift", "q"]],
+    [["jasp", "r"], ["clud", "r"], ["vemq", "s"]],
+    [["doth", "t"], ["praq", "u"], ["hunz", "v"]]
+  ],
+  "opacity": {
+    "equal_length": 4,
+    "no_role_prefix_suffix_numbering": true,
+    "no_embedded_role_labels": ["x", "a", "y"],
+    "not_x1_style": true,
+    "reject_motors": true,
+    "reject_control_clutter": ["q", "r", "s", "t", "u", "v"],
+    "no_unpinned_rng": true
+  },
+  "w1_kill_invariants": [
+    "every_evaluator_mapped_latent_transition_support_exactly_1",
+    "no_identical_cross_life_alias_edge_on_latent_path",
+    "probe_motor_hold",
+    "lived_bind_ne_query_life_target_alias"
+  ],
+  "w2_canonicalize": "Replacing each Kill alias with its evaluator-known latent role must reproduce the Control event sequence exactly: event order, bag sizes, clutter identity and placement, episode boundaries, and query-life designation.",
+  "map_isolation": {
+    "aliases_may_appear_in_visible": true,
+    "role_alias_association_hidden": true,
+    "forbidden_carriers": [
+      "event_metadata",
+      "teacher_info",
+      "S",
+      "agent_kwargs",
+      "organism_visible_diagnostics"
+    ]
+  },
+  "n_cells": 6,
+  "cell_ids": [
+    "W0_control",
+    "W1_kill",
+    "W2_schedule_twin",
+    "W3_opacity",
+    "W4_map_isolation",
+    "W5_no_mechanism"
+  ],
+  "genome_016_lock_sha": "76a28d983d02af27d711a44cc8079c5fac50e4a72ebf137cf3790a92d0d09e98",
+  "relate_016_lock_sha": "756750d4469177c72fdcea48f1b1b691366dbf4843edd2215b69170c5621f829",
+  "refuse": [
+    "calling this operand identity or object continuity",
+    "occlusion / gap-persistence worlds",
+    "treating Kill HOLD as a thing to solve this pass",
+    "alias machinery in the organism",
+    "role-correlated morphology (x1, xa, role prefixes/suffixes/numbering)",
+    "unpinned RNG aliases at score time",
+    "shared organism or S between Control and Kill",
+    "putting role→alias or mapping object into events / teacher / S / kwargs / diagnostics",
+    "cue=x on Kill as the kill criterion",
+    "defining W1 success by unpinned diagnostics (evidence_tie or hops)",
+    "TM.0.17 name",
+    "FAMILY / 288 worlds this pass",
+    "LOOKAHEAD",
+    "pixels / raw audio / text streams",
+    "stamp or pre-name Ex0S 0.0.005",
+    "SHAs of newly created ALIASWALL artifacts in this prereg (prior genome_016.lock and relate_016.lock SHAs are required pins)",
+    "rewrite genome_016 / relate_016 / agent.py"
+  ],
+  "note": "Wall probe only. alias_wall.lock written after 6/6 with real SHAs. Do not rewrite this file to match the implementation. Do not earn alias equivalence this pass."
+}
