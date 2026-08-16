@@ -1,0 +1,183 @@
+{
+  "version": "CONTINUITY-EVIDENCE.CONTRACT.PREREG",
+  "kind": "contract_prereg_only",
+  "lab": null,
+  "not_tm017": true,
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "results": null,
+  "claims_any_organism_satisfies_C2_through_C6": false,
+  "claim": "An opaque post-gap token may be linked provisionally to a pre-gap token only when an observable pre-gap intervention placed a specified mark or state on the latter and exactly one post-gap candidate produces the corresponding observable readout. Token spelling, route position, empty-event skip, episode structure, or sole candidacy contribute no identity evidence. The resulting continuity hypothesis is defeasible and must be withdrawn when later observations contradict it.",
+  "evidence_rule": {
+    "name": "causal_mark_continuity",
+    "empty_skip_alone_sufficient": false,
+    "episode_structure_alone_sufficient": false,
+    "sole_candidacy_sufficient": false,
+    "token_spelling_sufficient": false,
+    "route_position_sufficient": false,
+    "bare_mark_id_without_apply_read_sufficient": false,
+    "same_property_observed_twice_without_apply_sufficient": false,
+    "strong_witness": "pre_gap apply intervention of mark_id/state on a token, then post_gap readout of the corresponding state on exactly one candidate",
+    "uniqueness": "exactly_one_verifying_candidate",
+    "both_verify_refuses_unique": true,
+    "neither_verify_refuses_unique": true,
+    "mutually_conflicting_readouts_refuse_unique": true,
+    "contradiction_requires_withdrawal": true,
+    "stale_merge_after_contradiction_forbidden": true,
+    "permission_is_not_a_claimed_pass": true,
+    "admissibility_vs_earn": {
+      "admissibility": "Continuity hypothesis is permitted when exactly one candidate verifies the apply→read witness.",
+      "future_earn": "Organism must use that hypothesis in an identity-dependent probe that cannot be solved without the pre-gap evidence; skip, sole-candidate, and spelling shortcuts fail; always-HOLD fails earn."
+    },
+    "honest_label_refuse": "learned_object_continuity_from_empty_event_skip"
+  },
+  "channel_contract": {
+    "allowed_keys": [
+      "token",
+      "mark_id",
+      "phase",
+      "operation",
+      "observed_state"
+    ],
+    "key_rule": "exact_set_equality",
+    "field_semantics": {
+      "token": "opaque symbol under observation; spellings randomized independently of marks; spelling contributes no identity evidence",
+      "mark_id": "independent mark identity; not an object ID; fresh or counterbalanced across worlds; independently swappable, removable, and collision-capable; no permanent token→mark_id mapping",
+      "phase": "pre_gap or post_gap",
+      "operation": "apply or read; locked to phase",
+      "observed_state": "observable mark/state enum at that phase"
+    },
+    "phase_semantics": {
+      "pre_gap": "organism observes the mark/state being applied to the token (causal intervention)",
+      "post_gap": "organism observes the resulting readout on a candidate"
+    },
+    "operation_phase_lock": {
+      "pre_gap": "apply",
+      "post_gap": "read"
+    },
+    "insufficient_without_apply_read_sequence": true,
+    "forbidden_keys": [
+      "object_id",
+      "same_as",
+      "continuity_class",
+      "canonical_token",
+      "canonical_id",
+      "latent_map",
+      "role",
+      "route_position_identity"
+    ],
+    "forbidden_information": [
+      "hidden object ID",
+      "oracle same-object flag",
+      "permanent token to mark_id identity map",
+      "mark_id used as object ID by another name",
+      "empty-event skip as continuity evidence",
+      "sole candidacy as continuity evidence",
+      "token spelling or route position as identity"
+    ],
+    "future_organism_authorship": "A future candidate may author raw continuity evidence into S only; this prereg implements no such mechanism.",
+    "scorer_boundary": "The scorer alone may retain evaluator ground truth and must never pass it through events, teacher information, S, agent arguments, or organism-visible diagnostics."
+  },
+  "battery_contract": [
+    {
+      "cell": "C0_gapwall",
+      "evidence": "reuse frozen GAPWALL lessons: empty-skip, episode gap, two equal peers",
+      "honest_outcome": "skip is not continuity; episode has no bridge; two peers HOLD",
+      "gate": "kill_if_mislabeled_as_object_continuity"
+    },
+    {
+      "cell": "C1_weak",
+      "evidence": "reappear only; or apply without post read; or read without apply; or bare mark_id without apply→read sequence",
+      "honest_outcome": "HOLD; no continuity permission",
+      "gate": "kill_if_merge_or_permission"
+    },
+    {
+      "cell": "C2_mark",
+      "evidence": "apply on pre-gap token; exactly one post-gap candidate reads matching state",
+      "honest_outcome": "continuity hypothesis permitted (admissibility only)",
+      "future_earn": "identity-dependent probe that cannot be solved by skip, sole candidacy, or spelling; always-HOLD fails earn",
+      "gate": "future_candidate_admissibility_not_scored_this_pass"
+    },
+    {
+      "cell": "C3a_both",
+      "evidence": "two candidates both verify the readout",
+      "honest_outcome": "refuse unique link",
+      "gate": "kill_if_unique_choice"
+    },
+    {
+      "cell": "C3b_neither",
+      "evidence": "neither candidate verifies",
+      "honest_outcome": "refuse unique link",
+      "gate": "kill_if_unique_choice"
+    },
+    {
+      "cell": "C3c_conflict",
+      "evidence": "mutually conflicting readouts across candidates",
+      "honest_outcome": "refuse unique link",
+      "gate": "kill_if_unique_choice"
+    },
+    {
+      "cell": "C4_swap",
+      "evidence": "fresh counterfactual world: mark evidence swapped; tokens and marks independent",
+      "honest_outcome": "behavior follows mark evidence, not token spelling or skip",
+      "gate": "kill_if_spelling_or_skip_wins; attacks mark_id_as_object_id"
+    },
+    {
+      "cell": "C5_contradiction",
+      "evidence": "later conflicting observation after a permitted continuity link",
+      "honest_outcome": "withdraw or supersede prior permission; downstream HOLD or kept-separate; no stale merge remains effective",
+      "gate": "kill_if_stale_merge_or_soft_optional_hold_without_withdrawal"
+    },
+    {
+      "cell": "C6_causality",
+      "evidence": "reset rho retains; strip continuity evidence rows only → HOLD; donor-swap continuity rows → follows S",
+      "honest_outcome": "continuity evidence lives in S only",
+      "gate": "kill_if_equivalence_in_rho_or_cortex"
+    }
+  ],
+  "cell_ids": [
+    "C0_gapwall",
+    "C1_weak",
+    "C2_mark",
+    "C3a_both",
+    "C3b_neither",
+    "C3c_conflict",
+    "C4_swap",
+    "C5_contradiction",
+    "C6_causality"
+  ],
+  "isolation": {
+    "future_fresh_organism_per_cell": true,
+    "future_distinct_S_per_cell": true,
+    "future_empty_S_at_cell_birth": true,
+    "exceptions": "C6 may preserve, strip continuity rows, or donate S within its own cell only, exactly as declared by its intervention.",
+    "no_cross_cell_state": true,
+    "ground_truth_scorer_only": true
+  },
+  "prior_lock_shas": {
+    "gap_wall.lock": "f46401541ba38d6ab4369a84a1871e021ea161fa54977a585fbd1af76c2d1b3e",
+    "alias_finger.lock": "025f9983aaaf946275bbf6c75f9b621e0c3652417894e7c24a43a4acda03dd23",
+    "alias_evidence.prereg.lock": "8c1385f588df7de52bc4be6515bad934c3b708bc61b0fb61855a486ed957d39a"
+  },
+  "refuse": [
+    "assigning a numeric lab ID",
+    "implementing persistence or mark observe ABI this pass",
+    "claiming C2 through C6 pass",
+    "writing an earn runner or continuity freeze lock this pass",
+    "mechanism or runner SHAs in this prereg",
+    "empty-event skip as continuity evidence",
+    "sole candidacy or token spelling as identity",
+    "bare mark_id without apply→read sequence",
+    "same property observed twice without apply intervention",
+    "permanent token→mark_id identity map",
+    "soft C5 without mandatory withdrawal",
+    "C2 earn that always-HOLD can pass",
+    "FAMILY",
+    "LOOKAHEAD",
+    "pixels or raw sensory encoders",
+    "stamp or pre-name Ex0S 0.0.005",
+    "rewrite gap_wall.lock, alias_finger.lock, alias_evidence.prereg.lock, or three_memory/agent.py"
+  ],
+  "note": "Contract freeze only. There is no candidate mechanism, runner, test result, earn, or post-run freeze lock in this pass. Alias fingerprints remain a separate track. Opt-in persistence candidate only after this contract is frozen."
+}

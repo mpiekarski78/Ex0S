@@ -24,7 +24,7 @@ This is a capacity wall, not evidence of learned object continuity.
 
 ## Next
 
-Freeze a separate continuity-evidence contract. Only after that contract may an opt-in persistence candidate be proposed.
+Opt-in persistence candidate under the frozen continuity-evidence contract ([`continuity_evidence_contract.md`](continuity_evidence_contract.md)). Alias fingerprints remain separate.
 
 ## Reproduce
 

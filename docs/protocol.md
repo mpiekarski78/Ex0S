@@ -1769,7 +1769,7 @@ The apparatus channel is limited to `alias`, `probe_context`, `action`, and `obs
 
 Future outcomes are preregistered as A0 wall → HOLD; A1 one witness → HOLD; A2 two independent witnesses → equivalence permitted; A3 collision → keep separate; A4 swap → follow evidence; A5 contradiction → split or HOLD; A6 reset ρ / wipe S / donor swap → equivalence follows S only. “Permitted” is not a green result in this pass.
 
-Prereg: [`alias_evidence.prereg.lock`](alias_evidence.prereg.lock). One-page contract: [`alias_evidence_contract.md`](alias_evidence_contract.md). Mechanism work may begin only after this contract is frozen. Gap persistence / object continuity stays separate.
+Prereg: [`alias_evidence.prereg.lock`](alias_evidence.prereg.lock). One-page contract: [`alias_evidence_contract.md`](alias_evidence_contract.md). Mechanism work may begin only after this contract is frozen. Continuity / gap persistence is a separate contract ([`continuity_evidence_contract.md`](continuity_evidence_contract.md)).
 
 ## TM.0.16.ALIASFINGER — fingerprint candidate (hardened)
 
@@ -1818,4 +1818,19 @@ Each cell uses a fresh organism, empty S, and reset ρ. The prereg pins all sche
 
 Frozen ALIASFINGER-on preserves a pre-gap bag only when an empty visible event is skipped. `end_event_episode` removes that frontier; a visible distractor fragments the route; two equally supported reappearances remain irreducible. Battery **6/6**. This is a wall, not a continuity candidate.
 
-Prereg: [`gap_wall.prereg.lock`](gap_wall.prereg.lock). Freeze: [`gap_wall.lock`](gap_wall.lock). Apparatus: `experiments/run_tm016gapwall.py`. Results: [`tm016gapwall_results.md`](tm016gapwall_results.md). **Next:** freeze a separate continuity-evidence contract; only then consider an opt-in persistence candidate.
+Prereg: [`gap_wall.prereg.lock`](gap_wall.prereg.lock). Freeze: [`gap_wall.lock`](gap_wall.lock). Apparatus: `experiments/run_tm016gapwall.py`. Results: [`tm016gapwall_results.md`](tm016gapwall_results.md).
+
+---
+
+## Continuity-evidence contract — prereg only
+
+No numeric lab ID. Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=null`. Freezes the evidence rule only: no persistence mechanism, earn runner, result, or post-run freeze lock.
+
+**Claim:** provisional post-gap identity requires a causal pre-gap **apply** of a mark/state and exactly one matching post-gap **readout**. Empty-skip, sole candidacy, spelling, route position, and bare `mark_id` contribute no identity evidence. The hypothesis is defeasible and must be **withdrawn** on contradiction (no stale merge).
+
+**Channel:** exact keys `{token, mark_id, phase, operation, observed_state}` with `pre_gap`↔`apply` and `post_gap`↔`read`. Marks are fresh/counterbalanced, swappable, removable, collision-capable; not object IDs.
+
+**Future cells:** C0 GAPWALL lessons; C1 weak HOLD; C2 mark → admissibility only (earn needs identity-dependent probe); C3a/b/c both/neither/conflict refuse unique; C4 swap follows marks; C5 withdraw; C6 S-causality. Not claimed green.
+
+Prereg: [`continuity_evidence.prereg.lock`](continuity_evidence.prereg.lock). One-page: [`continuity_evidence_contract.md`](continuity_evidence_contract.md). **Next:** opt-in persistence candidate under this contract. Alias fingerprints stay separate.
+

@@ -23,7 +23,7 @@ Prior stamps still stand: 0.0.003 Frozen Composition ([`genome_011.lock`](genome
 | `three_memory/cortex.py` | frozen cortex |
 | `experiments/run_tm011compose.py` `make` | compose-on; kwargs forward acquire/skel/relate |
 
-Locks: [`genome_013.lock`](genome_013.lock), [`kappa_013.lock`](kappa_013.lock), [`family_013.lock`](family_013.lock), [`genome_014.lock`](genome_014.lock), [`acquire_014.lock`](acquire_014.lock), [`family_014.lock`](family_014.lock), [`skeleton_015.prereg.lock`](skeleton_015.prereg.lock), [`genome_015.lock`](genome_015.lock), [`skeleton_015.lock`](skeleton_015.lock), [`relate_016.prereg.lock`](relate_016.prereg.lock), [`genome_016.lock`](genome_016.lock), [`relate_016.lock`](relate_016.lock), [`alias_wall.prereg.lock`](alias_wall.prereg.lock), [`alias_wall.lock`](alias_wall.lock), [`alias_evidence.prereg.lock`](alias_evidence.prereg.lock), [`alias_finger.prereg.lock`](alias_finger.prereg.lock), [`alias_finger.candidate.lock`](alias_finger.candidate.lock), [`alias_finger.lock`](alias_finger.lock), [`gap_wall.prereg.lock`](gap_wall.prereg.lock), [`gap_wall.lock`](gap_wall.lock).
+Locks: [`genome_013.lock`](genome_013.lock), [`kappa_013.lock`](kappa_013.lock), [`family_013.lock`](family_013.lock), [`genome_014.lock`](genome_014.lock), [`acquire_014.lock`](acquire_014.lock), [`family_014.lock`](family_014.lock), [`skeleton_015.prereg.lock`](skeleton_015.prereg.lock), [`genome_015.lock`](genome_015.lock), [`skeleton_015.lock`](skeleton_015.lock), [`relate_016.prereg.lock`](relate_016.prereg.lock), [`genome_016.lock`](genome_016.lock), [`relate_016.lock`](relate_016.lock), [`alias_wall.prereg.lock`](alias_wall.prereg.lock), [`alias_wall.lock`](alias_wall.lock), [`alias_evidence.prereg.lock`](alias_evidence.prereg.lock), [`alias_finger.prereg.lock`](alias_finger.prereg.lock), [`alias_finger.candidate.lock`](alias_finger.candidate.lock), [`alias_finger.lock`](alias_finger.lock), [`gap_wall.prereg.lock`](gap_wall.prereg.lock), [`gap_wall.lock`](gap_wall.lock), [`continuity_evidence.prereg.lock`](continuity_evidence.prereg.lock).
 
 ## TM.0.14 → TM.0.16 lineage
 
@@ -50,7 +50,7 @@ GAPWALL: empty visible retains the pre-gap event bag by skip semantics only; `en
 |---------|------------|
 | Named product stamp for FAMILY earn | human decision (not auto) |
 | Cross-episode alias equivalence (earn) | ALIASFINGER candidate frozen in [`tm016aliasfinger_results.md`](tm016aliasfinger_results.md) (`earned_next=false`); contract [`alias_evidence_contract.md`](alias_evidence_contract.md) |
-| Gap persistence / object continuity | GAPWALL capacity measured; continuity-evidence contract not yet frozen; persistence mechanism not yet |
+| Gap persistence / object continuity | GAPWALL **6/6**; continuity-evidence contract frozen in [`continuity_evidence_contract.md`](continuity_evidence_contract.md); opt-in persistence candidate not yet |
 | Anonymous features / sensory encoders / pixels | later |
 | Lookahead / backtracking | later |
 | No-cue English motor bar | B Fail (untouched) |
@@ -66,6 +66,7 @@ python tests/test_tm016relate.py
 python tests/test_tm016aliaswall.py
 python tests/test_tm016aliasfinger.py
 python tests/test_tm016gapwall.py
+python tests/test_continuity_evidence_contract.py
 python -m experiments.run_tm016aliasfinger --verify-prereg
 python -m experiments.run_tm016gapwall --verify-prereg
 ```
