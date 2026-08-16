@@ -2018,3 +2018,9 @@ Outcome: candidate `e0b98d7` revealed after a clean push. Fresh seed-derived D1�
 
 Diagnosis ([`cortex_diagnosis.v10.lock`](cortex_diagnosis.v10.lock)): remaining pair reds are D2 `holds>=5` after consistent teaching. The HOLD window has no contradictory physics. v11 may count HOLD on a swapped-latent window without dropping `holds>=5`. Neural unchanged.
 
+## TM.0.23.CORTEX.V10 audit → isolated V11
+
+Canonical main `4d70290`. V10 gate **8/16** stands. Do not edit-rescore v10. **DEVELOP.v10 refused.** Full D0–D12 stays closed.
+
+v11 apparatus (scorer-only, no candidate SHA): [`cortex_v11_stat_contract.lock`](cortex_v11_stat_contract.lock), [`cortex_v11_architecture_amendment.lock`](cortex_v11_architecture_amendment.lock), [`cortex_v11.prereg.lock`](cortex_v11.prereg.lock). D2 HOLD is counted while press/harm physics are swapped. Neural remains candidate v7–v10 until a later birth/candidate commit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

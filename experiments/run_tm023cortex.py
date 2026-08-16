@@ -124,6 +124,13 @@ V10_GATE_FAIL = REPO_ROOT / "docs" / "cortex_v10_gate.failure.lock"
 DEV_V10_LOCK = REPO_ROOT / "docs" / "cortex_development.v10.lock"
 DIAG_V9 = REPO_ROOT / "docs" / "cortex_diagnosis.v9.lock"
 STAT_V10 = REPO_ROOT / "docs" / "cortex_v10_stat_contract.lock"
+CANDIDATE_V11 = REPO_ROOT / "docs" / "cortex.candidate.v11.lock"
+V11_PREREG = REPO_ROOT / "docs" / "cortex_v11.prereg.lock"
+V11_GATE_LOCK = REPO_ROOT / "docs" / "cortex_v11_gate.lock"
+V11_GATE_FAIL = REPO_ROOT / "docs" / "cortex_v11_gate.failure.lock"
+DEV_V11_LOCK = REPO_ROOT / "docs" / "cortex_development.v11.lock"
+DIAG_V10 = REPO_ROOT / "docs" / "cortex_diagnosis.v10.lock"
+STAT_V11 = REPO_ROOT / "docs" / "cortex_v11_stat_contract.lock"
 
 PHENOTYPE_PATHS = [
     "docs/CURRENT_ORGANISM.md",
@@ -2251,6 +2258,52 @@ def verify_v10_gate() -> dict[str, Any]:
     }
 
 
+def verify_v11_gate() -> dict[str, Any]:
+    """Verify v11 contradictory-HOLD gate integrity without re-scoring. Pending-safe if unscored."""
+    if not DIAG_V10.exists() or not STAT_V11.exists():
+        return {"ok": True, "pending": True, "why": "v11 diagnosis or stat contract not frozen yet"}
+    if DEV_V10_LOCK.exists():
+        return {"ok": False, "why": "DEVELOP.v10 exists — refuse"}
+    if V11_PREREG.exists():
+        v11c = json.loads(V11_PREREG.read_text(encoding="utf-8"))["eval_seed_commitment"]
+        for prior in (V10_PREREG, V9_PREREG, V8_PREREG, DEV_PREREG, PREREG):
+            if prior.exists() and json.loads(prior.read_text(encoding="utf-8")).get("eval_seed_commitment") == v11c:
+                return {"ok": False, "why": f"v11 commitment reused {prior.name}"}
+    if not CANDIDATE_V11.exists():
+        return {"ok": True, "pending": True, "why": "candidate v11 not frozen yet"}
+    if not V11_GATE_LOCK.exists():
+        return {"ok": True, "pending": True, "why": "v11 gate result not frozen yet"}
+    if DEV_V11_LOCK.exists():
+        return {"ok": False, "why": "DEVELOP.v11 exists — refuse until a later isolated full-dev commitment"}
+    gate = json.loads(V11_GATE_LOCK.read_text(encoding="utf-8"))
+    cand = json.loads(CANDIDATE_V11.read_text(encoding="utf-8"))
+    if gate.get("product") != "0.0.004" or gate.get("earned_next") is not False or gate.get("ex0s") is not None:
+        return {"ok": False, "why": "product/earned_next/ex0s drift"}
+    if gate.get("candidate_v11_sha") != _sha_file(CANDIDATE_V11):
+        return {"ok": False, "why": "gate/candidate v11 sha mismatch"}
+    battery = gate.get("battery") or {}
+    n_clear = int(battery.get("n_pair_clear") or 0)
+    clear = bool(gate.get("sensorimotor_association_gate_clear"))
+    if battery.get("d2_conflict") != "swapped_press_harm":
+        return {"ok": False, "why": "v11 D2 conflict window drifted"}
+    if clear and n_clear < 13:
+        return {"ok": False, "why": "gate claims clear with n_pair_clear < 13"}
+    if (not clear) and not V11_GATE_FAIL.exists():
+        return {"ok": False, "why": "missing cortex_v11_gate.failure.lock"}
+    if clear and V11_GATE_FAIL.exists():
+        return {"ok": False, "why": "failure lock present on a clear gate"}
+    return {
+        "ok": True,
+        "why": "v11 gate integrity ok",
+        "pending": False,
+        "sensorimotor_association_gate_clear": clear,
+        "n_pair_clear": n_clear,
+        "live_neural_matches_v11": _sha_file(NEURAL_PY) == cand.get("neural_cortex_sha"),
+        "refuse_rewrite": True,
+        "refuse_develop_before_clear": not clear,
+    }
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-phase-a", action="store_true")
@@ -2277,6 +2330,7 @@ def main() -> None:
     ap.add_argument("--verify-v8-gate", action="store_true")
     ap.add_argument("--verify-v9-gate", action="store_true")
     ap.add_argument("--verify-v10-gate", action="store_true")
+    ap.add_argument("--verify-v11-gate", action="store_true")
     ap.add_argument("--mact-v6-audit", action="store_true")
     ap.add_argument("--v4-math-audit", action="store_true")
     ap.add_argument("--write-v2-birth", action="store_true")
@@ -2337,6 +2391,9 @@ def main() -> None:
         return
     if args.verify_v10_gate:
         print(json.dumps(verify_v10_gate(), indent=2, default=str))
+        return
+    if args.verify_v11_gate:
+        print(json.dumps(verify_v11_gate(), indent=2, default=str))
         return
     if args.mact_v6_audit:
         from experiments.cortex_mact_boundary import write_v6_boundary_audit

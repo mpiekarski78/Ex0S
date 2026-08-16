@@ -1,0 +1,28 @@
+{
+  "version": "TM.0.23.CORTEX.V11.STAT.CONTRACT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "v1_architecture_contract_sha": "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2",
+  "stat_md_sha": "2d701630f8bc9d81df00eee661a4704b4992605af0da18a8fbe1180ce98eeac2",
+  "gate_md_sha": "1bc0d64629b67c03268835ac69872b4479838497d6812ceca58f0cca5e7a50cb",
+  "diagnosis_v10_sha": "9b14afc60c0a150daef5c78a47542776acc6e5722e00060143db085edf6fed73",
+  "neural_sha_at_freeze": "7b67f187e5ed2eb7745ab33280807b2e56d20107be9eb4b265a1b9a825d3e17b",
+  "neural_change_authorized": false,
+  "d1_bind": [
+    "press",
+    "harm"
+  ],
+  "d2_conflict": "swapped_press_harm",
+  "extras": "population",
+  "majority_min": 24,
+  "mean_delta_min": 0.1,
+  "life_delta_min": 0.1,
+  "gate_clear_min_pairs": 13,
+  "refuse": [
+    "drop holds>=5",
+    "edit historical score_d2",
+    "edit-and-rescore v10",
+    "new credit law"
+  ]
+}
