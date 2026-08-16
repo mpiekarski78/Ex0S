@@ -64,7 +64,7 @@ Ex0S 0.0.004  ←  TM.0.13.FAMILY
 
 Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enough to treat as a lineage, not only a series of demos.
 
-**Next:** Unstructured / ambiguous sensory events — latent relation inference (not LOOKAHEAD). Product stamp naming for FAMILY earn remains a human decision (`ex0s=null`).
+**Next:** specify observable evidence for cross-episode alias equivalence — behavioral fingerprints under multiple independent probe contexts. Contract only; no mechanism or earn yet. Product stays **0.0.004** (`earned_next=false`, `ex0s=null`).
 
 ## Question
 

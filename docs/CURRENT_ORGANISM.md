@@ -23,7 +23,7 @@ Prior stamps still stand: 0.0.003 Frozen Composition ([`genome_011.lock`](genome
 | `three_memory/cortex.py` | frozen cortex |
 | `experiments/run_tm011compose.py` `make` | compose-on; kwargs forward acquire/skel/relate |
 
-Locks: [`genome_013.lock`](genome_013.lock), [`kappa_013.lock`](kappa_013.lock), [`family_013.lock`](family_013.lock), [`genome_014.lock`](genome_014.lock), [`acquire_014.lock`](acquire_014.lock), [`family_014.lock`](family_014.lock), [`skeleton_015.prereg.lock`](skeleton_015.prereg.lock), [`genome_015.lock`](genome_015.lock), [`skeleton_015.lock`](skeleton_015.lock), [`relate_016.prereg.lock`](relate_016.prereg.lock), [`genome_016.lock`](genome_016.lock), [`relate_016.lock`](relate_016.lock), [`alias_wall.prereg.lock`](alias_wall.prereg.lock), [`alias_wall.lock`](alias_wall.lock).
+Locks: [`genome_013.lock`](genome_013.lock), [`kappa_013.lock`](kappa_013.lock), [`family_013.lock`](family_013.lock), [`genome_014.lock`](genome_014.lock), [`acquire_014.lock`](acquire_014.lock), [`family_014.lock`](family_014.lock), [`skeleton_015.prereg.lock`](skeleton_015.prereg.lock), [`genome_015.lock`](genome_015.lock), [`skeleton_015.lock`](skeleton_015.lock), [`relate_016.prereg.lock`](relate_016.prereg.lock), [`genome_016.lock`](genome_016.lock), [`relate_016.lock`](relate_016.lock), [`alias_wall.prereg.lock`](alias_wall.prereg.lock), [`alias_wall.lock`](alias_wall.lock), [`alias_evidence.prereg.lock`](alias_evidence.prereg.lock) (contract only; no mechanism freeze).
 
 ## TM.0.14 → TM.0.16 lineage
 
@@ -45,7 +45,7 @@ ALIASWALL: same latent route with fresh opaque aliases → support fragments; co
 | Missing | Where next |
 |---------|------------|
 | Named product stamp for FAMILY earn | human decision (not auto) |
-| Cross-episode alias equivalence (earn) | after observable evidence is specified — wall frozen in [`tm016aliaswall_results.md`](tm016aliaswall_results.md) |
+| Cross-episode alias equivalence (earn) | alias-evidence contract preregistered; mechanism not yet — [`alias_evidence_contract.md`](alias_evidence_contract.md) |
 | Gap persistence / object continuity | later, separate from alias equivalence |
 | Anonymous features / sensory encoders / pixels | later |
 | Lookahead / backtracking | later |

@@ -1757,3 +1757,16 @@ Earn this pass; TM.0.17; organism alias machinery; unpinned RNG; shared S; cue=`
 
 Apparatus: `experiments/run_tm016aliaswall.py`. Results: [`tm016aliaswall_results.md`](tm016aliaswall_results.md). Prereg: [`alias_wall.prereg.lock`](alias_wall.prereg.lock). Freeze: [`alias_wall.lock`](alias_wall.lock).
 
+---
+
+## Alias-evidence contract — prereg only
+
+No numeric lab ID. Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=null`. This freezes an evidence contract only: no candidate mechanism, earn runner, result, or post-run freeze lock.
+
+**Behavioral-fingerprint rule:** one matching observable consequence is insufficient. Each witness is (`probe_context`, `action`, `observed_outcome`); two opaque aliases may be treated as equivalent only when action and outcome match under at least two independent `probe_context` values. Route position is not identity evidence.
+
+The apparatus channel is limited to `alias`, `probe_context`, `action`, and `observed_outcome`. Role, equivalence class, canonical identity, mapping, and route-position-as-identity are forbidden. The scorer alone may know the latent map. A future candidate must author any fingerprint evidence into S.
+
+Future outcomes are preregistered as A0 wall → HOLD; A1 one witness → HOLD; A2 two independent witnesses → equivalence permitted; A3 collision → keep separate; A4 swap → follow evidence; A5 contradiction → split or HOLD; A6 reset ρ / wipe S / donor swap → equivalence follows S only. “Permitted” is not a green result in this pass.
+
+Prereg: [`alias_evidence.prereg.lock`](alias_evidence.prereg.lock). One-page contract: [`alias_evidence_contract.md`](alias_evidence_contract.md). Mechanism work may begin only after this contract is frozen. Gap persistence / object continuity stays separate.

@@ -1,0 +1,135 @@
+{
+  "version": "ALIAS-EVIDENCE.CONTRACT.PREREG",
+  "kind": "contract_prereg_only",
+  "lab": null,
+  "not_tm017": true,
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "claim": "Two opaque aliases may be treated as equivalent only when observable behavioral evidence shows the same consequences under multiple independent probe contexts, without supplying a hidden role, canonical identity, equivalence class, mapping, or route position as identity.",
+  "evidence_rule": {
+    "name": "behavioral_fingerprint",
+    "fingerprint_atom": [
+      "probe_context",
+      "action",
+      "observed_outcome"
+    ],
+    "minimum_independent_probe_contexts": 2,
+    "one_matching_consequence_is_sufficient": false,
+    "two_independent_matching_consequences_permit_equivalence": true,
+    "permission_is_not_a_claimed_pass": true,
+    "route_position_is_sufficient_evidence": false,
+    "scorer_only_may_know_latent_map": true,
+    "matching": "For each witness, both aliases must have the same action and observed_outcome under the same probe_context.",
+    "independence": "The two witnesses must use distinct probe_context identities and must not be duplicate, relabelled, or role-coded presentations of the same probe."
+  },
+  "channel_contract": {
+    "allowed_keys": [
+      "alias",
+      "probe_context",
+      "action",
+      "observed_outcome"
+    ],
+    "field_semantics": {
+      "alias": "opaque token under probe",
+      "probe_context": "independent probe identity; not a role, canonical identity, or route position",
+      "action": "motor or act taken",
+      "observed_outcome": "success, failure, or a named observable outcome enum; never role-coded"
+    },
+    "forbidden_keys": [
+      "role",
+      "equivalence_class",
+      "canonical_token",
+      "canonical_id",
+      "role_to_alias",
+      "alias_to_role",
+      "latent_map",
+      "route_position_identity"
+    ],
+    "forbidden_information": [
+      "hidden role",
+      "equivalence class",
+      "canonical token or ID",
+      "role-to-alias or alias-to-role map",
+      "route position presented or interpreted as identity"
+    ],
+    "future_organism_authorship": "A future candidate may author fingerprint and equivalence evidence into S only; this prereg implements no such mechanism.",
+    "scorer_boundary": "The scorer alone may retain the latent mapping for evaluation and must never pass it through events, teacher information, S, agent arguments, or organism-visible diagnostics."
+  },
+  "battery_contract": [
+    {
+      "cell": "A0_wall",
+      "evidence": "same latent route only; reuse the frozen ALIASWALL Kill condition",
+      "honest_outcome": "HOLD",
+      "gate": "kill_if_not_HOLD"
+    },
+    {
+      "cell": "A1_weak",
+      "evidence": "one matching observable consequence",
+      "honest_outcome": "HOLD; ambiguous",
+      "gate": "kill_if_not_HOLD"
+    },
+    {
+      "cell": "A2_convergent",
+      "evidence": "two matching observable consequences under independent probe contexts",
+      "honest_outcome": "equivalence permitted",
+      "gate": "future_candidate_contract_earn_condition_not_scored_this_pass"
+    },
+    {
+      "cell": "A3_collision",
+      "evidence": "same first consequence and different second consequence",
+      "honest_outcome": "keep separate",
+      "gate": "kill_if_merged"
+    },
+    {
+      "cell": "A4_swap",
+      "evidence": "behavioral fingerprints exchanged between aliases",
+      "honest_outcome": "behavior follows observable evidence, not alias spelling or route position",
+      "gate": "kill_if_behavior_does_not_follow_evidence"
+    },
+    {
+      "cell": "A5_contradiction",
+      "evidence": "later observable evidence conflicts with an earlier fingerprint",
+      "honest_outcome": "split or HOLD",
+      "gate": "kill_if_conflict_is_ignored"
+    },
+    {
+      "cell": "A6_causality",
+      "evidence": "reset rho, wipe S, and donor swap",
+      "honest_outcome": "equivalence follows S only: reset rho retains; wipe S removes; donor swap follows donor S",
+      "gate": "kill_if_equivalence_does_not_follow_S_only"
+    }
+  ],
+  "isolation": {
+    "future_fresh_organism_per_cell": true,
+    "future_distinct_S_per_cell": true,
+    "future_empty_S_at_cell_birth": true,
+    "exceptions": "A6 may preserve, wipe, or donate S within its own cell only, exactly as declared by its intervention.",
+    "no_cross_cell_state": true,
+    "latent_map_scorer_only": true
+  },
+  "results": null,
+  "claims_any_organism_satisfies_A2_through_A6": false,
+  "prior_lock_shas": {
+    "alias_wall.lock": "9439b9936c69b32afb8d0a1104ff9b2f530908940cd0eccf4396cee4d071ad8a",
+    "genome_016.lock": "76a28d983d02af27d711a44cc8079c5fac50e4a72ebf137cf3790a92d0d09e98",
+    "relate_016.lock": "756750d4469177c72fdcea48f1b1b691366dbf4843edd2215b69170c5621f829"
+  },
+  "refuse": [
+    "assigning a numeric lab ID",
+    "implementing a fingerprint or alias-merge mechanism",
+    "claiming A2 through A6 pass",
+    "writing an earn runner or freeze lock this pass",
+    "mechanism or runner SHAs in this prereg",
+    "one witness as sufficient evidence",
+    "route position as identity evidence",
+    "role, equivalence class, canonical ID, or latent map entering organism channels",
+    "FAMILY",
+    "LOOKAHEAD",
+    "pixels or raw sensory encoders",
+    "gap persistence or object continuity",
+    "stamp or pre-name Ex0S 0.0.005",
+    "rewrite alias_wall.lock, genome_016.lock, relate_016.lock, or three_memory/agent.py"
+  ],
+  "note": "Contract freeze only. There is no candidate mechanism, runner, test result, earn, or post-run freeze lock in this pass."
+}
