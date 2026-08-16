@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Sequence
 
 import numpy as np
 
@@ -115,6 +115,7 @@ class ThreeMemoryAgent:
         use_acquire_relate: bool = False,
         use_alias_fingerprint: bool = False,
         use_continuity_mark: bool = False,
+        use_symbol_ground: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -234,6 +235,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_alias_fingerprint requires use_acquire_relate")
         if use_continuity_mark and not use_acquire_relate:
             raise ValueError("use_continuity_mark requires use_acquire_relate")
+        if use_symbol_ground and not use_acquire_relate:
+            raise ValueError("use_symbol_ground requires use_acquire_relate")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -309,6 +312,7 @@ class ThreeMemoryAgent:
         self.use_acquire_relate = use_acquire_relate
         self.use_alias_fingerprint = use_alias_fingerprint
         self.use_continuity_mark = use_continuity_mark
+        self.use_symbol_ground = use_symbol_ground
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
@@ -436,6 +440,7 @@ class ThreeMemoryAgent:
             use_acquire_relate=self.use_acquire_relate,
             use_alias_fingerprint=self.use_alias_fingerprint,
             use_continuity_mark=self.use_continuity_mark,
+            use_symbol_ground=self.use_symbol_ground,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -1018,6 +1023,8 @@ class ThreeMemoryAgent:
             if frontier is None:
                 eligible = self._match_applicable(unvisited, obs)
                 projected = self._continuity_first_hop(obs)
+                if projected is None:
+                    projected = self._grounding_first_hop(obs)
                 if projected is not None:
                     if not projected:
                         return _hold()
@@ -1777,6 +1784,272 @@ class ThreeMemoryAgent:
         rec = self._continuity_project_token(t)
         if rec is None:
             return []
+        return [rec]
+
+    def observe_symbol_ground(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """Evidence-weighted symbol↔world co-occurrence. Exact keys only.
+
+        Writes experience_grounding rows. Bindings are recomputed at use time —
+        never stored as meanings, POS tags, or synonym maps.
+        """
+        required = {"symbol", "paired", "trial_id", "result"}
+        allowed_results = {"success", "failure", "correction"}
+        out: dict[str, Any] = {
+            "ok": False,
+            "wrote": False,
+            "updated": False,
+            "why": "",
+        }
+        if not self.use_symbol_ground or not self.store.enabled:
+            out["why"] = "grounding_off"
+            return out
+        if not isinstance(info, dict):
+            out["why"] = "bad_info"
+            return out
+        if set(info.keys()) != required:
+            out["why"] = "exact_key_reject"
+            return out
+        symbol_raw = info["symbol"]
+        paired_raw = info["paired"]
+        trial_raw = info["trial_id"]
+        result_raw = info["result"]
+        if not all(
+            isinstance(x, str) and x.strip()
+            for x in (symbol_raw, paired_raw, trial_raw, result_raw)
+        ):
+            out["why"] = "empty_field"
+            return out
+        symbol = symbol_raw.strip().lower()
+        paired = paired_raw.strip().lower()
+        trial_id = trial_raw.strip()
+        result = result_raw.strip().lower()
+        if result not in allowed_results:
+            out["why"] = "result_reject"
+            return out
+        tags: dict[str, Any] = {
+            "symbol": symbol,
+            "paired": paired,
+            "trial_id": trial_id,
+            "result": result,
+            "source": "experience_grounding",
+            "hyp": "supported",
+            "trials": 1,
+            "wins": 1,
+            "losses": 0,
+            "support": 1,
+            "contradiction": 0,
+        }
+        for banned in (
+            "noun",
+            "verb",
+            "color",
+            "pos",
+            "meaning",
+            "same_as",
+            "bind",
+            "did",
+            "ctx",
+            "role",
+            "english",
+            "gloss",
+        ):
+            if banned in tags:
+                raise ValueError(f"experience_grounding refuses {banned}")
+        n = len(self.store.records())
+        fid = f"ground_{n:04d}_{symbol}_{paired}"
+        rec = FactRecord(
+            fact_id=fid,
+            what=encode_tags(tags),
+            when=int(self.t),
+            drive_scores={},
+            tags=tags,
+        )
+        self.store.write(rec)
+        out["ok"] = True
+        out["wrote"] = True
+        out["why"] = "authored"
+        return out
+
+    def _grounding_rows(self) -> list[FactRecord]:
+        return [
+            r
+            for r in self.store.records()
+            if str(r.tags.get("source") or "") == "experience_grounding"
+        ]
+
+    def _grounding_support(self) -> dict[str, dict[str, int]]:
+        """symbol → paired → net support. success/correction +1; failure −1."""
+        scores: dict[str, dict[str, int]] = {}
+        for rec in self._grounding_rows():
+            sym = str(rec.tags.get("symbol") or "").lower()
+            paired = str(rec.tags.get("paired") or "").lower()
+            result = str(rec.tags.get("result") or "").lower()
+            if not sym or not paired:
+                continue
+            if result == "failure":
+                delta = -1
+            else:
+                # success and correction both reinforce the paired token
+                delta = 1
+            bucket = scores.setdefault(sym, {})
+            bucket[paired] = int(bucket.get(paired, 0)) + delta
+        return scores
+
+    def _grounding_binding(self, symbol: str, *, min_support: int = 2) -> str | None:
+        """Unique evidence-weighted paired token for symbol, else None (HOLD)."""
+        sym = symbol.lower()
+        scores = self._grounding_support().get(sym) or {}
+        if not scores:
+            return None
+        ranked = sorted(scores.items(), key=lambda kv: (-kv[1], kv[0]))
+        best_tok, best = ranked[0]
+        if best < min_support:
+            return None
+        if len(ranked) > 1 and ranked[1][1] == best:
+            return None
+        return best_tok
+
+    def select_grounded(
+        self,
+        utterance: Sequence[str],
+        choices: Sequence[str],
+        *,
+        min_support: int = 2,
+        expression: bool = False,
+    ) -> dict[str, Any]:
+        """Choose among world-offered options from recomputed grounding evidence.
+
+        expression=True: utterance holds a referent cue; choices are word candidates.
+        """
+        out: dict[str, Any] = {
+            "ok": True,
+            "selected": None,
+            "why": "hold",
+        }
+        if not self.use_symbol_ground:
+            out["why"] = "grounding_off"
+            return out
+        if not self._grounding_rows():
+            out["why"] = "no_rows"
+            return out
+        utt = [str(x).strip().lower() for x in utterance if str(x).strip()]
+        opts = [str(x).strip().lower() for x in choices if str(x).strip()]
+        if not utt or not opts:
+            out["why"] = "empty_probe"
+            return out
+        if expression:
+            # Invert: choice words whose direct support for the referent cue is unique max.
+            cue = utt[0]
+            scored: list[tuple[int, str]] = []
+            for w in opts:
+                support = int((self._grounding_support().get(w) or {}).get(cue, 0))
+                if support >= min_support:
+                    scored.append((support, w))
+            if not scored:
+                out["why"] = "expression_none"
+                return out
+            scored.sort(key=lambda kv: (-kv[0], kv[1]))
+            if len(scored) > 1 and scored[0][0] == scored[1][0]:
+                out["why"] = "expression_tie"
+                return out
+            out["selected"] = scored[0][1]
+            out["why"] = "expression"
+            return out
+
+        # Ordered multi-symbol phrase: treat "a b" as its own opaque symbol when
+        # evidence exists (word order without POS tags).
+        if len(utt) > 1:
+            phrase = " ".join(utt)
+            phrase_scores = self._grounding_support().get(phrase) or {}
+            if phrase_scores:
+                ranked = sorted(
+                    ((ch, phrase_scores.get(ch, 0)) for ch in opts),
+                    key=lambda kv: (-kv[1], kv[0]),
+                )
+                if ranked and ranked[0][1] >= min_support:
+                    if len(ranked) == 1 or ranked[0][1] > ranked[1][1]:
+                        out["selected"] = ranked[0][0]
+                        out["why"] = "ordered_phrase"
+                        return out
+                    out["why"] = "phrase_tie"
+                    return out
+
+        # Score each choice by how many utterance tokens uniquely support a
+        # fragment inside the choice (compound choices use '+').
+        scored_c: list[tuple[int, str]] = []
+        for ch in opts:
+            parts = set(ch.split("+")) | {ch}
+            hit = 0
+            blocked = False
+            for w in utt:
+                b = self._grounding_binding(w, min_support=min_support)
+                if b is None:
+                    blocked = True
+                    break
+                b_parts = set(b.split("+")) | {b}
+                if parts & b_parts or b in parts or ch in b_parts:
+                    hit += 1
+                else:
+                    # Direct support row for (w, ch) even without unique global binding
+                    support = (self._grounding_support().get(w) or {}).get(ch, 0)
+                    if support >= min_support:
+                        hit += 1
+                    else:
+                        blocked = True
+                        break
+            if not blocked and hit == len(utt):
+                scored_c.append((hit, ch))
+        if not scored_c:
+            # Fallback: among choices, unique max direct support summed over words
+            totals: dict[str, int] = {ch: 0 for ch in opts}
+            for w in utt:
+                bag = self._grounding_support().get(w) or {}
+                for ch in opts:
+                    parts = set(ch.split("+")) | {ch}
+                    for tok, sc in bag.items():
+                        if tok in parts or tok == ch:
+                            totals[ch] = int(totals[ch]) + max(sc, 0)
+            ranked = sorted(totals.items(), key=lambda kv: (-kv[1], kv[0]))
+            if ranked and ranked[0][1] >= min_support * max(len(utt), 1):
+                if len(ranked) == 1 or ranked[0][1] > ranked[1][1]:
+                    out["selected"] = ranked[0][0]
+                    out["why"] = "support_sum"
+                    return out
+            out["why"] = "insufficient_or_tie"
+            return out
+        scored_c.sort(key=lambda kv: (-kv[0], kv[1]))
+        if len(scored_c) > 1 and scored_c[0][0] == scored_c[1][0]:
+            out["why"] = "choice_tie"
+            return out
+        out["selected"] = scored_c[0][1]
+        out["why"] = "grounded"
+        return out
+
+    def _grounding_first_hop(self, obs) -> list | None:
+        """None = not in play; [] = HOLD; [rec] = project bound referent as did."""
+        if not self.use_symbol_ground or not self._grounding_rows():
+            return None
+        stream = list(self._current_stream(obs))
+        if len(stream) != 1:
+            # Multi-token cues use select_grounded via the world harness.
+            return None
+        bound = self._grounding_binding(stream[0])
+        if bound is None:
+            return []
+        tags = {
+            "bind": stream[0],
+            "did": bound,
+            "source": "experience_skel",
+            "hyp": "supported",
+            "support": 1,
+        }
+        rec = FactRecord(
+            fact_id=f"ground_proj_{stream[0]}_{bound}",
+            what=encode_tags(tags),
+            when=int(self.t),
+            drive_scores={},
+            tags=tags,
+        )
         return [rec]
 
     def _find_experience_skel(self, bind: str, did: str) -> FactRecord | None:

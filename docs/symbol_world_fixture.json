@@ -1,0 +1,4156 @@
+{
+  "version": "TM.0.17.SYMBOLWORLD.FIXTURE",
+  "lab": "TM.0.17.SYMBOLWORLD",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "note": "Immutable world+curriculum. Scorer-only latent maps. Runner generates nothing.",
+  "lexicon_main": {
+    "take": "act_take",
+    "push": "act_push",
+    "give": "act_give",
+    "ball": "cat_ball",
+    "cup": "cat_cup",
+    "box": "cat_box",
+    "red": "feat_red",
+    "blue": "feat_blue",
+    "green": "feat_green",
+    "mira": "ent_mira",
+    "kito": "ent_kito",
+    "lamp": "cat_lamp"
+  },
+  "lexicon_twin": {
+    "zorp": "act_take",
+    "quig": "act_push",
+    "naff": "act_give",
+    "blem": "cat_ball",
+    "drax": "cat_cup",
+    "yulp": "cat_box",
+    "vree": "feat_red",
+    "plom": "feat_blue",
+    "skee": "feat_green",
+    "fexa": "ent_mira",
+    "joru": "ent_kito",
+    "wexi": "cat_lamp",
+    "xilm": "cat_cup",
+    "rolp": "cat_ball",
+    "ekaz": "act_push",
+    "hsap": "act_take",
+    "xev": "tok_vex"
+  },
+  "entities": {
+    "e_ball_red": {
+      "cat": "cat_ball",
+      "feats": [
+        "feat_red",
+        "feat_round"
+      ]
+    },
+    "e_ball_blue": {
+      "cat": "cat_ball",
+      "feats": [
+        "feat_blue",
+        "feat_round"
+      ]
+    },
+    "e_cup_red": {
+      "cat": "cat_cup",
+      "feats": [
+        "feat_red",
+        "feat_hollow"
+      ]
+    },
+    "e_cup_blue": {
+      "cat": "cat_cup",
+      "feats": [
+        "feat_blue",
+        "feat_hollow"
+      ]
+    },
+    "e_box_green": {
+      "cat": "cat_box",
+      "feats": [
+        "feat_green",
+        "feat_square"
+      ]
+    },
+    "e_mira": {
+      "cat": "cat_agent",
+      "feats": [
+        "feat_agent"
+      ]
+    },
+    "e_kito": {
+      "cat": "cat_agent",
+      "feats": [
+        "feat_agent"
+      ]
+    },
+    "e_lamp_1": {
+      "cat": "cat_lamp",
+      "feats": [
+        "feat_glow"
+      ]
+    }
+  },
+  "actions": [
+    "act_take",
+    "act_push",
+    "act_give"
+  ],
+  "stages": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8",
+    "S9",
+    "S10"
+  ],
+  "script_baseline": [
+    {
+      "op": "event",
+      "visible": [
+        "e_ball_red",
+        "feat_red",
+        "feat_round"
+      ],
+      "end_episode": true
+    },
+    {
+      "op": "event",
+      "visible": [
+        "e_cup_blue",
+        "feat_blue",
+        "feat_hollow"
+      ],
+      "end_episode": true
+    },
+    {
+      "op": "probe",
+      "id": "B0_take_ball",
+      "stage": "S0",
+      "utterance": [
+        "take",
+        "ball"
+      ],
+      "choices": [
+        "e_ball_red",
+        "e_cup_blue"
+      ],
+      "expect": "HOLD",
+      "evidence_family": "baseline",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "B0_push",
+      "stage": "S0",
+      "utterance": [
+        "push"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "HOLD",
+      "evidence_family": "baseline",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "B0_red",
+      "stage": "S0",
+      "utterance": [
+        "red"
+      ],
+      "choices": [
+        "feat_red",
+        "feat_blue"
+      ],
+      "expect": "HOLD",
+      "evidence_family": "baseline",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "B0_mira",
+      "stage": "S0",
+      "utterance": [
+        "mira"
+      ],
+      "choices": [
+        "e_mira",
+        "e_kito"
+      ],
+      "expect": "HOLD",
+      "evidence_family": "baseline",
+      "lane": "main"
+    },
+    {
+      "op": "checkpoint_traverse",
+      "id": "B0_trav_ball",
+      "stage": "S0",
+      "cue": "ball",
+      "expect": "HOLD"
+    },
+    {
+      "op": "checkpoint_traverse",
+      "id": "B0_trav_take",
+      "stage": "S0",
+      "cue": "take",
+      "expect": "HOLD"
+    }
+  ],
+  "script_life": [
+    {
+      "op": "probe",
+      "id": "S0_unknown",
+      "stage": "S0",
+      "utterance": [
+        "take",
+        "ball"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "HOLD",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s1_ball_0",
+      "utterance": [
+        "ball"
+      ],
+      "visibles": [
+        "e_ball_red",
+        "feat_red",
+        "feat_round"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "ball",
+          "paired": "cat_ball",
+          "trial_id": "s1_ball_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s1_ball_1",
+      "utterance": [
+        "ball"
+      ],
+      "visibles": [
+        "e_ball_blue",
+        "feat_blue",
+        "feat_round"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "ball",
+          "paired": "cat_ball",
+          "trial_id": "s1_ball_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s1_cup_0",
+      "utterance": [
+        "cup"
+      ],
+      "visibles": [
+        "e_cup_red",
+        "feat_red",
+        "feat_hollow"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "cup",
+          "paired": "cat_cup",
+          "trial_id": "s1_cup_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s1_cup_1",
+      "utterance": [
+        "cup"
+      ],
+      "visibles": [
+        "e_cup_blue",
+        "feat_blue",
+        "feat_hollow"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "cup",
+          "paired": "cat_cup",
+          "trial_id": "s1_cup_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s1_ball_blue_0",
+      "utterance": [
+        "ball"
+      ],
+      "visibles": [
+        "e_ball_blue",
+        "feat_blue"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "ball",
+          "paired": "e_ball_blue",
+          "trial_id": "s1_ball_blue_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s1_ball_blue_1",
+      "utterance": [
+        "ball"
+      ],
+      "visibles": [
+        "e_ball_blue",
+        "feat_blue"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "ball",
+          "paired": "e_ball_blue",
+          "trial_id": "s1_ball_blue_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S1_ball",
+      "stage": "S1",
+      "utterance": [
+        "ball"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup",
+        "cat_box"
+      ],
+      "expect": "cat_ball",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S1_cup",
+      "stage": "S1",
+      "utterance": [
+        "cup"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup",
+        "cat_box"
+      ],
+      "expect": "cat_cup",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S1_ball_inst",
+      "stage": "S1",
+      "utterance": [
+        "ball"
+      ],
+      "choices": [
+        "e_ball_blue",
+        "e_cup_red"
+      ],
+      "expect": "e_ball_blue",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s2_take_0",
+      "utterance": [
+        "take"
+      ],
+      "visibles": [
+        "act_take",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "take",
+          "paired": "act_take",
+          "trial_id": "s2_take_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s2_take_1",
+      "utterance": [
+        "take"
+      ],
+      "visibles": [
+        "act_take",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "take",
+          "paired": "act_take",
+          "trial_id": "s2_take_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s2_push_0",
+      "utterance": [
+        "push"
+      ],
+      "visibles": [
+        "act_push",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "push",
+          "paired": "act_push",
+          "trial_id": "s2_push_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s2_push_1",
+      "utterance": [
+        "push"
+      ],
+      "visibles": [
+        "act_push",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "push",
+          "paired": "act_push",
+          "trial_id": "s2_push_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s2_give_0",
+      "utterance": [
+        "give"
+      ],
+      "visibles": [
+        "act_give",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "give",
+          "paired": "act_give",
+          "trial_id": "s2_give_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s2_give_1",
+      "utterance": [
+        "give"
+      ],
+      "visibles": [
+        "act_give",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "give",
+          "paired": "act_give",
+          "trial_id": "s2_give_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S2_take",
+      "stage": "S2",
+      "utterance": [
+        "take"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_take",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S2_push",
+      "stage": "S2",
+      "utterance": [
+        "push"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_push",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S2_give",
+      "stage": "S2",
+      "utterance": [
+        "give"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_give",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s3_red_0",
+      "utterance": [
+        "red"
+      ],
+      "visibles": [
+        "feat_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "red",
+          "paired": "feat_red",
+          "trial_id": "s3_red_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s3_red_1",
+      "utterance": [
+        "red"
+      ],
+      "visibles": [
+        "feat_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "red",
+          "paired": "feat_red",
+          "trial_id": "s3_red_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s3_blue_0",
+      "utterance": [
+        "blue"
+      ],
+      "visibles": [
+        "feat_blue"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "blue",
+          "paired": "feat_blue",
+          "trial_id": "s3_blue_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s3_blue_1",
+      "utterance": [
+        "blue"
+      ],
+      "visibles": [
+        "feat_blue"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "blue",
+          "paired": "feat_blue",
+          "trial_id": "s3_blue_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s3_green_0",
+      "utterance": [
+        "green"
+      ],
+      "visibles": [
+        "feat_green"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "green",
+          "paired": "feat_green",
+          "trial_id": "s3_green_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s3_green_1",
+      "utterance": [
+        "green"
+      ],
+      "visibles": [
+        "feat_green"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "green",
+          "paired": "feat_green",
+          "trial_id": "s3_green_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S3_red",
+      "stage": "S3",
+      "utterance": [
+        "red"
+      ],
+      "choices": [
+        "feat_red",
+        "feat_blue",
+        "feat_green"
+      ],
+      "expect": "feat_red",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S3_blue",
+      "stage": "S3",
+      "utterance": [
+        "blue"
+      ],
+      "choices": [
+        "feat_red",
+        "feat_blue",
+        "feat_green"
+      ],
+      "expect": "feat_blue",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s4_take_ball_0",
+      "utterance": [
+        "take",
+        "ball"
+      ],
+      "visibles": [
+        "act_take",
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "take",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "ball",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "take ball",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_0_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s4_take_ball_1",
+      "utterance": [
+        "take",
+        "ball"
+      ],
+      "visibles": [
+        "act_take",
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "take",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "ball",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "take ball",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_1_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s4_push_cup_0",
+      "utterance": [
+        "push",
+        "cup"
+      ],
+      "visibles": [
+        "act_push",
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "push",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "cup",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "push cup",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_0_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s4_push_cup_1",
+      "utterance": [
+        "push",
+        "cup"
+      ],
+      "visibles": [
+        "act_push",
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "push",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "cup",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "push cup",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_1_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s4_ball_take_0",
+      "utterance": [
+        "ball",
+        "take"
+      ],
+      "visibles": [
+        "act_push",
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "ball",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "take",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "ball take",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_0_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s4_ball_take_1",
+      "utterance": [
+        "ball",
+        "take"
+      ],
+      "visibles": [
+        "act_push",
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "ball",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "take",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "ball take",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_1_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S4_take_ball",
+      "stage": "S4",
+      "utterance": [
+        "take",
+        "ball"
+      ],
+      "choices": [
+        "act_take+cat_ball",
+        "act_push+cat_cup",
+        "act_push+cat_ball"
+      ],
+      "expect": "act_take+cat_ball",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S4_order_foil",
+      "stage": "S4",
+      "utterance": [
+        "ball",
+        "take"
+      ],
+      "choices": [
+        "act_take+cat_ball",
+        "act_push+cat_ball"
+      ],
+      "expect": "act_push+cat_ball",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s5_mira_0",
+      "utterance": [
+        "mira"
+      ],
+      "visibles": [
+        "e_mira"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "mira",
+          "paired": "ent_mira",
+          "trial_id": "s5_mira_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s5_mira_1",
+      "utterance": [
+        "mira"
+      ],
+      "visibles": [
+        "e_mira"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "mira",
+          "paired": "ent_mira",
+          "trial_id": "s5_mira_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s5_kito_0",
+      "utterance": [
+        "kito"
+      ],
+      "visibles": [
+        "e_kito"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "kito",
+          "paired": "ent_kito",
+          "trial_id": "s5_kito_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s5_kito_1",
+      "utterance": [
+        "kito"
+      ],
+      "visibles": [
+        "e_kito"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "kito",
+          "paired": "ent_kito",
+          "trial_id": "s5_kito_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S5_novel",
+      "stage": "S5",
+      "utterance": [
+        "give",
+        "blue",
+        "cup",
+        "mira"
+      ],
+      "choices": [
+        "act_give+feat_blue+cat_cup+ent_mira",
+        "act_give+feat_red+cat_cup+ent_mira",
+        "act_take+feat_blue+cat_cup+ent_mira",
+        "act_give+feat_blue+cat_ball+ent_kito"
+      ],
+      "expect": "act_give+feat_blue+cat_cup+ent_mira",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s6_wrong",
+      "utterance": [
+        "box"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "box",
+          "paired": "cat_ball",
+          "trial_id": "s6_wrong",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s6_fix_0",
+      "utterance": [
+        "box"
+      ],
+      "visibles": [
+        "cat_box"
+      ],
+      "result": "correction",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "box",
+          "paired": "cat_box",
+          "trial_id": "s6_fix_0",
+          "result": "correction"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s6_fix_1",
+      "utterance": [
+        "box"
+      ],
+      "visibles": [
+        "cat_box"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "box",
+          "paired": "cat_box",
+          "trial_id": "s6_fix_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s6_fix_2",
+      "utterance": [
+        "box"
+      ],
+      "visibles": [
+        "cat_box"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "box",
+          "paired": "cat_box",
+          "trial_id": "s6_fix_2",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s6_fail_wrong",
+      "utterance": [
+        "box"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "failure",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "box",
+          "paired": "cat_ball",
+          "trial_id": "s6_fail_wrong",
+          "result": "failure"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S6_box",
+      "stage": "S6",
+      "utterance": [
+        "box"
+      ],
+      "choices": [
+        "cat_box",
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "cat_box",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "eq_a",
+      "utterance": [
+        "zeph"
+      ],
+      "visibles": [
+        "tok_a"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "zeph",
+          "paired": "tok_a",
+          "trial_id": "eq_a",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "eq_b",
+      "utterance": [
+        "zeph"
+      ],
+      "visibles": [
+        "tok_b"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "zeph",
+          "paired": "tok_b",
+          "trial_id": "eq_b",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S6b_equalize",
+      "stage": "S6",
+      "utterance": [
+        "zeph"
+      ],
+      "choices": [
+        "tok_a",
+        "tok_b"
+      ],
+      "expect": "HOLD",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "reset_rho"
+    },
+    {
+      "op": "trial",
+      "id": "s7_interfere_0",
+      "utterance": [
+        "green"
+      ],
+      "visibles": [
+        "feat_green"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "green",
+          "paired": "feat_green",
+          "trial_id": "s7_interfere_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s7_interfere_1",
+      "utterance": [
+        "green"
+      ],
+      "visibles": [
+        "feat_green"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "green",
+          "paired": "feat_green",
+          "trial_id": "s7_interfere_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s7_interfere_2",
+      "utterance": [
+        "green"
+      ],
+      "visibles": [
+        "feat_green"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "green",
+          "paired": "feat_green",
+          "trial_id": "s7_interfere_2",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "event",
+      "visible": [
+        "noise_a",
+        "noise_b"
+      ],
+      "end_episode": true
+    },
+    {
+      "op": "reset_rho"
+    },
+    {
+      "op": "probe",
+      "id": "S7_ball_recall",
+      "stage": "S7",
+      "utterance": [
+        "ball"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup",
+        "cat_box"
+      ],
+      "expect": "cat_ball",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S7_take_recall",
+      "stage": "S7",
+      "utterance": [
+        "take"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_take",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "fork",
+      "kind": "strip_grounding",
+      "stage": "S7",
+      "probes": [
+        {
+          "id": "F_strip_ball",
+          "utterance": [
+            "ball"
+          ],
+          "choices": [
+            "cat_ball",
+            "cat_cup"
+          ],
+          "expect": "HOLD"
+        },
+        {
+          "id": "F_strip_take",
+          "utterance": [
+            "take"
+          ],
+          "choices": [
+            "act_take",
+            "act_push",
+            "act_give"
+          ],
+          "expect": "HOLD"
+        }
+      ]
+    },
+    {
+      "op": "fork",
+      "kind": "reset_rho",
+      "stage": "S7",
+      "probes": [
+        {
+          "id": "F_rho_ball",
+          "utterance": [
+            "ball"
+          ],
+          "choices": [
+            "cat_ball",
+            "cat_cup"
+          ],
+          "expect": "cat_ball"
+        }
+      ]
+    },
+    {
+      "op": "trial",
+      "id": "cf_noun_swap_a_0",
+      "utterance": [
+        "norp"
+      ],
+      "visibles": [
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "norp",
+          "paired": "cat_cup",
+          "trial_id": "cf_noun_swap_a_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_noun_swap_a_1",
+      "utterance": [
+        "norp"
+      ],
+      "visibles": [
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "norp",
+          "paired": "cat_cup",
+          "trial_id": "cf_noun_swap_a_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_noun_swap_b_0",
+      "utterance": [
+        "norp"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "failure",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "norp",
+          "paired": "cat_ball",
+          "trial_id": "cf_noun_swap_b_0",
+          "result": "failure"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_noun_swap_b_1",
+      "utterance": [
+        "norp"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "failure",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "norp",
+          "paired": "cat_ball",
+          "trial_id": "cf_noun_swap_b_1",
+          "result": "failure"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_glim_0",
+      "utterance": [
+        "glim"
+      ],
+      "visibles": [
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "glim",
+          "paired": "cat_cup",
+          "trial_id": "cf_glim_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_glim_1",
+      "utterance": [
+        "glim"
+      ],
+      "visibles": [
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "glim",
+          "paired": "cat_cup",
+          "trial_id": "cf_glim_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_plor_0",
+      "utterance": [
+        "plor"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "plor",
+          "paired": "cat_ball",
+          "trial_id": "cf_plor_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_plor_1",
+      "utterance": [
+        "plor"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "plor",
+          "paired": "cat_ball",
+          "trial_id": "cf_plor_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "CF_swap_noun_glim",
+      "stage": "S6",
+      "utterance": [
+        "glim"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "cat_cup",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "CF_swap_noun_plor",
+      "stage": "S6",
+      "utterance": [
+        "plor"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "cat_ball",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "cf_verb_z_0",
+      "utterance": [
+        "zake"
+      ],
+      "visibles": [
+        "act_push"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "zake",
+          "paired": "act_push",
+          "trial_id": "cf_verb_z_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_verb_z_1",
+      "utterance": [
+        "zake"
+      ],
+      "visibles": [
+        "act_push"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "zake",
+          "paired": "act_push",
+          "trial_id": "cf_verb_z_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_verb_p_0",
+      "utterance": [
+        "pash"
+      ],
+      "visibles": [
+        "act_take"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "pash",
+          "paired": "act_take",
+          "trial_id": "cf_verb_p_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_verb_p_1",
+      "utterance": [
+        "pash"
+      ],
+      "visibles": [
+        "act_take"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "pash",
+          "paired": "act_take",
+          "trial_id": "cf_verb_p_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "CF_swap_verb_zake",
+      "stage": "S6",
+      "utterance": [
+        "zake"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_push",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "CF_swap_verb_pash",
+      "stage": "S6",
+      "utterance": [
+        "pash"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_take",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "cf_rho_mid_0",
+      "utterance": [
+        "vex"
+      ],
+      "visibles": [
+        "tok_vex"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "vex",
+          "paired": "tok_vex",
+          "trial_id": "cf_rho_mid_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "reset_rho"
+    },
+    {
+      "op": "trial",
+      "id": "cf_rho_mid_1",
+      "utterance": [
+        "vex"
+      ],
+      "visibles": [
+        "tok_vex"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "vex",
+          "paired": "tok_vex",
+          "trial_id": "cf_rho_mid_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "CF_rho_mid_vex",
+      "stage": "S7",
+      "utterance": [
+        "vex"
+      ],
+      "choices": [
+        "tok_vex",
+        "tok_other"
+      ],
+      "expect": "tok_vex",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "isolation_seed",
+      "kind": "alias_and_continuity"
+    },
+    {
+      "op": "probe",
+      "id": "CF_iso_ball_still",
+      "stage": "S7",
+      "utterance": [
+        "ball"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "cat_ball",
+      "evidence_family": "isolation",
+      "lane": "main"
+    },
+    {
+      "op": "fork",
+      "kind": "strip_grounding",
+      "stage": "S7",
+      "probes": [
+        {
+          "id": "CF_iso_strip_keeps_fp_hold",
+          "utterance": [
+            "ball"
+          ],
+          "choices": [
+            "cat_ball",
+            "cat_cup"
+          ],
+          "expect": "HOLD",
+          "evidence_family": "isolation"
+        }
+      ]
+    },
+    {
+      "op": "fork",
+      "kind": "donor_swap",
+      "stage": "S7",
+      "probes": [
+        {
+          "id": "CF_donor_ball_to_cup",
+          "utterance": [
+            "ball"
+          ],
+          "choices": [
+            "cat_ball",
+            "cat_cup"
+          ],
+          "expect": "cat_cup",
+          "evidence_family": "donor",
+          "donor_rows": [
+            {
+              "symbol": "ball",
+              "paired": "cat_cup",
+              "trial_id": "don1",
+              "result": "success"
+            },
+            {
+              "symbol": "ball",
+              "paired": "cat_cup",
+              "trial_id": "don2",
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "op": "stage_marker",
+      "stage": "S9"
+    },
+    {
+      "op": "trial",
+      "id": "s9_lamp_0",
+      "utterance": [
+        "lamp"
+      ],
+      "visibles": [
+        "e_lamp_1",
+        "cat_lamp"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "lamp",
+          "paired": "cat_lamp",
+          "trial_id": "s9_lamp_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s9_lamp_1",
+      "utterance": [
+        "lamp"
+      ],
+      "visibles": [
+        "e_lamp_1",
+        "cat_lamp"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "lamp",
+          "paired": "cat_lamp",
+          "trial_id": "s9_lamp_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S9_lamp",
+      "stage": "S9",
+      "utterance": [
+        "lamp"
+      ],
+      "choices": [
+        "cat_lamp",
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "cat_lamp",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S10_word_for_ball",
+      "stage": "S10",
+      "utterance": [
+        "cat_ball"
+      ],
+      "choices": [
+        "ball",
+        "cup",
+        "box",
+        "take"
+      ],
+      "expect": "ball",
+      "evidence_family": "expression",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S10_word_for_take",
+      "stage": "S10",
+      "utterance": [
+        "act_take"
+      ],
+      "choices": [
+        "ball",
+        "cup",
+        "take",
+        "push"
+      ],
+      "expect": "take",
+      "evidence_family": "expression",
+      "lane": "main"
+    }
+  ],
+  "script_twin": [
+    {
+      "op": "probe",
+      "id": "S0_unknown",
+      "stage": "S0",
+      "utterance": [
+        "zorp",
+        "blem"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "HOLD",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s1_ball_0",
+      "utterance": [
+        "blem"
+      ],
+      "visibles": [
+        "e_ball_red",
+        "feat_red",
+        "feat_round"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "blem",
+          "paired": "cat_ball",
+          "trial_id": "s1_ball_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s1_ball_1",
+      "utterance": [
+        "blem"
+      ],
+      "visibles": [
+        "e_ball_blue",
+        "feat_blue",
+        "feat_round"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "blem",
+          "paired": "cat_ball",
+          "trial_id": "s1_ball_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s1_cup_0",
+      "utterance": [
+        "drax"
+      ],
+      "visibles": [
+        "e_cup_red",
+        "feat_red",
+        "feat_hollow"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "drax",
+          "paired": "cat_cup",
+          "trial_id": "s1_cup_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s1_cup_1",
+      "utterance": [
+        "drax"
+      ],
+      "visibles": [
+        "e_cup_blue",
+        "feat_blue",
+        "feat_hollow"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "drax",
+          "paired": "cat_cup",
+          "trial_id": "s1_cup_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s1_ball_blue_0",
+      "utterance": [
+        "blem"
+      ],
+      "visibles": [
+        "e_ball_blue",
+        "feat_blue"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "blem",
+          "paired": "e_ball_blue",
+          "trial_id": "s1_ball_blue_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s1_ball_blue_1",
+      "utterance": [
+        "blem"
+      ],
+      "visibles": [
+        "e_ball_blue",
+        "feat_blue"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "blem",
+          "paired": "e_ball_blue",
+          "trial_id": "s1_ball_blue_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S1_ball",
+      "stage": "S1",
+      "utterance": [
+        "blem"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup",
+        "cat_box"
+      ],
+      "expect": "cat_ball",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S1_cup",
+      "stage": "S1",
+      "utterance": [
+        "drax"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup",
+        "cat_box"
+      ],
+      "expect": "cat_cup",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S1_ball_inst",
+      "stage": "S1",
+      "utterance": [
+        "blem"
+      ],
+      "choices": [
+        "e_ball_blue",
+        "e_cup_red"
+      ],
+      "expect": "e_ball_blue",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s2_take_0",
+      "utterance": [
+        "zorp"
+      ],
+      "visibles": [
+        "act_take",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "zorp",
+          "paired": "act_take",
+          "trial_id": "s2_take_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s2_take_1",
+      "utterance": [
+        "zorp"
+      ],
+      "visibles": [
+        "act_take",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "zorp",
+          "paired": "act_take",
+          "trial_id": "s2_take_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s2_push_0",
+      "utterance": [
+        "quig"
+      ],
+      "visibles": [
+        "act_push",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "quig",
+          "paired": "act_push",
+          "trial_id": "s2_push_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s2_push_1",
+      "utterance": [
+        "quig"
+      ],
+      "visibles": [
+        "act_push",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "quig",
+          "paired": "act_push",
+          "trial_id": "s2_push_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s2_give_0",
+      "utterance": [
+        "naff"
+      ],
+      "visibles": [
+        "act_give",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "naff",
+          "paired": "act_give",
+          "trial_id": "s2_give_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s2_give_1",
+      "utterance": [
+        "naff"
+      ],
+      "visibles": [
+        "act_give",
+        "e_ball_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "naff",
+          "paired": "act_give",
+          "trial_id": "s2_give_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S2_take",
+      "stage": "S2",
+      "utterance": [
+        "zorp"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_take",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S2_push",
+      "stage": "S2",
+      "utterance": [
+        "quig"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_push",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S2_give",
+      "stage": "S2",
+      "utterance": [
+        "naff"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_give",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s3_red_0",
+      "utterance": [
+        "vree"
+      ],
+      "visibles": [
+        "feat_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "vree",
+          "paired": "feat_red",
+          "trial_id": "s3_red_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s3_red_1",
+      "utterance": [
+        "vree"
+      ],
+      "visibles": [
+        "feat_red"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "vree",
+          "paired": "feat_red",
+          "trial_id": "s3_red_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s3_blue_0",
+      "utterance": [
+        "plom"
+      ],
+      "visibles": [
+        "feat_blue"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "plom",
+          "paired": "feat_blue",
+          "trial_id": "s3_blue_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s3_blue_1",
+      "utterance": [
+        "plom"
+      ],
+      "visibles": [
+        "feat_blue"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "plom",
+          "paired": "feat_blue",
+          "trial_id": "s3_blue_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s3_green_0",
+      "utterance": [
+        "skee"
+      ],
+      "visibles": [
+        "feat_green"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "skee",
+          "paired": "feat_green",
+          "trial_id": "s3_green_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s3_green_1",
+      "utterance": [
+        "skee"
+      ],
+      "visibles": [
+        "feat_green"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "skee",
+          "paired": "feat_green",
+          "trial_id": "s3_green_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S3_red",
+      "stage": "S3",
+      "utterance": [
+        "vree"
+      ],
+      "choices": [
+        "feat_red",
+        "feat_blue",
+        "feat_green"
+      ],
+      "expect": "feat_red",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S3_blue",
+      "stage": "S3",
+      "utterance": [
+        "plom"
+      ],
+      "choices": [
+        "feat_red",
+        "feat_blue",
+        "feat_green"
+      ],
+      "expect": "feat_blue",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s4_take_ball_0",
+      "utterance": [
+        "zorp",
+        "blem"
+      ],
+      "visibles": [
+        "act_take",
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "zorp",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "blem",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "zorp blem",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_0_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s4_take_ball_1",
+      "utterance": [
+        "zorp",
+        "blem"
+      ],
+      "visibles": [
+        "act_take",
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "zorp",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "blem",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "zorp blem",
+          "paired": "act_take+cat_ball",
+          "trial_id": "s4_take_ball_1_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s4_push_cup_0",
+      "utterance": [
+        "quig",
+        "drax"
+      ],
+      "visibles": [
+        "act_push",
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "quig",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "drax",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "quig drax",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_0_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s4_push_cup_1",
+      "utterance": [
+        "quig",
+        "drax"
+      ],
+      "visibles": [
+        "act_push",
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "quig",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "drax",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "quig drax",
+          "paired": "act_push+cat_cup",
+          "trial_id": "s4_push_cup_1_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s4_ball_take_0",
+      "utterance": [
+        "blem",
+        "zorp"
+      ],
+      "visibles": [
+        "act_push",
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "blem",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "zorp",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_0",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "blem zorp",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_0_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s4_ball_take_1",
+      "utterance": [
+        "blem",
+        "zorp"
+      ],
+      "visibles": [
+        "act_push",
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "blem",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "zorp",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_1",
+          "result": "success"
+        },
+        {
+          "op": "ground",
+          "symbol": "blem zorp",
+          "paired": "act_push+cat_ball",
+          "trial_id": "s4_ball_take_1_phrase",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S4_take_ball",
+      "stage": "S4",
+      "utterance": [
+        "zorp",
+        "blem"
+      ],
+      "choices": [
+        "act_take+cat_ball",
+        "act_push+cat_cup",
+        "act_push+cat_ball"
+      ],
+      "expect": "act_take+cat_ball",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S4_order_foil",
+      "stage": "S4",
+      "utterance": [
+        "blem",
+        "zorp"
+      ],
+      "choices": [
+        "act_take+cat_ball",
+        "act_push+cat_ball"
+      ],
+      "expect": "act_push+cat_ball",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s5_mira_0",
+      "utterance": [
+        "fexa"
+      ],
+      "visibles": [
+        "e_mira"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "fexa",
+          "paired": "ent_mira",
+          "trial_id": "s5_mira_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s5_mira_1",
+      "utterance": [
+        "fexa"
+      ],
+      "visibles": [
+        "e_mira"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "fexa",
+          "paired": "ent_mira",
+          "trial_id": "s5_mira_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s5_kito_0",
+      "utterance": [
+        "joru"
+      ],
+      "visibles": [
+        "e_kito"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "joru",
+          "paired": "ent_kito",
+          "trial_id": "s5_kito_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s5_kito_1",
+      "utterance": [
+        "joru"
+      ],
+      "visibles": [
+        "e_kito"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "joru",
+          "paired": "ent_kito",
+          "trial_id": "s5_kito_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S5_novel",
+      "stage": "S5",
+      "utterance": [
+        "naff",
+        "plom",
+        "drax",
+        "fexa"
+      ],
+      "choices": [
+        "act_give+feat_blue+cat_cup+ent_mira",
+        "act_give+feat_red+cat_cup+ent_mira",
+        "act_take+feat_blue+cat_cup+ent_mira",
+        "act_give+feat_blue+cat_ball+ent_kito"
+      ],
+      "expect": "act_give+feat_blue+cat_cup+ent_mira",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "s6_wrong",
+      "utterance": [
+        "yulp"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "yulp",
+          "paired": "cat_ball",
+          "trial_id": "s6_wrong",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s6_fix_0",
+      "utterance": [
+        "yulp"
+      ],
+      "visibles": [
+        "cat_box"
+      ],
+      "result": "correction",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "yulp",
+          "paired": "cat_box",
+          "trial_id": "s6_fix_0",
+          "result": "correction"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s6_fix_1",
+      "utterance": [
+        "yulp"
+      ],
+      "visibles": [
+        "cat_box"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "yulp",
+          "paired": "cat_box",
+          "trial_id": "s6_fix_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s6_fix_2",
+      "utterance": [
+        "yulp"
+      ],
+      "visibles": [
+        "cat_box"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "yulp",
+          "paired": "cat_box",
+          "trial_id": "s6_fix_2",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s6_fail_wrong",
+      "utterance": [
+        "yulp"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "failure",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "yulp",
+          "paired": "cat_ball",
+          "trial_id": "s6_fail_wrong",
+          "result": "failure"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S6_box",
+      "stage": "S6",
+      "utterance": [
+        "yulp"
+      ],
+      "choices": [
+        "cat_box",
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "cat_box",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "eq_a",
+      "utterance": [
+        "zeph"
+      ],
+      "visibles": [
+        "tok_a"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "zeph",
+          "paired": "tok_a",
+          "trial_id": "eq_a",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "eq_b",
+      "utterance": [
+        "zeph"
+      ],
+      "visibles": [
+        "tok_b"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "zeph",
+          "paired": "tok_b",
+          "trial_id": "eq_b",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S6b_equalize",
+      "stage": "S6",
+      "utterance": [
+        "zeph"
+      ],
+      "choices": [
+        "tok_a",
+        "tok_b"
+      ],
+      "expect": "HOLD",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "reset_rho"
+    },
+    {
+      "op": "trial",
+      "id": "s7_interfere_0",
+      "utterance": [
+        "skee"
+      ],
+      "visibles": [
+        "feat_green"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "skee",
+          "paired": "feat_green",
+          "trial_id": "s7_interfere_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s7_interfere_1",
+      "utterance": [
+        "skee"
+      ],
+      "visibles": [
+        "feat_green"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "skee",
+          "paired": "feat_green",
+          "trial_id": "s7_interfere_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s7_interfere_2",
+      "utterance": [
+        "skee"
+      ],
+      "visibles": [
+        "feat_green"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "skee",
+          "paired": "feat_green",
+          "trial_id": "s7_interfere_2",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "event",
+      "visible": [
+        "noise_a",
+        "noise_b"
+      ],
+      "end_episode": true
+    },
+    {
+      "op": "reset_rho"
+    },
+    {
+      "op": "probe",
+      "id": "S7_ball_recall",
+      "stage": "S7",
+      "utterance": [
+        "blem"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup",
+        "cat_box"
+      ],
+      "expect": "cat_ball",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S7_take_recall",
+      "stage": "S7",
+      "utterance": [
+        "zorp"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_take",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "fork",
+      "kind": "strip_grounding",
+      "stage": "S7",
+      "probes": [
+        {
+          "id": "F_strip_ball",
+          "utterance": [
+            "blem"
+          ],
+          "choices": [
+            "cat_ball",
+            "cat_cup"
+          ],
+          "expect": "HOLD"
+        },
+        {
+          "id": "F_strip_take",
+          "utterance": [
+            "zorp"
+          ],
+          "choices": [
+            "act_take",
+            "act_push",
+            "act_give"
+          ],
+          "expect": "HOLD"
+        }
+      ]
+    },
+    {
+      "op": "fork",
+      "kind": "reset_rho",
+      "stage": "S7",
+      "probes": [
+        {
+          "id": "F_rho_ball",
+          "utterance": [
+            "blem"
+          ],
+          "choices": [
+            "cat_ball",
+            "cat_cup"
+          ],
+          "expect": "cat_ball"
+        }
+      ]
+    },
+    {
+      "op": "trial",
+      "id": "cf_noun_swap_a_0",
+      "utterance": [
+        "norp"
+      ],
+      "visibles": [
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "norp",
+          "paired": "cat_cup",
+          "trial_id": "cf_noun_swap_a_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_noun_swap_a_1",
+      "utterance": [
+        "norp"
+      ],
+      "visibles": [
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "norp",
+          "paired": "cat_cup",
+          "trial_id": "cf_noun_swap_a_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_noun_swap_b_0",
+      "utterance": [
+        "norp"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "failure",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "norp",
+          "paired": "cat_ball",
+          "trial_id": "cf_noun_swap_b_0",
+          "result": "failure"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_noun_swap_b_1",
+      "utterance": [
+        "norp"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "failure",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "norp",
+          "paired": "cat_ball",
+          "trial_id": "cf_noun_swap_b_1",
+          "result": "failure"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_glim_0",
+      "utterance": [
+        "xilm"
+      ],
+      "visibles": [
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "xilm",
+          "paired": "cat_cup",
+          "trial_id": "cf_glim_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_glim_1",
+      "utterance": [
+        "xilm"
+      ],
+      "visibles": [
+        "cat_cup"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "xilm",
+          "paired": "cat_cup",
+          "trial_id": "cf_glim_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_plor_0",
+      "utterance": [
+        "rolp"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "rolp",
+          "paired": "cat_ball",
+          "trial_id": "cf_plor_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_plor_1",
+      "utterance": [
+        "rolp"
+      ],
+      "visibles": [
+        "cat_ball"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "rolp",
+          "paired": "cat_ball",
+          "trial_id": "cf_plor_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "CF_swap_noun_glim",
+      "stage": "S6",
+      "utterance": [
+        "xilm"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "cat_cup",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "CF_swap_noun_plor",
+      "stage": "S6",
+      "utterance": [
+        "rolp"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "cat_ball",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "cf_verb_z_0",
+      "utterance": [
+        "ekaz"
+      ],
+      "visibles": [
+        "act_push"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "ekaz",
+          "paired": "act_push",
+          "trial_id": "cf_verb_z_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_verb_z_1",
+      "utterance": [
+        "ekaz"
+      ],
+      "visibles": [
+        "act_push"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "ekaz",
+          "paired": "act_push",
+          "trial_id": "cf_verb_z_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_verb_p_0",
+      "utterance": [
+        "hsap"
+      ],
+      "visibles": [
+        "act_take"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "hsap",
+          "paired": "act_take",
+          "trial_id": "cf_verb_p_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "cf_verb_p_1",
+      "utterance": [
+        "hsap"
+      ],
+      "visibles": [
+        "act_take"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "hsap",
+          "paired": "act_take",
+          "trial_id": "cf_verb_p_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "CF_swap_verb_zake",
+      "stage": "S6",
+      "utterance": [
+        "ekaz"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_push",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "CF_swap_verb_pash",
+      "stage": "S6",
+      "utterance": [
+        "hsap"
+      ],
+      "choices": [
+        "act_take",
+        "act_push",
+        "act_give"
+      ],
+      "expect": "act_take",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "trial",
+      "id": "cf_rho_mid_0",
+      "utterance": [
+        "xev"
+      ],
+      "visibles": [
+        "tok_vex"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "xev",
+          "paired": "tok_vex",
+          "trial_id": "cf_rho_mid_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "reset_rho"
+    },
+    {
+      "op": "trial",
+      "id": "cf_rho_mid_1",
+      "utterance": [
+        "xev"
+      ],
+      "visibles": [
+        "tok_vex"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "xev",
+          "paired": "tok_vex",
+          "trial_id": "cf_rho_mid_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "CF_rho_mid_vex",
+      "stage": "S7",
+      "utterance": [
+        "xev"
+      ],
+      "choices": [
+        "tok_vex",
+        "tok_other"
+      ],
+      "expect": "tok_vex",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "isolation_seed",
+      "kind": "alias_and_continuity"
+    },
+    {
+      "op": "probe",
+      "id": "CF_iso_ball_still",
+      "stage": "S7",
+      "utterance": [
+        "blem"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "cat_ball",
+      "evidence_family": "isolation",
+      "lane": "main"
+    },
+    {
+      "op": "fork",
+      "kind": "strip_grounding",
+      "stage": "S7",
+      "probes": [
+        {
+          "id": "CF_iso_strip_keeps_fp_hold",
+          "utterance": [
+            "blem"
+          ],
+          "choices": [
+            "cat_ball",
+            "cat_cup"
+          ],
+          "expect": "HOLD",
+          "evidence_family": "isolation"
+        }
+      ]
+    },
+    {
+      "op": "fork",
+      "kind": "donor_swap",
+      "stage": "S7",
+      "probes": [
+        {
+          "id": "CF_donor_ball_to_cup",
+          "utterance": [
+            "blem"
+          ],
+          "choices": [
+            "cat_ball",
+            "cat_cup"
+          ],
+          "expect": "cat_cup",
+          "evidence_family": "donor",
+          "donor_rows": [
+            {
+              "symbol": "blem",
+              "paired": "cat_cup",
+              "trial_id": "don1",
+              "result": "success"
+            },
+            {
+              "symbol": "blem",
+              "paired": "cat_cup",
+              "trial_id": "don2",
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "op": "stage_marker",
+      "stage": "S9"
+    },
+    {
+      "op": "trial",
+      "id": "s9_lamp_0",
+      "utterance": [
+        "wexi"
+      ],
+      "visibles": [
+        "e_lamp_1",
+        "cat_lamp"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "wexi",
+          "paired": "cat_lamp",
+          "trial_id": "s9_lamp_0",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "trial",
+      "id": "s9_lamp_1",
+      "utterance": [
+        "wexi"
+      ],
+      "visibles": [
+        "e_lamp_1",
+        "cat_lamp"
+      ],
+      "result": "success",
+      "ground_rows": [
+        {
+          "op": "ground",
+          "symbol": "wexi",
+          "paired": "cat_lamp",
+          "trial_id": "s9_lamp_1",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "op": "end_episode"
+    },
+    {
+      "op": "probe",
+      "id": "S9_lamp",
+      "stage": "S9",
+      "utterance": [
+        "wexi"
+      ],
+      "choices": [
+        "cat_lamp",
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "cat_lamp",
+      "evidence_family": "grounding",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S10_word_for_ball",
+      "stage": "S10",
+      "utterance": [
+        "cat_ball"
+      ],
+      "choices": [
+        "blem",
+        "drax",
+        "yulp",
+        "zorp"
+      ],
+      "expect": "blem",
+      "evidence_family": "expression",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S10_word_for_take",
+      "stage": "S10",
+      "utterance": [
+        "act_take"
+      ],
+      "choices": [
+        "blem",
+        "drax",
+        "zorp",
+        "quig"
+      ],
+      "expect": "zorp",
+      "evidence_family": "expression",
+      "lane": "main"
+    },
+    {
+      "op": "probe",
+      "id": "S8_twin_ball",
+      "stage": "S8",
+      "utterance": [
+        "blem"
+      ],
+      "choices": [
+        "cat_ball",
+        "cat_cup"
+      ],
+      "expect": "cat_ball",
+      "evidence_family": "grounding",
+      "lane": "twin"
+    }
+  ],
+  "unit_cells": {
+    "U0_flag_off": {
+      "flag": false,
+      "grounds": [
+        {
+          "symbol": "ball",
+          "paired": "cat_ball",
+          "trial_id": "u0",
+          "result": "success"
+        }
+      ],
+      "probe": {
+        "utterance": [
+          "ball"
+        ],
+        "choices": [
+          "cat_ball",
+          "cat_cup"
+        ],
+        "expect": "HOLD"
+      }
+    },
+    "U1_reject": {
+      "flag": true,
+      "malformed": {
+        "symbol": "ball",
+        "paired": "cat_ball"
+      },
+      "probe": {
+        "utterance": [
+          "ball"
+        ],
+        "choices": [
+          "cat_ball"
+        ],
+        "expect": "HOLD"
+      }
+    },
+    "U2_earn": {
+      "flag": true,
+      "grounds": [
+        {
+          "symbol": "ball",
+          "paired": "cat_ball",
+          "trial_id": "u2a",
+          "result": "success"
+        },
+        {
+          "symbol": "ball",
+          "paired": "cat_ball",
+          "trial_id": "u2b",
+          "result": "success"
+        }
+      ],
+      "probe": {
+        "utterance": [
+          "ball"
+        ],
+        "choices": [
+          "cat_ball",
+          "cat_cup"
+        ],
+        "expect": "cat_ball"
+      }
+    },
+    "U3_equalize": {
+      "flag": true,
+      "grounds": [
+        {
+          "symbol": "ball",
+          "paired": "cat_ball",
+          "trial_id": "u3a",
+          "result": "success"
+        },
+        {
+          "symbol": "ball",
+          "paired": "cat_cup",
+          "trial_id": "u3b",
+          "result": "success"
+        }
+      ],
+      "probe": {
+        "utterance": [
+          "ball"
+        ],
+        "choices": [
+          "cat_ball",
+          "cat_cup"
+        ],
+        "expect": "HOLD"
+      }
+    },
+    "U4_strip": {
+      "flag": true,
+      "grounds": [
+        {
+          "symbol": "ball",
+          "paired": "cat_ball",
+          "trial_id": "u4a",
+          "result": "success"
+        },
+        {
+          "symbol": "ball",
+          "paired": "cat_ball",
+          "trial_id": "u4b",
+          "result": "success"
+        }
+      ],
+      "strip": true,
+      "probe": {
+        "utterance": [
+          "ball"
+        ],
+        "choices": [
+          "cat_ball",
+          "cat_cup"
+        ],
+        "expect": "HOLD"
+      }
+    },
+    "U5_donor": {
+      "flag": true,
+      "grounds": [
+        {
+          "symbol": "ball",
+          "paired": "cat_ball",
+          "trial_id": "u5a",
+          "result": "success"
+        },
+        {
+          "symbol": "ball",
+          "paired": "cat_ball",
+          "trial_id": "u5b",
+          "result": "success"
+        }
+      ],
+      "donor_swap_to": [
+        {
+          "symbol": "ball",
+          "paired": "cat_cup",
+          "trial_id": "d1",
+          "result": "success"
+        },
+        {
+          "symbol": "ball",
+          "paired": "cat_cup",
+          "trial_id": "d2",
+          "result": "success"
+        }
+      ],
+      "probe": {
+        "utterance": [
+          "ball"
+        ],
+        "choices": [
+          "cat_ball",
+          "cat_cup"
+        ],
+        "expect": "cat_cup"
+      }
+    }
+  },
+  "min_support": 2
+}

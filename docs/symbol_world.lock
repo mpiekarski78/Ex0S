@@ -1,0 +1,26 @@
+{
+  "version": "TM.0.17.SYMBOLWORLD",
+  "lab": "TM.0.17.SYMBOLWORLD",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "last_stage_clear": "S10",
+  "first_fail_stage": null,
+  "first_fail": null,
+  "main_ok": true,
+  "twin_ok": true,
+  "fixture_sha": "1988b3aac4dc5cbe644fa9b1ee190bb0d265ea5c49001696a59715abffcf0d09",
+  "symbol_world_prereg_sha": "2398ffcc5c8a638e99ea18ea9b33602bc07e6f311ea4846dce82e3030e0c652d",
+  "symbol_ground_prereg_sha": "f9d808f3f8ca13ddc0378148cdb91e7770266a073bd52f0aaae962709ca916b5",
+  "candidate_sha": "ad180957d60e859e414e0b1867615b770b71aa9b1796fd7f9e084df56f8a4388",
+  "agent_sha": "809eba46278c5a2f62be15d502d7dce9738e550da7187c7b2a210dbfe63f0864",
+  "run_tm017symbolworld_sha": "e131be3cec3bf68c81e0f8aa46186e9520442fa24d71b169195cf67e00191d6a",
+  "refuse": [
+    "mechanism changes between stages",
+    "POS-specific learners",
+    "pixels / LLM / dictionary",
+    "free sentence generation",
+    "earned_next=true or non-null ex0s / Ex0S 1.0",
+    "rewriting symbol_world_fixture.json after pin"
+  ]
+}

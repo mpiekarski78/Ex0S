@@ -1862,3 +1862,13 @@ Recorded clear through **32**. Alias fingerprints and continuity marks coexist a
 
 Prereg: [`life_wall.prereg.lock`](life_wall.prereg.lock). Fixture: [`life_wall_fixture.json`](life_wall_fixture.json). Freeze: [`life_wall.lock`](life_wall.lock). Apparatus: `experiments/run_tm016lifewall.py`. Results: [`tm016lifewall_results.md`](tm016lifewall_results.md).
 
+## TM.0.17.SYMBOLWORLD — grounded symbolic learning package
+
+Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=null`. Not 0.0.005 / FAMILY / LOOKAHEAD / Ex0S 1.0. No LLM, dictionary, semantic labels, pixels, or audio.
+
+One package, three phases: (A) freeze symbolic world + baseline HOLD on `make_persist`; (B) one default-off evidence-weighted grounding candidate (`use_symbol_ground`, `observe_symbol_ground`, source `experience_grounding`) with use-time recompute and no POS-specific learners; (C) one continuous developmental life S0–S10 plus renamed-language twin, scored by `first_fail_stage`. Response is discrete choice or HOLD — not free sentence generation. Alias fingerprints and continuity marks stay isolated.
+
+Phase A baseline PASS. Grounding unit cells **6/6**. Developmental life cleared through **S10**.
+
+Prereg: [`symbol_world.prereg.lock`](symbol_world.prereg.lock), [`symbol_ground.prereg.lock`](symbol_ground.prereg.lock). Contract: [`grounding_evidence_contract.md`](grounding_evidence_contract.md). Fixture: [`symbol_world_fixture.json`](symbol_world_fixture.json). Locks: [`symbol_world_baseline.lock`](symbol_world_baseline.lock), [`symbol_ground.candidate.lock`](symbol_ground.candidate.lock), [`symbol_ground.lock`](symbol_ground.lock), [`symbol_world.lock`](symbol_world.lock). Apparatus: `experiments/run_tm017symbolworld.py`. Results: [`tm017symbolworld_results.md`](tm017symbolworld_results.md).
+

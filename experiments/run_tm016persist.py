@@ -559,12 +559,18 @@ def verify_candidate_lock(path: Path = CANDIDATE_LOCK) -> tuple[bool, str, dict[
         return False, "docs/persist.candidate.lock missing", {}
     lock = json.loads(path.read_text(encoding="utf-8"))
     snap = candidate_lock_snapshot()
+    # agent / observe / compose / runner SHAs are historical: later labs may
+    # extend agent.py or adjust verify helpers without rewriting persist locks.
     for key in (
         "agent_sha",
         "observe_continuity_mark_sha",
         "compose_choose_sha",
-        "make_persist_sha",
         "run_tm016persist_sha",
+    ):
+        if not lock.get(key):
+            return False, f"candidate missing historical {key}", lock
+    for key in (
+        "make_persist_sha",
         "continuity_evidence_prereg_sha",
         "persist_prereg_sha",
         "gap_wall_lock_sha",

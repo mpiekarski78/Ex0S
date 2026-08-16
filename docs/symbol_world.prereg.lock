@@ -1,0 +1,52 @@
+{
+  "version": "TM.0.17.SYMBOLWORLD.PREREG",
+  "lab": "TM.0.17.SYMBOLWORLD",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "not_a_product_stamp": true,
+  "label": "grounded symbolic learning package \u2014 world + developmental life",
+  "preregistered_claim": "Can the same frozen mechanism learn words, actions, properties and simple composition from interaction inside an unfamiliar symbolic world? Phase A freezes the world and measures baseline absence: PERSIST-on must HOLD on unknown words. No LLM, dictionary, semantic labels, pixels or audio.",
+  "fixture": "docs/symbol_world_fixture.json",
+  "fixture_sha": "1988b3aac4dc5cbe644fa9b1ee190bb0d265ea5c49001696a59715abffcf0d09",
+  "phases": [
+    "A_world_baseline",
+    "B_grounding_candidate",
+    "C_developmental_life"
+  ],
+  "stages": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8",
+    "S9",
+    "S10"
+  ],
+  "phase_a": {
+    "factory": "experiments.run_tm016persist.make_persist",
+    "agent_edits_permitted": false,
+    "expect": "unknown words HOLD"
+  },
+  "failure_record": "(stage, lane, probe, expected, actual, evidence_family)",
+  "prior_lock_shas": {
+    "persist.lock": "56554929d0ee82e637ef715e6122829adb79812e177b607b5af93829cd3cf0b2",
+    "life_wall.lock": "c5a86ddf881d15233ba46d9b3d32a65d476bc898c397b470ad77fe18c39cd7ff",
+    "alias_finger.lock": "025f9983aaaf946275bbf6c75f9b621e0c3652417894e7c24a43a4acda03dd23",
+    "gap_wall.lock": "f46401541ba38d6ab4369a84a1871e021ea161fa54977a585fbd1af76c2d1b3e"
+  },
+  "refuse": [
+    "LLM / dictionary / semantic labels / pixels / audio",
+    "learn_noun / learn_verb / learn_color",
+    "free sentence generation",
+    "run-time curriculum generation after fixture pin",
+    "earned_next=true or non-null ex0s / Ex0S 1.0",
+    "rewriting persist / alias / gap / life_wall locks",
+    "mechanism changes between developmental stages"
+  ],
+  "note": "Do not freeze Phase B/C until Phase A baseline lock exists. Do not rewrite this prereg to match outcomes."
+}

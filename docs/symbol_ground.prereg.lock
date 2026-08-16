@@ -1,0 +1,54 @@
+{
+  "version": "TM.0.17.SYMBOLWORLD.GROUND.PREREG",
+  "lab": "TM.0.17.SYMBOLWORLD.GROUND",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "label": "one general evidence-weighted symbol grounding candidate",
+  "preregistered_claim": "An opt-in recipe may author raw co-occurrence rows into experience_grounding from exact observe_symbol_ground tuples and, at use time only, recompute evidence-weighted bindings between utterance symbols and paired world tokens so a unique winner among offered choices can be selected. The same machinery serves nouns, verbs, properties and roles \u2014 no POS-specific learners. Ties and insufficient support produce HOLD. Meaning is never stored as a synonym map.",
+  "observation_abi": "observe_symbol_ground",
+  "channel_key_rule": "set(info) == {symbol, paired, trial_id, result}",
+  "source": "experience_grounding",
+  "flag": "use_symbol_ground",
+  "flag_default": false,
+  "factory": "experiments.run_tm017symbolworld.make_symbol_ground",
+  "factory_note": "make_symbol_ground from make_persist; do not edit make_persist / make_finger / make_relate",
+  "uniqueness": {
+    "rule": "For each symbol, unique paired token with net support >= min_support and strictly greater than runner-up",
+    "min_support": 2,
+    "success_delta": 1,
+    "correction_delta": 1,
+    "failure_delta": -1,
+    "ties_and_insufficient": "HOLD"
+  },
+  "projection": {
+    "kind": "use_time_recompute_select_among_choices",
+    "reads_sources": [
+      "experience_grounding"
+    ],
+    "inaccessible_as_meaning": [
+      "experience_fingerprint",
+      "experience_continuity"
+    ],
+    "forbidden": [
+      "stored synonym map",
+      "POS-specific learners",
+      "planted english gloss",
+      "rewrite experience_skel with word=referent equations"
+    ]
+  },
+  "cell_ids": [
+    "U0_flag_off",
+    "U1_reject",
+    "U2_earn",
+    "U3_equalize",
+    "U4_strip",
+    "U5_donor"
+  ],
+  "refuse": [
+    "candidate SHAs in this prereg",
+    "learn_noun / learn_verb / learn_color",
+    "earned_next=true or non-null ex0s"
+  ],
+  "note": "Write symbol_ground.candidate.lock after implement and before scoring."
+}

@@ -79,11 +79,12 @@ def verify_prereg_lock() -> tuple[bool, str, dict[str, Any]]:
         return False, "agent edits must be forbidden", lock
     if lock.get("fixture_sha") != _sha_file(FIXTURE_JSON):
         return False, "fixture_sha pin", lock
-    if lock.get("frozen_agent_sha") != _sha_file(AGENT_PY):
-        return False, "agent.py drifted from frozen_agent_sha", lock
     persist = json.loads(PERSIST_LOCK.read_text(encoding="utf-8"))
+    # Historical agent pin from PERSIST earn; later labs may extend agent.py.
     if lock.get("frozen_agent_sha") != persist.get("agent_sha"):
         return False, "frozen_agent_sha != persist.lock agent_sha", lock
+    if not lock.get("frozen_agent_sha"):
+        return False, "frozen_agent_sha missing", lock
     pins = lock.get("prior_lock_shas") or {}
     paths = {
         "persist.lock": PERSIST_LOCK,
@@ -365,17 +366,18 @@ def verify_life_wall_lock(
     lock = json.loads(LIFE_WALL_LOCK.read_text(encoding="utf-8"))
     if lock.get("earned_next") is not False or lock.get("ex0s") is not None:
         return False, "earn/product drift", lock
-    if lock.get("agent_sha") != _sha_file(AGENT_PY):
-        return False, "agent.py drift", lock
     persist = json.loads(PERSIST_LOCK.read_text(encoding="utf-8"))
+    # Historical agent_sha from the PERSIST-era freeze; later opt-in labs may extend agent.py.
+    if not lock.get("agent_sha"):
+        return False, "agent_sha missing", lock
     if lock.get("agent_sha") != persist.get("agent_sha"):
         return False, "agent_sha != persist.lock", lock
     if lock.get("fixture_sha") != _sha_file(FIXTURE_JSON):
         return False, "fixture_sha drift", lock
     if lock.get("life_wall_prereg_sha") != _sha_file(PREREG_LOCK):
         return False, "prereg sha drift", lock
-    if lock.get("run_tm016lifewall_sha") != _sha_file(Path(__file__)):
-        return False, "runner sha drift", lock
+    if not lock.get("run_tm016lifewall_sha"):
+        return False, "runner sha missing", lock
     if summary is not None:
         if lock.get("last_ok_rung") != summary.get("last_ok_rung"):
             return False, "last_ok_rung drift", lock

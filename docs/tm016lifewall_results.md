@@ -22,7 +22,7 @@ Frozen PERSIST-on coexists RELATE, ALIASFINGER, and mark-continuity in one accum
 
 ## Next
 
-Identify the first grounded nursery-world channel. No product stamp.
+Identify the first grounded nursery-world channel — delivered as TM.0.17.SYMBOLWORLD ([`tm017symbolworld_results.md`](tm017symbolworld_results.md)). No product stamp.
 
 ## Reproduce
 
