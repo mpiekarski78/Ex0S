@@ -1,0 +1,31 @@
+{
+  "version": "TM.0.23.CORTEX.V12.ISOLATION",
+  "lab": "TM.0.23.CORTEX.V11.GATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "v11 narrow D1–D2 gate failed (6/16 < 13/16). D1 and population extras green. Pair reds are D2 holds under swapped physics.",
+  "v11_gate_failure_lock": "docs/cortex_v11_gate.failure.lock",
+  "v11_gate_lock": "docs/cortex_v11_gate.lock",
+  "v11_reveal_lock": "docs/cortex_v11_eval_reveal.lock",
+  "v11_diagnosis_lock": "docs/cortex_diagnosis.v11.lock",
+  "refuse": [
+    "DEVELOP.v11 on any worlds",
+    "edit-and-rescore candidate v11 on revealed v11 gate worlds",
+    "transfer v10 or v11 partial credit",
+    "lower holds>=5 after seeing holds=4",
+    "open full D0–D12 before a later isolated gate ≥13/16"
+  ],
+  "next_cycle": {
+    "name": "isolated_v12",
+    "requires": [
+      "frozen diagnosis of missing HOLD under swapped consequences",
+      "new architecture amendment authorizing one surprise→HOLD law",
+      "new birth + candidate.v12.lock",
+      "new sealed commitment ≠ v11 gate ≠ DEVELOP",
+      "re-earn population boundary greens",
+      "fresh narrow D1–D2 gate ≥13/16 before any DEVELOP.v12"
+    ]
+  },
+  "note": "DEVELOP.v11 not opened. Historical locks immutable. Product remains 0.0.004."
+}

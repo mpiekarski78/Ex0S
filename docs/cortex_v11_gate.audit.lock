@@ -1,0 +1,65 @@
+{
+  "version": "TM.0.23.CORTEX.V11.GATE.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "gate_sha": "6cf4171b42e0e94016cfc42b364344e647ccae14c9011ebf673c7ff79915cecd",
+  "failure_sha": "7670fac953affae97f85d15c9b3cc380eb5db268f71cb6e4fbd58abbbad84563",
+  "n_pair_clear": 6,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git_commit",
+      "ok": true,
+      "candidate_git_sha": "0d17abb8dfec8f88ee7de11a7cfd1bd74fb3d879"
+    },
+    {
+      "id": "d2_conflict_is_swapped",
+      "ok": true,
+      "d2_conflict": "swapped_press_harm"
+    },
+    {
+      "id": "d1_and_population_green",
+      "ok": true,
+      "d1_ok": 32,
+      "population_d1": true,
+      "population_d2": true
+    },
+    {
+      "id": "pair_reds_are_d2_holds",
+      "ok": true,
+      "d2_ok": 22,
+      "d2_hold_fails": 10,
+      "holds_eq_4": 8,
+      "note": "Eight of ten D2 reds have holds=4. Floor remains 5. Not a soft clear."
+    },
+    {
+      "id": "no_soft_clear",
+      "ok": true
+    },
+    {
+      "id": "no_develop_v11",
+      "ok": true
+    },
+    {
+      "id": "neural_unchanged",
+      "ok": true,
+      "neural_cortex_sha": "7b67f187e5ed2eb7745ab33280807b2e56d20107be9eb4b265a1b9a825d3e17b"
+    }
+  ],
+  "consequence": {
+    "develop_v11": "refused",
+    "rescore_v11": "refused",
+    "next": "isolated_v12",
+    "refuse": [
+      "rewrite docs/cortex_v11_gate.lock",
+      "edit-and-rescore candidate v11 on revealed v11 worlds",
+      "open DEVELOP.v11",
+      "open full D0–D12",
+      "lower holds>=5 after seeing holds=4"
+    ]
+  },
+  "note": "6/16 stands. HOLD window is now contradictory. The organism still under-HOLDs after a physics swap."
+}

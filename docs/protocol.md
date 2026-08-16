@@ -2026,3 +2026,7 @@ v11 apparatus (scorer-only, no candidate SHA): [`cortex_v11_stat_contract.lock`]
 
 Candidate (this cycle, before reveal): [`cortex.candidate.v11.lock`](cortex.candidate.v11.lock) reuses neural SHA `7b67f187…`. Population C4/C5/C6 green. Reveal must pin the pushed candidate git SHA.
 
+Outcome: candidate `0d17abb` revealed after a clean push. Fresh seed-derived D1–D2 **6/16** — **fail**. D1 32/32; population extras green. [`cortex_v11_gate.failure.lock`](cortex_v11_gate.failure.lock) + [`cortex_v12.isolation.lock`](cortex_v12.isolation.lock). **DEVELOP.v11 refused.** Do not edit-rescore v11. Full D0–D12 not opened.
+
+Diagnosis ([`cortex_diagnosis.v11.lock`](cortex_diagnosis.v11.lock)): first honest contradiction window. Ten lives under-HOLD after a physics swap. v12 may add one generic surprise→HOLD response. Do not lower `holds>=5`.
+

@@ -1,0 +1,44 @@
+{
+  "version": "TM.0.23.CORTEX.V11.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "0d17abb",
+  "neural_mechanism_changed": false,
+  "v12_authorized_only_if_this_lock": true,
+  "c4_retained": true,
+  "population_c5_c6_green": true,
+  "gate_n_pair_clear": 6,
+  "d1_ok": 32,
+  "d1_population_ok": true,
+  "d2_ok": 22,
+  "d2_population_ok": true,
+  "same_architectural_reason_as_v10": false,
+  "claim": "v11 moved the D2 HOLD window onto swapped press/harm physics. That is the first honest contradiction measurement. D1 and both population extras are green. Ten lives still fail holds>=5 (eight of them at 4). The cortex continues to ACT through contradictory body consequences instead of rising to HOLD. This is a missing generic uncertainty response, not extras grain and not the old no-contradiction window.",
+  "d2_hold_fails": [
+    {"pair_id": 1, "role": "twin", "holds": 4, "beneficial": 5},
+    {"pair_id": 2, "role": "twin", "holds": 4, "beneficial": 5},
+    {"pair_id": 3, "role": "main", "holds": 4, "beneficial": 19},
+    {"pair_id": 5, "role": "main", "holds": 3, "beneficial": 21},
+    {"pair_id": 6, "role": "twin", "holds": 4, "beneficial": 24},
+    {"pair_id": 9, "role": "main", "holds": 4, "beneficial": 15},
+    {"pair_id": 10, "role": "main", "holds": 4, "beneficial": 23},
+    {"pair_id": 11, "role": "twin", "holds": 2, "beneficial": 11},
+    {"pair_id": 12, "role": "main", "holds": 4, "beneficial": 14},
+    {"pair_id": 14, "role": "twin", "holds": 4, "beneficial": 20}
+  ],
+  "authorize_v12": [
+    "one generic surprise/conflict → HOLD response: when an observed body consequence after ACT disagrees with the recently credited advantage direction, raise HOLD / lower ACT on that step",
+    "keep D1 press+harm floors, population extras, swapped D2 HOLD window, holds>=5, beneficial>=3, rho_ok",
+    "do not lower holds>=5",
+    "do not add capability-specific functions",
+    "new sealed commitment ≠ v11 ≠ DEVELOP"
+  ],
+  "refuse": [
+    "edit-and-rescore v11",
+    "DEVELOP.v11",
+    "soften holds to 4 after seeing eight 4s",
+    "open D0–D12 before a later isolated gate ≥13/16",
+    "treat v9/v10/v11 as the same architectural miss"
+  ]
+}
