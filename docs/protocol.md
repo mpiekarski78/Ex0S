@@ -2012,3 +2012,5 @@ Canonical main `6c25302`. V9 gate **6/16** stands. Do not edit-rescore v9. **DEV
 
 v10 apparatus (scorer-only, no candidate SHA): [`cortex_v10_stat_contract.lock`](cortex_v10_stat_contract.lock), [`cortex_v10_architecture_amendment.lock`](cortex_v10_architecture_amendment.lock), [`cortex_v10.prereg.lock`](cortex_v10.prereg.lock). D1 bind remains press+harm. Per-life extras no longer veto; battery extras are population majority + mean Δ. Floors unchanged. Neural remains candidate v7/v8/v9 until a later birth/candidate commit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle, before reveal): [`cortex.candidate.v10.lock`](cortex.candidate.v10.lock) reuses neural SHA `7b67f187…`. Population C4 + C5 (30/32, mean Δ≈0.24) + C6 green. Reveal must pin the pushed candidate git SHA.
+

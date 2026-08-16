@@ -114,7 +114,10 @@ def test_birth_and_candidate_frozen() -> None:
     assert CANDIDATE_LOCK.exists()
     assert CANDIDATE_V1.exists()
     cand = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
-    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V9":
+    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V10":
+        v10_birth = json.loads((REPO_ROOT / "docs" / "cortex_v10_birth.lock").read_text(encoding="utf-8"))
+        assert v10_birth["learning_law_ok"] is True
+    elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V9":
         v9_birth = json.loads((REPO_ROOT / "docs" / "cortex_v9_birth.lock").read_text(encoding="utf-8"))
         assert v9_birth["learning_law_ok"] is True
     elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V8":
@@ -188,10 +191,13 @@ def test_diag_and_v4_gate() -> None:
     assert (REPO_ROOT / "docs" / "cortex.candidate.v5.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v6.lock").exists()
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    v10 = REPO_ROOT / "docs" / "cortex.candidate.v10.lock"
     v9 = REPO_ROOT / "docs" / "cortex.candidate.v9.lock"
     v8 = REPO_ROOT / "docs" / "cortex.candidate.v8.lock"
     v7 = REPO_ROOT / "docs" / "cortex.candidate.v7.lock"
-    if v9.exists():
+    if v10.exists():
+        assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V10"
+    elif v9.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V9"
     elif v8.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V8"
