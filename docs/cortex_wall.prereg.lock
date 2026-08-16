@@ -1,0 +1,27 @@
+{
+  "version": "TM.0.23.CORTEX.WALL.PREREG",
+  "lab": "TM.0.23.CORTEX.WALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "On frozen make_cortex, a preregistered neural parity wall exposes simplified PERSIST/INQUIRE/RELIABILITY/PERSPECTIVE/INTERPRET/HONESTY probes via the universal ABI only. Need not fully pass; first_fail_neural_wall diagnoses the next primitive. Not a 0.0.005 stamp.",
+  "factory": "experiments.run_tm023cortex.make_cortex",
+  "mechanism_changes_permitted": false,
+  "need_not_fully_pass": true,
+  "probe_ids": [
+    "W_persist",
+    "W_inquire",
+    "W_reliability",
+    "W_perspective",
+    "W_interpret",
+    "W_honesty"
+  ],
+  "cortex_prereg_sha": "cdf41c1543464d9ca70b67c5b6cd97554ca3086ce1f46af981ced59c217b4784",
+  "refuse": [
+    "calling 0.0.004 capability mechanisms",
+    "writing experience_* rows",
+    "rewriting this prereg after results",
+    "earned_next=true or non-null ex0s"
+  ],
+  "note": "Frozen before candidate. Results recorded later in cortex_wall.lock."
+}

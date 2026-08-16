@@ -1,0 +1,147 @@
+{
+  "version": "TM.0.23.CORTEX.PREREG",
+  "lab": "TM.0.23.CORTEX",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "Starting from a pinned birth genome, one recurrent plastic artificial cortex matured during continuous symbolic lives and acquired relation learning, revision, persistent recall, symbolic grounding and variable-length sequence construction through generic event, memory and action interfaces, including transfer to held-out renamed worlds.",
+  "contract": "docs/cortex_architecture_contract.md",
+  "contract_sha": "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2",
+  "observe_keys": [
+    "body_state",
+    "interaction_token",
+    "observable_state",
+    "ordered_symbols",
+    "source_token"
+  ],
+  "operations": [
+    "RETRIEVE",
+    "WRITE",
+    "EMIT",
+    "ACT",
+    "STOP",
+    "HOLD"
+  ],
+  "genome": {
+    "n": 64,
+    "d_sym": 32,
+    "k_s": 8,
+    "d_body": 4,
+    "d_x": 293,
+    "p_connect": 0.1,
+    "t_max": 8,
+    "tau": 1.0,
+    "cos_thresh": 0.15,
+    "eta_pred": 0.05,
+    "eta_act": 0.05,
+    "beta": 0.01,
+    "clip": 2.0,
+    "seed_birth": 12345,
+    "seed_registry": 22222,
+    "seed_source": 33333,
+    "seed_action": 44444,
+    "seed_permute": 55555,
+    "dtype": "float64",
+    "body_setpoint": [
+      1.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    "ops": [
+      "RETRIEVE",
+      "WRITE",
+      "EMIT",
+      "ACT",
+      "STOP",
+      "HOLD"
+    ],
+    "op_cost": {
+      "RETRIEVE": 1.0,
+      "WRITE": 1.0,
+      "EMIT": 1.0,
+      "ACT": 1.0,
+      "STOP": 0.0,
+      "HOLD": 0.0
+    }
+  },
+  "stats": {
+    "earn_pairs": 16,
+    "optional_extension_pairs": 16,
+    "earn_threshold": ">=13/16",
+    "maturation_threshold": ">=14/16",
+    "no_seed_replacement": true
+  },
+  "capacity": {
+    "architecture_births_n": [
+      32,
+      64,
+      128,
+      256
+    ],
+    "mature_vocab": [
+      32,
+      128,
+      512,
+      2048
+    ],
+    "mature_s_rows": [
+      1000,
+      10000,
+      100000
+    ],
+    "mature_age": [
+      1000,
+      10000,
+      100000
+    ],
+    "mature_length": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "mature_domains": [
+      1,
+      3,
+      6,
+      12
+    ],
+    "mature_alternatives": [
+      2,
+      4,
+      8,
+      16
+    ]
+  },
+  "eval_seed_commitment": "4d76ecd69fabcdf5d39f321049405be32f444bd8c2954f9157fe6f0d7e07343e",
+  "generator_lock": "docs/cortex_world_generator.lock",
+  "generator_sha": "7a38a0cdd0568333365a5e4e59fcadcdde8553f105fd49f56255f9cc15295956",
+  "develop_sha": "14ac8c5e5722cfdf0d989d0e2d91d3c53d716f8d09cbc90c8d252d8c07adbf02",
+  "validate_sha": "1d97b475ad030c26c62fcd78abc063a1323e1e69240117156d7678972bc0b673",
+  "phenotype_lock_shas": {
+    "docs/CURRENT_ORGANISM.md": "d48aa05cb078edbca210451dd257533276c8692973357083514b5a15cde8a617",
+    "docs/interpret.lock": "e163664e07972065d2122f1baafce1355c44d9b0eff5294bfb1a46becdf22afc",
+    "docs/interpret_wall.lock": "81280004a0e289aaae026b07ebb90a3a68b631d5c739da2dea85abb1a21a35a1",
+    "docs/sequence.lock": "fcd4ead764bceea8b872808655d3526713d05e4e0e12d6ad35107d550d5db10c",
+    "docs/symbol_world.lock": "df648c1e35d843b7abd6b7add47860f20ecec184fa699a4cca8a170c2320d1f2",
+    "docs/relate_016.lock": "756750d4469177c72fdcea48f1b1b691366dbf4843edd2215b69170c5621f829",
+    "docs/persist.lock": "56554929d0ee82e637ef715e6122829adb79812e177b607b5af93829cd3cf0b2",
+    "docs/inquire_wall.lock": "a434a2c48a83949b7bf5cb2215048245c2af819b58b02cde37bec0250032b9dc",
+    "docs/reliability_wall.lock": "9766cdbb1018b2afc33027a0a1892a6f446c1c387e98438f651950f11f492503",
+    "docs/perspective_wall.lock": "f46bd78fcdd5698a4519bc0c9084369f1bcae660522007834e62cec7248ec822"
+  },
+  "hygiene_ok": true,
+  "refuse": [
+    "mechanism SHA in this prereg",
+    "adult weight SHA",
+    "wrapping make_interpret",
+    "D scoring before candidate",
+    "earned_next=true or non-null ex0s",
+    "revealing eval secrets before candidate",
+    "mean-pool messages",
+    "host homeostatic_delta"
+  ],
+  "note": "Frozen before CPU implementation. No agent/runner SHAs here."
+}

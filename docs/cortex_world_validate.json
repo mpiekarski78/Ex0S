@@ -1,0 +1,190 @@
+{
+  "version": "TM.0.23.CORTEX.WORLDS.VALIDATE",
+  "body_setpoint": [
+    1.0,
+    0.0,
+    1.0,
+    0.0
+  ],
+  "worlds": [
+    {
+      "world_id": "val_order",
+      "split": "validate",
+      "organism_events": [
+        {
+          "op": "observe",
+          "event": {
+            "interaction_token": "val_order_ix0",
+            "source_token": "src_a",
+            "ordered_symbols": [
+              "tok_p",
+              "tok_q"
+            ],
+            "observable_state": [
+              "st_idle"
+            ],
+            "body_state": [
+              0.5,
+              0.2,
+              0.5,
+              0.0
+            ]
+          }
+        },
+        {
+          "op": "force_note",
+          "note": "organism may ACT; physics applied by runner"
+        }
+      ],
+      "scorer_only": {
+        "latent_structure": {
+          "act_effects": {
+            "press": {
+              "state": [
+                "st_pressed"
+              ],
+              "delta": [
+                0.2,
+                -0.05,
+                0.1,
+                0.0
+              ]
+            },
+            "harm": {
+              "state": [
+                "st_hurt"
+              ],
+              "delta": [
+                -0.3,
+                0.4,
+                -0.1,
+                0.0
+              ]
+            },
+            "idle": {
+              "state": [
+                "st_idle"
+              ],
+              "delta": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "expected_probes": [
+          {
+            "id": "order_sensitive",
+            "symbols_a": [
+              "tok_a",
+              "tok_b"
+            ],
+            "symbols_b": [
+              "tok_b",
+              "tok_a"
+            ]
+          },
+          {
+            "id": "beneficial_act",
+            "operand": "press"
+          },
+          {
+            "id": "harmful_act",
+            "operand": "harm"
+          }
+        ]
+      }
+    },
+    {
+      "world_id": "val_smoke",
+      "split": "validate",
+      "organism_events": [
+        {
+          "op": "observe",
+          "event": {
+            "interaction_token": "val_smoke_ix0",
+            "source_token": "src_a",
+            "ordered_symbols": [
+              "cue_v"
+            ],
+            "observable_state": [
+              "st_idle"
+            ],
+            "body_state": [
+              0.5,
+              0.2,
+              0.5,
+              0.0
+            ]
+          }
+        },
+        {
+          "op": "force_note",
+          "note": "organism may ACT; physics applied by runner"
+        }
+      ],
+      "scorer_only": {
+        "latent_structure": {
+          "act_effects": {
+            "press": {
+              "state": [
+                "st_pressed"
+              ],
+              "delta": [
+                0.2,
+                -0.05,
+                0.1,
+                0.0
+              ]
+            },
+            "harm": {
+              "state": [
+                "st_hurt"
+              ],
+              "delta": [
+                -0.3,
+                0.4,
+                -0.1,
+                0.0
+              ]
+            },
+            "idle": {
+              "state": [
+                "st_idle"
+              ],
+              "delta": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "expected_probes": [
+          {
+            "id": "order_sensitive",
+            "symbols_a": [
+              "tok_a",
+              "tok_b"
+            ],
+            "symbols_b": [
+              "tok_b",
+              "tok_a"
+            ]
+          },
+          {
+            "id": "beneficial_act",
+            "operand": "press"
+          },
+          {
+            "id": "harmful_act",
+            "operand": "harm"
+          }
+        ]
+      }
+    }
+  ]
+}

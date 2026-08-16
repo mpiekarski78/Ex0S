@@ -1,0 +1,31 @@
+{
+  "version": "TM.0.23.CORTEX.GENERATOR",
+  "lab": "TM.0.23.CORTEX",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "physics": "experiments.run_tm023cortex.physics",
+  "body_setpoint": [
+    1.0,
+    0.0,
+    1.0,
+    0.0
+  ],
+  "splits": [
+    "develop",
+    "validate",
+    "eval"
+  ],
+  "note": "Eval worlds materialized only after candidate reveal of sealed seed+salt.",
+  "refuse": [
+    "feeding scorer_only into observe",
+    "host homeostatic_delta",
+    "small integer eval seeds"
+  ],
+  "develop_fixture": "docs/cortex_world_develop.json",
+  "validate_fixture": "docs/cortex_world_validate.json",
+  "develop_sha": "14ac8c5e5722cfdf0d989d0e2d91d3c53d716f8d09cbc90c8d252d8c07adbf02",
+  "validate_sha": "1d97b475ad030c26c62fcd78abc063a1323e1e69240117156d7678972bc0b673",
+  "eval_seed_commitment": "4d76ecd69fabcdf5d39f321049405be32f444bd8c2954f9157fe6f0d7e07343e",
+  "contract_sha": "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2"
+}

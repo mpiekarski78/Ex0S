@@ -1922,3 +1922,15 @@ Phase A baseline PASS. Interpret unit cells **16/16**. Life cleared through **J1
 
 Prereg: [`interpret_baseline.prereg.lock`](interpret_baseline.prereg.lock), [`interpret_mech.prereg.lock`](interpret_mech.prereg.lock), [`interpret_wall.prereg.lock`](interpret_wall.prereg.lock). Contract: [`interpret_evidence_contract.md`](interpret_evidence_contract.md). Fixture: [`interpret_fixture.json`](interpret_fixture.json). Locks: [`interpret_baseline.lock`](interpret_baseline.lock), [`interpret.candidate.lock`](interpret.candidate.lock), [`interpret_mech.lock`](interpret_mech.lock), [`interpret.lock`](interpret.lock), [`interpret_wall.lock`](interpret_wall.lock). Apparatus: `experiments/run_tm022interpret.py`. Results: [`tm022interpret_results.md`](tm022interpret_results.md).
 
+## TM.0.23.CORTEX — developmental artificial cortex (birth)
+
+Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=null`. Not 0.0.005 / D scoring this pass. New organism — does **not** wrap `make_interpret` / `ThreeMemoryAgent`. Neural code only in `three_memory/neural_cortex.py` and `three_memory/cortex_memory.py`.
+
+Freeze order locked: architecture contract → world generator + develop/validate fixtures → 256-bit `eval_seed_commitment` → hygiene → `cortex.prereg.lock` → `cortex_wall.prereg.lock` → implementation → unscored learning-law sanity (CPU + Spark GPU) → `cortex_birth.lock` → human/math audit → `cortex.candidate.lock` only if learning-law sanity passed.
+
+Genome (summary): sequential sensory microticks (no mean-pool); directed prediction `ε = s_t − ŝ_{t−1}`; three-factor action credit from body_state vs setpoint minus op cost; internal motor loop `T_max=8`; retrieval buffer; separate `rng_source` vectors; `body_state` from frozen world physics only.
+
+Birth sanity **pass** (`learning_law_ok=true`). Torch pin in birth lock: `2.13.0+cu130` / CUDA 13.0 / NVIDIA GB10. D0–D12 later.
+
+Contract: [`cortex_architecture_contract.md`](cortex_architecture_contract.md). Prereg: [`cortex.prereg.lock`](cortex.prereg.lock), [`cortex_wall.prereg.lock`](cortex_wall.prereg.lock). Locks: [`cortex_birth.lock`](cortex_birth.lock), [`cortex.candidate.lock`](cortex.candidate.lock). Apparatus: `experiments/run_tm023cortex.py`. Results: [`tm023cortex_results.md`](tm023cortex_results.md).
+

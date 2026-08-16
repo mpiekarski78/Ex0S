@@ -1,0 +1,178 @@
+{
+  "version": "TM.0.23.CORTEX.BIRTH",
+  "lab": "TM.0.23.CORTEX",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "learning_law_ok": true,
+  "results": [
+    {
+      "id": "order_ab_ba",
+      "ok": true,
+      "rho_distance": 3.7743755729802553
+    },
+    {
+      "id": "prediction",
+      "ok": true,
+      "early": 5.3961599266956695,
+      "late": 5.042530782032212
+    },
+    {
+      "id": "advantage_path",
+      "ok": true,
+      "adv_good": 0.5033296378372909,
+      "adv_bad": -2.732050807568877,
+      "delta": 0.03665604005850057
+    },
+    {
+      "id": "exploration",
+      "ok": true,
+      "ops": [
+        "ACT",
+        "HOLD",
+        "STOP"
+      ]
+    },
+    {
+      "id": "write_retrieve",
+      "ok": true,
+      "buf_norm": 6.697039384248343
+    },
+    {
+      "id": "checkpoint",
+      "ok": true,
+      "cont": [
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        {
+          "op": "STOP",
+          "token": null,
+          "emit_sequence": []
+        },
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        }
+      ],
+      "cont2": [
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        {
+          "op": "STOP",
+          "token": null,
+          "emit_sequence": []
+        },
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        }
+      ]
+    },
+    {
+      "id": "rho_reset",
+      "ok": true
+    },
+    {
+      "id": "scorer_isolation",
+      "ok": true
+    },
+    {
+      "id": "cpu_gpu",
+      "ok": true,
+      "cpu_ops": [
+        "ACT",
+        "HOLD",
+        "HOLD",
+        "HOLD",
+        "HOLD"
+      ],
+      "gpu_ops": [
+        "ACT",
+        "HOLD",
+        "HOLD",
+        "HOLD",
+        "HOLD"
+      ],
+      "device": "NVIDIA GB10"
+    },
+    {
+      "id": "order_ab_ba",
+      "ok": true,
+      "rho_distance": 3.7743755729802557
+    }
+  ],
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "contract_sha": "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2",
+  "neural_cortex_sha": "d21e8280c9f426a1bbaacf49ba4b3220fbbf863027966eada8017770ebdb2f0b",
+  "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
+  "run_tm023cortex_sha": "3382f667bd9634377b300dd1d2bb2014b3e9b4c5a3870c2a64631533993f2ac4",
+  "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
+  "prereg_sha": "cdf41c1543464d9ca70b67c5b6cd97554ca3086ce1f46af981ced59c217b4784",
+  "wall_prereg_sha": "f03ae4c5d55b87bdad6316e2a1be2ccc1804d315b0b97bd24ff680e2140de44d",
+  "note": "Unscored infrastructure. Not D scoring. Not 0.0.005.",
+  "genome": {
+    "n": 64,
+    "d_sym": 32,
+    "k_s": 8,
+    "d_body": 4,
+    "d_x": 293,
+    "p_connect": 0.1,
+    "t_max": 8,
+    "tau": 1.0,
+    "cos_thresh": 0.15,
+    "eta_pred": 0.05,
+    "eta_act": 0.05,
+    "beta": 0.01,
+    "clip": 2.0,
+    "seed_birth": 12345,
+    "seed_registry": 22222,
+    "seed_source": 33333,
+    "seed_action": 44444,
+    "seed_permute": 55555,
+    "dtype": "float64",
+    "body_setpoint": [
+      1.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    "ops": [
+      "RETRIEVE",
+      "WRITE",
+      "EMIT",
+      "ACT",
+      "STOP",
+      "HOLD"
+    ],
+    "op_cost": {
+      "RETRIEVE": 1.0,
+      "WRITE": 1.0,
+      "EMIT": 1.0,
+      "ACT": 1.0,
+      "STOP": 0.0,
+      "HOLD": 0.0
+    }
+  },
+  "gpu_equivalent": true,
+  "refuse": [
+    "D scoring without candidate",
+    "earned_next=true or non-null ex0s",
+    "wrapping make_interpret"
+  ]
+}
