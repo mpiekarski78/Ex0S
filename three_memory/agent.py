@@ -120,6 +120,7 @@ class ThreeMemoryAgent:
         use_inquire: bool = False,
         use_source_reliability: bool = False,
         use_source_perspective: bool = False,
+        use_source_interpretation: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -249,6 +250,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_source_reliability requires use_inquire")
         if use_source_perspective and not use_source_reliability:
             raise ValueError("use_source_perspective requires use_source_reliability")
+        if use_source_interpretation and not use_source_perspective:
+            raise ValueError("use_source_interpretation requires use_source_perspective")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -330,6 +333,7 @@ class ThreeMemoryAgent:
         self.use_source_reliability = use_source_reliability
         self.use_inquire_liveness = bool(use_source_reliability)
         self.use_source_perspective = use_source_perspective
+        self.use_source_interpretation = use_source_interpretation
         self.reliability_lambda = 4
         self.reliability_n_min = 2
         self.reliability_jaccard = 0.5
@@ -343,6 +347,9 @@ class ThreeMemoryAgent:
         self.perspective_weak_exposure = frozenset(
             {"exp_present", "exp_absent", "exp_sensor_connected"}
         )
+        # Interpretation: factorized reconstruct; no Jaccard; independent anchors
+        self.interpret_lambda = 4
+        self.interpret_n_min = 2
         self.inquire_budget = 8
         self.inquire_cost_ask = 2
         self.inquire_cost_experiment = 5
@@ -480,6 +487,7 @@ class ThreeMemoryAgent:
             use_inquire=self.use_inquire,
             use_source_reliability=self.use_source_reliability,
             use_source_perspective=self.use_source_perspective,
+            use_source_interpretation=self.use_source_interpretation,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -3540,6 +3548,467 @@ class ThreeMemoryAgent:
         lam = float(self.perspective_lambda)
         confidence = n / (n + lam)
         return max(0.0, quality * confidence)
+
+    # --- TM.0.22.INTERPRET: behaviorally evidenced interpretation ---
+
+    def observe_source_consequence(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """Author raw experience_interpretation rows. Opaque observables only."""
+        required = {
+            "source_token",
+            "interaction_token",
+            "exposure_event_token",
+            "consequence_event_token",
+            "context_symbols",
+            "message_symbols",
+            "action_symbols",
+            "state_before",
+            "state_after",
+        }
+        out: dict[str, Any] = {"ok": False, "wrote": False, "why": ""}
+        if not self.use_source_interpretation or not self.store.enabled:
+            out["why"] = "interpretation_off"
+            return out
+        if not isinstance(info, dict) or set(info.keys()) != required:
+            out["why"] = "exact_key_reject"
+            return out
+        banned = {
+            "understood",
+            "intended",
+            "belief",
+            "honest",
+            "honesty",
+            "success",
+            "failure",
+            "correction",
+            "cause",
+            "misunderstood",
+            "true_parse",
+            "result",
+        }
+        src = str(info["source_token"]).strip().lower()
+        ix = str(info["interaction_token"]).strip().lower()
+        eev = str(info["exposure_event_token"]).strip().lower()
+        cev = str(info["consequence_event_token"]).strip().lower()
+        ctx = [str(x).strip().lower() for x in info["context_symbols"] if str(x).strip()]
+        msg = [str(x).strip().lower() for x in info["message_symbols"] if str(x).strip()]
+        act = [str(x).strip().lower() for x in info["action_symbols"] if str(x).strip()]
+        sb = [str(x).strip().lower() for x in info["state_before"] if str(x).strip()]
+        sa = [str(x).strip().lower() for x in info["state_after"] if str(x).strip()]
+        if not src or not ix or not eev or not cev or not ctx or not msg or not act:
+            out["why"] = "empty_field"
+            return out
+        if len(msg) != len(act):
+            # Ordered-role evidence requires aligned message/action sequences.
+            # Never silently truncate unequal lengths into a false map.
+            out["why"] = "length_mismatch"
+            return out
+        # Exact opaque-token match only — substring bans reject innocent vocab
+        # (e.g. "because"/"unsuccessful" under "cause"/"success").
+        atoms = {src, ix, eev, cev, *ctx, *msg, *act, *sb, *sa}
+        if atoms & banned:
+            out["why"] = "banned_token"
+            return out
+        if any("|" in x for x in [src, ix, eev, cev] + ctx + msg + act + sb + sa):
+            out["why"] = "pipe_in_token"
+            return out
+        tags: dict[str, Any] = {
+            "source_token": src,
+            "interaction_token": ix,
+            "exposure_event_token": eev,
+            "consequence_event_token": cev,
+            "context_symbols": "|".join(ctx),
+            "message_symbols": "|".join(msg),
+            "action_symbols": "|".join(act),
+            "state_before": "|".join(sb),
+            "state_after": "|".join(sa),
+            "source": "experience_interpretation",
+            "hyp": "supported",
+            "support": 1,
+        }
+        n = len(self.store.records())
+        fid = f"interpret_{n:04d}_{src}"
+        rec = FactRecord(
+            fact_id=fid,
+            what=encode_tags(tags),
+            when=int(self.t),
+            drive_scores={},
+            tags=tags,
+        )
+        self.store.write(rec)
+        out["ok"] = True
+        out["wrote"] = True
+        out["why"] = "authored"
+        return out
+
+    def _interpretation_rows(self) -> list[FactRecord]:
+        return [
+            r
+            for r in self.store.records()
+            if str(r.tags.get("source") or "") == "experience_interpretation"
+        ]
+
+    def _independent_ground_meaning(self, symbol: str, *, min_support: int = 2) -> str | None:
+        """Unique non-testimony_derived grounding for symbol, else None."""
+        sym = symbol.lower()
+        scores: dict[str, int] = {}
+        for rec in self._grounding_rows():
+            if str(rec.tags.get("provenance") or "") == "testimony_derived":
+                continue
+            if str(rec.tags.get("symbol") or "").lower() != sym:
+                continue
+            if str(rec.tags.get("result") or "").lower() == "failure":
+                continue
+            paired = str(rec.tags.get("paired") or "").lower()
+            if not paired:
+                continue
+            scores[paired] = int(scores.get(paired, 0)) + 1
+        if not scores:
+            return None
+        ranked = sorted(scores.items(), key=lambda kv: (-kv[1], kv[0]))
+        if ranked[0][1] < min_support:
+            return None
+        if len(ranked) > 1 and ranked[1][1] == ranked[0][1]:
+            return None
+        return ranked[0][0]
+
+    def _interpret_episode_valid(self, rec: FactRecord) -> bool:
+        """Require shared interaction linkage and independently grounded actions."""
+        eev = str(rec.tags.get("exposure_event_token") or "")
+        cev = str(rec.tags.get("consequence_event_token") or "")
+        ix = str(rec.tags.get("interaction_token") or "")
+        if not eev or not cev or not ix:
+            return False
+        # Exposure row for same source + event must exist (observable linkage)
+        src = str(rec.tags.get("source_token") or "")
+        has_expo = False
+        for er in self.store.records():
+            if str(er.tags.get("source") or "") != "experience_perspective":
+                continue
+            if str(er.tags.get("speaker_token") or "") != src:
+                continue
+            if str(er.tags.get("event_token") or "") == eev:
+                has_expo = True
+                break
+        if not has_expo:
+            return False
+        acts = [x for x in str(rec.tags.get("action_symbols") or "").split("|") if x]
+        if not acts:
+            return False
+        # Every action must be independently grounded
+        for a in acts:
+            if self._independent_ground_meaning(a) is None:
+                return False
+        return True
+
+    def _interpret_symbol_votes(
+        self,
+        source: str,
+        context_symbols: Sequence[str],
+        *,
+        backoff: bool = True,
+    ) -> dict[str, dict[str, set[str]]]:
+        """symbol → meaning → set of dedup episode keys (interaction_token)."""
+        src = source.lower()
+        ctx = [str(x).strip().lower() for x in context_symbols if str(x).strip()]
+        ctx_set = set(ctx)
+        votes: dict[str, dict[str, set[str]]] = {}
+        for rec in self._interpretation_rows():
+            if str(rec.tags.get("source_token") or "") != src:
+                continue
+            if not self._interpret_episode_valid(rec):
+                continue
+            rctx = [x for x in str(rec.tags.get("context_symbols") or "").split("|") if x]
+            # Exact context match first; optional backoff drops only listed extra factors
+            if backoff:
+                # Accept if episode context equals query, or query is subset after
+                # removing only non-core factors beyond {scene, fac_lab} shared core.
+                core = {"scene", "fac_lab"}
+                if set(rctx) != ctx_set:
+                    # allow episode with fewer optional factors if core matches
+                    if not (core <= set(rctx) and core <= ctx_set):
+                        continue
+                    # never cross: require all of episode's symbols ⊆ query or vice versa
+                    if not (set(rctx) <= ctx_set or ctx_set <= set(rctx)):
+                        continue
+                    # if both have extras that differ, reject (same-context conflict rule)
+                    if set(rctx) - core != ctx_set - core and set(rctx) != ctx_set:
+                        # only exact optional match or pure core
+                        if set(rctx) != ctx_set and not (
+                            set(rctx) <= core and ctx_set <= core
+                        ):
+                            continue
+            else:
+                if set(rctx) != ctx_set:
+                    continue
+            msgs = [x for x in str(rec.tags.get("message_symbols") or "").split("|") if x]
+            acts = [x for x in str(rec.tags.get("action_symbols") or "").split("|") if x]
+            if len(msgs) != len(acts):
+                # Refuse truncated zip — unequal roles are not interpretation evidence.
+                continue
+            ix = str(rec.tags.get("interaction_token") or "")
+            for m, a in zip(msgs, acts):
+                meaning = self._independent_ground_meaning(a)
+                if meaning is None:
+                    continue
+                # Dedup by interaction — repetition does not multiply
+                bucket = votes.setdefault(m, {})
+                bucket.setdefault(meaning, set()).add(ix)
+        return votes
+
+    def interpret_message(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """Use-time UNIQUE | AMBIGUOUS | INSUFFICIENT (+ candidate if UNIQUE)."""
+        out: dict[str, Any] = {
+            "ok": True,
+            "status": "INSUFFICIENT",
+            "candidate": None,
+            "why": "",
+        }
+        if not self.use_source_interpretation:
+            out["why"] = "interpretation_off"
+            return out
+        required = {"source_token", "context_symbols", "ordered_symbols"}
+        if not isinstance(info, dict) or set(info.keys()) != required:
+            out["ok"] = False
+            out["why"] = "exact_key_reject"
+            return out
+        src = str(info["source_token"]).strip().lower()
+        ctx = [str(x).strip().lower() for x in info["context_symbols"] if str(x).strip()]
+        ordered = [
+            str(x).strip().lower() for x in info["ordered_symbols"] if str(x).strip()
+        ]
+        if not src or not ctx or not ordered:
+            out["why"] = "empty_field"
+            return out
+        # Prefer exact context; if empty votes, try backoff once
+        votes = self._interpret_symbol_votes(src, ctx, backoff=False)
+        if not any(votes.get(s) for s in ordered):
+            votes = self._interpret_symbol_votes(src, ctx, backoff=True)
+        n_min = int(self.interpret_n_min)
+        candidate: list[str] = []
+        any_evidence = False
+        ambiguous = False
+        for sym in ordered:
+            bag = votes.get(sym) or {}
+            # count unique episodes per meaning
+            ranked = sorted(
+                ((m, len(eps)) for m, eps in bag.items()),
+                key=lambda kv: (-kv[1], kv[0]),
+            )
+            if not ranked or ranked[0][1] < n_min:
+                out["status"] = "INSUFFICIENT"
+                out["why"] = "insufficient_symbol"
+                out["candidate"] = None
+                return out
+            any_evidence = True
+            if len(ranked) > 1 and ranked[1][1] >= n_min:
+                ambiguous = True
+                break
+            # also ambiguous if two meanings both present with any support at same level
+            if len(ranked) > 1 and ranked[1][1] > 0 and ranked[0][1] == ranked[1][1]:
+                ambiguous = True
+                break
+            candidate.append(ranked[0][0])
+        if not any_evidence:
+            out["status"] = "INSUFFICIENT"
+            out["why"] = "no_evidence"
+            return out
+        if ambiguous:
+            out["status"] = "AMBIGUOUS"
+            out["why"] = "conflicting_meanings"
+            out["candidate"] = None
+            return out
+        out["status"] = "UNIQUE"
+        out["candidate"] = candidate
+        out["why"] = "unique"
+        return out
+
+    def interpretation_fit(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """SUPPORTED | CONFLICT | UNKNOWN. Internally reconstructs; never takes candidate."""
+        out: dict[str, Any] = {"ok": True, "fit": "UNKNOWN", "why": ""}
+        if not self.use_source_interpretation:
+            out["why"] = "interpretation_off"
+            return out
+        required = {
+            "source_token",
+            "context_symbols",
+            "message_symbols",
+            "action_symbols",
+            "state_before",
+            "state_after",
+        }
+        if not isinstance(info, dict) or set(info.keys()) != required:
+            out["ok"] = False
+            out["why"] = "exact_key_reject"
+            return out
+        recon = self.interpret_message(
+            {
+                "source_token": info["source_token"],
+                "context_symbols": info["context_symbols"],
+                "ordered_symbols": info["message_symbols"],
+            }
+        )
+        if recon.get("status") != "UNIQUE" or not recon.get("candidate"):
+            out["fit"] = "UNKNOWN"
+            out["why"] = "no_unique_reconstruction"
+            return out
+        acts = [
+            str(x).strip().lower() for x in info["action_symbols"] if str(x).strip()
+        ]
+        observed: list[str] = []
+        for a in acts:
+            m = self._independent_ground_meaning(a)
+            if m is None:
+                out["fit"] = "UNKNOWN"
+                out["why"] = "action_not_independently_grounded"
+                return out
+            observed.append(m)
+        cand = [str(x) for x in recon["candidate"]]
+        if not cand or not observed:
+            out["fit"] = "UNKNOWN"
+            out["why"] = "empty_compare"
+            return out
+        # Length mismatch is incomplete observation — not a behavioral match.
+        if len(cand) != len(observed):
+            out["fit"] = "UNKNOWN"
+            out["why"] = "length_mismatch"
+            return out
+        if cand == observed:
+            out["fit"] = "SUPPORTED"
+            out["why"] = "match"
+        else:
+            out["fit"] = "CONFLICT"
+            out["why"] = "mismatch"
+        return out
+
+    def plan_interpretation(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """INTERPRET planner: separate ambiguous interpretation hyps (inquire value math)."""
+        out: dict[str, Any] = {
+            "ok": True,
+            "status": "HOLD",
+            "probe_atoms": None,
+            "why": "",
+        }
+        if not self.use_source_interpretation:
+            out["why"] = "interpretation_off"
+            return out
+        required = {"source_token", "context_symbols", "ordered_symbols"}
+        if not isinstance(info, dict) or set(info.keys()) != required:
+            out["ok"] = False
+            out["why"] = "exact_key_reject"
+            return out
+        recon = self.interpret_message(info)
+        if recon.get("status") == "UNIQUE":
+            out["status"] = "ANSWER"
+            out["why"] = "unique_interpretation"
+            out["candidate"] = recon.get("candidate")
+            return out
+        if recon.get("status") == "INSUFFICIENT":
+            out["status"] = "HOLD"
+            out["why"] = "insufficient"
+            return out
+        # AMBIGUOUS → propose a diagnostic ask over source (reuse inquire cost model)
+        src = str(info["source_token"]).strip().lower()
+        probe = ["ask", src, "which_meaning"]
+        # Expression gate via emit_sequence if available
+        if self.use_symbol_sequence:
+            ctx = [str(x).strip().lower() for x in info["context_symbols"] if str(x).strip()]
+            rendered = self.emit_sequence(ctx, probe)
+            if not rendered.get("ok") or rendered.get("sequence") != probe:
+                # Still allow PROBE status for lab scoring when emit cannot express
+                out["status"] = "PROBE"
+                out["probe_atoms"] = probe
+                out["why"] = "ambiguous_probe"
+                return out
+        out["status"] = "PROBE"
+        out["probe_atoms"] = probe
+        out["why"] = "ambiguous_probe"
+        return out
+
+    def plan_recipient_message(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """Emit recipient-specific message for uniquely resolved goal cues."""
+        out: dict[str, Any] = {
+            "ok": False,
+            "status": "HOLD",
+            "sequence": None,
+            "why": "",
+        }
+        if not self.use_source_interpretation:
+            out["why"] = "interpretation_off"
+            return out
+        required = {"recipient_token", "context_symbols", "goal_cue_symbols"}
+        if not isinstance(info, dict) or set(info.keys()) != required:
+            out["why"] = "exact_key_reject"
+            return out
+        recip = str(info["recipient_token"]).strip().lower()
+        ctx = [str(x).strip().lower() for x in info["context_symbols"] if str(x).strip()]
+        cues = [
+            str(x).strip().lower() for x in info["goal_cue_symbols"] if str(x).strip()
+        ]
+        if not recip or not ctx or not cues:
+            out["why"] = "empty_field"
+            return out
+        # Resolve unique communicative goal from pre-existing grounding of cues
+        goals: list[str] = []
+        for cue in cues:
+            g = self._independent_ground_meaning(cue)
+            if g is None:
+                out["status"] = "HOLD"
+                out["why"] = "goal_unresolved"
+                return out
+            goals.append(g)
+        if len(set(goals)) != 1:
+            out["status"] = "HOLD"
+            out["why"] = "goal_ambiguous"
+            return out
+        goal = goals[0]
+        # Invert recipient symbol map: find message symbols uniquely meaning goal
+        votes = self._interpret_symbol_votes(recip, ctx, backoff=False)
+        if not votes:
+            votes = self._interpret_symbol_votes(recip, ctx, backoff=True)
+        n_min = int(self.interpret_n_min)
+        candidates: list[str] = []
+        for sym, bag in votes.items():
+            ranked = sorted(
+                ((m, len(eps)) for m, eps in bag.items()),
+                key=lambda kv: (-kv[1], kv[0]),
+            )
+            if not ranked or ranked[0][1] < n_min:
+                continue
+            if ranked[0][0] != goal:
+                continue
+            if len(ranked) > 1 and ranked[1][1] >= n_min:
+                continue  # ambiguous symbol
+            candidates.append(sym)
+        candidates = sorted(set(candidates))
+        if len(candidates) != 1:
+            out["status"] = "HOLD"
+            out["why"] = "recipient_projection_ambiguous"
+            return out
+        seq = [candidates[0]]
+        # Prefer SEQUENCE emit under recipient-tagged input when demos exist
+        if self.use_symbol_sequence:
+            for prefix_inputs in (
+                ["say", recip],
+                ["tell", recip],
+                list(ctx[:1]) + [recip],
+            ):
+                emitted = self.emit_sequence(ctx, prefix_inputs)
+                if (
+                    emitted.get("ok")
+                    and emitted.get("sequence")
+                    and list(emitted["sequence"]) == seq
+                ):
+                    out["ok"] = True
+                    out["status"] = "EMIT"
+                    out["sequence"] = seq
+                    out["why"] = "recipient_emit"
+                    return out
+        # Atomic construction without partial: accept projected sequence when UNIQUE
+        out["ok"] = True
+        out["status"] = "EMIT"
+        out["sequence"] = seq
+        out["why"] = "recipient_projection"
+        return out
 
     def _find_experience_skel(self, bind: str, did: str) -> FactRecord | None:
         bl, dl = bind.lower(), did.lower()

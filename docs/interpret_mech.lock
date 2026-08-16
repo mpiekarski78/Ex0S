@@ -1,0 +1,111 @@
+{
+  "version": "TM.0.22.INTERPRET.MECH",
+  "lab": "TM.0.22.INTERPRET.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "n_pass": 16,
+  "n_cells": 16,
+  "cells": [
+    {
+      "cell": "U0_flag_off",
+      "ok": true,
+      "actual": "INSUFFICIENT",
+      "why": "pass"
+    },
+    {
+      "cell": "U1_reject",
+      "ok": true,
+      "actual": "exact_key_reject",
+      "why": "exact_key_reject"
+    },
+    {
+      "cell": "U2_unique",
+      "ok": true,
+      "actual": "UNIQUE",
+      "why": "pass"
+    },
+    {
+      "cell": "U3_two_sources",
+      "ok": true,
+      "actual": "ok",
+      "why": "pass"
+    },
+    {
+      "cell": "U4_exposure_alone",
+      "ok": true,
+      "actual": "INSUFFICIENT",
+      "why": "pass"
+    },
+    {
+      "cell": "U5_order",
+      "ok": true,
+      "actual": "UNIQUE",
+      "why": "pass"
+    },
+    {
+      "cell": "U6_world_wrong",
+      "ok": true,
+      "actual": "UNIQUE",
+      "why": "pass"
+    },
+    {
+      "cell": "U7_orthogonal",
+      "ok": true,
+      "actual": "ok",
+      "why": "pass"
+    },
+    {
+      "cell": "U8_compose",
+      "ok": true,
+      "actual": "UNIQUE",
+      "why": "pass"
+    },
+    {
+      "cell": "U9_strip_donor",
+      "ok": true,
+      "actual": "UNIQUE",
+      "why": "pass"
+    },
+    {
+      "cell": "U10_repair",
+      "ok": true,
+      "actual": "ok",
+      "why": "pass"
+    },
+    {
+      "cell": "U11_causality",
+      "ok": true,
+      "actual": "INSUFFICIENT",
+      "why": "pass"
+    },
+    {
+      "cell": "U12_no_amplify",
+      "ok": true,
+      "actual": "UNIQUE",
+      "why": "pass"
+    },
+    {
+      "cell": "U13_strip_anchor",
+      "ok": true,
+      "actual": "UNIQUE",
+      "why": "pass"
+    },
+    {
+      "cell": "U14_ambiguous_conflict",
+      "ok": true,
+      "actual": "AMBIGUOUS",
+      "why": "pass"
+    },
+    {
+      "cell": "U15_backoff_source",
+      "ok": true,
+      "actual": "ok",
+      "why": "pass"
+    }
+  ],
+  "agent_sha": "4117959005f7e0eb84336221f33de0f75029e442b281ea199921eb411fa7e951",
+  "candidate_sha": "10d41e59d6d86614b6b67d03357fd137228815e009d2a53e9ffb4c3e97a5324a",
+  "run_tm022interpret_sha": "02a64aea70da8487e5f24bfb0445edefb99cd8b849e8924bd90eb4fb5a851d4d"
+}

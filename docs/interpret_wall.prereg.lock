@@ -1,0 +1,96 @@
+{
+  "version": "TM.0.22.INTERPRET.WALL.PREREG",
+  "lab": "TM.0.22.INTERPRET.WALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "On frozen make_interpret, a preregistered conversation wall probes two-source meanings, misunderstood instructions, delayed revision, wrong-recipient messages, unfamiliar wording, interruption, copying, claim-understand inconsistency (fit CONFLICT; cause UNKNOWN is scorer/narrative only), deception-indistinguishable cases, and unmarked sudden change. Need not fully pass; first_fail_wall diagnoses the next primitive \u2014 behaviorally evidenced interpretation does not claim subjective comprehension, honesty, or stability.",
+  "fixture": "docs/interpret_fixture.json",
+  "fixture_sha": "cf59d9e837842fbb0e19a3c18839520092cf05abe42ab03223d3e4f2c040fa1b",
+  "fixture_section": "wall",
+  "factory": "experiments.run_tm022interpret.make_interpret",
+  "mechanism_changes_permitted": false,
+  "need_not_fully_pass": true,
+  "probe_ids": [
+    "W_two_meanings",
+    "W_misunderstood_instr",
+    "W_delayed_revision",
+    "W_wrong_recipient",
+    "W_unfamiliar",
+    "W_interrupt",
+    "W_copy",
+    "W_claim_understand",
+    "W_deception_tie",
+    "W_sudden_change"
+  ],
+  "probes": [
+    {
+      "id": "W_two_meanings",
+      "dimension": "interpretation",
+      "note": "two people one word differently",
+      "expect_may_fail": false
+    },
+    {
+      "id": "W_misunderstood_instr",
+      "dimension": "interpretation",
+      "note": "misunderstood instructions",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_delayed_revision",
+      "dimension": "interpretation",
+      "note": "delayed revision",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_wrong_recipient",
+      "dimension": "repair",
+      "note": "message tailored to wrong recipient",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_unfamiliar",
+      "dimension": "ambiguity",
+      "note": "unfamiliar wording",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_interrupt",
+      "dimension": "attention",
+      "note": "topic interrupt return",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_copy",
+      "dimension": "independence",
+      "note": "source copying another",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_claim_understand",
+      "dimension": "honesty",
+      "note": "claims understand but behaves inconsistently",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_deception_tie",
+      "dimension": "honesty",
+      "note": "interpretation indistinguishable from deception",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_sudden_change",
+      "dimension": "stability",
+      "note": "unmarked sudden behavioral change",
+      "expect_may_fail": true
+    }
+  ],
+  "cause_unknown_is_scorer_narrative_only": true,
+  "refuse": [
+    "rewriting this prereg after seeing interpret results",
+    "organism cause-classification ABI",
+    "treating wall green as requiring honesty or stability",
+    "earned_next=true or non-null ex0s"
+  ],
+  "note": "Frozen before candidate.lock. interpret_wall.lock records results only."
+}

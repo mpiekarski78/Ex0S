@@ -1,0 +1,49 @@
+{
+  "version": "TM.0.22.INTERPRET.MECH.PREREG",
+  "lab": "TM.0.22.INTERPRET.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "An opt-in recipe may record opaque source-consequence episodes with pre-outcome interaction tokens, reconstruct factorized first-order interpretations only when later behavior is independently grounded outside INTERPRET, score fit separately from reconstruction sufficiency, and repair via goal_cue_symbols under frozen SEQUENCE \u2014 without subjective comprehension, world-truth from another map, honesty, stability, Jaccard, or derived statuses in S.",
+  "flag": "use_source_interpretation",
+  "flag_default": false,
+  "requires": "use_source_perspective",
+  "observation_abi": "observe_source_consequence",
+  "source": "experience_interpretation",
+  "reconstruction_statuses": [
+    "UNIQUE",
+    "AMBIGUOUS",
+    "INSUFFICIENT"
+  ],
+  "fit_statuses": [
+    "SUPPORTED",
+    "CONFLICT",
+    "UNKNOWN"
+  ],
+  "independent_anchor_required": true,
+  "no_result_field": true,
+  "no_jaccard": true,
+  "no_derived_statuses_in_S": true,
+  "no_newest_row_wins": true,
+  "use_time_recompute": true,
+  "n_min": 2,
+  "lambda": 4,
+  "world_separation": "source_relative_only",
+  "repair_abi": "plan_recipient_message",
+  "repair_goal": "goal_cue_symbols",
+  "fixture": "docs/interpret_fixture.json",
+  "fixture_sha": "cf59d9e837842fbb0e19a3c18839520092cf05abe42ab03223d3e4f2c040fa1b",
+  "contract": "docs/interpret_evidence_contract.md",
+  "refuse": [
+    "subjective comprehension",
+    "honesty_score",
+    "cause ABI",
+    "result field",
+    "injected candidate into fit",
+    "Jaccard",
+    "derived statuses in S",
+    "promoting interpretation to world ANSWER",
+    "silently changing make_perspective / PERSPECTIVE locks",
+    "earned_next=true or non-null ex0s"
+  ]
+}

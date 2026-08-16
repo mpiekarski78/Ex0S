@@ -1,0 +1,36 @@
+{
+  "version": "TM.0.22.INTERPRET.CANDIDATE",
+  "lab": "TM.0.22.INTERPRET.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "flag": "use_source_interpretation",
+  "source": "experience_interpretation",
+  "observation_abi": "observe_source_consequence",
+  "reconstruction_statuses": [
+    "UNIQUE",
+    "AMBIGUOUS",
+    "INSUFFICIENT"
+  ],
+  "fit_statuses": [
+    "SUPPORTED",
+    "CONFLICT",
+    "UNKNOWN"
+  ],
+  "independent_anchor_required": true,
+  "no_jaccard": true,
+  "no_derived_statuses_in_S": true,
+  "world_separation": "source_relative_only",
+  "repair_goal": "goal_cue_symbols",
+  "factory": "experiments.run_tm022interpret.make_interpret",
+  "agent_sha": "8013156bbec8a80937a8b2ee3f3f9301a7a85e3b93353601b88ae90a3570eb6e",
+  "observe_source_consequence_sha": "4b4d28c1e222c88c3eb90f59558c74de1064ad038a75dcd167237bc4a827dee8",
+  "interpret_message_sha": "c5555f3474dc33cf53ccf6853935d4444eb73f1252a68719440869aa28ea715a",
+  "interpretation_fit_sha": "cea909c06b24943c9669d075d7adb80d594eef0897fb8df9ba603b477601e9dc",
+  "make_interpret_sha": "f4b32b1fd08de642e591d8b32f3abb92e3a949df67fe7fbaa5634a6bea8c25c1",
+  "run_tm022interpret_sha": "33d51f5dbd1199dea850624b24833fb158800711f2259e2a01b20c3633f15a95",
+  "interpret_mech_prereg_sha": "3dac78b8e7117514a11613099d3c56926f52650e8be8c143d93431ac43a17877",
+  "interpret_baseline_sha": "84c23b08444ba4f4f4741dc5d3a8b81dfc33935f1ea87f496da4396c6f75e349",
+  "interpret_wall_prereg_sha": "4d41c0c1f83e00a923def6c340abba4ab53dd7a37c2f00d2ae931d287f4ef567",
+  "note": "Pinned after unscored ABI smoke, before scored cells. Preserve as v1 if audit rewrites agent."
+}

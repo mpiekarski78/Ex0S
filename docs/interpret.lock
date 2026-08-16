@@ -1,0 +1,299 @@
+{
+  "version": "TM.0.22.INTERPRET",
+  "lab": "TM.0.22.INTERPRET",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "last_stage_clear": "J16",
+  "life_last_stage_clear": "J15",
+  "first_fail_stage": null,
+  "first_fail": null,
+  "main_ok": true,
+  "twin_ok": true,
+  "capacity": {
+    "ok": true,
+    "lanes": {
+      "sources_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 2,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 20,
+              "wall_s": 0.02108848188072443
+            }
+          },
+          {
+            "rung": 8,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 56,
+              "wall_s": 0.042795540764927864
+            }
+          },
+          {
+            "rung": 32,
+            "ok": true,
+            "metric_only": true,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 200,
+              "wall_s": 0.3473568828776479
+            }
+          },
+          {
+            "rung": 128,
+            "ok": true,
+            "metric_only": true,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 776,
+              "wall_s": 5.110695909708738
+            }
+          }
+        ]
+      },
+      "mappings_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 4,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 32,
+              "wall_s": 0.02637373935431242
+            }
+          },
+          {
+            "rung": 16,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 104,
+              "wall_s": 0.10348587855696678
+            }
+          },
+          {
+            "rung": 64,
+            "ok": true,
+            "metric_only": true,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 392,
+              "wall_s": 1.3082344885915518
+            }
+          },
+          {
+            "rung": 256,
+            "ok": true,
+            "metric_only": true,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 1544,
+              "wall_s": 20.750279202125967
+            }
+          }
+        ]
+      },
+      "length_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 1,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 14,
+              "wall_s": 0.01861406210809946
+            }
+          },
+          {
+            "rung": 2,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 20,
+              "wall_s": 0.01853281445801258
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 32,
+              "wall_s": 0.023564325645565987
+            }
+          },
+          {
+            "rung": 8,
+            "ok": true,
+            "metric_only": true,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 56,
+              "wall_s": 0.0411206753924489
+            }
+          },
+          {
+            "rung": 16,
+            "ok": true,
+            "metric_only": true,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 104,
+              "wall_s": 0.1024446776136756
+            }
+          }
+        ]
+      },
+      "age_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 100,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 114,
+              "wall_s": 0.11659462098032236
+            }
+          }
+        ]
+      },
+      "alternatives_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 2,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 20,
+              "wall_s": 0.02356674149632454
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 32,
+              "wall_s": 0.023208950646221638
+            }
+          },
+          {
+            "rung": 8,
+            "ok": true,
+            "metric_only": true,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 56,
+              "wall_s": 0.04061476979404688
+            }
+          },
+          {
+            "rung": 16,
+            "ok": true,
+            "metric_only": true,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 104,
+              "wall_s": 0.10245493426918983
+            }
+          }
+        ]
+      },
+      "correction_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 1,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 20,
+              "wall_s": 0.018015708774328232
+            }
+          },
+          {
+            "rung": 2,
+            "ok": true,
+            "metric_only": false,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 32,
+              "wall_s": 0.023375830613076687
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "metric_only": true,
+            "scored_ok": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 56,
+              "wall_s": 0.040275489911437035
+            }
+          }
+        ]
+      }
+    }
+  },
+  "fixture_sha": "cf59d9e837842fbb0e19a3c18839520092cf05abe42ab03223d3e4f2c040fa1b",
+  "agent_sha": "4117959005f7e0eb84336221f33de0f75029e442b281ea199921eb411fa7e951",
+  "candidate_sha": "10d41e59d6d86614b6b67d03357fd137228815e009d2a53e9ffb4c3e97a5324a",
+  "mech_sha": "e5ead0359c2af6316c34bf677e353c232dce02d1b7bb0988b6b5abdaa8a2740a",
+  "run_tm022interpret_sha": "02a64aea70da8487e5f24bfb0445edefb99cd8b849e8924bd90eb4fb5a851d4d",
+  "bounded_claim": "Ex0S reconstructed first-order source-specific interpretations of symbolic messages from independently grounded observable learning and behavior.",
+  "refuse": [
+    "subjective comprehension",
+    "honesty_score",
+    "cause ABI",
+    "result field",
+    "earned_next=true or non-null ex0s"
+  ]
+}

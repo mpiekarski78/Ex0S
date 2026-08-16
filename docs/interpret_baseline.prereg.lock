@@ -1,0 +1,24 @@
+{
+  "version": "TM.0.22.INTERPRET.BASELINE.PREREG",
+  "lab": "TM.0.22.INTERPRET",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "not_a_product_stamp": true,
+  "preregistered_claim": "Frozen PERSPECTIVE (make_perspective, interpretation off) does not reconstruct source-specific interpretations \u2014 interpret_message remains INSUFFICIENT; PERSPECTIVE/SEQUENCE/INQUIRE/RELIABILITY behavior unchanged.",
+  "fixture": "docs/interpret_fixture.json",
+  "fixture_sha": "cf59d9e837842fbb0e19a3c18839520092cf05abe42ab03223d3e4f2c040fa1b",
+  "phase_a": {
+    "factory": "experiments.run_tm021perspective.make_perspective",
+    "agent_edits_permitted": false,
+    "use_source_interpretation": false
+  },
+  "prior_lock_shas": {
+    "perspective.lock": "97851dff663a467f88fe3d9e9398b3421e23555f28e2b301b873e4e906e86c70"
+  },
+  "refuse": [
+    "editing agent.py in Phase A",
+    "honesty_score",
+    "earned_next=true or non-null ex0s"
+  ]
+}

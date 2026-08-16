@@ -1912,3 +1912,13 @@ Phase A baseline PASS. Perspective unit cells **9/9**. Life cleared through **P1
 
 Prereg: [`perspective_baseline.prereg.lock`](perspective_baseline.prereg.lock), [`perspective_mech.prereg.lock`](perspective_mech.prereg.lock), [`perspective_wall.prereg.lock`](perspective_wall.prereg.lock). Contract: [`perspective_evidence_contract.md`](perspective_evidence_contract.md). Fixture: [`perspective_fixture.json`](perspective_fixture.json). Locks: [`perspective_baseline.lock`](perspective_baseline.lock), [`perspective.candidate.lock`](perspective.candidate.lock), [`perspective_mech.lock`](perspective_mech.lock), [`perspective.lock`](perspective.lock), [`perspective_wall.lock`](perspective_wall.lock). Apparatus: `experiments/run_tm021perspective.py`. Results: [`tm021perspective_results.md`](tm021perspective_results.md).
 
+## TM.0.22.INTERPRET — behaviorally evidenced interpretation
+
+Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=null`. Not 0.0.005 / FAMILY / Ex0S 1.0. Earns reconstruction of first-order source-specific interpretations from **independently grounded** opaque consequence histories — never subjective comprehension, world-truth from another’s map, honesty, or stability.
+
+Stacks on frozen PERSPECTIVE via `make_perspective`. Factory `make_interpret` enables `use_source_interpretation`. Default `make_perspective` / PERSPECTIVE locks unchanged. Dual outputs: `interpret_message` → UNIQUE|AMBIGUOUS|INSUFFICIENT; `interpretation_fit` reconstructs internally → SUPPORTED|CONFLICT|UNKNOWN. Repair via `goal_cue_symbols`. No Jaccard; no derived statuses in S; no `result` field.
+
+Phase A baseline PASS. Interpret unit cells **16/16**. Life cleared through **J15** (J16 = capacity launch). Wall: scored scripts pass; `first_fail_wall=W_claim_understand` → next primitive **honesty**.
+
+Prereg: [`interpret_baseline.prereg.lock`](interpret_baseline.prereg.lock), [`interpret_mech.prereg.lock`](interpret_mech.prereg.lock), [`interpret_wall.prereg.lock`](interpret_wall.prereg.lock). Contract: [`interpret_evidence_contract.md`](interpret_evidence_contract.md). Fixture: [`interpret_fixture.json`](interpret_fixture.json). Locks: [`interpret_baseline.lock`](interpret_baseline.lock), [`interpret.candidate.lock`](interpret.candidate.lock), [`interpret_mech.lock`](interpret_mech.lock), [`interpret.lock`](interpret.lock), [`interpret_wall.lock`](interpret_wall.lock). Apparatus: `experiments/run_tm022interpret.py`. Results: [`tm022interpret_results.md`](tm022interpret_results.md).
+
