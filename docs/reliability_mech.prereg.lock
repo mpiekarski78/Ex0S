@@ -1,0 +1,46 @@
+{
+  "version": "TM.0.20.RELIABILITY.MECH.PREREG",
+  "lab": "TM.0.20.RELIABILITY.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "An opt-in recipe may record opaque-channel testimony, compare claim_atoms to independently observed world atoms (provenance \u2208 {direct, experiment, state_read}), append experience_reliability rows, recompute bounded source_evidence_margin (\u03bb=4, n_min=2), weight non-duplicated later conflicts, and keep inquiry on minimax value/cost \u2014 without host confirm|contradict, trust_score, or collapsing honesty/access/independence/intent into one score.",
+  "flag": "use_source_reliability",
+  "flag_default": false,
+  "requires": "use_inquire",
+  "sources": [
+    "experience_testimony",
+    "experience_reliability"
+  ],
+  "margin_name": "source_evidence_margin",
+  "observation_abi": "observe_testimony",
+  "claim_atoms_abi": true,
+  "host_confirm_forbidden": true,
+  "provenance_eligible": [
+    "direct",
+    "experiment",
+    "state_read"
+  ],
+  "provenance_ineligible": [
+    "testimony_derived"
+  ],
+  "lambda": 4,
+  "n_min": 2,
+  "jaccard": 0.5,
+  "live_claim_dedup": "speaker_token x cue x hypothesis x context_projection",
+  "r7": "cumulative_recalibration_append_only",
+  "r10_liveness": "opt_in_via_use_source_reliability_only",
+  "inquiry_strategy": "minimax_value_then_cost",
+  "contract": "docs/reliability_evidence_contract.md",
+  "fixture": "docs/reliability_fixture.json",
+  "refuse": [
+    "trust_score",
+    "host confirm|contradict",
+    "majority-as-verification",
+    "fixed inquire priority list",
+    "silently changing make_inquire / INQUIRE locks",
+    "collapsing six social dimensions",
+    "earned_next=true or non-null ex0s"
+  ],
+  "fixture_sha": "50149d8c1c59bb3d275a5c20a1af92dc370c2156bf0295359b2d2d42cbee5ac5"
+}

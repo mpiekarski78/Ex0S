@@ -1,0 +1,51 @@
+{
+  "version": "TM.0.20.RELIABILITY.MECH",
+  "lab": "TM.0.20.RELIABILITY.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "n_pass": 6,
+  "n_cells": 6,
+  "cells": [
+    {
+      "cell": "U0_flag_off",
+      "ok": true,
+      "actual": "HOLD",
+      "why": "pass"
+    },
+    {
+      "cell": "U1_reject",
+      "ok": true,
+      "actual": "exact_key_reject",
+      "why": "exact_key_reject"
+    },
+    {
+      "cell": "U2_weight_resolves",
+      "ok": true,
+      "actual": "ANSWER",
+      "why": "pass"
+    },
+    {
+      "cell": "U3_agree_not_verify",
+      "ok": true,
+      "actual": "HOLD",
+      "why": "pass"
+    },
+    {
+      "cell": "U4_insufficient_n",
+      "ok": true,
+      "actual": "HOLD",
+      "why": "pass"
+    },
+    {
+      "cell": "U5_isolation",
+      "ok": true,
+      "actual": "ANSWER",
+      "why": "pass"
+    }
+  ],
+  "agent_sha": "92ae7faf3e3c838c03282e53e71697edad6b1fd1639dba0ea15f014e4444c714",
+  "candidate_sha": "b8b70e56ae867a6aa86d3096771112e9b7e32a5d8d7c02d07006917deebfa3f3",
+  "run_tm020reliability_sha": "60b5478fa8b77a0a4b68766360150b90ba68cc09357d78c8395842644f833194"
+}

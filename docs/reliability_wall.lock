@@ -1,0 +1,117 @@
+{
+  "version": "TM.0.20.RELIABILITY.WALL",
+  "lab": "TM.0.20.RELIABILITY.WALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": false,
+  "scored_probes_ok": true,
+  "need_not_fully_pass": true,
+  "first_fail_wall": {
+    "id": "W_competent_liar",
+    "ok": false,
+    "actual": "diagnostic_fail",
+    "note": "accurate history then knowingly false report",
+    "dimension": "honesty"
+  },
+  "next_primitive_hint": "honesty",
+  "probes": [
+    {
+      "id": "W_competent_liar",
+      "ok": false,
+      "actual": "diagnostic_fail",
+      "note": "accurate history then knowingly false report",
+      "dimension": "honesty"
+    },
+    {
+      "id": "W_honest_no_access",
+      "ok": null,
+      "actual": "not_run",
+      "note": "honest channel that could not observe",
+      "dimension": "access"
+    },
+    {
+      "id": "W_copy_cluster",
+      "ok": null,
+      "actual": "not_run",
+      "note": "multiple sources copying one origin",
+      "dimension": "independence"
+    },
+    {
+      "id": "W_sudden_change",
+      "ok": null,
+      "actual": "not_run",
+      "note": "historically accurate source abrupt change",
+      "dimension": "stability"
+    },
+    {
+      "id": "W_helpful_incompetent",
+      "ok": null,
+      "actual": "not_run",
+      "note": "helpful but systematically wrong",
+      "dimension": "competence"
+    },
+    {
+      "id": "W_accurate_manipulator",
+      "ok": null,
+      "actual": "not_run",
+      "note": "accurate while steering harmful choice",
+      "dimension": "intent"
+    },
+    {
+      "id": "W_indistinguishable_cause",
+      "ok": true,
+      "actual": "pass",
+      "note": "tied explanations \u2192 HOLD / cause unknown",
+      "dimension": "meta"
+    },
+    {
+      "id": "W_alias_identity",
+      "ok": null,
+      "actual": "not_run",
+      "note": "channel-token / identity uncertainty",
+      "dimension": "identity"
+    },
+    {
+      "id": "W_unverifiable",
+      "ok": null,
+      "actual": "not_run",
+      "note": "unverifiable claims",
+      "dimension": "verification"
+    },
+    {
+      "id": "W_post_inquiry_flip",
+      "ok": null,
+      "actual": "not_run",
+      "note": "strategic post-inquiry flip",
+      "dimension": "stability"
+    },
+    {
+      "id": "W_all_wrong",
+      "ok": null,
+      "actual": "not_run",
+      "note": "all confidently wrong",
+      "dimension": "competence"
+    },
+    {
+      "id": "W_old_vs_unseen_context",
+      "ok": null,
+      "actual": "not_run",
+      "note": "reliable old context vs unseen",
+      "dimension": "context_transfer"
+    },
+    {
+      "id": "W_circular_testimony",
+      "ok": true,
+      "actual": "pass",
+      "note": "circular testimony",
+      "dimension": "verification"
+    }
+  ],
+  "fixture_sha": "50149d8c1c59bb3d275a5c20a1af92dc370c2156bf0295359b2d2d42cbee5ac5",
+  "reliability_wall_prereg_sha": "346b18ca955a281cdcb27f46247b8c4428fc2c55f3d4b37964b9104fb4869d43",
+  "reliability_lock_sha": "24e15bf78486873b8d959af0313aac4f372de61d4eff33bc5fe9ca4f77880615",
+  "agent_sha": "92ae7faf3e3c838c03282e53e71697edad6b1fd1639dba0ea15f014e4444c714",
+  "run_tm020reliability_sha": "60b5478fa8b77a0a4b68766360150b90ba68cc09357d78c8395842644f833194",
+  "note": "Results only. Predictive accuracy earned in-life; multi-factor source model remains open. not_run probes are not first_fail diagnostics. Do not rewrite wall prereg."
+}

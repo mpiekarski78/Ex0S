@@ -1,0 +1,244 @@
+{
+  "version": "TM.0.20.RELIABILITY",
+  "lab": "TM.0.20.RELIABILITY",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "last_stage_clear": "R12",
+  "life_last_stage_clear": "R12",
+  "first_fail_stage": null,
+  "first_fail": null,
+  "failure_family": null,
+  "main_ok": true,
+  "twin_ok": true,
+  "capacity": {
+    "ok": true,
+    "lanes": {
+      "sources_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 2,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 26,
+              "n_plan_timings": 1,
+              "p50_plan_s": 3.812834620475769e-05,
+              "p95_plan_s": 3.812834620475769e-05,
+              "wall_s": 0.004661880433559418,
+              "rows_examined": 26
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 40,
+              "n_plan_timings": 1,
+              "p50_plan_s": 5.731172859668732e-05,
+              "p95_plan_s": 5.731172859668732e-05,
+              "wall_s": 0.012219413183629513,
+              "rows_examined": 40
+            }
+          },
+          {
+            "rung": 16,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 124,
+              "n_plan_timings": 1,
+              "p50_plan_s": 0.00020316801965236664,
+              "p95_plan_s": 0.00020316801965236664,
+              "wall_s": 0.12054227013140917,
+              "rows_examined": 124
+            }
+          },
+          {
+            "rung": 64,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 460,
+              "n_plan_timings": 1,
+              "p50_plan_s": 0.0018717637285590172,
+              "p95_plan_s": 0.0018717637285590172,
+              "wall_s": 1.7129594227299094,
+              "rows_examined": 460
+            }
+          }
+        ]
+      },
+      "verified_claims_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 10,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 74,
+              "n_plan_timings": 1,
+              "p50_plan_s": 6.579142063856125e-05,
+              "p95_plan_s": 6.579142063856125e-05,
+              "wall_s": 0.04286191426217556,
+              "rows_examined": 74
+            }
+          },
+          {
+            "rung": 100,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 614,
+              "n_plan_timings": 1,
+              "p50_plan_s": 0.00036044977605342865,
+              "p95_plan_s": 0.00036044977605342865,
+              "wall_s": 3.0594085389748216,
+              "rows_examined": 614
+            }
+          }
+        ]
+      },
+      "contexts_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 1,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 20,
+              "n_plan_timings": 1,
+              "p50_plan_s": 3.860890865325928e-05,
+              "p95_plan_s": 3.860890865325928e-05,
+              "wall_s": 0.0024609481915831566,
+              "rows_examined": 20
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 40,
+              "n_plan_timings": 2,
+              "p50_plan_s": 5.79366460442543e-05,
+              "p95_plan_s": 7.331278175115585e-05,
+              "wall_s": 0.012189284898340702,
+              "rows_examined": 40
+            }
+          },
+          {
+            "rung": 16,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 112,
+              "n_plan_timings": 2,
+              "p50_plan_s": 0.00011807261034846306,
+              "p95_plan_s": 0.00015564821660518646,
+              "wall_s": 0.09922226518392563,
+              "rows_examined": 112
+            }
+          }
+        ]
+      },
+      "revisions_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 1,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 20,
+              "n_plan_timings": 1,
+              "p50_plan_s": 3.702379763126373e-05,
+              "p95_plan_s": 3.702379763126373e-05,
+              "wall_s": 0.002325795590877533,
+              "rows_examined": 20
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 38,
+              "n_plan_timings": 1,
+              "p50_plan_s": 8.503999561071396e-05,
+              "p95_plan_s": 8.503999561071396e-05,
+              "wall_s": 0.010919186286628246,
+              "rows_examined": 38
+            }
+          },
+          {
+            "rung": 16,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 110,
+              "n_plan_timings": 1,
+              "p50_plan_s": 0.00017209723591804504,
+              "p95_plan_s": 0.00017209723591804504,
+              "wall_s": 0.09489301033318043,
+              "rows_examined": 110
+            }
+          }
+        ]
+      },
+      "age_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 100,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 220,
+              "n_plan_timings": 1,
+              "p50_plan_s": 0.00014889612793922424,
+              "p95_plan_s": 0.00014889612793922424,
+              "wall_s": 0.3689397983253002,
+              "rows_examined": 220
+            }
+          }
+        ]
+      }
+    }
+  },
+  "fixture_sha": "50149d8c1c59bb3d275a5c20a1af92dc370c2156bf0295359b2d2d42cbee5ac5",
+  "agent_sha": "92ae7faf3e3c838c03282e53e71697edad6b1fd1639dba0ea15f014e4444c714",
+  "candidate_sha": "b8b70e56ae867a6aa86d3096771112e9b7e32a5d8d7c02d07006917deebfa3f3",
+  "mech_sha": "f3405c53fc50477e6f5e003bf18f0ed6d2089de979736e82dd1af9e86ab71ada",
+  "run_tm020reliability_sha": "60b5478fa8b77a0a4b68766360150b90ba68cc09357d78c8395842644f833194",
+  "bounded_claim": "Context-conditioned predictive reliability learned from independently verified outcomes.",
+  "refuse": [
+    "trust_score",
+    "host confirm|contradict",
+    "collapsing six social dimensions",
+    "earned_next=true or non-null ex0s"
+  ]
+}

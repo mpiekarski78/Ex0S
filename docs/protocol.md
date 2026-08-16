@@ -1892,3 +1892,13 @@ Phase A baseline PASS. Inquire unit cells **6/6**. Life cleared through **I12** 
 
 Prereg: [`inquire_baseline.prereg.lock`](inquire_baseline.prereg.lock), [`inquire_mech.prereg.lock`](inquire_mech.prereg.lock), [`inquire_wall.prereg.lock`](inquire_wall.prereg.lock). Contract: [`inquire_evidence_contract.md`](inquire_evidence_contract.md). Fixture: [`inquire_fixture.json`](inquire_fixture.json). Locks: [`inquire_baseline.lock`](inquire_baseline.lock), [`inquire.candidate.lock`](inquire.candidate.lock), [`inquire_mech.lock`](inquire_mech.lock), [`inquire.lock`](inquire.lock), [`inquire_wall.lock`](inquire_wall.lock). Apparatus: `experiments/run_tm019inquire.py`. Results: [`tm019inquire_results.md`](tm019inquire_results.md).
 
+## TM.0.20.RELIABILITY — evidence-source calibration
+
+Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=null`. Not 0.0.005 / FAMILY / Ex0S 1.0. Earns only context-conditioned **predictive accuracy** (`source_evidence_margin`) — never a `trust_score`. Host never supplies `confirm|contradict`. Six social-cognition dimensions (competence/honesty/access/stability/independence/intent) stay separate; wall diagnoses them only.
+
+Stacks on frozen INQUIRE via `make_inquire`. Factory `make_reliability` enables `use_source_reliability` + opt-in R10 liveness. Default `make_inquire` / INQUIRE locks unchanged. One package: (A) baseline conflict HOLD with reliability off; (B) `observe_testimony` / organism-derived compare / bounded margin (λ=4, n_min=2, Jaccard 0.5) / live-claim dedup; (C) R0–R12 + twin + unconfounded capacity; wall preregistered before candidate score.
+
+Phase A baseline PASS. Reliability unit cells **6/6**. Life cleared through **R12**. Wall: scored scripts pass; `first_fail_wall=W_competent_liar` → next primitive **honesty**.
+
+Prereg: [`reliability_baseline.prereg.lock`](reliability_baseline.prereg.lock), [`reliability_mech.prereg.lock`](reliability_mech.prereg.lock), [`reliability_wall.prereg.lock`](reliability_wall.prereg.lock). Contract: [`reliability_evidence_contract.md`](reliability_evidence_contract.md). Fixture: [`reliability_fixture.json`](reliability_fixture.json). Locks: [`reliability_baseline.lock`](reliability_baseline.lock), [`reliability.candidate.lock`](reliability.candidate.lock), [`reliability_mech.lock`](reliability_mech.lock), [`reliability.lock`](reliability.lock), [`reliability_wall.lock`](reliability_wall.lock). Apparatus: `experiments/run_tm020reliability.py`. Results: [`tm020reliability_results.md`](tm020reliability_results.md).
+

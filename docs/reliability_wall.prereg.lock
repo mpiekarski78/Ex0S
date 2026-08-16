@@ -1,0 +1,124 @@
+{
+  "version": "TM.0.20.RELIABILITY.WALL.PREREG",
+  "lab": "TM.0.20.RELIABILITY.WALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "On frozen make_reliability, a preregistered wall probes the six social-cognition dimensions (competence/honesty/access/stability/independence/intent) plus indistinguishable-cause HOLD, aliases, unverifiable claims, and circular testimony. Need not fully pass; first_fail_wall diagnoses the next primitive \u2014 predictive accuracy does not claim to solve social understanding.",
+  "fixture": "docs/reliability_fixture.json",
+  "fixture_sha": "50149d8c1c59bb3d275a5c20a1af92dc370c2156bf0295359b2d2d42cbee5ac5",
+  "fixture_section": "wall",
+  "factory": "experiments.run_tm020reliability.make_reliability",
+  "mechanism_changes_permitted": false,
+  "need_not_fully_pass": true,
+  "social_dimensions": [
+    "competence",
+    "honesty",
+    "access",
+    "stability",
+    "independence",
+    "intent"
+  ],
+  "probe_ids": [
+    "W_competent_liar",
+    "W_honest_no_access",
+    "W_copy_cluster",
+    "W_sudden_change",
+    "W_helpful_incompetent",
+    "W_accurate_manipulator",
+    "W_indistinguishable_cause",
+    "W_alias_identity",
+    "W_unverifiable",
+    "W_post_inquiry_flip",
+    "W_all_wrong",
+    "W_old_vs_unseen_context",
+    "W_circular_testimony"
+  ],
+  "probes": [
+    {
+      "id": "W_competent_liar",
+      "dimension": "honesty",
+      "note": "accurate history then knowingly false report",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_honest_no_access",
+      "dimension": "access",
+      "note": "honest channel that could not observe",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_copy_cluster",
+      "dimension": "independence",
+      "note": "multiple sources copying one origin",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_sudden_change",
+      "dimension": "stability",
+      "note": "historically accurate source abrupt change",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_helpful_incompetent",
+      "dimension": "competence",
+      "note": "helpful but systematically wrong",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_accurate_manipulator",
+      "dimension": "intent",
+      "note": "accurate while steering harmful choice",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_indistinguishable_cause",
+      "dimension": "meta",
+      "note": "tied explanations \u2192 HOLD / cause unknown",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_alias_identity",
+      "dimension": "identity",
+      "note": "channel-token / identity uncertainty",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_unverifiable",
+      "dimension": "verification",
+      "note": "unverifiable claims",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_post_inquiry_flip",
+      "dimension": "stability",
+      "note": "strategic post-inquiry flip",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_all_wrong",
+      "dimension": "competence",
+      "note": "all confidently wrong",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_old_vs_unseen_context",
+      "dimension": "context_transfer",
+      "note": "reliable old context vs unseen",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_circular_testimony",
+      "dimension": "verification",
+      "note": "circular testimony",
+      "expect_may_fail": true
+    }
+  ],
+  "refuse": [
+    "rewriting this prereg after seeing reliability results",
+    "adding mechanism during wall",
+    "treating wall green as requiring honesty/access/intent primitives",
+    "earned_next=true or non-null ex0s"
+  ],
+  "note": "Frozen before candidate.lock. reliability_wall.lock records results only. Predictive accuracy \u2260 social understanding."
+}

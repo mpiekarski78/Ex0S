@@ -1,0 +1,29 @@
+{
+  "version": "TM.0.20.RELIABILITY.CANDIDATE",
+  "lab": "TM.0.20.RELIABILITY.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "flag": "use_source_reliability",
+  "sources": [
+    "experience_testimony",
+    "experience_reliability"
+  ],
+  "margin_name": "source_evidence_margin",
+  "observation_abi": "observe_testimony",
+  "plan_abi": "plan_inquiry",
+  "factory": "experiments.run_tm020reliability.make_reliability",
+  "lambda": 4,
+  "n_min": 2,
+  "jaccard": 0.5,
+  "r10_liveness": "opt-in via use_source_reliability only",
+  "agent_sha": "92ae7faf3e3c838c03282e53e71697edad6b1fd1639dba0ea15f014e4444c714",
+  "observe_testimony_sha": "ccd2b287b2724670f56c8f97458ee36b4d855e1378893db7ddcbe4aa50f670b2",
+  "source_evidence_margin_sha": "bb2d7299f690ede92f26e53b9195789e40cb35aee8825df3316a46f131ed0c55",
+  "make_reliability_sha": "b1788cc233f1c534600797a25b6b54a6e71d864cd58dfb498c9c3df68f8d28db",
+  "run_tm020reliability_sha": "60b5478fa8b77a0a4b68766360150b90ba68cc09357d78c8395842644f833194",
+  "reliability_mech_prereg_sha": "7dfb3f88cc5f1272e10da904b79eca61054aff133a57e0c1097ec4f23663d72d",
+  "reliability_baseline_sha": "f37bb73320a32fa018e8d1495eafa9fb786c2a5205d203b0f271aad827a5c69a",
+  "reliability_wall_prereg_sha": "346b18ca955a281cdcb27f46247b8c4428fc2c55f3d4b37964b9104fb4869d43",
+  "note": "Pinned after unscored ABI smoke, before scored cells. Preserve as v1 if audit rewrites agent."
+}

@@ -118,6 +118,7 @@ class ThreeMemoryAgent:
         use_symbol_ground: bool = False,
         use_symbol_sequence: bool = False,
         use_inquire: bool = False,
+        use_source_reliability: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -243,6 +244,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_symbol_sequence requires use_symbol_ground")
         if use_inquire and not use_symbol_sequence:
             raise ValueError("use_inquire requires use_symbol_sequence")
+        if use_source_reliability and not use_inquire:
+            raise ValueError("use_source_reliability requires use_inquire")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -321,6 +324,11 @@ class ThreeMemoryAgent:
         self.use_symbol_ground = use_symbol_ground
         self.use_symbol_sequence = use_symbol_sequence
         self.use_inquire = use_inquire
+        self.use_source_reliability = use_source_reliability
+        self.use_inquire_liveness = bool(use_source_reliability)
+        self.reliability_lambda = 4
+        self.reliability_n_min = 2
+        self.reliability_jaccard = 0.5
         self.inquire_budget = 8
         self.inquire_cost_ask = 2
         self.inquire_cost_experiment = 5
@@ -456,6 +464,7 @@ class ThreeMemoryAgent:
             use_symbol_ground=self.use_symbol_ground,
             use_symbol_sequence=self.use_symbol_sequence,
             use_inquire=self.use_inquire,
+            use_source_reliability=self.use_source_reliability,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -1822,8 +1831,15 @@ class ThreeMemoryAgent:
             out["why"] = "bad_info"
             return out
         if set(info.keys()) != required:
-            out["why"] = "exact_key_reject"
-            return out
+            # Reliability path: optional provenance for verification-eligible rows
+            if (
+                self.use_source_reliability
+                and set(info.keys()) == required | {"provenance"}
+            ):
+                pass
+            else:
+                out["why"] = "exact_key_reject"
+                return out
         symbol_raw = info["symbol"]
         paired_raw = info["paired"]
         trial_raw = info["trial_id"]
@@ -1841,6 +1857,12 @@ class ThreeMemoryAgent:
         if result not in allowed_results:
             out["why"] = "result_reject"
             return out
+        provenance = None
+        if "provenance" in info:
+            provenance = str(info["provenance"]).strip().lower()
+            if provenance not in {"direct", "experiment", "state_read", "testimony_derived"}:
+                out["why"] = "provenance_reject"
+                return out
         tags: dict[str, Any] = {
             "symbol": symbol,
             "paired": paired,
@@ -1854,6 +1876,8 @@ class ThreeMemoryAgent:
             "support": 1,
             "contradiction": 0,
         }
+        if provenance is not None:
+            tags["provenance"] = provenance
         for banned in (
             "noun",
             "verb",
@@ -1883,6 +1907,12 @@ class ThreeMemoryAgent:
         out["ok"] = True
         out["wrote"] = True
         out["why"] = "authored"
+        if self.use_source_reliability and provenance in {
+            "direct",
+            "experiment",
+            "state_read",
+        }:
+            self._reliability_reconcile_from_ground(rec)
         return out
 
     def _grounding_rows(self) -> list[FactRecord]:
@@ -1893,9 +1923,15 @@ class ThreeMemoryAgent:
         ]
 
     def _grounding_support(self) -> dict[str, dict[str, int]]:
-        """symbol → paired → net support. success/correction +1; failure −1."""
+        """symbol → paired → net support. success/correction +1; failure −1.
+
+        Rows marked provenance=testimony_derived never count as world evidence
+        (anti-circular: teacher claim must not become inquire/ground support).
+        """
         scores: dict[str, dict[str, int]] = {}
         for rec in self._grounding_rows():
+            if str(rec.tags.get("provenance") or "") == "testimony_derived":
+                continue
             sym = str(rec.tags.get("symbol") or "").lower()
             paired = str(rec.tags.get("paired") or "").lower()
             result = str(rec.tags.get("result") or "").lower()
@@ -2678,13 +2714,44 @@ class ThreeMemoryAgent:
         return cands
 
     def _inquire_already_resolved_factor(self, cue: str, factor: str) -> bool:
-        """True if inquire trace already observed this factor probe for cue inputs containing cue."""
+        """True if inquire trace already observed this factor probe.
+
+        Default (INQUIRE-frozen): any observed factor is globally spent.
+        With use_inquire_liveness (reliability on): cue-scoped, and only blocked
+        while a live supporting consequence for that cue+factor remains.
+        """
+        cue_l = str(cue).strip().lower()
+        fac_l = str(factor).strip().lower()
         for rec in self._inquire_rows():
             if str(rec.tags.get("phase") or "") != "observed":
                 continue
             atoms = str(rec.tags.get("probe_atoms") or "")
-            if factor in atoms.split("|"):
+            if fac_l not in atoms.split("|"):
+                continue
+            if not self.use_inquire_liveness:
                 return True
+            # Opt-in R10: require cue match via input_symbols
+            inp = str(rec.tags.get("input_symbols") or "")
+            toks = [t for t in inp.split("|") if t]
+            if cue_l and cue_l not in toks and (not toks or toks[-1] != cue_l):
+                continue
+            if self._inquire_consequence_live(cue_l, fac_l):
+                return True
+            # Trace exists but consequence gone → eligible again
+            continue
+        return False
+
+    def _inquire_consequence_live(self, cue: str, factor: str) -> bool:
+        """True if cons_* grounding for cue still uniquely supports a hyp via factor."""
+        for rec in self._grounding_rows():
+            tid = str(rec.tags.get("trial_id") or "")
+            if not (tid.startswith("cons_") or tid.startswith("conflict_")):
+                continue
+            if cue and cue not in tid:
+                continue
+            if factor and factor not in tid:
+                continue
+            return True
         return False
 
     def _inquire_render_probe(
@@ -2746,6 +2813,27 @@ class ThreeMemoryAgent:
             out["why"] = "no_cue"
             return out
         hyps = self._inquire_hypotheses(cue, min_support=min_support)
+        # Reliability: try weighted testimony before unique-hyp / probe paths
+        live_hyps: list[str] = []
+        if self.use_source_reliability:
+            wans = self._reliability_weighted_answer(ctx, cue)
+            if wans is not None:
+                out["status"] = "ANSWER"
+                out["answer_symbols"] = [wans]
+                out["why"] = "source_evidence_margin"
+                return out
+            live_hyps = self._reliability_live_hyps(cue, ctx)
+        if not hyps:
+            # Uncalibrated unique testimony agreement is NOT an answer
+            if self.use_source_reliability and len(live_hyps) >= 2:
+                hyps = list(live_hyps)
+            else:
+                out["why"] = "no_hypotheses"
+                return out
+        elif self.use_source_reliability and live_hyps:
+            # Grounding ambiguous: include live hyps for inquire candidates
+            if len(hyps) > 1:
+                hyps = sorted(set(hyps) | set(live_hyps))
         if not hyps:
             out["why"] = "no_hypotheses"
             return out
@@ -2759,7 +2847,9 @@ class ThreeMemoryAgent:
             out["why"] = "budget_exhausted"
             return out
         cands = self._inquire_probe_candidates(hyps, min_support=min_support)
-        # Drop probes already observed
+        if self.use_source_reliability:
+            cands.extend(self._reliability_speaker_candidates(ctx, cue, hyps))
+        # Drop probes already observed (factor probes only; speaker asks use factor=spk)
         cands = [
             c
             for c in cands
@@ -2845,6 +2935,357 @@ class ThreeMemoryAgent:
 
     def reset_inquire_budget(self) -> None:
         self._inquire_probes_used = 0
+
+    # --- TM.0.20.RELIABILITY: predictive accuracy / source_evidence_margin -------
+
+    def observe_testimony(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """Author experience_testimony only. No truth / confirm labels."""
+        required = {"speaker_token", "context_atoms", "claim_atoms", "event_token"}
+        out: dict[str, Any] = {"ok": False, "wrote": False, "why": ""}
+        if not self.use_source_reliability or not self.store.enabled:
+            out["why"] = "reliability_off"
+            return out
+        if not isinstance(info, dict) or set(info.keys()) != required:
+            out["why"] = "exact_key_reject"
+            return out
+        speaker = str(info["speaker_token"]).strip().lower()
+        event = str(info["event_token"]).strip().lower()
+        ctx = [str(x).strip().lower() for x in info["context_atoms"] if str(x).strip()]
+        claim = [str(x).strip().lower() for x in info["claim_atoms"] if str(x).strip()]
+        if not speaker or not event or not ctx or len(claim) < 2:
+            out["why"] = "empty_field"
+            return out
+        banned = {
+            "is_correct",
+            "truth",
+            "trusted",
+            "expected_source",
+            "domain",
+            "trust_score",
+            "honesty",
+            "intent",
+        }
+        if any(b in speaker or b in event for b in banned):
+            out["why"] = "banned_token"
+            return out
+        if any("|" in x for x in ctx + claim + [speaker, event]):
+            out["why"] = "pipe_in_token"
+            return out
+        tags: dict[str, Any] = {
+            "speaker_token": speaker,
+            "context_atoms": "|".join(sorted(self._reliability_project_context(ctx))),
+            "context_raw": "|".join(ctx),
+            "claim_atoms": "|".join(claim),
+            "event_token": event,
+            "cue": claim[0],
+            "hypothesis": claim[1],
+            "source": "experience_testimony",
+            "hyp": "supported",
+            "support": 1,
+            "live": 1,
+        }
+        n = len(self.store.records())
+        fid = f"testimony_{n:04d}_{speaker}"
+        rec = FactRecord(
+            fact_id=fid,
+            what=encode_tags(tags),
+            when=int(self.t),
+            drive_scores={},
+            tags=tags,
+        )
+        # Supersede prior live claims for same speaker×cue×context (replacement)
+        self._reliability_supersede_live(speaker, claim[0], tags["context_atoms"])
+        self.store.write(rec)
+        out["ok"] = True
+        out["wrote"] = True
+        out["why"] = "authored"
+        return out
+
+    def _reliability_project_context(self, context_atoms: Sequence[str]) -> list[str]:
+        """Factor atoms only; exclude speaker/event/answer/domain tokens."""
+        out: list[str] = []
+        for a in context_atoms:
+            t = str(a).strip().lower()
+            if not t:
+                continue
+            if t.startswith("spk_") or t.startswith("evt_") or t.startswith("hyp_"):
+                continue
+            if t.startswith("ans_") or t.startswith("trial_"):
+                continue
+            if t in {"domain", "color_domain", "ownership_domain", "location_domain"}:
+                continue
+            # Keep factor-like tokens (feat_*, ctxf_*, or fixture factor_* )
+            if t.startswith("feat_") or t.startswith("ctxf_") or t.startswith("fac_"):
+                out.append(t)
+            elif t.startswith("factor_"):
+                out.append(t)
+        return sorted(set(out))
+
+    def _reliability_supersede_live(
+        self, speaker: str, cue: str, ctx_key: str
+    ) -> None:
+        # Collect ids first: TagStore.write reloads and invalidates row refs.
+        to_clear: list[str] = []
+        for rec in self._testimony_rows():
+            if str(rec.tags.get("speaker_token") or "") != speaker:
+                continue
+            if str(rec.tags.get("cue") or "") != cue:
+                continue
+            if str(rec.tags.get("context_atoms") or "") != ctx_key:
+                continue
+            if int(rec.tags.get("live") or 0) == 1:
+                to_clear.append(str(rec.fact_id))
+        for fid in to_clear:
+            for rec in self._testimony_rows():
+                if str(rec.fact_id) != fid:
+                    continue
+                if int(rec.tags.get("live") or 0) != 1:
+                    break
+                rec.tags["live"] = 0
+                rec.what = encode_tags(rec.tags)
+                self.store.write(rec)
+                break
+
+    def _testimony_rows(self) -> list[FactRecord]:
+        return [
+            r
+            for r in self.store.records()
+            if str(r.tags.get("source") or "") == "experience_testimony"
+        ]
+
+    def _reliability_rows(self) -> list[FactRecord]:
+        return [
+            r
+            for r in self.store.records()
+            if str(r.tags.get("source") or "") == "experience_reliability"
+        ]
+
+    def _reliability_jaccard(self, a: Sequence[str], b: Sequence[str]) -> float:
+        sa, sb = set(a), set(b)
+        if not sa and not sb:
+            return 0.0
+        if not sa or not sb:
+            return 0.0
+        return len(sa & sb) / float(len(sa | sb))
+
+    def _reliability_event_from_trial(self, trial_id: str) -> str | None:
+        """Locked correlation: trial_id = evt_<event_token>__<rest>."""
+        tid = str(trial_id or "").strip()
+        if not tid.startswith("evt_") or "__" not in tid:
+            return None
+        return tid[4:].split("__", 1)[0].strip().lower() or None
+
+    def _reliability_reconcile_from_ground(self, ground: FactRecord) -> None:
+        """Organism-derived support/contradict vs pending testimony (same event_token)."""
+        if not self.use_source_reliability:
+            return
+        prov = str(ground.tags.get("provenance") or "")
+        if prov not in {"direct", "experiment", "state_read"}:
+            return
+        sym = str(ground.tags.get("symbol") or "").lower()
+        paired = str(ground.tags.get("paired") or "").lower()
+        result = str(ground.tags.get("result") or "").lower()
+        tid = str(ground.tags.get("trial_id") or "")
+        event_hint = self._reliability_event_from_trial(tid)
+        if not event_hint:
+            return
+        for trec in self._testimony_rows():
+            claim = str(trec.tags.get("claim_atoms") or "").split("|")
+            if len(claim) < 2:
+                continue
+            if claim[0] != sym:
+                continue
+            ev = str(trec.tags.get("event_token") or "").lower()
+            if ev != event_hint:
+                continue
+            # Failure of a different pairing is not evidence about this claim.
+            if claim[1] == paired:
+                derived = "contradict" if result == "failure" else "support"
+            elif result == "failure":
+                continue
+            else:
+                # success/correction of a different hyp for the same cue → contradict
+                derived = "contradict"
+            speaker = str(trec.tags.get("speaker_token") or "")
+            # Append-only: skip duplicate compare for same speaker×event×verify
+            dup = False
+            for existing in self._reliability_rows():
+                if (
+                    str(existing.tags.get("speaker_token") or "") == speaker
+                    and str(existing.tags.get("event_token") or "") == ev
+                    and str(existing.tags.get("verify_trial_id") or "") == tid
+                ):
+                    dup = True
+                    break
+            if dup:
+                continue
+            self._reliability_append_derived(
+                speaker=speaker,
+                context_key=str(trec.tags.get("context_atoms") or ""),
+                event_token=ev,
+                derived=derived,
+                claim_atoms=claim,
+                verify_trial=tid,
+            )
+
+    def _reliability_append_derived(
+        self,
+        *,
+        speaker: str,
+        context_key: str,
+        event_token: str,
+        derived: str,
+        claim_atoms: Sequence[str],
+        verify_trial: str,
+    ) -> None:
+        if not speaker or derived not in {"support", "contradict"}:
+            return
+        tags: dict[str, Any] = {
+            "speaker_token": speaker,
+            "context_atoms": context_key,
+            "event_token": event_token,
+            "derived": derived,
+            "claim_atoms": "|".join(claim_atoms),
+            "verify_trial_id": verify_trial,
+            "source": "experience_reliability",
+            "hyp": "supported",
+            "support": 1,
+        }
+        n = len(self.store.records())
+        fid = f"reliability_{n:04d}_{derived}"
+        rec = FactRecord(
+            fact_id=fid,
+            what=encode_tags(tags),
+            when=int(self.t),
+            drive_scores={},
+            tags=tags,
+        )
+        self.store.write(rec)
+
+    def source_evidence_margin(
+        self, speaker: str, context_atoms: Sequence[str]
+    ) -> float:
+        """Bounded predictive-accuracy margin; not trust/honesty/intent."""
+        if not self.use_source_reliability:
+            return 0.0
+        proj = self._reliability_project_context(context_atoms)
+        thr = float(self.reliability_jaccard)
+        s_cnt = 0
+        k_cnt = 0
+        for rec in self._reliability_rows():
+            if str(rec.tags.get("speaker_token") or "") != speaker:
+                continue
+            ctx = [
+                x
+                for x in str(rec.tags.get("context_atoms") or "").split("|")
+                if x
+            ]
+            if self._reliability_jaccard(proj, ctx) < thr:
+                continue
+            d = str(rec.tags.get("derived") or "")
+            if d == "support":
+                s_cnt += 1
+            elif d == "contradict":
+                k_cnt += 1
+        n = s_cnt + k_cnt
+        if n < int(self.reliability_n_min):
+            return 0.0
+        quality = (s_cnt - k_cnt) / float(n)
+        lam = float(self.reliability_lambda)
+        confidence = n / (n + lam)
+        return max(0.0, quality * confidence)
+
+    def _reliability_live_claims(
+        self, context_atoms: Sequence[str], cue: str
+    ) -> list[FactRecord]:
+        """Deduped live claims for cue whose projected context overlaps the query."""
+        cue_l = cue.lower()
+        proj = self._reliability_project_context(context_atoms)
+        thr = float(self.reliability_jaccard)
+        live: dict[tuple[str, str, str, str], FactRecord] = {}
+        for rec in self._testimony_rows():
+            if int(rec.tags.get("live") or 0) != 1:
+                continue
+            if str(rec.tags.get("cue") or "") != cue_l:
+                continue
+            claim_proj = [
+                x for x in str(rec.tags.get("context_atoms") or "").split("|") if x
+            ]
+            if self._reliability_jaccard(proj, claim_proj) < thr:
+                continue
+            key = (
+                str(rec.tags.get("speaker_token") or ""),
+                cue_l,
+                str(rec.tags.get("hypothesis") or ""),
+                str(rec.tags.get("context_atoms") or ""),
+            )
+            live[key] = rec
+        return list(live.values())
+
+    def _reliability_live_hyps(
+        self, cue: str, context_atoms: Sequence[str]
+    ) -> list[str]:
+        hyps = {
+            str(r.tags.get("hypothesis") or "")
+            for r in self._reliability_live_claims(context_atoms, cue)
+            if str(r.tags.get("hypothesis") or "")
+        }
+        return sorted(hyps)
+
+    def _reliability_speaker_candidates(
+        self,
+        context_atoms: Sequence[str],
+        cue: str,
+        hyps: Sequence[str],
+    ) -> list[dict[str, Any]]:
+        """Ask-speaker candidates; value from source_evidence_margin (not fixed priority)."""
+        cands: list[dict[str, Any]] = []
+        seen: set[str] = set()
+        for rec in self._reliability_live_claims(context_atoms, cue):
+            spk = str(rec.tags.get("speaker_token") or "")
+            if not spk or spk in seen:
+                continue
+            seen.add(spk)
+            margin = self.source_evidence_margin(spk, context_atoms)
+            # Uncalibrated (margin 0) → no ask-speaker candidate from this channel
+            value = int(round(margin * 10.0))
+            if value <= 0:
+                continue
+            cands.append(
+                {
+                    "kind": "ask",
+                    "atoms": ["ask", spk],
+                    "factor": spk,
+                    "value": value,
+                    "cost": int(self.inquire_cost_ask),
+                    "partition": f"speaker:{spk}|hyps:{','.join(sorted(hyps))}",
+                }
+            )
+        return cands
+
+    def _reliability_weighted_answer(
+        self, context_atoms: Sequence[str], cue: str
+    ) -> str | None:
+        """Unique max source_evidence_margin over deduped live claims, else None."""
+        scores: dict[str, float] = {}
+        for rec in self._reliability_live_claims(context_atoms, cue):
+            hyp = str(rec.tags.get("hypothesis") or "")
+            if not hyp:
+                continue
+            spk = str(rec.tags.get("speaker_token") or "")
+            w = self.source_evidence_margin(spk, context_atoms)
+            if w <= 0:
+                continue
+            scores[hyp] = float(scores.get(hyp, 0.0)) + w
+        if not scores:
+            return None
+        ranked = sorted(scores.items(), key=lambda kv: (-round(kv[1], 9), kv[0]))
+        best_h, best_w = ranked[0]
+        if best_w <= 0:
+            return None
+        if len(ranked) > 1 and round(ranked[1][1], 9) == round(best_w, 9):
+            return None
+        return best_h
 
     def _find_experience_skel(self, bind: str, did: str) -> FactRecord | None:
         bl, dl = bind.lower(), did.lower()

@@ -156,6 +156,7 @@ TM.0.12.ROUTESIG.IDENTITY storage-row vs relation identity: [`docs/tm012routesig
 TM.0.17.SYMBOLWORLD grounded symbolic learning (S10): [`docs/tm017symbolworld_results.md`](docs/tm017symbolworld_results.md).
 TM.0.18.SEQUENCE grounded symbolic expression (E12): [`docs/tm018sequence_results.md`](docs/tm018sequence_results.md).
 TM.0.19.INQUIRE active evidence acquisition (I12): [`docs/tm019inquire_results.md`](docs/tm019inquire_results.md).
+TM.0.20.RELIABILITY evidence-source calibration (R12): [`docs/tm020reliability_results.md`](docs/tm020reliability_results.md).
 Ex0S lineage: [`docs/ex0s.md`](docs/ex0s.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 

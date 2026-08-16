@@ -1,0 +1,25 @@
+{
+  "version": "TM.0.20.RELIABILITY.BASELINE.PREREG",
+  "lab": "TM.0.20.RELIABILITY",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "not_a_product_stamp": true,
+  "preregistered_claim": "Frozen INQUIRE (make_inquire, reliability off) still HOLDs on conflicting equal teachers with no spontaneous source weighting \u2014 INQUIRE lock behavior unchanged.",
+  "fixture": "docs/reliability_fixture.json",
+  "fixture_sha": "50149d8c1c59bb3d275a5c20a1af92dc370c2156bf0295359b2d2d42cbee5ac5",
+  "phase_a": {
+    "factory": "experiments.run_tm019inquire.make_inquire",
+    "agent_edits_permitted": false,
+    "use_source_reliability": false
+  },
+  "prior_lock_shas": {
+    "inquire.lock": "cf8949a51ea9f6465f5db2c7627980d386fcf2e7219d6f5cd3f174d85f24354f"
+  },
+  "refuse": [
+    "editing agent.py in Phase A",
+    "host confirm|contradict",
+    "trust_score",
+    "earned_next=true or non-null ex0s"
+  ]
+}
