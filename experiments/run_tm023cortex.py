@@ -93,6 +93,16 @@ DEV_V6_LOCK = REPO_ROOT / "docs" / "cortex_development.v6.lock"
 MACT_V6_LOCK = REPO_ROOT / "docs" / "cortex_mact_boundary.v6.lock"
 MACT_V6_AUDIT = REPO_ROOT / "docs" / "cortex_mact_boundary.v6.audit.lock"
 DIAG_V5 = REPO_ROOT / "docs" / "cortex_diagnosis.v5.lock"
+CANDIDATE_V7 = REPO_ROOT / "docs" / "cortex.candidate.v7.lock"
+V7_GATE_LOCK = REPO_ROOT / "docs" / "cortex_v7_gate.lock"
+V7_GATE_FAIL = REPO_ROOT / "docs" / "cortex_v7_gate.failure.lock"
+V7_PREREG = REPO_ROOT / "docs" / "cortex_v7.prereg.lock"
+DEV_V7_LOCK = REPO_ROOT / "docs" / "cortex_development.v7.lock"
+MACT_V7_LOCK = REPO_ROOT / "docs" / "cortex_mact_boundary.v7.lock"
+DIAG_V6 = REPO_ROOT / "docs" / "cortex_diagnosis.v6.lock"
+DIAG_V6_NOTE = REPO_ROOT / "docs" / "cortex_diagnosis.v6.note.lock"
+STAT_V7 = REPO_ROOT / "docs" / "cortex_v7_stat_contract.lock"
+V7_ISOLATION = REPO_ROOT / "docs" / "cortex_v7.isolation.lock"
 
 PHENOTYPE_PATHS = [
     "docs/CURRENT_ORGANISM.md",
@@ -1936,6 +1946,90 @@ def verify_v6_gate() -> dict[str, Any]:
     }
 
 
+def verify_v7_gate() -> dict[str, Any]:
+    """Verify v7 stat-contract gate integrity without re-scoring. Pending-safe if unscored."""
+    if not DIAG_V6.exists() or not STAT_V7.exists():
+        return {"ok": False, "why": "missing v6 diagnosis or v7 stat contract"}
+    if not V7_ISOLATION.exists():
+        return {"ok": False, "why": "missing cortex_v7.isolation.lock"}
+    if DEV_V6_LOCK.exists():
+        return {"ok": False, "why": "DEVELOP.v6 exists — refuse"}
+    if V7_PREREG.exists():
+        v7c = json.loads(V7_PREREG.read_text(encoding="utf-8"))["eval_seed_commitment"]
+        for path in (V6_PREREG, V5_PREREG, PREREG, DEV_PREREG):
+            if path.exists():
+                prior = json.loads(path.read_text(encoding="utf-8")).get("eval_seed_commitment")
+                if prior and v7c == prior:
+                    return {"ok": False, "why": f"v7 commitment reused {path.name}"}
+    if not CANDIDATE_V7.exists():
+        return {"ok": True, "pending": True, "why": "candidate v7 not frozen yet"}
+    if not V7_GATE_LOCK.exists():
+        return {"ok": True, "pending": True, "why": "v7 gate result not frozen yet"}
+    if DEV_V7_LOCK.exists() and V7_GATE_FAIL.exists():
+        return {"ok": False, "why": "DEVELOP.v7 exists after gate fail — refuse"}
+    if DEV_V7_LOCK.exists() and not json.loads(V7_GATE_LOCK.read_text(encoding="utf-8")).get(
+        "sensorimotor_association_gate_clear"
+    ):
+        return {"ok": False, "why": "DEVELOP.v7 exists without a clear v7 gate — refuse"}
+    gate = json.loads(V7_GATE_LOCK.read_text(encoding="utf-8"))
+    cand = json.loads(CANDIDATE_V7.read_text(encoding="utf-8"))
+    if gate.get("product") != "0.0.004":
+        return {"ok": False, "why": "product drift"}
+    if gate.get("earned_next") is not False or gate.get("ex0s") is not None:
+        return {"ok": False, "why": "earned_next/ex0s drift"}
+    if gate.get("candidate_v7_sha") != _sha_file(CANDIDATE_V7):
+        return {"ok": False, "why": "gate/candidate v7 sha mismatch"}
+    battery = gate.get("battery") or {}
+    n_clear = int(battery.get("n_pair_clear") or 0)
+    clear = bool(gate.get("sensorimotor_association_gate_clear"))
+    if clear and n_clear < 13:
+        return {"ok": False, "why": "gate claims clear with n_pair_clear < 13"}
+    if (not clear) and n_clear >= 13:
+        return {"ok": False, "why": "n_pair_clear >= 13 but not marked clear"}
+    if (not clear) and not V7_GATE_FAIL.exists():
+        return {"ok": False, "why": "missing cortex_v7_gate.failure.lock"}
+    if clear and V7_GATE_FAIL.exists():
+        return {"ok": False, "why": "failure lock present on a clear gate"}
+    if (not clear) and V7_GATE_FAIL.exists():
+        fail = json.loads(V7_GATE_FAIL.read_text(encoding="utf-8"))
+        if fail.get("gate_sha") != _sha_file(V7_GATE_LOCK):
+            return {"ok": False, "why": "failure lock gate_sha mismatch"}
+        if "DEVELOP.v7" not in (fail.get("refuse") or []):
+            return {"ok": False, "why": "failure lock missing DEVELOP.v7 refuse"}
+    for p in battery.get("pairs") or []:
+        m, t = p["main"], p["twin"]
+        expect = m["d0_ok"] and t["d0_ok"] and m["d1_d2_ok"] and t["d1_d2_ok"]
+        if bool(p.get("pair_clear")) != expect:
+            return {"ok": False, "why": f"pair_clear inconsistent pair {p.get('pair_id')}"}
+        if p.get("pair_clear"):
+            for role in ("main", "twin"):
+                d1 = p[role]["stages"]["D1"]
+                if int(d1.get("press") or 0) < 3 or not d1.get("ok"):
+                    return {"ok": False, "why": f"soft D1 clear pair {p.get('pair_id')} {role}"}
+                if not d1.get("floors_ok"):
+                    return {"ok": False, "why": f"D1 floors not recorded pair {p.get('pair_id')} {role}"}
+                if not d1.get("trained_gt_birth") or not d1.get("trained_gt_frozen"):
+                    return {"ok": False, "why": f"D1 extras missing pair {p.get('pair_id')} {role}"}
+                d2 = p[role]["stages"]["D2"]
+                if int(d2.get("holds_during_conflict") or 0) < 5 or int(d2.get("beneficial_act") or 0) < 3:
+                    return {"ok": False, "why": f"soft D2 clear pair {p.get('pair_id')} {role}"}
+                if not d2.get("trained_gt_frozen") or not d2.get("assoc_ok"):
+                    return {"ok": False, "why": f"D2 extras missing pair {p.get('pair_id')} {role}"}
+    live_matches_v7 = _sha_file(NEURAL_PY) == cand.get("neural_cortex_sha")
+    return {
+        "ok": True,
+        "why": "v7 gate integrity ok",
+        "pending": False,
+        "sensorimotor_association_gate_clear": clear,
+        "n_pair_clear": n_clear,
+        "live_neural_matches_v7": live_matches_v7,
+        "refuse_rewrite": True,
+        "refuse_develop_before_clear": not clear,
+        "stat_contract_sha": _sha_file(STAT_V7),
+        "diagnosis_v6_sha": _sha_file(DIAG_V6),
+    }
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-phase-a", action="store_true")
@@ -1958,6 +2052,7 @@ def main() -> None:
     ap.add_argument("--verify-v4-gate", action="store_true")
     ap.add_argument("--verify-v5-gate", action="store_true")
     ap.add_argument("--verify-v6-gate", action="store_true")
+    ap.add_argument("--verify-v7-gate", action="store_true")
     ap.add_argument("--mact-v6-audit", action="store_true")
     ap.add_argument("--v4-math-audit", action="store_true")
     ap.add_argument("--write-v2-birth", action="store_true")
@@ -2006,6 +2101,9 @@ def main() -> None:
         return
     if args.verify_v6_gate:
         print(json.dumps(verify_v6_gate(), indent=2, default=str))
+        return
+    if args.verify_v7_gate:
+        print(json.dumps(verify_v7_gate(), indent=2, default=str))
         return
     if args.mact_v6_audit:
         from experiments.cortex_mact_boundary import write_v6_boundary_audit

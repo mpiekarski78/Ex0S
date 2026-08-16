@@ -1966,3 +1966,19 @@ Outcome: historical boundary lock claimed **8/8**; contract-honest audit finds *
 
 Key locks: [`cortex_diagnosis.v5.lock`](cortex_diagnosis.v5.lock), [`cortex.candidate.v6.lock`](cortex.candidate.v6.lock), [`cortex_mact_boundary.v6.lock`](cortex_mact_boundary.v6.lock), [`cortex_v6_gate.lock`](cortex_v6_gate.lock), [`cortex_v6_gate.failure.lock`](cortex_v6_gate.failure.lock). Results: [`tm023cortex_v6_gate_results.md`](tm023cortex_v6_gate_results.md).
 
+## TM.0.23.CORTEX.V6 population diagnosis → isolated V7
+
+Canonical baseline `97691cd`. V6 stays honestly frozen: D1–D2 **7/16** fail; boundary contract **6/8** fail; **C4 green**; C5/C6 single-life bars unsolved as learning tests; no DEVELOP.v6.
+
+Do not optimize the cortex so every plasticity-off individual fails `press≥3 ∧ press>harm`. A frozen stochastic organism may select the scorer-designated beneficial handle by chance. `press=11` or one `6>4` trajectory is not learned preference.
+
+Freeze a population-level motor-learning contract first ([`cortex_v7_stat_contract.lock`](cortex_v7_stat_contract.lock)): paired lives (identical birth weights, actuator vectors, bind order, cue schedule, action RNG; only plasticity differs); C5 majority + mean Δ + frozen-association among ACTs; C6 post-bind label assignment, slot and supposed-benefit effects below a preregistered max with a permutation test; D1/D2 floors unchanged plus trained > birth and trained > plasticity-off plus D2 consequence association.
+
+Observational diagnosis of frozen v6 ([`cortex_diagnosis.v6.lock`](cortex_diagnosis.v6.lock) + [`cortex_diagnosis.v6.note.lock`](cortex_diagnosis.v6.note.lock)): C4 revision real; contract-honest population C5/C6 already pass; gate reds are D1 always-HOLD and D2 `holds<5`. Authorized v7 change: retain v6 motor geometry and C4; skip `W_op` ACT credit when `body_adv≈0` so no-consequence cost does not extinguish ACT; score C5/C6 and D1/D2 under the statistical contract.
+
+Then: v7 birth/candidate → population boundary → fresh sealed D1–D2 ≥13/16 → full D0–D12 only after that. Do not edit-rescore v6. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Outcome: C4 retained; population C5 **30/32** mean Δ≈0.24; population C6 slot/label inside the preregistered band. Historical boundary lock **7/8** (leftover single-life C7 red; append-only note; lock not rewritten). Fresh sealed D1–D2 **0/16** — **fail** under paired extras (D1 floors 23/32 → 13/32; D2 floors 27/32 → 6/32; 7× D1 always-HOLD). [`cortex_v7_gate.failure.lock`](cortex_v7_gate.failure.lock) + [`cortex_v8.isolation.lock`](cortex_v8.isolation.lock). **DEVELOP.v7 refused.** Do not edit-rescore v7 on revealed worlds. Full D0–D12 not opened.
+
+Key locks: [`cortex_v7_stat_contract.lock`](cortex_v7_stat_contract.lock), [`cortex_diagnosis.v6.lock`](cortex_diagnosis.v6.lock), [`cortex.candidate.v7.lock`](cortex.candidate.v7.lock), [`cortex_mact_boundary.v7.lock`](cortex_mact_boundary.v7.lock), [`cortex_v7_gate.lock`](cortex_v7_gate.lock). Results: [`tm023cortex_v7_gate_results.md`](tm023cortex_v7_gate_results.md).
+

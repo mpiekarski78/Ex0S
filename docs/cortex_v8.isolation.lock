@@ -1,0 +1,32 @@
+{
+  "version": "TM.0.23.CORTEX.V8.ISOLATION",
+  "lab": "TM.0.23.CORTEX.V7.GATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "v7 narrow D1–D2 gate failed (0/16 < 13/16) under the statistical motor contract",
+  "v7_gate_failure_lock": "docs/cortex_v7_gate.failure.lock",
+  "v7_gate_lock": "docs/cortex_v7_gate.lock",
+  "v7_reveal_lock": "docs/cortex_v7_eval_reveal.lock",
+  "v6_diagnosis_lock": "docs/cortex_diagnosis.v6.lock",
+  "stat_contract": "docs/cortex_v7_stat_contract.lock",
+  "refuse": [
+    "DEVELOP.v7 on any worlds",
+    "edit-and-rescore candidate v7 on revealed v7 gate worlds",
+    "transfer v6 or v7 partial credit",
+    "soften D1/D2 floors or drop paired extras",
+    "open full D0–D12 before a later isolated gate ≥13/16"
+  ],
+  "next_cycle": {
+    "name": "isolated_v8",
+    "requires": [
+      "frozen diagnosis of v7 pair failures (not edit of v7 against revealed worlds)",
+      "new architecture amendment",
+      "new birth + candidate.v8.lock",
+      "new sealed commitment ≠ v7 gate ≠ DEVELOP",
+      "re-earn population boundary greens",
+      "fresh narrow D1–D2 gate ≥13/16 before any DEVELOP.v8"
+    ]
+  },
+  "note": "DEVELOP.v7 not opened. Historical locks immutable. C4 revision retained on the boundary. Product remains 0.0.004."
+}

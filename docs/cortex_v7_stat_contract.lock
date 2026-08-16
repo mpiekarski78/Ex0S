@@ -1,0 +1,41 @@
+{
+  "version": "TM.0.23.CORTEX.V7.STAT.CONTRACT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_baseline": "97691cd",
+  "v1_architecture_contract_sha": "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2",
+  "stat_md_sha": "90bcb0efe4a499f2d2045cf084a432f9aa5de7040c5586f5b23ae9bffcd59235",
+  "gate_md_sha": "8bf13aec7835a2ff2acd5c8a7a5cf8cdae392735279fd8f744319d36f0ac4af6",
+  "v6_candidate_sha": "ebcf9e80d09b348b15637982ac0e94f8e4c2d2fd0f7c5841ba40d00387f29f27",
+  "v6_neural_sha": "e31f86b979d9f324fc8ed5239d89d0d96bd8fcf427a00d46b6f24bdf7a6f953a",
+  "neural_sha_at_freeze": "e31f86b979d9f324fc8ed5239d89d0d96bd8fcf427a00d46b6f24bdf7a6f953a",
+  "thresholds": {
+    "n_pairs": 32,
+    "n_probes": 40,
+    "teach_n": 80,
+    "majority_min": 24,
+    "mean_delta_min": 0.1,
+    "max_nuisance_abs": 0.15,
+    "perm_n": 9999,
+    "perm_alpha": 0.05,
+    "d1_floors": {
+      "press_min": 3,
+      "press_gt_harm": true
+    },
+    "d2_floors": {
+      "holds_min": 5,
+      "beneficial_min": 3
+    },
+    "gate_clear_min_pairs": 13
+  },
+  "refuse": [
+    "soften D1/D2 floors",
+    "edit docs/cortex_architecture_contract.md",
+    "edit-and-rescore v6",
+    "DEVELOP.v6",
+    "tune neural so every frozen individual fails deterministic D1",
+    "open D0\u2013D12 before v7 gate \u226513/16"
+  ],
+  "note": "Frozen before v6 population diagnosis and before any v7 neural edit."
+}

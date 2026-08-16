@@ -1,0 +1,19 @@
+{
+  "version": "TM.0.23.CORTEX.V6.POPULATION.DIAGNOSIS.NOTE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "diagnosis_v6": "docs/cortex_diagnosis.v6.lock",
+  "historical_lock_rewritten": false,
+  "note": "Recorded c5_population.ok=false used p_press/40 vs 0.5 (HOLDs included). Stat contract requires the frozen-association clause among ACTs. On the frozen rows: 29/32 trained>frozen, mean_delta=0.230≥0.10, frozen_perm_p=0.629. C6 population already ok. C4 green. Gate reds: 6× D1 press=0/harm=0, 5× D2 holds<5.",
+  "contract_honest_c5_population": true,
+  "contract_honest_c6_population": true,
+  "c4_revision_retained": true,
+  "authorize_v7": [
+    "keep C4 snapshot / zero W_act_query / handle-keyed vectors / skip motor-query when body_adv≈0",
+    "skip W_op ACT credit when body_adv≈0 so no-consequence cost does not extinguish ACT",
+    "replace single-trajectory C5/C6 bars with the frozen population contract",
+    "D1/D2 floors unchanged plus trained>birth and trained>frozen plus D2 association",
+    "do not force every frozen life to fail deterministic D1"
+  ]
+}

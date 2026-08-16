@@ -114,7 +114,11 @@ def test_birth_and_candidate_frozen() -> None:
     assert CANDIDATE_LOCK.exists()
     assert CANDIDATE_V1.exists()
     cand = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
-    assert cand["learning_law_ok"] is True
+    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V7":
+        v7_birth = json.loads((REPO_ROOT / "docs" / "cortex_v7_birth.lock").read_text(encoding="utf-8"))
+        assert v7_birth["learning_law_ok"] is True
+    else:
+        assert cand["learning_law_ok"] is True
     assert cand["factory"] == "experiments.run_tm023cortex.make_cortex"
     # neural organism unchanged vs candidate
     assert sha(NEURAL_PY) == cand["neural_cortex_sha"]
@@ -170,7 +174,7 @@ def test_diag_and_v4_gate() -> None:
     assert gate["earned_next"] is False
     assert gate["ex0s"] is None
     assert gate["product"] == "0.0.004"
-    # versioned candidates preserved; live points at latest candidate (v6)
+    # versioned candidates preserved; live points at latest candidate
     assert (REPO_ROOT / "docs" / "cortex.candidate.v1.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v2.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v3.lock").exists()
@@ -178,7 +182,11 @@ def test_diag_and_v4_gate() -> None:
     assert (REPO_ROOT / "docs" / "cortex.candidate.v5.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v6.lock").exists()
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
-    assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V6"
+    v7 = REPO_ROOT / "docs" / "cortex.candidate.v7.lock"
+    if v7.exists():
+        assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V7"
+    else:
+        assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V6"
     # isolation: failed v2/v3 gates frozen; no full D battery on gate worlds
     assert (REPO_ROOT / "docs" / "cortex_v2_gate.failure.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex_v3_gate.failure.lock").exists()
@@ -273,6 +281,53 @@ def test_v6_diagnosis_boundary_and_gate_failure() -> None:
     iso = json.loads((REPO_ROOT / "docs" / "cortex_v7.isolation.lock").read_text(encoding="utf-8"))
     assert "DEVELOP.v6 on any worlds" in iso["refuse"]
     assert not (REPO_ROOT / "docs" / "cortex_development.v6.lock").exists()
+
+
+def test_v7_stat_diagnosis_and_no_develop() -> None:
+    stat = json.loads((REPO_ROOT / "docs" / "cortex_v7_stat_contract.lock").read_text(encoding="utf-8"))
+    assert stat["canonical_baseline"] == "97691cd"
+    assert stat["thresholds"]["majority_min"] == 24
+    assert stat["thresholds"]["mean_delta_min"] == 0.1
+    assert stat["thresholds"]["d1_floors"]["press_min"] == 3
+    assert stat["thresholds"]["d2_floors"]["holds_min"] == 5
+    assert stat["thresholds"]["gate_clear_min_pairs"] == 13
+    diag = json.loads((REPO_ROOT / "docs" / "cortex_diagnosis.v6.lock").read_text(encoding="utf-8"))
+    assert diag["neural_mechanism_changed"] is False
+    assert diag["c4"]["ok"] is True
+    note = json.loads((REPO_ROOT / "docs" / "cortex_diagnosis.v6.note.lock").read_text(encoding="utf-8"))
+    assert note["historical_lock_rewritten"] is False
+    assert note["contract_honest_c5_population"] is True
+    assert note["c4_revision_retained"] is True
+    assert not (REPO_ROOT / "docs" / "cortex_development.v6.lock").exists()
+    assert not (REPO_ROOT / "docs" / "cortex_development.v7.lock").exists()
+    iso8 = REPO_ROOT / "docs" / "cortex_v8.isolation.lock"
+    if iso8.exists():
+        iso = json.loads(iso8.read_text(encoding="utf-8"))
+        assert "DEVELOP.v7 on any worlds" in iso["refuse"]
+    from three_memory.neural_cortex import MOTOR_ACT_TOKENS
+
+    assert list(MOTOR_ACT_TOKENS) == []
+
+
+def test_verify_v7_gate_cli() -> None:
+    from experiments.run_tm023cortex import verify_v7_gate
+
+    v = verify_v7_gate()
+    assert v["ok"] is True, v
+    gate_p = REPO_ROOT / "docs" / "cortex_v7_gate.lock"
+    if not (REPO_ROOT / "docs" / "cortex.candidate.v7.lock").exists() or not gate_p.exists():
+        assert v.get("pending") is True
+        return
+    assert v.get("pending") is False
+    before = sha(gate_p)
+    verify_v7_gate()
+    assert sha(gate_p) == before
+    if v["sensorimotor_association_gate_clear"]:
+        assert v["n_pair_clear"] >= 13
+        assert not (REPO_ROOT / "docs" / "cortex_v7_gate.failure.lock").exists()
+    else:
+        assert v["refuse_develop_before_clear"] is True
+        assert (REPO_ROOT / "docs" / "cortex_v7_gate.failure.lock").exists()
 
 
 def test_verify_v6_gate_cli() -> None:
@@ -401,6 +456,8 @@ if __name__ == "__main__":
     test_verify_v5_gate_cli()
     test_v6_diagnosis_boundary_and_gate_failure()
     test_verify_v6_gate_cli()
+    test_v7_stat_diagnosis_and_no_develop()
+    test_verify_v7_gate_cli()
     test_sealed_not_used_in_smoke()
     test_sanity_live()
     print("test_tm023cortex: ok")

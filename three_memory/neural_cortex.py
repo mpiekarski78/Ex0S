@@ -491,11 +491,14 @@ class NeuralCortex:
         # three-factor on op / motor query used
         e_op = torch.zeros(len(OPS), dtype=self.dtype, device=self.device)
         e_op[OPS.index(p["op"])] = 1.0
-        self.W_op = self.W_op + self.genome.eta_act * adv * torch.outer(e_op, rho_elig)
+        # v7: no-consequence ACT cost must not extinguish ACT (skip W_op when body_adv≈0)
+        skip_act_cost = p["op"] == "ACT" and abs(body_adv) < 1e-9
+        if not skip_act_cost:
+            self.W_op = self.W_op + self.genome.eta_act * adv * torch.outer(e_op, rho_elig)
         # v4: b_op frozen (non-plastic)
         # v6: motor-query credit only when body consequences differ; use selected snapshot
         if p["token"] is not None and p["op"] in ("EMIT", "ACT"):
-            skip_motor = p["op"] == "ACT" and abs(body_adv) < 1e-9
+            skip_motor = skip_act_cost
             if not skip_motor:
                 if p["op"] == "ACT" and p.get("motor_vec") is not None:
                     tok_v = self._to_t(np.asarray(p["motor_vec"], dtype=np.float64))
