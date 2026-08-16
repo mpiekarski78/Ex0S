@@ -23,7 +23,7 @@ Prior stamps still stand: 0.0.003 Frozen Composition ([`genome_011.lock`](genome
 | `three_memory/cortex.py` | frozen cortex |
 | `experiments/run_tm011compose.py` `make` | compose-on; kwargs forward acquire/skel/relate |
 
-Locks: [`genome_013.lock`](genome_013.lock), [`kappa_013.lock`](kappa_013.lock), [`family_013.lock`](family_013.lock), [`genome_014.lock`](genome_014.lock), [`acquire_014.lock`](acquire_014.lock), [`family_014.lock`](family_014.lock), [`skeleton_015.prereg.lock`](skeleton_015.prereg.lock), [`genome_015.lock`](genome_015.lock), [`skeleton_015.lock`](skeleton_015.lock), [`relate_016.prereg.lock`](relate_016.prereg.lock), [`genome_016.lock`](genome_016.lock), [`relate_016.lock`](relate_016.lock), [`alias_wall.prereg.lock`](alias_wall.prereg.lock), [`alias_wall.lock`](alias_wall.lock), [`alias_evidence.prereg.lock`](alias_evidence.prereg.lock), [`alias_finger.prereg.lock`](alias_finger.prereg.lock), [`alias_finger.candidate.lock`](alias_finger.candidate.lock), [`alias_finger.lock`](alias_finger.lock), [`gap_wall.prereg.lock`](gap_wall.prereg.lock), [`gap_wall.lock`](gap_wall.lock), [`continuity_evidence.prereg.lock`](continuity_evidence.prereg.lock), [`persist.prereg.lock`](persist.prereg.lock), [`persist.candidate.v1.lock`](persist.candidate.v1.lock), [`persist.candidate.lock`](persist.candidate.lock), [`persist.lock`](persist.lock).
+Locks: [`genome_013.lock`](genome_013.lock), [`kappa_013.lock`](kappa_013.lock), [`family_013.lock`](family_013.lock), [`genome_014.lock`](genome_014.lock), [`acquire_014.lock`](acquire_014.lock), [`family_014.lock`](family_014.lock), [`skeleton_015.prereg.lock`](skeleton_015.prereg.lock), [`genome_015.lock`](genome_015.lock), [`skeleton_015.lock`](skeleton_015.lock), [`relate_016.prereg.lock`](relate_016.prereg.lock), [`genome_016.lock`](genome_016.lock), [`relate_016.lock`](relate_016.lock), [`alias_wall.prereg.lock`](alias_wall.prereg.lock), [`alias_wall.lock`](alias_wall.lock), [`alias_evidence.prereg.lock`](alias_evidence.prereg.lock), [`alias_finger.prereg.lock`](alias_finger.prereg.lock), [`alias_finger.candidate.lock`](alias_finger.candidate.lock), [`alias_finger.lock`](alias_finger.lock), [`gap_wall.prereg.lock`](gap_wall.prereg.lock), [`gap_wall.lock`](gap_wall.lock), [`continuity_evidence.prereg.lock`](continuity_evidence.prereg.lock), [`persist.prereg.lock`](persist.prereg.lock), [`persist.candidate.v1.lock`](persist.candidate.v1.lock), [`persist.candidate.lock`](persist.candidate.lock), [`persist.lock`](persist.lock), [`life_wall_fixture.json`](life_wall_fixture.json), [`life_wall.prereg.lock`](life_wall.prereg.lock), [`life_wall.lock`](life_wall.lock).
 
 ## TM.0.14 → TM.0.16 lineage
 
@@ -37,6 +37,7 @@ Locks: [`genome_013.lock`](genome_013.lock), [`kappa_013.lock`](kappa_013.lock),
 | ALIASFINGER | **7/7** opt-in behavioral fingerprints · `earned_next=false` · `ex0s=null` · [`tm016aliasfinger_results.md`](tm016aliasfinger_results.md) |
 | GAPWALL | **6/6** continuity capacity wall on frozen ALIASFINGER-on · `earned_next=false` · `ex0s=null` · [`tm016gapwall_results.md`](tm016gapwall_results.md) |
 | PERSIST | **9/9** opt-in mark-continuity persistence · `earned_next=false` · `ex0s=null` · [`tm016persist_results.md`](tm016persist_results.md) |
+| LIFEWALL | cleared through **32** continuous-lifetime integration wall · `earned_next=false` · `ex0s=null` · [`tm016lifewall_results.md`](tm016lifewall_results.md) |
 
 0.14: apparatus writes the relation; organism uses it.  
 0.15: apparatus emits a symbol sequence; organism writes the relation, then contextual continuation.  
@@ -44,7 +45,8 @@ Locks: [`genome_013.lock`](genome_013.lock), [`kappa_013.lock`](kappa_013.lock),
 ALIASWALL: same latent route with fresh opaque aliases → support fragments; compose HOLD — symbol equivalence is still external without fingerprints.  
 ALIASFINGER: opt-in exact-key probes author `experience_fingerprint`; pairwise cliques project at compose; Kill route completes when fingerprints converge (skel raw edges unchanged).
 GAPWALL: empty visible retains the pre-gap event bag by skip semantics only; `end_event_episode` removes it; distractors are ordinary events; two post-gap peers tie and HOLD.  
-PERSIST: opt-in exact-key apply/read rows in `experience_continuity`; unique witness projects one existing skel edge at use time; contradiction withdraws on recompute (rows stay).
+PERSIST: opt-in exact-key apply/read rows in `experience_continuity`; unique witness projects one existing skel edge at use time; contradiction withdraws on recompute (rows stay).  
+LIFEWALL: one interleaved lifetime + twin on frozen PERSIST-on clears through 32 concurrent histories; fingerprints and continuity coexist without substituting.
 
 ## Explicit absences
 
@@ -52,7 +54,7 @@ PERSIST: opt-in exact-key apply/read rows in `experience_continuity`; unique wit
 |---------|------------|
 | Named product stamp for FAMILY earn | human decision (not auto) |
 | Cross-episode alias equivalence (earn) | ALIASFINGER candidate frozen in [`tm016aliasfinger_results.md`](tm016aliasfinger_results.md) (`earned_next=false`); contract [`alias_evidence_contract.md`](alias_evidence_contract.md) |
-| Gap persistence / object continuity | GAPWALL **6/6**; contract [`continuity_evidence_contract.md`](continuity_evidence_contract.md); PERSIST candidate frozen in [`tm016persist_results.md`](tm016persist_results.md) (`earned_next=false`) |
+| Gap persistence / object continuity | GAPWALL **6/6**; contract [`continuity_evidence_contract.md`](continuity_evidence_contract.md); PERSIST [`tm016persist_results.md`](tm016persist_results.md); LIFEWALL cleared through **32** [`tm016lifewall_results.md`](tm016lifewall_results.md) |
 | Anonymous features / sensory encoders / pixels | later |
 | Lookahead / backtracking | later |
 | No-cue English motor bar | B Fail (untouched) |
@@ -70,9 +72,11 @@ python tests/test_tm016aliasfinger.py
 python tests/test_tm016gapwall.py
 python tests/test_continuity_evidence_contract.py
 python tests/test_tm016persist.py
+python tests/test_tm016lifewall.py
 python -m experiments.run_tm016aliasfinger --verify-prereg
 python -m experiments.run_tm016gapwall --verify-prereg
 python -m experiments.run_tm016persist --verify-prereg
+python -m experiments.run_tm016lifewall --verify-prereg
 ```
 
 Paper-style summary: [`CLAIM.md`](CLAIM.md).

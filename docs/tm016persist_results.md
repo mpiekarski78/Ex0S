@@ -27,7 +27,7 @@ Audit repair (v1 candidate superseded): recompute enforces the phase–operation
 
 ## Next
 
-No product stamp. Alias fingerprints remain a separate track. Anonymous features / encoders later.
+No product stamp. Alias fingerprints remain a separate track. LIFEWALL continuous-lifetime wall: [`tm016lifewall_results.md`](tm016lifewall_results.md). Anonymous features / encoders later.
 
 ## Reproduce
 

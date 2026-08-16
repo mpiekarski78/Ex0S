@@ -1852,3 +1852,13 @@ Battery **9/9**. Alias fingerprints stay a separate track.
 
 Prereg: [`persist.prereg.lock`](persist.prereg.lock). Candidate (before score): [`persist.candidate.lock`](persist.candidate.lock). Freeze: [`persist.lock`](persist.lock). Apparatus: `experiments/run_tm016persist.py`. Results: [`tm016persist_results.md`](tm016persist_results.md).
 
+## TM.0.16.LIFEWALL — continuous-lifetime integration wall
+
+Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=null`. Not TM.0.17 / 0.0.005 / FAMILY / LOOKAHEAD.
+
+Fixture-first wall on frozen PERSIST-on (`make_persist` only; no `agent.py` edits). One interleaved lifetime mixes RELATE, the complete frozen ALIASFINGER A2 schedule, and continuity marks across capacity rungs 4→8→16→32. Twin uses frozen rename + verify_perm maps. Forks at rungs 8 and 16 are reset-ρ / strip-continuity / strip-fingerprint only (no donor swaps). Expected-state machine is keyed by `(rung, phase, object_index)`; withdrawals persist into later rungs. First failure is `(rung, lane, checkpoint, object_index, expected, actual)`.
+
+Recorded clear through **32**. Alias fingerprints and continuity marks coexist and never substitute. Wall, not earn.
+
+Prereg: [`life_wall.prereg.lock`](life_wall.prereg.lock). Fixture: [`life_wall_fixture.json`](life_wall_fixture.json). Freeze: [`life_wall.lock`](life_wall.lock). Apparatus: `experiments/run_tm016lifewall.py`. Results: [`tm016lifewall_results.md`](tm016lifewall_results.md).
+

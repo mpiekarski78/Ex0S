@@ -1,0 +1,64 @@
+{
+  "version": "TM.0.16.LIFEWALL.PREREG",
+  "lab": "TM.0.16.LIFEWALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "not_tm017": true,
+  "not_a_product_stamp": true,
+  "label": "continuous-lifetime integration wall on frozen PERSIST-on",
+  "preregistered_claim": "Measure whether frozen PERSIST-on (ALIASFINGER + mark-continuity) remains independently causal and behaviorally correct when RELATE, fingerprints, and continuity marks are interleaved throughout one accumulating lifetime (plus a causally remapped twin), scoring the trajectory at preregistered checkpoints and capacity rungs 4\u21928\u219216\u219232. This wall does not add machinery.",
+  "organism": {
+    "factory": "experiments.run_tm016persist.make_persist",
+    "use_alias_fingerprint": true,
+    "use_continuity_mark": true,
+    "use_acquire_relate": true,
+    "agent_edits_permitted": false
+  },
+  "fixture": "docs/life_wall_fixture.json",
+  "fixture_sha": "4bdcc56a6492daf82b5bf3ecee5d5db4a6543f0ced1a810ee86999f118ace9db",
+  "rungs": [
+    4,
+    8,
+    16,
+    32
+  ],
+  "lanes": [
+    "main",
+    "twin",
+    "reset_rho",
+    "strip_continuity",
+    "strip_fingerprint"
+  ],
+  "failure_record": "(rung, lane, checkpoint, object_index, expected, actual)",
+  "rung_clears_when": "main, twin, and all scheduled forks pass",
+  "forks": [
+    "reset_rho",
+    "strip_continuity",
+    "strip_fingerprint"
+  ],
+  "donor_swaps": false,
+  "coexistence_rule": "alias fingerprints and continuity marks coexist and never substitute",
+  "token_disjointness": "all object-lane tokens disjoint from the complete frozen ALIASFINGER fixture including clutter",
+  "prior_lock_shas": {
+    "persist.lock": "56554929d0ee82e637ef715e6122829adb79812e177b607b5af93829cd3cf0b2",
+    "persist.prereg.lock": "51bf6d3fcad146838e710faa4fb32974f742036893563a8dccc85b8947206293",
+    "alias_finger.lock": "025f9983aaaf946275bbf6c75f9b621e0c3652417894e7c24a43a4acda03dd23",
+    "gap_wall.lock": "f46401541ba38d6ab4369a84a1871e021ea161fa54977a585fbd1af76c2d1b3e"
+  },
+  "frozen_agent_sha": "1c6309668f4dfc64d0cde04f62da17ff38f8c5fcf8bb48f06a8686e21ab886a3",
+  "refuse": [
+    "editing three_memory/agent.py",
+    "editing make_persist / make_finger / make_relate / run_tm054.make",
+    "runner or agent SHAs in this prereg",
+    "run-time token generation",
+    "donor-swap battery",
+    "rewriting life_wall_fixture.json after pin",
+    "rewriting persist.lock / alias_finger.lock / gap_wall.lock",
+    "TM.0.17 / 0.0.005 / FAMILY / LOOKAHEAD / pixels / nursery-world channel",
+    "earned_next=true or non-null ex0s",
+    "alias row as object identity",
+    "empty-skip as continuity"
+  ],
+  "note": "Wall probe only. Write life_wall.lock after one scored main+twin+forks run. Do not rewrite this prereg or the fixture to match outcomes."
+}

@@ -24,7 +24,7 @@ This is a capacity wall, not evidence of learned object continuity.
 
 ## Next
 
-TM.0.16.PERSIST under the frozen continuity-evidence contract ([`tm016persist_results.md`](tm016persist_results.md)). Alias fingerprints remain separate.
+TM.0.16.LIFEWALL continuous-lifetime wall ([`tm016lifewall_results.md`](tm016lifewall_results.md)). Alias fingerprints remain separate.
 
 ## Reproduce
 

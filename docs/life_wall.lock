@@ -1,0 +1,31 @@
+{
+  "version": "TM.0.16.LIFEWALL",
+  "lab": "TM.0.16.LIFEWALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "not_tm017": true,
+  "label": "continuous-lifetime integration wall on frozen PERSIST-on",
+  "last_ok_rung": 32,
+  "first_fail_rung": null,
+  "first_fail": null,
+  "main_ok": true,
+  "twin_ok": true,
+  "fixture_sha": "4bdcc56a6492daf82b5bf3ecee5d5db4a6543f0ced1a810ee86999f118ace9db",
+  "life_wall_prereg_sha": "642f2eff7188ed2432854b13500e5abb398477476e58f2ffb402ee9717dbd06e",
+  "agent_sha": "1c6309668f4dfc64d0cde04f62da17ff38f8c5fcf8bb48f06a8686e21ab886a3",
+  "run_tm016lifewall_sha": "76a70f281fa280f2ad0686f4d406076ee35a4ba7957929ca8bdd1a9d77ee1118",
+  "prior_lock_shas": {
+    "persist.lock": "56554929d0ee82e637ef715e6122829adb79812e177b607b5af93829cd3cf0b2",
+    "alias_finger.lock": "025f9983aaaf946275bbf6c75f9b621e0c3652417894e7c24a43a4acda03dd23",
+    "gap_wall.lock": "f46401541ba38d6ab4369a84a1871e021ea161fa54977a585fbd1af76c2d1b3e"
+  },
+  "refuse": [
+    "editing agent.py / make_persist / make_finger",
+    "run-time token generation",
+    "donor-swap battery",
+    "TM.0.17 / 0.0.005 / FAMILY / LOOKAHEAD / pixels / nursery-world",
+    "earned_next=true or non-null ex0s",
+    "rewriting life_wall_fixture.json"
+  ]
+}
