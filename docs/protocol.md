@@ -2006,3 +2006,9 @@ Outcome: candidate `bd94241` revealed after a clean push. Fresh seed-derived D1�
 
 Diagnosis ([`cortex_diagnosis.v9.lock`](cortex_diagnosis.v9.lock)): remaining D1 reds are per-life extras against high birth baselines, not missing press-vs-harm learning. Residual D2 `holds<5` in 5 lives. Floor-only pairs 11/16. Not the same miss as v8. v10 may score gate extras as a C5-style population while keeping floors. Neural unchanged.
 
+## TM.0.23.CORTEX.V9 audit → isolated V10
+
+Canonical main `6c25302`. V9 gate **6/16** stands. Do not edit-rescore v9. **DEVELOP.v9 refused.** Full D0–D12 stays closed.
+
+v10 apparatus (scorer-only, no candidate SHA): [`cortex_v10_stat_contract.lock`](cortex_v10_stat_contract.lock), [`cortex_v10_architecture_amendment.lock`](cortex_v10_architecture_amendment.lock), [`cortex_v10.prereg.lock`](cortex_v10.prereg.lock). D1 bind remains press+harm. Per-life extras no longer veto; battery extras are population majority + mean Δ. Floors unchanged. Neural remains candidate v7/v8/v9 until a later birth/candidate commit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

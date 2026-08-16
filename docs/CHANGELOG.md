@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.V10 apparatus:** Scorer-only population extras matching C5. D1 press/harm floors retained. Frozen commitment, no neural edit, no candidate SHA. [`cortex_v10.prereg.lock`](cortex_v10.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V9 gate fail:** Candidate `bd94241` revealed after a clean push (git SHA pinned). Seed-derived D1–D2 **6/16** — **not clear**. D1 floors **32/32** (press=0 gone); D1 extras 23/32; D2 21/32 (floors 27/32). [`cortex_v9_gate.failure.lock`](cortex_v9_gate.failure.lock) + [`cortex_v10.isolation.lock`](cortex_v10.isolation.lock). **DEVELOP.v9 refused.** Do not edit-rescore v9. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V9 candidate:** Reuses frozen v7/v8 neural under the v9 D1 press/harm scorer contract. Nine sanity + math audit pass. Population C4/C5/C6 green. [`cortex.candidate.v9.lock`](cortex.candidate.v9.lock). No reveal in this commit. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V9 apparatus:** Scorer-only D1 press/harm bind matching C5. Frozen commitment, no neural edit, no candidate SHA. [`cortex_v9.prereg.lock`](cortex_v9.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

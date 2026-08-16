@@ -433,6 +433,28 @@ def test_verify_v9_gate_cli() -> None:
         assert not (REPO_ROOT / "docs" / "cortex_development.v9.lock").exists()
 
 
+def test_verify_v10_gate_cli() -> None:
+    from experiments.run_tm023cortex import verify_v10_gate
+
+    v = verify_v10_gate()
+    assert v["ok"] is True, v
+    if not (REPO_ROOT / "docs" / "cortex.candidate.v10.lock").exists() or not (
+        REPO_ROOT / "docs" / "cortex_v10_gate.lock"
+    ).exists():
+        assert v.get("pending") is True
+        return
+    assert v.get("pending") is False
+    before = sha(REPO_ROOT / "docs" / "cortex_v10_gate.lock")
+    verify_v10_gate()
+    assert sha(REPO_ROOT / "docs" / "cortex_v10_gate.lock") == before
+    if v["sensorimotor_association_gate_clear"]:
+        assert v["n_pair_clear"] >= 13
+    else:
+        assert v["refuse_develop_before_clear"] is True
+        assert (REPO_ROOT / "docs" / "cortex_v10_gate.failure.lock").exists()
+        assert not (REPO_ROOT / "docs" / "cortex_development.v10.lock").exists()
+
+
 def test_verify_v6_gate_cli() -> None:
     from experiments.run_tm023cortex import verify_v6_gate
 
@@ -564,6 +586,7 @@ if __name__ == "__main__":
     test_verify_v7_gate_cli()
     test_verify_v8_gate_cli()
     test_verify_v9_gate_cli()
+    test_verify_v10_gate_cli()
     test_sealed_not_used_in_smoke()
     test_sanity_live()
     print("test_tm023cortex: ok")
