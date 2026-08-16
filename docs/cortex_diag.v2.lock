@@ -1,0 +1,392 @@
+{
+  "version": "TM.0.23.CORTEX.DIAG",
+  "lab": "TM.0.23.CORTEX.DIAG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "neural_mechanism_changed": false,
+  "candidate_sha": "ffdf5d4ee86e51485a84052af58f41618992612167276abc602a2c8860f383b1",
+  "neural_cortex_sha": "519621d9cd8d1882bd57b832b71deef0f57c573e4fd0f6df42cfb8f5b7771759",
+  "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
+  "trace_purity": {
+    "cpu": {
+      "ok": true,
+      "ops_tokens_eq": true,
+      "bodies_eq": true,
+      "s_writes_eq": true,
+      "rng_eq": true,
+      "tensor_digest_eq": true,
+      "gpu_discrete_ops_eq": null,
+      "device": "cpu"
+    },
+    "cuda": {
+      "ok": true,
+      "ops_tokens_eq": true,
+      "bodies_eq": true,
+      "s_writes_eq": true,
+      "rng_eq": true,
+      "tensor_digest_eq": null,
+      "gpu_discrete_ops_eq": true,
+      "device": "cuda"
+    }
+  },
+  "trace_purity_ok": true,
+  "devices": {
+    "cpu": {
+      "summary": {
+        "n_steps": 120,
+        "op_counts": {
+          "STOP": 22,
+          "EMIT": 3,
+          "ACT": 36,
+          "HOLD": 59
+        },
+        "op_rates": {
+          "STOP": 0.18333333333333332,
+          "EMIT": 0.025,
+          "ACT": 0.3,
+          "HOLD": 0.49166666666666664
+        },
+        "unique_ops": [
+          "ACT",
+          "EMIT",
+          "HOLD",
+          "STOP"
+        ],
+        "act_rate": 0.3,
+        "hold_rate": 0.49166666666666664,
+        "act_token_counts": {
+          "drop": 12,
+          "press": 24
+        },
+        "forced_hold_suspect_count": 0,
+        "forced_hold_suspect_rate": 0.0,
+        "vocab_ever_has_press": true,
+        "vocab_ever_has_harm": true,
+        "mean_adv": -0.04218443361963304,
+        "adv_quantiles": {
+          "p10": -0.2902199391312582,
+          "p50": 0.0,
+          "p90": 0.050901699437494834
+        },
+        "frac_adv_pos": 0.11666666666666667,
+        "pred_err_early": 3.8691013364716165,
+        "pred_err_late": 2.558339645025508,
+        "mean_rho_norm": 4.544098668281941,
+        "mean_frac_near_pm1": 0.015755208333333333,
+        "mean_clip_frac": 0.0,
+        "mean_consol_gap": 0.07336207594153495,
+        "write_events": 32,
+        "retrieve_events": 0,
+        "mean_buf_occ": 7.483333333333333,
+        "teach_hold_rate": 0.475,
+        "probe_act_rate": 0.225
+      },
+      "credit": {
+        "n": 119,
+        "adv_by_credited_op": {
+          "STOP": {
+            "mean": 0.0,
+            "frac_pos": 0.0,
+            "n": 22
+          },
+          "EMIT": {
+            "mean": -1.0,
+            "frac_pos": 0.0,
+            "n": 2
+          },
+          "ACT": {
+            "mean": -0.08505922317655458,
+            "frac_pos": 0.3888888888888889,
+            "n": 36
+          },
+          "HOLD": {
+            "mean": 0.0,
+            "frac_pos": 0.0,
+            "n": 59
+          }
+        },
+        "act_credit_events": 36,
+        "note": "body_consequence_step is set on the ACT-emitting observe, not the credit observe",
+        "sample_ids": [
+          {
+            "action_id": "a1",
+            "interaction_token": "main_t1",
+            "eligibility_id": "e1",
+            "credited_at_step": 2,
+            "body_consequence_step": null,
+            "credited_op": "STOP",
+            "credited_token": null,
+            "adv": 0.0,
+            "pred_err": 7.3802717921277905,
+            "phase": "teach"
+          },
+          {
+            "action_id": "a2",
+            "interaction_token": "main_t2",
+            "eligibility_id": "e2",
+            "credited_at_step": 3,
+            "body_consequence_step": null,
+            "credited_op": "EMIT",
+            "credited_token": "drop",
+            "adv": -1.0,
+            "pred_err": 5.946272789964438,
+            "phase": "teach"
+          },
+          {
+            "action_id": "a3",
+            "interaction_token": "main_t3",
+            "eligibility_id": "e3",
+            "credited_at_step": 4,
+            "body_consequence_step": null,
+            "credited_op": "STOP",
+            "credited_token": null,
+            "adv": 0.0,
+            "pred_err": 5.4031555742076325,
+            "phase": "teach"
+          },
+          {
+            "action_id": "a4",
+            "interaction_token": "main_t4",
+            "eligibility_id": "e4",
+            "credited_at_step": 5,
+            "body_consequence_step": 5,
+            "credited_op": "ACT",
+            "credited_token": "drop",
+            "adv": -0.28941471140279684,
+            "pred_err": 5.671945498797075,
+            "phase": "teach"
+          },
+          {
+            "action_id": "a5",
+            "interaction_token": "main_t5",
+            "eligibility_id": "e5",
+            "credited_at_step": 6,
+            "body_consequence_step": 6,
+            "credited_op": "ACT",
+            "credited_token": "drop",
+            "adv": -0.2974669886874103,
+            "pred_err": 4.062821818426711,
+            "phase": "teach"
+          }
+        ]
+      },
+      "prob_gain": {
+        "delta_p_act": -0.05133783106901904,
+        "p_act_birth": 0.16666666666666666,
+        "p_act_end": 0.11532883559764762,
+        "p_hold_birth": 0.16666666666666666,
+        "p_hold_end": 0.14648234085626768
+      },
+      "birth_probs": {
+        "RETRIEVE": 0.16666666666666666,
+        "WRITE": 0.16666666666666666,
+        "EMIT": 0.16666666666666666,
+        "ACT": 0.16666666666666666,
+        "STOP": 0.16666666666666666,
+        "HOLD": 0.16666666666666666
+      },
+      "end_probs": {
+        "RETRIEVE": 0.2753165569687143,
+        "WRITE": 0.13815988857579634,
+        "EMIT": 0.22786325236309748,
+        "ACT": 0.11532883559764762,
+        "STOP": 0.09684912563847653,
+        "HOLD": 0.14648234085626768
+      },
+      "raw_sha": "f59c1250ed7267c9a3ea50f45f7540e2da47bc4205c9c98bbe01141e4e6225cf",
+      "raw_path": "runs/cortex_diag/diag_pair0_main_cpu.json"
+    },
+    "cuda": {
+      "summary": {
+        "n_steps": 120,
+        "op_counts": {
+          "STOP": 22,
+          "EMIT": 3,
+          "ACT": 36,
+          "HOLD": 59
+        },
+        "op_rates": {
+          "STOP": 0.18333333333333332,
+          "EMIT": 0.025,
+          "ACT": 0.3,
+          "HOLD": 0.49166666666666664
+        },
+        "unique_ops": [
+          "ACT",
+          "EMIT",
+          "HOLD",
+          "STOP"
+        ],
+        "act_rate": 0.3,
+        "hold_rate": 0.49166666666666664,
+        "act_token_counts": {
+          "drop": 12,
+          "press": 24
+        },
+        "forced_hold_suspect_count": 0,
+        "forced_hold_suspect_rate": 0.0,
+        "vocab_ever_has_press": true,
+        "vocab_ever_has_harm": true,
+        "mean_adv": -0.04218443361963304,
+        "adv_quantiles": {
+          "p10": -0.2902199391312582,
+          "p50": 0.0,
+          "p90": 0.050901699437494834
+        },
+        "frac_adv_pos": 0.11666666666666667,
+        "pred_err_early": 3.8691013364716165,
+        "pred_err_late": 2.558339645025508,
+        "mean_rho_norm": 4.544098668281941,
+        "mean_frac_near_pm1": 0.015755208333333333,
+        "mean_clip_frac": 0.0,
+        "mean_consol_gap": 0.07336207594153495,
+        "write_events": 32,
+        "retrieve_events": 0,
+        "mean_buf_occ": 7.483333333333333,
+        "teach_hold_rate": 0.475,
+        "probe_act_rate": 0.225
+      },
+      "credit": {
+        "n": 119,
+        "adv_by_credited_op": {
+          "STOP": {
+            "mean": 0.0,
+            "frac_pos": 0.0,
+            "n": 22
+          },
+          "EMIT": {
+            "mean": -1.0,
+            "frac_pos": 0.0,
+            "n": 2
+          },
+          "ACT": {
+            "mean": -0.08505922317655458,
+            "frac_pos": 0.3888888888888889,
+            "n": 36
+          },
+          "HOLD": {
+            "mean": 0.0,
+            "frac_pos": 0.0,
+            "n": 59
+          }
+        },
+        "act_credit_events": 36,
+        "note": "body_consequence_step is set on the ACT-emitting observe, not the credit observe",
+        "sample_ids": [
+          {
+            "action_id": "a1",
+            "interaction_token": "main_t1",
+            "eligibility_id": "e1",
+            "credited_at_step": 2,
+            "body_consequence_step": null,
+            "credited_op": "STOP",
+            "credited_token": null,
+            "adv": 0.0,
+            "pred_err": 7.38027179212779,
+            "phase": "teach"
+          },
+          {
+            "action_id": "a2",
+            "interaction_token": "main_t2",
+            "eligibility_id": "e2",
+            "credited_at_step": 3,
+            "body_consequence_step": null,
+            "credited_op": "EMIT",
+            "credited_token": "drop",
+            "adv": -1.0,
+            "pred_err": 5.946272789964438,
+            "phase": "teach"
+          },
+          {
+            "action_id": "a3",
+            "interaction_token": "main_t3",
+            "eligibility_id": "e3",
+            "credited_at_step": 4,
+            "body_consequence_step": null,
+            "credited_op": "STOP",
+            "credited_token": null,
+            "adv": 0.0,
+            "pred_err": 5.4031555742076325,
+            "phase": "teach"
+          },
+          {
+            "action_id": "a4",
+            "interaction_token": "main_t4",
+            "eligibility_id": "e4",
+            "credited_at_step": 5,
+            "body_consequence_step": 5,
+            "credited_op": "ACT",
+            "credited_token": "drop",
+            "adv": -0.28941471140279684,
+            "pred_err": 5.671945498797075,
+            "phase": "teach"
+          },
+          {
+            "action_id": "a5",
+            "interaction_token": "main_t5",
+            "eligibility_id": "e5",
+            "credited_at_step": 6,
+            "body_consequence_step": 6,
+            "credited_op": "ACT",
+            "credited_token": "drop",
+            "adv": -0.2974669886874103,
+            "pred_err": 4.062821818426711,
+            "phase": "teach"
+          }
+        ]
+      },
+      "prob_gain": {
+        "delta_p_act": -0.05133783106901903,
+        "p_act_birth": 0.16666666666666666,
+        "p_act_end": 0.11532883559764763,
+        "p_hold_birth": 0.16666666666666666,
+        "p_hold_end": 0.14648234085626757
+      },
+      "birth_probs": {
+        "RETRIEVE": 0.16666666666666666,
+        "WRITE": 0.16666666666666666,
+        "EMIT": 0.16666666666666666,
+        "ACT": 0.16666666666666666,
+        "STOP": 0.16666666666666666,
+        "HOLD": 0.16666666666666666
+      },
+      "end_probs": {
+        "RETRIEVE": 0.27531655696871443,
+        "WRITE": 0.13815988857579634,
+        "EMIT": 0.22786325236309757,
+        "ACT": 0.11532883559764763,
+        "STOP": 0.09684912563847652,
+        "HOLD": 0.14648234085626757
+      },
+      "raw_sha": "507651d41e9a26713de3f3343c94db1fd2b5c661a7f27b75181f7f4a7bae8691",
+      "raw_path": "runs/cortex_diag/diag_pair0_main_cuda.json"
+    }
+  },
+  "cpu_gpu_divergence": {
+    "ok": true,
+    "cpu_op_counts": {
+      "STOP": 22,
+      "EMIT": 3,
+      "ACT": 36,
+      "HOLD": 59
+    },
+    "gpu_op_counts": {
+      "STOP": 22,
+      "EMIT": 3,
+      "ACT": 36,
+      "HOLD": 59
+    },
+    "policy": "HOLD/ACT count parity on identical seed D1-like trajectory"
+  },
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "note": "Bounded summaries. Raw traces under gitignored runs/; SHAs pinned per device.",
+  "ok": true
+}

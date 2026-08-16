@@ -1,0 +1,55 @@
+{
+  "version": "TM.0.23.CORTEX.V3.GATE.RUNNER",
+  "lab": "TM.0.23.CORTEX.V3.GATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eval_revealed": false,
+  "gate_contract": "docs/cortex_v3_gate_contract.md",
+  "gate_contract_sha": "04344fc9292a0924e6042f17e7436448daecf37f3dd8bc43ec4a22d749b3f9b1",
+  "architecture_amendment_sha": "60a97ae018650c1cdf9659e8ad259eb36b427c9629f1e47c5a81ca3814d4639a",
+  "diagnosis_v2_sha": "7d7400c62f70405a8a74c63d1e3f870468a7a468265130581384237d46de431c",
+  "stages": [
+    "D0",
+    "D1",
+    "D2"
+  ],
+  "thresholds": {
+    "D1": {
+      "press_min": 3,
+      "press_gt_harm": true,
+      "cf_differs": true
+    },
+    "D2": {
+      "holds_min": 5,
+      "beneficial_min": 3,
+      "rho_reset_preserves_weights": true
+    },
+    "D0": {
+      "n_probes": 64,
+      "p0": 0.5,
+      "alpha": 0.01
+    },
+    "pair_clear_requires": "main_D1_and_D2_and_twin_D1_and_D2",
+    "gate_clear_min_pairs": 13,
+    "n_pairs": 16
+  },
+  "scorer_module": "experiments.cortex_develop_scorers",
+  "scorer_sha": "6a6456286a0dab1ad108ce80bd4971e9c38418d575693bad617a297e19fa96eb",
+  "gate_module": "experiments.cortex_v2_gate",
+  "gate_module_sha": "ceaf6744954be426845041420daa540189502f0093095316111264f0cffee76a",
+  "runner": "experiments.run_tm023cortex",
+  "runner_sha": "d0c5379ad0a663d62c14dbec28ab838c7c3f908413df3330dac8a8c9b2d57d7c",
+  "candidate_interface": {
+    "factory": "experiments.run_tm023cortex.make_cortex",
+    "class": "NeuralCortex",
+    "note": "Pins interface only \u2014 no candidate SHA"
+  },
+  "refuse": [
+    "pin candidate SHA before v3 birth",
+    "reuse v2 sealed worlds",
+    "D3-D12",
+    "soften thresholds"
+  ],
+  "note": "Frozen before v3 neural edits."
+}

@@ -1,0 +1,175 @@
+{
+  "version": "TM.0.23.CORTEX.V4.BIRTH",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "v1_candidate_sha": "60df20ec89249a550f54ab45b85c42e8d8e1da9f401035e027b7b414afb587cd",
+  "v2_candidate_sha": "ffdf5d4ee86e51485a84052af58f41618992612167276abc602a2c8860f383b1",
+  "v3_candidate_sha": "61fe2d0836be090921d9414ad15234ab6274959ab43333a2afc00367e84ad47c",
+  "diagnosis_v3_sha": "daa6619026bfc13d3b66a5a9e38733e66306dcbb38d5fc96689bff253171ea0c",
+  "v4_prereg_sha": "fee9b59dd3db1a1ac533ef6312bf1e2b7a99095ef6089a4728d44997c04ae92d",
+  "architecture_amendment_sha": "03b3d778952122ec96aa836760290fec05dd518d8bdb1f6c521cb06ec23afe0b",
+  "neural_cortex_sha": "49c7653db0e5ea36cc88f237d2603e0bde7571bf57be00f6ded9bd2e455e9892",
+  "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
+  "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
+  "genome": {
+    "n": 64,
+    "d_sym": 32,
+    "k_s": 8,
+    "d_body": 4,
+    "d_x": 293,
+    "p_connect": 0.1,
+    "t_max": 8,
+    "tau": 1.0,
+    "cos_thresh": 0.15,
+    "eta_pred": 0.05,
+    "eta_act": 0.15,
+    "beta": 0.01,
+    "clip": 2.0,
+    "seed_birth": 12345,
+    "seed_registry": 22222,
+    "seed_source": 33333,
+    "seed_action": 44444,
+    "seed_permute": 55555,
+    "dtype": "float64",
+    "body_setpoint": [
+      1.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    "ops": [
+      "RETRIEVE",
+      "WRITE",
+      "EMIT",
+      "ACT",
+      "STOP",
+      "HOLD"
+    ],
+    "op_cost": {
+      "RETRIEVE": 1.0,
+      "WRITE": 1.0,
+      "EMIT": 1.0,
+      "ACT": 0.05,
+      "STOP": 0.0,
+      "HOLD": 0.0
+    }
+  },
+  "learning_law_ok": true,
+  "gpu_scoring_ready": true,
+  "all_sanity_ok": true,
+  "sanity_results": [
+    {
+      "id": "order_ab_ba",
+      "ok": true,
+      "rho_distance": 3.4339650279125706
+    },
+    {
+      "id": "prediction",
+      "ok": true,
+      "early": 5.538147100426159,
+      "late": 5.31443790058481
+    },
+    {
+      "id": "advantage_path",
+      "ok": true,
+      "adv_good": 0.5033296378372909,
+      "adv_bad": -2.732050807568877,
+      "delta": 0.11273725895130167,
+      "beneficial_increases_responsible_action_probability": true,
+      "harmful_decreases_responsible_action_probability": true
+    },
+    {
+      "id": "exploration",
+      "ok": true,
+      "ops": [
+        "ACT",
+        "HOLD",
+        "STOP"
+      ]
+    },
+    {
+      "id": "write_retrieve",
+      "ok": true,
+      "buf_norm": 5.102258595801208
+    },
+    {
+      "id": "checkpoint",
+      "ok": true,
+      "cont": [
+        {
+          "op": "ACT",
+          "token": "harm",
+          "emit_sequence": []
+        },
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        {
+          "op": "ACT",
+          "token": "harm",
+          "emit_sequence": []
+        }
+      ],
+      "cont2": [
+        {
+          "op": "ACT",
+          "token": "harm",
+          "emit_sequence": []
+        },
+        {
+          "op": "HOLD",
+          "token": null,
+          "emit_sequence": []
+        },
+        {
+          "op": "ACT",
+          "token": "harm",
+          "emit_sequence": []
+        }
+      ]
+    },
+    {
+      "id": "rho_reset",
+      "ok": true
+    },
+    {
+      "id": "scorer_isolation",
+      "ok": true
+    },
+    {
+      "id": "cpu_gpu",
+      "ok": true,
+      "cpu_ops": [
+        "ACT",
+        "ACT",
+        "ACT",
+        "ACT",
+        "HOLD"
+      ],
+      "gpu_ops": [
+        "ACT",
+        "ACT",
+        "ACT",
+        "ACT",
+        "HOLD"
+      ],
+      "device": "NVIDIA GB10"
+    },
+    {
+      "id": "order_ab_ba",
+      "ok": true,
+      "rho_distance": 3.4339650279125706
+    }
+  ],
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  }
+}

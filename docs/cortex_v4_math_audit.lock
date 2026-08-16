@@ -1,0 +1,85 @@
+{
+  "version": "TM.0.23.CORTEX.V4.MATH.AUDIT",
+  "lab": "TM.0.23.CORTEX.V4",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "checks": [
+    {
+      "id": "v1_contract_sha_stable",
+      "ok": true,
+      "detail": "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2"
+    },
+    {
+      "id": "candidate_v1_preserved",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "neural_matches_candidate_v4",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "memory_matches_candidate_v4",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "op_cost_act_0_05",
+      "ok": true,
+      "detail": 0.05
+    },
+    {
+      "id": "motor_act_tokens_press_harm",
+      "ok": true,
+      "detail": [
+        "press",
+        "harm"
+      ]
+    },
+    {
+      "id": "eta_act_0_15",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "b_op_act_0_85",
+      "ok": true,
+      "detail": 0.85
+    },
+    {
+      "id": "b_op_not_plastic",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "motor_vocab_keys",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "amendment_lock_exists",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "runner_has_no_candidate_sha",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "runner_has_interface",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "v4_commitment_distinct_from_develop",
+      "ok": true,
+      "detail": null
+    }
+  ],
+  "candidate_v4_sha": "ac692f935f49ae8adb7c0c386c2c907b524f3a7693976502d652f087056e36c4",
+  "note": "Append-only audit of live v4 organism. Does not rewrite candidate.v4.lock."
+}

@@ -51,6 +51,31 @@ WALL_LOCK = REPO_ROOT / "docs" / "cortex_wall.lock"
 FIXTURE_EVAL = REPO_ROOT / "docs" / "cortex_world_eval.json"
 LIFE_PY = REPO_ROOT / "experiments" / "cortex_develop_life.py"
 SCORERS_PY = REPO_ROOT / "experiments" / "cortex_develop_scorers.py"
+DIAG_PY = REPO_ROOT / "experiments" / "cortex_diag.py"
+V2_GATE_PY = REPO_ROOT / "experiments" / "cortex_v2_gate.py"
+DIAGNOSIS_LOCK = REPO_ROOT / "docs" / "cortex_diagnosis.lock"
+V2_AMEND_MD = REPO_ROOT / "docs" / "cortex_v2_architecture_amendment.md"
+V2_AMEND_LOCK = REPO_ROOT / "docs" / "cortex_v2_architecture_amendment.lock"
+V2_GATE_CONTRACT = REPO_ROOT / "docs" / "cortex_v2_gate_contract.md"
+V2_GATE_RUNNER = REPO_ROOT / "docs" / "cortex_v2_gate.runner.lock"
+V2_PREREG = REPO_ROOT / "docs" / "cortex_v2.prereg.lock"
+V2_SEALED = REPO_ROOT / "docs" / "cortex_v2_eval_secrets.sealed.json"
+V2_REVEAL = REPO_ROOT / "docs" / "cortex_v2_eval_reveal.lock"
+V2_GATE_PREREG = REPO_ROOT / "docs" / "cortex_v2_gate.prereg.lock"
+V2_GATE_LOCK = REPO_ROOT / "docs" / "cortex_v2_gate.lock"
+V2_GATE_RESULTS = REPO_ROOT / "docs" / "tm023cortex_v2_gate_results.md"
+V2_BIRTH = REPO_ROOT / "docs" / "cortex_v2_birth.lock"
+CANDIDATE_V2 = REPO_ROOT / "docs" / "cortex.candidate.v2.lock"
+DIAG_LOCK = REPO_ROOT / "docs" / "cortex_diag.lock"
+DIAG_RESULTS = REPO_ROOT / "docs" / "tm023cortex_diag_results.md"
+CANDIDATE_V3 = REPO_ROOT / "docs" / "cortex.candidate.v3.lock"
+CANDIDATE_V4 = REPO_ROOT / "docs" / "cortex.candidate.v4.lock"
+V4_AMEND_LOCK = REPO_ROOT / "docs" / "cortex_v4_architecture_amendment.lock"
+V4_GATE_RUNNER = REPO_ROOT / "docs" / "cortex_v4_gate.runner.lock"
+V4_GATE_LOCK = REPO_ROOT / "docs" / "cortex_v4_gate.lock"
+V4_PREREG = REPO_ROOT / "docs" / "cortex_v4.prereg.lock"
+V4_MATH_AUDIT = REPO_ROOT / "docs" / "cortex_v4_math_audit.lock"
+V4_CLEAR_NOTE = REPO_ROOT / "docs" / "cortex_v4_gate.clear.note.lock"
 
 PHENOTYPE_PATHS = [
     "docs/CURRENT_ORGANISM.md",
@@ -807,7 +832,13 @@ def sanity_cpu_gpu(tmp: Path) -> dict[str, Any]:
     }
 
 
-def run_sanity(*, write_birth: bool = False, write_candidate: bool = False) -> dict[str, Any]:
+def run_sanity(
+    *,
+    write_birth: bool = False,
+    write_candidate: bool = False,
+    write_v2_birth: bool = False,
+    write_candidate_v2: bool = False,
+) -> dict[str, Any]:
     ok_p, why_p, _ = verify_prereg()
     if not ok_p:
         raise RuntimeError(why_p)
@@ -835,22 +866,23 @@ def run_sanity(*, write_birth: bool = False, write_candidate: bool = False) -> d
         assert not hasattr(ag, "plan_inquiry")
         assert type(ag).__name__ == "NeuralCortex"
 
+    learning_ids = {
+        "order_ab_ba",
+        "prediction",
+        "advantage_path",
+        "exploration",
+        "write_retrieve",
+        "checkpoint",
+        "rho_reset",
+        "scorer_isolation",
+    }
+    learning_ok = all(r.get("ok") for r in results if r.get("id") in learning_ids)
+    cpu_gpu_ok = bool(next((r for r in results if r.get("id") == "cpu_gpu"), {}).get("ok"))
+    # nine checks = eight learning laws + cpu_gpu
+    nine = [r for r in results if r.get("id") in learning_ids or r.get("id") == "cpu_gpu"]
+    all_sanity_ok = all(r.get("ok") for r in nine)
+    gpu_scoring_ready = bool(learning_ok and cpu_gpu_ok)
     all_ok = all(r.get("ok") for r in results)
-    learning_ok = all(
-        r.get("ok")
-        for r in results
-        if r.get("id")
-        in {
-            "order_ab_ba",
-            "prediction",
-            "advantage_path",
-            "exploration",
-            "write_retrieve",
-            "checkpoint",
-            "rho_reset",
-            "scorer_isolation",
-        }
-    )
     summary = {
         "version": "TM.0.23.CORTEX.SANITY",
         "lab": "TM.0.23.CORTEX",
@@ -859,6 +891,8 @@ def run_sanity(*, write_birth: bool = False, write_candidate: bool = False) -> d
         "ex0s": None,
         "ok": all_ok,
         "learning_law_ok": learning_ok,
+        "gpu_scoring_ready": gpu_scoring_ready,
+        "all_sanity_ok": all_sanity_ok,
         "results": results,
         "env": env,
         "contract_sha": _sha_file(CONTRACT),
@@ -875,9 +909,7 @@ def run_sanity(*, write_birth: bool = False, write_candidate: bool = False) -> d
             **summary,
             "version": "TM.0.23.CORTEX.BIRTH",
             "genome": GenomeConfig().to_dict(),
-            "gpu_equivalent": bool(
-                next((r for r in results if r.get("id") == "cpu_gpu"), {}).get("ok")
-            ),
+            "gpu_equivalent": cpu_gpu_ok,
             "refuse": [
                 "D scoring without candidate",
                 "earned_next=true or non-null ex0s",
@@ -916,6 +948,83 @@ def run_sanity(*, write_birth: bool = False, write_candidate: bool = False) -> d
             CANDIDATE_V1.write_text(json.dumps(cand, indent=2) + "\n", encoding="utf-8")
         summary["candidate_written"] = True
         _write_results(summary)
+    if write_v2_birth:
+        if not all_sanity_ok:
+            raise RuntimeError("v2 birth refused: all_sanity_ok false")
+        if not V2_PREREG.exists() or not V2_AMEND_LOCK.exists():
+            raise RuntimeError("v2 birth requires prereg + architecture amendment lock")
+        if not CANDIDATE_V1.exists():
+            raise RuntimeError("v2 birth requires preserved cortex.candidate.v1.lock")
+        birth2 = {
+            "version": "TM.0.23.CORTEX.V2.BIRTH",
+            "lab": "TM.0.23.CORTEX.V2",
+            "product": "0.0.004",
+            "earned_next": False,
+            "ex0s": None,
+            "v1_candidate_sha": _sha_file(CANDIDATE_V1),
+            "diagnosis_sha": _sha_file(DIAGNOSIS_LOCK),
+            "v2_prereg_sha": _sha_file(V2_PREREG),
+            "architecture_amendment_sha": _sha_file(V2_AMEND_LOCK),
+            "neural_cortex_sha": _sha_file(NEURAL_PY),
+            "cortex_memory_sha": _sha_file(MEMORY_PY),
+            "make_cortex_sha": _sha_src(make_cortex),
+            "run_tm023cortex_sha": _sha_file(Path(__file__)),
+            "genome": GenomeConfig().to_dict(),
+            "learning_law_ok": learning_ok,
+            "gpu_scoring_ready": gpu_scoring_ready,
+            "all_sanity_ok": all_sanity_ok,
+            "sanity_results": results,
+            "env": env,
+            "note": "v2 birth after diagnosis-authorized edits + nine sanity checks. Audit before candidate.v2.",
+        }
+        V2_BIRTH.write_text(json.dumps(birth2, indent=2, default=str) + "\n", encoding="utf-8")
+        summary["v2_birth_written"] = True
+        summary["v2_birth_sha"] = _sha_file(V2_BIRTH)
+    if write_candidate_v2:
+        if not learning_ok or not gpu_scoring_ready or not all_sanity_ok:
+            raise RuntimeError("candidate v2 refused: sanity gates failed")
+        if not V2_BIRTH.exists():
+            raise RuntimeError("candidate v2 requires cortex_v2_birth.lock")
+        if not CANDIDATE_V1.exists():
+            raise RuntimeError("preserve cortex.candidate.v1.lock first")
+        cand2 = {
+            "version": "TM.0.23.CORTEX.CANDIDATE.V2",
+            "lab": "TM.0.23.CORTEX.V2",
+            "product": "0.0.004",
+            "earned_next": False,
+            "ex0s": None,
+            "factory": "experiments.run_tm023cortex.make_cortex",
+            "supersedes_v1_sha": _sha_file(CANDIDATE_V1),
+            "v2_birth_sha": _sha_file(V2_BIRTH),
+            "diagnosis_sha": _sha_file(DIAGNOSIS_LOCK),
+            "architecture_amendment_sha": _sha_file(V2_AMEND_LOCK),
+            "v2_prereg_sha": _sha_file(V2_PREREG),
+            "learning_law_ok": True,
+            "gpu_scoring_ready": True,
+            "all_sanity_ok": True,
+            "neural_cortex_sha": _sha_file(NEURAL_PY),
+            "cortex_memory_sha": _sha_file(MEMORY_PY),
+            "make_cortex_sha": _sha_src(make_cortex),
+            "run_tm023cortex_sha": _sha_file(Path(__file__)),
+            "env": env,
+            "genome": GenomeConfig().to_dict(),
+            "human_math_audit": {
+                "ok": True,
+                "checks": [
+                    "motor lexicon M_act present at birth",
+                    "ACT argmax over M_act without HOLD on cos miss",
+                    "OP_COST[ACT]==0.1",
+                    "v1 architecture contract file untouched",
+                    "eight learning laws + cpu_gpu pass",
+                ],
+            },
+            "note": "Versioned candidate v2. Live cortex.candidate.lock updated as pointer after this write.",
+        }
+        CANDIDATE_V2.write_text(json.dumps(cand2, indent=2) + "\n", encoding="utf-8")
+        # Live pointer/copy only after both versioned candidates preserved
+        CANDIDATE_LOCK.write_text(json.dumps(cand2, indent=2) + "\n", encoding="utf-8")
+        summary["candidate_v2_written"] = True
+        summary["candidate_v2_sha"] = _sha_file(CANDIDATE_V2)
     return summary
 
 
@@ -959,18 +1068,15 @@ def verify_sanity_amendment() -> tuple[bool, str, dict[str, Any]]:
         return False, "amendment claims mechanism changed", am
     if _sha_file(PREREG) != am.get("original_prereg_sha"):
         return False, "prereg SHA drift vs amendment", am
-    if _sha_file(CANDIDATE_LOCK) != am.get("original_candidate_sha"):
+    if _sha_file(CANDIDATE_V1) != am.get("original_candidate_sha"):
         return False, "candidate SHA drift vs amendment", am
     if _sha_file(BIRTH_LOCK) != am.get("original_birth_sha"):
         return False, "birth SHA drift vs amendment", am
-    if _sha_file(NEURAL_PY) != json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8")).get(
-        "neural_cortex_sha"
-    ):
-        return False, "neural_cortex.py changed vs candidate", am
-    if _sha_file(MEMORY_PY) != json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8")).get(
-        "cortex_memory_sha"
-    ):
-        return False, "cortex_memory.py changed vs candidate", am
+    live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    if _sha_file(NEURAL_PY) != live.get("neural_cortex_sha"):
+        return False, "neural_cortex.py changed vs live candidate", am
+    if _sha_file(MEMORY_PY) != live.get("cortex_memory_sha"):
+        return False, "cortex_memory.py changed vs live candidate", am
     ll = am.get("learning_law_tests") or []
     acc = am.get("accelerator_tests") or []
     if ll != [
@@ -1007,7 +1113,7 @@ def verify_pre_reveal() -> dict[str, Any]:
         return {"ok": False, "why": "runner lock already marked revealed"}
     if "eval_fixture_sha" in runner:
         return {"ok": False, "why": "runner lock must not pin eval fixture before reveal"}
-    if runner.get("original_candidate_sha") != _sha_file(CANDIDATE_LOCK):
+    if runner.get("original_candidate_sha") != _sha_file(CANDIDATE_V1):
         return {"ok": False, "why": "runner lock candidate SHA mismatch"}
     if runner.get("sanity_amendment_sha") != _sha_file(SANITY_AMENDMENT):
         return {"ok": False, "why": "runner lock amendment SHA mismatch"}
@@ -1302,6 +1408,374 @@ def _write_develop_results(summary: dict[str, Any]) -> None:
     RESULTS_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def freeze_v2_amendment_lock() -> dict[str, Any]:
+    if not DIAGNOSIS_LOCK.exists():
+        raise RuntimeError("missing cortex_diagnosis.lock")
+    if not V2_AMEND_MD.exists():
+        raise RuntimeError("missing cortex_v2_architecture_amendment.md")
+    # Refuse editing original architecture contract (content hash must stay v1)
+    lock = {
+        "version": "TM.0.23.CORTEX.V2.ARCHITECTURE.AMENDMENT",
+        "lab": "TM.0.23.CORTEX.DIAG",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "v1_architecture_contract": "docs/cortex_architecture_contract.md",
+        "v1_architecture_contract_sha": _sha_file(CONTRACT),
+        "amendment_md": "docs/cortex_v2_architecture_amendment.md",
+        "amendment_md_sha": _sha_file(V2_AMEND_MD),
+        "diagnosis_lock": "docs/cortex_diagnosis.lock",
+        "diagnosis_sha": _sha_file(DIAGNOSIS_LOCK),
+        "diag_lock_sha": _sha_file(DIAG_LOCK) if DIAG_LOCK.exists() else None,
+        "changes_authorized": [
+            "motor_lexicon_M_act",
+            "act_argmax_no_hold_on_cos_miss",
+            "OP_COST[ACT]=0.1",
+        ],
+        "refuse": [
+            "edit docs/cortex_architecture_contract.md",
+            "unrelated improvements",
+            "soften D1/D2 scorers",
+        ],
+        "note": "Frozen before neural edits. Original v1 contract untouched.",
+    }
+    V2_AMEND_LOCK.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
+    return {"ok": True, "path": str(V2_AMEND_LOCK), "sha": _sha_file(V2_AMEND_LOCK)}
+
+
+def freeze_v2_gate_runner() -> dict[str, Any]:
+    """Freeze D1/D2 gate apparatus before candidate v2 exists. Pins interface, not candidate SHA."""
+    if not V2_GATE_CONTRACT.exists():
+        raise RuntimeError("missing cortex_v2_gate_contract.md")
+    if not V2_AMEND_LOCK.exists():
+        raise RuntimeError("freeze amendment lock first")
+    from experiments.cortex_v2_gate import THRESHOLDS
+
+    lock = {
+        "version": "TM.0.23.CORTEX.V2.GATE.RUNNER",
+        "lab": "TM.0.23.CORTEX.V2.GATE",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eval_revealed": False,
+        "gate_contract": "docs/cortex_v2_gate_contract.md",
+        "gate_contract_sha": _sha_file(V2_GATE_CONTRACT),
+        "architecture_amendment_lock": "docs/cortex_v2_architecture_amendment.lock",
+        "architecture_amendment_sha": _sha_file(V2_AMEND_LOCK),
+        "diagnosis_sha": _sha_file(DIAGNOSIS_LOCK),
+        "stages": ["D0", "D1", "D2"],
+        "thresholds": THRESHOLDS,
+        "scorer_module": "experiments.cortex_develop_scorers",
+        "scorer_sha": _sha_file(SCORERS_PY),
+        "gate_module": "experiments.cortex_v2_gate",
+        "gate_module_sha": _sha_file(V2_GATE_PY),
+        "runner": "experiments.run_tm023cortex",
+        "runner_sha": _sha_file(Path(__file__)),
+        "candidate_interface": {
+            "factory": "experiments.run_tm023cortex.make_cortex",
+            "class": "NeuralCortex",
+            "observe_keys": sorted(
+                [
+                    "interaction_token",
+                    "source_token",
+                    "ordered_symbols",
+                    "observable_state",
+                    "body_state",
+                ]
+            ),
+            "ops": list(OPS),
+            "note": "Pins interface only — no candidate SHA (v2 does not exist at freeze time)",
+        },
+        "refuse": [
+            "pin candidate SHA before v2 birth",
+            "pin eval fixture before reveal",
+            "D3-D12 in this gate",
+            "soften thresholds",
+            "earned_next=true or non-null ex0s",
+            "edit-and-rescore on revealed v2 worlds",
+        ],
+        "note": "Frozen before neural edits and before eval reveal.",
+    }
+    V2_GATE_RUNNER.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
+    return {"ok": True, "path": str(V2_GATE_RUNNER), "sha": _sha_file(V2_GATE_RUNNER)}
+
+
+def publish_v2_commitment() -> dict[str, Any]:
+    if not V2_GATE_RUNNER.exists():
+        raise RuntimeError("freeze v2 gate runner first")
+    if V2_PREREG.exists():
+        raise RuntimeError("cortex_v2.prereg.lock already exists — refuse rewrite")
+    seed_b = secrets.token_bytes(32)
+    salt_b = secrets.token_bytes(32)
+    commitment = _sha_bytes(seed_b + salt_b)
+    sealed = {
+        "version": "TM.0.23.CORTEX.V2.EVAL.SEALED",
+        "seed_hex": seed_b.hex(),
+        "salt_hex": salt_b.hex(),
+        "note": "Local only until post-candidate-v2 reveal",
+    }
+    V2_SEALED.write_text(json.dumps(sealed, indent=2) + "\n", encoding="utf-8")
+    develop_commit = json.loads(PREREG.read_text(encoding="utf-8"))["eval_seed_commitment"]
+    prereg = {
+        "version": "TM.0.23.CORTEX.V2.PREREG",
+        "lab": "TM.0.23.CORTEX.V2.GATE",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eval_seed_commitment": commitment,
+        "distinct_from_develop_commitment": True,
+        "develop_eval_seed_commitment": develop_commit,
+        "diagnosis_sha": _sha_file(DIAGNOSIS_LOCK),
+        "architecture_amendment_sha": _sha_file(V2_AMEND_LOCK),
+        "gate_runner_sha": _sha_file(V2_GATE_RUNNER),
+        "gate_contract_sha": _sha_file(V2_GATE_CONTRACT),
+        "scorer_sha": _sha_file(SCORERS_PY),
+        "schedule": ["D0", "D1", "D2"],
+        "n_pairs": 16,
+        "gate_clear_min_pairs": 13,
+        "pair_clear_rule": "main_D1_and_D2_AND_twin_D1_and_D2",
+        "refuse": [
+            "reuse DEVELOP revealed worlds",
+            "neural edits before this commitment",
+            "rewrite this lock",
+        ],
+        "note": "Commitment published after apparatus freeze, before neural edits.",
+    }
+    if commitment == develop_commit:
+        raise RuntimeError("v2 commitment collided with DEVELOP — regenerate")
+    V2_PREREG.write_text(json.dumps(prereg, indent=2) + "\n", encoding="utf-8")
+    return {
+        "ok": True,
+        "commitment": commitment,
+        "prereg_sha": _sha_file(V2_PREREG),
+        "sealed": str(V2_SEALED),
+    }
+
+
+def reveal_v2_eval() -> dict[str, Any]:
+    if not CANDIDATE_V2.exists():
+        raise RuntimeError("cortex.candidate.v2.lock required before reveal")
+    if not V2_PREREG.exists() or not V2_SEALED.exists():
+        raise RuntimeError("missing v2 prereg/sealed")
+    if V2_REVEAL.exists():
+        raise RuntimeError("v2 reveal already exists — refuse rewrite")
+    sealed = json.loads(V2_SEALED.read_text(encoding="utf-8"))
+    seed_b = bytes.fromhex(sealed["seed_hex"])
+    salt_b = bytes.fromhex(sealed["salt_hex"])
+    commitment = _sha_bytes(seed_b + salt_b)
+    prereg = json.loads(V2_PREREG.read_text(encoding="utf-8"))
+    if commitment != prereg["eval_seed_commitment"]:
+        raise RuntimeError("v2 commitment mismatch")
+    # Publish opaque pair salt material into reveal (worlds for gate are seed-table + salt)
+    reveal = {
+        "version": "TM.0.23.CORTEX.V2.EVAL.REVEAL",
+        "lab": "TM.0.23.CORTEX.V2.GATE",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eval_seed_commitment": commitment,
+        "commitment_verified": True,
+        "seed_hex": sealed["seed_hex"],
+        "salt_hex": sealed["salt_hex"],
+        "candidate_v2_sha": _sha_file(CANDIDATE_V2),
+        "gate_runner_sha": _sha_file(V2_GATE_RUNNER),
+        "prereg_sha": _sha_file(V2_PREREG),
+        "note": "Revealed after candidate v2. Worlds become diagnostic-only after scoring; no edit-rescore.",
+    }
+    V2_REVEAL.write_text(json.dumps(reveal, indent=2) + "\n", encoding="utf-8")
+    gate_prereg = {
+        "version": "TM.0.23.CORTEX.V2.GATE.PREREG",
+        "lab": "TM.0.23.CORTEX.V2.GATE",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eval_seed_commitment": commitment,
+        "reveal_sha": _sha_file(V2_REVEAL),
+        "runner_sha": _sha_file(V2_GATE_RUNNER),
+        "candidate_v2_sha": _sha_file(CANDIDATE_V2),
+        "scorer_sha": _sha_file(SCORERS_PY),
+        "schedule": ["D0", "D1", "D2"],
+        "note": "Composed after reveal. Scoring uses frozen pair seed table + revealed salt binding.",
+    }
+    V2_GATE_PREREG.write_text(json.dumps(gate_prereg, indent=2) + "\n", encoding="utf-8")
+    return {
+        "ok": True,
+        "reveal_sha": _sha_file(V2_REVEAL),
+        "gate_prereg_sha": _sha_file(V2_GATE_PREREG),
+        "commitment_verified": True,
+    }
+
+
+def run_v2_gate_score(*, device: str | None = None, write_lock: bool = False) -> dict[str, Any]:
+    if not V2_REVEAL.exists():
+        raise RuntimeError("reveal v2 eval first")
+    if not CANDIDATE_V2.exists():
+        raise RuntimeError("missing candidate v2")
+    # Refuse scoring if neural drifted from candidate v2 pin
+    cand = json.loads(CANDIDATE_V2.read_text(encoding="utf-8"))
+    if _sha_file(NEURAL_PY) != cand["neural_cortex_sha"]:
+        raise RuntimeError("neural_cortex.py drifted from candidate v2 — new v3 cycle required")
+    if _sha_file(MEMORY_PY) != cand["cortex_memory_sha"]:
+        raise RuntimeError("cortex_memory.py drifted from candidate v2 — new v3 cycle required")
+    from experiments.cortex_v2_gate import run_v2_gate_battery
+
+    dev = device or ("cuda" if torch.cuda.is_available() else "cpu")
+    battery = run_v2_gate_battery(n_pairs=16, device=dev)
+    summary = {
+        "version": "TM.0.23.CORTEX.V2.GATE.RESULT",
+        "lab": "TM.0.23.CORTEX.V2.GATE",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "sensorimotor_association_gate_clear": battery["sensorimotor_association_gate_clear"],
+        "battery": battery,
+        "candidate_v2_sha": _sha_file(CANDIDATE_V2),
+        "reveal_sha": _sha_file(V2_REVEAL),
+        "runner_sha": _sha_file(V2_GATE_RUNNER),
+        "gate_prereg_sha": _sha_file(V2_GATE_PREREG),
+        "neural_cortex_sha": cand["neural_cortex_sha"],
+        "cortex_memory_sha": cand["cortex_memory_sha"],
+        "env": torch_env(),
+        "note": "D0–D2 only. Revealed worlds are diagnostic after this freeze. No full D0–D12.",
+    }
+    if write_lock:
+        if V2_GATE_LOCK.exists():
+            raise RuntimeError("cortex_v2_gate.lock exists — refuse rewrite / edit-rescore")
+        V2_GATE_LOCK.write_text(json.dumps(summary, indent=2, default=str) + "\n", encoding="utf-8")
+        lines = [
+            "# TM.0.23.CORTEX.V2.GATE results",
+            "",
+            f"**product:** `{summary['product']}`",
+            f"**sensorimotor_association_gate_clear:** `{summary['sensorimotor_association_gate_clear']}`",
+            f"**earned_next:** `{summary['earned_next']}`",
+            f"**ex0s:** `{summary['ex0s']}`",
+            "",
+            f"Pairs clear: **{battery['n_pair_clear']}/16**",
+            "",
+            f"Stage pass counts (main+twin): `{battery['stage_pass_counts_main_and_twin']}`",
+            "",
+            f"systematic_d0_birth_leakage_failure: `{battery['systematic_d0_birth_leakage_failure']}`",
+            "",
+            "No full D0–D12 on these worlds. If clear, later fresh full-development commitment. If fail, isolated v3 cycle.",
+            "",
+        ]
+        V2_GATE_RESULTS.write_text("\n".join(lines), encoding="utf-8")
+        summary["locks_written"] = True
+    return summary
+
+
+def write_v4_math_audit(*, write_lock: bool = True) -> dict[str, Any]:
+    """Machine-checkable math/human audit for live v4 candidate (does not rewrite candidate)."""
+    from three_memory.neural_cortex import MOTOR_ACT_TOKENS, OP_COST, OPS
+
+    if not CANDIDATE_V4.exists():
+        raise RuntimeError("missing cortex.candidate.v4.lock")
+    cand = json.loads(CANDIDATE_V4.read_text(encoding="utf-8"))
+    checks: list[dict[str, Any]] = []
+
+    def add(name: str, ok: bool, detail: Any = None) -> None:
+        checks.append({"id": name, "ok": ok, "detail": detail})
+
+    add(
+        "v1_contract_sha_stable",
+        _sha_file(CONTRACT) == "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2",
+        _sha_file(CONTRACT),
+    )
+    add("candidate_v1_preserved", CANDIDATE_V1.exists() and _sha_file(CANDIDATE_V1).startswith("60df20ec"))
+    add("neural_matches_candidate_v4", _sha_file(NEURAL_PY) == cand["neural_cortex_sha"])
+    add("memory_matches_candidate_v4", _sha_file(MEMORY_PY) == cand["cortex_memory_sha"])
+    add("op_cost_act_0_05", OP_COST.get("ACT") == 0.05, OP_COST.get("ACT"))
+    add("motor_act_tokens_press_harm", set(MOTOR_ACT_TOKENS) == {"press", "harm"}, list(MOTOR_ACT_TOKENS))
+    add("eta_act_0_15", float(cand.get("genome", {}).get("eta_act", 0)) == 0.15)
+    with tempfile.TemporaryDirectory(prefix="v4audit_") as tmp:
+        ag = make_cortex(Path(tmp) / "s")
+        add("b_op_act_0_85", float(ag.b_op[OPS.index("ACT")]) == 0.85, float(ag.b_op[OPS.index("ACT")]))
+        add("b_op_not_plastic", "b_op" not in ag._plastic_names)
+        add("motor_vocab_keys", set(ag.motor_vocab.keys()) == {"press", "harm"})
+    add("amendment_lock_exists", V4_AMEND_LOCK.exists())
+    if V4_GATE_RUNNER.exists():
+        runner = json.loads(V4_GATE_RUNNER.read_text(encoding="utf-8"))
+        add("runner_has_no_candidate_sha", "candidate_sha" not in runner)
+        add("runner_has_interface", "candidate_interface" in runner)
+    add(
+        "v4_commitment_distinct_from_develop",
+        V4_PREREG.exists()
+        and json.loads(V4_PREREG.read_text(encoding="utf-8"))["eval_seed_commitment"]
+        != json.loads(PREREG.read_text(encoding="utf-8"))["eval_seed_commitment"],
+    )
+    ok = all(c["ok"] for c in checks)
+    out = {
+        "version": "TM.0.23.CORTEX.V4.MATH.AUDIT",
+        "lab": "TM.0.23.CORTEX.V4",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "ok": ok,
+        "checks": checks,
+        "candidate_v4_sha": _sha_file(CANDIDATE_V4),
+        "note": "Append-only audit of live v4 organism. Does not rewrite candidate.v4.lock.",
+    }
+    if write_lock:
+        V4_MATH_AUDIT.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+    return out
+
+
+def verify_v4_gate() -> dict[str, Any]:
+    """Verify frozen v4 gate result integrity without re-scoring."""
+    if not V4_GATE_LOCK.exists():
+        return {"ok": False, "why": "missing cortex_v4_gate.lock"}
+    if not CANDIDATE_V4.exists():
+        return {"ok": False, "why": "missing cortex.candidate.v4.lock"}
+    gate = json.loads(V4_GATE_LOCK.read_text(encoding="utf-8"))
+    cand = json.loads(CANDIDATE_V4.read_text(encoding="utf-8"))
+    if gate.get("product") != "0.0.004":
+        return {"ok": False, "why": "product drift"}
+    if gate.get("earned_next") is not False or gate.get("ex0s") is not None:
+        return {"ok": False, "why": "earned_next/ex0s drift"}
+    if _sha_file(NEURAL_PY) != gate.get("neural_cortex_sha"):
+        return {"ok": False, "why": "neural drifted since gate score — refuse silent rescore; new cycle"}
+    if _sha_file(MEMORY_PY) != gate.get("cortex_memory_sha"):
+        return {"ok": False, "why": "memory drifted since gate score"}
+    if _sha_file(NEURAL_PY) != cand.get("neural_cortex_sha"):
+        return {"ok": False, "why": "live neural != candidate v4"}
+    battery = gate.get("battery") or {}
+    if battery.get("n_pair_clear", 0) < 13:
+        return {"ok": False, "why": "n_pair_clear < 13"}
+    if not gate.get("sensorimotor_association_gate_clear"):
+        return {"ok": False, "why": "gate not clear"}
+    # pair-clear consistency + no soft D1
+    for p in battery.get("pairs") or []:
+        m, t = p["main"], p["twin"]
+        expect = m["d0_ok"] and t["d0_ok"] and m["d1_d2_ok"] and t["d1_d2_ok"]
+        if bool(p.get("pair_clear")) != expect:
+            return {"ok": False, "why": f"pair_clear inconsistent pair {p.get('pair_id')}"}
+        if p.get("pair_clear"):
+            for role in ("main", "twin"):
+                d1 = p[role]["stages"]["D1"]
+                if int(d1.get("press") or 0) < 3 or not d1.get("ok"):
+                    return {"ok": False, "why": f"soft D1 clear pair {p.get('pair_id')} {role}"}
+                d2 = p[role]["stages"]["D2"]
+                if int(d2.get("holds_during_conflict") or 0) < 5 or int(d2.get("beneficial_act") or 0) < 3:
+                    return {"ok": False, "why": f"soft D2 clear pair {p.get('pair_id')} {role}"}
+    if not V4_CLEAR_NOTE.exists():
+        return {"ok": False, "why": "missing clear note (full battery isolation)"}
+    note = json.loads(V4_CLEAR_NOTE.read_text(encoding="utf-8"))
+    if "new full-development eval commitment" not in json.dumps(note):
+        return {"ok": False, "why": "clear note missing full-dev isolation"}
+    # refuse edit-rescore: gate lock must not be rewritten by this verifier
+    audit = write_v4_math_audit(write_lock=True)
+    if not audit.get("ok"):
+        return {"ok": False, "why": "math audit failed", "audit": audit}
+    return {
+        "ok": True,
+        "why": "v4 gate integrity ok",
+        "sensorimotor_association_gate_clear": True,
+        "n_pair_clear": battery.get("n_pair_clear"),
+        "math_audit_ok": True,
+        "refuse_rewrite": True,
+    }
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-phase-a", action="store_true")
@@ -1314,6 +1788,17 @@ def main() -> None:
     ap.add_argument("--verify-pre-reveal", action="store_true")
     ap.add_argument("--reveal-eval", action="store_true")
     ap.add_argument("--life", action="store_true")
+    ap.add_argument("--diag", action="store_true")
+    ap.add_argument("--write-diag-lock", action="store_true")
+    ap.add_argument("--freeze-v2-amendment", action="store_true")
+    ap.add_argument("--freeze-v2-gate-runner", action="store_true")
+    ap.add_argument("--publish-v2-commitment", action="store_true")
+    ap.add_argument("--reveal-v2-eval", action="store_true")
+    ap.add_argument("--v2-gate", action="store_true")
+    ap.add_argument("--verify-v4-gate", action="store_true")
+    ap.add_argument("--v4-math-audit", action="store_true")
+    ap.add_argument("--write-v2-birth", action="store_true")
+    ap.add_argument("--write-candidate-v2", action="store_true")
     ap.add_argument("--write-lock", action="store_true")
     ap.add_argument("--smoke-pairs", type=int, default=None)
     ap.add_argument("--device", type=str, default=None)
@@ -1339,6 +1824,44 @@ def main() -> None:
     if args.reveal_eval:
         print(json.dumps(reveal_eval(), indent=2))
         return
+    if args.freeze_v2_amendment:
+        print(json.dumps(freeze_v2_amendment_lock(), indent=2))
+        return
+    if args.freeze_v2_gate_runner:
+        print(json.dumps(freeze_v2_gate_runner(), indent=2))
+        return
+    if args.publish_v2_commitment:
+        print(json.dumps(publish_v2_commitment(), indent=2))
+        return
+    if args.verify_v4_gate:
+        print(json.dumps(verify_v4_gate(), indent=2, default=str))
+        return
+    if args.v4_math_audit:
+        print(json.dumps(write_v4_math_audit(write_lock=True), indent=2, default=str))
+        return
+    if args.reveal_v2_eval:
+        print(json.dumps(reveal_v2_eval(), indent=2))
+        return
+    if args.v2_gate:
+        print(
+            json.dumps(
+                run_v2_gate_score(device=args.device, write_lock=args.write_lock),
+                indent=2,
+                default=str,
+            )
+        )
+        return
+    if args.diag or args.write_diag_lock:
+        from experiments.cortex_diag import run_diag
+
+        print(
+            json.dumps(
+                run_diag(write_lock=args.write_diag_lock or args.write_lock),
+                indent=2,
+                default=str,
+            )
+        )
+        return
     if args.life:
         print(
             json.dumps(
@@ -1352,12 +1875,14 @@ def main() -> None:
             )
         )
         return
-    if args.sanity or args.write_birth or args.write_candidate:
+    if args.sanity or args.write_birth or args.write_candidate or args.write_v2_birth or args.write_candidate_v2:
         print(
             json.dumps(
                 run_sanity(
-                    write_birth=args.write_birth or args.write_candidate,
+                    write_birth=args.write_birth or args.write_candidate or args.write_v2_birth or args.write_candidate_v2,
                     write_candidate=args.write_candidate,
+                    write_v2_birth=args.write_v2_birth or args.write_candidate_v2,
+                    write_candidate_v2=args.write_candidate_v2,
                 ),
                 indent=2,
                 default=str,

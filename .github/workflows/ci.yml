@@ -49,3 +49,4 @@ jobs:
           python tests/test_tm023cortex.py
           python -m experiments.run_tm023cortex --verify-prereg
           python -m experiments.run_tm023cortex --verify-sanity-amendment
+          python -m experiments.run_tm023cortex --verify-v4-gate

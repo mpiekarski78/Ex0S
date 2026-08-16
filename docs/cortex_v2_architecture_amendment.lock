@@ -1,0 +1,25 @@
+{
+  "version": "TM.0.23.CORTEX.V2.ARCHITECTURE.AMENDMENT",
+  "lab": "TM.0.23.CORTEX.DIAG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "v1_architecture_contract": "docs/cortex_architecture_contract.md",
+  "v1_architecture_contract_sha": "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2",
+  "amendment_md": "docs/cortex_v2_architecture_amendment.md",
+  "amendment_md_sha": "b54ef6d78a4592ab4b3d9051ebb59b81a5560a8ff51651c3ef509b5b80f10899",
+  "diagnosis_lock": "docs/cortex_diagnosis.lock",
+  "diagnosis_sha": "b4fc0da16a16fd33f5dcd819ce4be2b6f2d3095ae2044145e9117957bc2b3726",
+  "diag_lock_sha": "6e966131a243a160fed91619257f8d19090a0df4bc1d0e3fdd99f65d680823a7",
+  "changes_authorized": [
+    "motor_lexicon_M_act",
+    "act_argmax_no_hold_on_cos_miss",
+    "OP_COST[ACT]=0.1"
+  ],
+  "refuse": [
+    "edit docs/cortex_architecture_contract.md",
+    "unrelated improvements",
+    "soften D1/D2 scorers"
+  ],
+  "note": "Frozen before neural edits. Original v1 contract untouched."
+}

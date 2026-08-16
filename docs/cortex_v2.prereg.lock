@@ -1,0 +1,29 @@
+{
+  "version": "TM.0.23.CORTEX.V2.PREREG",
+  "lab": "TM.0.23.CORTEX.V2.GATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eval_seed_commitment": "df2ea6ece2724877facf951830c0f0b9c725de5f9d195ca39e65533aa475ca1c",
+  "distinct_from_develop_commitment": true,
+  "develop_eval_seed_commitment": "4d76ecd69fabcdf5d39f321049405be32f444bd8c2954f9157fe6f0d7e07343e",
+  "diagnosis_sha": "b4fc0da16a16fd33f5dcd819ce4be2b6f2d3095ae2044145e9117957bc2b3726",
+  "architecture_amendment_sha": "88b9da3e49284f5a714b6c0fc8ec54626556326224b6beca3936714743d95c10",
+  "gate_runner_sha": "c4499a01c55f7b97c9b21a8ceaa0087e9406d15821c90288753d22f7cabd5048",
+  "gate_contract_sha": "b26229ab75a948e078a6f3e78fef00249548278eeac370147d37c8606750bf6f",
+  "scorer_sha": "6a6456286a0dab1ad108ce80bd4971e9c38418d575693bad617a297e19fa96eb",
+  "schedule": [
+    "D0",
+    "D1",
+    "D2"
+  ],
+  "n_pairs": 16,
+  "gate_clear_min_pairs": 13,
+  "pair_clear_rule": "main_D1_and_D2_AND_twin_D1_and_D2",
+  "refuse": [
+    "reuse DEVELOP revealed worlds",
+    "neural edits before this commitment",
+    "rewrite this lock"
+  ],
+  "note": "Commitment published after apparatus freeze, before neural edits."
+}

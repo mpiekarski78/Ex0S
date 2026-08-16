@@ -1,0 +1,40 @@
+{
+  "version": "TM.0.23.CORTEX.V4.GATE.RUNNER",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "gate_contract_sha": "2694c746ad52164bf22228f36495012bef0fe3ae90b78128651325a4f1dca5f5",
+  "architecture_amendment_sha": "03b3d778952122ec96aa836760290fec05dd518d8bdb1f6c521cb06ec23afe0b",
+  "stages": [
+    "D0",
+    "D1",
+    "D2"
+  ],
+  "thresholds": {
+    "D1": {
+      "press_min": 3,
+      "press_gt_harm": true,
+      "cf_differs": true
+    },
+    "D2": {
+      "holds_min": 5,
+      "beneficial_min": 3,
+      "rho_reset_preserves_weights": true
+    },
+    "D0": {
+      "n_probes": 64,
+      "p0": 0.5,
+      "alpha": 0.01
+    },
+    "pair_clear_requires": "main_D1_and_D2_and_twin_D1_and_D2",
+    "gate_clear_min_pairs": 13,
+    "n_pairs": 16
+  },
+  "scorer_sha": "6a6456286a0dab1ad108ce80bd4971e9c38418d575693bad617a297e19fa96eb",
+  "gate_module_sha": "ceaf6744954be426845041420daa540189502f0093095316111264f0cffee76a",
+  "candidate_interface": {
+    "factory": "experiments.run_tm023cortex.make_cortex",
+    "note": "interface only"
+  },
+  "note": "Frozen before v4 neural edits."
+}

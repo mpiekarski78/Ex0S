@@ -1,0 +1,27 @@
+{
+  "version": "TM.0.23.CORTEX.DIAGNOSIS.V3",
+  "lab": "TM.0.23.CORTEX.DIAG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "diagnosed_candidate": "docs/cortex.candidate.v3.lock",
+  "prior_gate_failure": "docs/cortex_v3_gate.failure.lock",
+  "ranked_root_causes": [
+    {
+      "rank": 1,
+      "id": "plastic_act_bias_kills_hold",
+      "claim": "Plastic b_op[ACT] under positive press advantage grows until HOLD mass collapses; D2 requires holds>=5",
+      "evidence": {
+        "D1_pass_lives": 32,
+        "D2_fail_mode": "holds_during_conflict in {1,2,3,4} with beneficial_act >=9",
+        "n_pair_clear": 11
+      }
+    }
+  ],
+  "allowed_v4_change_surface": [
+    "b_op[ACT] birth value 0.85 (milder than 1.5)",
+    "b_op is frozen (non-plastic); three-factor updates W_op only, not b_op",
+    "Keep M_act={press,harm}, OP_COST[ACT]=0.05, eta_act=0.15, ACT argmax without HOLD on cos miss"
+  ],
+  "refuse": ["edit-rescore v3 worlds", "soften D2 holds threshold", "edit v1 architecture contract"]
+}

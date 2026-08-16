@@ -1,0 +1,14 @@
+{
+  "version": "TM.0.23.CORTEX.V3.GATE.FAILURE",
+  "lab": "TM.0.23.CORTEX.V3.GATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "sensorimotor_association_gate_clear": false,
+  "n_pair_clear": 11,
+  "gate_lock": "docs/cortex_v3_gate.lock",
+  "reveal_worlds_status": "diagnostic_only",
+  "failure_mode": "D1 32/32; D2 fails solely on holds_during_conflict < 5 while beneficial_act high — plastic b_op[ACT] amplified ACT and suppressed HOLD",
+  "refuse": ["edit-rescore on revealed v3 worlds", "reuse v3b commitment"],
+  "next": "DIAG v3 → v4 amendment (non-plastic milder b_op) → new birth/candidate/commitment/gate"
+}

@@ -1940,3 +1940,11 @@ Scored 16 main/twin pairs on GPU. Fields: `development_gate_clear`, `eligible_fo
 
 Contract: [`cortex_development_contract.md`](cortex_development_contract.md). Locks: [`cortex_development.runner.lock`](cortex_development.runner.lock), [`cortex_eval_reveal.lock`](cortex_eval_reveal.lock), [`cortex_development.prereg.lock`](cortex_development.prereg.lock), [`cortex_development.lock`](cortex_development.lock), [`cortex_wall.lock`](cortex_wall.lock). Apparatus: `experiments/run_tm023cortex.py` + `experiments/cortex_develop_life.py`. Results: [`tm023cortex_results.md`](tm023cortex_results.md).
 
+## TM.0.23.CORTEX.DIAG → V2/V3/V4 D1–D2 gate
+
+Diagnose frozen failed DEVELOP candidate (trace-pure snapshot probes). Never edit [`cortex_architecture_contract.md`](cortex_architecture_contract.md). Freeze diagnosis + architecture amendment + D1/D2 gate apparatus + eval commitment **before** neural edits. Birth→audit→versioned candidate; reveal; score 16 complete main∧twin D1∧D2 pairs (≥13/16). Failed revealed worlds are diagnostic-only (no edit-rescore).
+
+Outcome: v2 gate **2/16** fail → v3 **11/16** fail → v4 **13/16** **clear** (`sensorimotor_association_gate_clear=true`). Product **0.0.004**; `earned_next=false`; `ex0s=null`. Full D0–D12 requires a **later** fresh full-development commitment — not v4 gate worlds.
+
+Key locks: [`cortex_diagnosis.lock`](cortex_diagnosis.lock), [`cortex_v4_architecture_amendment.lock`](cortex_v4_architecture_amendment.lock), [`cortex_v4_gate.lock`](cortex_v4_gate.lock), [`cortex.candidate.v4.lock`](cortex.candidate.v4.lock). Results: [`tm023cortex_v4_gate_results.md`](tm023cortex_v4_gate_results.md).
+

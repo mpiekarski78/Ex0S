@@ -1,0 +1,78 @@
+{
+  "version": "TM.0.23.CORTEX.DIAGNOSIS",
+  "lab": "TM.0.23.CORTEX.DIAG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "neural_mechanism_changed": false,
+  "diag_lock": "docs/cortex_diag.lock",
+  "candidate_v1_sha_field": "docs/cortex.candidate.lock",
+  "ranked_root_causes": [
+    {
+      "rank": 1,
+      "id": "motor_lexicon_absent",
+      "claim": "ACT operands press/harm/get/drop never enter sensory vocab during D1-like teach; rare ACT binds to state token st_idle",
+      "evidence": {
+        "vocab_ever_has_press": false,
+        "vocab_ever_has_harm": false,
+        "act_token_counts": {
+          "st_idle": 4
+        },
+        "device": "cpu",
+        "raw_sha_field": "devices.cpu.raw_sha"
+      }
+    },
+    {
+      "rank": 2,
+      "id": "forced_hold_cosine",
+      "claim": "Majority of steps are HOLD with post-motor best_act_cos below cos_thresh; ACT/EMIT cosine miss collapses to HOLD",
+      "evidence": {
+        "forced_hold_suspect_rate": 0.7083333333333334,
+        "hold_rate": 0.7916666666666666,
+        "act_rate": 0.03333333333333333
+      }
+    },
+    {
+      "rank": 3,
+      "id": "act_cost_dominates_advantage",
+      "claim": "Credited ACT events show mean adv=-1.0; OP_COST[ACT]=1.0 exceeds body-setpoint improvement from beneficial press under DEFAULT_LATENT, so three-factor learning cannot reinforce press",
+      "evidence": {
+        "adv_by_credited_op.ACT.mean": -1.0,
+        "frac_adv_pos": 0.0,
+        "delta_p_act": -0.04999149903825481
+      }
+    },
+    {
+      "rank": 4,
+      "id": "not_primary",
+      "claim": "Prediction loss improves; rho not saturated; clip unused; CPU/GPU HOLD/ACT counts match; eligibility IDs attach to prior actions \u2014 not primary D1 blockers",
+      "evidence": {
+        "pred_err_early_to_late": [
+          3.6011542733802995,
+          1.7027238666871978
+        ],
+        "mean_frac_near_pm1": 0.0,
+        "mean_clip_frac": 0.0,
+        "cpu_gpu_divergence_ok": true,
+        "trace_purity_ok": true
+      }
+    }
+  ],
+  "allowed_v2_change_surface": [
+    "Birth-time dedicated motor lexicon {press,harm,get,drop,idle} with registry-seeded vectors; ACT token selection searches only this lexicon",
+    "When op=ACT, select argmax motor token even if cosine < cos_thresh (do not force HOLD on motor miss); EMIT retains v1 cos_thresh\u2192HOLD behavior on full vocab",
+    "Reduce OP_COST[ACT] so beneficial press under DEFAULT_LATENT yields adv>0 while harm remains adv<0 (authorize ACT cost 0.1)"
+  ],
+  "refuse": [
+    "edit docs/cortex_architecture_contract.md",
+    "rewrite cortex.candidate.v1.lock or birth prereg",
+    "wrap make_interpret / ThreeMemoryAgent",
+    "reward/correct/answer observe keys",
+    "soften D1/D2 scorer thresholds",
+    "unrelated improvements (attention redesign, larger n, new ops, LLM)",
+    "full D0-D12 on DIAG or v2-gate revealed worlds"
+  ],
+  "note": "Diagnosis precedes neural edits. Amendment must cite these causes only.",
+  "diag_lock_sha": "6e966131a243a160fed91619257f8d19090a0df4bc1d0e3fdd99f65d680823a7",
+  "diag_trace_purity_ok": true
+}

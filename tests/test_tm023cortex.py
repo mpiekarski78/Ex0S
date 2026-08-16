@@ -141,8 +141,72 @@ def test_sanity_amendment_append_only() -> None:
     assert adv["harmful_decreases_responsible_action_probability"] is True
     # original locks not rewritten relative to amendment pins
     assert sha(PREREG) == am["original_prereg_sha"]
-    assert sha(CANDIDATE_LOCK) == am["original_candidate_sha"]
+    assert sha(CANDIDATE_V1) == am["original_candidate_sha"]
     assert sha(BIRTH_LOCK) == am["original_birth_sha"]
+
+
+def test_v1_architecture_contract_untouched() -> None:
+    # pinned birth contract SHA must remain the v1 file
+    assert sha(CONTRACT) == "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2"
+
+
+def test_diag_and_v4_gate() -> None:
+    diag = REPO_ROOT / "docs" / "cortex_diag.lock"
+    assert diag.exists()
+    d = json.loads(diag.read_text(encoding="utf-8"))
+    assert d["trace_purity_ok"] is True
+    assert d["neural_mechanism_changed"] is False
+    assert (REPO_ROOT / "docs" / "cortex_diagnosis.lock").exists()
+    assert (REPO_ROOT / "docs" / "cortex_v2_architecture_amendment.lock").exists()
+    v2_runner = json.loads((REPO_ROOT / "docs" / "cortex_v2_gate.runner.lock").read_text(encoding="utf-8"))
+    assert "candidate_sha" not in v2_runner
+    assert "candidate_interface" in v2_runner
+    v1_commit = json.loads(PREREG.read_text(encoding="utf-8"))["eval_seed_commitment"]
+    v4_prereg = json.loads((REPO_ROOT / "docs" / "cortex_v4.prereg.lock").read_text(encoding="utf-8"))
+    assert v4_prereg["eval_seed_commitment"] != v1_commit
+    gate = json.loads((REPO_ROOT / "docs" / "cortex_v4_gate.lock").read_text(encoding="utf-8"))
+    assert gate["sensorimotor_association_gate_clear"] is True
+    assert gate["battery"]["n_pair_clear"] >= 13
+    assert gate["earned_next"] is False
+    assert gate["ex0s"] is None
+    assert gate["product"] == "0.0.004"
+    # versioned candidates preserved; live points at v4
+    assert (REPO_ROOT / "docs" / "cortex.candidate.v1.lock").exists()
+    assert (REPO_ROOT / "docs" / "cortex.candidate.v2.lock").exists()
+    assert (REPO_ROOT / "docs" / "cortex.candidate.v3.lock").exists()
+    assert (REPO_ROOT / "docs" / "cortex.candidate.v4.lock").exists()
+    live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V4"
+    # isolation: failed v2/v3 gates frozen; no full D battery on gate worlds
+    assert (REPO_ROOT / "docs" / "cortex_v2_gate.failure.lock").exists()
+    assert (REPO_ROOT / "docs" / "cortex_v3_gate.failure.lock").exists()
+    note = gate.get("note") or ""
+    assert "full-development" in note.lower() or "D0-D12" in note or "D0–D12" in note
+
+
+def test_verify_v4_gate_cli() -> None:
+    from experiments.run_tm023cortex import verify_v4_gate, write_v4_math_audit
+
+    audit = write_v4_math_audit(write_lock=True)
+    assert audit["ok"] is True, audit
+    v = verify_v4_gate()
+    assert v["ok"] is True, v
+    assert v["sensorimotor_association_gate_clear"] is True
+    # refuse rewrite: gate lock sha stable across verify
+    before = sha(REPO_ROOT / "docs" / "cortex_v4_gate.lock")
+    verify_v4_gate()
+    assert sha(REPO_ROOT / "docs" / "cortex_v4_gate.lock") == before
+
+
+def test_motor_lexicon_v4() -> None:
+    with tempfile.TemporaryDirectory(prefix="tm023_mot_") as tmp:
+        ag = make_cortex(Path(tmp) / "s")
+        assert set(ag.motor_vocab.keys()) == {"press", "harm"}
+        from three_memory.neural_cortex import OPS, OP_COST
+
+        assert OP_COST["ACT"] == 0.05
+        assert float(ag.b_op[OPS.index("ACT")]) == 0.85
+        assert "b_op" not in ag._plastic_names
 
 
 def test_runner_lock_no_eval_fixture_pin() -> None:
@@ -232,10 +296,14 @@ if __name__ == "__main__":
     test_abi_reject()
     test_birth_and_candidate_frozen()
     test_sanity_amendment_append_only()
+    test_v1_architecture_contract_untouched()
     test_runner_lock_no_eval_fixture_pin()
     test_reveal_and_compose()
     test_develop_results_fields()
     test_scorer_audit_v1_preserved()
+    test_diag_and_v4_gate()
+    test_verify_v4_gate_cli()
+    test_motor_lexicon_v4()
     test_sealed_not_used_in_smoke()
     test_sanity_live()
     print("test_tm023cortex: ok")

@@ -19,11 +19,14 @@ from torch import Tensor
 from three_memory.cortex_memory import CortexMemory, CortexRecord
 
 OPS = ("RETRIEVE", "WRITE", "EMIT", "ACT", "STOP", "HOLD")
+# v2 amendment: dedicated ACT motor lexicon (not grown from sensory symbols)
+# v3 amendment: ACT targets restricted to press/harm only
+MOTOR_ACT_TOKENS = ("press", "harm")
 OP_COST = {
     "RETRIEVE": 1.0,
     "WRITE": 1.0,
     "EMIT": 1.0,
-    "ACT": 1.0,
+    "ACT": 0.05,  # v3 amendment (was 0.1 in v2; 1.0 in v1)
     "STOP": 0.0,
     "HOLD": 0.0,
 }
@@ -64,7 +67,7 @@ class GenomeConfig:
     tau: float = 1.0
     cos_thresh: float = 0.15
     eta_pred: float = 0.05
-    eta_act: float = 0.05
+    eta_act: float = 0.15  # v3b amendment (was 0.05)
     beta: float = 0.01
     clip: float = 2.0
     seed_birth: int = 12345
@@ -146,6 +149,12 @@ class NeuralCortex:
 
         self.vocab: dict[str, np.ndarray] = {}
         self.sources: dict[str, np.ndarray] = {}
+        # v2: birth-time motor lexicon M_act (diagnosis motor_lexicon_absent)
+        self.motor_vocab: dict[str, np.ndarray] = {}
+        for tok in MOTOR_ACT_TOKENS:
+            vec = self.rng_registry.normal(0.0, 1.0, size=g.d_sym).astype(np.float64)
+            self.motor_vocab[tok] = vec
+            self.vocab[tok] = vec
 
         self.M = self._init_mask()
         self.W_rec = self._init_masked_rec()
@@ -153,6 +162,9 @@ class NeuralCortex:
         self.b = torch.zeros(g.n, dtype=self.dtype, device=self.device)
         self.W_pred = self._randn(g.d_sym, g.n, g.n)
         self.W_op = self._randn(len(OPS), g.n, g.n)
+        # v4: additive frozen op logit bias (milder; not plastic — see diagnosis.v3)
+        self.b_op = torch.zeros(len(OPS), dtype=self.dtype, device=self.device)
+        self.b_op[OPS.index("ACT")] = 0.85
         self.W_emit_query = self._randn(g.d_sym, g.n, g.n)
         self.W_act_query = self._randn(g.d_sym, g.n, g.n)
         self.W_write = self._randn(g.d_sym, g.n, g.n)
@@ -178,6 +190,7 @@ class NeuralCortex:
         self._birth_M = self.M.detach().clone()
         self._birth_v_start = self.v_start.copy()
         self._birth_v_end = self.v_end.copy()
+        self._birth_b_op = self.b_op.detach().clone()
 
         self.rho = torch.zeros(g.n, dtype=self.dtype, device=self.device)
         self.retrieval_buffer = torch.zeros(
@@ -287,19 +300,26 @@ class NeuralCortex:
         p = e / np.sum(e)
         return int(self.rng_action.choice(len(OPS), p=p))
 
-    def _best_token(self, query: Tensor) -> str | None:
-        if not self.vocab:
+    def _best_token(
+        self,
+        query: Tensor,
+        *,
+        lexicon: dict[str, np.ndarray] | None = None,
+        require_thresh: bool = True,
+    ) -> str | None:
+        pool = lexicon if lexicon is not None else self.vocab
+        if not pool:
             return None
         q = self._from_t(query)
         qn = np.linalg.norm(q) + 1e-12
         best_tok = None
         best = -1.0
-        for tok, v in self.vocab.items():
+        for tok, v in pool.items():
             cos = float(np.dot(q, v) / (qn * (np.linalg.norm(v) + 1e-12)))
             if cos > best:
                 best = cos
                 best_tok = tok
-        if best < self.genome.cos_thresh:
+        if require_thresh and best < self.genome.cos_thresh:
             return None
         return best_tok
 
@@ -340,7 +360,7 @@ class NeuralCortex:
             # internal tick sensory: zeros inject except buffer/body/same_ix
             zero = np.zeros(g.d_sym, dtype=np.float64)
             self._sensory_tick(zero, body, same_ix, record_sensory=False)
-            logits = self.W_op @ self.rho
+            logits = (self.W_op @ self.rho) + self.b_op
             op_i = self._softmax_sample(logits)
             op = OPS[op_i]
             chosen_op = op
@@ -362,7 +382,12 @@ class NeuralCortex:
                 chosen_token = tok
                 continue
             if op == "ACT":
-                tok = self._best_token(self.W_act_query @ self.rho)
+                # v2: argmax over M_act only; never force HOLD on cosine miss
+                tok = self._best_token(
+                    self.W_act_query @ self.rho,
+                    lexicon=self.motor_vocab,
+                    require_thresh=False,
+                )
                 if tok is None:
                     chosen_op = "HOLD"
                     break
@@ -425,6 +450,7 @@ class NeuralCortex:
         e_op = torch.zeros(len(OPS), dtype=self.dtype, device=self.device)
         e_op[OPS.index(p["op"])] = 1.0
         self.W_op = self.W_op + self.genome.eta_act * adv * torch.outer(e_op, rho_elig)
+        # v4: b_op frozen (non-plastic)
         if p["token"] is not None and p["op"] in ("EMIT", "ACT"):
             tok_v = self._to_t(self._vocab_vec(p["token"]))
             mat_name = "W_emit_query" if p["op"] == "EMIT" else "W_act_query"
@@ -550,6 +576,7 @@ class NeuralCortex:
             self.W_slow[name] = self._birth_W[name].detach().clone()
         self.W_body = self._birth_W["W_body"].detach().clone()
         self.M = self._birth_M.detach().clone()
+        self.b_op = self._birth_b_op.detach().clone()
         self.v_start = self._birth_v_start.copy()
         self.v_end = self._birth_v_end.copy()
         self.age = 0
@@ -567,6 +594,7 @@ class NeuralCortex:
             "W": {name: tsave(getattr(self, name)) for name in self._plastic_names},
             "W_slow": {name: tsave(v) for name, v in self.W_slow.items()},
             "W_body": tsave(self.W_body),
+            "b_op": tsave(self.b_op),
             "M": tsave(self.M),
             "rho": tsave(self.rho),
             "retrieval_buffer": tsave(self.retrieval_buffer),
@@ -584,6 +612,7 @@ class NeuralCortex:
                 "body": np.asarray(self._pending["body"]).tolist(),
             },
             "vocab": {k: v.tolist() for k, v in self.vocab.items()},
+            "motor_vocab": {k: v.tolist() for k, v in self.motor_vocab.items()},
             "sources": {k: v.tolist() for k, v in self.sources.items()},
             "v_start": self.v_start.tolist(),
             "v_end": self.v_end.tolist(),
@@ -605,6 +634,10 @@ class NeuralCortex:
             setattr(self, name, tload(snap["W"][name]))
             self.W_slow[name] = tload(snap["W_slow"][name])
         self.W_body = tload(snap["W_body"])
+        if "b_op" in snap:
+            self.b_op = tload(snap["b_op"])
+        else:
+            self.b_op = self._birth_b_op.detach().clone()
         self.M = tload(snap["M"])
         self.rho = tload(snap["rho"])
         self.retrieval_buffer = tload(snap["retrieval_buffer"])
@@ -620,6 +653,18 @@ class NeuralCortex:
         self.vocab = {
             k: np.asarray(v, dtype=np.float64) for k, v in (snap.get("vocab") or {}).items()
         }
+        mv = snap.get("motor_vocab")
+        if mv:
+            self.motor_vocab = {
+                k: np.asarray(v, dtype=np.float64) for k, v in mv.items()
+            }
+        else:
+            # migrate: recover M_act keys from vocab if present
+            self.motor_vocab = {
+                k: self.vocab[k].copy()
+                for k in MOTOR_ACT_TOKENS
+                if k in self.vocab
+            }
         self.sources = {
             k: np.asarray(v, dtype=np.float64) for k, v in (snap.get("sources") or {}).items()
         }

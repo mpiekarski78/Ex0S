@@ -1,0 +1,59 @@
+{
+  "version": "TM.0.23.CORTEX.DIAGNOSIS.V2",
+  "lab": "TM.0.23.CORTEX.DIAG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "neural_mechanism_changed": false,
+  "diagnosed_candidate": "docs/cortex.candidate.v2.lock",
+  "diag_lock": "docs/cortex_diag.v2.lock",
+  "prior_gate_failure": "docs/cortex_v2_gate.failure.lock",
+  "ranked_root_causes": [
+    {
+      "rank": 1,
+      "id": "motor_operand_dilution",
+      "claim": "M_act includes get/drop/idle which compete with press; failing pairs often have press=0 while ACT still fires non-press motors",
+      "evidence": {
+        "gate_n_pair_clear": 2,
+        "diag_v2_act_token_counts": {"drop": 12, "press": 24},
+        "act_adv_mean": -0.08505922317655458,
+        "act_frac_pos": 0.3888888888888889
+      }
+    },
+    {
+      "rank": 2,
+      "id": "act_rate_still_fragile",
+      "claim": "HOLD remains majority; P(ACT) still declines over teach on the probed seed; many lives never reach press>=3",
+      "evidence": {
+        "hold_rate": 0.49166666666666664,
+        "act_rate": 0.3,
+        "delta_p_act": -0.05133783106901904,
+        "gate_D1_pass_lives": 16
+      }
+    },
+    {
+      "rank": 3,
+      "id": "not_primary",
+      "claim": "Forced-HOLD cosine miss fixed; press in vocab; trace purity ok; D0 always passes",
+      "evidence": {
+        "forced_hold_suspect_rate": 0.0,
+        "vocab_ever_has_press": true,
+        "trace_purity_ok": true,
+        "D0_pass": 32
+      }
+    }
+  ],
+  "allowed_v3_change_surface": [
+    "Restrict M_act ACT-selection set to {press, harm} only (get/drop/idle remain sensory-capable but not ACT targets)",
+    "Birth logit bias: add +0.35 to W_op row for ACT at init (and birth snapshot) to stabilize ACT exploration",
+    "OP_COST[ACT] from 0.1 to 0.05 so press under DEFAULT_LATENT more reliably yields adv>0"
+  ],
+  "refuse": [
+    "edit-rescore on revealed v2 worlds",
+    "reuse v2 eval commitment",
+    "edit docs/cortex_architecture_contract.md",
+    "soften D1/D2 thresholds",
+    "unrelated improvements"
+  ],
+  "note": "v2 gate failed 2/16. Isolation: new v3 amendment, birth, commitment, gate."
+}

@@ -1,0 +1,73 @@
+{
+  "version": "TM.0.23.CORTEX.V2.GATE.RUNNER",
+  "lab": "TM.0.23.CORTEX.V2.GATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eval_revealed": false,
+  "gate_contract": "docs/cortex_v2_gate_contract.md",
+  "gate_contract_sha": "b26229ab75a948e078a6f3e78fef00249548278eeac370147d37c8606750bf6f",
+  "architecture_amendment_lock": "docs/cortex_v2_architecture_amendment.lock",
+  "architecture_amendment_sha": "88b9da3e49284f5a714b6c0fc8ec54626556326224b6beca3936714743d95c10",
+  "diagnosis_sha": "b4fc0da16a16fd33f5dcd819ce4be2b6f2d3095ae2044145e9117957bc2b3726",
+  "stages": [
+    "D0",
+    "D1",
+    "D2"
+  ],
+  "thresholds": {
+    "D1": {
+      "press_min": 3,
+      "press_gt_harm": true,
+      "cf_differs": true
+    },
+    "D2": {
+      "holds_min": 5,
+      "beneficial_min": 3,
+      "rho_reset_preserves_weights": true
+    },
+    "D0": {
+      "n_probes": 64,
+      "p0": 0.5,
+      "alpha": 0.01
+    },
+    "pair_clear_requires": "main_D1_and_D2_and_twin_D1_and_D2",
+    "gate_clear_min_pairs": 13,
+    "n_pairs": 16
+  },
+  "scorer_module": "experiments.cortex_develop_scorers",
+  "scorer_sha": "6a6456286a0dab1ad108ce80bd4971e9c38418d575693bad617a297e19fa96eb",
+  "gate_module": "experiments.cortex_v2_gate",
+  "gate_module_sha": "ceaf6744954be426845041420daa540189502f0093095316111264f0cffee76a",
+  "runner": "experiments.run_tm023cortex",
+  "runner_sha": "d0c5379ad0a663d62c14dbec28ab838c7c3f908413df3330dac8a8c9b2d57d7c",
+  "candidate_interface": {
+    "factory": "experiments.run_tm023cortex.make_cortex",
+    "class": "NeuralCortex",
+    "observe_keys": [
+      "body_state",
+      "interaction_token",
+      "observable_state",
+      "ordered_symbols",
+      "source_token"
+    ],
+    "ops": [
+      "RETRIEVE",
+      "WRITE",
+      "EMIT",
+      "ACT",
+      "STOP",
+      "HOLD"
+    ],
+    "note": "Pins interface only \u2014 no candidate SHA (v2 does not exist at freeze time)"
+  },
+  "refuse": [
+    "pin candidate SHA before v2 birth",
+    "pin eval fixture before reveal",
+    "D3-D12 in this gate",
+    "soften thresholds",
+    "earned_next=true or non-null ex0s",
+    "edit-and-rescore on revealed v2 worlds"
+  ],
+  "note": "Frozen before neural edits and before eval reveal."
+}

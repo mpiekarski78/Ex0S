@@ -1,17 +1,19 @@
 {
-  "version": "TM.0.23.CORTEX.CANDIDATE.V4",
+  "version": "TM.0.23.CORTEX.CANDIDATE.V3",
+  "lab": "TM.0.23.CORTEX.V3",
   "product": "0.0.004",
   "earned_next": false,
   "ex0s": null,
   "factory": "experiments.run_tm023cortex.make_cortex",
-  "supersedes_v3_sha": "61fe2d0836be090921d9414ad15234ab6274959ab43333a2afc00367e84ad47c",
-  "v4_birth_sha": "397e580ce25bcae94858076bd424fc4a67ded9b9ee77245beb4d7ad2d3e3b0f0",
-  "architecture_amendment_sha": "03b3d778952122ec96aa836760290fec05dd518d8bdb1f6c521cb06ec23afe0b",
-  "v4_prereg_sha": "fee9b59dd3db1a1ac533ef6312bf1e2b7a99095ef6089a4728d44997c04ae92d",
+  "supersedes_v2_sha": "ffdf5d4ee86e51485a84052af58f41618992612167276abc602a2c8860f383b1",
+  "v1_candidate_sha": "60df20ec89249a550f54ab45b85c42e8d8e1da9f401035e027b7b414afb587cd",
+  "v3_birth_sha": "81a68313698611a2cc9273a7d8ffebbbb1765f967939fa866acb1003d5e2c0fe",
+  "architecture_amendment_sha": "447398698aadd01e673cf328f2aa7b428a6eeca666c9d89d964b0d5f940b63e7",
+  "v3b_prereg_sha": "d154f337d6bcb813618d66931b2ec08f5ef27c21ba8e324190f848d351ff3b4d",
   "learning_law_ok": true,
   "gpu_scoring_ready": true,
   "all_sanity_ok": true,
-  "neural_cortex_sha": "49c7653db0e5ea36cc88f237d2603e0bde7571bf57be00f6ded9bd2e455e9892",
+  "neural_cortex_sha": "e8bf4a1586c0388f2a29edee33d2ff69528ab56c5c6bb7336d9553b2096e6b62",
   "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
   "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
   "env": {
@@ -68,11 +70,13 @@
   "human_math_audit": {
     "ok": true,
     "checks": [
-      "frozen b_op[ACT]=0.85",
+      "b_op additive ACT bias 1.5 (not W_op row constant)",
       "M_act={press,harm}",
       "OP_COST[ACT]=0.05",
       "eta_act=0.15",
-      "v1 contract untouched"
+      "v1 architecture contract untouched",
+      "nine sanity pass"
     ]
-  }
+  },
+  "note": "Versioned candidate v3 after v2 gate failure isolation."
 }

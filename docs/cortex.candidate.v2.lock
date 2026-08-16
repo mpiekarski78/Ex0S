@@ -1,19 +1,22 @@
 {
-  "version": "TM.0.23.CORTEX.CANDIDATE.V4",
+  "version": "TM.0.23.CORTEX.CANDIDATE.V2",
+  "lab": "TM.0.23.CORTEX.V2",
   "product": "0.0.004",
   "earned_next": false,
   "ex0s": null,
   "factory": "experiments.run_tm023cortex.make_cortex",
-  "supersedes_v3_sha": "61fe2d0836be090921d9414ad15234ab6274959ab43333a2afc00367e84ad47c",
-  "v4_birth_sha": "397e580ce25bcae94858076bd424fc4a67ded9b9ee77245beb4d7ad2d3e3b0f0",
-  "architecture_amendment_sha": "03b3d778952122ec96aa836760290fec05dd518d8bdb1f6c521cb06ec23afe0b",
-  "v4_prereg_sha": "fee9b59dd3db1a1ac533ef6312bf1e2b7a99095ef6089a4728d44997c04ae92d",
+  "supersedes_v1_sha": "60df20ec89249a550f54ab45b85c42e8d8e1da9f401035e027b7b414afb587cd",
+  "v2_birth_sha": "327c62b79aa29d5c82e216eca6ded68b91120385d3fdaab5a126fd17c31124cd",
+  "diagnosis_sha": "b4fc0da16a16fd33f5dcd819ce4be2b6f2d3095ae2044145e9117957bc2b3726",
+  "architecture_amendment_sha": "88b9da3e49284f5a714b6c0fc8ec54626556326224b6beca3936714743d95c10",
+  "v2_prereg_sha": "61fc47f70d6386bd5ae09ff6ab6262734709ee91419c60999a7c36af17c28cbb",
   "learning_law_ok": true,
   "gpu_scoring_ready": true,
   "all_sanity_ok": true,
-  "neural_cortex_sha": "49c7653db0e5ea36cc88f237d2603e0bde7571bf57be00f6ded9bd2e455e9892",
+  "neural_cortex_sha": "519621d9cd8d1882bd57b832b71deef0f57c573e4fd0f6df42cfb8f5b7771759",
   "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
   "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
+  "run_tm023cortex_sha": "d0c5379ad0a663d62c14dbec28ab838c7c3f908413df3330dac8a8c9b2d57d7c",
   "env": {
     "torch_version": "2.13.0+cu130",
     "torch_cuda": "13.0",
@@ -33,7 +36,7 @@
     "tau": 1.0,
     "cos_thresh": 0.15,
     "eta_pred": 0.05,
-    "eta_act": 0.15,
+    "eta_act": 0.05,
     "beta": 0.01,
     "clip": 2.0,
     "seed_birth": 12345,
@@ -60,7 +63,7 @@
       "RETRIEVE": 1.0,
       "WRITE": 1.0,
       "EMIT": 1.0,
-      "ACT": 0.05,
+      "ACT": 0.1,
       "STOP": 0.0,
       "HOLD": 0.0
     }
@@ -68,11 +71,12 @@
   "human_math_audit": {
     "ok": true,
     "checks": [
-      "frozen b_op[ACT]=0.85",
-      "M_act={press,harm}",
-      "OP_COST[ACT]=0.05",
-      "eta_act=0.15",
-      "v1 contract untouched"
+      "motor lexicon M_act present at birth",
+      "ACT argmax over M_act without HOLD on cos miss",
+      "OP_COST[ACT]==0.1",
+      "v1 architecture contract file untouched",
+      "eight learning laws + cpu_gpu pass"
     ]
-  }
+  },
+  "note": "Versioned candidate v2. Live cortex.candidate.lock updated as pointer after this write."
 }

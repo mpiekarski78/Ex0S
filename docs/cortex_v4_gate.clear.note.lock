@@ -1,0 +1,26 @@
+{
+  "version": "TM.0.23.CORTEX.V4.GATE.CLEAR.NOTE",
+  "lab": "TM.0.23.CORTEX.V4.GATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "sensorimotor_association_gate_clear": true,
+  "n_pair_clear": 13,
+  "gate_lock": "docs/cortex_v4_gate.lock",
+  "revealed_worlds_status": "diagnostic_only_for_full_battery",
+  "next_full_development": {
+    "required": true,
+    "steps": [
+      "freeze v4 gate result (done)",
+      "new full-development eval commitment (distinct from v4 gate)",
+      "freeze full D0-D12 runner",
+      "reveal new held-out worlds",
+      "score D0-D12"
+    ],
+    "refuse": [
+      "run full D0-D12 on revealed v4 gate worlds",
+      "reuse v2/v3/v4 gate commitments for full battery"
+    ]
+  },
+  "note": "Narrow gate cleared; permission to spend on full battery later — not final developmental evaluation."
+}
