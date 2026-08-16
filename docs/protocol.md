@@ -1797,3 +1797,25 @@ Candidate lock [`alias_finger.candidate.lock`](alias_finger.candidate.lock) befo
 
 Apparatus: `experiments/run_tm016aliasfinger.py`. Results: [`tm016aliasfinger_results.md`](tm016aliasfinger_results.md).
 
+---
+
+## TM.0.16.GAPWALL — continuity capacity wall
+
+Wall bookkeeping only on frozen ALIASFINGER-on. Product stays **0.0.004**. `earned_next=false`; `ex0s=null`. Not TM.0.17. No organism or prior-lock edits.
+
+### Measurement contract
+
+- G0 adjacent: repeated `a→b→c` is the unique-route baseline; continuity is not at issue.
+- G1 empty skip: `a→[]→b→c`; the empty event returns `why=empty_visible`, writes nothing, and the raw route bridges. This is **empty-event skip semantics**, never learned object continuity.
+- G2 episode gap: `a`, `end_event_episode`, `a`; no `a→a` seam and no inherited query frontier.
+- G3 distractor: `a→d→a`; the distractor edges are authored, no direct `a→a` continuity edge appears, and compose HOLDs after the finite loop.
+- G4 one reappear: `a→[]→u1`; record unique vs HOLD as a measurement. Observed unique assignment is labeled skip-driven only.
+- G5 two reappear: `a→[]→[u1,u2]`; equal supports must tie and HOLD with neither peer selected.
+
+Each cell uses a fresh organism, empty S, and reset ρ. The prereg pins all schedules, scorer contracts, and ALIASFINGER/evidence/genome/RELATE prior locks before the runner exists.
+
+### Bounded result
+
+Frozen ALIASFINGER-on preserves a pre-gap bag only when an empty visible event is skipped. `end_event_episode` removes that frontier; a visible distractor fragments the route; two equally supported reappearances remain irreducible. Battery **6/6**. This is a wall, not a continuity candidate.
+
+Prereg: [`gap_wall.prereg.lock`](gap_wall.prereg.lock). Freeze: [`gap_wall.lock`](gap_wall.lock). Apparatus: `experiments/run_tm016gapwall.py`. Results: [`tm016gapwall_results.md`](tm016gapwall_results.md). **Next:** freeze a separate continuity-evidence contract; only then consider an opt-in persistence candidate.

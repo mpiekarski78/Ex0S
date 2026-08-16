@@ -1,0 +1,51 @@
+{
+  "version": "TM.0.16.GAPWALL",
+  "lab": "TM.0.16.GAPWALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "not_tm017": true,
+  "label": "continuity capacity wall on frozen ALIASFINGER-on",
+  "cell_ids": [
+    "G0_adjacent",
+    "G1_empty_skip",
+    "G2_episode_gap",
+    "G3_distractor",
+    "G4_one_reappear",
+    "G5_two_reappear"
+  ],
+  "cell_ok": {
+    "G0_adjacent": true,
+    "G1_empty_skip": true,
+    "G2_episode_gap": true,
+    "G3_distractor": true,
+    "G4_one_reappear": true,
+    "G5_two_reappear": true
+  },
+  "observed": {
+    "G1_empty_event_skip_semantics": true,
+    "G2_cross_episode_bridge": false,
+    "G3_distractor_report": "fragmented_through_distractor",
+    "G4_measured_outcome": "unique",
+    "G5_irreducible_ambiguity": true
+  },
+  "agent_sha": "c61b2c86c53fac83ae4fdffde3e9d5b1d445774740980478d75b688f8bb498f2",
+  "make_finger_sha": "c6bc154651c27a75fa06333547e3cab1932fb69dcdd9b8d51906eeb6d124f2ba",
+  "run_tm016gapwall_sha": "8e3565fb9345d870431b8b157b9cf521c8a23f5541ab4743e6548ee3770f9884",
+  "gap_wall_prereg_sha": "547ed1656f9a5ddda4ec55abfa2569aabfa62219810fc92876c27865705aebc8",
+  "prior_lock_shas": {
+    "alias_finger.lock": "025f9983aaaf946275bbf6c75f9b621e0c3652417894e7c24a43a4acda03dd23",
+    "alias_finger.candidate.lock": "86b20b7ee6bfc5caa6a39184ab895d913112f510397e0281120d8eb7522404f8",
+    "alias_evidence.prereg.lock": "8c1385f588df7de52bc4be6515bad934c3b708bc61b0fb61855a486ed957d39a",
+    "genome_016.lock": "76a28d983d02af27d711a44cc8079c5fac50e4a72ebf137cf3790a92d0d09e98",
+    "relate_016.lock": "756750d4469177c72fdcea48f1b1b691366dbf4843edd2215b69170c5621f829"
+  },
+  "bounded_fact": "Frozen ALIASFINGER-on bridges an empty event only because empty visible is skipped, clears the frontier at end_event_episode, treats distractors as ordinary events, and HOLDS when two post-gap peers tie.",
+  "refuse": [
+    "learned object continuity claim",
+    "editing agent.py / RELATE / ALIASFINGER / alias-evidence contract",
+    "continuity-evidence contract or persistence candidate this pass",
+    "TM.0.17 / 0.0.005 / FAMILY / LOOKAHEAD / pixels",
+    "earned_next=true or non-null ex0s"
+  ]
+}
