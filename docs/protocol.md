@@ -2038,3 +2038,11 @@ v12 apparatus: [`cortex_v12_stat_contract.lock`](cortex_v12_stat_contract.lock),
 
 Candidate (this cycle, before reveal): [`cortex.candidate.v12.lock`](cortex.candidate.v12.lock) neural SHA `63096393…`. Opposite-sign ACT body-advantage sets a one-step HOLD bias and a plastic HOLD-vs-ACT update. Population C4 + C5 (30/32, mean Δ≈0.24) + C6 green. Reveal must pin the pushed candidate git SHA.
 
+Outcome: candidate `8236dbc` revealed after a clean push. Fresh seed-derived D1–D2 **12/16** — **fail**. D1 32/32; D2 28/32; population extras green. [`cortex_v12_gate.failure.lock`](cortex_v12_gate.failure.lock) + [`cortex_v13.isolation.lock`](cortex_v13.isolation.lock). **DEVELOP.v12 refused.** Do not edit-rescore v12. Full D0–D12 not opened.
+
+Diagnosis ([`cortex_diagnosis.v12.lock`](cortex_diagnosis.v12.lock)): same remaining fail family as v11 (under-HOLD after swap; second consecutive). One-step last-ACT snap explains the leftover 3–4 holds. v13 may add one generic slow advantage baseline. Do not lower `holds>=5`. If v13 fails for the same reason, stop.
+
+## TM.0.23.CORTEX.V12 audit → isolated V13
+
+Canonical main `8236dbc`. V12 gate **12/16** stands. Do not edit-rescore v12. **DEVELOP.v12 refused.** Full D0–D12 stays closed.
+

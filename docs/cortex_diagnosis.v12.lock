@@ -1,0 +1,44 @@
+{
+  "version": "TM.0.23.CORTEX.V12.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "8236dbc",
+  "neural_mechanism_changed": true,
+  "v13_authorized_only_if_this_lock": true,
+  "c4_retained": true,
+  "population_c5_c6_green": true,
+  "gate_n_pair_clear": 12,
+  "d1_ok": 32,
+  "d1_population_ok": true,
+  "d2_ok": 28,
+  "d2_population_ok": true,
+  "same_architectural_reason_as_v11": true,
+  "consecutive_same_reason_count": 2,
+  "stop_if_v13_same_reason": true,
+  "claim": "v12 added a one-step last-ACT sign-flip → HOLD law. That is a real movement (6/16 → 12/16; D2 22 → 28). The remaining four reds still fail only holds>=5 under swapped physics (holds 3 or 4; beneficial and rho green). After the first contradictory ACT, last_act_body_adv snaps to the new sign, so continued ACTs in the swapped world no longer look like conflicts. The missing law is a slow advantage baseline, not a larger one-step bias and not a lowered floor.",
+  "d2_hold_fails": [
+    {"pair_id": 7, "role": "twin", "holds": 4, "beneficial_act": 8},
+    {"pair_id": 8, "role": "main", "holds": 3, "beneficial_act": 16},
+    {"pair_id": 9, "role": "main", "holds": 4, "beneficial_act": 15},
+    {"pair_id": 11, "role": "main", "holds": 3, "beneficial_act": 14}
+  ],
+  "authorize_v13": [
+    "one generic slow advantage baseline: compare current ACT body_adv to a decaying baseline of recently credited ACT advantages; conflict while they disagree in sign (both |adv| > 1e-9)",
+    "update the baseline slowly, or only on agreeing observations — do not snap it to the surprising observation",
+    "retain the existing one-step HOLD bias + plastic HOLD-vs-ACT update when conflict fires",
+    "keep D1 press+harm floors, population extras, swapped D2 HOLD window, holds>=5, beneficial>=3, rho_ok",
+    "do not lower holds>=5",
+    "do not raise CONFLICT_HOLD_BIAS as the only change",
+    "do not add capability-specific functions",
+    "new sealed commitment ≠ v12 ≠ DEVELOP"
+  ],
+  "refuse": [
+    "edit-and-rescore v12",
+    "DEVELOP.v12",
+    "soften holds to 3 or 4 after seeing the remaining reds",
+    "treat a bigger one-step bias as a new architecture",
+    "open D0–D12 before a later isolated gate ≥13/16",
+    "start v14 for the same under-HOLD-after-swap reason if v13 also fails that way"
+  ]
+}

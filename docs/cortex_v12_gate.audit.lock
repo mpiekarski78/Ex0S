@@ -1,0 +1,67 @@
+{
+  "version": "TM.0.23.CORTEX.V12.GATE.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "gate_sha": "1ee3ee4d03883eb8745d9201dd7d50615faa11864b0e02afcd3c9b6d5bea928e",
+  "failure_sha": "f464b86ac8c39dad4653f90c2560a4f01a9d54165b2a40b84a4ab1ca93e79220",
+  "n_pair_clear": 12,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git_commit",
+      "ok": true,
+      "candidate_git_sha": "8236dbc77cba9e7baff4621a0436006fbcdaf1d5"
+    },
+    {
+      "id": "d2_conflict_is_swapped",
+      "ok": true,
+      "d2_conflict": "swapped_press_harm"
+    },
+    {
+      "id": "d1_and_population_green",
+      "ok": true,
+      "d1_ok": 32,
+      "d2_ok": 28,
+      "population_d1": true,
+      "population_d2": true
+    },
+    {
+      "id": "pair_reds_are_d2_holds",
+      "ok": true,
+      "d2_hold_fails": 4,
+      "holds_eq_4": 2,
+      "holds_eq_3": 2,
+      "note": "All four D2 reds fail only holds>=5 (beneficial and rho green). Floor remains 5. Not a soft clear."
+    },
+    {
+      "id": "no_soft_clear",
+      "ok": true
+    },
+    {
+      "id": "no_develop_v12",
+      "ok": true
+    },
+    {
+      "id": "neural_matches_v12_candidate",
+      "ok": true,
+      "neural_cortex_sha": "63096393d8ae5f81d33940b0b8b5ea86c004b84daa1228d7c277118149eaf4c5"
+    }
+  ],
+  "consequence": {
+    "develop_v12": "refused",
+    "rescore_v12": "refused",
+    "next": "isolated_v13",
+    "refuse": [
+      "rewrite docs/cortex_v12_gate.lock",
+      "edit-and-rescore candidate v12 on revealed v12 worlds",
+      "open DEVELOP.v12",
+      "open full D0–D12",
+      "lower holds>=5 after seeing holds=3 or 4",
+      "raise CONFLICT_HOLD_BIAS after seeing the remaining 4s"
+    ]
+  },
+  "note": "12/16 stands. One-step surprise→HOLD moved the score from 6/16 to 12/16. Remaining reds are still under-HOLD after a physics swap."
+}

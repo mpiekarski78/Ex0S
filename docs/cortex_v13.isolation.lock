@@ -1,0 +1,33 @@
+{
+  "version": "TM.0.23.CORTEX.V13.ISOLATION",
+  "lab": "TM.0.23.CORTEX.V12.GATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "v12 narrow D1–D2 gate failed (12/16 < 13/16). D1 and population extras green. Pair reds are D2 holds under swapped physics after a one-step surprise law.",
+  "v12_gate_failure_lock": "docs/cortex_v12_gate.failure.lock",
+  "v12_gate_lock": "docs/cortex_v12_gate.lock",
+  "v12_reveal_lock": "docs/cortex_v12_eval_reveal.lock",
+  "v12_diagnosis_lock": "docs/cortex_diagnosis.v12.lock",
+  "refuse": [
+    "DEVELOP.v12 on any worlds",
+    "edit-and-rescore candidate v12 on revealed v12 gate worlds",
+    "transfer v11 or v12 partial credit",
+    "lower holds>=5 after seeing holds=3 or 4",
+    "raise CONFLICT_HOLD_BIAS as the only v13 change",
+    "open full D0–D12 before a later isolated gate ≥13/16"
+  ],
+  "next_cycle": {
+    "name": "isolated_v13",
+    "requires": [
+      "frozen diagnosis of one-step last-ACT snap",
+      "new architecture amendment authorizing one slow advantage baseline",
+      "new birth + candidate.v13.lock",
+      "new sealed commitment ≠ v12 gate ≠ DEVELOP",
+      "re-earn population boundary greens",
+      "fresh narrow D1–D2 gate ≥13/16 before any DEVELOP.v13"
+    ],
+    "stop_rule": "If v13 fails for the same under-HOLD-after-swap reason, stop and ask. That would be the third consecutive same architectural miss (v11, v12, v13)."
+  },
+  "note": "DEVELOP.v12 not opened. Historical locks immutable. Product remains 0.0.004."
+}

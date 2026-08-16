@@ -553,6 +553,13 @@ def test_verify_v12_gate_cli() -> None:
         assert v["refuse_develop_before_clear"] is True
         assert (REPO_ROOT / "docs" / "cortex_v12_gate.failure.lock").exists()
         assert not (REPO_ROOT / "docs" / "cortex_development.v12.lock").exists()
+        gate = json.loads((REPO_ROOT / "docs" / "cortex_v12_gate.lock").read_text(encoding="utf-8"))
+        assert gate["battery"]["n_pair_clear"] == 12
+        assert gate["battery"]["d2_conflict"] == "swapped_press_harm"
+        assert gate["battery"]["stage_ok_counts"]["D1"] == 32
+        assert gate["battery"]["stage_ok_counts"]["D2"] == 28
+        iso = json.loads((REPO_ROOT / "docs" / "cortex_v13.isolation.lock").read_text(encoding="utf-8"))
+        assert "DEVELOP.v12 on any worlds" in iso["refuse"]
 
 
 def test_verify_v6_gate_cli() -> None:
