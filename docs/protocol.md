@@ -1832,5 +1832,23 @@ No numeric lab ID. Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=
 
 **Future cells:** C0 GAPWALL lessons; C1 weak HOLD; C2 mark → admissibility only (earn needs identity-dependent probe); C3a/b/c both/neither/conflict refuse unique; C4 swap follows marks; C5 withdraw; C6 S-causality. Not claimed green.
 
-Prereg: [`continuity_evidence.prereg.lock`](continuity_evidence.prereg.lock). One-page: [`continuity_evidence_contract.md`](continuity_evidence_contract.md). **Next:** opt-in persistence candidate under this contract. Alias fingerprints stay separate.
+Prereg: [`continuity_evidence.prereg.lock`](continuity_evidence.prereg.lock). One-page: [`continuity_evidence_contract.md`](continuity_evidence_contract.md).
+
+## TM.0.16.PERSIST — opt-in mark-continuity persistence
+
+Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=null`. Not TM.0.17 / 0.0.005.
+
+Opt-in `use_continuity_mark` (default off) plus exact-key `observe_continuity_mark`. Raw rows go to `source=experience_continuity` only. Permission is recomputed at use time: for `(mark_id, observed_state)`, exactly one apply names `P` and exactly one matching read names `Q`. A one-hop projection may use only the existing skel edge needed for the current probe. No stored `same_as`, canonical tokens, cached link, or transitive equality. `mark_id` scopes an intervention attempt, not an object.
+
+- C0: GAPWALL G1/G2/G5 reused with the flag on and no mark rows — skip is not continuity.
+- C1: valid weak evidence HOLD; malformed ABI rejects and writes nothing.
+- C2: unique apply→read earns cue `norb` → `wift`; cue `jasp` HOLD; always-HOLD fails.
+- C3a/b/c: both / neither / conflicting reads refuse unique.
+- C4: swapped mark evidence follows the mark, not spelling.
+- C5: later different state, second matching read, or second apply withdraws; rows stay; reprobe HOLD.
+- C6: reset ρ retains; strip continuity rows → HOLD; donate onto skel follows S.
+
+Battery **9/9**. Alias fingerprints stay a separate track.
+
+Prereg: [`persist.prereg.lock`](persist.prereg.lock). Candidate (before score): [`persist.candidate.lock`](persist.candidate.lock). Freeze: [`persist.lock`](persist.lock). Apparatus: `experiments/run_tm016persist.py`. Results: [`tm016persist_results.md`](tm016persist_results.md).
 

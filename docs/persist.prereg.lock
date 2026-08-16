@@ -1,0 +1,352 @@
+{
+  "version": "TM.0.16.PERSIST.PREREG",
+  "lab": "TM.0.16.PERSIST",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "not_tm017": true,
+  "label": "opt-in mark-continuity persistence candidate under frozen continuity-evidence contract",
+  "preregistered_claim": "An opt-in recipe may author raw continuity rows into S from exact observe_continuity_mark tuples and, at use time only, recompute a one-hop P → Q projection from those rows so that a unique causal apply→read witness can complete an identity-dependent probe. mark_id scopes an intervention attempt, not an object; it is fresh/counterbalanced between worlds and cannot establish continuity without the corresponding apply/read observations. Token spelling, skip, sole candidacy, and route position contribute no identity evidence. Permission is defeasible and disappears when recomputed evidence is no longer unique.",
+  "observation_abi": "observe_continuity_mark",
+  "channel_key_rule": "set(info) == {token, mark_id, phase, operation, observed_state}",
+  "source": "experience_continuity",
+  "flag": "use_continuity_mark",
+  "flag_default": false,
+  "factory": "experiments.run_tm016persist.make_persist",
+  "factory_note": "make_persist constructs from make_finger then sets use_continuity_mark; do not edit run_tm054.make, make_finger, or make_relate",
+  "uniqueness": {
+    "rule": "For (mark_id, observed_state), permission exists only when exactly one pre-gap apply identifies token P and exactly one post-gap read identifies token Q. Multiple matching applies, multiple matching reads, no match, or conflicting reads produce no permission.",
+    "count_unit": "observation_rows",
+    "conflicting_reads": "same token with two distinct observed_state values for the same mark_id refuses permission for that mark_id",
+    "second_matching_read_is_c5": true
+  },
+  "projection": {
+    "kind": "one_hop_P_to_Q_recomputed_at_use_time",
+    "reads_sources": ["experience_continuity"],
+    "inaccessible_sources": ["experience_fingerprint"],
+    "project_only": "the existing experience_skel edge needed for the current probe",
+    "forbidden": [
+      "same_as",
+      "canonicalize tokens",
+      "rewrite skeleton rows",
+      "cache a persistent link",
+      "transitive closure",
+      "general token equality",
+      "permanent token to mark_id map"
+    ]
+  },
+  "abi_vs_weak": {
+    "malformed_or_phase_op_mismatch": "reject; write nothing to S",
+    "flag_off": "why=continuity_off; write nothing",
+    "valid_apply_without_read": "accept observation; no permission; probe HOLD",
+    "valid_read_without_apply": "accept observation; no permission; probe HOLD",
+    "reappear_without_evidence": "no continuity rows; probe HOLD",
+    "bare_mark_id": "ABI reject, not a C1 HOLD"
+  },
+  "contradiction": {
+    "C5_later_state": "linked candidate later returns a different observed_state",
+    "C5_second_read": "another candidate later produces the matching read",
+    "C5_second_apply": "additional apply makes the pre-gap source ambiguous",
+    "rows_remain_in_S": true,
+    "permission_recomputed": true,
+    "reprobe_after": true,
+    "soft_hold_without_withdrawal_forbidden": true
+  },
+  "tokens": {
+    "P": "kelm",
+    "dest": "wift",
+    "Q": "norb",
+    "R": "jasp"
+  },
+  "marks": {
+    "default": "mk_alpha",
+    "swap_world": "mk_beta",
+    "matching_state": "on",
+    "other_state": "off"
+  },
+  "initial_skeleton": {
+    "episodes": [[["kelm"], ["wift"]]],
+    "end_each_episode": true,
+    "edge": "kelm->wift",
+    "support": 1
+  },
+  "query_protocol": {
+    "probe": "traverse_hold",
+    "teacher": "off",
+    "report_lived_bind": true
+  },
+  "isolation": {
+    "fresh_organism_per_cell": true,
+    "empty_S": true,
+    "reset_rho_before_probe": true,
+    "no_shared_state_across_cells": true,
+    "c6_may_strip_or_donate_within_cell": true,
+    "ground_truth_scorer_only": true
+  },
+  "cell_ids": [
+    "C0_gapwall",
+    "C1_weak",
+    "C2_mark",
+    "C3a_both",
+    "C3b_neither",
+    "C3c_conflict",
+    "C4_swap",
+    "C5_contradiction",
+    "C6_causality"
+  ],
+  "fixtures": {
+    "C0_gapwall": {
+      "continuity_observations": [],
+      "reuse": {
+        "G1_empty_skip": {
+          "episodes": [[["a"], [], ["b"], ["c"]]],
+          "end_each_episode": true,
+          "expect": {
+            "gap_why": "empty_visible",
+            "gap_wrote": 0,
+            "query_cue": "a",
+            "lived_bind": "c",
+            "honest_label": "empty_event_skip_semantics",
+            "object_continuity_claim": false
+          }
+        },
+        "G2_episode_gap": {
+          "episodes": [[["a"]], [["a"]]],
+          "end_each_episode": true,
+          "expect": {
+            "query_cue": "a",
+            "motor": "HOLD",
+            "lived_bind": null,
+            "cross_episode_bridge": false
+          }
+        },
+        "G5_two_reappear": {
+          "episodes": [[["a"], [], ["u1", "u2"]]],
+          "end_each_episode": true,
+          "expect": {
+            "query_cue": "a",
+            "motor": "HOLD",
+            "lived_bind_not_in": ["u1", "u2"],
+            "unique_assignment": false
+          }
+        }
+      },
+      "forbidden_shortcut": "label any skip-driven unique as object continuity"
+    },
+    "C1_weak": {
+      "subcases": {
+        "C1_reappear": {
+          "skel": [[["kelm"], ["wift"]]],
+          "end_skel_episode": true,
+          "later_episodes": [[["norb"]], [["jasp"]]],
+          "continuity_observations": [],
+          "expect": {
+            "continuity_rows": 0,
+            "permission": null,
+            "cue_norb_motor": "HOLD",
+            "cue_jasp_motor": "HOLD"
+          }
+        },
+        "C1_apply_only": {
+          "skel": [[["kelm"], ["wift"]]],
+          "end_skel_episode": true,
+          "continuity_observations": [
+            {"token": "kelm", "mark_id": "mk_alpha", "phase": "pre_gap", "operation": "apply", "observed_state": "on"}
+          ],
+          "expect": {
+            "continuity_rows": 1,
+            "permission": null,
+            "cue_norb_motor": "HOLD"
+          }
+        },
+        "C1_read_only": {
+          "skel": [[["kelm"], ["wift"]]],
+          "end_skel_episode": true,
+          "continuity_observations": [
+            {"token": "norb", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "read", "observed_state": "on"}
+          ],
+          "expect": {
+            "continuity_rows": 1,
+            "permission": null,
+            "cue_norb_motor": "HOLD"
+          }
+        }
+      },
+      "forbidden_shortcut": "unique choice, skip-as-identity, spelling norb==kelm"
+    },
+    "C1_abi": {
+      "kind": "smoke_not_weak",
+      "cases": [
+        {"info": {"mark_id": "mk_alpha"}, "why": "exact_key_reject", "wrote": 0},
+        {"info": {"token": "kelm", "mark_id": "mk_alpha", "phase": "pre_gap", "operation": "apply", "observed_state": "on", "object_id": "hidden"}, "why": "exact_key_reject", "wrote": 0},
+        {"info": {"token": "kelm", "mark_id": "mk_alpha", "phase": "pre_gap", "operation": "read", "observed_state": "on"}, "why": "phase_op_reject", "wrote": 0},
+        {"info": {"token": "norb", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "apply", "observed_state": "on"}, "why": "phase_op_reject", "wrote": 0},
+        {"flag_off": true, "info": {"token": "kelm", "mark_id": "mk_alpha", "phase": "pre_gap", "operation": "apply", "observed_state": "on"}, "why": "continuity_off", "wrote": 0}
+      ]
+    },
+    "C2_mark": {
+      "skel": [[["kelm"], ["wift"]]],
+      "end_skel_episode": true,
+      "candidates": ["norb", "jasp"],
+      "continuity_observations": [
+        {"token": "kelm", "mark_id": "mk_alpha", "phase": "pre_gap", "operation": "apply", "observed_state": "on"},
+        {"token": "norb", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "read", "observed_state": "on"},
+        {"token": "jasp", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "read", "observed_state": "off"}
+      ],
+      "expect": {
+        "permission": {"P": "kelm", "Q": "norb"},
+        "cue_norb_lived_bind": "wift",
+        "cue_jasp_motor": "HOLD",
+        "cue_kelm_lived_bind": "wift",
+        "continuity_rows": 3,
+        "skel_untouched": true
+      },
+      "forbidden_shortcut": "always-HOLD; sole-candidate; spelling; empty-skip bridge"
+    },
+    "C3a_both": {
+      "skel": [[["kelm"], ["wift"]]],
+      "end_skel_episode": true,
+      "continuity_observations": [
+        {"token": "kelm", "mark_id": "mk_alpha", "phase": "pre_gap", "operation": "apply", "observed_state": "on"},
+        {"token": "norb", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "read", "observed_state": "on"},
+        {"token": "jasp", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "read", "observed_state": "on"}
+      ],
+      "expect": {
+        "permission": null,
+        "cue_norb_motor": "HOLD",
+        "cue_jasp_motor": "HOLD"
+      },
+      "forbidden_shortcut": "unique choice"
+    },
+    "C3b_neither": {
+      "skel": [[["kelm"], ["wift"]]],
+      "end_skel_episode": true,
+      "continuity_observations": [
+        {"token": "kelm", "mark_id": "mk_alpha", "phase": "pre_gap", "operation": "apply", "observed_state": "on"},
+        {"token": "norb", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "read", "observed_state": "off"},
+        {"token": "jasp", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "read", "observed_state": "off"}
+      ],
+      "expect": {
+        "permission": null,
+        "cue_norb_motor": "HOLD",
+        "cue_jasp_motor": "HOLD"
+      },
+      "forbidden_shortcut": "unique choice"
+    },
+    "C3c_conflict": {
+      "skel": [[["kelm"], ["wift"]]],
+      "end_skel_episode": true,
+      "continuity_observations": [
+        {"token": "kelm", "mark_id": "mk_alpha", "phase": "pre_gap", "operation": "apply", "observed_state": "on"},
+        {"token": "norb", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "read", "observed_state": "on"},
+        {"token": "norb", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "read", "observed_state": "off"}
+      ],
+      "expect": {
+        "permission": null,
+        "cue_norb_motor": "HOLD",
+        "continuity_rows": 3,
+        "retains_both_norb_reads": true
+      },
+      "forbidden_shortcut": "unique choice"
+    },
+    "C4_swap": {
+      "fresh_world": true,
+      "skel": [[["kelm"], ["wift"]]],
+      "end_skel_episode": true,
+      "mark_id": "mk_beta",
+      "continuity_observations": [
+        {"token": "kelm", "mark_id": "mk_beta", "phase": "pre_gap", "operation": "apply", "observed_state": "on"},
+        {"token": "jasp", "mark_id": "mk_beta", "phase": "post_gap", "operation": "read", "observed_state": "on"},
+        {"token": "norb", "mark_id": "mk_beta", "phase": "post_gap", "operation": "read", "observed_state": "off"}
+      ],
+      "expect": {
+        "permission": {"P": "kelm", "Q": "jasp"},
+        "cue_jasp_lived_bind": "wift",
+        "cue_norb_motor": "HOLD"
+      },
+      "forbidden_shortcut": "spelling or skip wins; mark_id used as object ID"
+    },
+    "C5_contradiction": {
+      "start_from": "C2_mark",
+      "reprobe_after_each": true,
+      "subcases": {
+        "C5_later_state": {
+          "later_observation": {"token": "norb", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "read", "observed_state": "off"},
+          "expect": {
+            "rows_remain": true,
+            "permission": null,
+            "cue_norb_motor": "HOLD",
+            "cue_norb_lived_bind_ne": "wift"
+          }
+        },
+        "C5_second_read": {
+          "later_observation": {"token": "jasp", "mark_id": "mk_alpha", "phase": "post_gap", "operation": "read", "observed_state": "on"},
+          "expect": {
+            "rows_remain": true,
+            "permission": null,
+            "cue_norb_motor": "HOLD",
+            "cue_jasp_motor": "HOLD"
+          }
+        },
+        "C5_second_apply": {
+          "later_observation": {"token": "kelm", "mark_id": "mk_alpha", "phase": "pre_gap", "operation": "apply", "observed_state": "on"},
+          "expect": {
+            "rows_remain": true,
+            "permission": null,
+            "cue_norb_motor": "HOLD"
+          }
+        }
+      },
+      "forbidden_shortcut": "stale merge; second probe still returns wift"
+    },
+    "C6_causality": {
+      "start_from": "C2_mark",
+      "interventions": {
+        "reset_rho": {
+          "expect": {"cue_norb_lived_bind": "wift"}
+        },
+        "strip_continuity_only": {
+          "expect": {
+            "cue_norb_motor": "HOLD",
+            "skel_kelm_wift_remains": true
+          }
+        },
+        "donate_continuity_only_to_empty": {
+          "recipient": "empty_S",
+          "donate": "experience_continuity",
+          "expect": {"cue_norb_motor": "HOLD"}
+        },
+        "donate_continuity_onto_skel": {
+          "recipient": "skel_kelm_wift_only",
+          "before_donate_expect": {"cue_norb_motor": "HOLD"},
+          "donate": "experience_continuity",
+          "after_donate_expect": {"cue_norb_lived_bind": "wift"}
+        }
+      },
+      "forbidden_shortcut": "equivalence in rho or cortex"
+    }
+  },
+  "prior_lock_shas": {
+    "continuity_evidence.prereg.lock": "539845b6c0f4f7272b2dd71ab9c55fc38cd3f39a1ecf784e4603f5382364e9fa",
+    "gap_wall.lock": "f46401541ba38d6ab4369a84a1871e021ea161fa54977a585fbd1af76c2d1b3e",
+    "alias_finger.lock": "025f9983aaaf946275bbf6c75f9b621e0c3652417894e7c24a43a4acda03dd23",
+    "alias_evidence.prereg.lock": "8c1385f588df7de52bc4be6515bad934c3b708bc61b0fb61855a486ed957d39a"
+  },
+  "refuse": [
+    "candidate SHAs in this prereg",
+    "rewrite continuity_evidence.prereg.lock, gap_wall.lock, alias_finger.lock, alias_evidence.prereg.lock",
+    "edit experiments/run_tm054.py make, make_finger, or make_relate",
+    "stored same_as / canonical token / persistent link / transitive equality",
+    "empty-event skip as continuity evidence",
+    "sole candidacy or token spelling as identity",
+    "bare mark_id as C1 HOLD rather than ABI reject",
+    "soft C5 without mandatory withdrawal and reprobe",
+    "C2 earn that always-HOLD can pass",
+    "FAMILY",
+    "LOOKAHEAD",
+    "pixels or raw sensory encoders",
+    "TM.0.17 / stamp or pre-name Ex0S 0.0.005",
+    "earned_next=true or non-null ex0s"
+  ],
+  "note": "Prereg only. Write persist.candidate.lock before scoring; never put candidate SHAs here. Freeze persist.lock only if C0–C6 including C2 earn, all C5 subcases, and C6 donor swap all pass. Product stays 0.0.004."
+}

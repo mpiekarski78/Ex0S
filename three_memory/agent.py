@@ -114,6 +114,7 @@ class ThreeMemoryAgent:
         use_acquire_skel: bool = False,
         use_acquire_relate: bool = False,
         use_alias_fingerprint: bool = False,
+        use_continuity_mark: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -231,6 +232,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_acquire_relate requires use_evidence")
         if use_alias_fingerprint and not use_acquire_relate:
             raise ValueError("use_alias_fingerprint requires use_acquire_relate")
+        if use_continuity_mark and not use_acquire_relate:
+            raise ValueError("use_continuity_mark requires use_acquire_relate")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -305,6 +308,7 @@ class ThreeMemoryAgent:
         self.use_acquire_skel = use_acquire_skel
         self.use_acquire_relate = use_acquire_relate
         self.use_alias_fingerprint = use_alias_fingerprint
+        self.use_continuity_mark = use_continuity_mark
         self._last_chosen_ids: list[str] = []
         self._peek: list[FactRecord] = []
         self._search_chosen: list = []
@@ -431,6 +435,7 @@ class ThreeMemoryAgent:
             use_acquire_skel=self.use_acquire_skel,
             use_acquire_relate=self.use_acquire_relate,
             use_alias_fingerprint=self.use_alias_fingerprint,
+            use_continuity_mark=self.use_continuity_mark,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -1012,11 +1017,20 @@ class ThreeMemoryAgent:
             ]
             if frontier is None:
                 eligible = self._match_applicable(unvisited, obs)
+                projected = self._continuity_first_hop(obs)
+                if projected is not None:
+                    if not projected:
+                        return _hold()
+                    winners = projected
+                else:
+                    if not eligible:
+                        return _hold()
+                    winners = self._compose_select(eligible, frontier)
             else:
                 eligible = self._match_frontier(unvisited, frontier, kappa=kappa)
-            if not eligible:
-                return _hold()
-            winners = self._compose_select(eligible, frontier)
+                if not eligible:
+                    return _hold()
+                winners = self._compose_select(eligible, frontier)
             if not winners:
                 return _hold(evidence_tie=True)
             rec = winners[0]
@@ -1566,6 +1580,204 @@ class ThreeMemoryAgent:
         out["wrote"] = True
         out["why"] = "authored"
         return out
+
+    def observe_continuity_mark(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """Causal mark channel. Exact key set only; writes experience_continuity rows.
+
+        Never stores same_as, canonical tokens, bind/did identity, or a persistent
+        permission. Uniqueness is recomputed at use time from raw rows.
+        """
+        required = {"token", "mark_id", "phase", "operation", "observed_state"}
+        phase_op = {"pre_gap": "apply", "post_gap": "read"}
+        out: dict[str, Any] = {
+            "ok": False,
+            "wrote": False,
+            "updated": False,
+            "why": "",
+        }
+        if not self.use_continuity_mark or not self.store.enabled:
+            out["why"] = "continuity_off"
+            return out
+        if not isinstance(info, dict):
+            out["why"] = "bad_info"
+            return out
+        if set(info.keys()) != required:
+            out["why"] = "exact_key_reject"
+            return out
+        token_raw = info["token"]
+        mark_raw = info["mark_id"]
+        phase_raw = info["phase"]
+        op_raw = info["operation"]
+        state_raw = info["observed_state"]
+        if not all(
+            isinstance(x, str) and x.strip()
+            for x in (token_raw, mark_raw, phase_raw, op_raw, state_raw)
+        ):
+            out["why"] = "empty_field"
+            return out
+        token = token_raw.strip().lower()
+        mark_id = mark_raw.strip()
+        phase = phase_raw.strip()
+        operation = op_raw.strip()
+        observed_state = state_raw.strip()
+        if phase not in phase_op or phase_op[phase] != operation:
+            out["why"] = "phase_op_reject"
+            return out
+        tags: dict[str, Any] = {
+            "token": token,
+            "mark_id": mark_id,
+            "phase": phase,
+            "operation": operation,
+            "observed_state": observed_state,
+            "source": "experience_continuity",
+            "hyp": "supported",
+            "trials": 1,
+            "wins": 1,
+            "losses": 0,
+            "support": 1,
+            "contradiction": 0,
+        }
+        for banned in (
+            "object_id",
+            "same_as",
+            "continuity_class",
+            "canonical_token",
+            "canonical_id",
+            "latent_map",
+            "role",
+            "route_position_identity",
+            "bind",
+            "did",
+            "ctx",
+        ):
+            if banned in tags:
+                raise ValueError(f"experience_continuity refuses {banned}")
+        n = len(self.store.records())
+        fid = f"cont_{n:04d}_{phase}_{token}_{mark_id}"
+        rec = FactRecord(
+            fact_id=fid,
+            what=encode_tags(tags),
+            when=int(self.t),
+            drive_scores={},
+            tags=tags,
+        )
+        self.store.write(rec)
+        out["ok"] = True
+        out["wrote"] = True
+        out["why"] = "authored"
+        return out
+
+    def _continuity_rows(self) -> list[FactRecord]:
+        return [
+            r
+            for r in self.store.records()
+            if str(r.tags.get("source") or "") == "experience_continuity"
+        ]
+
+    def _continuity_recompute(self) -> list[tuple[str, str]]:
+        """Derived (P, Q) permissions from raw rows. Never stored.
+
+        For each mark_id: conflicting states on the same token refuse that mark.
+        Any row that violates the phase–operation lock refuses that mark.
+        For each (mark_id, observed_state): exactly one apply row and exactly one
+        read row produce one (P, Q). A Q with two distinct P sources is dropped.
+        """
+        phase_op = {"pre_gap": "apply", "post_gap": "read"}
+        rows = self._continuity_rows()
+        by_mark: dict[str, list[FactRecord]] = {}
+        for rec in rows:
+            mid = str(rec.tags.get("mark_id") or "")
+            if not mid:
+                continue
+            by_mark.setdefault(mid, []).append(rec)
+        pairs: list[tuple[str, str]] = []
+        for _mid, recs in by_mark.items():
+            apply_states: dict[str, set[str]] = {}
+            read_states: dict[str, set[str]] = {}
+            malformed = False
+            for rec in recs:
+                tok = str(rec.tags.get("token") or "").lower()
+                state = str(rec.tags.get("observed_state") or "")
+                phase = str(rec.tags.get("phase") or "")
+                op = str(rec.tags.get("operation") or "")
+                if not tok or not state or phase not in phase_op or phase_op[phase] != op:
+                    malformed = True
+                    break
+                if op == "apply":
+                    apply_states.setdefault(tok, set()).add(state)
+                else:
+                    read_states.setdefault(tok, set()).add(state)
+            if malformed:
+                continue
+            if any(len(s) > 1 for s in apply_states.values()):
+                continue
+            if any(len(s) > 1 for s in read_states.values()):
+                continue
+            matching: dict[str, tuple[list[str], list[str]]] = {}
+            for rec in recs:
+                tok = str(rec.tags.get("token") or "").lower()
+                state = str(rec.tags.get("observed_state") or "")
+                op = str(rec.tags.get("operation") or "")
+                slot = matching.setdefault(state, ([], []))
+                if op == "apply":
+                    slot[0].append(tok)
+                elif op == "read":
+                    slot[1].append(tok)
+            for _state, (applies, reads) in matching.items():
+                if len(applies) == 1 and len(reads) == 1:
+                    pairs.append((applies[0], reads[0]))
+        by_q: dict[str, set[str]] = {}
+        for p, q in pairs:
+            by_q.setdefault(q, set()).add(p)
+        return [(next(iter(ps)), q) for q, ps in by_q.items() if len(ps) == 1]
+
+    def _continuity_source_for(self, q: str) -> str | None:
+        ql = q.lower()
+        ps = {p for p, qq in self._continuity_recompute() if qq == ql}
+        if len(ps) != 1:
+            return None
+        return next(iter(ps))
+
+    def _continuity_project_token(self, q: str) -> FactRecord | None:
+        """One-hop: unique P for Q, then the unique existing skel out-edge from P."""
+        p = self._continuity_source_for(q)
+        if p is None:
+            return None
+        edges = self._skel_out_edges(p)
+        dests = {
+            str(rec.tags.get("did") or "").lower()
+            for rec in edges
+            if isinstance(rec.tags.get("did"), str) and rec.tags.get("did")
+        }
+        dests.discard("")
+        if len(dests) != 1:
+            return None
+        dest = next(iter(dests))
+        raw = [rec for rec in edges if str(rec.tags.get("did") or "").lower() == dest]
+        if len(raw) != 1:
+            return None
+        return raw[0]
+
+    def _continuity_first_hop(self, obs) -> list | None:
+        """None = continuity not in play; [] = HOLD; [rec] = project existing edge.
+
+        Continuity is in play only when rows exist and the current stream token
+        is a unique Q. Fingerprint rows are not read.
+        """
+        if not self.use_continuity_mark or not self._continuity_rows():
+            return None
+        stream = self._current_stream(obs)
+        permitted = [t for t in stream if self._continuity_source_for(t) is not None]
+        if len(stream) != 1:
+            # A Q in a multi-token cue must not fall through to raw compose.
+            return [] if permitted else None
+        if not permitted:
+            return None
+        t = next(iter(stream))
+        rec = self._continuity_project_token(t)
+        if rec is None:
+            return []
+        return [rec]
 
     def _find_experience_skel(self, bind: str, did: str) -> FactRecord | None:
         bl, dl = bind.lower(), did.lower()

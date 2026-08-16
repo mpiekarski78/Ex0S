@@ -24,7 +24,7 @@ This is a capacity wall, not evidence of learned object continuity.
 
 ## Next
 
-Opt-in persistence candidate under the frozen continuity-evidence contract ([`continuity_evidence_contract.md`](continuity_evidence_contract.md)). Alias fingerprints remain separate.
+TM.0.16.PERSIST under the frozen continuity-evidence contract ([`tm016persist_results.md`](tm016persist_results.md)). Alias fingerprints remain separate.
 
 ## Reproduce
 

@@ -1,0 +1,50 @@
+{
+  "version": "TM.0.16.PERSIST",
+  "lab": "TM.0.16.PERSIST",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "label": "opt-in mark-continuity persistence candidate",
+  "preregistered_claim": "An opt-in recipe may author raw continuity rows into S from exact observe_continuity_mark tuples and, at use time only, recompute a one-hop P \u2192 Q projection from those rows so that a unique causal apply\u2192read witness can complete an identity-dependent probe. mark_id scopes an intervention attempt, not an object; it is fresh/counterbalanced between worlds and cannot establish continuity without the corresponding apply/read observations. Token spelling, skip, sole candidacy, and route position contribute no identity evidence. Permission is defeasible and disappears when recomputed evidence is no longer unique.",
+  "cell_ids": [
+    "C0_gapwall",
+    "C1_weak",
+    "C2_mark",
+    "C3a_both",
+    "C3b_neither",
+    "C3c_conflict",
+    "C4_swap",
+    "C5_contradiction",
+    "C6_causality"
+  ],
+  "cell_ok": {
+    "C0_gapwall": true,
+    "C1_weak": true,
+    "C2_mark": true,
+    "C3a_both": true,
+    "C3b_neither": true,
+    "C3c_conflict": true,
+    "C4_swap": true,
+    "C5_contradiction": true,
+    "C6_causality": true
+  },
+  "agent_sha": "1c6309668f4dfc64d0cde04f62da17ff38f8c5fcf8bb48f06a8686e21ab886a3",
+  "observe_continuity_mark_sha": "f4fa6614ddfd699355b7d7ac96e9bf69ea4011c4ed962ac40b8509e6c0253a25",
+  "make_persist_sha": "08f6962abe2158247f486f7489aac0b6449475b2dabe28422105f8ae151c4535",
+  "run_tm016persist_sha": "07ae4250a13d209e4c13e3ae44ab0a19bb6f5a1d7ae3bc4b0bda5e94a9e358de",
+  "candidate_lock_sha": "cfb968a1b4df8ef749a74d569c39080510e8b704631625715696cd6ad8b82a57",
+  "persist_prereg_sha": "51bf6d3fcad146838e710faa4fb32974f742036893563a8dccc85b8947206293",
+  "continuity_evidence_prereg_sha": "539845b6c0f4f7272b2dd71ab9c55fc38cd3f39a1ecf784e4603f5382364e9fa",
+  "gap_wall_lock_sha": "f46401541ba38d6ab4369a84a1871e021ea161fa54977a585fbd1af76c2d1b3e",
+  "alias_finger_lock_sha": "025f9983aaaf946275bbf6c75f9b621e0c3652417894e7c24a43a4acda03dd23",
+  "refuse": [
+    "rewrite persist.candidate.lock after score",
+    "rewrite persist.candidate.v1.lock",
+    "rewrite continuity_evidence.prereg.lock",
+    "stored same_as / persistent link / transitive equality",
+    "soft C5 without withdrawal and reprobe",
+    "TM.0.17 / 0.0.005",
+    "FAMILY / LOOKAHEAD / pixels",
+    "earned_next=true or non-null ex0s"
+  ]
+}

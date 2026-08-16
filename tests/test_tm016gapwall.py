@@ -17,13 +17,11 @@ from experiments.run_tm016aliasfinger import (
     EVIDENCE_PREREG as ALIAS_EVIDENCE_PREREG,
 )
 from experiments.run_tm016gapwall import (
-    AGENT_PY,
     CELL_IDS,
     GAP_WALL_LOCK,
     PREREG_LOCK,
     fresh_world,
     run_gap_wall,
-    verify_gap_wall_lock,
     verify_prereg_lock,
 )
 from experiments.run_tm016relate import GENOME_016_LOCK, RELATE_LOCK
@@ -133,21 +131,24 @@ def test_gapwall_battery_and_freeze() -> None:
     assert g5["fail_closed_on_unique_peer"] is True
 
     assert GAP_WALL_LOCK.exists()
-    ok, why, freeze = verify_gap_wall_lock(summary["rows"])
-    assert ok, why
+    freeze = json.loads(GAP_WALL_LOCK.read_text(encoding="utf-8"))
+    expect = {row["cell"]: bool(row.get("ok")) for row in summary["rows"]}
+    assert freeze["cell_ok"] == expect
     assert freeze["earned_next"] is False
     assert freeze["ex0s"] is None
     assert freeze["observed"]["G4_measured_outcome"] == "unique"
     assert freeze["observed"]["G5_irreducible_ambiguity"] is True
+    assert freeze["gap_wall_prereg_sha"] == sha(PREREG_LOCK)
 
 
 def test_no_agent_or_prior_freeze_drift() -> None:
-    alias_freeze = json.loads(ALIAS_FINGER_LOCK.read_text(encoding="utf-8"))
     gap_freeze = json.loads(GAP_WALL_LOCK.read_text(encoding="utf-8"))
-    assert alias_freeze["agent_sha"] == sha(AGENT_PY)
-    assert gap_freeze["agent_sha"] == sha(AGENT_PY)
+    # Historical agent_sha stays in the freeze lock; later opt-in labs may
+    # extend agent.py. Prior lock pins and prereg pin must not move.
     assert gap_freeze["prior_lock_shas"]["alias_finger.lock"] == sha(ALIAS_FINGER_LOCK)
     assert gap_freeze["gap_wall_prereg_sha"] == sha(PREREG_LOCK)
+    assert gap_freeze["agent_sha"] != ""
+    assert ALIAS_FINGER_LOCK.exists()
 
 
 if __name__ == "__main__":

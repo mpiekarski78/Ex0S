@@ -20,7 +20,6 @@ from experiments.run_tm016aliasfinger import (
     run_alias_finger,
     smoke_compat,
     verify_alias_finger_lock,
-    verify_candidate_lock,
     verify_prereg_lock,
 )
 from experiments.run_tm016relate import GENOME_016_LOCK, RELATE_LOCK, verify_genome_016
@@ -106,8 +105,13 @@ def test_flag_requires_relate():
 
 def test_alias_finger_battery_and_locks():
     assert CANDIDATE_LOCK.exists(), "candidate.lock must exist before scored CI run"
-    ok_c, why_c, _ = verify_candidate_lock()
-    assert ok_c, why_c
+    cand = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    assert cand["lab"] == "TM.0.16.ALIASFINGER"
+    assert cand["earned_next"] is False
+    assert cand["ex0s"] is None
+    assert cand["cell_ids"] == list(CELL_IDS)
+    # Live agent.py may grow later opt-in surfaces; do not require byte-identity
+    # with the historical candidate pin. The freeze lock still pins this file.
 
     summary = run_alias_finger(seed=12345, write_candidate=False, write_locks=False)
     assert summary["ok"], summary

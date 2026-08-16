@@ -54,4 +54,4 @@ C2–C6 are not claimed green. No organism, runner, test, or post-run freeze loc
 
 ## Later
 
-After this contract is frozen: build an opt-in persistence candidate that authors continuity evidence into S, attack it with C0–C6 (including the identity-dependent earn probe), and freeze only if earned. Alias fingerprints stay separate; anonymous features and encoders remain later still.
+After this contract is frozen: build an opt-in persistence candidate that authors continuity evidence into S, attack it with C0–C6 (including the identity-dependent earn probe), and freeze only if earned. That candidate is TM.0.16.PERSIST ([`tm016persist_results.md`](tm016persist_results.md); `earned_next=false`). Alias fingerprints stay separate; anonymous features and encoders remain later still.
