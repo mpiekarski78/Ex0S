@@ -1,0 +1,69 @@
+{
+  "version": "TM.0.21.PERSPECTIVE.MECH",
+  "lab": "TM.0.21.PERSPECTIVE.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "n_pass": 9,
+  "n_cells": 9,
+  "cells": [
+    {
+      "cell": "U0_flag_off",
+      "ok": true,
+      "actual": "UNKNOWN",
+      "why": "pass"
+    },
+    {
+      "cell": "U1_reject",
+      "ok": true,
+      "actual": "exact_key_reject",
+      "why": "exact_key_reject"
+    },
+    {
+      "cell": "U2_aligned",
+      "ok": true,
+      "actual": "ALIGNED",
+      "why": "pass"
+    },
+    {
+      "cell": "U3_closed_miss",
+      "ok": true,
+      "actual": "ALIGNED",
+      "why": "pass"
+    },
+    {
+      "cell": "U4_misaligned",
+      "ok": true,
+      "actual": "MISALIGNED",
+      "why": "pass"
+    },
+    {
+      "cell": "U5_strip",
+      "ok": true,
+      "actual": "ALIGNED",
+      "why": "pass"
+    },
+    {
+      "cell": "U6_present_only",
+      "ok": true,
+      "actual": "UNKNOWN",
+      "why": "pass"
+    },
+    {
+      "cell": "U7_orthogonal",
+      "ok": true,
+      "actual": "MISALIGNED",
+      "why": "pass"
+    },
+    {
+      "cell": "U8_jaccard_no_attach",
+      "ok": true,
+      "actual": "MISALIGNED",
+      "why": "pass"
+    }
+  ],
+  "agent_sha": "806d2c35e054a4bd76a96e2c9e8cbce23bd8d1f225bcac194dea2710277d8bc1",
+  "candidate_sha": "8594789d87c94f3b320fef4b8c08ad64fd1cbabb6372afc52fc953ce3329ac28",
+  "run_tm021perspective_sha": "ce0dea7fdb1a8fc40a7229216d156e1b6e7d0634973b74cd735d666faea7451c"
+}

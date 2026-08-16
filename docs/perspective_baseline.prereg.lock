@@ -1,0 +1,24 @@
+{
+  "version": "TM.0.21.PERSPECTIVE.BASELINE.PREREG",
+  "lab": "TM.0.21.PERSPECTIVE",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "not_a_product_stamp": true,
+  "preregistered_claim": "Frozen RELIABILITY (make_reliability, perspective off) does not distinguish ALIGNED vs MISALIGNED evidenced perspectives \u2014 conflicting testimony remains predictive/HOLD as today; RELIABILITY lock behavior unchanged.",
+  "fixture": "docs/perspective_fixture.json",
+  "fixture_sha": "d62954a9251e8507cf7e0aa0aa8b34848fdb405057decfac4d007145dbe37e68",
+  "phase_a": {
+    "factory": "experiments.run_tm020reliability.make_reliability",
+    "agent_edits_permitted": false,
+    "use_source_perspective": false
+  },
+  "prior_lock_shas": {
+    "reliability.lock": "24e15bf78486873b8d959af0313aac4f372de61d4eff33bc5fe9ca4f77880615"
+  },
+  "refuse": [
+    "editing agent.py in Phase A",
+    "honesty_score",
+    "earned_next=true or non-null ex0s"
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "version": "TM.0.21.PERSPECTIVE.WALL",
+  "lab": "TM.0.21.PERSPECTIVE.WALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": false,
+  "scored_probes_ok": true,
+  "need_not_fully_pass": true,
+  "first_fail_wall": {
+    "id": "W_misunderstood",
+    "ok": false,
+    "actual": "diagnostic_fail",
+    "note": "observed but misunderstood",
+    "dimension": "comprehension"
+  },
+  "next_primitive_hint": "comprehension",
+  "probes": [
+    {
+      "id": "W_attention_gap",
+      "ok": true,
+      "actual": "pass",
+      "note": "exposure but did not attend",
+      "dimension": "attention"
+    },
+    {
+      "id": "W_misunderstood",
+      "ok": false,
+      "actual": "diagnostic_fail",
+      "note": "observed but misunderstood",
+      "dimension": "comprehension"
+    },
+    {
+      "id": "W_forgot",
+      "ok": null,
+      "actual": "not_run",
+      "note": "forgot",
+      "dimension": "memory"
+    },
+    {
+      "id": "W_indirect",
+      "ok": null,
+      "actual": "not_run",
+      "note": "learned indirectly",
+      "dimension": "indirect"
+    },
+    {
+      "id": "W_error_vs_lie",
+      "ok": null,
+      "actual": "not_run",
+      "note": "accidental error vs intentional lie",
+      "dimension": "intent"
+    },
+    {
+      "id": "W_helpful_deception",
+      "ok": null,
+      "actual": "not_run",
+      "note": "helpful deception",
+      "dimension": "intent"
+    },
+    {
+      "id": "W_malicious_accurate",
+      "ok": null,
+      "actual": "not_run",
+      "note": "malicious but accurate",
+      "dimension": "intent"
+    },
+    {
+      "id": "W_copied",
+      "ok": null,
+      "actual": "not_run",
+      "note": "copied information",
+      "dimension": "independence"
+    },
+    {
+      "id": "W_nested_belief",
+      "ok": null,
+      "actual": "not_run",
+      "note": "nested beliefs",
+      "dimension": "nested_tom"
+    },
+    {
+      "id": "W_strategic",
+      "ok": null,
+      "actual": "not_run",
+      "note": "adapts reports to questions",
+      "dimension": "strategic"
+    },
+    {
+      "id": "W_indistinguishable",
+      "ok": true,
+      "actual": "pass",
+      "note": "tied explanations \u2192 UNKNOWN",
+      "dimension": "meta"
+    }
+  ],
+  "fixture_sha": "d62954a9251e8507cf7e0aa0aa8b34848fdb405057decfac4d007145dbe37e68",
+  "perspective_wall_prereg_sha": "fd783b9d5f65c2086ddc9ab695eca1c95ec68c045005238cab6265911a54a36d",
+  "perspective_lock_sha": "c390d99ee04d3c901e57afc90ce4c00e12f782839ad41bca2fc448c551cacb85",
+  "agent_sha": "806d2c35e054a4bd76a96e2c9e8cbce23bd8d1f225bcac194dea2710277d8bc1",
+  "run_tm021perspective_sha": "ce0dea7fdb1a8fc40a7229216d156e1b6e7d0634973b74cd735d666faea7451c",
+  "note": "Results only. Evidenced perspective earned in-life; comprehension / nested ToM / intent remain open. not_run probes are not first_fail diagnostics. Do not rewrite wall prereg."
+}

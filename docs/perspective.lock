@@ -1,0 +1,227 @@
+{
+  "version": "TM.0.21.PERSPECTIVE",
+  "lab": "TM.0.21.PERSPECTIVE",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "last_stage_clear": "P12",
+  "life_last_stage_clear": "P12",
+  "first_fail_stage": null,
+  "first_fail": null,
+  "failure_family": null,
+  "main_ok": true,
+  "twin_ok": true,
+  "capacity": {
+    "ok": true,
+    "lanes": {
+      "sources_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 2,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 12,
+              "n_plan_timings": 0,
+              "wall_s": 0.0007816487923264503
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 16,
+              "n_plan_timings": 0,
+              "wall_s": 0.0018113143742084503
+            }
+          },
+          {
+            "rung": 16,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 40,
+              "n_plan_timings": 0,
+              "wall_s": 0.012977943755686283
+            }
+          },
+          {
+            "rung": 64,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 136,
+              "n_plan_timings": 0,
+              "wall_s": 0.15691185276955366
+            }
+          }
+        ]
+      },
+      "private_branches_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 1,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 10,
+              "n_plan_timings": 0,
+              "wall_s": 0.0004322882741689682
+            }
+          },
+          {
+            "rung": 2,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 12,
+              "n_plan_timings": 0,
+              "wall_s": 0.0007987217977643013
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 16,
+              "n_plan_timings": 0,
+              "wall_s": 0.0018129479140043259
+            }
+          },
+          {
+            "rung": 8,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 24,
+              "n_plan_timings": 0,
+              "wall_s": 0.004529784433543682
+            }
+          }
+        ]
+      },
+      "exposure_changes_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 1,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 10,
+              "n_plan_timings": 0,
+              "wall_s": 0.0003846408799290657
+            }
+          },
+          {
+            "rung": 4,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 16,
+              "n_plan_timings": 0,
+              "wall_s": 0.0017959875985980034
+            }
+          },
+          {
+            "rung": 16,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 40,
+              "n_plan_timings": 0,
+              "wall_s": 0.012994103133678436
+            }
+          }
+        ]
+      },
+      "reports_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 1,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 11,
+              "n_plan_timings": 0,
+              "wall_s": 0.0006385771557688713
+            }
+          },
+          {
+            "rung": 10,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 20,
+              "n_plan_timings": 0,
+              "wall_s": 0.005467929877340794
+            }
+          },
+          {
+            "rung": 100,
+            "ok": true,
+            "metric_only": true,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 110,
+              "n_plan_timings": 0,
+              "wall_s": 0.19461047742515802
+            }
+          }
+        ]
+      },
+      "age_lane": {
+        "ok": true,
+        "first_fail_rung": null,
+        "rungs": [
+          {
+            "rung": 100,
+            "ok": true,
+            "metric_only": false,
+            "first_fail": null,
+            "metrics": {
+              "s_row_count": 110,
+              "n_plan_timings": 0,
+              "wall_s": 0.0932071041315794
+            }
+          }
+        ]
+      }
+    }
+  },
+  "fixture_sha": "d62954a9251e8507cf7e0aa0aa8b34848fdb405057decfac4d007145dbe37e68",
+  "agent_sha": "806d2c35e054a4bd76a96e2c9e8cbce23bd8d1f225bcac194dea2710277d8bc1",
+  "candidate_sha": "8594789d87c94f3b320fef4b8c08ad64fd1cbabb6372afc52fc953ce3329ac28",
+  "mech_sha": "b2276f3eba35b9a98a221d5507d62d12a1448ef52de8e4767b12d16aa986f302",
+  "run_tm021perspective_sha": "ce0dea7fdb1a8fc40a7229216d156e1b6e7d0634973b74cd735d666faea7451c",
+  "bounded_claim": "Ex0S reconstructed a source's last uniquely supported evidence perspective from observable exposure events.",
+  "refuse": [
+    "honesty_score",
+    "knows/believes/has_access",
+    "false_belief claims",
+    "earned_next=true or non-null ex0s"
+  ]
+}

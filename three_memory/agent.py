@@ -119,6 +119,7 @@ class ThreeMemoryAgent:
         use_symbol_sequence: bool = False,
         use_inquire: bool = False,
         use_source_reliability: bool = False,
+        use_source_perspective: bool = False,
         n_actions: int = 4,
         domain: str = "door",
     ):
@@ -246,6 +247,8 @@ class ThreeMemoryAgent:
             raise ValueError("use_inquire requires use_symbol_sequence")
         if use_source_reliability and not use_inquire:
             raise ValueError("use_source_reliability requires use_inquire")
+        if use_source_perspective and not use_source_reliability:
+            raise ValueError("use_source_perspective requires use_source_reliability")
         if value_key not in ("action", "do"):
             raise ValueError(value_key)
         if not isinstance(place_key, str) or not place_key:
@@ -326,9 +329,20 @@ class ThreeMemoryAgent:
         self.use_inquire = use_inquire
         self.use_source_reliability = use_source_reliability
         self.use_inquire_liveness = bool(use_source_reliability)
+        self.use_source_perspective = use_source_perspective
         self.reliability_lambda = 4
         self.reliability_n_min = 2
         self.reliability_jaccard = 0.5
+        # Perspective: alignment margin uses same λ/n_min; strong exposure atoms scaffolded
+        self.perspective_lambda = 4
+        self.perspective_n_min = 2
+        self.perspective_jaccard = 0.5
+        self.perspective_strong_exposure = frozenset(
+            {"exp_delivered", "exp_ack_read", "exp_receipt"}
+        )
+        self.perspective_weak_exposure = frozenset(
+            {"exp_present", "exp_absent", "exp_sensor_connected"}
+        )
         self.inquire_budget = 8
         self.inquire_cost_ask = 2
         self.inquire_cost_experiment = 5
@@ -465,6 +479,7 @@ class ThreeMemoryAgent:
             use_symbol_sequence=self.use_symbol_sequence,
             use_inquire=self.use_inquire,
             use_source_reliability=self.use_source_reliability,
+            use_source_perspective=self.use_source_perspective,
             n_actions=self.n_actions,
             domain=self.domain,
         )
@@ -2813,6 +2828,13 @@ class ThreeMemoryAgent:
             out["why"] = "no_cue"
             return out
         hyps = self._inquire_hypotheses(cue, min_support=min_support)
+        # PERSPECTIVE frozen influence #1: unique direct world grounding wins
+        # before predictive testimony (does not change reliability-only order).
+        if self.use_source_perspective and len(hyps) == 1:
+            out["status"] = "ANSWER"
+            out["answer_symbols"] = [hyps[0]]
+            out["why"] = "unique_hypothesis"
+            return out
         # Reliability: try weighted testimony before unique-hyp / probe paths
         live_hyps: list[str] = []
         if self.use_source_reliability:
@@ -2820,7 +2842,10 @@ class ThreeMemoryAgent:
             if wans is not None:
                 out["status"] = "ANSWER"
                 out["answer_symbols"] = [wans]
-                out["why"] = "source_evidence_margin"
+                why = "source_evidence_margin"
+                if self.use_source_perspective:
+                    why = "source_evidence_margin_perspective"
+                out["why"] = why
                 return out
             live_hyps = self._reliability_live_hyps(cue, ctx)
         if not hyps:
@@ -3266,7 +3291,11 @@ class ThreeMemoryAgent:
     def _reliability_weighted_answer(
         self, context_atoms: Sequence[str], cue: str
     ) -> str | None:
-        """Unique max source_evidence_margin over deduped live claims, else None."""
+        """Unique max source_evidence_margin over deduped live claims, else None.
+
+        With use_source_perspective: MISALIGNED live claims contribute weight 0
+        (withhold, never invert). UNKNOWN/ALIGNED use predictive margin unpenalized.
+        """
         scores: dict[str, float] = {}
         for rec in self._reliability_live_claims(context_atoms, cue):
             hyp = str(rec.tags.get("hypothesis") or "")
@@ -3276,6 +3305,12 @@ class ThreeMemoryAgent:
             w = self.source_evidence_margin(spk, context_atoms)
             if w <= 0:
                 continue
+            if self.use_source_perspective:
+                status = self.report_alignment_status(
+                    spk, [cue, hyp], context_atoms
+                )
+                if status == "MISALIGNED":
+                    continue  # withhold channel influence; do not invert
             scores[hyp] = float(scores.get(hyp, 0.0)) + w
         if not scores:
             return None
@@ -3286,6 +3321,225 @@ class ThreeMemoryAgent:
         if len(ranked) > 1 and round(ranked[1][1], 9) == round(best_w, 9):
             return None
         return best_h
+
+    # --- TM.0.21.PERSPECTIVE: exposure, evidenced perspective, report alignment ---
+
+    def observe_exposure(self, info: dict[str, Any] | None) -> dict[str, Any]:
+        """Author raw experience_perspective exposure rows. No knows/believes/access."""
+        required = {"speaker_token", "context_atoms", "exposure_atoms", "event_token"}
+        out: dict[str, Any] = {"ok": False, "wrote": False, "why": ""}
+        if not self.use_source_perspective or not self.store.enabled:
+            out["why"] = "perspective_off"
+            return out
+        if not isinstance(info, dict) or set(info.keys()) != required:
+            out["why"] = "exact_key_reject"
+            return out
+        speaker = str(info["speaker_token"]).strip().lower()
+        event = str(info["event_token"]).strip().lower()
+        ctx = [str(x).strip().lower() for x in info["context_atoms"] if str(x).strip()]
+        atoms = [
+            str(x).strip().lower() for x in info["exposure_atoms"] if str(x).strip()
+        ]
+        if not speaker or not event or not ctx or not atoms:
+            out["why"] = "empty_field"
+            return out
+        banned = {
+            "knows",
+            "believes",
+            "saw_truth",
+            "is_lying",
+            "honest",
+            "has_access",
+            "honesty",
+            "intent",
+            "trust_score",
+            "false_belief",
+        }
+        blob = " ".join([speaker, event] + atoms)
+        if any(b in blob for b in banned):
+            out["why"] = "banned_token"
+            return out
+        if any("|" in x for x in ctx + atoms + [speaker, event]):
+            out["why"] = "pipe_in_token"
+            return out
+        strong = sorted(a for a in atoms if a in self.perspective_strong_exposure)
+        tags: dict[str, Any] = {
+            "speaker_token": speaker,
+            "context_atoms": "|".join(sorted(self._reliability_project_context(ctx))),
+            "context_raw": "|".join(ctx),
+            "exposure_atoms": "|".join(atoms),
+            "event_token": event,
+            "strong": 1 if strong else 0,
+            "strong_atoms": "|".join(strong),
+            "source": "experience_perspective",
+            "hyp": "supported",
+            "support": 1,
+        }
+        n = len(self.store.records())
+        fid = f"perspective_{n:04d}_{speaker}"
+        rec = FactRecord(
+            fact_id=fid,
+            what=encode_tags(tags),
+            when=int(self.t),
+            drive_scores={},
+            tags=tags,
+        )
+        self.store.write(rec)
+        out["ok"] = True
+        out["wrote"] = True
+        out["why"] = "authored"
+        return out
+
+    def _perspective_rows(self) -> list[FactRecord]:
+        return [
+            r
+            for r in self.store.records()
+            if str(r.tags.get("source") or "") == "experience_perspective"
+        ]
+
+    def _perspective_strong_exposures(self, speaker: str) -> list[FactRecord]:
+        spk = speaker.lower()
+        rows = [
+            r
+            for r in self._perspective_rows()
+            if str(r.tags.get("speaker_token") or "") == spk
+            and int(r.tags.get("strong") or 0) == 1
+        ]
+        return sorted(rows, key=lambda r: (int(r.when), str(r.fact_id)))
+
+    def _perspective_world_for_event(
+        self, event_token: str, cue: str
+    ) -> list[tuple[str, int, str]]:
+        """Return (paired_hyp, when, fact_id) for eligible grounds linked to event."""
+        ev = event_token.lower()
+        cue_l = cue.lower()
+        out: list[tuple[str, int, str]] = []
+        for rec in self._grounding_rows():
+            prov = str(rec.tags.get("provenance") or "")
+            if prov not in {"direct", "experiment", "state_read"}:
+                continue
+            if str(rec.tags.get("symbol") or "").lower() != cue_l:
+                continue
+            if str(rec.tags.get("result") or "").lower() == "failure":
+                continue
+            tid = str(rec.tags.get("trial_id") or "")
+            hint = self._reliability_event_from_trial(tid)
+            if hint != ev:
+                continue
+            paired = str(rec.tags.get("paired") or "").lower()
+            if not paired:
+                continue
+            out.append((paired, int(rec.when), str(rec.fact_id)))
+        return out
+
+    def evidenced_perspective_hyp(
+        self, speaker: str, cue: str
+    ) -> str | None:
+        """Last uniquely supported evidenced hyp for cue from strong exposure+event link.
+
+        Presence-only never attaches. Exact event_token linkage only (not Jaccard).
+        """
+        if not self.use_source_perspective:
+            return None
+        # Chronological: each strong exposure may attach world facts for its event
+        last_hyp: str | None = None
+        last_when = -1
+        last_fid = ""
+        for exp in self._perspective_strong_exposures(speaker):
+            ev = str(exp.tags.get("event_token") or "")
+            if not ev:
+                continue
+            worlds = self._perspective_world_for_event(ev, cue)
+            if not worlds:
+                continue
+            # Unique world hyp for this event×cue
+            hyps = sorted({h for h, _w, _f in worlds})
+            if len(hyps) != 1:
+                continue
+            # Prefer latest world observe among matches
+            hyp, when, fid = max(worlds, key=lambda t: (t[1], t[2]))
+            if when > last_when or (when == last_when and fid > last_fid):
+                last_hyp = hyp
+                last_when = when
+                last_fid = fid
+        return last_hyp
+
+    def report_alignment_status(
+        self,
+        speaker: str,
+        claim_atoms: Sequence[str],
+        context_atoms: Sequence[str] | None = None,
+    ) -> str:
+        """Use-time ALIGNED | MISALIGNED | UNKNOWN. Not honesty/belief."""
+        if not self.use_source_perspective:
+            return "UNKNOWN"
+        claim = [str(x).strip().lower() for x in claim_atoms if str(x).strip()]
+        if len(claim) < 2:
+            return "UNKNOWN"
+        cue, hyp = claim[0], claim[1]
+        persp = self.evidenced_perspective_hyp(speaker, cue)
+        if persp is None:
+            return "UNKNOWN"
+        if persp == hyp:
+            return "ALIGNED"
+        return "MISALIGNED"
+
+    def report_alignment_margin(
+        self, speaker: str, context_atoms: Sequence[str]
+    ) -> float:
+        """Bounded margin from justified ALIGNED/MISALIGNED assessments (use-time).
+
+        Jaccard transfers historical assessments across similar contexts only —
+        never used to attach world facts to a perspective.
+        Dedup: speaker × cue × hyp × evidenced perspective hyp (repetition without
+        new exposure does not amplify).
+        """
+        if not self.use_source_perspective:
+            return 0.0
+        proj = self._reliability_project_context(context_atoms)
+        thr = float(self.perspective_jaccard)
+        # Collect unique justified assessments from live+historical testimony
+        seen: set[tuple[str, str, str, str]] = set()
+        s_cnt = 0
+        k_cnt = 0
+        for rec in self._testimony_rows():
+            if str(rec.tags.get("speaker_token") or "") != speaker.lower():
+                continue
+            claim = str(rec.tags.get("claim_atoms") or "").split("|")
+            if len(claim) < 2:
+                continue
+            ctx = [
+                x
+                for x in str(rec.tags.get("context_atoms") or "").split("|")
+                if x
+            ]
+            # Transfer: only count assessments whose testimony context overlaps query
+            if proj and ctx:
+                if self._reliability_jaccard(proj, ctx) < thr:
+                    continue
+            elif proj or ctx:
+                continue
+            status = self.report_alignment_status(speaker, claim, context_atoms)
+            if status == "UNKNOWN":
+                continue
+            # Dedup: same claim under same evidenced perspective — repetition
+            # without new exposure must not amplify the margin.
+            persp = self.evidenced_perspective_hyp(speaker, claim[0]) or ""
+            key = (speaker.lower(), claim[0], claim[1], persp)
+            if key in seen:
+                continue
+            seen.add(key)
+            if status == "ALIGNED":
+                s_cnt += 1
+            elif status == "MISALIGNED":
+                k_cnt += 1
+        n = s_cnt + k_cnt
+        if n < int(self.perspective_n_min):
+            return 0.0
+        quality = (s_cnt - k_cnt) / float(n)
+        lam = float(self.perspective_lambda)
+        confidence = n / (n + lam)
+        return max(0.0, quality * confidence)
 
     def _find_experience_skel(self, bind: str, did: str) -> FactRecord | None:
         bl, dl = bind.lower(), did.lower()

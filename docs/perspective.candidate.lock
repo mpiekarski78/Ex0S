@@ -1,0 +1,34 @@
+{
+  "version": "TM.0.21.PERSPECTIVE.CANDIDATE",
+  "lab": "TM.0.21.PERSPECTIVE.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "flag": "use_source_perspective",
+  "source": "experience_perspective",
+  "observation_abi": "observe_exposure",
+  "statuses": [
+    "ALIGNED",
+    "MISALIGNED",
+    "UNKNOWN"
+  ],
+  "margin_name": "report_alignment_margin",
+  "influence": {
+    "world_unique_first": true,
+    "ALIGNED": "does_not_prove_world_correctness",
+    "MISALIGNED": "withhold_weight_0_never_invert",
+    "UNKNOWN": "unpenalized_predictive_or_inquire"
+  },
+  "presence_never_attaches": true,
+  "jaccard_scope": "report_alignment_margin_transfer_only",
+  "factory": "experiments.run_tm021perspective.make_perspective",
+  "agent_sha": "806d2c35e054a4bd76a96e2c9e8cbce23bd8d1f225bcac194dea2710277d8bc1",
+  "observe_exposure_sha": "65592dc23d914cf6e7a6c4abcc4e5c3200ec31e19696625358a3997339dd3476",
+  "report_alignment_status_sha": "dc33e19392b58844532ab94731b491e9640d1bbed4ef87924fe38f514a0c3e59",
+  "make_perspective_sha": "2bf5d3ab2a89d1598b6dc646cd36dd85c8a1883110f52c6af92fe0e950edecb8",
+  "run_tm021perspective_sha": "ce0dea7fdb1a8fc40a7229216d156e1b6e7d0634973b74cd735d666faea7451c",
+  "perspective_mech_prereg_sha": "1b2a2ea189b7449a7921916f9f59e932afb53b64eaf1ea47888436eba5cd6bd0",
+  "perspective_baseline_sha": "06e085e0895d5dae8de03bc2ff5f808a44ed525faf45b7a5331f13271381c66f",
+  "perspective_wall_prereg_sha": "fd783b9d5f65c2086ddc9ab695eca1c95ec68c045005238cab6265911a54a36d",
+  "note": "Pinned after unscored ABI smoke, before scored cells. Preserve as v1 if audit rewrites agent."
+}

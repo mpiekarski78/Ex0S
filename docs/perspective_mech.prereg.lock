@@ -1,0 +1,51 @@
+{
+  "version": "TM.0.21.PERSPECTIVE.MECH.PREREG",
+  "lab": "TM.0.21.PERSPECTIVE.MECH",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "An opt-in recipe may record observable exposure events, reconstruct a source's last uniquely supported evidenced perspective via exact event linkage (not Jaccard attach), recompute ALIGNED|MISALIGNED|UNKNOWN at use time, and apply a frozen influence rule with predictive source_evidence_margin \u2014 without honesty_score, knows/believes, or claiming belief/intent.",
+  "flag": "use_source_perspective",
+  "flag_default": false,
+  "requires": "use_source_reliability",
+  "observation_abi": "observe_exposure",
+  "source": "experience_perspective",
+  "statuses": [
+    "ALIGNED",
+    "MISALIGNED",
+    "UNKNOWN"
+  ],
+  "margin_name": "report_alignment_margin",
+  "closed_world_life": true,
+  "exposure_scaffold": true,
+  "strong_exposure_atoms": [
+    "exp_delivered",
+    "exp_ack_read",
+    "exp_receipt"
+  ],
+  "weak_exposure_atoms": [
+    "exp_present",
+    "exp_absent",
+    "exp_sensor_connected"
+  ],
+  "presence_never_attaches": true,
+  "use_time_recompute": true,
+  "jaccard_scope": "report_alignment_margin_transfer_only",
+  "jaccard": 0.5,
+  "lambda": 4,
+  "n_min": 2,
+  "misaligned_influence": "withhold_weight_0_never_invert",
+  "unknown_influence": "unpenalized_predictive_or_inquire",
+  "fixture": "docs/perspective_fixture.json",
+  "fixture_sha": "d62954a9251e8507cf7e0aa0aa8b34848fdb405057decfac4d007145dbe37e68",
+  "contract": "docs/perspective_evidence_contract.md",
+  "refuse": [
+    "honesty_score",
+    "knows/believes/has_access ABI",
+    "false_belief claims",
+    "Jaccard as event identity",
+    "derived alignment as ordinary facts",
+    "silently changing make_reliability / RELIABILITY locks",
+    "earned_next=true or non-null ex0s"
+  ]
+}

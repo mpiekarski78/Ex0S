@@ -1902,3 +1902,13 @@ Phase A baseline PASS. Reliability unit cells **6/6**. Life cleared through **R1
 
 Prereg: [`reliability_baseline.prereg.lock`](reliability_baseline.prereg.lock), [`reliability_mech.prereg.lock`](reliability_mech.prereg.lock), [`reliability_wall.prereg.lock`](reliability_wall.prereg.lock). Contract: [`reliability_evidence_contract.md`](reliability_evidence_contract.md). Fixture: [`reliability_fixture.json`](reliability_fixture.json). Locks: [`reliability_baseline.lock`](reliability_baseline.lock), [`reliability.candidate.lock`](reliability.candidate.lock), [`reliability_mech.lock`](reliability_mech.lock), [`reliability.lock`](reliability.lock), [`reliability_wall.lock`](reliability_wall.lock). Apparatus: `experiments/run_tm020reliability.py`. Results: [`tm020reliability_results.md`](tm020reliability_results.md).
 
+## TM.0.21.PERSPECTIVE — source exposure, evidenced perspective, report alignment
+
+Product remains **Ex0S 0.0.004**. `earned_next=false`; `ex0s=null`. Not 0.0.005 / FAMILY / Ex0S 1.0. Earns only reconstruction of a source’s last uniquely supported **evidenced perspective** from observable exposure, plus use-time report alignment (ALIGNED|MISALIGNED|UNKNOWN) — never `honesty_score`, belief, or intent.
+
+Stacks on frozen RELIABILITY via `make_reliability`. Factory `make_perspective` enables `use_source_perspective` (requires reliability). Default `make_reliability` / RELIABILITY locks unchanged. One package: (A) baseline with perspective off; (B) `observe_exposure` / exact event linkage / frozen influence vs `source_evidence_margin`; (C) P0–P12 + twin + unconfounded capacity; wall preregistered before candidate score.
+
+Phase A baseline PASS. Perspective unit cells **9/9**. Life cleared through **P12**. Wall: scored scripts pass; `first_fail_wall=W_misunderstood` → next primitive **comprehension**.
+
+Prereg: [`perspective_baseline.prereg.lock`](perspective_baseline.prereg.lock), [`perspective_mech.prereg.lock`](perspective_mech.prereg.lock), [`perspective_wall.prereg.lock`](perspective_wall.prereg.lock). Contract: [`perspective_evidence_contract.md`](perspective_evidence_contract.md). Fixture: [`perspective_fixture.json`](perspective_fixture.json). Locks: [`perspective_baseline.lock`](perspective_baseline.lock), [`perspective.candidate.lock`](perspective.candidate.lock), [`perspective_mech.lock`](perspective_mech.lock), [`perspective.lock`](perspective.lock), [`perspective_wall.lock`](perspective_wall.lock). Apparatus: `experiments/run_tm021perspective.py`. Results: [`tm021perspective_results.md`](tm021perspective_results.md).
+

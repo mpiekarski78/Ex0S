@@ -1,0 +1,101 @@
+{
+  "version": "TM.0.21.PERSPECTIVE.WALL.PREREG",
+  "lab": "TM.0.21.PERSPECTIVE.WALL",
+  "ex0s_under_test": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "preregistered_claim": "On frozen make_perspective, a preregistered wall probes attention gaps, misunderstanding, forgetting, indirect learning, error vs lie, deception, copied information, nested beliefs, and strategic adaptation. Need not fully pass; first_fail_wall diagnoses the next primitive \u2014 evidenced perspective does not claim to model another mind.",
+  "fixture": "docs/perspective_fixture.json",
+  "fixture_sha": "d62954a9251e8507cf7e0aa0aa8b34848fdb405057decfac4d007145dbe37e68",
+  "fixture_section": "wall",
+  "factory": "experiments.run_tm021perspective.make_perspective",
+  "mechanism_changes_permitted": false,
+  "need_not_fully_pass": true,
+  "probe_ids": [
+    "W_attention_gap",
+    "W_misunderstood",
+    "W_forgot",
+    "W_indirect",
+    "W_error_vs_lie",
+    "W_helpful_deception",
+    "W_malicious_accurate",
+    "W_copied",
+    "W_nested_belief",
+    "W_strategic",
+    "W_indistinguishable"
+  ],
+  "probes": [
+    {
+      "id": "W_attention_gap",
+      "dimension": "attention",
+      "note": "exposure but did not attend",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_misunderstood",
+      "dimension": "comprehension",
+      "note": "observed but misunderstood",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_forgot",
+      "dimension": "memory",
+      "note": "forgot",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_indirect",
+      "dimension": "indirect",
+      "note": "learned indirectly",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_error_vs_lie",
+      "dimension": "intent",
+      "note": "accidental error vs intentional lie",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_helpful_deception",
+      "dimension": "intent",
+      "note": "helpful deception",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_malicious_accurate",
+      "dimension": "intent",
+      "note": "malicious but accurate",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_copied",
+      "dimension": "independence",
+      "note": "copied information",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_nested_belief",
+      "dimension": "nested_tom",
+      "note": "nested beliefs",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_strategic",
+      "dimension": "strategic",
+      "note": "adapts reports to questions",
+      "expect_may_fail": true
+    },
+    {
+      "id": "W_indistinguishable",
+      "dimension": "meta",
+      "note": "tied explanations \u2192 UNKNOWN",
+      "expect_may_fail": true
+    }
+  ],
+  "refuse": [
+    "rewriting this prereg after seeing perspective results",
+    "treating wall green as requiring nested ToM or intent",
+    "earned_next=true or non-null ex0s"
+  ],
+  "note": "Frozen before candidate.lock. perspective_wall.lock records results only."
+}
