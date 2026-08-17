@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.24.ACTORCREDIT.REACH runner freeze:** ABI smoke green. Runner lock pins v29 neural SHA, unused FIT/CHECK domains, Q2 learning gates. Diagnostic answer next. [`lineage_actorcredit_reach.runner.lock`](lineage_actorcredit_reach.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.ACTORCREDIT.REACH apparatus:** Newly committed reachability after A0–A11 12/12. Unused worlds `TM024.ACTORCREDIT.REACH.FIT.` / `CHECK.`. Same Q2 learning gates; n stays 64. Historical REACH not rescored. [`lineage_actorcredit_reach.prereg.lock`](lineage_actorcredit_reach.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.ACTORCREDIT result:** A0–A11 **12/12**. Action-owned delayed credit moves both `P(ACT)` and `P(beneficial|ACT)`; clamp credits, passive does not; REST retains; HOLD integrity holds. Reachability authorized on unused `TM024.ACTORCREDIT.REACH.FIT.` / `CHECK.` Another lineage run still closed until that diagnostic. [`lineage_actorcredit.lock`](lineage_actorcredit.lock). n stays 64. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.ACTORCREDIT runner freeze:** ABI smoke green. Runner lock pins v29 neural SHA and unused `TM024.ACTORCREDIT.CELLS.` A0–A11 answers next. [`lineage_actorcredit.runner.lock`](lineage_actorcredit.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
