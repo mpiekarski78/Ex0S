@@ -573,15 +573,14 @@ def run_q4() -> dict[str, Any]:
     with tempfile.TemporaryDirectory(prefix="wm_q4_") as tmp:
         ag = make_cortex(Path(tmp) / "s", device="cpu")
         ag.bind_actuators(list(world["handles"]))
+        # Mid-range body so beneficial/harmful deltas are observable (not clipped at 0/1).
+        body = [0.5, 0.4, 0.5, 0.0]
         # warm rho
-        probe_observe(ag, world, tag="warm")
-        body = [1.0, 0.0, 1.0, 0.0]
-        # Force an ACT pending by staging: set pending manually after observe
-        out0 = ag.observe(
+        ag.observe(
             build_observe(
-                interaction_token="act0",
-                source_token="src_teacher",
-                ordered_symbols=list(world["teacher_pair"][:1]),  # one symbol to avoid equal-evidence HOLD
+                interaction_token="warm",
+                source_token="src_probe",
+                ordered_symbols=list(world["teacher_pair"][:1]),
                 observable_state=["st_idle"],
                 body_state=body,
             )
@@ -589,7 +588,7 @@ def run_q4() -> dict[str, Any]:
         # Link 1: ACT -> body change via host physics
         tok = world["beneficial"]
         state, body2 = physics(body, tok, world["latent"])
-        body_changed = body2 != body
+        body_changed = any(abs(float(a) - float(b)) > 1e-12 for a, b in zip(body, body2, strict=True))
         links["act_to_body"] = {"ok": bool(body_changed), "body_before": body, "body_after": body2}
 
         # Prepare pending ACT with real rho_elig
@@ -820,12 +819,12 @@ def smoke() -> dict[str, Any]:
 def write_runner_lock() -> dict[str, Any]:
     prereg = load_prereg()
     lock = {
-        "version": "TM.0.24.WALLMAP.RUNNER.V4",
+        "version": "TM.0.24.WALLMAP.RUNNER.V5",
         "product": "0.0.004",
         "earned_next": False,
         "ex0s": None,
         "eligible_for_000005": False,
-        "supersedes": "TM.0.24.WALLMAP.RUNNER.V3",
+        "supersedes": "TM.0.24.WALLMAP.RUNNER.V4",
         "shas": wallmap_shas(),
         "prereg_sha": sha_file(PREREG),
         "contract_sha": sha_file(CONTRACT),
