@@ -2350,7 +2350,7 @@ Addendum: [`lineage_discrimmap.r2.decision.addendum.lock`](lineage_discrimmap.r2
 
 ## TM.0.24.DISCRIMMAP.R2 → isolated PHASEMAP
 
-Canonical main `fa86101`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+Canonical main `3863c05`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
 Hard-margin feasible interpolates captured teaching points. Robust boundary absent means the address is not stable enough for behavior. Do not try another optimizer, competitive rule, or prototype variant.
 
@@ -2359,6 +2359,18 @@ PHASEMAP apparatus: [`lineage_phasemap.prereg.lock`](lineage_phasemap.prereg.loc
 Phase runner: [`lineage_phasemap.runner.lock`](lineage_phasemap.runner.lock). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
 Result: [`lineage_phasemap.decision.lock`](lineage_phasemap.decision.lock) **state_reinstatement_instability**. P0 and P1 are robust at eight cues. First fail is P2: teaching interpolates (`γ\approx 0.0102`) but same-phase probes do not transfer. P2 equals P3; P4 equals P5. Last robust causal source is P1 (event-end). A later freeze may capture P1 for both ACT scoring and credit; this package does not install it. SCORE unopened. No v31. The 1,536 eligibility budget stays closed. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+
+Addendum: [`lineage_phasemap.decision.addendum.lock`](lineage_phasemap.decision.addendum.lock). Historical PHASEMAP preserved. Next is TRACEBRIDGE.
+
+## TM.0.24.PHASEMAP → isolated TRACEBRIDGE
+
+Canonical main `3863c05`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+If the last robust P1 state is causally carried to the action and credit ticks, does the unchanged v29 learning law work? Do not resurrect W1. Do not declare v31/v32.
+
+TRACEBRIDGE apparatus: [`lineage_tracebridge.prereg.lock`](lineage_tracebridge.prereg.lock) + [`lineage_tracebridge.isolation.lock`](lineage_tracebridge.isolation.lock). B0 collapsed P5 + v29; B1 exact P1 bridge + v29; B2 event-end register (8×64, λ=0); B3 P1+D3 diagnostic; B4 P1+D1 ceiling. Unused `TM024.TRACEBRIDGE.DEV.` / `TWIN.`. SCORE reserved. 512/1536 unopened. n stays 64. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
+
+Trace runner: [`lineage_tracebridge.runner.lock`](lineage_tracebridge.runner.lock). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 

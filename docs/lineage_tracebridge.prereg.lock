@@ -1,0 +1,200 @@
+{
+  "version": "TM.0.24.TRACEBRIDGE.PREREG",
+  "lab": "TM.0.24.TRACEBRIDGE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "investigation_justified": true,
+  "package_question": "If the last robust P1 state is causally carried to the action and credit ticks, does the unchanged v29 learning law work?",
+  "authorized_by": [
+    "docs/lineage_phasemap.decision.lock",
+    "docs/lineage_phasemap.decision.addendum.lock"
+  ],
+  "phasemap_decision_sha": "55807477c1a16157a890f2ecb6c2e7fbc305905b7cc04a1ead48b70bc91e3852",
+  "phasemap_dev_sha": "fff8040db45958a325cd6ff4dcf5468b63961d547c62c0cff321beedb88ff5d9",
+  "phasemap_addendum_sha": "0d100f150bce198193ec090cba4fccdae5d3fed1529f83cabd18831352433790",
+  "r2_runner_py_sha": "06f5f2c6edc0dffef570e75295708ea2816ea737cd0af9dab157cd94f4c26b41",
+  "candidate": "docs/cortex.candidate.v30.lock",
+  "candidate_v30_sha": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+  "n": 64,
+  "increase_n": false,
+  "act_score_mode": "query",
+  "w1_resurrected": false,
+  "eligibility_budget_installed": false,
+  "write_geometry_branch_closed": true,
+  "declared_budget_if_later_authorized": {
+    "fast_slow_proto": 1024,
+    "event_end_trace_rows": 512,
+    "total": 1536,
+    "opened": false,
+    "note": "8 actuator-local 64-d rows. Combined with fast/slow actuator rows matches the already declared 1536 ceiling. Unopened until a later freeze after TRACEBRIDGE sufficiency."
+  },
+  "declared_budget_remains_closed": 1536,
+  "domains": {
+    "DEV": "TM024.TRACEBRIDGE.DEV.",
+    "TWIN": "TM024.TRACEBRIDGE.TWIN.",
+    "SCORE": "TM024.TRACEBRIDGE.SCORE."
+  },
+  "score_reserved_unopened": true,
+  "arms": {
+    "B0": {
+      "role": "collapsed_p5_v29_control",
+      "address": "P5_rho_elig",
+      "learner": "v29_W_act_query",
+      "v_eligible": false
+    },
+    "B1": {
+      "role": "exact_p1_bridge_v29",
+      "address": "P1_event_end",
+      "learner": "v29_W_act_query",
+      "feeds": ["live_ACT_scoring", "delayed_credit"],
+      "ideal_causal_upper_bound": true,
+      "v_eligible": false
+    },
+    "B2": {
+      "role": "event_boundary_local_trace_v29",
+      "address": "actuator_local_event_end_register",
+      "learner": "v29_W_act_query",
+      "timing": "innate_v_end_injection",
+      "not_cue_identity": true,
+      "not_semantic_content": true,
+      "freeze_through_observable": true,
+      "freeze_through_motor": true,
+      "lambda": 0.0,
+      "rows": 8,
+      "row_dim": 64,
+      "ungated_identical_ingest": true,
+      "v_eligible": false
+    },
+    "B3": {
+      "role": "p1_plus_d3_competitive_diagnostic",
+      "address": "P1_event_end",
+      "learner": "d3_competitive_signed_by_adv",
+      "eta": 0.15,
+      "epochs": 1,
+      "c_max": 1.0,
+      "init": "zeros",
+      "intercept": false,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "B4": {
+      "role": "p1_d1_oracle_ceiling",
+      "address": "P1_event_end",
+      "learner": "hard_margin_linear",
+      "source": "experiments/run_tm024discrimmap_r2.py",
+      "no_new_solver": true,
+      "no_soft_margin": true,
+      "v_eligible": false
+    }
+  },
+  "capacity": [
+    {"n_cues": 2, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 4, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 8, "n_handles": 2, "balanced": true, "required": true}
+  ],
+  "teach_orders": ["A_then_B", "B_then_A"],
+  "equal_advantage": true,
+  "pos_delta": [0.25, -0.1, 0.15, 0.0],
+  "neg_delta": [-0.35, 0.45, -0.15, 0.0],
+  "n_rest_ticks": 4,
+  "margin": {
+    "native_ranking_min": 0.01,
+    "geometric_margin_min": 0.01,
+    "w_norm_excludes_intercept": true,
+    "require_correct_classification": true,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19,
+    "frozen_before_dev": true
+  },
+  "fit": {
+    "rows": "teach_select_address_only",
+    "never_fit_probes": true,
+    "never_fit_perturbations": true
+  },
+  "controls": {
+    "delayed_consequences": true,
+    "positive_and_negative": true,
+    "ecological_reversal": true,
+    "hold": true,
+    "rest": true,
+    "renamed_twins": true,
+    "frozen_perturbations": true
+  },
+  "decision_ladder": [
+    {
+      "id": "revisit_phasemap_apparatus",
+      "when": "B4 fails at eight cues",
+      "then": "revisit_phasemap_apparatus"
+    },
+    {
+      "id": "p1_transport_interpolation_only",
+      "when": "B1 trains but twins or perturbations fail",
+      "then": "p1_transport_interpolation_only"
+    },
+    {
+      "id": "authorize_trace_only_keep_v29_write",
+      "when": "B1 and B2 pass with v29",
+      "then": "authorize_trace_only_keep_v29_write"
+    },
+    {
+      "id": "p1_sufficient_trace_dynamics_fail",
+      "when": "B1 passes and B2 fails",
+      "then": "p1_sufficient_trace_dynamics_fail"
+    },
+    {
+      "id": "transport_and_discriminative_write_required",
+      "when": "B1 fails and B3 passes",
+      "then": "transport_and_discriminative_write_required"
+    },
+    {
+      "id": "p1_not_usable_by_online_class",
+      "when": "B1 and B3 fail",
+      "then": "p1_not_usable_by_online_class"
+    }
+  ],
+  "fail_closed": [
+    "prereg_or_runner_hash_mismatch",
+    "missing_or_duplicated_cell",
+    "probe_in_fit",
+    "score_identifier_in_dev_payload",
+    "act_score_mode_not_query",
+    "w1_or_v31_present",
+    "same_frozen_dev_execution_again"
+  ],
+  "historical_immutable": [
+    "docs/lineage_phasemap.decision.lock",
+    "docs/lineage_phasemap.dev.lock",
+    "docs/lineage_discrimmap.r2.decision.lock",
+    "docs/lineage_discrimmap.r2.dev.lock",
+    "docs/lineage_writegeom.decision.lock",
+    "docs/cortex.candidate.v30.lock"
+  ],
+  "another_lineage_run": false,
+  "q3": false,
+  "refuse": [
+    "D5",
+    "neural_edit_this_package",
+    "declare_v31",
+    "declare_v32",
+    "resurrect_W1",
+    "open_SCORE",
+    "install_512_trace_this_package",
+    "install_1536_eligibility_budget",
+    "increase_n",
+    "instincts",
+    "SFNN_cell_classes",
+    "lineage_evolution",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "rewrite_historical_locks",
+    "earned_next",
+    "stamp_0.0.005"
+  ],
+  "note": "Runner-only P1 trace sufficiency. No neural law. Product remains 0.0.004."
+}

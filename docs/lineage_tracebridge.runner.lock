@@ -1,0 +1,60 @@
+{
+  "version": "TM.0.24.TRACEBRIDGE.RUNNER.V1",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "write_geometry_branch_closed": true,
+  "w1_resurrected": false,
+  "act_score_mode": "query",
+  "shas": {
+    "runner": "db6c4e73cac57dd79cb86fcfa371fee1e2fc5753bf1d03402faea690ff4de551",
+    "neural_cortex": "90dae9a652fdefa0e7942b775053e2b765991eb26ee3ee4cdcfdb994b901d9e0",
+    "cortex_memory": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+    "prereg": "e0e3cd94d2913de5e62ea896f79bd0976e39a7a6af862ca79f9ebb8701d42a38",
+    "contract": "ef8bde5ffc0ae0710cde5b2a8b7d8d1c8277dc2a16972c0597347cfd02b1c809",
+    "isolation": "a4a097294142ce9bfefdd36d2599249093649868dc057bcf7209d48f32187586",
+    "candidate_v30": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+    "phasemap_decision": "55807477c1a16157a890f2ecb6c2e7fbc305905b7cc04a1ead48b70bc91e3852",
+    "phasemap_addendum": "0d100f150bce198193ec090cba4fccdae5d3fed1529f83cabd18831352433790",
+    "r2_prereg": "22e4e9546c4668e9bee76c712a4efb529678e635e04a395d0ce5e052a50b5d13",
+    "r2_runner": "06f5f2c6edc0dffef570e75295708ea2816ea737cd0af9dab157cd94f4c26b41"
+  },
+  "n": 64,
+  "domain": "TM024.TRACEBRIDGE.DEV.",
+  "twin_domain": "TM024.TRACEBRIDGE.TWIN.",
+  "score_domain": "TM024.TRACEBRIDGE.SCORE.",
+  "score_reserved_unopened": true,
+  "arms": [
+    "B0",
+    "B1",
+    "B2",
+    "B3",
+    "B4"
+  ],
+  "b2_lambda": 0.0,
+  "b2_rows": 8,
+  "trace_budget_unopened": 512,
+  "declared_budget_remains_closed": 1536,
+  "expected_n_cells": 85,
+  "fail_closed": [
+    "prereg_or_runner_hash_mismatch",
+    "missing_or_duplicated_cell",
+    "probe_in_fit",
+    "score_identifier_in_dev_payload",
+    "act_score_mode_not_query",
+    "w1_or_v31_present",
+    "same_frozen_dev_execution_again"
+  ],
+  "decision_ladder": [
+    "revisit_phasemap_apparatus",
+    "p1_transport_interpolation_only",
+    "authorize_trace_only_keep_v29_write",
+    "p1_sufficient_trace_dynamics_fail",
+    "transport_and_discriminative_write_required",
+    "p1_not_usable_by_online_class"
+  ],
+  "git_head": "3863c052f6e3a760bd91bab0a95a7f7637b6af24",
+  "note": "Frozen TRACEBRIDGE runner. DEV lock only after this file is on origin/main. No neural edit."
+}
