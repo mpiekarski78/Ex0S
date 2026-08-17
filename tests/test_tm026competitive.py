@@ -231,3 +231,71 @@ def test_smoke() -> None:
     assert out["manifest_sha"] == MANIFEST_SHA
     assert out["geometry_only"] is True
     assert out["v33_candidate_exists"] is False
+
+
+def test_awake_no_update_when_ranking_correct() -> None:
+    import numpy as np
+
+    from three_memory.neural_cortex import BODY_SETPOINT
+
+    ag = _fresh_bound()
+    ag.bind_actuators(["h_a", "h_b"])
+    p1 = np.zeros(64, dtype=np.float64)
+    p1[0] = 1.0
+    scores = {"h_a": 0.9, "h_b": 0.1}
+    orig = ag.actuator_scores
+    ag.actuator_scores = lambda _p: scores  # type: ignore[method-assign]
+    assert ag._act_ranking_error(p1, "h_a", 1.0) is False
+    w0 = ag.W_act_query.detach().clone()
+    ag._pending = {
+        "op": "ACT",
+        "token": "h_a",
+        "rho_elig": p1.copy(),
+        "rho_op": p1.copy(),
+        "rho_motor": p1.copy(),
+        "rho_p1": p1.copy(),
+        "s_hat": np.zeros(ag.genome.d_sym, dtype=np.float64),
+        "body": np.zeros(4, dtype=np.float64),
+        "cost": 0.0,
+        "motor_vec": ag.motor_vocab["h_a"].copy(),
+        "authored": True,
+        "clamped": True,
+        "t": 0,
+        "interaction_token": "v33_awake",
+    }
+    ag._apply_credit(np.zeros(ag.genome.d_sym), BODY_SETPOINT)
+    assert float((ag.W_act_query - w0).abs().max().item()) == 0.0
+    ag.actuator_scores = orig
+
+
+def test_rest_strengthen_low_margin_only() -> None:
+    import numpy as np
+
+    from three_memory.neural_cortex import ACT_MARGIN_FLOOR
+
+    ag = _fresh_bound()
+    ag.bind_actuators(["h_a", "h_b"])
+    p1 = np.asarray(ag._unit_or_zero(np.array([1.0] + [0.0] * 63)), dtype=np.float64)
+    ag._episodes = [{"p1": p1.copy(), "handle": "h_a", "adv": 1.0, "age": 1, "version": 1, "valid": True}]
+    orig_scores = ag.actuator_scores
+    orig_margin = ag._act_geometric_margin
+    ag.actuator_scores = lambda _p: {"h_a": 0.2, "h_b": 0.1}  # type: ignore[method-assign]
+    ag._act_geometric_margin = lambda _p, _h: 0.005  # type: ignore[method-assign]
+    w0 = ag.W_act_query.detach().clone()
+    n_replay, n_strengthen = ag._replay_store_pass(0.15, strengthen=True)
+    assert n_replay >= 1
+    assert n_strengthen == 1
+    assert float((ag.W_act_query - w0).abs().max().item()) > 0.0
+    ag._act_geometric_margin = lambda _p, _h: ACT_MARGIN_FLOOR + 0.01  # type: ignore[method-assign]
+    _r, n_strengthen2 = ag._replay_store_pass(0.15, strengthen=True)
+    assert n_strengthen2 == 0
+    assert _r >= 1
+    ag.actuator_scores = orig_scores
+    ag._act_geometric_margin = orig_margin
+
+
+if __name__ == "__main__":
+    for name in sorted(n for n in globals() if n.startswith("test_")):
+        globals()[name]()
+        print("ok", name)
+    print("ok")

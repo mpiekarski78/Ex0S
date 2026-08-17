@@ -457,7 +457,7 @@ if __name__ == "__main__":
     test_decision_ladder()
     test_dev_opened()
     test_addendum()
-    test_scored_eight_cue_cell_reproduces()
+    test_twoscale_historical_boundary_immutable()
     test_tie_band_unique_winner()
     test_p1_credit_three_cases()
     test_checkpoint_dev_epoch_defaults_and_age_scale()
