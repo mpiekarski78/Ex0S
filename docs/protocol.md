@@ -2274,6 +2274,8 @@ Reachability apparatus: [`lineage_actorcredit_reach.prereg.lock`](lineage_actorc
 
 Result: [`lineage_actorcredit_reach.lock`](lineage_actorcredit_reach.lock) **false**. Credit precondition green. CHECK adult mean 0.16 vs τ=0.60. Complete behavioral credit is not L0 reachability. Do not increase n. Do not reopen Q3. Another lineage run stays closed. QUAL/EVAL sealed. Not 0.0.005.
 
+STATEMAP apparatus: [`lineage_statemap.prereg.lock`](lineage_statemap.prereg.lock). Hypothesis: teaching-state vs later autonomous probe-state misalignment — not yet a diagnosis. Frozen S0–S12 on unused `TM024.STATEMAP.CELLS.` / `TWIN.`. No neural edit. n stays 64. Score only after `docs/lineage_statemap.runner.lock` on clean `origin/main`. Choose an amendment only from the decision table. Another lineage run stays closed. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
