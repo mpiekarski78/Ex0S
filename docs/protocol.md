@@ -2430,6 +2430,16 @@ Result: [`lineage_lifecyclemarginmap.decision.lock`](lineage_lifecyclemarginmap.
 
 Addendum: [`lineage_lifecyclemarginmap.decision.addendum.lock`](lineage_lifecyclemarginmap.decision.addendum.lock). Historical DEV/decision/runner preserved. Interpret the published code as **consolidation_margin_loss_under_min_unique_winner_margin_without_ranking_ok**. Rung 3 used unique-winner gap without requiring ranking. First PA fail is 4-cue acquire ranking. Honest first-match on these cells is **lifecycle_margin_insufficient**. That does not reverse M0 REST help.
 
+## TM.0.24.LIFECYCLEMARGINMAP → isolated AFFINEMAP
+
+Canonical main `67b9a98`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Do not investigate consolidation further. The first real fail is M1 four-cue acquire ranking. M1/C3 PA is homogeneous (`b=0`); M3/D1 is affine (`wᵀx+b`). Extract frozen M3 fitted `b`, margin with that `b`, margin after setting `b=0`, and exact optimal homogeneous hard-margin. Then score A0 affine D1, A1 homogeneous D1, A2 existing PA, A3 diagnostic actuator-local bias (unauthorized). Same P1 store, cue counts, twins, and perturbations. No lifecycle changes. No eco/spec. Unused `TM024.AFFINEMAP.DEV.` / `TWIN.`. SCORE reserved. n stays 64.
+
+AFFINEMAP apparatus: [`lineage_affinemap.prereg.lock`](lineage_affinemap.prereg.lock) + [`lineage_affinemap.isolation.lock`](lineage_affinemap.isolation.lock). Manifest: [`lineage_affinemap.manifest.lock`](lineage_affinemap.manifest.lock).
+
+Hypothesis-class runner: [`lineage_affinemap.runner.lock`](lineage_affinemap.runner.lock). 104 cells. Ladder: `affine_intercept_required` → `online_optimization_failure` → `apparatus_inconsistency` → `learned_local_bias_supported` → `d1_ceiling_reaudit` → `affine_map_insufficient`. A3 is not an instinct. DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
