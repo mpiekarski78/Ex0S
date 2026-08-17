@@ -31,6 +31,7 @@ MANIFEST_SHA = "0048aa21d8512a50923fa0a878dccf3b28e43878d10b9c84b338dec26b21c5f4
 DEV_LOCK_SHA = "57015fef334b533a77173bb06323e3f28e8d9bc5ad41e3453bfe126ee4a34bf8"
 DECISION_SHA = "851d4a9312a7a8164600f53b857f65d3f50fc22fba136e52f00d3266422ddff0"
 DEV_MANIFEST_SHA = "1930d480d68260191f9f20c80462c775e2eba443afbb755e22dd5ad9b6174e05"
+ADDENDUM_SHA = "d4dd4ca797d4c6c0aff6725fa79723abd870491a59f4cae41f73ca03fd75f794"
 FREEZE_COMMIT = "607b834e22dbd1fd159ec21d8f5fe05f05406be8"
 JOINT_CAUSAL = "replacement_and_margin_conditioned_replay_jointly_causal"
 EXPECTED_N_CELLS = 112
@@ -77,6 +78,7 @@ def test_phase_a_files() -> None:
         "docs/lineage_lifecyclemarginmap.isolation.lock",
         "docs/lineage_lifecyclemarginmap.dev.lock",
         "docs/lineage_lifecyclemarginmap.decision.lock",
+        "docs/lineage_lifecyclemarginmap.decision.addendum.lock",
         "docs/lineage_memorylifecyclemap.r2.decision.addendum.lock",
         "docs/lineage_memorylifecyclemap.r2.decision.lock",
         "docs/lineage_convergencemap.decision.lock",
@@ -164,7 +166,7 @@ def _cell(
         "order": order,
         "world": world,
         "passed": passed,
-        "ranking_ok": passed or kind == "acquire",
+        "ranking_ok": bool(passed),
         "min_probe_margin": float(min_margin),
         "m3_ceiling_only": arm == "M3",
         "id": f"{kind}|{arm}|c{n_cues}|{order}|w{world}",
@@ -210,6 +212,28 @@ def _full(**arm_kwargs: dict[str, object]) -> list[dict[str, object]]:
     for arm in ARMS:
         cells.extend(_arm_cells(arm, **(arm_kwargs.get(arm) or {})))
     return cells
+
+
+def _honest_first_match(cells: list[dict[str, object]], p: dict[str, object]) -> str:
+    from experiments.run_tm024lifecyclemarginmap import GMIN, _four, _m1_never_reaches, _m1_post_rest_below, _phase_flags
+
+    flags = {arm: _phase_flags(cells, arm) for arm in ARMS}
+    acq8 = [c for c in cells if c["arm"] == "M1" and c["kind"] == "acquire" and int(c["n_cues"]) == 8]
+    pre_rest_with_ranking = bool(acq8) and all(
+        bool(c.get("ranking_ok")) and float(c.get("min_probe_margin") or 0.0) >= GMIN for c in acq8
+    )
+    ladder = p["decision_ladder"]
+    if _four(flags["M1"]) and (not flags["M0"]["stable"]) and flags["M2"]["plasticity"]:
+        return str(ladder[0]["id"])
+    if flags["M1"]["stable"] and flags["M1"]["plasticity"] and (not flags["M2"]["plasticity"]):
+        return str(ladder[1]["id"])
+    if pre_rest_with_ranking and _m1_post_rest_below(cells):
+        return str(ladder[2]["id"])
+    if _m1_never_reaches(cells) and (not _four(flags["M3"])):
+        return str(ladder[3]["id"])
+    if _four(flags["M3"]) and (not any(_four(flags[a]) for a in ("M0", "M1", "M2"))):
+        return str(ladder[4]["id"])
+    return str(ladder[5]["id"])
 
 
 def _decide(**arm_kwargs: dict[str, object]) -> tuple[str, dict[str, object]]:
@@ -258,6 +282,53 @@ def test_decision_ladder() -> None:
         )
         == "lifecycle_margin_insufficient"
     )
+
+
+def test_honest_first_match() -> None:
+    from experiments.run_tm024lifecyclemarginmap import _decision, load_prereg
+
+    p = load_prereg()
+    consol = {
+        "acquire_all": True,
+        "acquire8_margin": 0.02,
+        "stable8_margin": 0.005,
+    }
+    cells = _full(M1=consol)
+    hist, _then, _extra = _decision(cells, p)
+    assert hist == "consolidation_margin_loss"
+    assert _honest_first_match(cells, p) == "consolidation_margin_loss"
+    for c in cells:
+        if c["arm"] == "M1" and c["kind"] == "acquire" and int(c["n_cues"]) == 8:
+            c["ranking_ok"] = False
+            c["passed"] = False
+    hist2, _then2, extra2 = _decision(cells, p)
+    assert extra2["m1_pre_rest_reaches_0.01"] is True
+    assert hist2 == "consolidation_margin_loss"
+    assert _honest_first_match(cells, p) == "lifecycle_margin_insufficient"
+    assert _honest_first_match(_full(M1=FOUR, M2={"plasticity": True}), p) == "margin_conditioned_replay_supported"
+    assert _honest_first_match(_full(M1=FOUR), p) == JOINT_CAUSAL
+    assert _honest_first_match(_full(M3=FOUR), p) == "max_margin_ceiling_only"
+
+
+def test_addendum() -> None:
+    p = REPO_ROOT / "docs" / "lineage_lifecyclemarginmap.decision.addendum.lock"
+    assert sha(p) == ADDENDUM_SHA
+    add = json.loads(p.read_text(encoding="utf-8"))
+    assert add["historical_code"] == "consolidation_margin_loss"
+    assert add["interpret_as"] == "consolidation_margin_loss_under_min_unique_winner_margin_without_ranking_ok"
+    assert add["honest_first_match_on_these_cells"] == "lifecycle_margin_insufficient"
+    assert add["rewrite_historical_decision"] is False
+    assert add["rewrite_historical_dev"] is False
+    assert add["rewrite_historical_runner"] is False
+    assert add["honest_rung_3_requires_m1_eight_cue_acquire_ranking_ok"] is True
+    assert add["m1_first_fail"] == "four_cue_acquire_ranking"
+    assert add["historical_decision_sha"] == DECISION_SHA
+    assert add["historical_dev_lock_sha"] == DEV_LOCK_SHA
+    assert add["historical_runner_lock_sha"] == RUNNER_LOCK_SHA
+    assert add["historical_runner_py_sha"] == RUNNER_SHA
+    assert add["historical_r2_prereg_sha"] == R2_PREREG
+    assert add["next"] is None
+    assert sha(REPO_ROOT / "experiments" / "run_tm024lifecyclemarginmap.py") == RUNNER_SHA
 
 
 def test_joint_causality_truth_table() -> None:
@@ -674,6 +745,9 @@ def test_dev_coverage_if_present() -> None:
     assert extra["m1_post_rest_below_0.01"] is True
     assert extra["M1"]["stable"] is False
     assert extra["M3"]["plasticity"] is False
+    assert _honest_first_match(dev["cells"], p) == "lifecycle_margin_insufficient"
+    m1_4a = [c for c in dev["cells"] if c["arm"] == "M1" and c["kind"] == "acquire" and int(c["n_cues"]) == 4]
+    assert all(c["ranking_ok"] is False for c in m1_4a)
     assert sha(REPO_ROOT / "experiments" / "run_tm024lifecyclemarginmap.py") == RUNNER_SHA
 
 
@@ -682,6 +756,8 @@ def main() -> None:
     test_phase_a_files()
     test_remote_freeze_before_dev()
     test_decision_ladder()
+    test_honest_first_match()
+    test_addendum()
     test_joint_causality_truth_table()
     test_ladder_selects_exactly_one_rung()
     test_null_does_not_coerce_to_false()

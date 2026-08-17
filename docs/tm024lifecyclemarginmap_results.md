@@ -2,13 +2,21 @@
 
 Decision: **consolidation_margin_loss**.
 
+Interpret as **consolidation_margin_loss_under_min_unique_winner_margin_without_ranking_ok**. Honest first-match on these cells is **lifecycle_margin_insufficient**.
+
 112 unused cells on `TM024.LIFECYCLEMARGINMAP.DEV.` / `TWIN.`. Freeze commit `607b834`. Runner.py SHA `5f7dc1a7…` unchanged. SCORE unopened. No neural candidate. Product **0.0.004**. `earned_next=false`.
 
-## First-match
+## Historical first-match
 
-M1 8-cue live min margin reached 0.01 before REST (0.02002) and fell below afterward (0.00017). That is the frozen consolidation rung. It is not `margin_conditioned_replay_supported`, not `replacement_and_margin_conditioned_replay_jointly_causal`, and not `max_margin_ceiling_only`.
+Rung 3 fired because every M1 8-cue acquire cell had `min_probe_margin` 0.02002 ≥ 0.01 and every M1 8-cue stable cell had 0.00017 < 0.01. That predicate does **not** require `ranking_ok`. `min_probe_margin` is the unique-winner gap, including wrong winners.
 
-M1 8-cue ranking was already incorrect on 3 / 8 probes before REST. The 0.02002 figure is the weakest live probe margin, not a four-phase pass. REST then collapsed that number. Stored P1 signs never all-correct (`first_all_correct_call=None`; 93 / 128 actual PA updates).
+## Honest first-match
+
+M1 8-cue acquire ranking was already 5 / 8 before REST. Stored signs never all-correct (`first_all_correct_call=None`; 93 / 128 PA updates). First PA fail is **4-cue acquire ranking**. REST collapsing a mixed unique-winner gap is not recovery of the mapping, then consolidation loss.
+
+M1 2-cue ranking held and stayed above 0.01 after REST (0.02007 → 0.01933); that miss is perturbation, not an 8-cue consolidation story.
+
+It is not `margin_conditioned_replay_supported`, not `replacement_and_margin_conditioned_replay_jointly_causal`, and not `max_margin_ceiling_only`.
 
 ## Control reproduced
 

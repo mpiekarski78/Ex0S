@@ -2428,6 +2428,8 @@ Margin-trigger runner: [`lineage_lifecyclemarginmap.runner.lock`](lineage_lifecy
 
 Result: [`lineage_lifecyclemarginmap.decision.lock`](lineage_lifecyclemarginmap.decision.lock) **consolidation_margin_loss**. M1 8-cue live min margin reached 0.01 before REST and fell to 0.00017 after; ranking was already incorrect on 3/8 probes. M0 reproduced the R2 L2 control (14/128 updates; REST raised 0.00211→0.00643). M3 8-cue stability passes; M3 eco fails, so not a four-phase ceiling. SCORE unopened. No v31. Runner not corrected after DEV. Product **0.0.004**. `earned_next=false`.
 
+Addendum: [`lineage_lifecyclemarginmap.decision.addendum.lock`](lineage_lifecyclemarginmap.decision.addendum.lock). Historical DEV/decision/runner preserved. Interpret the published code as **consolidation_margin_loss_under_min_unique_winner_margin_without_ranking_ok**. Rung 3 used unique-winner gap without requiring ranking. First PA fail is 4-cue acquire ranking. Honest first-match on these cells is **lifecycle_margin_insufficient**. That does not reverse M0 REST help.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
