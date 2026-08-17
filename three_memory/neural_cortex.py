@@ -62,6 +62,7 @@ FAMILIARITY_RATIO = 0.5
 FAMILIARITY_DECAY = 0.98
 FAMILIARITY_ABS = 16.0
 ECHOIC_MAX = 8
+VOCAL_REFRACTORY = 1.0
 EQUAL_EVIDENCE_MIN_SYMBOLS = 3
 
 
@@ -220,6 +221,7 @@ class NeuralCortex:
         self._symbol_obs_counts: dict[str, int] = {}
         self._symbol_fam: dict[str, float] = {}
         self._echoic: list[str] = []
+        self._vocal_next: str | None = None
         self.last_action: dict[str, Any] | None = None
         self.last_trajectory: list[np.ndarray] = []
         self.sensory_trajectory: list[np.ndarray] = []
@@ -432,6 +434,8 @@ class NeuralCortex:
         applied_retrieve = False
         conflict_hold = bool(self._hold_after_conflict)
         self._hold_after_conflict = False
+        vocal_next = self._vocal_next
+        self._vocal_next = None
 
         for _k in range(g.t_max):
             self._commit_pending_retrieve()
@@ -439,10 +443,17 @@ class NeuralCortex:
             zero = np.zeros(g.d_sym, dtype=np.float64)
             self._sensory_tick(zero, body, same_ix, record_sensory=False)
             logits = (self.W_op @ self.rho) + self.b_op
-            if conflict_hold:
+            if conflict_hold or vocal_next:
                 logits = logits.clone()
+            if conflict_hold:
                 logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] + CONFLICT_HOLD_BIAS
                 logits[OPS.index("ACT")] = logits[OPS.index("ACT")] - CONFLICT_HOLD_BIAS
+            if vocal_next == "HOLD":
+                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] + VOCAL_REFRACTORY
+                logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] - VOCAL_REFRACTORY
+            elif vocal_next == "EMIT":
+                logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] + VOCAL_REFRACTORY
+                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] - VOCAL_REFRACTORY
             op_i = self._softmax_sample(logits)
             op = OPS[op_i]
             chosen_op = op
@@ -516,6 +527,12 @@ class NeuralCortex:
             "retrieved": applied_retrieve,
             "motor_vec": motor_vec,
         }
+        if chosen_op == "EMIT":
+            self._vocal_next = "HOLD"
+        elif chosen_op == "HOLD" and self._echoic:
+            self._vocal_next = "EMIT"
+        else:
+            self._vocal_next = None
         self.last_action = out
         self.last_s_hat = s_hat
         return out
@@ -731,6 +748,7 @@ class NeuralCortex:
         self._symbol_obs_counts = {}
         self._symbol_fam = {}
         self._echoic = []
+        self._vocal_next = None
         self.reset_rho()
 
     def checkpoint(self) -> dict[str, Any]:
@@ -790,6 +808,7 @@ class NeuralCortex:
             "symbol_obs_counts": {k: int(v) for k, v in self._symbol_obs_counts.items()},
             "symbol_fam": {k: float(v) for k, v in self._symbol_fam.items()},
             "echoic": list(self._echoic),
+            "vocal_next": self._vocal_next,
         }
 
     def load_checkpoint(self, snap: dict[str, Any]) -> None:
@@ -869,6 +888,8 @@ class NeuralCortex:
         self._symbol_obs_counts = {str(k): int(v) for k, v in (snap.get("symbol_obs_counts") or {}).items()}
         self._symbol_fam = {str(k): float(v) for k, v in (snap.get("symbol_fam") or {}).items()}
         self._echoic = [str(x) for x in (snap.get("echoic") or [])][-ECHOIC_MAX:]
+        vn = snap.get("vocal_next")
+        self._vocal_next = str(vn) if vn in ("HOLD", "EMIT") else None
 
     def weight_hash(self) -> str:
         h = hashlib.sha256()

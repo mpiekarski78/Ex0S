@@ -2160,3 +2160,5 @@ Canonical main `724e339`. D6.R2 apparatus follows. Product **0.0.004**; `earned_
 
 D6.R2 apparatus: [`cortex_d6_r2.prereg.lock`](cortex_d6_r2.prereg.lock). Vocal refractory authorized after this freeze.
 
+Candidate (this cycle): [`cortex.candidate.v22.lock`](cortex.candidate.v22.lock). Vocal refractory. C4/C5/C6 green. Reveal D6.R2 only from a clean tree pinning `git rev-parse HEAD`.
+
