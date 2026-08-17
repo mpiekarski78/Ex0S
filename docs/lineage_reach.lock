@@ -1,0 +1,35 @@
+{
+  "version": "TM.0.24.REACH",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "passed": false,
+  "credit_precondition": {
+    "id": "zero_elig_no_plastic_motion",
+    "ok": true,
+    "max_abs_delta": 0.0,
+    "max_slow_delta": 0.0,
+    "elig_eps": 1e-12
+  },
+  "credit_precondition_ok": true,
+  "check": {
+    "adult_mean": 0.11875,
+    "birth_mean": 0.0,
+    "plasticity_off_mean": 0.16875,
+    "ci_lower": 0.025,
+    "G_k": false,
+    "birth_below": true,
+    "off_below": true,
+    "adult_ok": false
+  },
+  "one_genotype": true,
+  "n": 64,
+  "fit_domain": "TM024.REACH.DIAG.FIT.",
+  "check_domain": "TM024.REACH.DIAG.CHECK.",
+  "wallmap_q2_historical": true,
+  "wallmap_q2_sha": "5017d8b439bf18cf20e31c5846ad8dda9515fbe6aff13f024acdd9e0f0b531fa",
+  "candidate": "docs/cortex.candidate.v28.lock",
+  "note": "Same genotype on CHECK. Favorable birth is not a pass."
+}

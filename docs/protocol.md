@@ -2250,6 +2250,8 @@ Candidate (this cycle): [`cortex.candidate.v28.lock`](cortex.candidate.v28.lock)
 
 Reachability apparatus: [`lineage_reach.prereg.lock`](lineage_reach.prereg.lock). Unused domains `TM024.REACH.DIAG.FIT.` / `CHECK.`. Same Q2 learning gates. Neural unchanged after v28 candidate. Score only after `docs/lineage_reach.runner.lock` on clean `origin/main`.
 
+Result: [`lineage_reach.lock`](lineage_reach.lock) **false**. Credit precondition green (zero eligibility does not move unused tensors). CHECK adult mean 0.12 vs τ=0.60. n stays 64. Do not rescore. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
