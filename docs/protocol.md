@@ -2386,6 +2386,8 @@ CONVERGENCEMAP apparatus: [`lineage_convergencemap.prereg.lock`](lineage_converg
 
 Convergence runner: [`lineage_convergencemap.runner.lock`](lineage_convergencemap.runner.lock). `exposure_mode=live|replay` are distinct cells. PA status is post-update \(y(w^\top x)/\|w\|\). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
+Result: [`lineage_convergencemap.decision.lock`](lineage_convergencemap.decision.lock) **oracle_separability_not_operationally_reachable**. Live C0–C3 fail. Exact replay of C1/C3 fails. C4 sequential RLS ranks eight cues on frozen P1 but fails ecological reversal and remains ceiling-only. Do not install the 512-row trace. SCORE unopened. No v31/v32. W1 stays closed. The 1,536 budget stays closed. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
