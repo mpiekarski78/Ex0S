@@ -2200,3 +2200,9 @@ D7.R2 apparatus: [`cortex_d7_r2.prereg.lock`](cortex_d7_r2.prereg.lock). Phrase-
 
 Candidate (this cycle): [`cortex.candidate.v25.lock`](cortex.candidate.v25.lock). Phrase-final STOP. C4/C5/C6 green. Reveal D7.R2 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d7_r2_gate.lock`](cortex_d7_r2_gate.lock) **15/16**. Audit [`cortex_d7_r2.audit.lock`](cortex_d7_r2.audit.lock). Isolated D7 is green. Do not rescore. Next is FULLDEV.R6 on unused domain `TM023.FULL.R6.`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+## TM.0.23.CORTEX.D7.R2 15/16 → FULLDEV.R6
+
+Canonical main `8cb6591`. FULLDEV.R6 apparatus follows. Live v25, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

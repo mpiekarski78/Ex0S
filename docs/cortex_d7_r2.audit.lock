@@ -1,0 +1,57 @@
+{
+  "version": "TM.0.23.CORTEX.D7.R2.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "b2cfbe9219490380c3b65eafc5312efb5db9bbda3239f85e1a7c5c5f565f71c7",
+  "reveal_sha": "681ce6cf42f97489cb475c942a79a6778905af335bd58ebc3204b81232f86a6b",
+  "n_pair_clear": 15,
+  "claimed_clear": true,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "candidate_git_sha": "8cb659112e1bfb3dedede7a8fc53226948876d71"
+    },
+    {
+      "id": "domain_is_d7_r2",
+      "ok": true,
+      "domain": "TM023.D7.R2."
+    },
+    {
+      "id": "d7_green",
+      "ok": true,
+      "d7_ok": 31,
+      "note": "One red life (pair 14 main) has distinct=[2] max=2 terminals=20 hits=5. Gate is 15/16, above 13."
+    },
+    {
+      "id": "d7_scorer_not_soft",
+      "ok": true
+    },
+    {
+      "id": "d5_prefix_weak",
+      "ok": true,
+      "d5_ok": 5,
+      "note": "Prefix D5 is 5/32 on these worlds. Not required for this gate. Do not lower D5 floors. FULLDEV.R6 will show whether habituation transferred."
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_d7_r2": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "fulldev_r6",
+    "refuse": [
+      "rewrite docs/cortex_d7_r2_gate.lock",
+      "edit-and-rescore on revealed D7.R2 worlds",
+      "stamp earned_next",
+      "open nursery conversation"
+    ]
+  },
+  "note": "15/16 stands. Isolated D7 is green. Next is FULLDEV.R6 on unused domain TM023.FULL.R6."
+}
