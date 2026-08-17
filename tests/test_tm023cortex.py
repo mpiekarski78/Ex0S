@@ -617,6 +617,23 @@ def test_verify_v13_gate_cli() -> None:
         assert not (REPO_ROOT / "docs" / "cortex_development.v13.lock").exists()
 
 
+def test_verify_fulldev_r1_cli() -> None:
+    from experiments.run_tm023cortex import verify_fulldev_r1
+
+    v = verify_fulldev_r1()
+    assert v["ok"] is True, v
+    if not (REPO_ROOT / "docs" / "cortex_fulldev_r1.lock").exists():
+        assert v.get("pending") is True
+        return
+    assert v.get("pending") is False
+    if v["development_gate_clear"]:
+        assert v["n_pair_clear"] >= 13
+        assert not (REPO_ROOT / "docs" / "cortex_fulldev_r1.failure.lock").exists()
+    else:
+        assert (REPO_ROOT / "docs" / "cortex_fulldev_r1.failure.lock").exists()
+    assert not (REPO_ROOT / "docs" / "cortex_development.v13.lock").exists()
+
+
 def test_verify_v6_gate_cli() -> None:
     from experiments.run_tm023cortex import verify_v6_gate
 
@@ -754,6 +771,7 @@ if __name__ == "__main__":
     test_v13_candidate_boundary_pending_gate()
     test_verify_v12_gate_cli()
     test_verify_v13_gate_cli()
+    test_verify_fulldev_r1_cli()
     test_sealed_not_used_in_smoke()
     test_sanity_live()
     print("test_tm023cortex: ok")

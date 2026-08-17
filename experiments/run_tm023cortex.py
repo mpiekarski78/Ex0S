@@ -145,6 +145,9 @@ V13_GATE_FAIL = REPO_ROOT / "docs" / "cortex_v13_gate.failure.lock"
 DEV_V13_LOCK = REPO_ROOT / "docs" / "cortex_development.v13.lock"
 DIAG_V12 = REPO_ROOT / "docs" / "cortex_diagnosis.v12.lock"
 STAT_V13 = REPO_ROOT / "docs" / "cortex_v13_stat_contract.lock"
+FULLDEV_R1_PREREG = REPO_ROOT / "docs" / "cortex_fulldev_r1.prereg.lock"
+FULLDEV_R1_LOCK = REPO_ROOT / "docs" / "cortex_fulldev_r1.lock"
+FULLDEV_R1_FAIL = REPO_ROOT / "docs" / "cortex_fulldev_r1.failure.lock"
 
 PHENOTYPE_PATHS = [
     "docs/CURRENT_ORGANISM.md",
@@ -2410,6 +2413,46 @@ def verify_v13_gate() -> dict[str, Any]:
     }
 
 
+def verify_fulldev_r1() -> dict[str, Any]:
+    """Verify FULLDEV.R1 integrity without re-scoring. Pending-safe if unscored."""
+    if not FULLDEV_R1_PREREG.exists():
+        return {"ok": True, "pending": True, "why": "FULLDEV.R1 prereg not frozen yet"}
+    if DEV_V13_LOCK.exists():
+        return {"ok": False, "why": "DEVELOP.v13 exists — refuse"}
+    r1c = json.loads(FULLDEV_R1_PREREG.read_text(encoding="utf-8"))["eval_seed_commitment"]
+    for prior in (V13_PREREG, V12_PREREG, V11_PREREG, V10_PREREG, V9_PREREG, DEV_PREREG, PREREG):
+        if prior.exists() and json.loads(prior.read_text(encoding="utf-8")).get("eval_seed_commitment") == r1c:
+            return {"ok": False, "why": f"FULLDEV.R1 commitment reused {prior.name}"}
+    if json.loads(FULLDEV_R1_PREREG.read_text(encoding="utf-8")).get("domain") != "TM023.FULL.R1.":
+        return {"ok": False, "why": "FULLDEV.R1 domain drifted"}
+    if not FULLDEV_R1_LOCK.exists():
+        return {"ok": True, "pending": True, "why": "FULLDEV.R1 result not frozen yet"}
+    res = json.loads(FULLDEV_R1_LOCK.read_text(encoding="utf-8"))
+    if res.get("product") != "0.0.004" or res.get("earned_next") is not False or res.get("ex0s") is not None:
+        return {"ok": False, "why": "product/earned_next/ex0s drift"}
+    if res.get("eligible_for_000005") is not False:
+        return {"ok": False, "why": "eligible_for_000005 must stay false on this pass"}
+    battery = res.get("battery") or {}
+    n_clear = int(battery.get("n_pair_clear") or 0)
+    clear = bool(res.get("development_gate_clear"))
+    if battery.get("domain") != "TM023.FULL.R1.":
+        return {"ok": False, "why": "result domain drifted"}
+    if clear and n_clear < 13:
+        return {"ok": False, "why": "gate claims clear with n_pair_clear < 13"}
+    if (not clear) and not FULLDEV_R1_FAIL.exists():
+        return {"ok": False, "why": "missing cortex_fulldev_r1.failure.lock"}
+    if clear and FULLDEV_R1_FAIL.exists():
+        return {"ok": False, "why": "failure lock present on a clear battery"}
+    return {
+        "ok": True,
+        "why": "FULLDEV.R1 integrity ok",
+        "pending": False,
+        "development_gate_clear": clear,
+        "n_pair_clear": n_clear,
+        "refuse_rewrite": True,
+    }
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-phase-a", action="store_true")
@@ -2439,6 +2482,7 @@ def main() -> None:
     ap.add_argument("--verify-v11-gate", action="store_true")
     ap.add_argument("--verify-v12-gate", action="store_true")
     ap.add_argument("--verify-v13-gate", action="store_true")
+    ap.add_argument("--verify-fulldev-r1", action="store_true")
     ap.add_argument("--mact-v6-audit", action="store_true")
     ap.add_argument("--v4-math-audit", action="store_true")
     ap.add_argument("--write-v2-birth", action="store_true")
@@ -2508,6 +2552,9 @@ def main() -> None:
         return
     if args.verify_v13_gate:
         print(json.dumps(verify_v13_gate(), indent=2, default=str))
+        return
+    if args.verify_fulldev_r1:
+        print(json.dumps(verify_fulldev_r1(), indent=2, default=str))
         return
     if args.mact_v6_audit:
         from experiments.cortex_mact_boundary import write_v6_boundary_audit

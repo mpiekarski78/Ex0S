@@ -2054,5 +2054,7 @@ Outcome: candidate `99c3873` revealed after a clean push. Fresh seed-derived D1�
 
 ## TM.0.23.CORTEX.V13 clear → later full development
 
-Canonical main `99c3873`. V13 gate **14/16** stands. Do not edit-rescore v13. Do not run D0–D12 on revealed v13 worlds. Do not stamp product.
+Canonical main `733a9f8`. V13 gate **14/16** stands. Do not edit-rescore v13. Do not run D0–D12 on revealed v13 worlds. Do not stamp product.
+
+FULLDEV.R1 apparatus: [`cortex_fulldev_r1.prereg.lock`](cortex_fulldev_r1.prereg.lock), [`cortex_fulldev_r1.runner.lock`](cortex_fulldev_r1.runner.lock). Domain `TM023.FULL.R1.` ≠ V8–V13 and ≠ `pair_seeds`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
