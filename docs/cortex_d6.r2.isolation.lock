@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.23.CORTEX.D6.R2.ISOLATION",
+  "lab": "TM.0.23.CORTEX.D6.R1",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "D6.R1 scored 11/16. D6 27/32. Five reds miss emit/hold balance, not echoic match.",
+  "d6_r1_gate": "docs/cortex_d6_r1_gate.lock",
+  "d6_r1_failure": "docs/cortex_d6_r1_gate.failure.lock",
+  "d6_r1_audit": "docs/cortex_d6_r1.audit.lock",
+  "v21_diagnosis": "docs/cortex_diagnosis.v21.lock",
+  "refuse": [
+    "edit-and-rescore D6.R1 on revealed worlds",
+    "reuse TM023.D6.R1. or FULL.R* or D5.R* or pair_seeds worlds",
+    "open FULLDEV or nursery before a later isolated D6 ≥13/16",
+    "stamp earned_next"
+  ],
+  "next_cycle": {
+    "name": "isolated_d6_r2",
+    "requires": [
+      "frozen diagnosis of EMIT/HOLD turn-taking",
+      "new amendment: vocal refractory / echoic EMIT bias after HOLD",
+      "new birth + candidate.v22.lock",
+      "new sealed commitment ≠ D6.R1",
+      "re-earn C4/C5/C6",
+      "fresh narrow D6 ≥13/16 before reopening FULLDEV"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004."
+}

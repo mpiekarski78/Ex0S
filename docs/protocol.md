@@ -2152,3 +2152,9 @@ D6.R1 apparatus: [`cortex_d6_r1.prereg.lock`](cortex_d6_r1.prereg.lock). Echoic 
 
 Candidate (this cycle): [`cortex.candidate.v21.lock`](cortex.candidate.v21.lock). Echoic emit. C4/C5/C6 green. Reveal D6.R1 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d6_r1_gate.lock`](cortex_d6_r1_gate.lock) **11/16**. D6 27/32. Audit [`cortex_d6_r1.audit.lock`](cortex_d6_r1.audit.lock). Diagnosis [`cortex_diagnosis.v21.lock`](cortex_diagnosis.v21.lock): vocal refractory / turn-taking after echoic emit. Do not rescore D6.R1.
+
+## TM.0.23.CORTEX.V21 D6.R1 11/16 → isolated D6.R2
+
+Canonical main `724e339`. D6.R2 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

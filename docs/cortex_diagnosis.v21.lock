@@ -1,0 +1,28 @@
+{
+  "version": "TM.0.23.CORTEX.V21.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "724e33982ca5b7ce95e6e4322e1fa36d4fc5f189",
+  "neural_mechanism_changed": true,
+  "v22_authorized_only_if_this_lock": true,
+  "claim": "D6.R1 scored 11/16. D6 is 27/32. Echoic replay matches taught sequences when EMIT happens. Five reds are motor balance: four lives emit only once (too much HOLD), one life holds only once (too much EMIT). Biology: babbling alternates vocalization and pause (turn-taking / refractory). Missing generic law: after EMIT, briefly bias HOLD; after HOLD, if the echoic buffer is nonempty, briefly bias EMIT. Do not plant emit1/emit2. Do not lower floors.",
+  "authorize_v22": [
+    "keep v21 echoic emit and v16–v20 HOLD / habituation / S / RETRIEVE laws",
+    "after an EMIT, add a small next-step HOLD bias and subtract EMIT bias",
+    "after a HOLD, if echoic buffer is nonempty, add a small next-step EMIT bias and subtract HOLD bias",
+    "do not change CONFLICT_HOLD_BIAS",
+    "do not edit cortex_develop_scorers.py",
+    "do not lower emits>=2, matched>=1, or holds>=3",
+    "new sealed commitment domain TM023.D6.R2.",
+    "isolated lives still run D1–D5 prefix before score_d6",
+    "re-earn C4/C5/C6 before reveal",
+    "narrow D6 gate ≥13/16 before reopening full D0–D12"
+  ],
+  "refuse": [
+    "edit-and-rescore D6.R1",
+    "lower D6 floors",
+    "drop C6",
+    "stamp product"
+  ]
+}

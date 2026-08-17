@@ -1,0 +1,67 @@
+{
+  "version": "TM.0.23.CORTEX.D6.R1.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "d4b240f82313f01a60926b7fede7b51ac9eda24bf31f166aaa0b25815e268f1f",
+  "failure_sha": "e7153cc1c15848c98e1b228e68d34d7ed79b42f2bebc314b12dfe12029153762",
+  "reveal_sha": "7a38bfd5492cc63cc67a6172ddc7b232ea794dd35a14a11d8e3f19e6e444c385",
+  "n_pair_clear": 11,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "candidate_git_sha": "724e33982ca5b7ce95e6e4322e1fa36d4fc5f189"
+    },
+    {
+      "id": "domain_is_d6_r1",
+      "ok": true,
+      "domain": "TM023.D6.R1."
+    },
+    {
+      "id": "d6_moved_off_two",
+      "ok": true,
+      "d6_ok": 27,
+      "note": "Echoic emit lifted D6 from 2/32 (FULLDEV.R4) to 27/32. Pair clear is 11/16 because five pairs have a D6-red member."
+    },
+    {
+      "id": "remaining_reds_are_emit_hold_balance",
+      "ok": true,
+      "n_d6_red": 5,
+      "reds": [
+        {"pair": 3, "role": "main", "emits": 4, "matched": 4, "holds": 1},
+        {"pair": 7, "role": "twin", "emits": 1, "matched": 1, "holds": 2},
+        {"pair": 8, "role": "main", "emits": 1, "matched": 1, "holds": 16},
+        {"pair": 12, "role": "main", "emits": 1, "matched": 0, "holds": 9},
+        {"pair": 15, "role": "main", "emits": 1, "matched": 1, "holds": 6}
+      ],
+      "note": "Four reds miss emits>=2 (they HOLD too often). One red matches taught sequences but holds=1 (EMITs too often). Echoic content works; the remaining miss is vocalization vs pause balance."
+    },
+    {
+      "id": "d6_scorer_not_soft",
+      "ok": true,
+      "note": "Do not lower emits>=2, matched>=1, or holds>=3."
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_d6_r1": "refused",
+    "fulldev": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d6_r2",
+    "refuse": [
+      "rewrite docs/cortex_d6_r1_gate.lock",
+      "edit-and-rescore on revealed D6.R1 worlds",
+      "lower D6 floors",
+      "stamp earned_next"
+    ]
+  },
+  "note": "11/16 stands. Echoic emit is the right content law. Remaining miss is EMIT/HOLD turn-taking."
+}
