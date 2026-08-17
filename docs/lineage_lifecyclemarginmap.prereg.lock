@@ -1,0 +1,320 @@
+{
+  "version": "TM.0.24.LIFECYCLEMARGINMAP.PREREG",
+  "lab": "TM.0.24.LIFECYCLEMARGINMAP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "investigation_justified": true,
+  "package_question": "With the L2 episode store, radius, replacement, replay schedule, and two live reversal updates held fixed, does switching only the replay update trigger from error-only ranking to the frozen C3 passive-aggressive margin rule recover native margin 0.01 and ranking perturbation?",
+  "authorized_by": [
+    "docs/lineage_memorylifecyclemap.r2.decision.lock",
+    "docs/lineage_memorylifecyclemap.r2.decision.addendum.lock"
+  ],
+  "historical_r2_decision_sha": "484c38d90582b650633e76a9a92481022a5d3c97308c72e8d51d30d6c9b266dd",
+  "historical_r2_dev_sha": "9321e57bb4f3bd1f4fe108c8fcb7751eca4fdb9da3d23401da5e5e2abd09eaed",
+  "historical_r2_addendum_sha": "92321043267e95092863e1d6e0ac08256d36cdf313c11078f352471fb25c7228",
+  "historical_r2_runner_lock_sha": "c05c9254e9e1b1d6b6039d7cee43b487f83a53b2d1c0b46b60feb039dd6a1077",
+  "historical_r2_runner_py_sha": "30f3c4ee67fb4e6524088cc545232682ea7c189758c06d11db0a80428af825a2",
+  "historical_r2_prereg_sha": "d1063d354cbe4162355c377d8e7a42cf6508035c9f7c6273291096477c8a2924",
+  "historical_v1_runner_lock_sha": "28cc70a50de9c9f65d3ea351f8d598dd5274751d4bbd956dff5212e1156fa593",
+  "rewrite_historical_r2": false,
+  "rewrite_historical_v1": false,
+  "rescore_historical_worlds": false,
+  "interpret_r2_historical_as": "episode_reinstatement_match_failure_under_global_ecological_stored_p1_unique_match_or",
+  "honest_r2_first_match": "memory_lifecycle_insufficient",
+  "memory_lifecycle_insufficient_means": "frozen_lifecycle_did_not_pass_all_four_phases",
+  "does_not_mean_replay_or_replacement_provided_no_benefit": true,
+  "first_failure_was_stability_strength_not_match_or_replacement": true,
+  "ecological_sigma_0.01_matcher_is_separate_limitation": true,
+  "ecological_matcher_must_not_redirect_this_diagnosis": true,
+  "convergencemap_decision_sha": "6de34e295b54ef51c2684b0ce1cf7295064300db75e9e7ee258c7bb95665072d",
+  "convergencemap_addendum_sha": "04a5e91cdc23839c9e3c954dc8c921f902c092de14acd906ada7caa678a6b083",
+  "convergencemap_runner_py_sha": "232cffa23619de1fcdbde7b8c82fc3de8e1c2fbe84a014a40bc27f3723cbbcf6",
+  "tracebridge_runner_py_sha": "db6c4e73cac57dd79cb86fcfa371fee1e2fc5753bf1d03402faea690ff4de551",
+  "writegeom_runner_py_sha": "b210cc621ccd93e016483e3d9d8dc8adbc284eb8fabc01a4b15bbb4ecb1f4d31",
+  "discrimmap_r2_prereg_sha": "22e4e9546c4668e9bee76c712a4efb529678e635e04a395d0ce5e052a50b5d13",
+  "discrimmap_r2_runner_py_sha": "06f5f2c6edc0dffef570e75295708ea2816ea737cd0af9dab157cd94f4c26b41",
+  "candidate": "docs/cortex.candidate.v30.lock",
+  "candidate_v30_sha": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+  "n": 64,
+  "increase_n": false,
+  "act_score_mode": "query",
+  "w1_resurrected": false,
+  "eligibility_budget_installed": false,
+  "trace_rows_installed": false,
+  "write_geometry_branch_closed": true,
+  "stop_isolated_write_formulas": true,
+  "no_new_eta_grid": true,
+  "no_new_match_radius": true,
+  "no_new_replay_budget": true,
+  "no_new_margin_threshold": true,
+  "declared_budget_if_later_authorized": {
+    "fast_slow_proto": 1024,
+    "event_end_trace_rows": 512,
+    "total": 1536,
+    "opened": false
+  },
+  "declared_budget_remains_closed": 1536,
+  "episode_store": {
+    "n_slots": 8,
+    "row_dim": 64,
+    "max_state_scalars": 512,
+    "runner_only": true,
+    "not_installed_trace": true,
+    "fields": ["p1", "handle", "adv", "age", "version", "valid"],
+    "no_cue_string": true
+  },
+  "match": {
+    "metric": "l2_unit_p1",
+    "radius": 0.05,
+    "threshold": 0.05,
+    "role": "preregistered_match_radius",
+    "not_same_cue_ceiling": true,
+    "ranking_ties_are_non_unique": true,
+    "perturbation": {
+      "bounded_match_sanity": {
+        "role": "implementation_sanity",
+        "cannot_satisfy_lifecycle_stability_gate": true
+      },
+      "ecological_match_stability": {
+        "role": "scientific_robustness",
+        "sigma": 0.01,
+        "not_this_packages_first_failure": true
+      }
+    }
+  },
+  "domains": {
+    "DEV": "TM024.LIFECYCLEMARGINMAP.DEV.",
+    "TWIN": "TM024.LIFECYCLEMARGINMAP.TWIN.",
+    "SCORE": "TM024.LIFECYCLEMARGINMAP.SCORE."
+  },
+  "score_reserved_unopened": true,
+  "p1_bridge": {
+    "source": "experiments/run_tm024tracebridge.py",
+    "teach_arm": "B3",
+    "exact_p1": true
+  },
+  "learner": {
+    "error_only": {
+      "source": "experiments/run_tm024convergencemap.py.ErrorOnlyBank",
+      "eta": 0.15,
+      "c_max": 1.0
+    },
+    "c3_passive_aggressive": {
+      "source": "experiments/run_tm024convergencemap.py.PassiveAggressive",
+      "geometric_margin_target": 0.01,
+      "learning_rate_grid": false,
+      "clipnorm": false
+    },
+    "d1_hard_margin": {
+      "source": "experiments/run_tm024discrimmap_r2.py.hard_margin_linear",
+      "soft_margin": false,
+      "soft_margin_C": null,
+      "no_automatic_soft_margin": true,
+      "intercept": true,
+      "intercept_in_norm": false,
+      "y_encoding": [-1, 1],
+      "alpha_min": 0.0,
+      "kkt_residual_max": 1e-6,
+      "constraint_tol": 1e-7
+    }
+  },
+  "arms": {
+    "M0": {
+      "role": "existing_error_only_l2_control",
+      "store": true,
+      "policy": "replace",
+      "replay_learner": "error_only",
+      "live_reversal_trains_learner": true,
+      "matched_live_reversal": true,
+      "live_capture_passes": 1,
+      "replay_epochs": 16,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "M1": {
+      "role": "l2_with_frozen_c3_passive_aggressive",
+      "store": true,
+      "policy": "replace",
+      "replay_learner": "c3_passive_aggressive",
+      "live_reversal_trains_learner": true,
+      "matched_live_reversal": true,
+      "live_capture_passes": 1,
+      "replay_epochs": 16,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "M2": {
+      "role": "l3_stale_store_with_frozen_c3_passive_aggressive",
+      "store": true,
+      "policy": "retain_stale",
+      "refuse_contradictory_replacement": true,
+      "replay_learner": "c3_passive_aggressive",
+      "live_reversal_trains_learner": true,
+      "matched_live_reversal": true,
+      "live_capture_passes": 1,
+      "replay_epochs": 16,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "M3": {
+      "role": "d1_oracle_on_identical_stored_rows",
+      "store": true,
+      "policy": "replace",
+      "replay_learner": "d1_hard_margin",
+      "live_reversal_trains_learner": false,
+      "matched_live_reversal": false,
+      "live_capture_passes": 1,
+      "replay_epochs": 16,
+      "batch_fit_not_online_replay": true,
+      "ceiling_only": true,
+      "diagnostic_only": true,
+      "implementation_authorized": false,
+      "v_eligible": false
+    }
+  },
+  "matched_live_reversal_arms": ["M0", "M1", "M2"],
+  "fixed_l2_lifecycle": {
+    "p1_store": true,
+    "radius": 0.05,
+    "replacement_on_m0_m1_m3": true,
+    "replay_epochs": 16,
+    "two_live_reversal_updates_on_matched_arms": true,
+    "change_only_replay_update_trigger": true
+  },
+  "r2_frozen_eight_cue_l2": {
+    "n_replay_calls": 128,
+    "n_actual_error_only_updates": 14,
+    "n_checkpoint_errors": 47,
+    "first_all_correct_call": 20,
+    "n_replay_calls_after_first_all_correct": 108,
+    "n_below_0.01_at_first_all_correct": 1,
+    "pre_rest_min_probe_margin": 0.0021132898340570526,
+    "post_rest_min_probe_margin": 0.0064329167433538935,
+    "rest_reduced_margin": false,
+    "ranking_ok": true,
+    "perturb_stable": false,
+    "note": "Published R2 L2 8-cue acquire/stable cells: 14/128 updates, ranking correct, REST raised min margin 0.00211→0.00643. Per-call first-all-correct is reconstructed from the frozen L2 capture/replay/REST path; it matches those published totals."
+  },
+  "phased_contract": {
+    "acquisition": "final_ranking_correct_unique_winners_within_budget",
+    "stability": "retain_ranking_native_margin_0.01_and_ranking_perturbation_sigma_0.01_after_no_update_and_REST",
+    "plasticity": "adapt_after_genuine_reversal",
+    "specificity": "reversal_must_not_erase_unrelated_cues_4cue_reverse_one",
+    "acquire_does_not_require_native_margin": true,
+    "stable_requires_native_margin_and_perturbation": true,
+    "lifecycle_stability_gate": "ranking_perturb_sigma_0.01",
+    "bounded_match_sanity_cannot_satisfy_stability_gate": true,
+    "report_margin_trajectory": "acquisition_replay_rest_perturbation"
+  },
+  "capacity": [
+    {"n_cues": 2, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 4, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 8, "n_handles": 2, "balanced": true, "required": true}
+  ],
+  "teach_orders": ["A_then_B", "B_then_A"],
+  "equal_advantage": true,
+  "n_rest_ticks": 4,
+  "margin": {
+    "native_ranking_min": 0.01,
+    "geometric_margin_min": 0.01,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19,
+    "frozen_before_dev": true
+  },
+  "expected_n_cells": 112,
+  "expected_kind_counts": {
+    "acquire": 48,
+    "stable": 48,
+    "twin": 8,
+    "eco": 4,
+    "spec": 4
+  },
+  "assert_unique_ids_and_manifest_before_dev": true,
+  "m3_ceiling_only": true,
+  "decision_ladder": [
+    {
+      "id": "margin_conditioned_replay_supported",
+      "when": "M1 passes all four phases, M0 fails stability, and M2 reversal still passes",
+      "then": "margin_conditioned_replay_supported"
+    },
+    {
+      "id": "replacement_and_margin_conditioned_replay_jointly_causal",
+      "when": "M1 passes stability and reversal and M2 fails reversal",
+      "then": "replacement_and_margin_conditioned_replay_jointly_causal"
+    },
+    {
+      "id": "consolidation_margin_loss",
+      "when": "M1 reaches 0.01 before REST but loses it afterward",
+      "then": "consolidation_margin_loss"
+    },
+    {
+      "id": "compact_margin_replay_insufficient",
+      "when": "M1 never reaches 0.01 and M3 is not four-phase",
+      "then": "compact_margin_replay_insufficient"
+    },
+    {
+      "id": "max_margin_ceiling_only",
+      "when": "only M3 passes all four phases",
+      "then": "max_margin_ceiling_only"
+    },
+    {
+      "id": "lifecycle_margin_insufficient",
+      "when": "nothing above",
+      "then": "lifecycle_margin_insufficient"
+    }
+  ],
+  "fail_closed": [
+    "prereg_or_runner_hash_mismatch",
+    "missing_or_duplicated_cell",
+    "probe_in_fit",
+    "score_identifier_in_dev_payload",
+    "act_score_mode_not_query",
+    "w1_or_v31_present",
+    "same_frozen_dev_execution_again",
+    "cue_string_in_episode",
+    "m3_treated_as_implementation",
+    "dev_without_manifest_or_unique_ids",
+    "rewrite_historical_locks",
+    "new_eta_grid",
+    "new_match_radius",
+    "new_replay_budget",
+    "new_margin_threshold",
+    "bounded_match_used_as_stability_gate",
+    "ecological_match_used_as_first_failure"
+  ],
+  "another_lineage_run": false,
+  "q3": false,
+  "refuse": [
+    "D5",
+    "neural_edit_this_package",
+    "declare_v31",
+    "declare_v32",
+    "resurrect_W1",
+    "open_SCORE",
+    "install_512_trace_this_package",
+    "install_1536_eligibility_budget",
+    "increase_n",
+    "instincts",
+    "SFNN_cell_classes",
+    "lineage_evolution",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "rewrite_historical_locks",
+    "earned_next",
+    "stamp_0.0.005",
+    "another_isolated_write_formula_grid",
+    "cue_string_in_episode",
+    "bounded_match_sanity_as_stability_gate",
+    "new_eta_grid",
+    "new_match_radius",
+    "new_replay_budget",
+    "new_margin_threshold"
+  ],
+  "note": "Runner-only margin-trigger diagnostic on the frozen L2 lifecycle. R2 DEV/decision/addendum preserved. Ecological σ=0.01 matcher is a separate limitation. Product remains 0.0.004."
+}

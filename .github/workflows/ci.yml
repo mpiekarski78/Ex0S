@@ -62,7 +62,7 @@ jobs:
           python tests/test_tm024convergencemap.py
           python tests/test_tm024memorylifecyclemap.py
           python tests/test_tm024memorylifecyclemap_r2.py
-          python tests/test_tm024memorylifecyclemap_r2.py
+          python tests/test_tm024lifecyclemarginmap.py
           python -m experiments.run_tm023cortex --verify-prereg
           python -m experiments.run_tm023cortex --verify-sanity-amendment
           python -m experiments.run_tm023cortex --verify-v4-gate

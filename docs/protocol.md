@@ -2414,7 +2414,17 @@ Memory-lifecycle R2 runner: [`lineage_memorylifecyclemap.r2.runner.lock`](lineag
 
 Result: [`lineage_memorylifecyclemap.r2.decision.lock`](lineage_memorylifecyclemap.r2.decision.lock) **episode_reinstatement_match_failure**. L2 exact reversal match succeeded; `bounded_match_sanity=1.0`; `ecological_match_stability=0.0` at σ=0.01. L1–L3 live reversal counts matched. Do not install the 512-row trace. SCORE unopened. No v31/v32. W1 stays closed. V1 freeze preserved. QUAL/EVAL sealed. Not 0.0.005.
 
-Addendum: [`lineage_memorylifecyclemap.r2.decision.addendum.lock`](lineage_memorylifecyclemap.r2.decision.addendum.lock). Historical R2 DEV/decision/runner preserved. Interpret the published code as **episode_reinstatement_match_failure_under_global_ecological_stored_p1_unique_match_or**. L2 eco/spec passed; exact reversal match succeeded; 8-cue ranking stayed correct and missed the 0.01 stability gate. Rung 5 ORed a global stored-P1 σ=0.01 unique-match diagnostic onto any L2 four-phase miss. Honest first-match on these cells is **memory_lifecycle_insufficient**. R3 not opened.
+Addendum: [`lineage_memorylifecyclemap.r2.decision.addendum.lock`](lineage_memorylifecyclemap.r2.decision.addendum.lock). Historical R2 DEV/decision/runner preserved. Interpret the published code as **episode_reinstatement_match_failure_under_global_ecological_stored_p1_unique_match_or**. L2 eco/spec passed; exact reversal match succeeded; 8-cue ranking stayed correct and missed the 0.01 stability gate. Rung 5 ORed a global stored-P1 σ=0.01 unique-match diagnostic onto any L2 four-phase miss. Honest first-match on these cells is **memory_lifecycle_insufficient**. That means the frozen lifecycle did not pass all four phases; it does not mean episodic replay and replacement provided no benefit. R3 not opened.
+
+## TM.0.24.MEMORYLIFECYCLEMAP.R2 → isolated LIFECYCLEMARGINMAP
+
+Canonical main `9fa4b57`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Hold the L2 episode store, radius 0.05, replacement, 16-epoch replay budget, and two live reversal updates fixed. Change only the replay update trigger: error-only vs frozen C3 passive-aggressive vs D1 ceiling. Unused `TM024.LIFECYCLEMARGINMAP.DEV.` / `TWIN.`. SCORE reserved. n stays 64.
+
+LIFECYCLEMARGINMAP apparatus: [`lineage_lifecyclemarginmap.prereg.lock`](lineage_lifecyclemarginmap.prereg.lock) + [`lineage_lifecyclemarginmap.isolation.lock`](lineage_lifecyclemarginmap.isolation.lock). Manifest: [`lineage_lifecyclemarginmap.manifest.lock`](lineage_lifecyclemarginmap.manifest.lock).
+
+Margin-trigger runner: [`lineage_lifecyclemarginmap.runner.lock`](lineage_lifecyclemarginmap.runner.lock). 112 cells. M0 error-only L2 control; M1 C3 PA on L2; M2 C3 PA on L3 stale store; M3 D1 ceiling. Report acquisition→replay→REST→perturbation on acquire/stable cells; eco/spec REST fields stay null. Ladder rungs are disjoint: PA-replay-supported requires M2 reversal still passing; M1 never-reaches does not hide an M3 ceiling. DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
