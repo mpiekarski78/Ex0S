@@ -1,0 +1,444 @@
+{
+  "version": "TM.0.24.AFFINEMAP.R2.PREREG",
+  "lab": "TM.0.24.AFFINEMAP.R2",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "investigation_justified": true,
+  "a3_implementation_authorized": false,
+  "a3_not_an_instinct": true,
+  "package_question": "On unused R2 worlds, with a common two-actuator normalized geometric margin as the only 0.01 pass statistic, does A0 vs A1 differ only by intercept, A1 vs A2 share a homogeneous class, and can A3 bias be supported only if geometric margin and perturbation pass?",
+  "authorized_by": [
+    "docs/lineage_affinemap.runner.lock",
+    "docs/lineage_affinemap.prereg.lock"
+  ],
+  "historical_lmm_decision_sha": "851d4a9312a7a8164600f53b857f65d3f50fc22fba136e52f00d3266422ddff0",
+  "historical_lmm_dev_sha": "57015fef334b533a77173bb06323e3f28e8d9bc5ad41e3453bfe126ee4a34bf8",
+  "historical_lmm_addendum_sha": "d4dd4ca797d4c6c0aff6725fa79723abd870491a59f4cae41f73ca03fd75f794",
+  "historical_lmm_runner_lock_sha": "d0e5eee16752a7ae89bdfc16f3e0294ce14cfd4726aa8e71f7a8eba1c7c848dd",
+  "historical_lmm_runner_py_sha": "5f7dc1a79e49c42edc45ccd7d12d4c4a8d2989a067071becc433b46c6234ddce",
+  "historical_lmm_prereg_sha": "4a753d811a14b428321f88767ce5d018a42dc047eccaa959ab83ed9f4c1ee8e2",
+  "historical_r2_decision_sha": "484c38d90582b650633e76a9a92481022a5d3c97308c72e8d51d30d6c9b266dd",
+  "historical_r2_dev_sha": "9321e57bb4f3bd1f4fe108c8fcb7751eca4fdb9da3d23401da5e5e2abd09eaed",
+  "historical_r2_addendum_sha": "92321043267e95092863e1d6e0ac08256d36cdf313c11078f352471fb25c7228",
+  "historical_r2_runner_lock_sha": "c05c9254e9e1b1d6b6039d7cee43b487f83a53b2d1c0b46b60feb039dd6a1077",
+  "historical_r2_runner_py_sha": "30f3c4ee67fb4e6524088cc545232682ea7c189758c06d11db0a80428af825a2",
+  "historical_r2_prereg_sha": "d1063d354cbe4162355c377d8e7a42cf6508035c9f7c6273291096477c8a2924",
+  "historical_v1_runner_lock_sha": "28cc70a50de9c9f65d3ea351f8d598dd5274751d4bbd956dff5212e1156fa593",
+  "historical_v1_runner_py_sha": "edec8809938f3f1ab77948feb3661bea4fc3e6bb1abf573a81089ae628dfc974",
+  "rewrite_historical_lmm": false,
+  "rewrite_historical_r2": false,
+  "rewrite_historical_v1": false,
+  "rescore_historical_worlds": false,
+  "do_not_investigate_consolidation": true,
+  "first_pa_fail": "m1_four_cue_acquire_ranking",
+  "interpret_lmm_historical_as": "consolidation_margin_loss_under_min_unique_winner_margin_without_ranking_ok",
+  "honest_lmm_first_match": "lifecycle_margin_insufficient",
+  "ecological_sigma_0.01_matcher_is_separate_limitation": true,
+  "ecological_matcher_must_not_redirect_this_diagnosis": true,
+  "immediate_wall": "online_acquisition_geometry",
+  "convergencemap_decision_sha": "6de34e295b54ef51c2684b0ce1cf7295064300db75e9e7ee258c7bb95665072d",
+  "convergencemap_addendum_sha": "04a5e91cdc23839c9e3c954dc8c921f902c092de14acd906ada7caa678a6b083",
+  "convergencemap_runner_py_sha": "232cffa23619de1fcdbde7b8c82fc3de8e1c2fbe84a014a40bc27f3723cbbcf6",
+  "tracebridge_runner_py_sha": "db6c4e73cac57dd79cb86fcfa371fee1e2fc5753bf1d03402faea690ff4de551",
+  "writegeom_runner_py_sha": "b210cc621ccd93e016483e3d9d8dc8adbc284eb8fabc01a4b15bbb4ecb1f4d31",
+  "discrimmap_r2_prereg_sha": "22e4e9546c4668e9bee76c712a4efb529678e635e04a395d0ce5e052a50b5d13",
+  "discrimmap_r2_runner_py_sha": "06f5f2c6edc0dffef570e75295708ea2816ea737cd0af9dab157cd94f4c26b41",
+  "candidate": "docs/cortex.candidate.v30.lock",
+  "candidate_v30_sha": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+  "n": 64,
+  "increase_n": false,
+  "act_score_mode": "query",
+  "w1_resurrected": false,
+  "eligibility_budget_installed": false,
+  "trace_rows_installed": false,
+  "write_geometry_branch_closed": true,
+  "stop_isolated_write_formulas": true,
+  "no_new_eta_grid": true,
+  "no_new_match_radius": true,
+  "no_new_replay_budget": true,
+  "no_new_margin_threshold": true,
+  "no_lifecycle_changes": true,
+  "skip_eco_spec": true,
+  "declared_budget_if_later_authorized": {
+    "fast_slow_proto": 1024,
+    "event_end_trace_rows": 512,
+    "total": 1536,
+    "opened": false
+  },
+  "declared_budget_remains_closed": 1536,
+  "episode_store": {
+    "n_slots": 8,
+    "row_dim": 64,
+    "max_state_scalars": 512,
+    "runner_only": true,
+    "not_installed_trace": true,
+    "fields": [
+      "p1",
+      "handle",
+      "adv",
+      "age",
+      "version",
+      "valid"
+    ],
+    "no_cue_string": true
+  },
+  "match": {
+    "metric": "l2_unit_p1",
+    "radius": 0.05,
+    "threshold": 0.05,
+    "role": "preregistered_match_radius",
+    "not_same_cue_ceiling": true,
+    "ranking_ties_are_non_unique": true,
+    "perturbation": {
+      "bounded_match_sanity": {
+        "role": "implementation_sanity",
+        "cannot_satisfy_lifecycle_stability_gate": true
+      },
+      "ecological_match_stability": {
+        "role": "scientific_robustness",
+        "sigma": 0.01,
+        "not_this_packages_first_failure": true
+      }
+    }
+  },
+  "domains": {
+    "DEV": "TM024.AFFINEMAP.R2.DEV.",
+    "TWIN": "TM024.AFFINEMAP.R2.TWIN.",
+    "SCORE": "TM024.AFFINEMAP.R2.SCORE."
+  },
+  "score_reserved_unopened": true,
+  "p1_bridge": {
+    "source": "experiments/run_tm024tracebridge.py",
+    "teach_arm": "B3",
+    "exact_p1": true
+  },
+  "learner": {
+    "d1_hard_margin_affine": {
+      "source": "experiments/run_tm024discrimmap_r2.py.hard_margin_linear",
+      "soft_margin": false,
+      "soft_margin_C": null,
+      "no_automatic_soft_margin": true,
+      "intercept": true,
+      "intercept_in_norm": false,
+      "y_encoding": [
+        -1,
+        1
+      ],
+      "alpha_min": 0.0,
+      "kkt_residual_max": 1e-06,
+      "constraint_tol": 1e-07
+    },
+    "d1_hard_margin_homogeneous": {
+      "source": "experiments/run_tm024affinemap.py.hard_margin_homogeneous",
+      "does_not_edit_discrimmap_r2": true,
+      "soft_margin": false,
+      "soft_margin_C": null,
+      "intercept": false,
+      "b": 0.0,
+      "y_encoding": [
+        -1,
+        1
+      ],
+      "alpha_min": 0.0,
+      "kkt_residual_max": 1e-06,
+      "constraint_tol": 1e-07
+    },
+    "c3_passive_aggressive": {
+      "source": "experiments/run_tm024convergencemap.py.PassiveAggressive",
+      "geometric_margin_target": 0.01,
+      "learning_rate_grid": false,
+      "clipnorm": false,
+      "intercept": false,
+      "scores": "unit_row_dot_no_bias"
+    },
+    "c3_passive_aggressive_local_bias": {
+      "source": "experiments/run_tm024affinemap.py.PassiveAggressiveBias",
+      "geometric_margin_target": 0.01,
+      "learning_rate_grid": false,
+      "clipnorm": false,
+      "bias_init": 0.0,
+      "n_bias_equals_n_handles": true,
+      "full_bank_would_be_8_fast_maybe_8_slow": true,
+      "this_grid_uses_2_handles": true,
+      "permute_with_opaque_actuator_slots": true,
+      "no_cue_string": true,
+      "no_semantic_action_identity": true,
+      "update_only_from_experienced_consequences": true,
+      "weight_step": "existing_pa_unchanged",
+      "bias_step": "0.5 * max(0, gamma - (s_ch - s_ot)) after the weight step, using scores that include bias",
+      "diagnostic_only": true,
+      "implementation_authorized": false,
+      "not_an_instinct": true
+    }
+  },
+  "arms": {
+    "A0": {
+      "role": "existing_affine_d1_b_free",
+      "store": true,
+      "policy": "replace",
+      "replay_learner": "d1_hard_margin_affine",
+      "live_reversal_trains_learner": false,
+      "matched_live_reversal": false,
+      "live_capture_passes": 1,
+      "replay_epochs": 16,
+      "batch_fit_not_online_replay": true,
+      "ceiling_only": true,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "A1": {
+      "role": "exact_hard_margin_d1_b_0",
+      "store": true,
+      "policy": "replace",
+      "replay_learner": "d1_hard_margin_homogeneous",
+      "live_reversal_trains_learner": false,
+      "matched_live_reversal": false,
+      "live_capture_passes": 1,
+      "replay_epochs": 16,
+      "batch_fit_not_online_replay": true,
+      "ceiling_only": true,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "A2": {
+      "role": "existing_pa_b_0",
+      "store": true,
+      "policy": "replace",
+      "replay_learner": "c3_passive_aggressive",
+      "live_reversal_trains_learner": false,
+      "matched_live_reversal": false,
+      "live_capture_passes": 1,
+      "replay_epochs": 16,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "A3": {
+      "role": "pa_with_learned_actuator_local_bias",
+      "store": true,
+      "policy": "replace",
+      "replay_learner": "c3_passive_aggressive_local_bias",
+      "live_reversal_trains_learner": false,
+      "matched_live_reversal": false,
+      "live_capture_passes": 1,
+      "replay_epochs": 16,
+      "diagnostic_only": true,
+      "implementation_authorized": false,
+      "not_an_instinct": true,
+      "v_eligible": false
+    }
+  },
+  "matched_live_reversal_arms": [],
+  "fixed_l2_lifecycle": {
+    "p1_store": true,
+    "radius": 0.05,
+    "replacement": true,
+    "replay_epochs": 16,
+    "no_eco_spec": true,
+    "no_live_reversal_cells": true,
+    "change_only_hypothesis_class": true
+  },
+  "phased_contract": {
+    "acquisition": "final_ranking_correct_unique_winners_within_budget",
+    "stability": "ranking_ok_and_normalized_geometric_margin_0.01_and_perturbation_ok",
+    "acquire_does_not_require_native_margin": true,
+    "stable_requires_native_margin_and_perturbation": true,
+    "lifecycle_stability_gate": "normalized_geometric_margin_0.01_and_perturbation",
+    "bounded_match_sanity_cannot_satisfy_stability_gate": true,
+    "ladder_uses_acquire_ranking_at_4_and_8": true,
+    "skip_plasticity_specificity": true,
+    "native_margin_is_normalized_geometric": true,
+    "pairwise_score_gap_cannot_satisfy_0.01_gate": true
+  },
+  "capacity": [
+    {
+      "n_cues": 2,
+      "n_handles": 2,
+      "balanced": true,
+      "required": true
+    },
+    {
+      "n_cues": 4,
+      "n_handles": 2,
+      "balanced": true,
+      "required": true
+    },
+    {
+      "n_cues": 8,
+      "n_handles": 2,
+      "balanced": true,
+      "required": true
+    }
+  ],
+  "teach_orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "equal_advantage": true,
+  "n_rest_ticks": 4,
+  "margin": {
+    "native_ranking_min": 0.01,
+    "geometric_margin_min": 0.01,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19,
+    "frozen_before_dev": true,
+    "pass_statistic": "normalized_geometric_margin",
+    "pairwise_score_gap_is_not_pass_statistic": true
+  },
+  "expected_n_cells": 104,
+  "expected_kind_counts": {
+    "acquire": 48,
+    "stable": 48,
+    "twin": 8
+  },
+  "assert_unique_ids_and_manifest_before_dev": true,
+  "a0_a1_ceiling_only": true,
+  "a3_diagnostic_only": true,
+  "decision_ladder": [
+    {
+      "id": "affine_intercept_required",
+      "when": "A0 passes acquire ranking at four and eight cues and A1 fails at four or eight cues",
+      "then": "affine_intercept_required"
+    },
+    {
+      "id": "online_optimization_failure",
+      "when": "A1 passes acquire ranking at four and eight cues and A2 fails at four or eight cues",
+      "then": "online_optimization_failure"
+    },
+    {
+      "id": "apparatus_inconsistency",
+      "when": "A2 passes acquire ranking at four and eight cues while M1 previously failed four-cue acquire ranking",
+      "then": "apparatus_inconsistency"
+    },
+    {
+      "id": "learned_local_bias_supported",
+      "when": "A3 passes ranking, normalized geometric margin 0.01, and perturbation at four and eight cue stability, and A2 fails that robustness at four or eight cues. A raw pairwise-gap increase is not sufficient.",
+      "then": "learned_local_bias_supported"
+    },
+    {
+      "id": "d1_ceiling_reaudit",
+      "when": "A0 and A1 both fail acquire ranking at four or both fail at eight cues",
+      "then": "d1_ceiling_reaudit"
+    },
+    {
+      "id": "affine_map_insufficient",
+      "when": "nothing above",
+      "then": "affine_map_insufficient"
+    }
+  ],
+  "fail_closed": [
+    "prereg_or_runner_hash_mismatch",
+    "missing_or_duplicated_cell",
+    "probe_in_fit",
+    "score_identifier_in_dev_payload",
+    "act_score_mode_not_query",
+    "w1_or_v31_present",
+    "same_frozen_dev_execution_again",
+    "cue_string_in_episode",
+    "a3_treated_as_implementation",
+    "dev_without_manifest_or_unique_ids",
+    "rewrite_historical_locks",
+    "new_eta_grid",
+    "new_match_radius",
+    "new_replay_budget",
+    "new_margin_threshold",
+    "lifecycle_change",
+    "eco_spec_cells",
+    "bounded_match_used_as_stability_gate",
+    "ecological_match_used_as_first_failure",
+    "consolidation_investigated",
+    "pairwise_score_gap_used_as_geometric_gate",
+    "scoring_inconsistency",
+    "missing_recorded_metric_fields",
+    "rewrite_affinemap_v1",
+    "open_affinemap_v1_dev",
+    "rescore_affinemap_v1_worlds"
+  ],
+  "another_lineage_run": false,
+  "q3": false,
+  "refuse": [
+    "D5",
+    "neural_edit_this_package",
+    "declare_v31",
+    "declare_v32",
+    "resurrect_W1",
+    "open_SCORE",
+    "install_512_trace_this_package",
+    "install_1536_eligibility_budget",
+    "increase_n",
+    "instincts",
+    "authorize_A3",
+    "SFNN_cell_classes",
+    "lineage_evolution",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "rewrite_historical_locks",
+    "earned_next",
+    "stamp_0.0.005",
+    "another_isolated_write_formula_grid",
+    "cue_string_in_episode",
+    "bounded_match_sanity_as_stability_gate",
+    "new_eta_grid",
+    "new_match_radius",
+    "new_replay_budget",
+    "new_margin_threshold",
+    "lifecycle_change",
+    "investigate_consolidation",
+    "rewrite AFFINEMAP V1",
+    "open AFFINEMAP V1 DEV",
+    "rescore TM024.AFFINEMAP.DEV.",
+    "call pairwise score gap gamma",
+    "count A3 gap increase as bias support without geometric margin and perturbation"
+  ],
+  "note": "R2 common two-actuator geometric margin. V1 freeze 4a5183e preserved. Intercept conclusion remains valid. Product remains 0.0.004.",
+  "historical_affinemap_v1_git_head": "4a5183eedc45417fd29cd639c3f2fcb4c4a87ad3",
+  "historical_affinemap_v1_runner_lock_sha": "5cd319ecc1872dadcc1e193f05a1794dd850c2d37d8500fa11e2bf96b3577669",
+  "historical_affinemap_v1_runner_py_sha": "be7a360ef8b635085b7cd22490812c311ad2335c463054a7471e443dec664eea",
+  "historical_affinemap_v1_prereg_sha": "746faa55139c010d265142a055903f898b3c26730e529c93d607a904061017d5",
+  "historical_affinemap_v1_isolation_sha": "386fe75eece7e8d48c7088de6d4a70f2446e737d7c3aceb670ab795733fc294a",
+  "historical_affinemap_v1_contract_sha": "025ffaa181434548d1e29bad4901266f2c0f346e7d8be48671e5f96ce002d8ba",
+  "historical_affinemap_v1_manifest_sha": "e8acd76acf61c62d487487d94a3ea8acdf8a032a61982a1d7d17629d3c600e59",
+  "rewrite_historical_affinemap_v1": false,
+  "open_v1_dev": false,
+  "v1_used_pairwise_score_gap_as_pass_statistic": true,
+  "v1_reported_1.996_is_not_normalized_geometric_margin": true,
+  "intercept_conclusion_from_v1_extract_remains_valid": true,
+  "correction_concerns_robustness_scoring_not_representability": true,
+  "common_score": {
+    "two_actuator_rows": true,
+    "v": "unit(w_want) - unit(w_rival)",
+    "c": "b_want - b_rival",
+    "normalized_geometric_margin": "(v\u00b7x + c) / ||v||",
+    "pairwise_score_gap": "s_want - s_rival with s_h = unit(w_h)\u00b7x + b_h",
+    "homogeneous_geometric_margin_cannot_exceed_1": true,
+    "d1_embedding": {
+      "w_plus": "w",
+      "w_minus": "-w",
+      "b_plus": "b / ||w||",
+      "b_minus": "-b / ||w||",
+      "preserves_d1_ranking_sign": true,
+      "matches_discrimmap_y_wx_plus_b_over_norm_w": true
+    },
+    "pa_embedding": {
+      "w_h": "existing PA row",
+      "b_h": "0 on A2; learned actuator-local bias on A3"
+    },
+    "a0_vs_a1": "intercept_only",
+    "a1_vs_a2": "same_homogeneous_class_and_common_score_statistic",
+    "a2_vs_a3": "learned_bias_only",
+    "only_normalized_geometric_margin_satisfies_0.01_gate": true,
+    "raw_two_row_gap_must_not_be_called_gamma": true,
+    "a3_raw_gap_increase_is_not_bias_support": true
+  },
+  "recorded_fields": [
+    "ranking_ok",
+    "pairwise_score_gap",
+    "normalized_geometric_margin",
+    "perturbation_ok"
+  ]
+}

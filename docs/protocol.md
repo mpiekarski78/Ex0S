@@ -2440,6 +2440,16 @@ AFFINEMAP apparatus: [`lineage_affinemap.prereg.lock`](lineage_affinemap.prereg.
 
 Hypothesis-class runner: [`lineage_affinemap.runner.lock`](lineage_affinemap.runner.lock). 104 cells. Ladder: `affine_intercept_required` → `online_optimization_failure` → `apparatus_inconsistency` → `learned_local_bias_supported` → `d1_ceiling_reaudit` → `affine_map_insufficient`. A3 is not an instinct. DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
+## TM.0.24.AFFINEMAP → isolated AFFINEMAP.R2
+
+Canonical main `4a5183e`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+V1 intercept extract remains valid: homogeneous D1 already ranks at four and eight cues. V1 `min_probe_margin` 1.996 is a two-actuator score gap, not normalized geometric margin (which cannot exceed 1 on unit-row homogeneous features). R2 freezes the common two-row statistic \(v=\hat w_+-\hat w_-\), \(c=b_+-b_-\), \(\gamma=(v^\top x+c)/\|v\|\). Every cell records `ranking_ok`, `pairwise_score_gap`, `normalized_geometric_margin`, `perturbation_ok`. Only γ satisfies 0.01. A high pairwise gap with γ<0.01 is a valid stability fail; abort only if stored pass disagrees with ranking ∧ γ≥0.01 ∧ perturbation. A3 gap increase is not bias support without γ and perturbation. Unused `TM024.AFFINEMAP.R2.DEV.` / `TWIN.`. Do not open V1 DEV. SCORE reserved. n stays 64.
+
+AFFINEMAP R2 apparatus: [`lineage_affinemap.r2.prereg.lock`](lineage_affinemap.r2.prereg.lock) + [`lineage_affinemap.r2.isolation.lock`](lineage_affinemap.r2.isolation.lock). Manifest: [`lineage_affinemap.r2.manifest.lock`](lineage_affinemap.r2.manifest.lock).
+
+Common-margin runner: [`lineage_affinemap.r2.runner.lock`](lineage_affinemap.r2.runner.lock). 104 cells. DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
