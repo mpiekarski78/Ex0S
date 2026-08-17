@@ -2080,3 +2080,7 @@ Candidate (this cycle): [`cortex.candidate.v15.lock`](cortex.candidate.v15.lock)
 
 Result: [`cortex_d3_r2_gate.lock`](cortex_d3_r2_gate.lock) **0/16**. D0 32, D3 7 lives / 0 pairs. Audit [`cortex_d3_r2.audit.lock`](cortex_d3_r2.audit.lock). Diagnosis [`cortex_diagnosis.v15.lock`](cortex_diagnosis.v15.lock): key equal-evidence HOLD to the current observe's body_adv, not sticky last-ACT residue. Do not rescore D3.R2.
 
+## TM.0.23.CORTEX.V15 D3.R2 0/16 → isolated D3.R3
+
+Canonical main `b19469f`. D3.R3 apparatus: [`cortex_d3_r3.prereg.lock`](cortex_d3_r3.prereg.lock). Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

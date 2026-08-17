@@ -652,6 +652,26 @@ def test_v15_candidate_boundary_pending_gate() -> None:
     assert prereg["domain"] == "TM023.D3.R2."
 
 
+def test_verify_d3_r3_cli() -> None:
+    from experiments.run_tm023cortex import verify_d3_r3
+
+    v = verify_d3_r3()
+    assert v["ok"] is True, v
+    if not (REPO_ROOT / "docs" / "cortex.candidate.v16.lock").exists() or not (
+        REPO_ROOT / "docs" / "cortex_d3_r3_gate.lock"
+    ).exists():
+        assert v.get("pending") is True
+        return
+    assert v.get("pending") is False
+    if v["relation_gate_clear"]:
+        assert v["n_pair_clear"] >= 13
+        assert not (REPO_ROOT / "docs" / "cortex_d3_r3_gate.failure.lock").exists()
+    else:
+        assert v["refuse_fulldev_before_clear"] is True
+        assert (REPO_ROOT / "docs" / "cortex_d3_r3_gate.failure.lock").exists()
+    assert not (REPO_ROOT / "docs" / "cortex_development.v16.lock").exists()
+
+
 def test_verify_d3_r2_cli() -> None:
     from experiments.run_tm023cortex import verify_d3_r2
 
@@ -833,6 +853,7 @@ if __name__ == "__main__":
     test_verify_v12_gate_cli()
     test_verify_v13_gate_cli()
     test_v15_candidate_boundary_pending_gate()
+    test_verify_d3_r3_cli()
     test_verify_d3_r2_cli()
     test_verify_fulldev_r1_cli()
     test_sealed_not_used_in_smoke()
