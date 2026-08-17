@@ -115,12 +115,56 @@ def test_runner_lock_if_present() -> None:
 
 
 def test_opposing_handles_positive_advantage() -> None:
-    from experiments.run_tm024motorpersist import DEV_DOMAIN, handles, make_cell_world, mid_adv, opposing_world
+    from experiments.run_tm024motorpersist import (
+        DEV_DOMAIN,
+        POS_DELTA,
+        POS_DELTA_H1,
+        POS_DELTA_H2,
+        handles,
+        make_cell_world,
+        mid_adv,
+        opposing_world,
+    )
 
+    assert POS_DELTA_H1 == POS_DELTA
+    assert POS_DELTA_H2 == POS_DELTA
     w = opposing_world(make_cell_world(0, DEV_DOMAIN))
     h1, h2 = handles(w)
-    assert mid_adv(w, h1) > 0.0
-    assert mid_adv(w, h2) > 0.0
+    a1, a2 = mid_adv(w, h1), mid_adv(w, h2)
+    assert a1 > 0.0
+    assert a2 > 0.0
+    assert abs(a1 - a2) <= 1e-12
+
+
+def test_last_write_wins_equal_advantage() -> None:
+    """Live regression: equal consequences, both orders, last write wins at p=0."""
+    import tempfile
+
+    from experiments.run_tm023cortex import make_cortex
+    from experiments.run_tm024motorpersist import (
+        DEV_DOMAIN,
+        apply_persist,
+        make_cell_world,
+        teach_opposing,
+    )
+
+    world = make_cell_world(0, DEV_DOMAIN)
+    with tempfile.TemporaryDirectory(prefix="mp_lww_") as tmp:
+        for order, want_h1 in (("A_then_B", False), ("B_then_A", True)):
+            ag = make_cortex(Path(tmp) / order, device="cpu")
+            ag.bind_actuators(list(world["handles"]))
+            apply_persist(ag, 0.0)
+            out = teach_opposing(ag, world, tag=f"lww_{order}", order=order)
+            assert out["equal_adv"] is True
+            assert abs(out["mid_adv"]["h1"] - out["mid_adv"]["h2"]) <= 1e-12
+            assert all(float(t["adv"]) > 0.0 for t in out["taught"])
+            assert out["opposing"] is False
+            assert out["last_write_wins"] is True
+            if want_h1:
+                assert out["live_a"]["prefer_h1"] and out["live_b"]["prefer_h1"]
+            else:
+                assert out["live_a"]["prefer_h2"] and out["live_b"]["prefer_h2"]
+            assert out["teach_rho_cosine"] > 0.99
 
 
 def test_smoke() -> None:
@@ -160,13 +204,56 @@ def test_decision_if_present() -> None:
         assert all(a > 0.0 for a in advs), advs
 
 
+def test_reaudit_if_present() -> None:
+    p = REPO_ROOT / "docs" / "lineage_motorpersist.reaudit.lock"
+    if not p.exists():
+        return
+    from experiments.run_tm024motorpersist import (
+        DEV_DOMAIN,
+        HISTORICAL_DECISION_SHA,
+        HISTORICAL_P_LOCK_SHA,
+        SCORE_DOMAIN,
+    )
+
+    d = json.loads(p.read_text(encoding="utf-8"))
+    assert d["product"] == "0.0.004"
+    assert d["earned_next"] is False
+    assert d["ex0s"] is None
+    assert d["n"] == 64
+    assert d["n_sequences"] == 24
+    assert len(d["rows"]) == 24
+    assert d["domain"] == DEV_DOMAIN
+    assert d["score_domain_opened"] is False
+    assert SCORE_DOMAIN not in json.dumps(d)
+    assert d["equal_positive_consequences"] is True
+    assert d["last_write_wins_all"] is True
+    assert d["a_then_b_both_select_b"] is True
+    assert d["b_then_a_both_select_a"] is True
+    assert d["opposing_any"] is False
+    assert d["decision_code"] == "identity_survives_opposing_learning_fails"
+    assert sha(REPO_ROOT / "docs" / "lineage_motorpersist.decision.lock") == HISTORICAL_DECISION_SHA
+    assert sha(REPO_ROOT / "docs" / "lineage_motorpersist.p.lock") == HISTORICAL_P_LOCK_SHA
+    assert d["historical_decision_sha"] == HISTORICAL_DECISION_SHA
+    assert d["historical_p_lock_sha"] == HISTORICAL_P_LOCK_SHA
+    orders = {r["order"] for r in d["rows"]}
+    assert orders == {"A_then_B", "B_then_A"}
+    assert all(r["domain"] == DEV_DOMAIN for r in d["rows"])
+    for r in d["rows"]:
+        assert r["last_write_wins"] is True
+        assert r["opposing"] is False
+        assert r["equal_adv"] is True
+        assert "teach_rho_cosine" in r and "teach_rho_l2" in r
+
+
 def main() -> None:
     test_phase_a_files()
     test_contract_stance()
     test_runner_lock_if_present()
     test_opposing_handles_positive_advantage()
+    test_last_write_wins_equal_advantage()
     test_smoke()
     test_decision_if_present()
+    test_reaudit_if_present()
     print("test_tm024motorpersist: ok")
 
 

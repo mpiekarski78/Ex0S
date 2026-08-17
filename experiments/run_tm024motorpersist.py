@@ -43,7 +43,11 @@ ISOLATION = REPO_ROOT / "docs" / "lineage_motorpersist.isolation.lock"
 P_LOCK = REPO_ROOT / "docs" / "lineage_motorpersist.p.lock"
 RUNNER_LOCK = REPO_ROOT / "docs" / "lineage_motorpersist.runner.lock"
 DECISION = REPO_ROOT / "docs" / "lineage_motorpersist.decision.lock"
+REAUDIT_LOCK = REPO_ROOT / "docs" / "lineage_motorpersist.reaudit.lock"
+REAUDIT_MD = REPO_ROOT / "docs" / "tm024motorpersist_reaudit.md"
 RESULT_MD = REPO_ROOT / "docs" / "tm024motorpersist_results.md"
+HISTORICAL_DECISION_SHA = "75d0ab57de8c4e394d42f78fa2af0494722b85348f123b9796de3e9b74af93b9"
+HISTORICAL_P_LOCK_SHA = "634886c2fa0ccc531b390b9f919ac7c64262a4748c95cee9381362fbab6d1559"
 NEURAL = REPO_ROOT / "three_memory" / "neural_cortex.py"
 MEMORY = REPO_ROOT / "three_memory" / "cortex_memory.py"
 CANDIDATE_V29 = REPO_ROOT / "docs" / "cortex.candidate.v29.lock"
@@ -127,21 +131,21 @@ def handles(world: dict[str, Any]) -> tuple[str, str]:
     return str(world["handles"][0]), str(world["handles"][1])
 
 
-# Two distinct homeostatic-positive deltas from MID. The stock synthetic world
-# has one beneficial and one harmful actuator; teaching the harmful handle from
-# MID yields negative advantage, which suppresses that handle and trips
-# opposite-sign conflict-HOLD. That made "A→h1, B→h2, opposing rankings"
-# unteachable even with perfect cue identity.
-POS_DELTA_H1 = [0.25, -0.1, 0.15, 0.0]
-POS_DELTA_H2 = [0.15, -0.2, 0.25, 0.0]
+# One shared homeostatic-positive delta from MID. Distinct state labels keep
+# the two handles observationally different; the body consequence is identical
+# so last-write-wins cannot be confounded with larger-write-wins.
+POS_DELTA = [0.25, -0.1, 0.15, 0.0]
+POS_DELTA_H1 = list(POS_DELTA)
+POS_DELTA_H2 = list(POS_DELTA)
+TEACH_ORDERS = ("A_then_B", "B_then_A")
 
 
 def opposing_world(world: dict[str, Any]) -> dict[str, Any]:
     w = copy.deepcopy(world)
     h1, h2 = handles(w)
     effects = dict(w["latent"]["act_effects"])
-    effects[h1] = {"state": ["st_p1"], "delta": list(POS_DELTA_H1)}
-    effects[h2] = {"state": ["st_p2"], "delta": list(POS_DELTA_H2)}
+    effects[h1] = {"state": ["st_p1"], "delta": list(POS_DELTA)}
+    effects[h2] = {"state": ["st_p2"], "delta": list(POS_DELTA)}
     w["latent"] = {"act_effects": effects}
     return w
 
@@ -215,33 +219,57 @@ def teach_opposing(
         seq = ((b, h2, "b"), (a, h1, "a"))
     else:
         seq = ((a, h1, "a"), (b, h2, "b"))
+    if abs(adv1 - adv2) > 1e-12:
+        raise RuntimeError(f"opposing handles must have equal MID advantage, got {adv1}, {adv2}")
     taught = []
+    rhos: list[np.ndarray] = []
     for cue, tok, name in seq:
         t = teach_one(ag, w, tok, tag=f"{tag}_{name}", symbols=[cue])
+        rho = np.asarray(t["rho_teach"], dtype=np.float64).copy()
+        rhos.append(rho)
         taught.append({"cue": cue, "tok": tok, "moved": bool(t["moved"]), "adv": t["adv"]})
     if any(float(row["adv"]) <= 0.0 for row in taught):
         raise RuntimeError(f"opposing teach applied non-positive advantage: {taught}")
+    teach_rho_cosine = float(cosine(rhos[0], rhos[1]))
+    teach_rho_l2 = float(l2(rhos[0], rhos[1]))
     pa = live_handles(ag, w, a, tag=f"{tag}_pa")
     pb = live_handles(ag, w, b, tag=f"{tag}_pb")
     opposing = bool(pa["prefer_h1"] and pb["prefer_h2"])
+    if order == "B_then_A":
+        last_write_wins = bool(pa["prefer_h1"] and pb["prefer_h1"])
+        last_write_handle = h1
+    else:
+        last_write_wins = bool(pa["prefer_h2"] and pb["prefer_h2"])
+        last_write_handle = h2
     return {
         "order": order,
         "taught": taught,
         "live_a": {k: pa[k] for k in ("h1", "h2", "prefer_h1", "prefer_h2")},
         "live_b": {k: pb[k] for k in ("h1", "h2", "prefer_h1", "prefer_h2")},
         "opposing": opposing,
+        "last_write_wins": last_write_wins,
+        "last_write_handle": last_write_handle,
+        "teach_rho_cosine": teach_rho_cosine,
+        "teach_rho_l2": teach_rho_l2,
         "mid_adv": {"h1": adv1, "h2": adv2},
+        "equal_adv": True,
     }
 
 
-def eval_p_on_world(p: float, world: dict[str, Any], *, p0_step: float | None) -> dict[str, Any]:
+def eval_p_on_world(
+    p: float,
+    world: dict[str, Any],
+    *,
+    p0_step: float | None,
+    order: str = "A_then_B",
+) -> dict[str, Any]:
     t = thr()
     with tempfile.TemporaryDirectory(prefix="mp_dev_") as tmp:
         ag = _fresh(tmp, "s", world, p=p)
         warmup_vocab(ag, world)
         elig = pair_elig(ag, world)
         s0 = s0_ok(_fresh(tmp, "s0", world, p=p), world, tag="dev_s0")
-        opp = teach_opposing(_fresh(tmp, "opp", world, p=p), world, tag="dev_opp")
+        opp = teach_opposing(_fresh(tmp, "opp", world, p=p), world, tag="dev_opp", order=order)
         step = float(elig["motor_step_l2"])
         frac = None if p0_step is None or p0_step <= 1e-12 else step / float(p0_step)
         motor_alive = bool(p0_step is None or (frac is not None and frac >= float(t["motor_step_min_frac_of_p0"])))
@@ -251,11 +279,15 @@ def eval_p_on_world(p: float, world: dict[str, Any], *, p0_step: float | None) -
         "p": float(p),
         "domain": world["domain"],
         "index": world["diag_index"],
+        "order": order,
         "identity": identity,
         "elig_cosine": elig["elig_cosine"],
         "elig_l2": elig["elig_l2"],
+        "teach_rho_cosine": opp["teach_rho_cosine"],
+        "teach_rho_l2": opp["teach_rho_l2"],
         "s0": s0["passed"],
         "opposing": opp["opposing"],
+        "last_write_wins": opp["last_write_wins"],
         "opposing_detail": opp,
         "motor_step_l2": step,
         "motor_step_frac_of_p0": frac,
@@ -299,6 +331,124 @@ def run_dev_grid() -> dict[str, Any]:
         "rows": rows,
             "note": "DEV only. Do not tune on SCORE worlds. Opposing teach uses two homeostatic-positive handles so both updates have positive advantage.",
     }
+
+
+def _compact_reaudit_row(row: dict[str, Any]) -> dict[str, Any]:
+    det = row.get("opposing_detail") or {}
+    return {
+        "p": row["p"],
+        "domain": row["domain"],
+        "index": row["index"],
+        "order": row["order"],
+        "identity": row["identity"],
+        "elig_cosine": row["elig_cosine"],
+        "elig_l2": row["elig_l2"],
+        "teach_rho_cosine": row["teach_rho_cosine"],
+        "teach_rho_l2": row["teach_rho_l2"],
+        "s0": row["s0"],
+        "opposing": row["opposing"],
+        "last_write_wins": row["last_write_wins"],
+        "last_write_handle": det.get("last_write_handle"),
+        "live_a": det.get("live_a"),
+        "live_b": det.get("live_b"),
+        "taught_adv": [float(t["adv"]) for t in det.get("taught") or []],
+        "mid_adv": det.get("mid_adv"),
+        "equal_adv": det.get("equal_adv"),
+        "motor_step_l2": row["motor_step_l2"],
+        "motor_alive": row["motor_alive"],
+        "usable": row["usable"],
+    }
+
+
+def run_reaudit_grid() -> dict[str, Any]:
+    """Equal-advantage, both-order DEV re-audit. Does not rewrite historical p.lock."""
+    if not neural_has_persist():
+        raise RuntimeError("neural still v29 — implement the authorized mix before DEV")
+    worlds = [make_cell_world(i, DEV_DOMAIN) for i in range(2)]
+    p0_steps: list[float] = []
+    for w in worlds:
+        r0 = eval_p_on_world(0.0, w, p0_step=None, order="A_then_B")
+        p0_steps.append(float(r0["motor_step_l2"]))
+    rows: list[dict[str, Any]] = []
+    for p in p_grid():
+        for w, p0_step in zip(worlds, p0_steps):
+            for order in TEACH_ORDERS:
+                p0 = None if p == 0.0 else p0_step
+                r = eval_p_on_world(p, w, p0_step=p0, order=order)
+                rows.append(_compact_reaudit_row(r))
+    n = len(rows)
+    if n != 24:
+        raise RuntimeError(f"reaudit must be exactly 24 sequences, got {n}")
+    if any(r["domain"] != DEV_DOMAIN for r in rows):
+        raise RuntimeError("reaudit opened a non-DEV domain")
+    last_write_all = all(bool(r["last_write_wins"]) for r in rows)
+    opposing_any = any(bool(r["opposing"]) for r in rows)
+    equal_adv_all = all(bool(r["equal_adv"]) for r in rows)
+    a_then_b = [r for r in rows if r["order"] == "A_then_B"]
+    b_then_a = [r for r in rows if r["order"] == "B_then_A"]
+    a_both_b = all(bool(r["live_a"]["prefer_h2"] and r["live_b"]["prefer_h2"]) for r in a_then_b)
+    b_both_a = all(bool(r["live_a"]["prefer_h1"] and r["live_b"]["prefer_h1"]) for r in b_then_a)
+    cos = [float(r["teach_rho_cosine"]) for r in rows]
+    l2s = [float(r["teach_rho_l2"]) for r in rows]
+    return {
+        "version": "TM.0.24.MOTORPERSIST.REAUDIT",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eligible_for_000005": False,
+        "n": 64,
+        "n_sequences": n,
+        "grid": p_grid(),
+        "orders": list(TEACH_ORDERS),
+        "n_worlds": 2,
+        "domain": DEV_DOMAIN,
+        "score_domain_opened": False,
+        "equal_positive_consequences": equal_adv_all,
+        "pos_delta": list(POS_DELTA),
+        "last_write_wins_all": last_write_all,
+        "a_then_b_both_select_b": a_both_b,
+        "b_then_a_both_select_a": b_both_a,
+        "opposing_any": opposing_any,
+        "usable_any": any(bool(r["usable"]) for r in rows),
+        "teach_rho_cosine_min": min(cos),
+        "teach_rho_cosine_max": max(cos),
+        "teach_rho_l2_min": min(l2s),
+        "teach_rho_l2_max": max(l2s),
+        "historical_decision_sha": HISTORICAL_DECISION_SHA,
+        "historical_p_lock_sha": HISTORICAL_P_LOCK_SHA,
+        "decision_code": "identity_survives_opposing_learning_fails",
+        "next": "plastic_write_geometry_or_connection_local_state",
+        "rows": rows,
+        "note": "Equal MID consequences and both teaching orders. Last write still wins. Diagnosis direction unchanged. SCORE unopened. Historical MOTORPERSIST locks untouched.",
+    }
+
+
+def write_reaudit_lock(dev: dict[str, Any] | None = None) -> dict[str, Any]:
+    if sha_file(DECISION) != HISTORICAL_DECISION_SHA:
+        raise RuntimeError("historical decision.lock drifted — do not rewrite it")
+    if sha_file(P_LOCK) != HISTORICAL_P_LOCK_SHA:
+        raise RuntimeError("historical p.lock drifted — do not rewrite it")
+    out = dev or run_reaudit_grid()
+    out["env"] = torch_env()
+    out["git_head"] = _git_head()
+    if REAUDIT_LOCK.exists():
+        raise RuntimeError("reaudit.lock exists")
+    REAUDIT_LOCK.write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8")
+    REAUDIT_MD.write_text(
+        "# TM.0.24.MOTORPERSIST equal-advantage re-audit\n\n"
+        f"{out['n_sequences']} DEV sequences (`p` grid × 2 worlds × both orders). "
+        "Both handles share one positive MID delta. "
+        f"A→B both select B: **{out['a_then_b_both_select_b']}**. "
+        f"B→A both select A: **{out['b_then_a_both_select_a']}**. "
+        f"Opposing any: **{out['opposing_any']}**. "
+        f"Teaching-state cosine [{out['teach_rho_cosine_min']:.6f}, {out['teach_rho_cosine_max']:.6f}]; "
+        f"L2 [{out['teach_rho_l2_min']:.6f}, {out['teach_rho_l2_max']:.6f}].\n\n"
+        "Diagnosis unchanged: **identity_survives_opposing_learning_fails**. "
+        "SCORE unopened. Historical MOTORPERSIST locks untouched. "
+        "Next is plastic-write geometry. Product **0.0.004**. `earned_next=false`.\n",
+        encoding="utf-8",
+    )
+    return out
 
 
 def write_p_lock(dev: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -714,6 +864,8 @@ def main() -> None:
     ap.add_argument("--write-p-lock", action="store_true")
     ap.add_argument("--write-dev-decision", action="store_true")
     ap.add_argument("--write-runner-lock", action="store_true")
+    ap.add_argument("--reaudit", action="store_true")
+    ap.add_argument("--write-reaudit-lock", action="store_true")
     ap.add_argument("--score", action="store_true")
     ap.add_argument("--write-decision", action="store_true")
     args = ap.parse_args()
@@ -727,6 +879,10 @@ def main() -> None:
         print(json.dumps(write_dev_decision(), indent=2, default=str))
     elif args.write_runner_lock:
         print(json.dumps(write_runner_lock(), indent=2))
+    elif args.reaudit:
+        print(json.dumps(run_reaudit_grid(), indent=2, default=str))
+    elif args.write_reaudit_lock:
+        print(json.dumps(write_reaudit_lock(), indent=2, default=str))
     elif args.score:
         out = run_all()
         if args.write_decision:

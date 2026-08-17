@@ -2300,6 +2300,8 @@ Candidate (this cycle): [`cortex.candidate.v30.lock`](cortex.candidate.v30.lock)
 
 Result: [`lineage_motorpersist.decision.lock`](lineage_motorpersist.decision.lock) **identity_survives_opposing_learning_fails**. No grid `p` kept A/B distinct *and* allowed opposing sequential teaching *and* left the motor map intact. The first opposing protocol taught a negative-advantage handle; retest with two positive-advantage actuators still fails (last write wins for both cues). Identity can survive at `p≥0.25` (L2); live A/B rankings stay the same handle. Next is plastic-write geometry / compact connection-local state — not a context/motor partition and not SFNN cell classes. Scored worlds not opened. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
 
+Equal-advantage re-audit: [`lineage_motorpersist.reaudit.lock`](lineage_motorpersist.reaudit.lock). Both handles share one positive MID delta; 24 DEV sequences (grid × 2 worlds × both orders). A→B makes both select B; B→A makes both select A. Teaching-state cosine and L2 recorded. SCORE unopened. Historical MOTORPERSIST locks untouched. Diagnosis direction unchanged: shared-write last-write-wins. Next is plastic-write geometry.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

@@ -52,6 +52,7 @@ jobs:
           python tests/test_tm023cortex.py
           python tests/test_tm024lineage.py
           python tests/test_tm024wallmap.py
+          python tests/test_tm024motorpersist.py
           python -m experiments.run_tm023cortex --verify-prereg
           python -m experiments.run_tm023cortex --verify-sanity-amendment
           python -m experiments.run_tm023cortex --verify-v4-gate

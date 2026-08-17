@@ -1,0 +1,992 @@
+{
+  "version": "TM.0.24.MOTORPERSIST.REAUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "n": 64,
+  "n_sequences": 24,
+  "grid": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    0.9,
+    0.95
+  ],
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 2,
+  "domain": "TM024.MOTORPERSIST.DEV.",
+  "score_domain_opened": false,
+  "equal_positive_consequences": true,
+  "pos_delta": [
+    0.25,
+    -0.1,
+    0.15,
+    0.0
+  ],
+  "last_write_wins_all": true,
+  "a_then_b_both_select_b": true,
+  "b_then_a_both_select_a": true,
+  "opposing_any": false,
+  "usable_any": false,
+  "teach_rho_cosine_min": 0.9977893890160422,
+  "teach_rho_cosine_max": 0.9996619534049846,
+  "teach_rho_l2_min": 0.07502412227011425,
+  "teach_rho_l2_max": 0.2364670754145881,
+  "historical_decision_sha": "75d0ab57de8c4e394d42f78fa2af0494722b85348f123b9796de3e9b74af93b9",
+  "historical_p_lock_sha": "634886c2fa0ccc531b390b9f919ac7c64262a4748c95cee9381362fbab6d1559",
+  "decision_code": "identity_survives_opposing_learning_fails",
+  "next": "plastic_write_geometry_or_connection_local_state",
+  "rows": [
+    {
+      "p": 0.0,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "A_then_B",
+      "identity": false,
+      "elig_cosine": 0.9998620495015036,
+      "elig_l2": 0.047961366370770926,
+      "teach_rho_cosine": 0.99964932875396,
+      "teach_rho_l2": 0.07662489696351542,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_574478241",
+      "live_a": {
+        "h1": 0.18674196599801976,
+        "h2": 0.8618946921717442,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.18638232221581055,
+        "h2": 0.8620802642899531,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 2.547004437594626,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.0,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "B_then_A",
+      "identity": false,
+      "elig_cosine": 0.9998620495015036,
+      "elig_l2": 0.047961366370770926,
+      "teach_rho_cosine": 0.99964932875396,
+      "teach_rho_l2": 0.07662489696351542,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_318221797",
+      "live_a": {
+        "h1": 0.8620802642899371,
+        "h2": 0.18638232221584117,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.8618946921717284,
+        "h2": 0.1867419659980504,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 2.547004437594626,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.0,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "A_then_B",
+      "identity": true,
+      "elig_cosine": 0.9997321293074743,
+      "elig_l2": 0.06719504420722412,
+      "teach_rho_cosine": 0.99964932875396,
+      "teach_rho_l2": 0.07662489696351542,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_264862539",
+      "live_a": {
+        "h1": 0.38818626358755215,
+        "h2": 0.8796130724286912,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.38790541568553905,
+        "h2": 0.8797579867637024,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 2.5303867096825794,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.0,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "B_then_A",
+      "identity": true,
+      "elig_cosine": 0.9997321293074743,
+      "elig_l2": 0.06719504420722412,
+      "teach_rho_cosine": 0.99964932875396,
+      "teach_rho_l2": 0.07662489696351542,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_897903749",
+      "live_a": {
+        "h1": 0.879757986763677,
+        "h2": 0.38790541568558884,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.8796130724286655,
+        "h2": 0.38818626358760205,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 2.5303867096825794,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.25,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "A_then_B",
+      "identity": true,
+      "elig_cosine": 0.9998304640861602,
+      "elig_l2": 0.05317565974406176,
+      "teach_rho_cosine": 0.9996619534049846,
+      "teach_rho_l2": 0.07502412227011425,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_574478241",
+      "live_a": {
+        "h1": 0.18539380535266042,
+        "h2": 0.8625896663978807,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.18505448850004508,
+        "h2": 0.8627642994857904,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 1.9102533281959697,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.25,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "B_then_A",
+      "identity": true,
+      "elig_cosine": 0.9998304640861602,
+      "elig_l2": 0.05317565974406176,
+      "teach_rho_cosine": 0.9996619534049846,
+      "teach_rho_l2": 0.07502412227011425,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_318221797",
+      "live_a": {
+        "h1": 0.8627642994857748,
+        "h2": 0.18505448850007572,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.8625896663978647,
+        "h2": 0.1853938053526911,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 1.9102533281959697,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.25,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "A_then_B",
+      "identity": true,
+      "elig_cosine": 0.9998365203114731,
+      "elig_l2": 0.052205331428197305,
+      "teach_rho_cosine": 0.9996619534049846,
+      "teach_rho_l2": 0.07502412227011425,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_264862539",
+      "live_a": {
+        "h1": 0.3871332217688807,
+        "h2": 0.8801559133881782,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.3868680731506398,
+        "h2": 0.8802923749908977,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 1.8977900322619348,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.25,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "B_then_A",
+      "identity": true,
+      "elig_cosine": 0.9998365203114731,
+      "elig_l2": 0.052205331428197305,
+      "teach_rho_cosine": 0.9996619534049846,
+      "teach_rho_l2": 0.07502412227011425,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_897903749",
+      "live_a": {
+        "h1": 0.880292374990872,
+        "h2": 0.3868680731506896,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.8801559133881527,
+        "h2": 0.38713322176893056,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 1.8977900322619348,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.5,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "A_then_B",
+      "identity": true,
+      "elig_cosine": 0.9995618238350872,
+      "elig_l2": 0.08948475579866819,
+      "teach_rho_cosine": 0.999180987675716,
+      "teach_rho_l2": 0.12249628892694378,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_574478241",
+      "live_a": {
+        "h1": 0.18486103595753298,
+        "h2": 0.8628638108105607,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.18403312711091285,
+        "h2": 0.8632892649879299,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 1.273502218797313,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.5,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "B_then_A",
+      "identity": true,
+      "elig_cosine": 0.9995618238350872,
+      "elig_l2": 0.08948475579866819,
+      "teach_rho_cosine": 0.999180987675716,
+      "teach_rho_l2": 0.12249628892694378,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_318221797",
+      "live_a": {
+        "h1": 0.863289264987914,
+        "h2": 0.18403312711094333,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.8628638108105449,
+        "h2": 0.1848610359575636,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 1.273502218797313,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.5,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "A_then_B",
+      "identity": true,
+      "elig_cosine": 0.9995521688703857,
+      "elig_l2": 0.09060544359184772,
+      "teach_rho_cosine": 0.999180987675716,
+      "teach_rho_l2": 0.12249628892694378,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_264862539",
+      "live_a": {
+        "h1": 0.386716885865516,
+        "h2": 0.8803701452120385,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.38606969480779746,
+        "h2": 0.8807027302849562,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 1.2651933548412897,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.5,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "B_then_A",
+      "identity": true,
+      "elig_cosine": 0.9995521688703857,
+      "elig_l2": 0.09060544359184772,
+      "teach_rho_cosine": 0.999180987675716,
+      "teach_rho_l2": 0.12249628892694378,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_897903749",
+      "live_a": {
+        "h1": 0.8807027302849305,
+        "h2": 0.38606969480784714,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.880370145212013,
+        "h2": 0.38671688586556596,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 1.2651933548412897,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.75,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "A_then_B",
+      "identity": true,
+      "elig_cosine": 0.9991701071960908,
+      "elig_l2": 0.13356610669456695,
+      "teach_rho_cosine": 0.9984258675353441,
+      "teach_rho_l2": 0.18421664475967445,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_574478241",
+      "live_a": {
+        "h1": 0.18510526370615696,
+        "h2": 0.8627381747452321,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.18350752346177027,
+        "h2": 0.8635590148582956,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.6367511093986565,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.75,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "B_then_A",
+      "identity": true,
+      "elig_cosine": 0.9991701071960908,
+      "elig_l2": 0.13356610669456695,
+      "teach_rho_cosine": 0.9984258675353441,
+      "teach_rho_l2": 0.18421664475967445,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_318221797",
+      "live_a": {
+        "h1": 0.8635590148582798,
+        "h2": 0.18350752346180074,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.8627381747452164,
+        "h2": 0.1851052637061875,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.6367511093986565,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.75,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "A_then_B",
+      "identity": true,
+      "elig_cosine": 0.9990293465797193,
+      "elig_l2": 0.1447999423440959,
+      "teach_rho_cosine": 0.9984258675353441,
+      "teach_rho_l2": 0.18421664475967445,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_264862539",
+      "live_a": {
+        "h1": 0.3869077526735536,
+        "h2": 0.8802719591756969,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.38565868408789644,
+        "h2": 0.8809136688624701,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.632596677420645,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.75,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "B_then_A",
+      "identity": true,
+      "elig_cosine": 0.9990293465797193,
+      "elig_l2": 0.1447999423440959,
+      "teach_rho_cosine": 0.9984258675353441,
+      "teach_rho_l2": 0.18421664475967445,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_897903749",
+      "live_a": {
+        "h1": 0.8809136688624446,
+        "h2": 0.38565868408794624,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.8802719591756714,
+        "h2": 0.38690775267360333,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.632596677420645,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.9,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "A_then_B",
+      "identity": true,
+      "elig_cosine": 0.9989271518844036,
+      "elig_l2": 0.16115998545164523,
+      "teach_rho_cosine": 0.9979453955403635,
+      "teach_rho_l2": 0.22327934639444302,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_574478241",
+      "live_a": {
+        "h1": 0.18549948115998535,
+        "h2": 0.8625352558762945,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.18341167122652308,
+        "h2": 0.8636081785433921,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.2547004437594626,
+      "motor_alive": false,
+      "usable": false
+    },
+    {
+      "p": 0.9,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "B_then_A",
+      "identity": true,
+      "elig_cosine": 0.9989271518844036,
+      "elig_l2": 0.16115998545164523,
+      "teach_rho_cosine": 0.9979453955403635,
+      "teach_rho_l2": 0.22327934639444302,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_318221797",
+      "live_a": {
+        "h1": 0.8636081785433763,
+        "h2": 0.18341167122655355,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.8625352558762787,
+        "h2": 0.18549948116001594,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.2547004437594626,
+      "motor_alive": false,
+      "usable": false
+    },
+    {
+      "p": 0.9,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "A_then_B",
+      "identity": true,
+      "elig_cosine": 0.998679672582896,
+      "elig_l2": 0.1792010559536046,
+      "teach_rho_cosine": 0.9979453955403635,
+      "teach_rho_l2": 0.22327934639444302,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_264862539",
+      "live_a": {
+        "h1": 0.3872157898168875,
+        "h2": 0.8801134006256062,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.3855837182217207,
+        "h2": 0.8809521196950197,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.25303867096825794,
+      "motor_alive": false,
+      "usable": false
+    },
+    {
+      "p": 0.9,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "B_then_A",
+      "identity": true,
+      "elig_cosine": 0.998679672582896,
+      "elig_l2": 0.1792010559536046,
+      "teach_rho_cosine": 0.9979453955403635,
+      "teach_rho_l2": 0.22327934639444302,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_897903749",
+      "live_a": {
+        "h1": 0.8809521196949941,
+        "h2": 0.3855837182217704,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.8801134006255805,
+        "h2": 0.38721578981693733,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.25303867096825794,
+      "motor_alive": false,
+      "usable": false
+    },
+    {
+      "p": 0.95,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "A_then_B",
+      "identity": true,
+      "elig_cosine": 0.9988489538860283,
+      "elig_l2": 0.17045709314566465,
+      "teach_rho_cosine": 0.9977893890160422,
+      "teach_rho_l2": 0.2364670754145881,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_574478241",
+      "live_a": {
+        "h1": 0.1856561238086223,
+        "h2": 0.8624545830814623,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.18340918339083773,
+        "h2": 0.8636094544611229,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.12735022187973144,
+      "motor_alive": false,
+      "usable": false
+    },
+    {
+      "p": 0.95,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "order": "B_then_A",
+      "identity": true,
+      "elig_cosine": 0.9988489538860283,
+      "elig_l2": 0.17045709314566465,
+      "teach_rho_cosine": 0.9977893890160422,
+      "teach_rho_l2": 0.2364670754145881,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_318221797",
+      "live_a": {
+        "h1": 0.8636094544611074,
+        "h2": 0.1834091833908682,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.8624545830814464,
+        "h2": 0.18565612380865296,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.12735022187973144,
+      "motor_alive": false,
+      "usable": false
+    },
+    {
+      "p": 0.95,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "A_then_B",
+      "identity": true,
+      "elig_cosine": 0.9985640732579318,
+      "elig_l2": 0.1908146963456061,
+      "teach_rho_cosine": 0.9977893890160422,
+      "teach_rho_l2": 0.2364670754145881,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_264862539",
+      "live_a": {
+        "h1": 0.38733817207742477,
+        "h2": 0.8800503723312314,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "live_b": {
+        "h1": 0.3855817724426066,
+        "h2": 0.8809531176122802,
+        "prefer_h1": false,
+        "prefer_h2": true
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.12651933548412903,
+      "motor_alive": false,
+      "usable": false
+    },
+    {
+      "p": 0.95,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "order": "B_then_A",
+      "identity": true,
+      "elig_cosine": 0.9985640732579318,
+      "elig_l2": 0.1908146963456061,
+      "teach_rho_cosine": 0.9977893890160422,
+      "teach_rho_l2": 0.2364670754145881,
+      "s0": true,
+      "opposing": false,
+      "last_write_wins": true,
+      "last_write_handle": "h_897903749",
+      "live_a": {
+        "h1": 0.880953117612255,
+        "h2": 0.38558177244265646,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "live_b": {
+        "h1": 0.8800503723312059,
+        "h2": 0.3873381720774747,
+        "prefer_h1": true,
+        "prefer_h2": false
+      },
+      "taught_adv": [
+        0.23799941637852023,
+        0.23799941637852023
+      ],
+      "mid_adv": {
+        "h1": 0.23799941637852023,
+        "h2": 0.23799941637852023
+      },
+      "equal_adv": true,
+      "motor_step_l2": 0.12651933548412903,
+      "motor_alive": false,
+      "usable": false
+    }
+  ],
+  "note": "Equal MID consequences and both teaching orders. Last write still wins. Diagnosis direction unchanged. SCORE unopened. Historical MOTORPERSIST locks untouched.",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "git_head": "64de7ee2a249377dc33dde57f13d2f7105a07ca3"
+}
