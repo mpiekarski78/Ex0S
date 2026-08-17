@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.V13 candidate:** Adds the authorized slow advantage baseline (conflict vs decaying agreeing `ema`; no snap on surprise). Nine sanity + math audit pass. Population C4/C5/C6 green. [`cortex.candidate.v13.lock`](cortex.candidate.v13.lock). No reveal in this commit. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V13 apparatus:** Authorizes one slow advantage baseline. Scorers, floors, and HOLD bias retained. Frozen commitment, no neural edit yet, no candidate SHA. [`cortex_v13.prereg.lock`](cortex_v13.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V12 gate fail:** Candidate `8236dbc` revealed after a clean push (git SHA pinned). Seed-derived D1–D2 **12/16** — **not clear**. D1 32/32, D2 28/32, both population extras green. Four D2 reds fail only `holds>=5` (two at 4, two at 3). One-step last-ACT snap is the diagnosed gap. [`cortex_v12_gate.failure.lock`](cortex_v12_gate.failure.lock) + [`cortex_v13.isolation.lock`](cortex_v13.isolation.lock). **DEVELOP.v12 refused.** Do not edit-rescore v12. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V12 candidate:** Adds the authorized surprise→HOLD law (opposite-sign ACT body-advantage → next-step HOLD bias + plastic HOLD-vs-ACT). Nine sanity + math audit pass. Population C4/C5/C6 green. [`cortex.candidate.v12.lock`](cortex.candidate.v12.lock). No reveal in this commit. `earned_next=false`; `ex0s=null`; product **0.0.004**.

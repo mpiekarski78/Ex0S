@@ -2048,3 +2048,5 @@ Canonical main `2a99035`. V12 gate **12/16** stands. Do not edit-rescore v12. **
 
 v13 apparatus: [`cortex_v13_stat_contract.lock`](cortex_v13_stat_contract.lock), [`cortex_v13_architecture_amendment.lock`](cortex_v13_architecture_amendment.lock), [`cortex_v13.prereg.lock`](cortex_v13.prereg.lock). Authorizes a slow advantage baseline after this freeze is on `origin/main`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle, before reveal): [`cortex.candidate.v13.lock`](cortex.candidate.v13.lock). Opposite-sign vs slow `ema` sets the existing HOLD response and does not snap the baseline. Population C4 + C5 (31/32) + C6 green. Reveal must pin the pushed candidate git SHA.
+

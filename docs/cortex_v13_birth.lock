@@ -1,19 +1,16 @@
 {
-  "version": "TM.0.23.CORTEX.CANDIDATE.V13",
+  "version": "TM.0.23.CORTEX.V13.BIRTH",
   "product": "0.0.004",
   "earned_next": false,
   "ex0s": null,
-  "factory": "experiments.run_tm023cortex.make_cortex",
-  "supersedes_v12_sha": "6137fe0b24d23c61a0b6ab314631fd3a60172cb6d06dfa440a8c2a7f9517b010",
-  "v13_birth_sha": "880b1e087cae99c0d29928acffcac685cf63f7f285a0acc2de94269b5a94dec1",
-  "architecture_amendment_sha": "91580d620e8f360f2d9cc8ead36061872fb8c2d9009c4659693b4f554e26b5da",
   "diagnosis_v12_sha": "86d2e6f90630f9ab82a7c31bb62847e39188d4fa51b2d45eae5bc8fb13e742e6",
   "stat_contract_sha": "2faa0aa8186211a47cbd55c06f134fee21ef24c268e069230ded1b4a60253180",
-  "math_audit_sha": "884fef1834b2da27e9b3c50cce3ba2371bc50815192c6b40ed919c3d22040027",
+  "architecture_amendment_sha": "91580d620e8f360f2d9cc8ead36061872fb8c2d9009c4659693b4f554e26b5da",
   "learning_law_ok": true,
   "gpu_scoring_ready": true,
   "all_sanity_ok": true,
   "neural_cortex_sha": "156b2f4fe64cc65a4b7ad9eb52bae44798bc198a0b98433a8f52b0e26ccedba3",
+  "prior_v12_neural_sha": "63096393d8ae5f81d33940b0b8b5ea86c004b84daa1228d7c277118149eaf4c5",
   "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
   "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
   "env": {
@@ -68,5 +65,11 @@
       "HOLD": 0.0
     }
   },
-  "note": "Candidate v13 adds a slow advantage baseline. Must re-earn D1\u2013D2. No DEVELOP yet."
+  "checks": {
+    "unit_motor": true,
+    "bind_n": 2,
+    "b_op_act": 0.85,
+    "op_cost_act": 0.05
+  },
+  "note": "v13 slow advantage baseline. Must re-earn D1\u2013D2. No DEVELOP yet."
 }

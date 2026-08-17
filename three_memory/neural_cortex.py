@@ -54,8 +54,10 @@ BANNED_KEYS = frozenset(
 )
 BODY_SETPOINT = np.array([1.0, 0.0, 1.0, 0.0], dtype=np.float64)
 # v12: opposite-sign ACT body_adv raises HOLD / lowers ACT on the next step.
+# v13: compare body_adv to a slow agreeing baseline instead of last-tick snap.
 CONFLICT_ADV_EPS = 1e-9
 CONFLICT_HOLD_BIAS = 2.0
+ADV_BASELINE_ALPHA = 0.05
 
 
 @dataclass
@@ -207,6 +209,7 @@ class NeuralCortex:
         self._pending: dict[str, Any] | None = None
         self._pending_writes: list[CortexRecord] = []
         self._last_act_body_adv = 0.0
+        self._adv_baseline = 0.0
         self._hold_after_conflict = False
         self.last_action: dict[str, Any] | None = None
         self.last_trajectory: list[np.ndarray] = []
@@ -506,21 +509,18 @@ class NeuralCortex:
         skip_act_cost = p["op"] == "ACT" and abs(body_adv) < 1e-9
         if not skip_act_cost:
             self.W_op = self.W_op + self.genome.eta_act * adv * torch.outer(e_op, rho_elig)
-        # v12: opposite-sign ACT consequence → next-step HOLD bias + plastic HOLD-vs-ACT.
-        if p["op"] == "ACT":
-            prev_adv = float(self._last_act_body_adv)
-            if (
-                abs(prev_adv) > CONFLICT_ADV_EPS
-                and abs(body_adv) > CONFLICT_ADV_EPS
-                and (prev_adv * body_adv) < 0.0
-            ):
+        # v13: opposite-sign vs slow baseline → HOLD; do not snap the baseline.
+        if p["op"] == "ACT" and abs(body_adv) > CONFLICT_ADV_EPS:
+            ema = float(self._adv_baseline)
+            if abs(ema) > CONFLICT_ADV_EPS and (ema * body_adv) < 0.0:
                 self._hold_after_conflict = True
                 e_conf = torch.zeros(len(OPS), dtype=self.dtype, device=self.device)
                 e_conf[OPS.index("HOLD")] = 1.0
                 e_conf[OPS.index("ACT")] = -1.0
                 self.W_op = self.W_op + self.genome.eta_act * abs(body_adv) * torch.outer(e_conf, rho_elig)
-            if abs(body_adv) > CONFLICT_ADV_EPS:
-                self._last_act_body_adv = float(body_adv)
+            else:
+                self._adv_baseline = (1.0 - ADV_BASELINE_ALPHA) * ema + ADV_BASELINE_ALPHA * float(body_adv)
+            self._last_act_body_adv = float(body_adv)
         # v4: b_op frozen (non-plastic)
         # v6: motor-query credit only when body consequences differ; use selected snapshot
         if p["token"] is not None and p["op"] in ("EMIT", "ACT"):
@@ -663,6 +663,7 @@ class NeuralCortex:
         self.v_end = self._birth_v_end.copy()
         self.age = 0
         self._last_act_body_adv = 0.0
+        self._adv_baseline = 0.0
         self._hold_after_conflict = False
         self.reset_rho()
 
@@ -718,6 +719,7 @@ class NeuralCortex:
                 "motor": _np_state(self.rng_motor),
             },
             "last_act_body_adv": float(self._last_act_body_adv),
+            "adv_baseline": float(self._adv_baseline),
             "hold_after_conflict": bool(self._hold_after_conflict),
         }
 
@@ -793,6 +795,7 @@ class NeuralCortex:
         self.rng_permute = _restore_rng(g.seed_permute, rs.get("permute"))
         self.rng_motor = _restore_rng(g.seed_motor, rs.get("motor"))
         self._last_act_body_adv = float(snap.get("last_act_body_adv") or 0.0)
+        self._adv_baseline = float(snap.get("adv_baseline") or 0.0)
         self._hold_after_conflict = bool(snap.get("hold_after_conflict") or False)
 
     def weight_hash(self) -> str:
