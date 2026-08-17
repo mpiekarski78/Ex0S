@@ -2092,3 +2092,5 @@ Result: [`cortex_d3_r3_gate.lock`](cortex_d3_r3_gate.lock) **16/16**. Audit [`co
 
 Canonical main `24df253`. FULLDEV.R2 apparatus: [`cortex_fulldev_r2.prereg.lock`](cortex_fulldev_r2.prereg.lock). Live v16, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Result: [`cortex_fulldev_r2.lock`](cortex_fulldev_r2.lock) **0/16**. D3 31/32 transferred. First-fail `{D1:13, D4:19}`. D4 is 0/32: `donor_changes_retrieval=false` on every life. Audit [`cortex_fulldev_r2.audit.lock`](cortex_fulldev_r2.audit.lock). Diagnosis [`cortex_diagnosis.fulldev_r2.lock`](cortex_diagnosis.fulldev_r2.lock): S write must make the written content immediately recallable. Do not rescore FULLDEV.R2. Next is isolated D4.R1.
+

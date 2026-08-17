@@ -1,0 +1,78 @@
+{
+  "version": "TM.0.23.CORTEX.FULLDEV.R2.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "6ae06f142967a9db75fcbc1956fe6db8c9560b2a9bb0811a13115df88e3c7699",
+  "failure_sha": "949b4ea5ba65d8e35d16e63bfeb3df9ac461ee895ff60647adb709cc58371272",
+  "reveal_sha": "3644576f9a3933318a61c21b9de30d4fea89a18b8b5784d635e48f9659cd0735",
+  "n_pair_clear": 0,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "apparatus_git_sha": "728dfe1c145935460e253c4a9e924e60fd666e3a",
+      "candidate_git_sha": "dd3d0798316ae095a31aa87803b4ebc130604dbe"
+    },
+    {
+      "id": "domain_is_full_r2",
+      "ok": true,
+      "domain": "TM023.FULL.R2."
+    },
+    {
+      "id": "d3_transferred",
+      "ok": true,
+      "d3_ok": 31,
+      "note": "Isolated D3.R3 law holds in full-dev (31/32). The one miss is equal_holds=6."
+    },
+    {
+      "id": "d2_green",
+      "ok": true,
+      "d2_ok": 32
+    },
+    {
+      "id": "first_fail_modes",
+      "ok": true,
+      "first_fail_histogram": {"D1": 13, "D4": 19},
+      "stage_pass_counts": {"D0": 32, "D1": 19, "D2": 32, "D3": 31, "D4": 0, "D5": 2, "D6": 0, "D7": 0, "D8": 0, "D9": 2, "D10": 20, "D11": 32, "D12": 19}
+    },
+    {
+      "id": "d4_is_the_zero_wall",
+      "ok": true,
+      "d4_ok": 0,
+      "note": "All 32 lives write (n_writes 85–139), persist, and strip. donor_ok is true. donor_changes_retrieval is false on every life: stripped_buf_norm == donor_buf_norm. Host donor write to S does not change the retrieval buffer."
+    },
+    {
+      "id": "d4_scorer_not_soft",
+      "ok": true,
+      "note": "Historical score_d4 requires organism write, persist after rho reset, strip, and donor S changing retrieval. Not a floor-lowering case. Do not edit cortex_develop_scorers.py."
+    },
+    {
+      "id": "d1_still_partial",
+      "ok": true,
+      "d1_ok": 19,
+      "note": "13 first-fails at D1 are the known full-bind get/drop lure (press=0). D4 is the 0/32 wall after D1–D3."
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_fulldev_r2": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d4",
+    "refuse": [
+      "rewrite docs/cortex_fulldev_r2.lock",
+      "edit-and-rescore on revealed FULLDEV.R2 worlds",
+      "stamp earned_next",
+      "open nursery conversation",
+      "skip D4 to attack D5–D12"
+    ]
+  },
+  "note": "0/16 stands. D3 transferred. The first post-D3 wall is D4: S write does not refresh recall."
+}

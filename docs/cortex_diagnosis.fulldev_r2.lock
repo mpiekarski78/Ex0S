@@ -1,0 +1,26 @@
+{
+  "version": "TM.0.23.CORTEX.FULLDEV.R2.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "728dfe1c145935460e253c4a9e924e60fd666e3a",
+  "neural_mechanism_changed": true,
+  "v17_authorized_only_if_this_lock": true,
+  "claim": "FULLDEV.R2 D4 is 0/32 because a host (or organism) write to S does not change retrieval_buffer. The organism already WRITEs and persists. D4's remaining clause is donor S changes recalled fact. retrieval_buffer updates only on RETRIEVE, and score_d4's donor write never runs a motor RETRIEVE. Missing generic law: when S is written, the written content becomes immediately recallable in the retrieval buffer (recency slot).",
+  "authorize_v17": [
+    "keep v16 equal-evidence / familiarity / conflict / 3-symbol laws",
+    "on CortexMemory.write, copy the written content into retrieval_buffer[0] (recency)",
+    "do not add capability-specific functions",
+    "do not edit cortex_develop_scorers.py",
+    "new sealed commitment domain TM023.D4.R1. unused vs FULL.R2 / D3.R* / pair_seeds",
+    "re-earn C4/C5/C6 before any D4 reveal",
+    "narrow D4 gate ≥13/16 before reopening full D0–D12"
+  ],
+  "refuse": [
+    "edit-and-rescore FULLDEV.R2",
+    "lower D4 donor_changes_retrieval",
+    "drop C6",
+    "skip D4",
+    "stamp product"
+  ]
+}

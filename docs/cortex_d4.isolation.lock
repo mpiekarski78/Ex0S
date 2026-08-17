@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.23.CORTEX.D4.ISOLATION",
+  "lab": "TM.0.23.CORTEX.FULLDEV.R2",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "FULLDEV.R2 D0–D12 failed 0/16. D3 transferred (31/32). D4 is 0/32: writes persist but donor S does not change retrieval.",
+  "fulldev_r2_failure_lock": "docs/cortex_fulldev_r2.failure.lock",
+  "fulldev_r2_lock": "docs/cortex_fulldev_r2.lock",
+  "fulldev_r2_reveal_lock": "docs/cortex_fulldev_r2_eval_reveal.lock",
+  "fulldev_r2_diagnosis_lock": "docs/cortex_diagnosis.fulldev_r2.lock",
+  "refuse": [
+    "edit-and-rescore FULLDEV.R2 on revealed worlds",
+    "run D5–D12 isolation before D4 clears",
+    "reuse TM023.FULL.R2. or FULL.R1. or D3.R* or pair_seeds worlds",
+    "open nursery conversation",
+    "stamp earned_next"
+  ],
+  "next_cycle": {
+    "name": "isolated_d4_r1",
+    "requires": [
+      "frozen diagnosis of missing S-write → retrieval recency",
+      "new architecture amendment authorizing only that generic law",
+      "new birth + candidate.v17.lock after the apparatus is on origin/main",
+      "new sealed commitment ≠ FULLDEV.R2",
+      "fresh narrow D4 gate ≥13/16 before reopening full D0–D12"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004."
+}
