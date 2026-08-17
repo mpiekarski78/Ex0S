@@ -22,6 +22,7 @@ RUNNER_SHA = "232cffa23619de1fcdbde7b8c82fc3de8e1c2fbe84a014a40bc27f3723cbbcf6"
 DEV_LOCK_SHA = "7aa13d1bbd172cadb565d5d6cafd27d91f47b120491069a00a34111a6d505ca6"
 DEV_MANIFEST_SHA = "7ad1feb895e6c28897be7dbafe082f5e8a50acbeb0f64695f18f2aea88d9fb7e"
 DECISION_SHA = "6de34e295b54ef51c2684b0ce1cf7295064300db75e9e7ee258c7bb95665072d"
+ADDENDUM_SHA = "04a5e91cdc23839c9e3c954dc8c921f902c092de14acd906ada7caa678a6b083"
 EXPECTED_N_CELLS = 220
 ARMS = ("C0", "C1", "C2", "C3", "C4")
 PHASES_OK = (
@@ -46,6 +47,7 @@ def test_phase_a_files() -> None:
         "docs/lineage_convergencemap.isolation.lock",
         "docs/lineage_tracebridge.decision.lock",
         "docs/lineage_tracebridge.decision.addendum.lock",
+        "docs/lineage_convergencemap.decision.addendum.lock",
         "docs/cortex.candidate.v30.lock",
         "experiments/run_tm024convergencemap.py",
         "experiments/run_tm024tracebridge.py",
@@ -96,6 +98,19 @@ def test_phase_a_files() -> None:
     assert add["rewrite_historical_decision"] is False
     assert add["next"] == "TM.0.24.CONVERGENCEMAP"
     assert add["does_not_reject_online_learning_generally"] is True
+    cvg_add_p = REPO_ROOT / "docs" / "lineage_convergencemap.decision.addendum.lock"
+    assert sha(cvg_add_p) == ADDENDUM_SHA
+    cvg_add = json.loads(cvg_add_p.read_text(encoding="utf-8"))
+    assert cvg_add["historical_code"] == "oracle_separability_not_operationally_reachable"
+    assert cvg_add["interpret_as"] == (
+        "oracle_separability_not_operationally_reachable_under_frozen_monotonic_retention_and_reversal_contract"
+    )
+    assert cvg_add["rewrite_historical_decision"] is False
+    assert cvg_add["next"] == "TM.0.24.MEMORYLIFECYCLEMAP"
+    assert cvg_add["does_not_mean_p1_unlearnable"] is True
+    assert cvg_add["c1_exact_replay_8cue"]["ranking_ok"] == 4
+    assert cvg_add["c1_exact_replay_8cue"]["passed"] == 0
+    assert cvg_add["historical_decision_sha"] == DECISION_SHA
     runner_p = REPO_ROOT / "docs" / "lineage_convergencemap.runner.lock"
     if runner_p.exists():
         runner = json.loads(runner_p.read_text(encoding="utf-8"))

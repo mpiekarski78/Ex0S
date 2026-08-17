@@ -2386,7 +2386,19 @@ CONVERGENCEMAP apparatus: [`lineage_convergencemap.prereg.lock`](lineage_converg
 
 Convergence runner: [`lineage_convergencemap.runner.lock`](lineage_convergencemap.runner.lock). `exposure_mode=live|replay` are distinct cells. PA status is post-update \(y(w^\top x)/\|w\|\). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
-Result: [`lineage_convergencemap.decision.lock`](lineage_convergencemap.decision.lock) **oracle_separability_not_operationally_reachable**. Live C0–C3 fail. Exact replay of C1/C3 fails. C4 sequential RLS ranks eight cues on frozen P1 but fails ecological reversal and remains ceiling-only. Do not install the 512-row trace. SCORE unopened. No v31/v32. W1 stays closed. The 1,536 budget stays closed. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+Result: [`lineage_convergencemap.decision.lock`](lineage_convergencemap.decision.lock) **oracle_separability_not_operationally_reachable**. Live C0–C3 fail. Exact replay of C1/C3 fails the combined contract. C4 sequential RLS ranks eight cues on frozen P1 but fails ecological reversal and remains ceiling-only. Do not install the 512-row trace. SCORE unopened. No v31/v32. W1 stays closed. The 1,536 budget stays closed. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+
+Addendum: [`lineage_convergencemap.decision.addendum.lock`](lineage_convergencemap.decision.addendum.lock). Historical CONVERGENCEMAP preserved. Interpret the refusal as **oracle_separability_not_operationally_reachable_under_frozen_monotonic_retention_and_reversal_contract**. C1 exact replay ranked all eight cues. “Not operationally reachable” alone overstates that evidence. The remaining wall is memory lifecycle. Next is MEMORYLIFECYCLEMAP.
+
+## TM.0.24.CONVERGENCEMAP → isolated MEMORYLIFECYCLEMAP
+
+Canonical main `2686205`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Does a compact error-driven rule plus a fixed eight-slot P1 episode store, with content-addressed replacement on reversal, satisfy a phased acquire/stable/plasticity/specificity contract? Stop testing isolated write formulas. Do not open a trace or neural candidate. Do not resurrect W1. Do not declare v31/v32.
+
+MEMORYLIFECYCLEMAP apparatus: [`lineage_memorylifecyclemap.prereg.lock`](lineage_memorylifecyclemap.prereg.lock) + [`lineage_memorylifecyclemap.isolation.lock`](lineage_memorylifecyclemap.isolation.lock). Exact P1 bridge. L0 live C1 repetition, no store; L1 FIFO eight-slot replay; L2 content-addressed replacement; L3 refuses contradictory replacement on a content match (live reversal still trains; replay keeps the stale episode); L4 sequential RLS ceiling. Episodes hold only a 64-d P1, opaque handle, consequence, and age/version. Match by P1 L2 radius 0.05, not cue name and not a same-cue ceiling. Unused `TM024.MEMORYLIFECYCLEMAP.DEV.` / `TWIN.`. SCORE reserved. 512/1536 unopened. n stays 64. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
+
+Memory-lifecycle runner: [`lineage_memorylifecyclemap.runner.lock`](lineage_memorylifecyclemap.runner.lock). 140 cells. Phased contract. Matcher diagnostics. L3 refuse-on-contradiction. L4 ceiling-only. DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
