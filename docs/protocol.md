@@ -2058,3 +2058,11 @@ Canonical main `733a9f8`. V13 gate **14/16** stands. Do not edit-rescore v13. Do
 
 FULLDEV.R1 apparatus: [`cortex_fulldev_r1.prereg.lock`](cortex_fulldev_r1.prereg.lock), [`cortex_fulldev_r1.runner.lock`](cortex_fulldev_r1.runner.lock). Domain `TM023.FULL.R1.` ≠ V8–V13 and ≠ `pair_seeds`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Outcome: apparatus `41183aa` revealed after a clean push. Fresh D0–D12 **0/16** — **fail**. First-fail mode D3 (22). [`cortex_fulldev_r1.failure.lock`](cortex_fulldev_r1.failure.lock) + [`cortex_d3.isolation.lock`](cortex_d3.isolation.lock). Do not edit-rescore FULLDEV.R1. Nursery not opened.
+
+Diagnosis ([`cortex_diagnosis.fulldev_r1.lock`](cortex_diagnosis.fulldev_r1.lock)): D3 equal-evidence / distractor HOLD is missing. Isolate D3 only.
+
+## TM.0.23.CORTEX.FULLDEV.R1 audit → isolated D3
+
+Canonical main `41183aa`. FULLDEV.R1 **0/16** stands. Do not edit-rescore. Do not stamp product.
+

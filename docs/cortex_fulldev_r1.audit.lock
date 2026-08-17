@@ -1,0 +1,63 @@
+{
+  "version": "TM.0.23.CORTEX.FULLDEV.R1.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "9ed85f0d72cac46205926ff7531d2e9715e6669ac9c9796cb7737ce6633d09af",
+  "failure_sha": "ebba716e63e7d094d9011cb499b917b1630886c9f7eb11a4cfa5d64dfad98aff",
+  "n_pair_clear": 0,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git_commit",
+      "ok": true,
+      "apparatus_git_sha": "41183aa5409c26c2a2cd3a741c616113d01d00b2",
+      "candidate_git_sha": "99c387326d36d8a047c079b917276b121fb24228"
+    },
+    {
+      "id": "domain_is_full_r1",
+      "ok": true,
+      "domain": "TM023.FULL.R1."
+    },
+    {
+      "id": "d0_green",
+      "ok": true,
+      "d0_ok": 32
+    },
+    {
+      "id": "first_fail_mode_is_d3",
+      "ok": true,
+      "first_fail_histogram": {"D1": 7, "D3": 22, "D4": 2, "D2": 1},
+      "stage_pass_counts": {"D0": 32, "D1": 25, "D2": 31, "D3": 5, "D4": 0, "D5": 0, "D6": 4, "D7": 0, "D8": 0, "D9": 30, "D10": 13, "D11": 6, "D12": 13}
+    },
+    {
+      "id": "d3_scorer_not_soft",
+      "ok": true,
+      "note": "D3 requires equal-evidence HOLD>=8, clear_nonhold>=5, clear more actionable than distractor. Sample reds ACT on distractors and under-HOLD on equal cues. Not a floor-lowering case."
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    },
+    {
+      "id": "no_develop_v13",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_fulldev_r1": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d3",
+    "refuse": [
+      "rewrite docs/cortex_fulldev_r1.lock",
+      "edit-and-rescore on revealed FULLDEV.R1 worlds",
+      "stamp earned_next",
+      "open nursery conversation",
+      "skip D3 to attack D4–D12"
+    ]
+  },
+  "note": "0/16 stands. Motor D1–D2 mostly hold; the first post-motor wall is D3 relation/ambiguity."
+}

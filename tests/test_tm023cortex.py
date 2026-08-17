@@ -631,6 +631,12 @@ def test_verify_fulldev_r1_cli() -> None:
         assert not (REPO_ROOT / "docs" / "cortex_fulldev_r1.failure.lock").exists()
     else:
         assert (REPO_ROOT / "docs" / "cortex_fulldev_r1.failure.lock").exists()
+        res = json.loads((REPO_ROOT / "docs" / "cortex_fulldev_r1.lock").read_text(encoding="utf-8"))
+        assert res["battery"]["n_pair_clear"] == 0
+        assert res["battery"]["domain"] == "TM023.FULL.R1."
+        assert res["battery"]["first_fail_histogram"]["D3"] == 22
+        iso = json.loads((REPO_ROOT / "docs" / "cortex_d3.isolation.lock").read_text(encoding="utf-8"))
+        assert "open nursery conversation" in iso["refuse"]
     assert not (REPO_ROOT / "docs" / "cortex_development.v13.lock").exists()
 
 
