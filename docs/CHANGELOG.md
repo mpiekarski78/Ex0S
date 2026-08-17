@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.D5.R3 result:** **15/16 clear.** D0 32/32, D5 31/32. unknown_holds 10–19, known_nonhold 0.75–1.00. [`cortex_d5_r3_gate.lock`](cortex_d5_r3_gate.lock) + [`cortex_d5_r3.audit.lock`](cortex_d5_r3.audit.lock). Full D0–D12 still closed. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V26 / D5.R3 candidate:** Neophobia blocks unfamiliar phrase unroll. Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.453). [`cortex.candidate.v26.lock`](cortex.candidate.v26.lock) + [`cortex_mact_boundary.v26.lock`](cortex_mact_boundary.v26.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D5.R3 apparatus:** Isolated D5 after FULLDEV.R6 0/16. Neophobia on unfamiliar phrase authorized; no neural edit yet. [`cortex_d5_r3.prereg.lock`](cortex_d5_r3.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R6 result:** 0/16. D0 32, D1 17, D4 32, **D5 9**, D6 28, **D7 30**, D8 0. D7 transferred. D5 unknown HOLD regressed under phrase unroll. [`cortex_fulldev_r6.lock`](cortex_fulldev_r6.lock) + [`cortex_fulldev_r6.audit.lock`](cortex_fulldev_r6.audit.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

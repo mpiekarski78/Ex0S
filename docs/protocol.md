@@ -2218,3 +2218,9 @@ D5.R3 apparatus: [`cortex_d5_r3.prereg.lock`](cortex_d5_r3.prereg.lock). Neophob
 
 Candidate (this cycle): [`cortex.candidate.v26.lock`](cortex.candidate.v26.lock). Neophobia on unfamiliar phrase. C4/C5/C6 green. Reveal D5.R3 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d5_r3_gate.lock`](cortex_d5_r3_gate.lock) **15/16**. Audit [`cortex_d5_r3.audit.lock`](cortex_d5_r3.audit.lock). Isolated D5 recovered. Do not rescore. Next is FULLDEV.R7 on unused domain `TM023.FULL.R7.`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
+
+Canonical main `0984ef3`. FULLDEV.R7 apparatus follows. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
