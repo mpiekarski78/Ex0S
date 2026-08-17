@@ -1,0 +1,65 @@
+{
+  "version": "TM.0.23.CORTEX.D7.R1.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "a454d16ed4fc48d6877314752ea8cd11ff5732ed3f423ca801f543fd53503e56",
+  "failure_sha": "64cccb6dcf8124b876f1488a05c611926601a9b86d8c3b770b6dc7c8e0420746",
+  "reveal_sha": "8b01d0f6e00de6a597630d4d0d2cb09e6de02b0650180bd39b4ed33370fe1f15",
+  "n_pair_clear": 1,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "candidate_git_sha": "6ac974229f86557fb2d90e26e1d0d7587b252f1b"
+    },
+    {
+      "id": "domain_is_d7_r1",
+      "ok": true,
+      "domain": "TM023.D7.R1."
+    },
+    {
+      "id": "d7_still_red",
+      "ok": true,
+      "d7_ok": 11,
+      "n_pair_clear": 1,
+      "note": "11/32 D7. Softmax persist barely moved FULLDEV.R5's 10/32. 17/21 reds still max_length<4. 3 reds reach length>=4 but terminals<15."
+    },
+    {
+      "id": "softmax_persist_wrong_shape",
+      "ok": true,
+      "note": "Bias is too weak to start a long phrase and too sticky to terminate. HOLD/STOP terminals fall when unroll succeeds. Do not keep tuning UTTERANCE_PERSIST."
+    },
+    {
+      "id": "d6_mostly_held",
+      "ok": true,
+      "d6_ok": 29,
+      "note": "Three D6 reds: one emits=0, two holds=2. Persist did not collapse D6."
+    },
+    {
+      "id": "d7_scorer_not_soft",
+      "ok": true
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_d7_r1": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d7_r2",
+    "refuse": [
+      "rewrite docs/cortex_d7_r1_gate.lock",
+      "edit-and-rescore on revealed D7.R1 worlds",
+      "tune UTTERANCE_PERSIST and rescore",
+      "stamp earned_next",
+      "open nursery conversation"
+    ]
+  },
+  "note": "1/16 stands. Softmax utterance persist is the wrong shape. Next is phrase-final STOP / motor-program unroll."
+}

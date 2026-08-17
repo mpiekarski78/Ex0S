@@ -2190,3 +2190,9 @@ D7.R1 apparatus: [`cortex_d7_r1.prereg.lock`](cortex_d7_r1.prereg.lock). Utteran
 
 Candidate (this cycle): [`cortex.candidate.v24.lock`](cortex.candidate.v24.lock). Utterance persistence. C4/C5/C6 green. Reveal D7.R1 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d7_r1_gate.lock`](cortex_d7_r1_gate.lock) **1/16**. Audit [`cortex_d7_r1.audit.lock`](cortex_d7_r1.audit.lock). Softmax persist is the wrong shape. Do not rescore. Next is isolated D7.R2 with phrase-final STOP. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+## TM.0.23.CORTEX.D7.R1 1/16 → isolated D7.R2
+
+Canonical main `6ac9742`. Isolated D7.R2 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.23.CORTEX.D7.R2.ISOLATION",
+  "lab": "TM.0.23.CORTEX.D7.R1",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "D7.R1 scored 1/16. Softmax persist is the wrong shape: still short on 17/21 reds, terminals collapse on 3 unrolls.",
+  "d7_r1_gate": "docs/cortex_d7_r1_gate.lock",
+  "d7_r1_failure": "docs/cortex_d7_r1_gate.failure.lock",
+  "d7_r1_audit": "docs/cortex_d7_r1.audit.lock",
+  "v24_diagnosis": "docs/cortex_diagnosis.v24.lock",
+  "refuse": [
+    "edit-and-rescore D7.R1 on revealed worlds",
+    "reuse TM023.D7.R1. or FULL.R* or D6.R* worlds",
+    "open FULLDEV or nursery before a later isolated D7 ≥13/16",
+    "stamp earned_next"
+  ],
+  "next_cycle": {
+    "name": "isolated_d7_r2",
+    "requires": [
+      "frozen diagnosis of missing phrase-final STOP / motor-program unroll",
+      "new amendment: hard phrase unroll then STOP, not another persist constant",
+      "new birth + candidate.v25.lock",
+      "new sealed commitment ≠ D7.R1",
+      "re-earn C4/C5/C6",
+      "fresh narrow D7 ≥13/16 before reopening FULLDEV"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004. First isolated D7 miss; change the law because softmax persist is the wrong shape, not because of a three-fail count."
+}

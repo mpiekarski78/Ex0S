@@ -1,0 +1,29 @@
+{
+  "version": "TM.0.23.CORTEX.V24.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "6ac974229f86557fb2d90e26e1d0d7587b252f1b",
+  "neural_mechanism_changed": true,
+  "v25_authorized_only_if_this_lock": true,
+  "claim": "D7.R1 1/16. Softmax UTTERANCE_PERSIST=1.5 does not make a phrase. 17/21 reds stay max_length<4; 3 reds unroll but miss terminals>=15 because persist suppresses HOLD/STOP. Biology: a speech-motor program unrolls a just-heard phrase, may reduplicate it (canonical babbling), then hits a phrase-final boundary (STOP), not a mid-phrase HOLD and not an endless softmax babble. Missing generic law: hard phrase unroll + phrase-final STOP. Keep echoic token choice and inter-observe vocal refractory. Do not tune UTTERANCE_PERSIST again.",
+  "authorize_v25": [
+    "keep v16–v23 HOLD / habituation / S-write / RETRIEVE recency / echoic emit / vocal refractory",
+    "replace softmax utterance persist with a motor-program unroll: after the first EMIT, continue the current just-heard phrase, optionally reduplicate, then STOP",
+    "do not plant emit1/emit2/length-4 names",
+    "do not edit cortex_develop_scorers.py",
+    "do not lower distinct_lengths>=2, max_length>=4, terminals>=15, or curriculum_hits>=2",
+    "new sealed commitment domain TM023.D7.R2.",
+    "isolated D7 lives must run D1–D6 scorers first",
+    "re-earn C4/C5/C6 before any D7 reveal",
+    "narrow D7 gate ≥13/16 before reopening full D0–D12"
+  ],
+  "refuse": [
+    "edit-and-rescore D7.R1",
+    "tune UTTERANCE_PERSIST",
+    "lower D7 floors",
+    "drop C6",
+    "skip D7",
+    "stamp product"
+  ]
+}

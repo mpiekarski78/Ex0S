@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.D7.R1 result:** 1/16. D0 32, D7 11/32. Softmax persist is the wrong shape. [`cortex_d7_r1_gate.lock`](cortex_d7_r1_gate.lock) + [`cortex_d7_r1.audit.lock`](cortex_d7_r1.audit.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V24 / D7.R1 candidate:** Utterance persistence (`UTTERANCE_PERSIST=1.5`). Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.2). [`cortex.candidate.v24.lock`](cortex.candidate.v24.lock) + [`cortex_mact_boundary.v24.lock`](cortex_mact_boundary.v24.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D7.R1 apparatus:** Isolated D7 after FULLDEV.R5 0/16. Utterance persistence authorized; no neural edit yet. Lives run D1–D6 prefix then historical `score_d7`. [`cortex_d7_r1.prereg.lock`](cortex_d7_r1.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R5 result:** 0/16. D0 32, D1 23, D2 31, D3 30, D4 32, D5 22, **D6 32**, **D7 10**, D8 0. D6 transferred. D7 EMIT stays short (max_length<4 on 19/22 reds). [`cortex_fulldev_r5.lock`](cortex_fulldev_r5.lock) + [`cortex_fulldev_r5.audit.lock`](cortex_fulldev_r5.audit.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
