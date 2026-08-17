@@ -65,7 +65,17 @@ def test_runner_lock_if_present() -> None:
     assert lock["earned_next"] is False
     assert lock["ex0s"] is None
     assert lock["n"] == 64
-    assert lock["shas"] == reach_shas()
+    live = reach_shas()
+    frozen = lock["shas"]
+    if live.get("neural_cortex") != frozen.get("neural_cortex"):
+        assert (REPO_ROOT / "docs" / "cortex_v29_architecture_amendment.lock").is_file()
+        assert frozen["neural_cortex"] == "0a4014ce91bf08b69693924ee645bdc912ae4c6e0a9b6529bda6a6fe8a281892"
+        for key, val in frozen.items():
+            if key == "neural_cortex":
+                continue
+            assert live.get(key) == val, key
+    else:
+        assert lock["shas"] == live
     assert lock["fit_domain"] == "TM024.REACH.DIAG.FIT."
     assert lock["check_domain"] == "TM024.REACH.DIAG.CHECK."
 

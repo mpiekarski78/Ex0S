@@ -2264,6 +2264,8 @@ Bottleneck: interface between action provenance, delayed credit, and factorized 
 
 v29 apparatus: [`cortex_v29.prereg.lock`](cortex_v29.prereg.lock) + [`lineage_actorcredit.prereg.lock`](lineage_actorcredit.prereg.lock). Action-owned delayed credit authorized after this freeze. Neural edit only after this commit is on `origin/main`. Frozen cells A0–A11. Reachability only if cells pass. Another lineage run stays closed. FULLDEV.R7 sealed.
 
+Candidate (this cycle): [`cortex.candidate.v29.lock`](cortex.candidate.v29.lock). Action-owned delayed credit. Must re-earn C4/C5/C6 then A0–A11 on unused `TM024.ACTORCREDIT.CELLS.` worlds. n stays 64. LINEAGE/WALLMAP/REACH/PLASTICITYMAP/v28 historical.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

@@ -234,6 +234,7 @@ class NeuralCortex:
         self.last_s_hat = np.zeros(g.d_sym, dtype=np.float64)
         self.prev_interaction: str | None = None
         self._pending: dict[str, Any] | None = None
+        self._pred_pending: dict[str, Any] | None = None
         self._pending_writes: list[CortexRecord] = []
         self._last_act_body_adv = 0.0
         self._adv_baseline = 0.0
@@ -601,74 +602,137 @@ class NeuralCortex:
         self.last_s_hat = s_hat
         return out
 
+    def _actor_pending_from_action(
+        self,
+        action: dict[str, Any],
+        *,
+        interaction_token: str | None,
+        clamped: bool,
+        op: str | None = None,
+        token: str | None = None,
+        motor_vec: np.ndarray | None = None,
+    ) -> dict[str, Any]:
+        chosen_op = str(op or action["op"])
+        chosen_tok = token if token is not None else action.get("token")
+        rho = np.asarray(action["rho_elig"], dtype=np.float64).copy()
+        mv = motor_vec
+        if mv is None and chosen_op == "ACT" and chosen_tok and chosen_tok in self.motor_vocab:
+            mv = self.motor_vocab[chosen_tok].copy()
+        elif mv is None:
+            mv = None if action.get("motor_vec") is None else np.asarray(action["motor_vec"], dtype=np.float64).copy()
+        return {
+            "op": chosen_op,
+            "token": chosen_tok,
+            "rho_elig": rho,
+            "rho_op": rho.copy(),
+            "rho_motor": rho.copy(),
+            "s_hat": np.asarray(action["s_hat"], dtype=np.float64).copy(),
+            "body": np.asarray(action.get("body", self.last_body), dtype=np.float64).copy(),
+            "cost": float(self._op_cost.get(chosen_op, action.get("cost") or 0.0)),
+            "motor_vec": mv,
+            "authored": True,
+            "clamped": bool(clamped),
+            "t": int(self._t),
+            "interaction_token": interaction_token,
+        }
+
+    def clamp_action(self, op: str, token: str | None) -> dict[str, Any]:
+        """Host clamp after an organism selection tick. Keeps saved eligibility."""
+        if self.last_action is None:
+            return {"ok": False, "why": "no_selection_tick"}
+        if op not in OPS:
+            return {"ok": False, "why": "bad_op"}
+        motor_vec = None
+        if op == "ACT":
+            if not token or token not in self.motor_vocab:
+                return {"ok": False, "why": "unknown_handle"}
+            motor_vec = self.motor_vocab[token].copy()
+        self._pending = self._actor_pending_from_action(
+            self.last_action,
+            interaction_token=self.prev_interaction,
+            clamped=True,
+            op=op,
+            token=token,
+            motor_vec=motor_vec,
+        )
+        return {"ok": True, "op": op, "token": token, "clamped": True}
+
+    def drop_actor_pending(self) -> None:
+        """Passive imposed movement: no organism actor credit on the next body change."""
+        self._pending = None
+
     def _apply_credit(self, s_t: np.ndarray, body_t: np.ndarray) -> dict[str, float]:
-        if self._pending is None:
-            return {"adv": 0.0, "pred_err": 0.0}
+        updated: set[str] = set()
+        eta_p = float(self.genome.eta_pred) * self._age_scale("eta_pred_scale", 1.0)
+        eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
+        adv = 0.0
+        pred_err = 0.0
         p = self._pending
+        if p is None:
+            pp = self._pred_pending
+            if pp is not None:
+                eps = s_t - np.asarray(pp["s_hat"], dtype=np.float64)
+                pred_err = float(np.linalg.norm(eps))
+                rho_pred = self._to_t(pp["rho_elig"])
+                if float(torch.max(torch.abs(rho_pred)).item()) > ELIG_EPS:
+                    self.W_pred = self.W_pred + eta_p * torch.outer(self._to_t(eps), rho_pred)
+                    updated.add("W_pred")
+                self._pred_pending = None
+            self._clip_and_consolidate(updated)
+            self._last_pred_err = pred_err
+            return {"adv": 0.0, "pred_err": pred_err}
+
         eps = s_t - p["s_hat"]
+        pred_err = float(np.linalg.norm(eps))
         body_prev = p["body"]
         body_adv = float(
             np.linalg.norm(body_prev - self._body_setpoint)
             - np.linalg.norm(body_t - self._body_setpoint)
         )
-        adv = body_adv - p["cost"]
-        rho_elig = self._to_t(p["rho_elig"])
-        elig_active = bool(torch.max(torch.abs(rho_elig)).item() > ELIG_EPS)
-        updated: set[str] = set()
-        # directed prediction
-        eta_p = float(self.genome.eta_pred) * self._age_scale("eta_pred_scale", 1.0)
-        eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
-        if elig_active:
-            self.W_pred = self.W_pred + eta_p * torch.outer(
-                self._to_t(eps), rho_elig
-            )
+        adv = body_adv - float(p["cost"])
+        rho_op = self._to_t(p.get("rho_op", p["rho_elig"]))
+        rho_motor = self._to_t(p.get("rho_motor", p["rho_elig"]))
+        elig_op = bool(torch.max(torch.abs(rho_op)).item() > ELIG_EPS)
+        elig_motor = bool(torch.max(torch.abs(rho_motor)).item() > ELIG_EPS)
+        if elig_op:
+            self.W_pred = self.W_pred + eta_p * torch.outer(self._to_t(eps), rho_op)
             updated.add("W_pred")
-        # three-factor on op / motor query used
         e_op = torch.zeros(len(OPS), dtype=self.dtype, device=self.device)
         e_op[OPS.index(p["op"])] = 1.0
-        # v7: no-consequence ACT cost must not extinguish ACT (skip W_op when body_adv≈0)
         skip_act_cost = p["op"] == "ACT" and abs(body_adv) < 1e-9
-        if elig_active and not skip_act_cost:
-            self.W_op = self.W_op + eta_a * adv * torch.outer(e_op, rho_elig)
+        if elig_op and not skip_act_cost:
+            self.W_op = self.W_op + eta_a * adv * torch.outer(e_op, rho_op)
             updated.add("W_op")
-        # v13: opposite-sign vs slow baseline → HOLD; do not snap the baseline.
         if p["op"] == "ACT" and abs(body_adv) > CONFLICT_ADV_EPS:
             ema = float(self._adv_baseline)
             if abs(ema) > CONFLICT_ADV_EPS and (ema * body_adv) < 0.0:
                 self._hold_after_conflict = True
-                if elig_active:
+                if elig_op:
                     e_conf = torch.zeros(len(OPS), dtype=self.dtype, device=self.device)
                     e_conf[OPS.index("HOLD")] = 1.0
                     e_conf[OPS.index("ACT")] = -1.0
-                    self.W_op = self.W_op + eta_a * abs(body_adv) * torch.outer(e_conf, rho_elig)
+                    self.W_op = self.W_op + eta_a * abs(body_adv) * torch.outer(e_conf, rho_op)
                     updated.add("W_op")
             else:
                 alpha = self._lp("adv_baseline_alpha", ADV_BASELINE_ALPHA)
                 self._adv_baseline = (1.0 - alpha) * ema + alpha * float(body_adv)
             self._last_act_body_adv = float(body_adv)
-        # v4: b_op frozen (non-plastic)
-        # v6: motor-query credit only when body consequences differ; use selected snapshot
-        if elig_active and p["token"] is not None and p["op"] in ("EMIT", "ACT"):
-            skip_motor = skip_act_cost
-            if not skip_motor:
-                if p["op"] == "ACT" and p.get("motor_vec") is not None:
-                    tok_v = self._to_t(np.asarray(p["motor_vec"], dtype=np.float64))
-                elif p["op"] == "ACT" and p["token"] in self.motor_vocab:
-                    tok_v = self._to_t(self.motor_vocab[p["token"]])
-                else:
-                    tok_v = self._to_t(self._vocab_vec(p["token"]))
-                mat_name = "W_emit_query" if p["op"] == "EMIT" else "W_act_query"
-                W = getattr(self, mat_name)
-                setattr(
-                    self,
-                    mat_name,
-                    W + eta_a * adv * torch.outer(tok_v, rho_elig),
-                )
-                updated.add(mat_name)
+        if elig_motor and p["token"] is not None and p["op"] in ("EMIT", "ACT") and not skip_act_cost:
+            if p["op"] == "ACT" and p.get("motor_vec") is not None:
+                tok_v = self._to_t(np.asarray(p["motor_vec"], dtype=np.float64))
+            elif p["op"] == "ACT" and p["token"] in self.motor_vocab:
+                tok_v = self._to_t(self.motor_vocab[p["token"]])
+            else:
+                tok_v = self._to_t(self._vocab_vec(p["token"]))
+            mat_name = "W_emit_query" if p["op"] == "EMIT" else "W_act_query"
+            W = getattr(self, mat_name)
+            setattr(self, mat_name, W + eta_a * adv * torch.outer(tok_v, rho_motor))
+            updated.add(mat_name)
         self._clip_and_consolidate(updated)
         self._pending = None
-        self._last_pred_err = float(np.linalg.norm(eps))
-        return {"adv": adv, "pred_err": float(np.linalg.norm(eps))}
+        self._pred_pending = None
+        self._last_pred_err = pred_err
+        return {"adv": adv, "pred_err": pred_err}
 
     def _clip_and_consolidate(self, names: set[str] | None = None) -> None:
         if not names:
@@ -773,18 +837,18 @@ class NeuralCortex:
                 self._hold_after_conflict = True
 
         action = self._motor_loop(body, same_ix)
-        # store eligibility for next observe
-        self._pending = {
-            "op": action["op"],
-            "token": action["token"],
-            "rho_elig": action["rho_elig"],
-            "s_hat": action["s_hat"],
-            "body": body.copy(),
-            "cost": action["cost"],
-            "motor_vec": None
-            if action.get("motor_vec") is None
-            else np.asarray(action["motor_vec"], dtype=np.float64).copy(),
+        self._pred_pending = {
+            "s_hat": np.asarray(action["s_hat"], dtype=np.float64).copy(),
+            "rho_elig": np.asarray(action["rho_elig"], dtype=np.float64).copy(),
         }
+        if action["op"] in ("ACT", "EMIT"):
+            self._pending = self._actor_pending_from_action(
+                action,
+                interaction_token=ix,
+                clamped=False,
+            )
+        else:
+            self._pending = None
         self.prev_interaction = ix
         self.last_body = body.copy()
         self.last_s = s_t
@@ -810,6 +874,7 @@ class NeuralCortex:
         self.emit_buffer = []
         self.last_s_hat = np.zeros(g.d_sym, dtype=np.float64)
         self._pending = None
+        self._pred_pending = None
         self._pending_retrieve = None
         self.last_trajectory = []
 
@@ -917,14 +982,32 @@ class NeuralCortex:
                 **{
                     k: v
                     for k, v in self._pending.items()
-                    if k not in ("rho_elig", "s_hat", "body", "motor_vec")
+                    if k
+                    not in (
+                        "rho_elig",
+                        "rho_op",
+                        "rho_motor",
+                        "s_hat",
+                        "body",
+                        "motor_vec",
+                    )
                 },
                 "rho_elig": np.asarray(self._pending["rho_elig"]).tolist(),
+                "rho_op": np.asarray(self._pending.get("rho_op", self._pending["rho_elig"])).tolist(),
+                "rho_motor": np.asarray(
+                    self._pending.get("rho_motor", self._pending["rho_elig"])
+                ).tolist(),
                 "s_hat": np.asarray(self._pending["s_hat"]).tolist(),
                 "body": np.asarray(self._pending["body"]).tolist(),
                 "motor_vec": None
                 if self._pending.get("motor_vec") is None
                 else np.asarray(self._pending["motor_vec"]).tolist(),
+            },
+            "pred_pending": None
+            if self._pred_pending is None
+            else {
+                "s_hat": np.asarray(self._pred_pending["s_hat"]).tolist(),
+                "rho_elig": np.asarray(self._pred_pending["rho_elig"]).tolist(),
             },
             "vocab": {k: v.tolist() for k, v in self.vocab.items()},
             "motor_vocab": {k: v.tolist() for k, v in self.motor_vocab.items()},
@@ -1000,16 +1083,31 @@ class NeuralCortex:
         if pend is None:
             self._pending = None
         else:
+            rho_elig = np.asarray(pend["rho_elig"], dtype=np.float64)
             self._pending = {
                 "op": pend["op"],
                 "token": pend.get("token"),
-                "rho_elig": np.asarray(pend["rho_elig"], dtype=np.float64),
+                "rho_elig": rho_elig,
+                "rho_op": np.asarray(pend.get("rho_op", rho_elig), dtype=np.float64),
+                "rho_motor": np.asarray(pend.get("rho_motor", rho_elig), dtype=np.float64),
                 "s_hat": np.asarray(pend["s_hat"], dtype=np.float64),
                 "body": np.asarray(pend["body"], dtype=np.float64),
                 "cost": float(pend["cost"]),
                 "motor_vec": None
                 if pend.get("motor_vec") is None
                 else np.asarray(pend["motor_vec"], dtype=np.float64),
+                "authored": bool(pend.get("authored", True)),
+                "clamped": bool(pend.get("clamped", False)),
+                "t": int(pend.get("t") or 0),
+                "interaction_token": pend.get("interaction_token"),
+            }
+        pp = snap.get("pred_pending")
+        if pp is None:
+            self._pred_pending = None
+        else:
+            self._pred_pending = {
+                "s_hat": np.asarray(pp["s_hat"], dtype=np.float64),
+                "rho_elig": np.asarray(pp["rho_elig"], dtype=np.float64),
             }
         self.memory.restore(snap.get("S") or [])
         g = self.genome

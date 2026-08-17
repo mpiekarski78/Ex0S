@@ -64,7 +64,17 @@ def test_runner_lock_if_present() -> None:
     assert lock["product"] == "0.0.004"
     assert lock["earned_next"] is False
     assert lock["n"] == 64
-    assert lock["shas"] == pmap_shas()
+    live = pmap_shas()
+    frozen = lock["shas"]
+    if live.get("neural_cortex") != frozen.get("neural_cortex"):
+        assert (REPO_ROOT / "docs" / "cortex_v29_architecture_amendment.lock").is_file()
+        assert frozen["neural_cortex"] == "0a4014ce91bf08b69693924ee645bdc912ae4c6e0a9b6529bda6a6fe8a281892"
+        for key, val in frozen.items():
+            if key == "neural_cortex":
+                continue
+            assert live.get(key) == val, key
+    else:
+        assert lock["shas"] == live
 
 
 def test_smoke() -> None:

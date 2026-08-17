@@ -1,0 +1,112 @@
+{
+  "version": "TM.0.23.CORTEX.MACT.BOUNDARY.RESULT.V29",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "candidate": "docs/cortex.candidate.v29.lock",
+  "candidate_sha": "484c7a3ab1acec815ef1f73e3f9dddbf0ad6b127313401fcbd6f75e17d9e0bf1",
+  "required_ids": [
+    "C4_consequence_swap_timed",
+    "C5_plasticity_necessity",
+    "C6_no_consequence_population"
+  ],
+  "all_required_green": true,
+  "n_ok": 6,
+  "n_controls": 7,
+  "controls": [
+    {
+      "id": "C1_env_exposed_handles",
+      "ok": true,
+      "planted_tokens": [],
+      "birth_motor_keys": [],
+      "why": null
+    },
+    {
+      "id": "C2_spellings_not_neural_input",
+      "ok": true,
+      "leaked_into_vocab": [],
+      "handles": [
+        "h_10f20bc9a2c2",
+        "h_27671f1b01db",
+        "h_2b192f65e5e8",
+        "h_e19c58af3813"
+      ],
+      "why": null
+    },
+    {
+      "id": "C3_twin_independent_rename_vectorize",
+      "ok": true,
+      "handle_ids_differ": true,
+      "has_motor_rng": true,
+      "press_vectors_equal": false,
+      "rebind_restores": true,
+      "why": null
+    },
+    {
+      "id": "C4_consequence_swap_timed",
+      "ok": true,
+      "swap_revise_episodes": 40,
+      "pref_a": true,
+      "stale_ok": true,
+      "pref_b": true,
+      "restore_a": true,
+      "counts_before": {
+        "h_d6d045e64b97": 15
+      },
+      "counts_stale": {
+        "h_d6d045e64b97": 7
+      },
+      "counts_revised": {
+        "h_0212ab081a3e": 16
+      },
+      "counts_restored": {
+        "h_d6d045e64b97": 15
+      },
+      "why": null
+    },
+    {
+      "id": "C5_plasticity_necessity",
+      "ok": true,
+      "n_pairs": 32,
+      "n_trained_beats_frozen": 32,
+      "majority_min": 24,
+      "mean_delta": 0.20625,
+      "mean_delta_min": 0.1,
+      "frozen_mean_p_press": 0.5255839437050738,
+      "frozen_perm_p": 0.2138,
+      "why": null
+    },
+    {
+      "id": "C6_no_consequence_population",
+      "ok": true,
+      "n_pairs": 32,
+      "slot_effect": 0.004941883129770064,
+      "label_effect": 0.013643643186019405,
+      "slot_perm_p": 0.7994,
+      "label_perm_p": 0.4648,
+      "max_nuisance_abs": 0.15,
+      "why": null
+    },
+    {
+      "id": "C8_shuffled_credit",
+      "ok": false,
+      "counts": {
+        "h_aeab02f61cdb": 5,
+        "h_cea3207c4288": 4,
+        "h_cba422d4de35": 5,
+        "h_5fe8f8af7adf": 4
+      },
+      "why": "actuator_reinforced_under_shuffled_credit"
+    }
+  ],
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "git_head": "68512aad8dfbbb9650b2346b47945e1b44cea102"
+}
