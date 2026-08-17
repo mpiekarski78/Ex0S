@@ -2286,6 +2286,8 @@ C-cell runner: [`lineage_collisionmap.runner.lock`](lineage_collisionmap.runner.
 
 Result: [`lineage_collisionmap.decision.lock`](lineage_collisionmap.decision.lock) **attractor_collapse**. Cue identity is present after sensing and is lost on the first zero-input motor tick, which is the credited `ρ_elig`. Sequential-write, rank, and geometry arms did not fire first. Do not increase n. Do not authorize a two-timescale amendment from this package alone. Another lineage run stays closed. QUAL/EVAL sealed. Not 0.0.005.
 
+PERSISTGATE freeze: [`lineage_persistgate.prereg.lock`](lineage_persistgate.prereg.lock). The wall is the zero-input motor transition, not credit algebra. Investigating generic state persistence is justified; a particular implementation is not authorized. Residual/leaky/gated recurrence inside 64 units is the first class to test **if** a later freeze authorizes an amendment. The live readout must remain distinct at `ρ_elig`; crediting a saved historical ρ is insufficient. Lineage stays closed until a newly committed reachability diagnostic passes after any such amendment. n stays 64. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
