@@ -2070,3 +2070,9 @@ D3.R1 apparatus: [`cortex_d3_r1.prereg.lock`](cortex_d3_r1.prereg.lock). Authori
 
 Candidate (this cycle, reveal refused): [`cortex.candidate.v14.lock`](cortex.candidate.v14.lock). C4/C5 green; C6 label permutation p=0.0217 < 0.05. Two-symbol zero-advantage HOLD contaminates no-consequence motor teaching. Do not reveal D3.R1.
 
+Diagnosis ([`cortex_diagnosis.v14.lock`](cortex_diagnosis.v14.lock)): equal-evidence HOLD must wait until ≥3 distinct symbols have been observed.
+
+## TM.0.23.CORTEX.V14 C6 red → isolated D3.R2
+
+Canonical main `b0fd058`. Do not reveal v14. D3.R2 apparatus: [`cortex_d3_r2.prereg.lock`](cortex_d3_r2.prereg.lock). Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.D3.R2 apparatus:** Narrows equal-evidence HOLD to lives that have observed ≥3 distinct symbols. C6 required. Frozen commitment, no neural edit yet. [`cortex_d3_r2.prereg.lock`](cortex_d3_r2.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V14 / D3.R1 candidate (C6 red):** Equal-evidence / low-familiarity HOLD implemented. Nine sanity + math audit pass. C4/C5 green; **C6 red** (label perm p=0.0217). Reveal refused. [`cortex.candidate.v14.lock`](cortex.candidate.v14.lock) + [`cortex_mact_boundary.v14.lock`](cortex_mact_boundary.v14.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D3.R1 apparatus:** Isolated equal-evidence / low-familiarity HOLD. Historical D3 floors retained. Frozen commitment, no neural edit yet. [`cortex_d3_r1.prereg.lock`](cortex_d3_r1.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R1 fail:** Apparatus `41183aa` revealed after a clean push. Seed-derived D0–D12 **0/16** — **not clear**. D0 32/32; D1 25; D2 31; first-fail **D3 22**. [`cortex_fulldev_r1.failure.lock`](cortex_fulldev_r1.failure.lock) + [`cortex_d3.isolation.lock`](cortex_d3.isolation.lock). Do not edit-rescore. Do not stamp product. `earned_next=false`; `ex0s=null`; product **0.0.004**.

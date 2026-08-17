@@ -1,0 +1,25 @@
+{
+  "version": "TM.0.23.CORTEX.D3.R2.STAT.CONTRACT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "stat_md_sha": "d5f078439c7c22ccbd7771bb1375eec84495031f0c4ec13697db96c9c3e2ea30",
+  "gate_md_sha": "58c4e629eb91907a72de6f6a3dc4bb49e3355319e8b1b112f9ca8b79a421728d",
+  "diagnosis_v14_sha": "396454279e66c7afa41a065ffa72f9eef6486e67f4dbe976e4ca4c6f8f88462a",
+  "neural_sha_at_freeze": "554ec63017c7f5db9e741d1f3a26caec21a5321eb633501f3bf2943a3e6f28ec",
+  "neural_change_authorized": true,
+  "authorized_law": "equal_evidence_min_3_symbols",
+  "equal_evidence_min_symbols": 3,
+  "familiarity_ratio": 0.5,
+  "conflict_hold_bias": 2.0,
+  "d3_floors": {
+    "equal_holds_min": 8,
+    "clear_nonhold_min": 5
+  },
+  "gate_clear_min_pairs": 13,
+  "refuse": [
+    "lower equal_holds",
+    "drop C6",
+    "edit cortex_develop_scorers.py"
+  ]
+}

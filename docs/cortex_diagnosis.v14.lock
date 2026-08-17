@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.23.CORTEX.V14.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "b0fd058",
+  "neural_mechanism_changed": true,
+  "v15_authorized_only_if_this_lock": true,
+  "c4_retained": true,
+  "c5_green": true,
+  "c6_green": false,
+  "reveal_refused": true,
+  "claim": "v14 equal-evidence HOLD fires on any 2-symbol observe after a zero body_adv ACT. C6 teaches [a,b] with no consequence, so the law HOLDs through no-consequence motor teaching and creates a label permutation effect (p=0.0217). D3 equal probes also have 2 symbols, but D3 lives have already observed a third symbol (distractor). The missing restriction is: apply equal-evidence HOLD only after at least 3 distinct symbols have been observed. Keep low-familiarity HOLD. Do not lower equal_holds. Do not reveal v14.",
+  "authorize_v15": [
+    "keep low-familiarity HOLD (single symbol count < 0.5 * max)",
+    "equal-evidence HOLD only if n_sym>=2 and last |body_adv|<=1e-9 and distinct observed symbols >= 3 (frozen)",
+    "keep CONFLICT_HOLD_BIAS=2.0",
+    "new sealed commitment ≠ D3.R1 ≠ FULLDEV.R1 ≠ V8–V13",
+    "re-earn C4/C5/C6 before any D3 reveal",
+    "do not add capability-specific functions",
+    "do not edit cortex_develop_scorers.py"
+  ],
+  "refuse": [
+    "reveal D3.R1 / v14",
+    "edit-and-rescore v14",
+    "lower equal_holds",
+    "drop C6 as a required green",
+    "stamp product"
+  ]
+}
