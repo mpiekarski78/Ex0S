@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.23.CORTEX.D5.R2.ISOLATION",
+  "lab": "TM.0.23.CORTEX.D5.R1",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "D5.R1 scored 11/16. D5 26/32. Six reds miss unknown_holds>=12 (8–11) while known_nonhold_rate is already green.",
+  "d5_r1_gate": "docs/cortex_d5_r1_gate.lock",
+  "d5_r1_failure": "docs/cortex_d5_r1_gate.failure.lock",
+  "d5_r1_audit": "docs/cortex_d5_r1.audit.lock",
+  "v19_diagnosis": "docs/cortex_diagnosis.v19.lock",
+  "refuse": [
+    "edit-and-rescore D5.R1 on revealed worlds",
+    "reuse TM023.D5.R1. or FULL.R* or D4.R* or D3.R* or pair_seeds worlds",
+    "open FULLDEV or nursery before a later isolated D5 ≥13/16",
+    "stamp earned_next"
+  ],
+  "next_cycle": {
+    "name": "isolated_d5_r2",
+    "requires": [
+      "frozen diagnosis of too-early novelty release",
+      "new amendment: FAMILIARITY_ABS=16",
+      "new birth + candidate.v20.lock",
+      "new sealed commitment ≠ D5.R1",
+      "re-earn C4/C5/C6",
+      "fresh narrow D5 ≥13/16 before reopening FULLDEV"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004."
+}

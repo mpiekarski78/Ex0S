@@ -1,0 +1,67 @@
+{
+  "version": "TM.0.23.CORTEX.D5.R1.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "783d760bb5972dc0505392188c5ece90ba5349ca2217caa6b04a768dfd098b94",
+  "failure_sha": "86a9d247df3b2ff5e3b595993a3bf84658e1c9e65409cbaa9a6f5b0c2565643b",
+  "reveal_sha": "c0bc950c1b8fff7636a7244aa2c003f73cbd91468cbe55d382b25ab4cb62954f",
+  "n_pair_clear": 11,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "candidate_git_sha": "c0574bfc858d9153af5e5b59ec1d54c34905af95"
+    },
+    {
+      "id": "domain_is_d5_r1",
+      "ok": true,
+      "domain": "TM023.D5.R1."
+    },
+    {
+      "id": "d5_moved_off_zero",
+      "ok": true,
+      "d5_ok": 26,
+      "note": "Habituation lifted D5 from 0/32 (FULLDEV.R3) to 26/32. Pair clear is 11/16 because five pairs have a D5-red member."
+    },
+    {
+      "id": "remaining_reds_are_short_unknown_hold",
+      "ok": true,
+      "n_d5_red": 6,
+      "unknown_holds": [8, 9, 10, 10, 11, 11],
+      "known_nonhold_rate_range": [0.55, 0.95],
+      "note": "All six reds meet known_nonhold_rate>=0.30. All miss unknown_holds>=12. Novelty is a softmax bias, not a hard HOLD, and FAMILIARITY_ABS=12 releases the bias around probe 13."
+    },
+    {
+      "id": "d5_scorer_not_soft",
+      "ok": true,
+      "note": "Do not lower unknown_holds>=12. Do not edit cortex_develop_scorers.py."
+    },
+    {
+      "id": "d4_still_green",
+      "ok": true,
+      "d4_ok": 32
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_d5_r1": "refused",
+    "fulldev": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d5_r2",
+    "refuse": [
+      "rewrite docs/cortex_d5_r1_gate.lock",
+      "edit-and-rescore on revealed D5.R1 worlds",
+      "lower unknown_holds floor",
+      "stamp earned_next"
+    ]
+  },
+  "note": "11/16 stands. Habituation is the right law. The remaining miss is too-early release of novelty HOLD (ABS=12)."
+}

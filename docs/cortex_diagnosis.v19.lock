@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.23.CORTEX.V19.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "c0574bfc858d9153af5e5b59ec1d54c34905af95",
+  "neural_mechanism_changed": true,
+  "v20_authorized_only_if_this_lock": true,
+  "claim": "D5.R1 scored 11/16. D5 is 26/32. The six reds all have unknown_holds 8–11 and known_nonhold_rate 0.55–0.95. Habituation works for the known symbol. Novelty HOLD is a softmax bias that turns off once the decaying trace reaches FAMILIARITY_ABS=12, around probe 13, so some lives fall short of unknown_holds>=12. Biology: neophobia persists until a stricter familiarization criterion. Raise FAMILIARITY_ABS so the novelty bias covers more of the 20 unknown probes. Do not change CONFLICT_HOLD_BIAS. Do not return to lifetime-max ranking.",
+  "authorize_v20": [
+    "keep v19 decaying familiarity trace and absolute criterion",
+    "raise FAMILIARITY_ABS from 12 to 16",
+    "keep FAMILIARITY_DECAY=0.98 and FAMILIARITY_RATIO=0.5",
+    "keep v16 equal-evidence / conflict / 3-symbol laws",
+    "keep v17 S-write recency and v18 RETRIEVE recency tie-break",
+    "do not edit cortex_develop_scorers.py",
+    "do not lower unknown_holds>=12",
+    "new sealed commitment domain TM023.D5.R2.",
+    "isolated lives still run D1–D4 prefix before score_d5",
+    "re-earn C4/C5/C6 before reveal",
+    "narrow D5 gate ≥13/16 before reopening full D0–D12"
+  ],
+  "refuse": [
+    "edit-and-rescore D5.R1",
+    "lower D5 floors",
+    "drop C6",
+    "hard-code D5 unknown token",
+    "stamp product"
+  ]
+}

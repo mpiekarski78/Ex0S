@@ -2124,3 +2124,9 @@ D5.R1 apparatus: [`cortex_d5_r1.prereg.lock`](cortex_d5_r1.prereg.lock). Habitua
 
 Candidate (this cycle): [`cortex.candidate.v19.lock`](cortex.candidate.v19.lock). Habituation familiarity. C4/C5/C6 green (C6 label perm p=0.058). Reveal D5.R1 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d5_r1_gate.lock`](cortex_d5_r1_gate.lock) **11/16**. D5 26/32. Audit [`cortex_d5_r1.audit.lock`](cortex_d5_r1.audit.lock). Diagnosis [`cortex_diagnosis.v19.lock`](cortex_diagnosis.v19.lock): raise `FAMILIARITY_ABS` to 16 so novelty HOLD covers more unknown probes. Do not rescore D5.R1.
+
+## TM.0.23.CORTEX.V19 D5.R1 11/16 → isolated D5.R2
+
+Canonical main `c0574bf`. D5.R2 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
