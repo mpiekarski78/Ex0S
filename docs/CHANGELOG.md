@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.V27 / isolated GEN candidate:** Learned internal motor program (no phrase replay; echoic bias only; generic refractory). Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.476). [`cortex.candidate.v27.lock`](cortex.candidate.v27.lock) + [`cortex_mact_boundary.v27.lock`](cortex_mact_boundary.v27.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V27 apparatus:** Isolated G1+G3+G5 after GENERALITY.v26 3/8. Learned internal motor program authorized; no neural edit yet. [`cortex_v27.prereg.lock`](cortex_v27.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.GENERALITY.v26 result:** **3/8 red.** G1/G2/G3/G5 fail (scripted phrase copy / echo-as-answer / STOP-from-copied-length). G4/G6/G8 green. FULLDEV.R7 refused. [`cortex_v26_generality.lock`](cortex_v26_generality.lock) + [`cortex_v26_generality.audit.lock`](cortex_v26_generality.audit.lock). Next is isolated v27. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.GENERALITY.v26 apparatus:** Frozen G1–G8 contract and runner on immutable candidate v26. No score yet. Do not reveal FULLDEV.R7 until all controls are green. [`cortex_v26_generality_contract.md`](cortex_v26_generality_contract.md) + [`cortex_v26_generality.runner.lock`](cortex_v26_generality.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

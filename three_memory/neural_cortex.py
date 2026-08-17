@@ -62,6 +62,7 @@ FAMILIARITY_RATIO = 0.5
 FAMILIARITY_DECAY = 0.98
 FAMILIARITY_ABS = 16.0
 ECHOIC_MAX = 8
+ECHOIC_BIAS = 0.08
 VOCAL_REFRACTORY = 1.5
 UTTERANCE_PERSIST = 1.5
 EQUAL_EVIDENCE_MIN_SYMBOLS = 3
@@ -222,8 +223,8 @@ class NeuralCortex:
         self._symbol_obs_counts: dict[str, int] = {}
         self._symbol_fam: dict[str, float] = {}
         self._echoic: list[str] = []
-        self._phrase: list[str] = []
         self._vocal_next: str | None = None
+        self._last_motor_class: str | None = None
         self.last_action: dict[str, Any] | None = None
         self.last_trajectory: list[np.ndarray] = []
         self.sensory_trajectory: list[np.ndarray] = []
@@ -362,15 +363,19 @@ class NeuralCortex:
         lexicon: dict[str, np.ndarray] | None = None,
         require_thresh: bool = True,
         rng: np.random.Generator | None = None,
+        echoic_bias: bool = False,
     ) -> str | None:
         pool = lexicon if lexicon is not None else self.vocab
         if not pool:
             return None
         q = self._from_t(query)
         qn = np.linalg.norm(q) + 1e-12
+        echoic = set(self._echoic) if echoic_bias else set()
         scored: list[tuple[float, str]] = []
         for tok, v in pool.items():
             cos = float(np.dot(q, v) / (qn * (np.linalg.norm(v) + 1e-12)))
+            if tok in echoic:
+                cos = cos + ECHOIC_BIAS
             scored.append((cos, tok))
         best = max(c for c, _t in scored)
         if require_thresh and best < self.genome.cos_thresh:
@@ -379,21 +384,6 @@ class NeuralCortex:
         if rng is not None and len(ties) > 1:
             return str(rng.choice(ties))
         return ties[0]
-
-    def _echoic_emit_token(self) -> str | None:
-        if not self._echoic:
-            return None
-        idx = len(self.emit_buffer)
-        for step in (idx, 0):
-            pos = -(1 + step)
-            if abs(pos) <= len(self._echoic):
-                tok = self._echoic[pos]
-                if tok in self.vocab:
-                    return tok
-        for tok in reversed(self._echoic):
-            if tok in self.vocab:
-                return tok
-        return None
 
     def _on_s_write(self, rec: CortexRecord) -> None:
         v = np.asarray(rec.content, dtype=np.float64).reshape(-1)
@@ -438,26 +428,12 @@ class NeuralCortex:
         self._hold_after_conflict = False
         vocal_next = self._vocal_next
         self._vocal_next = None
-        phrase_program: list[str] | None = None
 
         for _k in range(g.t_max):
             self._commit_pending_retrieve()
             # internal tick sensory: zeros inject except buffer/body/same_ix
             zero = np.zeros(g.d_sym, dtype=np.float64)
             self._sensory_tick(zero, body, same_ix, record_sensory=False)
-            if phrase_program is not None:
-                if len(self.emit_buffer) < len(phrase_program):
-                    op = "EMIT"
-                    tok = phrase_program[len(self.emit_buffer)]
-                    self.emit_buffer.append(tok)
-                    chosen_token = tok
-                    chosen_op = op
-                    rho_elig = self._from_t(self.rho)
-                    continue
-                op = "STOP"
-                chosen_op = op
-                rho_elig = self._from_t(self.rho)
-                break
             logits = (self.W_op @ self.rho) + self.b_op
             if conflict_hold or vocal_next:
                 logits = logits.clone()
@@ -467,8 +443,12 @@ class NeuralCortex:
             if vocal_next == "HOLD":
                 logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] + VOCAL_REFRACTORY
                 logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] - VOCAL_REFRACTORY
+                logits[OPS.index("ACT")] = logits[OPS.index("ACT")] - VOCAL_REFRACTORY
             elif vocal_next == "EMIT":
                 logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] + VOCAL_REFRACTORY
+                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] - VOCAL_REFRACTORY
+            elif vocal_next == "ACT":
+                logits[OPS.index("ACT")] = logits[OPS.index("ACT")] + VOCAL_REFRACTORY
                 logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] - VOCAL_REFRACTORY
             op_i = self._softmax_sample(logits)
             op = OPS[op_i]
@@ -482,24 +462,7 @@ class NeuralCortex:
             if op == "STOP":
                 break
             if op == "EMIT":
-                program = [t for t in self._phrase if t]
-                if program:
-                    unfamiliar = any(float(self._symbol_fam.get(t, 0.0)) < FAMILIARITY_ABS for t in program)
-                    if unfamiliar:
-                        chosen_op = "HOLD"
-                        self.emit_buffer = []
-                        break
-                    if 1 <= len(program) <= 2 and float(self.rng_motor.random()) < 0.5:
-                        program = program + program
-                    phrase_target = len(program)
-                    phrase_program = program[: min(g.t_max, phrase_target)]
-                    tok = phrase_program[0]
-                    self.emit_buffer.append(tok)
-                    chosen_token = tok
-                    continue
-                tok = self._echoic_emit_token()
-                if tok is None:
-                    tok = self._best_token(self.W_emit_query @ self.rho)
+                tok = self._best_token(self.W_emit_query @ self.rho, echoic_bias=True)
                 if tok is None:
                     chosen_op = "HOLD"
                     self.emit_buffer = []
@@ -558,10 +521,11 @@ class NeuralCortex:
             "retrieved": applied_retrieve,
             "motor_vec": motor_vec,
         }
-        if chosen_op == "EMIT":
+        if chosen_op in ("EMIT", "ACT"):
             self._vocal_next = "HOLD"
-        elif chosen_op == "HOLD" and self._echoic:
-            self._vocal_next = "EMIT"
+            self._last_motor_class = chosen_op
+        elif chosen_op == "HOLD" and self._last_motor_class in ("EMIT", "ACT"):
+            self._vocal_next = self._last_motor_class
         else:
             self._vocal_next = None
         self.last_action = out
@@ -705,7 +669,6 @@ class NeuralCortex:
             self._echoic.append(u)
         if len(self._echoic) > ECHOIC_MAX:
             self._echoic = self._echoic[-ECHOIC_MAX:]
-        self._phrase = [str(u) for u in ordered]
         if self._pending is not None:
             body_prev = np.asarray(self._pending["body"], dtype=np.float64)
             cur_body_adv = float(
@@ -780,8 +743,8 @@ class NeuralCortex:
         self._symbol_obs_counts = {}
         self._symbol_fam = {}
         self._echoic = []
-        self._phrase = []
         self._vocal_next = None
+        self._last_motor_class = None
         self.reset_rho()
 
     def checkpoint(self) -> dict[str, Any]:
@@ -841,8 +804,8 @@ class NeuralCortex:
             "symbol_obs_counts": {k: int(v) for k, v in self._symbol_obs_counts.items()},
             "symbol_fam": {k: float(v) for k, v in self._symbol_fam.items()},
             "echoic": list(self._echoic),
-            "phrase": list(self._phrase),
             "vocal_next": self._vocal_next,
+            "last_motor_class": self._last_motor_class,
         }
 
     def load_checkpoint(self, snap: dict[str, Any]) -> None:
@@ -922,9 +885,10 @@ class NeuralCortex:
         self._symbol_obs_counts = {str(k): int(v) for k, v in (snap.get("symbol_obs_counts") or {}).items()}
         self._symbol_fam = {str(k): float(v) for k, v in (snap.get("symbol_fam") or {}).items()}
         self._echoic = [str(x) for x in (snap.get("echoic") or [])][-ECHOIC_MAX:]
-        self._phrase = [str(x) for x in (snap.get("phrase") or [])]
         vn = snap.get("vocal_next")
-        self._vocal_next = str(vn) if vn in ("HOLD", "EMIT") else None
+        self._vocal_next = str(vn) if vn in ("HOLD", "EMIT", "ACT") else None
+        lm = snap.get("last_motor_class")
+        self._last_motor_class = str(lm) if lm in ("EMIT", "ACT") else None
 
     def weight_hash(self) -> str:
         h = hashlib.sha256()

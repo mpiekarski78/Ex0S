@@ -2234,6 +2234,8 @@ Canonical main `5696c3b`. Isolated v27 apparatus follows. Product **0.0.004**; `
 
 v27 apparatus: [`cortex_v27.prereg.lock`](cortex_v27.prereg.lock). Learned internal motor program authorized after this freeze. Neural edit only after this commit is on `origin/main`. Domain `TM023.V27.GEN.`. Narrow gate G1+G3+G5. FULLDEV.R7 stays sealed.
 
+Candidate (this cycle): [`cortex.candidate.v27.lock`](cortex.candidate.v27.lock). Learned internal motor program, not sensory-buffer replay. C4/C5/C6 green. Reveal v27 only from a clean tree pinning `git rev-parse HEAD`.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

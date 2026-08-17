@@ -1,17 +1,16 @@
 {
-  "version": "TM.0.23.CORTEX.CANDIDATE.V27",
+  "version": "TM.0.23.CORTEX.V27.BIRTH",
   "product": "0.0.004",
   "earned_next": false,
   "ex0s": null,
-  "factory": "experiments.run_tm023cortex.make_cortex",
-  "supersedes_v26_sha": "8610a7e7213d320831ae44eb80f02765463c9d3b9b1274c0c83c053b2fd08508",
-  "v27_birth_sha": "668d173c6d9cb39ea866ecc03e68ca154a5f36710af69cfad591cba92ef711b7",
+  "diagnosis_v26_generality_sha": "32bc080dcb1ee7581194fa026759157ba6476eb56f436d59a19c198cac3cd272",
+  "stat_contract_sha": "f6dc9df5b75c3d9e841f95c5a530a87c97b40dc5e621577876dfbc799904036d",
   "architecture_amendment_sha": "0381412014cd542f789d59d7b842cfbd617e230371bb127477d32077dc1b9bfb",
-  "math_audit_sha": "0f662c4a2518204c08481c114180a7325144673be271f9304a71be06e86225a5",
   "learning_law_ok": true,
   "gpu_scoring_ready": true,
   "all_sanity_ok": true,
   "neural_cortex_sha": "71bece5917893fae03c3a95c276cf93bc0e34fce6a7bfb6a99adf093bb7ebc08",
+  "prior_v26_neural_sha": "25a445c2abb016030caa0285ea8ff3169f4c1e2544169ef263a7d8bc4d908edb",
   "cortex_memory_sha": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
   "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
   "env": {
@@ -66,5 +65,10 @@
       "HOLD": 0.0
     }
   },
-  "note": "Candidate v27. Must re-earn C4/C5/C6 then G1+G3+G5. FULLDEV.R7 sealed."
+  "checks": {
+    "bind_n": 2,
+    "b_op_act": 0.85,
+    "op_cost_act": 0.05
+  },
+  "note": "v27 learned motor program, not phrase replay. No FULLDEV.R7."
 }
