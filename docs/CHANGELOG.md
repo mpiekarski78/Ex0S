@@ -2,6 +2,8 @@
 
 ## 2026-08-17
 
+- **TM.0.24.LINEAGE scored L0 wall:** Five generations (P=8). Champion DEV triplet 0 adult means 0.09–0.13 vs τ=0.60. L0 not unlocked. QUAL/EVAL sealed. [`lineage_engine.candidate.lock`](lineage_engine.candidate.lock) equals Phase 0B SHAs. [`lineage_wall.lock`](lineage_wall.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
+- **TM.0.24.LINEAGE engine freeze:** Arm D/C codecs, observable teacher, REST, antithetic ES. v27-default C4/C5/C6 green. Phase 0B ~3349 ticks/s CPU. Compute amendment P=16 (floors unchanged). [`lineage_engine.preflight.lock`](lineage_engine.preflight.lock).
 - **TM.0.23.CORTEX.V27 gate result:** **0/16**. G1 green (scripted phrase gone). G3/G5 red: emit_B almost never appears; STOP length stays ~0–2. [`cortex_v27_gate.lock`](cortex_v27_gate.lock) + [`cortex_v27.audit.lock`](cortex_v27.audit.lock). FULLDEV.R7 refused. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V27 / isolated GEN candidate:** Learned internal motor program (no phrase replay; echoic bias only; generic refractory). Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.476). [`cortex.candidate.v27.lock`](cortex.candidate.v27.lock) + [`cortex_mact_boundary.v27.lock`](cortex_mact_boundary.v27.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V27 apparatus:** Isolated G1+G3+G5 after GENERALITY.v26 3/8. Learned internal motor program authorized; no neural edit yet. [`cortex_v27.prereg.lock`](cortex_v27.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

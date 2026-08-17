@@ -89,6 +89,8 @@ class GenomeConfig:
     seed_permute: int = 55555
     seed_motor: int = 66666
     dtype: str = "float64"
+    # Optional lineage overlay. None → v27 module constants (make_cortex unchanged).
+    lineage_params: dict[str, Any] | None = None
 
     @property
     def d_x(self) -> int:
@@ -154,6 +156,21 @@ class NeuralCortex:
         self.memory = CortexMemory(Path(s_dir) if s_dir is not None else None)
         self.age = 0
         self._t = 0
+        self.dev_epoch = 0
+        self._resting = False
+        self._last_pred_err = 0.0
+        self._body_setpoint = np.asarray(
+            (g.lineage_params or {}).get("body_setpoint", BODY_SETPOINT),
+            dtype=np.float64,
+        ).reshape(-1)
+        if self._body_setpoint.shape[0] != 4:
+            self._body_setpoint = BODY_SETPOINT.copy()
+        self._op_cost = dict(OP_COST)
+        lp = g.lineage_params or {}
+        for op in OPS:
+            key = f"op_cost.{op}"
+            if key in lp:
+                self._op_cost[op] = float(lp[key])
 
         self.rng_birth = np.random.default_rng(g.seed_birth)
         self.rng_registry = np.random.default_rng(g.seed_registry)
@@ -211,7 +228,7 @@ class NeuralCortex:
         )
         self.memory.on_write = self._on_s_write
         self.emit_buffer: list[str] = []
-        self.last_body = BODY_SETPOINT.copy()
+        self.last_body = self._body_setpoint.copy()
         self.last_s = np.zeros(g.d_sym, dtype=np.float64)
         self.last_s_hat = np.zeros(g.d_sym, dtype=np.float64)
         self.prev_interaction: str | None = None
@@ -258,6 +275,25 @@ class NeuralCortex:
 
     def _from_t(self, x: Tensor) -> np.ndarray:
         return x.detach().cpu().numpy().astype(np.float64)
+
+    def _lp(self, key: str, default: float) -> float:
+        p = self.genome.lineage_params
+        if not p or key not in p:
+            return float(default)
+        return float(p[key])
+
+    def _age_scale(self, name: str, default: float = 1.0) -> float:
+        stages = (
+            "birth",
+            "high_plasticity",
+            "experience_replay",
+            "pruning_stabilization",
+            "mature_plasticity",
+            "novelty_reopen",
+        )
+        # Default mature-equivalent: all v27 scales are 1.0. Epoch 0 uses birth row still 1.0.
+        idx = min(int(self.dev_epoch), len(stages) - 1)
+        return self._lp(f"age.{stages[idx]}.{name}", default)
 
     def bind_actuators(self, handle_ids: list[str]) -> dict[str, Any]:
         """Universal actuator surface: opaque handle IDs → internal motor-registry vectors.
@@ -375,7 +411,7 @@ class NeuralCortex:
         for tok, v in pool.items():
             cos = float(np.dot(q, v) / (qn * (np.linalg.norm(v) + 1e-12)))
             if tok in echoic:
-                cos = cos + ECHOIC_BIAS
+                cos = cos + self._lp("echoic_bias", ECHOIC_BIAS)
             scored.append((cos, tok))
         best = max(c for c, _t in scored)
         if require_thresh and best < self.genome.cos_thresh:
@@ -397,18 +433,43 @@ class NeuralCortex:
         q = self.W_att @ self.rho
         qn = self._from_t(q)
         qnorm = np.linalg.norm(qn) + 1e-12
-        scored: list[tuple[float, int, str, np.ndarray]] = []
-        for rec in self.memory.records():
-            v = np.asarray(rec.content, dtype=np.float64)
-            if v.shape[0] != self.genome.d_sym:
-                continue
-            cos = float(np.dot(qn, v) / (qnorm * (np.linalg.norm(v) + 1e-12)))
-            scored.append((cos, int(rec.when), rec.fact_id, v))
-        scored.sort(key=lambda t: (-t[0], -t[1], t[2]))
+        rows = list(self.memory.records())
+        if not rows:
+            self._pending_retrieve = np.zeros((self.genome.k_s, self.genome.d_sym), dtype=np.float64)
+            return
+        if self._resting:
+            w_rec = self._lp("replay.mix.recency", 0.25)
+            w_sim = self._lp("replay.mix.similarity", 0.25)
+            w_sur = self._lp("replay.mix.surprise", 0.25)
+            w_rnd = self._lp("replay.mix.random", 0.25)
+            wsum = max(w_rec + w_sim + w_sur + w_rnd, 1e-12)
+            w_rec, w_sim, w_sur, w_rnd = (w_rec / wsum, w_sim / wsum, w_sur / wsum, w_rnd / wsum)
+            tmax = max((int(r.when) for r in rows), default=1)
+            scored: list[tuple[float, int, str, np.ndarray]] = []
+            rng = self.rng_action
+            for rec in rows:
+                v = np.asarray(rec.content, dtype=np.float64)
+                if v.shape[0] != self.genome.d_sym:
+                    continue
+                cos = float(np.dot(qn, v) / (qnorm * (np.linalg.norm(v) + 1e-12)))
+                recency = float(int(rec.when) + 1) / float(tmax + 1)
+                surprise = float((rec.tags or {}).get("surprise") or 0.0)
+                rnd = float(rng.random())
+                score = w_sim * cos + w_rec * recency + w_sur * surprise + w_rnd * rnd
+                scored.append((score, int(rec.when), rec.fact_id, v))
+            scored.sort(key=lambda t: (-t[0], -t[1], t[2]))
+        else:
+            scored = []
+            for rec in rows:
+                v = np.asarray(rec.content, dtype=np.float64)
+                if v.shape[0] != self.genome.d_sym:
+                    continue
+                cos = float(np.dot(qn, v) / (qnorm * (np.linalg.norm(v) + 1e-12)))
+                scored.append((cos, int(rec.when), rec.fact_id, v))
+            scored.sort(key=lambda t: (-t[0], -t[1], t[2]))
         buf = np.zeros((self.genome.k_s, self.genome.d_sym), dtype=np.float64)
         for i, (_c, _when, _fid, v) in enumerate(scored[: self.genome.k_s]):
             buf[i] = v
-        # populate for NEXT tick — store pending apply
         self._pending_retrieve = buf
 
     def _commit_pending_retrieve(self) -> None:
@@ -438,18 +499,24 @@ class NeuralCortex:
             if conflict_hold or vocal_next:
                 logits = logits.clone()
             if conflict_hold:
-                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] + CONFLICT_HOLD_BIAS
-                logits[OPS.index("ACT")] = logits[OPS.index("ACT")] - CONFLICT_HOLD_BIAS
+                hb = self._lp("conflict_hold_bias", CONFLICT_HOLD_BIAS) * self._age_scale(
+                    "conflict_hold_scale", 1.0
+                )
+                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] + hb
+                logits[OPS.index("ACT")] = logits[OPS.index("ACT")] - hb
+            vr = self._lp("vocal_refractory", VOCAL_REFRACTORY) * self._age_scale(
+                "refractory", 1.0
+            )
             if vocal_next == "HOLD":
-                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] + VOCAL_REFRACTORY
-                logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] - VOCAL_REFRACTORY
-                logits[OPS.index("ACT")] = logits[OPS.index("ACT")] - VOCAL_REFRACTORY
+                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] + vr
+                logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] - vr
+                logits[OPS.index("ACT")] = logits[OPS.index("ACT")] - vr
             elif vocal_next == "EMIT":
-                logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] + VOCAL_REFRACTORY
-                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] - VOCAL_REFRACTORY
+                logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] + vr
+                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] - vr
             elif vocal_next == "ACT":
-                logits[OPS.index("ACT")] = logits[OPS.index("ACT")] + VOCAL_REFRACTORY
-                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] - VOCAL_REFRACTORY
+                logits[OPS.index("ACT")] = logits[OPS.index("ACT")] + vr
+                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] - vr
             op_i = self._softmax_sample(logits)
             op = OPS[op_i]
             chosen_op = op
@@ -498,6 +565,7 @@ class NeuralCortex:
                     interaction_token=str(self.prev_interaction or ""),
                     source_token="",
                     source="cortex_write",
+                    tags={"surprise": float(self._last_pred_err)},
                 )
                 staged_writes.append(rec)
                 continue
@@ -517,7 +585,7 @@ class NeuralCortex:
             "rho_elig": rho_elig,
             "s_hat": s_hat,
             "body": body.copy(),
-            "cost": float(OP_COST[chosen_op]),
+            "cost": float(self._op_cost[chosen_op]),
             "retrieved": applied_retrieve,
             "motor_vec": motor_vec,
         }
@@ -539,13 +607,15 @@ class NeuralCortex:
         eps = s_t - p["s_hat"]
         body_prev = p["body"]
         body_adv = float(
-            np.linalg.norm(body_prev - BODY_SETPOINT)
-            - np.linalg.norm(body_t - BODY_SETPOINT)
+            np.linalg.norm(body_prev - self._body_setpoint)
+            - np.linalg.norm(body_t - self._body_setpoint)
         )
         adv = body_adv - p["cost"]
         rho_elig = self._to_t(p["rho_elig"])
         # directed prediction
-        self.W_pred = self.W_pred + self.genome.eta_pred * torch.outer(
+        eta_p = float(self.genome.eta_pred) * self._age_scale("eta_pred_scale", 1.0)
+        eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
+        self.W_pred = self.W_pred + eta_p * torch.outer(
             self._to_t(eps), rho_elig
         )
         # three-factor on op / motor query used
@@ -554,7 +624,7 @@ class NeuralCortex:
         # v7: no-consequence ACT cost must not extinguish ACT (skip W_op when body_adv≈0)
         skip_act_cost = p["op"] == "ACT" and abs(body_adv) < 1e-9
         if not skip_act_cost:
-            self.W_op = self.W_op + self.genome.eta_act * adv * torch.outer(e_op, rho_elig)
+            self.W_op = self.W_op + eta_a * adv * torch.outer(e_op, rho_elig)
         # v13: opposite-sign vs slow baseline → HOLD; do not snap the baseline.
         if p["op"] == "ACT" and abs(body_adv) > CONFLICT_ADV_EPS:
             ema = float(self._adv_baseline)
@@ -563,9 +633,10 @@ class NeuralCortex:
                 e_conf = torch.zeros(len(OPS), dtype=self.dtype, device=self.device)
                 e_conf[OPS.index("HOLD")] = 1.0
                 e_conf[OPS.index("ACT")] = -1.0
-                self.W_op = self.W_op + self.genome.eta_act * abs(body_adv) * torch.outer(e_conf, rho_elig)
+                self.W_op = self.W_op + eta_a * abs(body_adv) * torch.outer(e_conf, rho_elig)
             else:
-                self._adv_baseline = (1.0 - ADV_BASELINE_ALPHA) * ema + ADV_BASELINE_ALPHA * float(body_adv)
+                alpha = self._lp("adv_baseline_alpha", ADV_BASELINE_ALPHA)
+                self._adv_baseline = (1.0 - alpha) * ema + alpha * float(body_adv)
             self._last_act_body_adv = float(body_adv)
         # v4: b_op frozen (non-plastic)
         # v6: motor-query credit only when body consequences differ; use selected snapshot
@@ -583,15 +654,16 @@ class NeuralCortex:
                 setattr(
                     self,
                     mat_name,
-                    W + self.genome.eta_act * adv * torch.outer(tok_v, rho_elig),
+                    W + eta_a * adv * torch.outer(tok_v, rho_elig),
                 )
         self._clip_and_consolidate()
         self._pending = None
+        self._last_pred_err = float(np.linalg.norm(eps))
         return {"adv": adv, "pred_err": float(np.linalg.norm(eps))}
 
     def _clip_and_consolidate(self) -> None:
         c = self.genome.clip
-        beta = self.genome.beta
+        beta = float(self.genome.beta) * self._age_scale("beta_scale", 1.0)
         for name in self._plastic_names:
             W = getattr(self, name)
             W = torch.clamp(W, -c, c)
@@ -658,7 +730,7 @@ class NeuralCortex:
         self._sensory_tick(s_t, body, same_ix, record_sensory=True)
 
         for k in list(self._symbol_fam):
-            faded = float(self._symbol_fam[k]) * FAMILIARITY_DECAY
+            faded = float(self._symbol_fam[k]) * self._lp("familiarity_decay", FAMILIARITY_DECAY)
             if faded < 1e-9:
                 self._symbol_fam.pop(k, None)
             else:
@@ -667,23 +739,24 @@ class NeuralCortex:
             self._symbol_obs_counts[u] = int(self._symbol_obs_counts.get(u, 0)) + 1
             self._symbol_fam[u] = float(self._symbol_fam.get(u, 0.0)) + 1.0
             self._echoic.append(u)
-        if len(self._echoic) > ECHOIC_MAX:
-            self._echoic = self._echoic[-ECHOIC_MAX:]
+        echo_max = int(self._lp("echoic_max", float(ECHOIC_MAX)))
+        if len(self._echoic) > echo_max:
+            self._echoic = self._echoic[-echo_max:]
         if self._pending is not None:
             body_prev = np.asarray(self._pending["body"], dtype=np.float64)
             cur_body_adv = float(
-                np.linalg.norm(body_prev - BODY_SETPOINT) - np.linalg.norm(body - BODY_SETPOINT)
+                np.linalg.norm(body_prev - self._body_setpoint) - np.linalg.norm(body - self._body_setpoint)
             )
         else:
             cur_body_adv = 0.0
         if (
             len(ordered) >= 2
             and abs(cur_body_adv) <= CONFLICT_ADV_EPS
-            and len(self._symbol_obs_counts) >= EQUAL_EVIDENCE_MIN_SYMBOLS
+            and len(self._symbol_obs_counts) >= int(self._lp("equal_evidence_min_symbols", float(EQUAL_EVIDENCE_MIN_SYMBOLS)))
         ):
             self._hold_after_conflict = True
         elif len(ordered) == 1:
-            if float(self._symbol_fam.get(ordered[0], 0.0)) < FAMILIARITY_ABS:
+            if float(self._symbol_fam.get(ordered[0], 0.0)) < self._lp("familiarity_abs", FAMILIARITY_ABS):
                 self._hold_after_conflict = True
 
         action = self._motor_loop(body, same_ix)
@@ -727,6 +800,62 @@ class NeuralCortex:
         self._pending_retrieve = None
         self.last_trajectory = []
 
+    def rest_epoch(self, n_ticks: int, *, body: np.ndarray | None = None) -> dict[str, Any]:
+        """Host rest opportunity. Replay selection is cortical RETRIEVE. Host does not pick S rows."""
+        n_ticks = int(max(0, n_ticks))
+        body_arr = np.asarray(body if body is not None else self.last_body, dtype=np.float64)
+        fatigued = body_arr.copy()
+        if fatigued.shape[0] >= 4:
+            fatigued[3] = min(1.0, float(fatigued[3]) + 0.3)
+        self._resting = True
+        ops: dict[str, int] = {}
+        try:
+            for i in range(n_ticks):
+                out = self.observe(
+                    {
+                        "interaction_token": f"rest_{self._t}_{i}",
+                        "source_token": "src_rest",
+                        "ordered_symbols": [],
+                        "observable_state": ["st_idle"],
+                        "body_state": fatigued.tolist(),
+                    }
+                )
+                op = str((out.get("action") or {}).get("op") or "?")
+                ops[op] = ops.get(op, 0) + 1
+        finally:
+            self._resting = False
+        self.reset_rho()
+        self._maybe_grow_prune()
+        self.dev_epoch += 1
+        return {"ok": True, "n": n_ticks, "op_counts": ops, "dev_epoch": int(self.dev_epoch)}
+
+    def _maybe_grow_prune(self) -> None:
+        grow = self._lp("connect.growth_rate", 0.0) * self._age_scale("growth_scale", 0.0)
+        prune = self._lp("connect.prune_rate", 0.0) * self._age_scale("prune_scale", 0.0)
+        if grow <= 0.0 and prune <= 0.0:
+            return
+        m = self._from_t(self.M)
+        w = self._from_t(self.W_rec)
+        rng = self.rng_birth
+        n = int(m.shape[0])
+        eye = np.eye(n, dtype=bool)
+        if prune > 0.0:
+            thr = self._lp("connect.prune_threshold", 0.0)
+            cand = (m > 0) & (np.abs(w) < thr) & (~eye)
+            ii, jj = np.where(cand)
+            for i, j in zip(ii, jj, strict=True):
+                if rng.random() < prune:
+                    m[i, j] = 0.0
+                    w[i, j] = 0.0
+        if grow > 0.0:
+            cand = (m == 0) & (~eye)
+            ii, jj = np.where(cand)
+            for i, j in zip(ii, jj, strict=True):
+                if rng.random() < grow:
+                    m[i, j] = 1.0
+        self.M = self._to_t(m)
+        self.W_rec = self._to_t(w) * self.M
+
     def reset_cortex(self) -> None:
         for name in self._plastic_names:
             setattr(self, name, self._birth_W[name].detach().clone())
@@ -737,6 +866,7 @@ class NeuralCortex:
         self.v_start = self._birth_v_start.copy()
         self.v_end = self._birth_v_end.copy()
         self.age = 0
+        self.dev_epoch = 0
         self._last_act_body_adv = 0.0
         self._adv_baseline = 0.0
         self._hold_after_conflict = False
@@ -884,7 +1014,7 @@ class NeuralCortex:
         self._hold_after_conflict = bool(snap.get("hold_after_conflict") or False)
         self._symbol_obs_counts = {str(k): int(v) for k, v in (snap.get("symbol_obs_counts") or {}).items()}
         self._symbol_fam = {str(k): float(v) for k, v in (snap.get("symbol_fam") or {}).items()}
-        self._echoic = [str(x) for x in (snap.get("echoic") or [])][-ECHOIC_MAX:]
+        self._echoic = [str(x) for x in (snap.get("echoic") or [])][-int(self._lp("echoic_max", float(ECHOIC_MAX))):]
         vn = snap.get("vocal_next")
         self._vocal_next = str(vn) if vn in ("HOLD", "EMIT", "ACT") else None
         lm = snap.get("last_motor_class")

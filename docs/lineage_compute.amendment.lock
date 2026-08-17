@@ -1,0 +1,37 @@
+{
+  "version": "TM.0.24.LINEAGE.COMPUTE.AMENDMENT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "preflight_sha": "579a29551bce9121b781b31e70101c1687dc2dbdbf7875f4b4079c75e51d58e5",
+  "scope_reduction": "P=16 pairs (not 128) because Phase 0A/0B show sequential n=64 is CPU-bound; scientific floors unchanged.",
+  "P": 16,
+  "islands": 2,
+  "pairs_per_island": 8,
+  "B": 2,
+  "W": 2,
+  "E": 1,
+  "N_wake": 80,
+  "N_replay": 10,
+  "sigma": 0.05,
+  "adam_lr": 0.02,
+  "base_replication": {
+    "B": 2,
+    "W": 2
+  },
+  "confirmatory_replication": {
+    "B": 4,
+    "W": 4
+  },
+  "hard_maximum": {
+    "B": 8,
+    "W": 8
+  },
+  "max_generations": 20,
+  "checkpoint_every": 5,
+  "expected_hours_per_generation": 0.0009553614846980965,
+  "gpu_hour_budget": 48.0,
+  "preferred_device": "cpu",
+  "note": "If confirmatory precision is unaffordable, record underpowered. Do not move \u03c4_k."
+}

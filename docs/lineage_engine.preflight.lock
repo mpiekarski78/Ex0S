@@ -1,0 +1,52 @@
+{
+  "version": "TM.0.24.LINEAGE.ENGINE.PREFLIGHT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "device": "cpu",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "shas": {
+    "neural_cortex": "2b563a9c5de3ec8b411121bd5518c09f49f422f44108138ec34a1d5708c98d2e",
+    "cortex_memory": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+    "cortex_lineage": "58540efea926dc12cd2d268b820f581176c1d14b7e143f2babc037ae2ca91bac",
+    "runner": "47da198301ebb81392256a5333bc08aa207366055ed1d2eda29934abfb393e52",
+    "layout": "b5950cc80ce5ff379d4c7bf317cf1e4df0740e378414c8c88ae0d7e2184edbfa",
+    "generator_lock": "006d11ff5dfc3141f5652c6f02c54fa0bfbd9f139986a7dc4c21c9ccb8ded030",
+    "fitness_contract": "d44a35fe41effd9c88205b10b11c8e9759cb964abb0d583ddab195271cc353eb",
+    "architecture_contract": "72b07fc894fe1bfa632962e7b2ce17cbb59dc243d27c30a5a70574bc460bcdf1",
+    "prereg": "19c98d78b71d2e99615616e3a05869493a904bb83d013821b9fa535b08e52b48",
+    "world_prereg": "28ceb6b7dc1fbe89ac413ea87e9691d9617e8a8366f8652f02b3a77d24173beb",
+    "compat": "ff22b685fc02793fa7b795b6aea0a8e8f9ce2aefe673bf467c61be549e47b639"
+  },
+  "n_wake": 40,
+  "n_replay": 8,
+  "ticks_per_second_p50": 3349.5174876253577,
+  "t_tick_seconds": 0.00029855046396815515,
+  "variance": {
+    "within_world_birth": 0.014526139322916664,
+    "across_world": 0.014840364583333331,
+    "teacher": 0.0
+  },
+  "analytical": {
+    "illustrative_128x4x4x1": {
+      "steps": 2150400,
+      "hours": 0.17833414381031132
+    },
+    "frozen_proposal_16x2x2x1": {
+      "steps": 11520,
+      "hours": 0.0009553614846980965
+    }
+  },
+  "rest_used": true,
+  "arm": "D",
+  "note": "Real Arm D siblings + REST + teacher. Not a capability score."
+}

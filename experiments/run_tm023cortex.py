@@ -247,6 +247,29 @@ def _sha_file(path: Path) -> str:
     return _sha_bytes(path.read_bytes())
 
 
+LINEAGE_COMPAT = REPO_ROOT / "docs" / "lineage_v27_default_compat.lock"
+
+
+def live_matches_declared_neural() -> bool:
+    """v27 candidate lock stays immutable. Lineage substrate may pin a new live SHA."""
+    live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    neural = _sha_file(NEURAL_PY)
+    memory = _sha_file(MEMORY_PY)
+    if neural == live.get("neural_cortex_sha") and memory == live.get("cortex_memory_sha"):
+        return True
+    if not LINEAGE_COMPAT.exists():
+        return False
+    compat = json.loads(LINEAGE_COMPAT.read_text(encoding="utf-8"))
+    return (
+        compat.get("ancestor_neural_sha") == live.get("neural_cortex_sha")
+        and neural == compat.get("neural_cortex_sha")
+        and memory == compat.get("cortex_memory_sha")
+        and bool((compat.get("C4") or {}).get("ok"))
+        and bool((compat.get("C5") or {}).get("ok"))
+        and bool((compat.get("C6") or {}).get("ok"))
+    )
+
+
 def _sha_src(fn: Callable[..., Any]) -> str:
     return _sha_bytes(inspect.getsource(fn).encode())
 
@@ -1206,10 +1229,8 @@ def verify_sanity_amendment() -> tuple[bool, str, dict[str, Any]]:
     if _sha_file(BIRTH_LOCK) != am.get("original_birth_sha"):
         return False, "birth SHA drift vs amendment", am
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
-    if _sha_file(NEURAL_PY) != live.get("neural_cortex_sha"):
+    if not live_matches_declared_neural():
         return False, "neural_cortex.py changed vs live candidate", am
-    if _sha_file(MEMORY_PY) != live.get("cortex_memory_sha"):
-        return False, "cortex_memory.py changed vs live candidate", am
     ll = am.get("learning_law_tests") or []
     acc = am.get("accelerator_tests") or []
     if ll != [

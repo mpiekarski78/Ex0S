@@ -180,9 +180,17 @@ def test_birth_and_candidate_frozen() -> None:
     else:
         assert cand["learning_law_ok"] is True
     assert cand["factory"] == "experiments.run_tm023cortex.make_cortex"
-    # neural organism unchanged vs candidate
-    assert sha(NEURAL_PY) == cand["neural_cortex_sha"]
-    assert sha(MEMORY_PY) == cand["cortex_memory_sha"]
+    lineage_compat = REPO_ROOT / "docs" / "lineage_v27_default_compat.lock"
+    if lineage_compat.exists() and cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V27":
+        compat = json.loads(lineage_compat.read_text(encoding="utf-8"))
+        assert compat["ancestor_neural_sha"] == cand["neural_cortex_sha"]
+        assert sha(NEURAL_PY) == compat["neural_cortex_sha"]
+        assert sha(MEMORY_PY) == compat["cortex_memory_sha"]
+        assert compat["C4"]["ok"] and compat["C5"]["ok"] and compat["C6"]["ok"]
+        assert compat["earned_next"] is False
+    else:
+        assert sha(NEURAL_PY) == cand["neural_cortex_sha"]
+        assert sha(MEMORY_PY) == cand["cortex_memory_sha"]
 
 
 def test_sanity_amendment_append_only() -> None:
