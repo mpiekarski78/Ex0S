@@ -2324,9 +2324,11 @@ Result: [`lineage_eligmap.decision.lock`](lineage_eligmap.decision.lock) **trace
 
 ## TM.0.24.ELIGMAP → isolated DISCRIMMAP
 
-Canonical main pending this freeze. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+Canonical main `27593ca`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
-DISCRIMMAP apparatus: [`lineage_discrimmap.prereg.lock`](lineage_discrimmap.prereg.lock) + [`lineage_discrimmap.isolation.lock`](lineage_discrimmap.isolation.lock). Runner-only separability ladder on captured E0/E1/Eλ/EΔ. D0 nearest-prototype control; D1 batch max-margin linear oracle; D2 frozen ridge λ=0.01; D3 online competitive (chosen +, unchosen −); D4 RBF kernel ridge ceiling only. Measurement is normalized geometric margin \(\gamma_i=y_i(w^\top x_i+b)/\|w\|\), frozen at 0.01 before DEV. Unused `TM024.DISCRIMMAP.DEV.` / `TWIN.`. SCORE reserved. DEV lock only after runner.lock on origin/main. n stays 64. Instincts, SFNN, larger n, lineage, and the 1,536 eligibility budget remain closed. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
+DISCRIMMAP apparatus: [`lineage_discrimmap.prereg.lock`](lineage_discrimmap.prereg.lock) + [`lineage_discrimmap.isolation.lock`](lineage_discrimmap.isolation.lock). Runner-only separability ladder on captured E0/E1/Eλ/EΔ. D0 nearest-prototype control; D1 batch max-margin linear oracle; D2 frozen ridge λ=0.01; D3 online competitive (chosen +, unchosen −); D4 RBF kernel ridge ceiling only. Measurement is normalized geometric margin \(\gamma_i=y_i(w^\top x_i+b)/\|w\|\), frozen at 0.01 before DEV. Unused `TM024.DISCRIMMAP.DEV.` / `TWIN.`. SCORE reserved. n stays 64. Instincts, SFNN, larger n, lineage, and the 1,536 eligibility budget remain closed. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
+
+D-arm runner: [`lineage_discrimmap.runner.lock`](lineage_discrimmap.runner.lock). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 

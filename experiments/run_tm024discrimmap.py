@@ -8,7 +8,6 @@ SCORE reserved and unopened.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import subprocess
 from pathlib import Path
@@ -74,6 +73,27 @@ def discrimmap_shas() -> dict[str, str]:
 
 def _git_head() -> str:
     return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT).decode().strip()
+
+
+ARMS = ("D0", "D1", "D2", "D3", "D4")
+EXPECTED_N_RANK = 4 * 5 * 3 * 2 * 2  # addr × arm × cue × order × world
+EXPECTED_N_TWIN = 4 * 5 * 2  # addr × arm × order at 2-cue TWIN
+EXPECTED_N_CELLS = EXPECTED_N_RANK + EXPECTED_N_TWIN
+
+
+def cell_id(kind: str, arm: str, aid: str, n_cues: int, order: str, world: int) -> str:
+    return f"{kind}|{arm}|{aid}|c{n_cues}|{order}|w{world}"
+
+
+def assert_runner_frozen() -> dict[str, Any]:
+    if not RUNNER_LOCK.exists():
+        raise RuntimeError("no discrimmap runner.lock — refuse DEV lock")
+    lock = json.loads(RUNNER_LOCK.read_text(encoding="utf-8"))
+    if discrimmap_shas() != lock.get("shas"):
+        raise RuntimeError("discrimmap implementation drifted after runner.lock")
+    if lock.get("n") != 64:
+        raise RuntimeError("n must stay 64")
+    return lock
 
 
 def geometric_margin(w: np.ndarray, b: float, x: np.ndarray, y: float) -> float:
@@ -168,7 +188,7 @@ def capture_xy(
     h_tr: list[str] = []
     for tick in rec["ticks"]:
         e = addr(tick, tracer)
-        if tick["kind"] == "select" and tick.get("handle"):
+        if tick["kind"] == "select" and tick.get("handle") and float(tick.get("adv") or 0.0) != 0.0:
             h = str(tick["handle"])
             X_tr.append(e)
             y_tr.append(1.0 if h == handles[0] else -1.0)
@@ -214,6 +234,43 @@ def perturb_sign_stable(
             noise = rng.normal(0.0, sigma, size=X[j].shape)
             xp = unit_or_zero(X[j] + noise)
             if geometric_margin(w, b, xp, float(y[j])) <= 0.0:
+                good = False
+                break
+        if good:
+            n_ok += 1
+    return {"n_ok": n_ok, "n": n, "stable": n_ok >= need}
+
+
+def _rbf(A: np.ndarray, B: np.ndarray, sigma: float) -> np.ndarray:
+    aa = np.sum(A * A, axis=1)[:, None]
+    bb = np.sum(B * B, axis=1)[None, :]
+    d2 = np.maximum(aa + bb - 2.0 * (A @ B.T), 0.0)
+    return np.exp(-d2 / (2.0 * float(sigma) ** 2 + EPS))
+
+
+def perturb_kernel_stable(
+    X_tr: np.ndarray,
+    alpha: np.ndarray,
+    X_te: np.ndarray,
+    y: np.ndarray,
+    *,
+    sigma: float,
+    domain: str,
+    key: str,
+) -> dict[str, Any]:
+    m = load_prereg()["margin"]
+    sig = float(m["rho_perturb_sigma"])
+    n = int(m["perturb_n"])
+    need = int(m["perturb_stable_min"])
+    rng = np.random.default_rng(domain_seed(domain, key))
+    n_ok = 0
+    for _i in range(n):
+        good = True
+        for j in range(len(y)):
+            noise = rng.normal(0.0, sig, size=X_te[j].shape)
+            xp = unit_or_zero(X_te[j] + noise).reshape(1, -1)
+            sc = float((_rbf(xp, X_tr, sigma) @ alpha)[0])
+            if sc * float(y[j]) <= 0.0:
                 good = False
                 break
         if good:
@@ -270,54 +327,80 @@ def eval_arm(
         w, b = max_margin_linear(X_tr, y_tr)
         train_g = min_geometric_margin(w, b, X_tr, y_tr)
         probe_g = min_geometric_margin(w, b, X_te, y_te)
-        ranking_ok = bool(np.all(np.sign(X_te @ w + b) == y_te)) if len(y_te) else False
+        ranking_ok = bool(len(y_te) and np.all((X_te @ w + b) * y_te > 0.0))
+        train_rank = bool(len(y_tr) and np.all((X_tr @ w + b) * y_tr > 0.0))
         stab = perturb_sign_stable(w, b, X_te, y_te, domain=world["domain"], key=f"{tag}_{arm}_{aid}")
-        passed = bool(ranking_ok and probe_g >= gmin and stab["stable"])
+        passed = bool(
+            train_rank and ranking_ok and train_g >= gmin and probe_g >= gmin and stab["stable"]
+        )
     elif arm == "D2":
         coef = ridge_classifier(X_tr, y_tr, float(p["arms"]["D2"]["lambda"]))
         w, b = coef[:-1], float(coef[-1])
         train_g = min_geometric_margin(w, b, X_tr, y_tr)
         probe_g = min_geometric_margin(w, b, X_te, y_te)
-        ranking_ok = bool(np.all(np.sign(X_te @ w + b) == y_te)) if len(y_te) else False
+        ranking_ok = bool(len(y_te) and np.all((X_te @ w + b) * y_te > 0.0))
+        train_rank = bool(len(y_tr) and np.all((X_tr @ w + b) * y_tr > 0.0))
         stab = perturb_sign_stable(w, b, X_te, y_te, domain=world["domain"], key=f"{tag}_{arm}_{aid}")
-        passed = bool(ranking_ok and probe_g >= gmin and stab["stable"])
+        passed = bool(
+            train_rank and ranking_ok and train_g >= gmin and probe_g >= gmin and stab["stable"]
+        )
     elif arm == "D3":
         w, b, _rows = competitive_fit(X_tr, handles, xy["h_tr"], eta=float(p["arms"]["D3"]["eta"]))
         train_g = min_geometric_margin(w, b, X_tr, y_tr)
         probe_g = min_geometric_margin(w, b, X_te, y_te)
-        ranking_ok = bool(np.all(np.sign(X_te @ w + b) == y_te)) if len(y_te) else False
+        ranking_ok = bool(len(y_te) and np.all((X_te @ w + b) * y_te > 0.0))
+        train_rank = bool(len(y_tr) and np.all((X_tr @ w + b) * y_tr > 0.0))
         stab = perturb_sign_stable(w, b, X_te, y_te, domain=world["domain"], key=f"{tag}_{arm}_{aid}")
-        passed = bool(ranking_ok and probe_g >= gmin and stab["stable"])
+        passed = bool(
+            train_rank and ranking_ok and train_g >= gmin and probe_g >= gmin and stab["stable"]
+        )
     elif arm == "D4":
-        scores, rkhs, _a = kernel_ridge_predict(
+        scores, rkhs, alpha = kernel_ridge_predict(
             X_tr,
             y_tr,
             X_te,
             lam=float(p["arms"]["D4"]["lambda"]),
             sigma=float(p["arms"]["D4"]["rbf_sigma"]),
         )
-        ranking_ok = bool(np.all(np.sign(scores) == y_te)) if len(y_te) else False
+        ranking_ok = bool(len(y_te) and np.all(scores * y_te > 0.0))
         probe_g = 0.0 if rkhs <= EPS else float(np.min(y_te * scores / rkhs))
         train_s, _, _ = kernel_ridge_predict(
             X_tr, y_tr, X_tr, lam=float(p["arms"]["D4"]["lambda"]), sigma=float(p["arms"]["D4"]["rbf_sigma"])
         )
         train_g = 0.0 if rkhs <= EPS else float(np.min(y_tr * train_s / rkhs))
-        stab = {"stable": ranking_ok, "n_ok": 20 if ranking_ok else 0, "n": 20}
-        passed = bool(ranking_ok and probe_g >= gmin)
+        train_rank = bool(len(y_tr) and np.all(train_s * y_tr > 0.0))
+        stab = perturb_kernel_stable(
+            X_tr,
+            alpha,
+            X_te,
+            y_te,
+            sigma=float(p["arms"]["D4"]["rbf_sigma"]),
+            domain=world["domain"],
+            key=f"{tag}_{arm}_{aid}",
+        )
+        passed = bool(
+            train_rank and ranking_ok and train_g >= gmin and probe_g >= gmin and stab["stable"]
+        )
     else:
         raise RuntimeError(arm)
+    if arm == "D0":
+        train_rank = ranking_ok
     return {
         "arm": arm,
         "address": aid,
         "passed": passed,
         "ranking_ok": ranking_ok,
+        "train_ranking_ok": bool(train_rank),
         "train_geometric_margin": float(train_g),
         "probe_geometric_margin": float(probe_g),
         "perturb_stable": bool(stab.get("stable")),
+        "perturb_n_ok": int(stab.get("n_ok") or 0),
+        "perturb_n": int(stab.get("n") or 0),
         "n_train": int(len(y_tr)),
         "n_probe": int(len(y_te)),
         "w_norm": float(np.linalg.norm(w)),
         "d0_cosine_margins": d0_margins,
+        "geometric_margin_min": gmin if arm != "D0" else float(p["d0_control"]["cosine_margin_min"]),
     }
 
 
@@ -329,7 +412,7 @@ def smoke() -> dict[str, Any]:
     g1 = geometric_margin(w, 0.0, x, 1.0)
     g10 = geometric_margin(10.0 * w, 0.0, x, 1.0)
     scale_ok = bool(abs(g1 - g10) <= 1e-12 and abs(g1 - 1.0) <= 1e-9)
-    world = capacity_world(0, DEV_DOMAIN, n_cues=2, n_handles=2)
+    world = capacity_world(0, "TM024.DISCRIMMAP.SMOKE.", n_cues=2, n_handles=2)
     pairs = mapping_pairs(world, flip=False)
     rec = collect_stream(world, pairs, tag="dm_smk", probe_pairs=pairs)
     d0 = eval_arm(rec, arm="D0", aid="E1", world=world, pairs=pairs, tag="smk")
@@ -346,11 +429,271 @@ def smoke() -> dict[str, Any]:
         "d0_e1_2cue_passed": d0["passed"],
         "d1_e1_2cue_ranking": d1["ranking_ok"],
         "d1_e1_2cue_probe_g": d1["probe_geometric_margin"],
+        "expected_n_cells": EXPECTED_N_CELLS,
         "neural_edit": False,
         "v31_exists": CANDIDATE_V31.exists(),
         "eligibility_budget_installed": False,
         "env": torch_env(),
     }
+
+
+def _eval_block(
+    rec: dict[str, Any],
+    *,
+    world: dict[str, Any],
+    pairs: list[tuple[str, str]],
+    order: str,
+    n_cues: int,
+    wi: int,
+    kind: str,
+    tag: str,
+    required: bool,
+) -> list[dict[str, Any]]:
+    p = load_prereg()
+    rows = []
+    for aid in p["addresses"]:
+        for arm in ARMS:
+            out = eval_arm(rec, arm=arm, aid=aid, world=world, pairs=pairs, tag=f"{tag}_{arm}_{aid}")
+            cid = cell_id(kind, arm, aid, n_cues, order, wi)
+            out.update(
+                {
+                    "id": cid,
+                    "kind": kind,
+                    "order": order,
+                    "n_cues": n_cues,
+                    "n_handles": 2,
+                    "world": wi,
+                    "required": required,
+                    "domain": world["domain"],
+                }
+            )
+            rows.append(out)
+    return rows
+
+
+def run_dev() -> dict[str, Any]:
+    if CANDIDATE_V31.exists():
+        raise RuntimeError("v31 candidate must not exist")
+    p = load_prereg()
+    cells: list[dict[str, Any]] = []
+    for spec in p["capacity"]:
+        n_cues = int(spec["n_cues"])
+        for wi in range(2):
+            world = capacity_world(wi, DEV_DOMAIN, n_cues=n_cues, n_handles=2)
+            pairs = mapping_pairs(world, flip=False)
+            for order in TEACH_ORDERS:
+                seq = list(reversed(pairs)) if order == "B_then_A" else list(pairs)
+                rec = collect_stream(
+                    world, seq, tag=f"dm_{wi}_{n_cues}_{order}", probe_pairs=pairs
+                )
+                assert rec["ticks"] and rec["probes"] and rec["taught"]
+                assert len(rec["probes"]) == n_cues
+                assert len(rec["taught"]) == n_cues
+                cells.extend(
+                    _eval_block(
+                        rec,
+                        world=world,
+                        pairs=pairs,
+                        order=order,
+                        n_cues=n_cues,
+                        wi=wi,
+                        kind="rank",
+                        tag=f"rank{wi}_{n_cues}_{order}",
+                        required=True,
+                    )
+                )
+    twin_cells: list[dict[str, Any]] = []
+    for order in TEACH_ORDERS:
+        world = capacity_world(0, TWIN_DOMAIN, n_cues=2, n_handles=2)
+        pairs = mapping_pairs(world, flip=False)
+        seq = list(reversed(pairs)) if order == "B_then_A" else list(pairs)
+        rec = collect_stream(world, seq, tag=f"dm_twin_{order}", probe_pairs=pairs)
+        twin_cells.extend(
+            _eval_block(
+                rec,
+                world=world,
+                pairs=pairs,
+                order=order,
+                n_cues=2,
+                wi=0,
+                kind="twin",
+                tag=f"twin_{order}",
+                required=True,
+            )
+        )
+    all_cells = cells + twin_cells
+    ids = [c["id"] for c in all_cells]
+    if len(ids) != EXPECTED_N_CELLS or len(set(ids)) != EXPECTED_N_CELLS:
+        raise RuntimeError(f"cell coverage {len(ids)} unique {len(set(ids))} expected {EXPECTED_N_CELLS}")
+    for c in all_cells:
+        if int(c["n_train"]) != int(c["n_cues"]) or int(c["n_probe"]) != int(c["n_cues"]):
+            raise RuntimeError(f"empty or mismatched teach/probe {c['id']}")
+        if c["domain"] not in (DEV_DOMAIN, TWIN_DOMAIN):
+            raise RuntimeError(f"unexpected domain {c['domain']}")
+
+    def _arm_addr(arm: str, aid: str, n_cues: int, kind: str) -> list[dict[str, Any]]:
+        return [
+            c
+            for c in all_cells
+            if c["arm"] == arm and c["address"] == aid and c["n_cues"] == n_cues and c["kind"] == kind
+        ]
+
+    def _all_pass(rows: list[dict[str, Any]]) -> bool:
+        return bool(rows) and all(bool(r["passed"]) for r in rows)
+
+    aids = list(p["addresses"])
+    d1_8 = all(_all_pass(_arm_addr("D1", a, 8, "rank")) for a in aids)
+    d1_twin = all(_all_pass(_arm_addr("D1", a, 2, "twin")) for a in aids)
+    d1_robust = bool(d1_8 and d1_twin)
+    d3_8 = all(_all_pass(_arm_addr("D3", a, 8, "rank")) for a in aids)
+    d3_twin = all(_all_pass(_arm_addr("D3", a, 2, "twin")) for a in aids)
+    d3_robust = bool(d3_8 and d3_twin)
+    d4_8 = all(_all_pass(_arm_addr("D4", a, 8, "rank")) for a in aids)
+    d0_8 = all(_all_pass(_arm_addr("D0", a, 8, "rank")) for a in aids)
+    d1_train_any = any(
+        bool(c["train_ranking_ok"]) and float(c["train_geometric_margin"]) >= 0.01
+        for c in all_cells
+        if c["arm"] == "D1" and c["kind"] == "rank" and c["n_cues"] == 8
+    )
+    d1_twin_or_perturb_fail = any(
+        (not bool(c["passed"])) and bool(c["train_ranking_ok"])
+        for c in all_cells
+        if c["arm"] == "D1"
+    )
+    ladder = p["decision_ladder"]
+    if not d1_robust:
+        code, then = ladder[0]["id"], ladder[0]["then"]
+    elif d1_robust and not d3_robust:
+        code, then = ladder[1]["id"], ladder[1]["then"]
+    elif d1_robust and d3_robust:
+        code, then = ladder[2]["id"], ladder[2]["then"]
+    elif d4_8 and not d1_robust:
+        code, then = ladder[3]["id"], ladder[3]["then"]
+    elif d1_train_any and d1_twin_or_perturb_fail:
+        code, then = ladder[4]["id"], ladder[4]["then"]
+    else:
+        code, then = ladder[0]["id"], ladder[0]["then"]
+
+    return {
+        "version": "TM.0.24.DISCRIMMAP.DEV",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eligible_for_000005": False,
+        "n": 64,
+        "domain": DEV_DOMAIN,
+        "twin_domain": TWIN_DOMAIN,
+        "score_domain_opened": False,
+        "neural_edit": False,
+        "implementation_authorized": False,
+        "d0_8cue_pass": d0_8,
+        "d1_robust": d1_robust,
+        "d3_robust": d3_robust,
+        "d4_8cue_pass": d4_8,
+        "decision_code": code,
+        "decision_then": then,
+        "n_cells": len(all_cells),
+        "n_rank": len(cells),
+        "n_twin": len(twin_cells),
+        "cells": all_cells,
+        "env": torch_env(),
+        "git_head": _git_head(),
+        "shas": discrimmap_shas(),
+        "note": "DEV only. SCORE unopened. No neural edit. Product remains 0.0.004.",
+    }
+
+
+def write_runner_lock() -> dict[str, Any]:
+    if RUNNER_LOCK.exists():
+        raise RuntimeError("discrimmap runner.lock already exists")
+    if CANDIDATE_V31.exists():
+        raise RuntimeError("v31 candidate must not exist")
+    prereg = load_prereg()
+    lock = {
+        "version": "TM.0.24.DISCRIMMAP.RUNNER.V1",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eligible_for_000005": False,
+        "neural_edit": False,
+        "implementation_authorized": False,
+        "shas": discrimmap_shas(),
+        "n": 64,
+        "domain": DEV_DOMAIN,
+        "twin_domain": TWIN_DOMAIN,
+        "score_domain": SCORE_DOMAIN,
+        "score_reserved_unopened": True,
+        "addresses": prereg["addresses"],
+        "arms": list(ARMS),
+        "geometric_margin_min": prereg["margin"]["geometric_margin_min"],
+        "reject_raw_linear_margin": True,
+        "expected_n_rank": EXPECTED_N_RANK,
+        "expected_n_twin": EXPECTED_N_TWIN,
+        "expected_n_cells": EXPECTED_N_CELLS,
+        "git_head": _git_head(),
+        "note": "Frozen D-arm runner. DEV lock only after this file is on origin/main. No neural edit.",
+    }
+    RUNNER_LOCK.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
+    return lock
+
+
+def write_dev_lock(out: dict[str, Any]) -> dict[str, Any]:
+    assert_runner_frozen()
+    if DEV_LOCK.exists():
+        raise RuntimeError("discrimmap DEV lock already exists")
+    if "TM024.DISCRIMMAP.SCORE." in json.dumps(out):
+        raise RuntimeError("SCORE domain leaked into DEV lock")
+    DEV_LOCK.write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8")
+    return out
+
+
+def write_decision(dev: dict[str, Any]) -> dict[str, Any]:
+    if DECISION.exists():
+        raise RuntimeError("discrimmap decision lock already exists")
+    out = {
+        "version": "TM.0.24.DISCRIMMAP.DECISION",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eligible_for_000005": False,
+        "capability_claim": False,
+        "n": 64,
+        "scored_worlds": False,
+        "neural_edit": False,
+        "implementation_authorized": False,
+        "candidate_v31": False,
+        "candidate_v32": False,
+        "lineage_reopened": False,
+        "q3": False,
+        "eligibility_budget_installed": False,
+        "declared_budget_remains_closed": 1536,
+        "n1n2_secondary": True,
+        "decision": {
+            "code": dev["decision_code"],
+            "then": dev["decision_then"],
+            "d1_robust": bool(dev.get("d1_robust")),
+            "d3_robust": bool(dev.get("d3_robust")),
+        },
+        "dev_lock_sha": sha_file(DEV_LOCK) if DEV_LOCK.exists() else None,
+        "env": dev.get("env"),
+        "git_head": _git_head(),
+        "note": (
+            "Runner-only separability diagnostic. SCORE unopened. "
+            "No v31/v32 candidate. Lineage stays closed. Product remains 0.0.004."
+        ),
+    }
+    DECISION.write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8")
+    RESULT_MD = REPO_ROOT / "docs" / "tm024discrimmap_results.md"
+    RESULT_MD.write_text(
+        "# TM.0.24.DISCRIMMAP DEV\n\n"
+        f"Decision: **{out['decision']['code']}**. "
+        f"D1 robust: **{out['decision']['d1_robust']}**. "
+        f"D3 robust: **{out['decision']['d3_robust']}**.\n\n"
+        f"Next: `{out['decision']['then']}`. SCORE unopened. No neural candidate. "
+        "1536 eligibility budget stays closed. Product **0.0.004**. `earned_next=false`.\n",
+        encoding="utf-8",
+    )
+    return out
 
 
 def refuse_score() -> None:
@@ -360,14 +703,18 @@ def refuse_score() -> None:
 def refuse_dev_lock() -> None:
     if not RUNNER_LOCK.exists():
         raise RuntimeError("DISCRIMMAP DEV lock requires runner.lock on origin/main after this freeze")
+    assert_runner_frozen()
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--verify-prereg", action="store_true")
-    ap.add_argument("--score", action="store_true")
+    ap.add_argument("--write-runner-lock", action="store_true")
+    ap.add_argument("--dev", action="store_true")
     ap.add_argument("--write-dev-lock", action="store_true")
+    ap.add_argument("--write-decision", action="store_true")
+    ap.add_argument("--score", action="store_true")
     args = ap.parse_args()
     if args.smoke:
         print(json.dumps(smoke(), indent=2, default=str))
@@ -379,9 +726,23 @@ def main() -> None:
         assert p["margin"]["geometric_margin_min"] == 0.01
         assert p["arms"]["D4"]["v_eligible"] is False
         assert p["declared_budget_remains_closed"] == 1536
-        print(json.dumps({"ok": True, "product": p["product"]}, indent=2))
+        print(json.dumps({"ok": True, "product": p["product"], "expected_n_cells": EXPECTED_N_CELLS}, indent=2))
+    elif args.write_runner_lock:
+        print(json.dumps(write_runner_lock(), indent=2, default=str))
+    elif args.dev:
+        out = run_dev()
+        brief = {k: v for k, v in out.items() if k != "cells"}
+        print(json.dumps(brief, indent=2, default=str))
     elif args.write_dev_lock:
         refuse_dev_lock()
+        out = run_dev()
+        write_dev_lock(out)
+        print(json.dumps({k: v for k, v in out.items() if k != "cells"}, indent=2, default=str))
+    elif args.write_decision:
+        if not DEV_LOCK.exists():
+            raise RuntimeError("write DEV lock first")
+        dev = json.loads(DEV_LOCK.read_text(encoding="utf-8"))
+        print(json.dumps(write_decision(dev), indent=2, default=str))
     elif args.score:
         refuse_score()
     else:

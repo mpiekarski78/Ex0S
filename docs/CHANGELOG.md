@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.24.DISCRIMMAP runner freeze:** Frozen D0–D4 runner, 280 cells (240 rank + 40 twin), normalized geometric margin 0.01. DEV lock only after this runner.lock is on origin/main. No neural edit. SCORE unopened. [`lineage_discrimmap.runner.lock`](lineage_discrimmap.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.DISCRIMMAP apparatus:** Runner-only separability ladder after ELIGMAP. D0 nearest-prototype control; D1 max-margin linear oracle; D2 frozen ridge; D3 online competitive; D4 nonlinear ceiling only. Measurement is normalized geometric margin `γ=y(wᵀx+b)/‖w‖`, frozen at 0.01 before DEV. Not a neural amendment. 1536 eligibility budget stays closed. SCORE unopened. [`lineage_discrimmap.prereg.lock`](lineage_discrimmap.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.ELIGMAP coverage:** Existing DEV lock validated in CI: 113 cells, 113 unique IDs, expected address/λ/cue/order/world/twin counts, non-empty teach/probe rows, 5 trajectory ticks per one-symbol observe, no SCORE-domain identifiers, deterministic manifest hash. No computational change; DEV not rerun. [`lineage_eligmap.dev.lock`](lineage_eligmap.dev.lock) SHA unchanged.
 - **TM.0.24.ELIGMAP decision addendum:** Historical decision preserved. “Competitive/discriminative write geometry” means runner-only DISCRIMMAP, not a neural amendment. N1/N2 remain secondary. [`lineage_eligmap.decision.addendum.lock`](lineage_eligmap.decision.addendum.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
