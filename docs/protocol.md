@@ -2186,3 +2186,5 @@ Result: [`cortex_fulldev_r5.lock`](cortex_fulldev_r5.lock) **0/16**. D6 32/32 tr
 
 Canonical main `75d3ba4`. Isolated D7.R1 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+D7.R1 apparatus: [`cortex_d7_r1.prereg.lock`](cortex_d7_r1.prereg.lock). Utterance persistence authorized; no neural edit yet. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

@@ -1,0 +1,35 @@
+{
+  "version": "TM.0.23.CORTEX.D7.R1.STAT.CONTRACT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "stat_md_sha": "3b7cdde86adcc26579ff1fc1367c0ad486686e00b56b1164e3c787833de71019",
+  "gate_md_sha": "ccec477a0732bdc1cf8ec3c5aa812a098c598adb0a8610e2b3e7fceab249707c",
+  "diagnosis_fulldev_r5_sha": "c74cbe55f97416f1506bcd25476ad5651ba8910e0279a553af52e97f38a5c6c7",
+  "isolation_sha": "1687c429f7a1991ebce6d8b6b29b0c34f04727b70a9ce08e5f02574ef25fc1c1",
+  "neural_sha_at_freeze": "bb4d8538a187bbad0427bd23b01931f25dbae122718dced0ac6b6ed2bcaf28c2",
+  "neural_change_authorized": true,
+  "authorized_law": "utterance_persistence",
+  "d7_requires": [
+    "distinct_lengths>=2",
+    "max_length>=4",
+    "max_length<=8",
+    "terminals>=15",
+    "curriculum_hits>=2"
+  ],
+  "prefix_stages": [
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6"
+  ],
+  "gate_clear_min_pairs": 13,
+  "refuse": [
+    "edit cortex_develop_scorers.py",
+    "drop C6",
+    "skip D7",
+    "isolate without D1\u2013D6 prefix"
+  ]
+}
