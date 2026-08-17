@@ -1,0 +1,50 @@
+{
+  "version": "TM.0.24.TRACEBRIDGE.DECISION",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "n": 64,
+  "scored_worlds": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "candidate_v31": false,
+  "candidate_v32": false,
+  "w1_resurrected": false,
+  "lineage_reopened": false,
+  "q3": false,
+  "eligibility_budget_installed": false,
+  "trace_rows_installed": false,
+  "declared_budget_remains_closed": 1536,
+  "write_geometry_branch_closed": true,
+  "decision": {
+    "code": "p1_not_usable_by_online_class",
+    "then": "p1_not_usable_by_online_class",
+    "arm_robust": {
+      "B0": false,
+      "B1": false,
+      "B2": false,
+      "B3": false,
+      "B4": true
+    },
+    "arm_train_only_8cue": {
+      "B0": false,
+      "B1": false,
+      "B2": false,
+      "B3": false,
+      "B4": false
+    }
+  },
+  "dev_lock_sha": "b734f0bd45aa52c65ce48fe57fd38b8693ce796d58c38547dc2391e87e49b384",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "git_head": "8ecd876b4f72c230c1ef1e0410b18509c5773fe4",
+  "note": "Runner-only P1 trace sufficiency. Write-geometry closed. No v31. Lineage stays closed. Product remains 0.0.004."
+}

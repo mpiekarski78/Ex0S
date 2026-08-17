@@ -2364,13 +2364,15 @@ Addendum: [`lineage_phasemap.decision.addendum.lock`](lineage_phasemap.decision.
 
 ## TM.0.24.PHASEMAP → isolated TRACEBRIDGE
 
-Canonical main `3863c05`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+Canonical main `8ecd876`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
 If the last robust P1 state is causally carried to the action and credit ticks, does the unchanged v29 learning law work? Do not resurrect W1. Do not declare v31/v32.
 
 TRACEBRIDGE apparatus: [`lineage_tracebridge.prereg.lock`](lineage_tracebridge.prereg.lock) + [`lineage_tracebridge.isolation.lock`](lineage_tracebridge.isolation.lock). B0 collapsed P5 + v29; B1 exact P1 bridge + v29; B2 event-end register (8×64, λ=0); B3 P1+D3 diagnostic; B4 P1+D1 ceiling. Unused `TM024.TRACEBRIDGE.DEV.` / `TWIN.`. SCORE reserved. 512/1536 unopened. n stays 64. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
 
 Trace runner: [`lineage_tracebridge.runner.lock`](lineage_tracebridge.runner.lock). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
+
+Result: [`lineage_tracebridge.decision.lock`](lineage_tracebridge.decision.lock) **p1_not_usable_by_online_class**. B4 confirms P1 is D1-robust at eight cues. B1/B2 with unchanged v29 last-write-win even at two cues. B3 competitive writing on P1 passes 2/4 cues and fails eight. Do not install the 512-row trace. SCORE unopened. No v31/v32. W1 stays closed. The 1,536 budget stays closed. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
 
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 

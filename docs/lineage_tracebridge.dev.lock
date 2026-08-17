@@ -1,0 +1,5867 @@
+{
+  "version": "TM.0.24.TRACEBRIDGE.DEV",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "n": 64,
+  "domain": "TM024.TRACEBRIDGE.DEV.",
+  "twin_domain": "TM024.TRACEBRIDGE.TWIN.",
+  "score_domain_opened": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "write_geometry_branch_closed": true,
+  "w1_resurrected": false,
+  "act_score_mode": "query",
+  "arm_robust": {
+    "B0": false,
+    "B1": false,
+    "B2": false,
+    "B3": false,
+    "B4": true
+  },
+  "arm_train_only_8cue": {
+    "B0": false,
+    "B1": false,
+    "B2": false,
+    "B3": false,
+    "B4": false
+  },
+  "decision_code": "p1_not_usable_by_online_class",
+  "decision_then": "p1_not_usable_by_online_class",
+  "n_cells": 85,
+  "cells": [
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.30761366303304394,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.30761366303304394,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.3078937784941165,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B0|c2|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.30761366303298576,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.30789377849405786,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.30761366303298576,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B0|c2|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.34875070806068353,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.34875070806068353,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.34906485390017483,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B0|c2|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.34875070806067543,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.34906485390016695,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.34875070806067543,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B0|c2|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.29916200588208874,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.29917030779920484,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.2991678588930081,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.29917457012054705,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.29916200588208874,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B0|c4|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 4,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2991620058820297,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.2991620058820297,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.29917457012048765,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.29916785889294906,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.29917030779914566,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B0|c4|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 4,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.3392679690025179,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.3392772877957706,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.3392745389314553,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.3392820721925879,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.3392679690025179,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B0|c4|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 4,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.33926796900250966,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.33926796900250966,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.33928207219257966,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.339274538931447,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.3392772877957625,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B0|c4|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 4,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2827539114344988,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_529107819",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_217755594",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_797308791",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_784488123",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2828135431775677,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.2827719562456583,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2828335006193663,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.2828038332813946,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_529107819",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2827825915291483,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_217755594",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.2827539114344988,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_797308791",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.28281606184844643,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_784488123",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.28289748444308127,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B0|c8|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 8,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.28275391143443807,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_529107819",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_217755594",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_797308791",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_784488123",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.2828974844430211,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.2828160618483856,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.28275391143443807,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.2827825915290877,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_529107819",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.2828038332813342,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_217755594",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.2828335006193057,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_797308791",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.28277195624559825,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_784488123",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.28281354317750707,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B0|c8|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 8,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.3208348950874652,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_845358363",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_682610396",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_885066417",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_986023329",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.32090194023938756,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.32085518326754414,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.32092437870071044,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.3208910232368506,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_845358363",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.32086714073526645,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_682610396",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.3208348950874652,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_885066417",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.32090477202250856,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_986023329",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.320996316413541,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B0|c8|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 8,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.3208348950874569,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_845358363",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_682610396",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_885066417",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_986023329",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.32099631641353255,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.3209047720224998,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.3208348950874569,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.3208671407352578,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_845358363",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.32089102323684204,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_682610396",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.320924378700702,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_885066417",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.3208551832675355,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_986023329",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.3209019402393789,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B0|c8|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B0",
+      "n_cues": 8,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2969769614764052,
+      "taught": [
+        {
+          "cue": "s_073169012",
+          "handle": "h_547624188",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_581425335",
+          "handle": "h_051178242",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_073169012",
+          "want": "h_547624188",
+          "winner": "h_051178242",
+          "margin": 0.2969769614764052,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_581425335",
+          "want": "h_051178242",
+          "winner": "h_051178242",
+          "margin": 0.2972481226303666,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "twin|B0|c2|A_then_B|w1",
+      "kind": "twin",
+      "arm": "B0",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.TWIN.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.29697696147637864,
+      "taught": [
+        {
+          "cue": "s_073169012",
+          "handle": "h_547624188",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_581425335",
+          "handle": "h_051178242",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_073169012",
+          "want": "h_547624188",
+          "winner": "h_547624188",
+          "margin": 0.29724812263034006,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_581425335",
+          "want": "h_051178242",
+          "winner": "h_547624188",
+          "margin": 0.29697696147637864,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "twin|B0|c2|B_then_A|w1",
+      "kind": "twin",
+      "arm": "B0",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.TWIN.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "required": true,
+      "adv": [
+        0.23799941637852023,
+        -0.6041611964080489,
+        0.23799941637852023
+      ],
+      "winner": "h_056937415",
+      "want": "h_056937415",
+      "margin": 1.2453596194481953,
+      "perturb_stable": true,
+      "kind": "eco",
+      "id": "eco|B0|c2|A_then_B|w0",
+      "arm": "B0",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV."
+    },
+    {
+      "passed": true,
+      "required": true,
+      "d_w_act_query": 0.0,
+      "id": "hold|B0|c2|A_then_B|w0",
+      "kind": "hold",
+      "arm": "B0",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV."
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.3078788450310156,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.3078788450310156,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.3078900852471512,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rest|B0|c2|A_then_B|w0",
+      "kind": "rest",
+      "arm": "B0",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2968690158601458,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2968690158601458,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.3185905073707914,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B1|c2|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2968690158600866,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.3185905073707336,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.2968690158600866,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B1|c2|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.33669381536950804,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.33669381536950804,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.3610540915893732,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B1|c2|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.3366938153694998,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.36105409158936497,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.3366938153694998,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B1|c2|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2940817942830296,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.29718073074946594,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.29975844731327517,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2940817942830296,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.3042264717520631,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B1|c4|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 4,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2940817942829699,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.30422647175200435,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.2940817942829699,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.2997584473132161,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.297180730749407,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B1|c4|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 4,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.333564021158663,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.33704378766752385,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.33993744653727065,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.333564021158663,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.34495128693790855,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B1|c4|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 4,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.3335640211586548,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.3449512869379002,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.3335640211586548,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.3399374465372623,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.3370437876675153,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B1|c4|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 4,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.27318239124643406,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_529107819",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_217755594",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_797308791",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_784488123",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2792482808154263,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.2767428723077029,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2812912453008848,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.2813205050246339,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_529107819",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.27851189055975745,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_217755594",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.283033065846267,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_797308791",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.27318239124643406,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_784488123",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.2881525596484247,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B1|c8|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 8,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.273182391246373,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_529107819",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_217755594",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_797308791",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_784488123",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.2881525596483643,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.273182391246373,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.2830330658462066,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.2785118905596964,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_529107819",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.2813205050245733,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_217755594",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.28129124530082417,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_797308791",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.27674287230764194,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_784488123",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.27924828081536535,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B1|c8|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 8,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.3100684806399593,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_845358363",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_682610396",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_885066417",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_986023329",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.3168927672985181,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.31407459142003336,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.31919026951564744,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.31922317150012713,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_845358363",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.31606451819782955,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_682610396",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.321148750594346,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_885066417",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.3100684806399593,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_986023329",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.3269031237344473,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B1|c8|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 8,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.31006848063995074,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_845358363",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_682610396",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_885066417",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_986023329",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.32690312373443886,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.31006848063995074,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.32114875059433723,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.3160645181978212,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_845358363",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.3192231715001188,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_682610396",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.319190269515639,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_885066417",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.3140745914200247,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_986023329",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.31689276729850946,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B1|c8|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B1",
+      "n_cues": 8,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.28657727612152684,
+      "taught": [
+        {
+          "cue": "s_073169012",
+          "handle": "h_547624188",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_581425335",
+          "handle": "h_051178242",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_073169012",
+          "want": "h_547624188",
+          "winner": "h_051178242",
+          "margin": 0.28657727612152684,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_581425335",
+          "want": "h_051178242",
+          "winner": "h_051178242",
+          "margin": 0.30760443046529495,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "twin|B1|c2|A_then_B|w1",
+      "kind": "twin",
+      "arm": "B1",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.TWIN.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.28657727612149975,
+      "taught": [
+        {
+          "cue": "s_073169012",
+          "handle": "h_547624188",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_581425335",
+          "handle": "h_051178242",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_073169012",
+          "want": "h_547624188",
+          "winner": "h_547624188",
+          "margin": 0.30760443046526886,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_581425335",
+          "want": "h_051178242",
+          "winner": "h_547624188",
+          "margin": 0.28657727612149975,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "twin|B1|c2|B_then_A|w1",
+      "kind": "twin",
+      "arm": "B1",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.TWIN.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "required": true,
+      "adv": [
+        0.23799941637852023,
+        -0.6041611964080489,
+        0.23799941637852023
+      ],
+      "winner": "h_056937415",
+      "want": "h_056937415",
+      "margin": 1.2453551472286088,
+      "perturb_stable": true,
+      "kind": "eco",
+      "id": "eco|B1|c2|A_then_B|w0",
+      "arm": "B1",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV."
+    },
+    {
+      "passed": true,
+      "required": true,
+      "d_w_act_query": 0.0,
+      "id": "hold|B1|c2|A_then_B|w0",
+      "kind": "hold",
+      "arm": "B1",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV."
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.29674612600822403,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.29674612600822403,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.31855605724118075,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rest|B1|c2|A_then_B|w0",
+      "kind": "rest",
+      "arm": "B1",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2968690158601458,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2968690158601458,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.31859050737079153,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B2|c2|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2968690158600866,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.3185905073707336,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.2968690158600866,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B2|c2|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.33669381536950804,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.33669381536950804,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.3610540915893732,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B2|c2|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.3366938153694998,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.3610540915893651,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.3366938153694998,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B2|c2|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2940817942830297,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.29718073074946605,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.29975844731327517,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2940817942830297,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.3042264717520631,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B2|c4|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 4,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2940817942829699,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.30422647175200423,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.2940817942829699,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.2997584473132161,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.29718073074940676,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B2|c4|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 4,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.333564021158663,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.33704378766752363,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.33993744653727065,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.333564021158663,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.34495128693790855,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B2|c4|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 4,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.3335640211586548,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.3449512869379002,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.3335640211586548,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.3399374465372623,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.3370437876675153,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B2|c4|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 4,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.27318239124643406,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_529107819",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_217755594",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_797308791",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_784488123",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2792482808154263,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.2767428723077029,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2812912453008849,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.2813205050246339,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_529107819",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.2785118905597572,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_217755594",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.283033065846267,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_797308791",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.27318239124643406,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_784488123",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.2881525596484247,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B2|c8|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 8,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.273182391246373,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_529107819",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_217755594",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_797308791",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_784488123",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.2881525596483643,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.273182391246373,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.28303306584620636,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.2785118905596965,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_529107819",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.2813205050245733,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_217755594",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.28129124530082406,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_797308791",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.27674287230764194,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_784488123",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.27924828081536535,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B2|c8|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 8,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.3100684806399594,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_845358363",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_682610396",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_885066417",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_986023329",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.316892767298518,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.31407459142003336,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.31919026951564744,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.31922317150012725,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_845358363",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.31606451819782955,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_682610396",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.321148750594346,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_885066417",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.3100684806399594,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_986023329",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.3269031237344475,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B2|c8|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 8,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.31006848063995074,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_845358363",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_682610396",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_885066417",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_986023329",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.32690312373443886,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.31006848063995074,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.32114875059433734,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.316064518197821,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_845358363",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.3192231715001188,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_682610396",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.319190269515639,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_885066417",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.3140745914200247,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_986023329",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.31689276729850946,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B2|c8|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B2",
+      "n_cues": 8,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.28657727612152684,
+      "taught": [
+        {
+          "cue": "s_073169012",
+          "handle": "h_547624188",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_581425335",
+          "handle": "h_051178242",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_073169012",
+          "want": "h_547624188",
+          "winner": "h_051178242",
+          "margin": 0.28657727612152684,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_581425335",
+          "want": "h_051178242",
+          "winner": "h_051178242",
+          "margin": 0.30760443046529484,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "twin|B2|c2|A_then_B|w1",
+      "kind": "twin",
+      "arm": "B2",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.TWIN.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.28657727612149975,
+      "taught": [
+        {
+          "cue": "s_073169012",
+          "handle": "h_547624188",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_581425335",
+          "handle": "h_051178242",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_073169012",
+          "want": "h_547624188",
+          "winner": "h_547624188",
+          "margin": 0.30760443046526864,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_581425335",
+          "want": "h_051178242",
+          "winner": "h_547624188",
+          "margin": 0.28657727612149975,
+          "perturb_stable": true,
+          "ok": false
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "twin|B2|c2|B_then_A|w1",
+      "kind": "twin",
+      "arm": "B2",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.TWIN.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "required": true,
+      "adv": [
+        0.23799941637852023,
+        -0.6041611964080489,
+        0.23799941637852023
+      ],
+      "winner": "h_056937415",
+      "want": "h_056937415",
+      "margin": 1.2453551472286093,
+      "perturb_stable": true,
+      "kind": "eco",
+      "id": "eco|B2|c2|A_then_B|w0",
+      "arm": "B2",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV."
+    },
+    {
+      "passed": true,
+      "required": true,
+      "d_w_act_query": 0.0,
+      "id": "hold|B2|c2|A_then_B|w0",
+      "kind": "hold",
+      "arm": "B2",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV."
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.29674612600822403,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.29674612600822403,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.31855605724118075,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rest|B2|c2|A_then_B|w0",
+      "kind": "rest",
+      "arm": "B2",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "perturb_stable": true,
+      "min_probe_margin": 0.22818069528848117,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.22818069528848117,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.23079609782870955,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B3|c2|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "perturb_stable": true,
+      "min_probe_margin": 0.22818069528848117,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.23079609782870955,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.22818069528848117,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B3|c2|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "perturb_stable": true,
+      "min_probe_margin": 0.22818069528848117,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.22818069528848117,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.23079609782870955,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B3|c2|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "perturb_stable": true,
+      "min_probe_margin": 0.22818069528848117,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.23079609782870955,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.22818069528848117,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B3|c2|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "perturb_stable": true,
+      "min_probe_margin": 0.08432437615878223,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.17930653146294934,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.162106718364061,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.08432437615878223,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.10979649945621948,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B3|c4|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 4,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "perturb_stable": true,
+      "min_probe_margin": 0.08432437615878223,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.10979649945621948,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.08432437615878223,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.162106718364061,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.17930653146294934,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B3|c4|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 4,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "perturb_stable": true,
+      "min_probe_margin": 0.08432437615878223,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.17930653146294934,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.162106718364061,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.08432437615878223,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.10979649945621948,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B3|c4|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 4,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "perturb_stable": true,
+      "min_probe_margin": 0.08432437615878223,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.10979649945621948,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.08432437615878223,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.162106718364061,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.17930653146294934,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B3|c4|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 4,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.03218364635017687,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_529107819",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_217755594",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_797308791",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_784488123",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.14567356470018164,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.040557084332974655,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_056937415",
+          "margin": 0.03218364635017687,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.11138466978510461,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_529107819",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.07261864764101035,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_217755594",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.17950631147637686,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_797308791",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.11550888578161976,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_784488123",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.10591281619241653,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B3|c8|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 8,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.03218364635017687,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_529107819",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_217755594",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_797308791",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_784488123",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.10591281619241653,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.11550888578161976,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.17950631147637686,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.07261864764101035,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_529107819",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.11138466978510461,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_217755594",
+          "want": "h_056937415",
+          "winner": "h_638344059",
+          "margin": 0.03218364635017687,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_797308791",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.040557084332974655,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_784488123",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.14567356470018164,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B3|c8|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 8,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.03218364635017687,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_845358363",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_682610396",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_885066417",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_986023329",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.14567356470018164,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.040557084332974655,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_831639938",
+          "margin": 0.03218364635017687,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.11138466978510461,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_845358363",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.07261864764101035,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_682610396",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.17950631147637686,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_885066417",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.11550888578161976,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_986023329",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.10591281619241653,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B3|c8|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 8,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "ranking_ok": false,
+      "train_ranking_ok": false,
+      "perturb_stable": true,
+      "min_probe_margin": 0.03218364635017687,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_845358363",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_682610396",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_885066417",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_986023329",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.10591281619241653,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.11550888578161976,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.17950631147637686,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.07261864764101035,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_845358363",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.11138466978510461,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_682610396",
+          "want": "h_831639938",
+          "winner": "h_504528114",
+          "margin": 0.03218364635017687,
+          "perturb_stable": true,
+          "ok": false
+        },
+        {
+          "cue": "s_885066417",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.040557084332974655,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_986023329",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.14567356470018164,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B3|c8|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B3",
+      "n_cues": 8,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "perturb_stable": true,
+      "min_probe_margin": 0.22818069528848117,
+      "taught": [
+        {
+          "cue": "s_073169012",
+          "handle": "h_547624188",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_581425335",
+          "handle": "h_051178242",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_073169012",
+          "want": "h_547624188",
+          "winner": "h_547624188",
+          "margin": 0.22818069528848117,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_581425335",
+          "want": "h_051178242",
+          "winner": "h_051178242",
+          "margin": 0.23079609782870955,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "twin|B3|c2|A_then_B|w1",
+      "kind": "twin",
+      "arm": "B3",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.TWIN.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "perturb_stable": true,
+      "min_probe_margin": 0.22818069528848117,
+      "taught": [
+        {
+          "cue": "s_073169012",
+          "handle": "h_547624188",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_581425335",
+          "handle": "h_051178242",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_073169012",
+          "want": "h_547624188",
+          "winner": "h_547624188",
+          "margin": 0.23079609782870955,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_581425335",
+          "want": "h_051178242",
+          "winner": "h_051178242",
+          "margin": 0.22818069528848117,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "twin|B3|c2|B_then_A|w1",
+      "kind": "twin",
+      "arm": "B3",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.TWIN.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "required": true,
+      "adv": [
+        0.23799941637852023,
+        -0.6041611964080489,
+        0.23799941637852023
+      ],
+      "winner": "h_056937415",
+      "want": "h_056937415",
+      "margin": 1.9997386110987683,
+      "perturb_stable": true,
+      "kind": "eco",
+      "id": "eco|B3|c2|A_then_B|w0",
+      "arm": "B3",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV."
+    },
+    {
+      "passed": true,
+      "required": true,
+      "d_w_act_query": 0.0,
+      "id": "hold|B3|c2|A_then_B|w0",
+      "kind": "hold",
+      "arm": "B3",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV."
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "perturb_stable": true,
+      "min_probe_margin": 0.2300412122036283,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.23073049586095828,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.2300412122036283,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rest|B3|c2|A_then_B|w0",
+      "kind": "rest",
+      "arm": "B3",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.11536524793047868,
+      "probe_geometric_margin": 0.11409034764424011,
+      "solver_status": "optimal",
+      "n_sv": 2,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.11409034764424011,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.11409034764424011,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B4|c2|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.11536524793047871,
+      "probe_geometric_margin": 0.11409034764424017,
+      "solver_status": "optimal",
+      "n_sv": 2,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.11409034764424017,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.11409034764424017,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B4|c2|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.11536524793047868,
+      "probe_geometric_margin": 0.11409034764424011,
+      "solver_status": "optimal",
+      "n_sv": 2,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.11409034764424011,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.11409034764424011,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B4|c2|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.11536524793047871,
+      "probe_geometric_margin": 0.11409034764424017,
+      "solver_status": "optimal",
+      "n_sv": 2,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.11409034764424017,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.11409034764424017,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rank|B4|c2|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.06484902637247532,
+      "probe_geometric_margin": 0.06471527018861473,
+      "solver_status": "optimal",
+      "n_sv": 4,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.06471527018861473,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.06471527018861473,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.06471527018861473,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.06471527018861473,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B4|c4|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 4,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.06484902637247554,
+      "probe_geometric_margin": 0.06471527018861539,
+      "solver_status": "optimal",
+      "n_sv": 4,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.06471527018861539,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.06471527018861539,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.06471527018861539,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.06471527018861539,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B4|c4|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 4,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.06484902637247532,
+      "probe_geometric_margin": 0.06471527018861473,
+      "solver_status": "optimal",
+      "n_sv": 4,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.06471527018861473,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.06471527018861473,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.06471527018861473,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.06471527018861473,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B4|c4|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 4,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.06484902637247554,
+      "probe_geometric_margin": 0.06471527018861539,
+      "solver_status": "optimal",
+      "n_sv": 4,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.06471527018861539,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.06471527018861539,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.06471527018861539,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.06471527018861539,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 4,
+      "n_probe": 4,
+      "id": "rank|B4|c4|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 4,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.03984334643809731,
+      "probe_geometric_margin": 0.024672327236810416,
+      "solver_status": "optimal",
+      "n_sv": 8,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_529107819",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_217755594",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_797308791",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_784488123",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_529107819",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_217755594",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_797308791",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_784488123",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B4|c8|A_then_B|w0",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 8,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.03984334643809694,
+      "probe_geometric_margin": 0.024672327236811044,
+      "solver_status": "optimal",
+      "n_sv": 8,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_054537823",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_628939143",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_529107819",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_217755594",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_797308791",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_784488123",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_054537823",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_628939143",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_529107819",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_217755594",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_797308791",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_784488123",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B4|c8|B_then_A|w0",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 8,
+      "order": "B_then_A",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.03984334643809731,
+      "probe_geometric_margin": 0.024672327236810416,
+      "solver_status": "optimal",
+      "n_sv": 8,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_845358363",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_682610396",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_885066417",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_986023329",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_845358363",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_682610396",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_885066417",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_986023329",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.024672327236810416,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B4|c8|A_then_B|w1",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 8,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.03984334643809694,
+      "probe_geometric_margin": 0.024672327236811044,
+      "solver_status": "optimal",
+      "n_sv": 8,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_599762444",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_402124711",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_354370627",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_385464427",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_845358363",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_682610396",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_885066417",
+          "handle": "h_504528114",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_986023329",
+          "handle": "h_831639938",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_599762444",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_402124711",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_354370627",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_385464427",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_845358363",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_682610396",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_885066417",
+          "want": "h_504528114",
+          "winner": "h_504528114",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_986023329",
+          "want": "h_831639938",
+          "winner": "h_831639938",
+          "margin": 0.024672327236811044,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 8,
+      "n_probe": 8,
+      "id": "rank|B4|c8|B_then_A|w1",
+      "kind": "rank",
+      "arm": "B4",
+      "n_cues": 8,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.11536524793047868,
+      "probe_geometric_margin": 0.11409034764424011,
+      "solver_status": "optimal",
+      "n_sv": 2,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_073169012",
+          "handle": "h_547624188",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_581425335",
+          "handle": "h_051178242",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_073169012",
+          "want": "h_547624188",
+          "winner": "h_547624188",
+          "margin": 0.11409034764424011,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_581425335",
+          "want": "h_051178242",
+          "winner": "h_051178242",
+          "margin": 0.11409034764424011,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "twin|B4|c2|A_then_B|w1",
+      "kind": "twin",
+      "arm": "B4",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.TWIN.",
+      "required": true
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.11536524793047871,
+      "probe_geometric_margin": 0.11409034764424017,
+      "solver_status": "optimal",
+      "n_sv": 2,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_073169012",
+          "handle": "h_547624188",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_581425335",
+          "handle": "h_051178242",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_073169012",
+          "want": "h_547624188",
+          "winner": "h_547624188",
+          "margin": 0.11409034764424017,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_581425335",
+          "want": "h_051178242",
+          "winner": "h_051178242",
+          "margin": 0.11409034764424017,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "twin|B4|c2|B_then_A|w1",
+      "kind": "twin",
+      "arm": "B4",
+      "n_cues": 2,
+      "order": "B_then_A",
+      "world": 1,
+      "domain": "TM024.TRACEBRIDGE.TWIN.",
+      "required": true
+    },
+    {
+      "passed": false,
+      "required": true,
+      "adv": [
+        0.23799941637852023,
+        -0.6041611964080489,
+        0.23799941637852023
+      ],
+      "winner": "h_638344059",
+      "want": "h_056937415",
+      "solver_status": "optimal",
+      "kind": "eco",
+      "id": "eco|B4|c2|A_then_B|w0",
+      "arm": "B4",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV."
+    },
+    {
+      "passed": true,
+      "required": true,
+      "d_w_act_query": 0.0,
+      "id": "hold|B4|c2|A_then_B|w0",
+      "kind": "hold",
+      "arm": "B4",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV."
+    },
+    {
+      "passed": true,
+      "ranking_ok": true,
+      "train_ranking_ok": true,
+      "train_geometric_margin": 0.11536524793047868,
+      "probe_geometric_margin": 0.11502060610181457,
+      "solver_status": "optimal",
+      "n_sv": 2,
+      "perturb_stable": true,
+      "taught": [
+        {
+          "cue": "s_356549718",
+          "handle": "h_638344059",
+          "adv": 0.23799941637852023
+        },
+        {
+          "cue": "s_871292021",
+          "handle": "h_056937415",
+          "adv": 0.23799941637852023
+        }
+      ],
+      "probes": [
+        {
+          "cue": "s_356549718",
+          "want": "h_638344059",
+          "winner": "h_638344059",
+          "margin": 0.11502060610181457,
+          "perturb_stable": true,
+          "ok": true
+        },
+        {
+          "cue": "s_871292021",
+          "want": "h_056937415",
+          "winner": "h_056937415",
+          "margin": 0.11502060610181457,
+          "perturb_stable": true,
+          "ok": true
+        }
+      ],
+      "n_train": 2,
+      "n_probe": 2,
+      "id": "rest|B4|c2|A_then_B|w0",
+      "kind": "rest",
+      "arm": "B4",
+      "n_cues": 2,
+      "order": "A_then_B",
+      "world": 0,
+      "domain": "TM024.TRACEBRIDGE.DEV.",
+      "required": true
+    }
+  ],
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "git_head": "8ecd876b4f72c230c1ef1e0410b18509c5773fe4",
+  "shas": {
+    "runner": "db6c4e73cac57dd79cb86fcfa371fee1e2fc5753bf1d03402faea690ff4de551",
+    "neural_cortex": "90dae9a652fdefa0e7942b775053e2b765991eb26ee3ee4cdcfdb994b901d9e0",
+    "cortex_memory": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+    "prereg": "e0e3cd94d2913de5e62ea896f79bd0976e39a7a6af862ca79f9ebb8701d42a38",
+    "contract": "ef8bde5ffc0ae0710cde5b2a8b7d8d1c8277dc2a16972c0597347cfd02b1c809",
+    "isolation": "a4a097294142ce9bfefdd36d2599249093649868dc057bcf7209d48f32187586",
+    "candidate_v30": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+    "phasemap_decision": "55807477c1a16157a890f2ecb6c2e7fbc305905b7cc04a1ead48b70bc91e3852",
+    "phasemap_addendum": "0d100f150bce198193ec090cba4fccdae5d3fed1529f83cabd18831352433790",
+    "r2_prereg": "22e4e9546c4668e9bee76c712a4efb529678e635e04a395d0ce5e052a50b5d13",
+    "r2_runner": "06f5f2c6edc0dffef570e75295708ea2816ea737cd0af9dab157cd94f4c26b41"
+  },
+  "note": "TRACEBRIDGE DEV only. Write-geometry closed. No neural edit. Product remains 0.0.004."
+}

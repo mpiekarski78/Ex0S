@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.24.TRACEBRIDGE result:** First-match **p1_not_usable_by_online_class**. B4 (P1+D1) passes at eight cues. B1/B2 v29 last-write fails even two cues. B3 competitive on P1 passes 2/4 cues and fails eight. No trace install. SCORE unopened. No v31. [`lineage_tracebridge.decision.lock`](lineage_tracebridge.decision.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.TRACEBRIDGE runner freeze:** Frozen B0–B4, event-end register λ=0, 85 cells. DEV lock only after this runner.lock is on origin/main. No neural edit. SCORE unopened. [`lineage_tracebridge.runner.lock`](lineage_tracebridge.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.TRACEBRIDGE apparatus:** Runner-only P1 sufficiency after PHASEMAP. B0 collapsed P5 + v29; B1 exact P1 bridge + v29; B2 event-end register (8×64, λ=0); B3 P1+D3 diagnostic; B4 P1+D1 ceiling. Unused `TM024.TRACEBRIDGE.DEV.` / `TWIN.`. SCORE unopened. No W1/v31. 512/1536 unopened. [`lineage_tracebridge.prereg.lock`](lineage_tracebridge.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.PHASEMAP result:** First-match **state_reinstatement_instability**. P0/P1 are robust at eight cues. First fail is P2: teaching is hard-margin clean but live probes do not transfer. P2=P3 and P4=P5. Last robust source is P1. SCORE unopened. No v31. [`lineage_phasemap.decision.lock`](lineage_phasemap.decision.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
