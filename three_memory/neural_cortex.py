@@ -59,6 +59,8 @@ CONFLICT_ADV_EPS = 1e-9
 CONFLICT_HOLD_BIAS = 2.0
 ADV_BASELINE_ALPHA = 0.05
 FAMILIARITY_RATIO = 0.5
+FAMILIARITY_DECAY = 0.98
+FAMILIARITY_ABS = 12.0
 EQUAL_EVIDENCE_MIN_SYMBOLS = 3
 
 
@@ -215,6 +217,7 @@ class NeuralCortex:
         self._adv_baseline = 0.0
         self._hold_after_conflict = False
         self._symbol_obs_counts: dict[str, int] = {}
+        self._symbol_fam: dict[str, float] = {}
         self.last_action: dict[str, Any] | None = None
         self.last_trajectory: list[np.ndarray] = []
         self.sensory_trajectory: list[np.ndarray] = []
@@ -623,8 +626,15 @@ class NeuralCortex:
         self._sensory_tick(self.v_end, body, same_ix, record_sensory=True)
         self._sensory_tick(s_t, body, same_ix, record_sensory=True)
 
+        for k in list(self._symbol_fam):
+            faded = float(self._symbol_fam[k]) * FAMILIARITY_DECAY
+            if faded < 1e-9:
+                self._symbol_fam.pop(k, None)
+            else:
+                self._symbol_fam[k] = faded
         for u in ordered:
             self._symbol_obs_counts[u] = int(self._symbol_obs_counts.get(u, 0)) + 1
+            self._symbol_fam[u] = float(self._symbol_fam.get(u, 0.0)) + 1.0
         if self._pending is not None:
             body_prev = np.asarray(self._pending["body"], dtype=np.float64)
             cur_body_adv = float(
@@ -639,8 +649,7 @@ class NeuralCortex:
         ):
             self._hold_after_conflict = True
         elif len(ordered) == 1:
-            mx = max(self._symbol_obs_counts.values()) if self._symbol_obs_counts else 0
-            if mx > 0 and float(self._symbol_obs_counts.get(ordered[0], 0)) < FAMILIARITY_RATIO * float(mx):
+            if float(self._symbol_fam.get(ordered[0], 0.0)) < FAMILIARITY_ABS:
                 self._hold_after_conflict = True
 
         action = self._motor_loop(body, same_ix)
@@ -698,6 +707,7 @@ class NeuralCortex:
         self._adv_baseline = 0.0
         self._hold_after_conflict = False
         self._symbol_obs_counts = {}
+        self._symbol_fam = {}
         self.reset_rho()
 
     def checkpoint(self) -> dict[str, Any]:
@@ -755,6 +765,7 @@ class NeuralCortex:
             "adv_baseline": float(self._adv_baseline),
             "hold_after_conflict": bool(self._hold_after_conflict),
             "symbol_obs_counts": {k: int(v) for k, v in self._symbol_obs_counts.items()},
+            "symbol_fam": {k: float(v) for k, v in self._symbol_fam.items()},
         }
 
     def load_checkpoint(self, snap: dict[str, Any]) -> None:
@@ -832,6 +843,7 @@ class NeuralCortex:
         self._adv_baseline = float(snap.get("adv_baseline") or 0.0)
         self._hold_after_conflict = bool(snap.get("hold_after_conflict") or False)
         self._symbol_obs_counts = {str(k): int(v) for k, v in (snap.get("symbol_obs_counts") or {}).items()}
+        self._symbol_fam = {str(k): float(v) for k, v in (snap.get("symbol_fam") or {}).items()}
 
     def weight_hash(self) -> str:
         h = hashlib.sha256()

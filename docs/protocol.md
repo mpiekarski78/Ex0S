@@ -2122,3 +2122,5 @@ Canonical main `425a0ee`. Isolated D5 after D4 transferred. Product **0.0.004**;
 
 D5.R1 apparatus: [`cortex_d5_r1.prereg.lock`](cortex_d5_r1.prereg.lock). Habituation familiarity authorized after this freeze. Reveal only from a clean tree pinning `git rev-parse HEAD`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle): [`cortex.candidate.v19.lock`](cortex.candidate.v19.lock). Habituation familiarity. C4/C5/C6 green (C6 label perm p=0.058). Reveal D5.R1 only from a clean tree pinning `git rev-parse HEAD`.
+

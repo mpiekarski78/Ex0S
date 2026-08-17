@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.V19 / D5.R1 candidate:** Habituation familiarity (decaying trace + absolute criterion). Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.058). [`cortex.candidate.v19.lock`](cortex.candidate.v19.lock) + [`cortex_mact_boundary.v19.lock`](cortex_mact_boundary.v19.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D5.R1 apparatus:** Isolated D5 after FULLDEV.R3 0/16. Habituation familiarity authorized; no neural edit yet. Lives run D1–D4 prefix then historical `score_d5`. [`cortex_d5_r1.prereg.lock`](cortex_d5_r1.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R3 result:** 0/16. D0 32, D1 17, D2 31, D3 31, **D4 32**, **D5 0**. D3 and D4 transferred. D5 unknown HOLD works; known_nonhold_rate stays <0.30 because lifetime-max familiarity treats a just-taught symbol as novel. [`cortex_fulldev_r3.lock`](cortex_fulldev_r3.lock) + [`cortex_fulldev_r3.audit.lock`](cortex_fulldev_r3.audit.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R3 apparatus:** Full D0–D12 on unused domain `TM023.FULL.R3.` after isolated D3.R3 and D4.R2 16/16. Live candidate v18, no neural edit. [`cortex_fulldev_r3.prereg.lock`](cortex_fulldev_r3.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
