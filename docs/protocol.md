@@ -2108,3 +2108,5 @@ Canonical main `bc8af9f`. D4.R2 apparatus: [`cortex_d4_r2.prereg.lock`](cortex_d
 
 Candidate (this cycle): [`cortex.candidate.v18.lock`](cortex.candidate.v18.lock). RETRIEVE recency tie-break. C4/C5/C6 green. Reveal D4.R2 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d4_r2_gate.lock`](cortex_d4_r2_gate.lock) **16/16**. Audit [`cortex_d4_r2.audit.lock`](cortex_d4_r2.audit.lock). Isolated D4 is green. Do not rescore. Next is FULLDEV.R3 on unused domain `TM023.FULL.R3.`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

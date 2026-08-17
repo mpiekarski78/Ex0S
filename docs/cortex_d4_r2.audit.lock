@@ -1,0 +1,70 @@
+{
+  "version": "TM.0.23.CORTEX.D4.R2.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "117694b6b1aa933ed3c9ac943b5648014cea175262faafca69c8cec16f33b1a8",
+  "reveal_sha": "61242797e8f252967315caa0d244c0c4a44403d1979432a0302aa3a4ed96ea0f",
+  "n_pair_clear": 16,
+  "claimed_clear": true,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_candidate_git",
+      "ok": true,
+      "candidate_git_sha": "b3563d872233dd0547128f68bed544e2fd6347e5"
+    },
+    {
+      "id": "domain_is_d4_r2",
+      "ok": true,
+      "domain": "TM023.D4.R2."
+    },
+    {
+      "id": "d0_and_d4_all_green",
+      "ok": true,
+      "d0_ok": 32,
+      "d4_ok": 32
+    },
+    {
+      "id": "donor_changes_all_true",
+      "ok": true,
+      "note": "donor_changes_retrieval true on 32/32. Sample donor_buf_norm > stripped_buf_norm (9.39>7.44, 8.97>7.65). n_writes vary. Not a rubber stamp."
+    },
+    {
+      "id": "scorer_untouched",
+      "ok": true
+    },
+    {
+      "id": "c6_stayed_green",
+      "ok": true
+    },
+    {
+      "id": "no_failure_lock_on_clear",
+      "ok": true
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    },
+    {
+      "id": "fulldev_still_closed",
+      "ok": true,
+      "note": "Isolated D4 clear does not reopen D0–D12. Next is FULLDEV.R3 on unused domain TM023.FULL.R3."
+    }
+  ],
+  "consequence": {
+    "rescore_d4_r2": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "fulldev_r3",
+    "refuse": [
+      "rewrite docs/cortex_d4_r2_gate.lock",
+      "edit-and-rescore on revealed D4.R2 worlds",
+      "reuse TM023.FULL.R1. or FULL.R2. or pair_seeds worlds",
+      "stamp earned_next",
+      "open nursery conversation before D0–D12 clears"
+    ]
+  },
+  "note": "16/16 stands. Isolated D4 is honestly green. Full D0–D12 requires a new unused-domain commitment."
+}
