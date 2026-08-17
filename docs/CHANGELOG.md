@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.24.COLLISIONMAP runner freeze:** ABI smoke green. Runner lock pins v29 neural SHA, unused `TM024.COLLISIONMAP.CELLS.` / `TWIN.`, cosine/L2/rank thresholds, and closed-form ridge λ=0.01. C0–C5 answers next. [`lineage_collisionmap.runner.lock`](lineage_collisionmap.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.COLLISIONMAP apparatus:** Cross-cue collision diagnostic after STATEMAP S6. Frozen C0–C5 on unused `TM024.COLLISIONMAP.CELLS.` / `TWIN.`. Preregistered cosine/L2/rank thresholds and closed-form ridge (λ=0.01) on `ρ_elig`. No neural edit. n stays 64. Score only after runner.lock on origin/main. [`lineage_collisionmap.prereg.lock`](lineage_collisionmap.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.STATEMAP result:** **10/13.** First fail **S6** (two cues collapse to one motor ranking). S7 teacher→probe is aligned (cosine ≈ 1); the prior alignment hypothesis is not confirmed. S10/S11: flat age schedule; 29/134 Arm D genes have no runtime effect. n stays 64. No amendment this package. [`lineage_statemap.decision.lock`](lineage_statemap.decision.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.STATEMAP runner freeze:** ABI smoke green. Runner lock pins v29 neural SHA and unused `TM024.STATEMAP.CELLS.` / `TWIN.` S0–S12 answers next. [`lineage_statemap.runner.lock`](lineage_statemap.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

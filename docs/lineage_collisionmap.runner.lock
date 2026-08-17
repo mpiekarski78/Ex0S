@@ -1,0 +1,53 @@
+{
+  "version": "TM.0.24.COLLISIONMAP.RUNNER.V1",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "shas": {
+    "runner": "0c157cfc88c8cd6b346239809f9fe32c0b2e16bdb338735418a1c4164810ef08",
+    "neural_cortex": "d75b8da7f251378c9638cf9a0c4a859f12b0215d9f6f7b1623e704d831f86d03",
+    "cortex_memory": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+    "prereg": "d66a3a49febbd880c0229c0f6d140a8783dda2856081e7ff7dd1580c921f3c75",
+    "contract": "73e0fd36ca66eed842cd355853d5f9961704a808e7fc34f50feab1d521bd8092",
+    "isolation": "be224c8c64e9f8765c62292cdb29a68350a40c51c819720ba117234e942a65df",
+    "candidate_v29": "484c7a3ab1acec815ef1f73e3f9dddbf0ad6b127313401fcbd6f75e17d9e0bf1",
+    "statemap_decision": "d1fe680e158570529e6de84d6067c301d3409a47f181dfbf34490ee1a2faf13b"
+  },
+  "prereg_sha": "d66a3a49febbd880c0229c0f6d140a8783dda2856081e7ff7dd1580c921f3c75",
+  "contract_sha": "73e0fd36ca66eed842cd355853d5f9961704a808e7fc34f50feab1d521bd8092",
+  "isolation_sha": "be224c8c64e9f8765c62292cdb29a68350a40c51c819720ba117234e942a65df",
+  "candidate_v29_sha": "484c7a3ab1acec815ef1f73e3f9dddbf0ad6b127313401fcbd6f75e17d9e0bf1",
+  "statemap_decision_sha": "d1fe680e158570529e6de84d6067c301d3409a47f181dfbf34490ee1a2faf13b",
+  "n": 64,
+  "domain": "TM024.COLLISIONMAP.CELLS.",
+  "twin_domain": "TM024.COLLISIONMAP.TWIN.",
+  "cells": [
+    "C0",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5"
+  ],
+  "thresholds": {
+    "cos_distinct_max": 0.99,
+    "l2_distinct_min": 0.05,
+    "rank_rel_tol": 0.001,
+    "n_rank_cues": 8,
+    "n_sep_repeats": 8,
+    "linear_sep_acc_min": 0.99,
+    "direct_fit_both_correct": true
+  },
+  "frozen_readout_fit": {
+    "method": "closed_form_ridge",
+    "lambda": 0.01,
+    "state": "rho_elig",
+    "targets": "bound_motor_vectors",
+    "iterative": false,
+    "sklearn": false,
+    "note": "W = Y X^T (X X^T + lambda I)^{-1}. No post-hoc lambda search."
+  },
+  "git_head": "30a6b2a5502677154619208c5bd2802b322cfa4f",
+  "note": "Frozen C-cell runner. Score only after this lock is on origin/main. No neural edit. v29 live."
+}
