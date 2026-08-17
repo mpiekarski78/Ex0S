@@ -1,0 +1,60 @@
+{
+  "version": "TM.0.23.CORTEX.D5.R2.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "d925f2c518813295de126cc15677215cf772b848e10eccfee12467e4c01c5930",
+  "reveal_sha": "f31b3b8688810f624d66d42ae546c3c811e6f7fae0a9cc255e606b7ff7856fd0",
+  "n_pair_clear": 16,
+  "claimed_clear": true,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "candidate_git_sha": "569ffe909c8a80bc14b10414ea021eef3440d451"
+    },
+    {
+      "id": "domain_is_d5_r2",
+      "ok": true,
+      "domain": "TM023.D5.R2."
+    },
+    {
+      "id": "d5_green",
+      "ok": true,
+      "d5_ok": 32,
+      "unknown_holds_range": [14, 19],
+      "known_nonhold_rate_range": [0.35, 0.9],
+      "note": "Not a rubber HOLD. unknown_holds 14–19, known_nonhold_rate 0.35–0.90."
+    },
+    {
+      "id": "d0_d3_d4_green",
+      "ok": true,
+      "d0_ok": 32,
+      "d3_ok": 32,
+      "d4_ok": 32
+    },
+    {
+      "id": "d5_scorer_not_soft",
+      "ok": true
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_d5_r2": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "fulldev_r4",
+    "refuse": [
+      "rewrite docs/cortex_d5_r2_gate.lock",
+      "edit-and-rescore on revealed D5.R2 worlds",
+      "stamp earned_next",
+      "open nursery conversation"
+    ]
+  },
+  "note": "16/16 stands. Isolated D5 is green. Next is FULLDEV.R4 on unused domain TM023.FULL.R4."
+}

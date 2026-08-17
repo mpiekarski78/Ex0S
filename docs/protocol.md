@@ -2134,3 +2134,9 @@ D5.R2 apparatus: [`cortex_d5_r2.prereg.lock`](cortex_d5_r2.prereg.lock). `FAMILI
 
 Candidate (this cycle): [`cortex.candidate.v20.lock`](cortex.candidate.v20.lock). Longer neophobia. C4/C5/C6 green. Reveal D5.R2 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d5_r2_gate.lock`](cortex_d5_r2_gate.lock) **16/16**. Audit [`cortex_d5_r2.audit.lock`](cortex_d5_r2.audit.lock). Isolated D5 is green. Do not rescore. Next is FULLDEV.R4 on unused domain `TM023.FULL.R4.`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+## TM.0.23.CORTEX.D5.R2 16/16 → FULLDEV.R4
+
+Canonical main `569ffe9`. FULLDEV.R4 apparatus follows. Live v20, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
