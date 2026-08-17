@@ -31,6 +31,7 @@ MANIFEST_SHA = "4dfffce9dc423f72fc136b38996b2e32f8156ab25c3316b957a3ba37d8c4feb5
 DEV_LOCK_SHA = "9321e57bb4f3bd1f4fe108c8fcb7751eca4fdb9da3d23401da5e5e2abd09eaed"
 DEV_MANIFEST_SHA = "1c031296210424cc3593a320cc862c9fd1b68cc24f4909218394023890464d92"
 DECISION_SHA = "484c38d90582b650633e76a9a92481022a5d3c97308c72e8d51d30d6c9b266dd"
+ADDENDUM_SHA = "92321043267e95092863e1d6e0ac08256d36cdf313c11078f352471fb25c7228"
 EXPECTED_N_CELLS = 140
 ARMS = ("L0", "L1", "L2", "L3", "L4")
 PHASES_OK = (
@@ -62,6 +63,7 @@ def test_phase_a_files() -> None:
         "docs/lineage_memorylifecyclemap.r2.contract.md",
         "docs/lineage_memorylifecyclemap.r2.prereg.lock",
         "docs/lineage_memorylifecyclemap.r2.isolation.lock",
+        "docs/lineage_memorylifecyclemap.r2.decision.addendum.lock",
         "docs/lineage_memorylifecyclemap.runner.addendum.lock",
         "docs/lineage_memorylifecyclemap.runner.lock",
         "docs/lineage_memorylifecyclemap.prereg.lock",
@@ -98,6 +100,25 @@ def test_phase_a_files() -> None:
     assert add["rewrite_historical_runner"] is False
     assert add["historical_runner_lock_sha"] == V1_RUNNER_LOCK_SHA
     assert add["next"] == "TM.0.24.MEMORYLIFECYCLEMAP.R2"
+    r2_add_p = REPO_ROOT / "docs" / "lineage_memorylifecyclemap.r2.decision.addendum.lock"
+    assert sha(r2_add_p) == ADDENDUM_SHA
+    r2_add = json.loads(r2_add_p.read_text(encoding="utf-8"))
+    assert r2_add["historical_code"] == "episode_reinstatement_match_failure"
+    assert r2_add["interpret_as"] == (
+        "episode_reinstatement_match_failure_under_global_ecological_stored_p1_unique_match_or"
+    )
+    assert r2_add["rewrite_historical_decision"] is False
+    assert r2_add["rewrite_historical_dev"] is False
+    assert r2_add["rewrite_historical_runner"] is False
+    assert r2_add["honest_first_match_on_these_cells"] == "memory_lifecycle_insufficient"
+    assert r2_add["honest_rung_5_requires_l2_eco_or_spec_phase_failure"] is True
+    assert r2_add["next"] is None
+    assert r2_add["r3_not_opened"] is True
+    assert r2_add["historical_decision_sha"] == DECISION_SHA
+    assert r2_add["historical_dev_lock_sha"] == DEV_LOCK_SHA
+    assert r2_add["historical_runner_lock_sha"] == RUNNER_LOCK_SHA
+    assert r2_add["historical_runner_py_sha"] == RUNNER_SHA
+    assert r2_add["v1_runner_lock_sha"] == V1_RUNNER_LOCK_SHA
     assert sha(REPO_ROOT / "docs" / "lineage_convergencemap.decision.lock") == CVG_DEC
     assert sha(REPO_ROOT / "docs" / "lineage_convergencemap.dev.lock") == CVG_DEV
     assert sha(REPO_ROOT / "docs" / "lineage_convergencemap.decision.addendum.lock") == CVG_ADD
@@ -206,6 +227,28 @@ def _full(**arm_kwargs: dict[str, bool]) -> list[dict[str, object]]:
     return cells
 
 
+def _honest_first_match(cells: list[dict[str, object]], p: dict[str, object]) -> str:
+    from experiments.run_tm024memorylifecyclemap_r2 import ARMS as R2_ARMS
+    from experiments.run_tm024memorylifecyclemap_r2 import _four, _l2_match_failure, _phase_flags
+
+    flags = {arm: _phase_flags(cells, arm) for arm in R2_ARMS}
+    l2_eco_spec_fail = (not flags["L2"]["plasticity"]) or (not flags["L2"]["specificity"])
+    ladder = p["decision_ladder"]
+    if _four(flags["L0"]):
+        return ladder[0]["id"]
+    if _four(flags["L1"]):
+        return ladder[1]["id"]
+    if (not flags["L1"]["plasticity"]) and _four(flags["L2"]) and (not flags["L3"]["plasticity"]):
+        return ladder[2]["id"]
+    if _four(flags["L2"]) and _four(flags["L3"]):
+        return ladder[3]["id"]
+    if (not _four(flags["L2"])) and l2_eco_spec_fail and _l2_match_failure(cells):
+        return ladder[4]["id"]
+    if _four(flags["L4"]) and (not any(_four(flags[a]) for a in ("L0", "L1", "L2", "L3"))):
+        return ladder[5]["id"]
+    return ladder[6]["id"]
+
+
 def test_decision_ladder() -> None:
     from experiments.run_tm024memorylifecyclemap_r2 import EXPECTED_N_CELLS as N
     from experiments.run_tm024memorylifecyclemap_r2 import _decision, load_prereg
@@ -217,6 +260,11 @@ def test_decision_ladder() -> None:
         assert len(cells) == N
         c, _then, _extra = _decision(cells, p)
         return c
+
+    def honest(**arm_kwargs: dict[str, bool]) -> str:
+        cells = _full(**arm_kwargs)
+        assert len(cells) == N
+        return _honest_first_match(cells, p)
 
     four = {
         "acquire_all": True,
@@ -234,6 +282,19 @@ def test_decision_ladder() -> None:
     assert code(L2={"ecological_fail": True}) == "episode_reinstatement_match_failure"
     assert code(L4=four) == "covariance_memory_ceiling_only"
     assert code() == "memory_lifecycle_insufficient"
+    l2_stable_only_miss = {
+        "acquire_all": True,
+        "twin": True,
+        "plasticity": True,
+        "specificity": True,
+        "ecological_fail": True,
+    }
+    assert code(L2=l2_stable_only_miss) == "episode_reinstatement_match_failure"
+    assert honest(L2=l2_stable_only_miss) == "memory_lifecycle_insufficient"
+    assert honest(L2={"plasticity": False, "ecological_fail": True}) == "episode_reinstatement_match_failure"
+    assert honest(L2={"specificity": False, "reversal_miss": True}) == "episode_reinstatement_match_failure"
+    assert honest(L4=four) == "covariance_memory_ceiling_only"
+    assert honest() == "memory_lifecycle_insufficient"
 
 
 def test_matched_live_and_store_policies() -> None:
@@ -470,7 +531,11 @@ def test_decision_if_present() -> None:
     assert d["product"] == "0.0.004"
     assert d["earned_next"] is False
     assert d["neural_edit"] is False
-    assert d["decision"]["code"] in PHASES_OK
+    assert d["decision"]["code"] == "episode_reinstatement_match_failure"
+    assert d["decision"]["phase_flags"]["l2_reversal_matcher_miss"] is True
+    assert d["decision"]["phase_flags"]["L2"]["plasticity"] is True
+    assert d["decision"]["phase_flags"]["L2"]["specificity"] is True
+    assert d["decision"]["phase_flags"]["L2"]["stable"] is False
     assert "TM024.MEMORYLIFECYCLEMAP.R2.SCORE." not in json.dumps(d)
     assert "TM024.MEMORYLIFECYCLEMAP.SCORE." not in json.dumps(d)
 
@@ -510,6 +575,40 @@ def test_dev_coverage_if_present() -> None:
     assert all(c.get("stability_gate") == "ranking_perturb_sigma_0.01" for c in dev["cells"])
     if DEV_MANIFEST_SHA is not None:
         assert memorylifecyclemap_r2_manifest(dev) == DEV_MANIFEST_SHA
+    store = [c for c in dev["cells"] if c["arm"] in ("L1", "L2", "L3")]
+    assert len(store) == 84
+    assert all((c.get("matcher") or {}).get("ecological_match_failure") is True for c in store)
+    l2_eco = next(c for c in dev["cells"] if c["arm"] == "L2" and c["kind"] == "eco")
+    l2_spec = next(c for c in dev["cells"] if c["arm"] == "L2" and c["kind"] == "spec")
+    assert l2_eco["passed"] is True
+    assert l2_spec["passed"] is True
+    for c in (l2_eco, l2_spec):
+        matcher = c["matcher"]
+        assert matcher["reversal_matcher_miss"] is False
+        assert matcher["reversal_match_recall"] == 1.0
+        assert matcher["n_reversal_writes"] == 2
+        assert matcher["n_reversal_hits"] == 2
+        assert matcher["ecological_match_failure"] is True
+        assert matcher["ecological_match_stability"] == 0.0
+        assert matcher["bounded_match_sanity"] == 1.0
+        assert c["n_live_reversal_updates"] == 2
+    l2_8s = [c for c in dev["cells"] if c["arm"] == "L2" and c["kind"] == "stable" and int(c["n_cues"]) == 8]
+    assert len(l2_8s) == 4
+    assert all(c["passed"] is False for c in l2_8s)
+    assert all(c["ranking_ok"] is True for c in l2_8s)
+    assert all(c["perturb_stable"] is False for c in l2_8s)
+    assert min(float(c["min_probe_margin"]) for c in l2_8s) == 0.0064329167433538935
+    from experiments.run_tm024memorylifecyclemap_r2 import _decision, load_prereg
+
+    p = load_prereg()
+    frozen, _then, extra = _decision(dev["cells"], p)
+    assert frozen == "episode_reinstatement_match_failure"
+    assert extra["l2_reversal_matcher_miss"] is True
+    assert extra["l2_match_failure"] is True
+    assert extra["L2"]["plasticity"] is True
+    assert extra["L2"]["specificity"] is True
+    assert extra["L2"]["stable"] is False
+    assert _honest_first_match(dev["cells"], p) == "memory_lifecycle_insufficient"
 
 
 def main() -> None:

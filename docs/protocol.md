@@ -2414,6 +2414,8 @@ Memory-lifecycle R2 runner: [`lineage_memorylifecyclemap.r2.runner.lock`](lineag
 
 Result: [`lineage_memorylifecyclemap.r2.decision.lock`](lineage_memorylifecyclemap.r2.decision.lock) **episode_reinstatement_match_failure**. L2 exact reversal match succeeded; `bounded_match_sanity=1.0`; `ecological_match_stability=0.0` at σ=0.01. L1–L3 live reversal counts matched. Do not install the 512-row trace. SCORE unopened. No v31/v32. W1 stays closed. V1 freeze preserved. QUAL/EVAL sealed. Not 0.0.005.
 
+Addendum: [`lineage_memorylifecyclemap.r2.decision.addendum.lock`](lineage_memorylifecyclemap.r2.decision.addendum.lock). Historical R2 DEV/decision/runner preserved. Interpret the published code as **episode_reinstatement_match_failure_under_global_ecological_stored_p1_unique_match_or**. L2 eco/spec passed; exact reversal match succeeded; 8-cue ranking stayed correct and missed the 0.01 stability gate. Rung 5 ORed a global stored-P1 σ=0.01 unique-match diagnostic onto any L2 four-phase miss. Honest first-match on these cells is **memory_lifecycle_insufficient**. R3 not opened.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
