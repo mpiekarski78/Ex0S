@@ -1,0 +1,19 @@
+{
+  "version": "TM.0.23.CORTEX.V27.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "1fd4306",
+  "neural_mechanism_changed": true,
+  "claim": "v27 removed sensory-buffer replay (G1 green) but did not create a learned emit/STOP function. Heard-A→emit-B teaching via next-step body advantage on W_emit_query almost never produces emit_B (HOLD dominates). STOP length does not follow taught boundaries. Biology: delayed imitation / template matching — a sensory target trace scores later motor output; the target is not copied into the emit program. Distinct from _phrase / phrase_program.",
+  "g1_ok": true,
+  "n_pair_clear": 0,
+  "load_bearing_reds": ["G3_non_echo_response", "G5_stop_evidence"],
+  "refuse": [
+    "edit-and-rescore v27 on revealed worlds",
+    "restore phrase_program",
+    "reveal FULLDEV.R7",
+    "stamp product",
+    "lower G3/G5 bars"
+  ]
+}

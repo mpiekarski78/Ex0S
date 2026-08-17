@@ -722,6 +722,14 @@ def test_v27_candidate_boundary_pending_gate() -> None:
     assert prereg["authorized_law"] == "learned_internal_motor_program_not_sensory_buffer_replay"
     assert prereg["domain"] == "TM023.V27.GEN."
     assert not (REPO_ROOT / "docs" / "cortex_fulldev_r7.prereg.lock").exists()
+    gate_p = REPO_ROOT / "docs" / "cortex_v27_gate.lock"
+    if gate_p.exists():
+        gate = json.loads(gate_p.read_text(encoding="utf-8"))
+        assert gate["relation_gate_clear"] is False
+        assert gate["battery"]["n_pair_clear"] == 0
+        assert gate["battery"]["g1_ok"] is True
+        assert gate["earned_next"] is False
+        assert (REPO_ROOT / "docs" / "cortex_v27_gate.failure.lock").exists()
 
 
 def test_v26_candidate_boundary_pending_gate() -> None:

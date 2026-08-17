@@ -2236,6 +2236,8 @@ v27 apparatus: [`cortex_v27.prereg.lock`](cortex_v27.prereg.lock). Learned inter
 
 Candidate (this cycle): [`cortex.candidate.v27.lock`](cortex.candidate.v27.lock). Learned internal motor program, not sensory-buffer replay. C4/C5/C6 green. Reveal v27 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_v27_gate.lock`](cortex_v27_gate.lock) **0/16**. G1 green. G3/G5 red (HOLD dominates; STOP length not taught). Audit [`cortex_v27.audit.lock`](cortex_v27.audit.lock). Diagnosis [`cortex_diagnosis.v27.lock`](cortex_diagnosis.v27.lock): delayed imitation / template match, not buffer copy. Do not rescore. Do not restore `phrase_program`. Do not reveal FULLDEV.R7.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

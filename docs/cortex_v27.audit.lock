@@ -1,0 +1,56 @@
+{
+  "version": "TM.0.23.CORTEX.V27.GATE.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "910ed69fcd44fc81d6f9c3b7c45477d63e016e087a796063ab803b74eda36086",
+  "reveal_sha": "c0818ae69abfcd7732e38fc0c02e11f0e7cd6c4272c24a657a1675d409577c41",
+  "n_pair_clear": 0,
+  "g1_ok": true,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "candidate_git_sha": "1fd4306748a5aa20301d8c3e3c8e19c7f8b23eaf"
+    },
+    {
+      "id": "g1_green_scripting_gone",
+      "ok": true
+    },
+    {
+      "id": "g3_almost_no_emit_b",
+      "ok": true,
+      "note": "emit_b is 0 on 31/32 lives. other (HOLD/non-B) dominates. Occasional echo_a 1–5. Do not soften emit_B>=3."
+    },
+    {
+      "id": "g5_short_or_empty",
+      "ok": true,
+      "note": "Mean STOP/emit lengths stay near 0–2. Twin boundary-4 never closer to 4 than 2. Do not soften abs(mean4-mean2)>=1.0."
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    },
+    {
+      "id": "fulldev_r7_not_revealed",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_v27": "refused",
+    "fulldev_r7": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "diagnose_learned_emit_and_stop",
+    "refuse": [
+      "rewrite docs/cortex_v27_gate.lock",
+      "restore phrase_program to recover D7",
+      "soften G3/G5",
+      "reveal FULLDEV.R7"
+    ]
+  },
+  "note": "0/16 stands. G1 cleared. G3/G5 remain the wall. Product 0.0.004."
+}
