@@ -17,8 +17,9 @@ ELIG_DEV = "33f79b6b83fb5b7e33b452019e010b5a05a8b0cd762b8ed6f355346b6a4a7578"
 V30_CAND = "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c"
 RUNNER_LOCK_SHA = "ae0dd8752341b2b727453010bcef6b380425b03a59c36c7c788bb40c7cff8c88"
 RUNNER_SHA = "9167437c33224cf35ce065a58c56afdb2e14dc5f6ca0677e8f39588a0c37f7c3"
-DEV_LOCK_SHA = None  # pinned after DEV lock lands
-DEV_MANIFEST_SHA = None
+DEV_LOCK_SHA = "4c0c8677e7e95f18b9adaa788ec941f5cf17cb62bc486bca4099a1f2b5dcea13"
+DEV_MANIFEST_SHA = "7fb81b3be164249a7515407f983ac425a55b9cfdf6735bb01fe058973fcd863e"
+DECISION_SHA = "183b9a5f582f2c645adfe2df1424af92072255a59ad0cf8ec6358325f42083b0"
 EXPECTED_N_RANK = 240
 EXPECTED_N_TWIN = 40
 EXPECTED_N_CELLS = 280
@@ -39,6 +40,8 @@ def test_phase_a_files() -> None:
         "docs/lineage_discrimmap.prereg.lock",
         "docs/lineage_discrimmap.isolation.lock",
         "docs/lineage_discrimmap.runner.lock",
+        "docs/lineage_discrimmap.dev.lock",
+        "docs/lineage_discrimmap.decision.lock",
         "docs/lineage_eligmap.decision.lock",
         "docs/lineage_eligmap.decision.addendum.lock",
         "docs/lineage_eligmap.dev.lock",
@@ -156,6 +159,7 @@ def test_decision_if_present() -> None:
     p = REPO_ROOT / "docs" / "lineage_discrimmap.decision.lock"
     if not p.exists():
         return
+    assert sha(p) == DECISION_SHA
     d = json.loads(p.read_text(encoding="utf-8"))
     assert d["product"] == "0.0.004"
     assert d["earned_next"] is False
@@ -169,6 +173,10 @@ def test_decision_if_present() -> None:
     assert d["declared_budget_remains_closed"] == 1536
     assert d["n"] == 64
     assert d["scored_worlds"] is False
+    assert d["decision"]["code"] == "d1_fails_robustly"
+    assert d["decision"]["d1_robust"] is False
+    assert d["decision"]["d3_robust"] is False
+    assert d["dev_lock_sha"] == DEV_LOCK_SHA
     assert "TM024.DISCRIMMAP.SCORE." not in json.dumps(d)
     assert not (REPO_ROOT / "docs" / "cortex.candidate.v31.lock").exists()
     assert not (REPO_ROOT / "docs" / "cortex.candidate.v32.lock").exists()

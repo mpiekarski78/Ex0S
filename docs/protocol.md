@@ -2330,6 +2330,8 @@ DISCRIMMAP apparatus: [`lineage_discrimmap.prereg.lock`](lineage_discrimmap.prer
 
 D-arm runner: [`lineage_discrimmap.runner.lock`](lineage_discrimmap.runner.lock). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
+Result: [`lineage_discrimmap.decision.lock`](lineage_discrimmap.decision.lock) **d1_fails_robustly**. The batch max-margin linear oracle cannot fit eight-cue training addresses (0/16 train-rank). D3 and D4 fail every 8-cue rank cell. Two-cue can rank in some cells; that is not robust separability. Address geometry remains insufficient; do not install a competitive linear write law. SCORE unopened. No v31/v32. The 1,536 eligibility budget stays closed. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
