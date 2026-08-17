@@ -2256,6 +2256,14 @@ PLASTICITYMAP apparatus: [`lineage_plasticitymap.prereg.lock`](lineage_plasticit
 
 Result: [`lineage_plasticitymap.decision.lock`](lineage_plasticitymap.decision.lock). D0 incomplete (zero-elig/consolidation green; prior-elig near-tie; later behavior not both-green). D1 green. D2 red (ranking can move; sampled ACT often HOLD). Do not treat Q4 as fully repaired. Do not increase n. QUAL/EVAL sealed. Not 0.0.005.
 
+## TM.0.24.PLASTICITYMAP → isolated v29 ACTORCREDIT
+
+Canonical main `f64542a`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Bottleneck: interface between action provenance, delayed credit, and factorized action selection. `P(beneficial)=P(ACT)×P(handle|ACT)`. Ranking can move while `P(ACT)` stays near zero.
+
+v29 apparatus: [`cortex_v29.prereg.lock`](cortex_v29.prereg.lock) + [`lineage_actorcredit.prereg.lock`](lineage_actorcredit.prereg.lock). Action-owned delayed credit authorized after this freeze. Neural edit only after this commit is on `origin/main`. Frozen cells A0–A11. Reachability only if cells pass. Another lineage run stays closed. FULLDEV.R7 sealed.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

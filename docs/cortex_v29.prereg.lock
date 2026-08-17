@@ -1,0 +1,39 @@
+{
+  "version": "TM.0.23.CORTEX.V29.PREREG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "plasticitymap_decision_sha": "5d57ba526661fd12c8dde2b55847861f6f89e78a806261409be41a9210560b48",
+  "architecture_amendment_sha": "747bffa0a8b6fcb3fb4f90c88ecee574d71dbd41aa087e4874cfc5d13d325bcc",
+  "architecture_amendment_md_sha": "ca6da4835229588ecebdb783deb043c73f4f7a1533576b431c97bebb18e501f7",
+  "isolation_sha": "9740ef1e13ccb5762e317e68c2fa23372e1d81553a076997215dd32e71bc40fc",
+  "authorized_law": "action_owned_delayed_credit",
+  "n": 64,
+  "tau": 0.6,
+  "delta_B": 0.05,
+  "delta_P": 0.05,
+  "required_after_edit": [
+    "nine_sanity",
+    "C4",
+    "C5",
+    "C6",
+    "A0_A11_cells",
+    "newly_committed_reachability_if_A_cells_pass"
+  ],
+  "reachability_domains_reserved": [
+    "TM024.ACTORCREDIT.REACH.FIT.",
+    "TM024.ACTORCREDIT.REACH.CHECK."
+  ],
+  "refuse": [
+    "increase_n",
+    "move_tau_or_delta",
+    "rewrite_historical_locks",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "L0_specific_circuitry",
+    "clamp_as_teaching_oracle",
+    "lineage_run_before_A_cells_and_reachability"
+  ],
+  "note": "Narrow v29 action-owned delayed credit. Neural edit authorized after this freeze is on origin/main."
+}

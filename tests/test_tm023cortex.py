@@ -114,7 +114,10 @@ def test_birth_and_candidate_frozen() -> None:
     assert CANDIDATE_LOCK.exists()
     assert CANDIDATE_V1.exists()
     cand = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
-    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V28":
+    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V29":
+        v29_birth = json.loads((REPO_ROOT / "docs" / "cortex_v29_birth.lock").read_text(encoding="utf-8"))
+        assert v29_birth["learning_law_ok"] is True
+    elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V28":
         v28_birth = json.loads((REPO_ROOT / "docs" / "cortex_v28_birth.lock").read_text(encoding="utf-8"))
         assert v28_birth["learning_law_ok"] is True
     elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V27":
@@ -253,6 +256,7 @@ def test_diag_and_v4_gate() -> None:
     assert (REPO_ROOT / "docs" / "cortex.candidate.v5.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v6.lock").exists()
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    v29 = REPO_ROOT / "docs" / "cortex.candidate.v29.lock"
     v28 = REPO_ROOT / "docs" / "cortex.candidate.v28.lock"
     v27 = REPO_ROOT / "docs" / "cortex.candidate.v27.lock"
     v26 = REPO_ROOT / "docs" / "cortex.candidate.v26.lock"
@@ -275,7 +279,9 @@ def test_diag_and_v4_gate() -> None:
     v9 = REPO_ROOT / "docs" / "cortex.candidate.v9.lock"
     v8 = REPO_ROOT / "docs" / "cortex.candidate.v8.lock"
     v7 = REPO_ROOT / "docs" / "cortex.candidate.v7.lock"
-    if v28.exists():
+    if v29.exists():
+        assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V29"
+    elif v28.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V28"
     elif v27.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V27"
@@ -712,6 +718,31 @@ def test_verify_v13_gate_cli() -> None:
         assert v["refuse_develop_before_clear"] is True
         assert (REPO_ROOT / "docs" / "cortex_v13_gate.failure.lock").exists()
         assert not (REPO_ROOT / "docs" / "cortex_development.v13.lock").exists()
+
+
+def test_v29_candidate_boundary_pending_gate() -> None:
+    amend = json.loads((REPO_ROOT / "docs" / "cortex_v29_architecture_amendment.lock").read_text(encoding="utf-8"))
+    prereg = json.loads((REPO_ROOT / "docs" / "cortex_v29.prereg.lock").read_text(encoding="utf-8"))
+    iso = json.loads((REPO_ROOT / "docs" / "cortex_v29.isolation.lock").read_text(encoding="utf-8"))
+    cells = json.loads((REPO_ROOT / "docs" / "lineage_actorcredit.prereg.lock").read_text(encoding="utf-8"))
+    assert amend["n"] == 64
+    assert prereg["n"] == 64
+    assert prereg["authorized_law"] == "action_owned_delayed_credit"
+    assert "increase_n" in prereg["refuse"]
+    assert "increase n" in iso["refuse"]
+    assert cells["cells"][-1] == "A11"
+    assert cells["reachability_only_if_cells_pass"] is True
+    assert not (REPO_ROOT / "docs" / "cortex_fulldev_r7.prereg.lock").exists()
+    cand_p = REPO_ROOT / "docs" / "cortex.candidate.v29.lock"
+    if not cand_p.exists():
+        return
+    cand = json.loads(cand_p.read_text(encoding="utf-8"))
+    assert cand["version"] == "TM.0.23.CORTEX.CANDIDATE.V29"
+    assert cand["earned_next"] is False
+    assert cand["ex0s"] is None
+    v28 = json.loads((REPO_ROOT / "docs" / "cortex.candidate.v28.lock").read_text(encoding="utf-8"))
+    assert cand["neural_cortex_sha"] != v28["neural_cortex_sha"]
+    assert cand["genome"]["n"] == 64
 
 
 def test_v28_candidate_boundary_pending_gate() -> None:
@@ -1362,6 +1393,7 @@ if __name__ == "__main__":
     test_v13_candidate_boundary_pending_gate()
     test_verify_v12_gate_cli()
     test_verify_v13_gate_cli()
+    test_v29_candidate_boundary_pending_gate()
     test_v28_candidate_boundary_pending_gate()
     test_v27_candidate_boundary_pending_gate()
     test_v26_candidate_boundary_pending_gate()

@@ -1,0 +1,44 @@
+{
+  "version": "TM.0.23.CORTEX.V29.ISOLATION",
+  "lab": "TM.0.24.ACTORCREDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "reason": "PLASTICITYMAP: n=64 can rank either handle and ordinary plasticity can move ranking, but credit is not uniquely owned by the causal action tick and P(ACT) often stays near zero. motor_score is not P(beneficial ACT).",
+  "plasticitymap_decision": "docs/lineage_plasticitymap.decision.lock",
+  "plasticitymap_decision_sha": "5d57ba526661fd12c8dde2b55847861f6f89e78a806261409be41a9210560b48",
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_reach.lock",
+    "docs/lineage_plasticitymap.decision.lock",
+    "docs/cortex.candidate.v28.lock"
+  ],
+  "refuse": [
+    "rewrite LINEAGE WALLMAP REACH PLASTICITYMAP or v28 locks",
+    "increase n",
+    "move tau or delta",
+    "L0-specific circuitry",
+    "reveal QUAL/EVAL",
+    "reveal FULLDEV.R7",
+    "treat clamp as teaching oracle",
+    "another lineage run before A-cells and reachability",
+    "stamp earned_next",
+    "stamp 0.0.005"
+  ],
+  "next_cycle": {
+    "name": "isolated_v29_actorcredit",
+    "requires": [
+      "frozen architecture amendment authorizing action-owned delayed credit",
+      "apparatus on origin/main before any v29 neural edit",
+      "new birth + candidate.v29.lock",
+      "re-earn nine sanity and C4/C5/C6",
+      "frozen A0-A11 cells on unused worlds",
+      "newly committed reachability diagnostic only after A-cells",
+      "n remains 64"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004."
+}

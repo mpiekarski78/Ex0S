@@ -1,0 +1,42 @@
+{
+  "version": "TM.0.24.ACTORCREDIT.PREREG",
+  "lab": "TM.0.24.ACTORCREDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "package_question": "Can action-owned delayed credit make a beneficial organism-authored ACT increase both later P(ACT) and P(beneficial|ACT) without crediting the following sensory tick or passive world effects?",
+  "candidate_after_implement": "docs/cortex.candidate.v29.lock",
+  "architecture_amendment_sha": "747bffa0a8b6fcb3fb4f90c88ecee574d71dbd41aa087e4874cfc5d13d325bcc",
+  "n": 64,
+  "increase_n": false,
+  "cells": ["A0", "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11"],
+  "factorization": "P(beneficial_action)=P(ACT)*P(beneficial_handle|ACT)",
+  "domains": {
+    "CELLS": "TM024.ACTORCREDIT.CELLS.",
+    "REACH_FIT": "TM024.ACTORCREDIT.REACH.FIT.",
+    "REACH_CHECK": "TM024.ACTORCREDIT.REACH.CHECK."
+  },
+  "clamped_vs_passive": {
+    "clamped_organism_action": "cortex forms pending trace; host may replace sampled op/handle; saved eligibility kept",
+    "passive_imposed_movement": "no pending organism action; no actor credit"
+  },
+  "reachability_only_if_cells_pass": true,
+  "q3_only_if_reachability_passes": true,
+  "another_lineage_run": false,
+  "refuse": [
+    "neural_edit_before_origin_main_freeze",
+    "soften_scorers",
+    "L0_specific_circuitry",
+    "QUAL_EVAL_reveal",
+    "rewrite_historical_locks",
+    "earned_next",
+    "stamp_0.0.005",
+    "move_tau_or_delta",
+    "increase_n",
+    "FULLDEV_R7",
+    "clamp_as_teaching_oracle"
+  ],
+  "note": "Phase A scientific freeze. Neural edit and A-cell runner follow origin/main. Product remains 0.0.004."
+}

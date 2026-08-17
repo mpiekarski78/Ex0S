@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.24.ACTORCREDIT / v29 apparatus:** Action-owned delayed credit after PLASTICITYMAP. Clamp vs passive. Frozen A0–A11 cells. No neural edit yet. n stays 64. [`cortex_v29.prereg.lock`](cortex_v29.prereg.lock) + [`lineage_actorcredit.prereg.lock`](lineage_actorcredit.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.PLASTICITYMAP result:** D0 **false** (zero-elig and consolidation repaired; prior-elig near-tie; later behavior not both-green). D1 readout **true**. D2 forced exposure **false** (motor ranking moves; sampled ACT often HOLD). D4 REST retention **true** on its world. D6 skipped. [`lineage_plasticitymap.decision.lock`](lineage_plasticitymap.decision.lock). n stays 64. No lineage rescore. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.PLASTICITYMAP runner freeze:** ABI smoke green. Runner lock pins v28 neural SHA, unused diagnostic domains, forced-exposure budget. Diagnostic answers next. [`lineage_plasticitymap.runner.lock`](lineage_plasticitymap.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.PLASTICITYMAP apparatus:** Developmental motor-learning decomposition after v28. Complete credit chain on fresh worlds, then forced balanced ACT exposure (decisive). No answers yet. n stays 64. [`lineage_plasticitymap.prereg.lock`](lineage_plasticitymap.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
