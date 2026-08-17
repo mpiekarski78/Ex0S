@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.23.CORTEX.D4.R2.ISOLATION",
+  "lab": "TM.0.23.CORTEX.D4.R1",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "D4.R1 scored 0/16. Writes persist. score_d4 re-runs RETRIEVE; fact_id tie-break hides donor_fact.",
+  "d4_r1_gate": "docs/cortex_d4_r1_gate.lock",
+  "d4_r1_failure": "docs/cortex_d4_r1_gate.failure.lock",
+  "d4_r1_audit": "docs/cortex_d4_r1.audit.lock",
+  "v17_diagnosis": "docs/cortex_diagnosis.v17.lock",
+  "refuse": [
+    "edit-and-rescore D4.R1 on revealed worlds",
+    "reuse TM023.D4.R1. or FULL.R2 or D3.R* or pair_seeds worlds",
+    "open FULLDEV or nursery before a later isolated D4 ≥13/16",
+    "stamp earned_next"
+  ],
+  "next_cycle": {
+    "name": "isolated_d4_r2",
+    "requires": [
+      "frozen diagnosis of retrieve fact_id tie-break",
+      "new amendment: recency tie-break in RETRIEVE",
+      "new birth + candidate.v18.lock",
+      "new sealed commitment ≠ D4.R1",
+      "re-earn C4/C5/C6",
+      "fresh narrow D4 ≥13/16 before reopening FULLDEV"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004."
+}

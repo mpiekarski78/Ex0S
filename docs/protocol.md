@@ -2100,3 +2100,5 @@ Canonical main `8fe8a96`. D4.R1 apparatus: [`cortex_d4_r1.prereg.lock`](cortex_d
 
 Candidate (this cycle): [`cortex.candidate.v17.lock`](cortex.candidate.v17.lock). S-write recency. C4/C5/C6 green (C6 label perm p=0.058). Reveal D4.R1 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d4_r1_gate.lock`](cortex_d4_r1_gate.lock) **0/16**. Audit [`cortex_d4_r1.audit.lock`](cortex_d4_r1.audit.lock). Diagnosis [`cortex_diagnosis.v17.lock`](cortex_diagnosis.v17.lock): RETRIEVE must break attention ties by recency. Do not rescore D4.R1.
+

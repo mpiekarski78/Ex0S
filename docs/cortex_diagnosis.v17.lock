@@ -1,0 +1,29 @@
+{
+  "version": "TM.0.23.CORTEX.V17.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "400e7541c492a7db604cf08ea8033c0b1fdfc937",
+  "neural_mechanism_changed": true,
+  "v18_authorized_only_if_this_lock": true,
+  "c4_retained": true,
+  "c5_green": true,
+  "c6_green": true,
+  "d4_r1_n_pair_clear": 0,
+  "claim": "v17 S-write recency updates retrieval_buffer[0], but score_d4 measures recall by running _do_retrieve first. After rho reset the attention query is ~0, every cosine ties, and sort-by-fact_id keeps older cw_* records in the top k_s. donor_fact never enters the retrieved set. Missing generic law: when attention scores tie, prefer newer S records (recency tie-break). Keep v17 recency write and all v16 HOLD laws.",
+  "authorize_v18": [
+    "keep v16 HOLD laws and v17 S-write recency",
+    "RETRIEVE sort key (-cosine, -when, fact_id) so ties go to newer facts",
+    "new sealed commitment domain TM023.D4.R2.",
+    "re-earn C4/C5/C6 before any D4 reveal",
+    "do not edit cortex_develop_scorers.py",
+    "do not add capability-specific functions"
+  ],
+  "refuse": [
+    "edit-and-rescore D4.R1",
+    "edit score_d4",
+    "drop C6",
+    "reopen FULLDEV before isolated D4 ≥13/16",
+    "stamp product"
+  ]
+}

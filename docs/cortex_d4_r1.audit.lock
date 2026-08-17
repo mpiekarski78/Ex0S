@@ -1,0 +1,72 @@
+{
+  "version": "TM.0.23.CORTEX.D4.R1.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "475c50bc7ec7f92fd03aa097f1fea90884d606a04bcf50dfd523b50967885c44",
+  "failure_sha": "84beda104679bf14f827710f1024136d9d3124df9c29fe7f351ccd42fff23ebd",
+  "reveal_sha": "e15433c8c4141521849b22c683e9c3e7fc98f18cbe963a6fc5d4b1f49e79e95e",
+  "n_pair_clear": 0,
+  "n_d4_ok_lives": 2,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_candidate_git",
+      "ok": true,
+      "candidate_git_sha": "400e7541c492a7db604cf08ea8033c0b1fdfc937"
+    },
+    {
+      "id": "domain_is_d4_r1",
+      "ok": true,
+      "domain": "TM023.D4.R1."
+    },
+    {
+      "id": "d0_green",
+      "ok": true,
+      "d0_ok": 32
+    },
+    {
+      "id": "writes_persist_strip",
+      "ok": true,
+      "persisted": 32,
+      "stripped": 32,
+      "donor_ok": 32,
+      "donor_changes_true": 2
+    },
+    {
+      "id": "scorer_reruns_retrieve",
+      "ok": true,
+      "note": "_retrieval_buf_norm calls _do_retrieve + commit before measuring. v17 slot-0 recency is overwritten. After rho reset, attention query is ~0, all cosines tie, sort is fact_id, and donor_fact loses to cw_* records. Throwaway: raw donor write does change the buffer; the scorer measurement does not see it."
+    },
+    {
+      "id": "d4_scorer_not_soft",
+      "ok": true,
+      "note": "Historical score_d4 unchanged. Do not edit cortex_develop_scorers.py. The missing law is retrieve tie-break by recency, not a lower donor floor."
+    },
+    {
+      "id": "c6_stayed_green",
+      "ok": true
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_d4_r1": "refused",
+    "fulldev": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d4_r2",
+    "refuse": [
+      "rewrite docs/cortex_d4_r1_gate.lock",
+      "edit-and-rescore on revealed D4.R1 worlds",
+      "edit cortex_develop_scorers.py",
+      "stamp earned_next",
+      "open nursery conversation"
+    ]
+  },
+  "note": "0/16 stands. S-write recency is real but invisible to D4's retrieve-then-measure. Next: recency tie-break inside RETRIEVE."
+}
