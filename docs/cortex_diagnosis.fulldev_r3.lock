@@ -1,0 +1,31 @@
+{
+  "version": "TM.0.23.CORTEX.FULLDEV.R3.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "425a0ee34f95079efde58d0c9941c9638d5305b7",
+  "neural_mechanism_changed": true,
+  "v19_authorized_only_if_this_lock": true,
+  "claim": "FULLDEV.R3 D5 is 0/32 because single-symbol novelty HOLD compares lifetime observation count to 0.5 times the lifetime maximum. After D1–D4, older symbols have counts 100–214. D5 teaches a new known symbol 50 times, which stays below half-max, so the known probe HOLDs (known_nonhold_rate 0.00–0.25). Unknown novelty HOLD already works (unknown_holds 11–20, 31/32 ≥12). Missing generic law: familiarity / habituation is recency-weighted. A recently repeated symbol is familiar even if older symbols have higher lifetime counts. Biology: neophobia releases after familiarization; lifetime frequency of other items does not keep a just-taught item novel.",
+  "authorize_v19": [
+    "keep v16 equal-evidence / conflict / 3-symbol laws",
+    "keep v17 S-write recency and v18 RETRIEVE recency tie-break",
+    "replace lifetime-max single-symbol novelty with a decaying short-term familiarity trace",
+    "HOLD a lone symbol only when its recency-weighted familiarity is below FAMILIARITY_RATIO times the current recency-weighted max",
+    "do not add capability-specific functions or D5-named shortcuts",
+    "do not edit cortex_develop_scorers.py",
+    "do not lower unknown_holds>=12 or known_nonhold_rate>=0.30",
+    "new sealed commitment domain TM023.D5.R1. unused vs FULL.R* / D3.R* / D4.R* / pair_seeds",
+    "isolated D5 life must run D1–D4 scorers first so the lifetime/recency context exists",
+    "re-earn C4/C5/C6 before any D5 reveal",
+    "narrow D5 gate ≥13/16 before reopening full D0–D12"
+  ],
+  "refuse": [
+    "edit-and-rescore FULLDEV.R3",
+    "lower D5 floors",
+    "drop C6",
+    "skip D5",
+    "isolate D5 as D0+D5 without the D1–D4 prefix",
+    "stamp product"
+  ]
+}

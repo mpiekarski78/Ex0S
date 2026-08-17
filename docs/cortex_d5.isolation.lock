@@ -1,0 +1,31 @@
+{
+  "version": "TM.0.23.CORTEX.D5.ISOLATION",
+  "lab": "TM.0.23.CORTEX.FULLDEV.R3",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "FULLDEV.R3 D0–D12 failed 0/16. D3 transferred (31/32). D4 transferred (32/32). D5 is 0/32: unknown HOLD works; known_nonhold_rate stays below 0.30 because lifetime-max familiarity treats a just-taught symbol as novel.",
+  "fulldev_r3_failure_lock": "docs/cortex_fulldev_r3.failure.lock",
+  "fulldev_r3_lock": "docs/cortex_fulldev_r3.lock",
+  "fulldev_r3_reveal_lock": "docs/cortex_fulldev_r3_eval_reveal.lock",
+  "fulldev_r3_diagnosis_lock": "docs/cortex_diagnosis.fulldev_r3.lock",
+  "refuse": [
+    "edit-and-rescore FULLDEV.R3 on revealed worlds",
+    "run D6–D12 isolation before D5 clears",
+    "reuse TM023.FULL.R3. or FULL.R1. or FULL.R2. or D3.R* or D4.R* or pair_seeds worlds",
+    "open nursery conversation",
+    "stamp earned_next"
+  ],
+  "next_cycle": {
+    "name": "isolated_d5_r1",
+    "requires": [
+      "frozen diagnosis of lifetime-max familiarity vs habituation",
+      "new architecture amendment authorizing only recency-weighted familiarity",
+      "new birth + candidate.v19.lock after the apparatus is on origin/main",
+      "new sealed commitment ≠ FULLDEV.R3",
+      "isolated lives run D1–D4 scorers before score_d5",
+      "fresh narrow D5 gate ≥13/16 before reopening full D0–D12"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004."
+}

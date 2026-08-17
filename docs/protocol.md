@@ -2114,3 +2114,9 @@ Result: [`cortex_d4_r2_gate.lock`](cortex_d4_r2_gate.lock) **16/16**. Audit [`co
 
 Canonical main `25c6bfb`. FULLDEV.R3 apparatus: [`cortex_fulldev_r3.prereg.lock`](cortex_fulldev_r3.prereg.lock). Live v18, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Result: [`cortex_fulldev_r3.lock`](cortex_fulldev_r3.lock) **0/16**. D4 32/32 transferred. First-fail `{D5:17, D1:15}`. D5 is 0/32: unknown HOLD works; known probe still HOLDs. Audit [`cortex_fulldev_r3.audit.lock`](cortex_fulldev_r3.audit.lock). Diagnosis [`cortex_diagnosis.fulldev_r3.lock`](cortex_diagnosis.fulldev_r3.lock): familiarity must be recency-weighted (habituation), not lifetime-max. Do not rescore FULLDEV.R3. Next is isolated D5.R1.
+
+## TM.0.23.CORTEX.FULLDEV.R3 0/16 → isolated D5.R1
+
+Canonical main `425a0ee`. Isolated D5 after D4 transferred. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

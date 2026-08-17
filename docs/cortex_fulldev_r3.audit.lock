@@ -1,0 +1,96 @@
+{
+  "version": "TM.0.23.CORTEX.FULLDEV.R3.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "783b2f95a102dd94dc2a7d139e536a7525c6572aa6f7ad495fb247e183821de5",
+  "failure_sha": "e22e4e10ab10c6cb321ab4bf2f2e3d4eb31a894935c1a93503d975cccd80e1b5",
+  "reveal_sha": "b66c201c781fd17bfb05655632085f74652ef8e290fb291579d89d37afb0bde9",
+  "n_pair_clear": 0,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "apparatus_git_sha": "425a0ee34f95079efde58d0c9941c9638d5305b7",
+      "candidate_git_sha": "b3563d872233dd0547128f68bed544e2fd6347e5"
+    },
+    {
+      "id": "domain_is_full_r3",
+      "ok": true,
+      "domain": "TM023.FULL.R3."
+    },
+    {
+      "id": "d4_transferred",
+      "ok": true,
+      "d4_ok": 32,
+      "note": "Isolated D4.R2 RETRIEVE recency holds in full-dev (32/32)."
+    },
+    {
+      "id": "d3_transferred",
+      "ok": true,
+      "d3_ok": 31,
+      "note": "Isolated D3.R3 equal-evidence HOLD holds in full-dev (31/32)."
+    },
+    {
+      "id": "d2_near_green",
+      "ok": true,
+      "d2_ok": 31
+    },
+    {
+      "id": "first_fail_modes",
+      "ok": true,
+      "first_fail_histogram": {"D5": 17, "D1": 15},
+      "stage_pass_counts": {"D0": 32, "D1": 17, "D2": 31, "D3": 31, "D4": 32, "D5": 0, "D6": 0, "D7": 0, "D8": 0, "D9": 2, "D10": 20, "D11": 32, "D12": 16}
+    },
+    {
+      "id": "d5_is_the_zero_wall",
+      "ok": true,
+      "d5_ok": 0,
+      "unknown_holds_hist": {"11": 1, "13": 1, "14": 3, "15": 2, "16": 2, "17": 4, "18": 8, "19": 8, "20": 3},
+      "known_nonhold_rate_range": [0.0, 0.3],
+      "note": "31/32 lives meet unknown_holds>=12. known_nonhold_rate is 0.00–0.25 on 31/32 lives (one life at 0.30). The wall is HOLD on the just-taught known symbol, not missing novelty HOLD."
+    },
+    {
+      "id": "d5_scorer_not_soft",
+      "ok": true,
+      "note": "Historical score_d5 requires unknown_holds>=12, known_nonhold_rate>=0.30, and known_nonhold_rate >= unknown_nonhold_rate+0.15. Do not edit cortex_develop_scorers.py. Do not lower floors."
+    },
+    {
+      "id": "lifetime_max_familiarity_confound",
+      "ok": true,
+      "diagnostic_worlds": "pair_seeds(0) main — not FULLDEV.R3",
+      "max_before_d5": 214,
+      "half_max": 107.0,
+      "d5_ground_teaches": 50,
+      "note": "Single-symbol novelty HOLD compares lifetime count to 0.5*lifetime max. After D1–D4, workhorse symbols have counts 100–214. Teaching ground 50 times leaves ground < half-max, so the known probe still HOLDs. Confirmed on pair_seeds, not by rescoring R3."
+    },
+    {
+      "id": "d1_still_partial",
+      "ok": true,
+      "d1_ok": 17,
+      "note": "15 first-fails at D1 are the known full-bind get/drop lure (press=0 on 14/15; one press=1 harm=0; one press=0 harm=1). D5 is the 0/32 wall after D1–D4."
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_fulldev_r3": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d5",
+    "refuse": [
+      "rewrite docs/cortex_fulldev_r3.lock",
+      "edit-and-rescore on revealed FULLDEV.R3 worlds",
+      "stamp earned_next",
+      "open nursery conversation",
+      "skip D5 to attack D6–D12",
+      "lower score_d5 floors"
+    ]
+  },
+  "note": "0/16 stands. D3 and D4 transferred. The first post-D4 wall is D5: lifetime-max familiarity keeps a just-taught known symbol novel."
+}
