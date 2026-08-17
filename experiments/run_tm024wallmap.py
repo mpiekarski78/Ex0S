@@ -151,6 +151,20 @@ def probe_observe(ag: NeuralCortex, world: dict[str, Any], *, tag: str = "probe"
     )
 
 
+def probe_observe_no_credit(ag: NeuralCortex, world: dict[str, Any], *, tag: str = "probe") -> None:
+    """Sensory path only. Avoids W_* reassignment from zero-eta credit (keeps Adam leaves)."""
+    saved = ag._apply_credit
+
+    def _noop(s_t, body_t):  # noqa: ANN001
+        return {"adv": 0.0, "pred_err": 0.0}
+
+    ag._apply_credit = _noop  # type: ignore[method-assign]
+    try:
+        probe_observe(ag, world, tag=tag)
+    finally:
+        ag._apply_credit = saved  # type: ignore[method-assign]
+
+
 def surrogate_loss_torch(ag: NeuralCortex, world: dict[str, Any]) -> torch.Tensor:
     """Differentiable Q1 surrogate. ρ is stop-grad. Gradients flow to readout matrices."""
     rho = ag.rho.detach()
@@ -186,25 +200,28 @@ def q1_fit_one_world(world: dict[str, Any], *, restart: int, max_steps: int = 20
         freeze_plasticity(ag)
         rng = np.random.default_rng(domain_seed("Q1.init", f"{world['seed']}_{restart}"))
         for name in ("W_in", "W_rec", "W_op", "W_act_query"):
-            W = getattr(ag, name)
+            W = getattr(ag, name).detach()
             noise = torch.tensor(
                 rng.normal(0.0, float(prereg["sigma_init"]), size=tuple(W.shape)),
                 dtype=ag.dtype,
                 device=ag.device,
             )
             if name == "W_rec":
-                setattr(ag, name, (W + noise) * ag.M)
+                setattr(ag, name, ((W + noise) * ag.M.detach()).detach())
+            elif name in ("W_op", "W_act_query"):
+                setattr(ag, name, (W + noise).detach().requires_grad_(True))
             else:
-                setattr(ag, name, W + noise)
-        ag.b_op = ag.b_op + torch.tensor(
-            rng.normal(0.0, float(prereg["sigma_init"]), size=tuple(ag.b_op.shape)),
-            dtype=ag.dtype,
-            device=ag.device,
-        )
+                setattr(ag, name, (W + noise).detach())
+        ag.b_op = (
+            ag.b_op.detach()
+            + torch.tensor(
+                rng.normal(0.0, float(prereg["sigma_init"]), size=tuple(ag.b_op.shape)),
+                dtype=ag.dtype,
+                device=ag.device,
+            )
+        ).detach().requires_grad_(True)
         # Surrogate grads: readout only (stop-grad ρ). W_in/W_rec stay at init+noise.
         params = [ag.W_op, ag.b_op, ag.W_act_query]
-        for p in params:
-            p.requires_grad_(True)
         opt = torch.optim.Adam(params, lr=float(prereg["lr_start"]), betas=(0.9, 0.999), eps=1e-8)
         streak = 0
         best_probe = 0.0
@@ -216,18 +233,37 @@ def q1_fit_one_world(world: dict[str, Any], *, restart: int, max_steps: int = 20
             )
             for g in opt.param_groups:
                 g["lr"] = lr
-            probe_observe(ag, world, tag=f"fit_{step}")
-            opt.zero_grad()
+            probe_observe_no_credit(ag, world, tag=f"fit_{step}")
+            opt.zero_grad(set_to_none=True)
             loss = surrogate_loss_torch(ag, world)
             loss.backward()
             opt.step()
             with torch.no_grad():
                 clip = float(prereg["clip"])
-                ag.W_op.clamp_(-clip, clip)
-                ag.W_act_query.clamp_(-clip, clip)
-                ag.b_op.clamp_(-clip, clip)
+                ag.W_op.data.clamp_(-clip, clip)
+                ag.W_act_query.data.clamp_(-clip, clip)
+                ag.b_op.data.clamp_(-clip, clip)
             if step % int(prereg["eval_every"]) == 0:
-                pb = float(probe_beneficial(ag, world, n_probe=N_PROBE))
+                # Eval on a detached clone so credit/observe cannot replace Adam leaves.
+                snap = {
+                    "W_op": ag.W_op.detach().clone(),
+                    "b_op": ag.b_op.detach().clone(),
+                    "W_act_query": ag.W_act_query.detach().clone(),
+                    "W_in": ag.W_in.detach().clone(),
+                    "W_rec": ag.W_rec.detach().clone(),
+                    "M": ag.M.detach().clone(),
+                }
+                with tempfile.TemporaryDirectory(prefix="wm_ev_") as etmp:
+                    ev = make_cortex(Path(etmp) / "s", device="cpu")
+                    ev.bind_actuators(list(world["handles"]))
+                    freeze_plasticity(ev)
+                    ev.W_op = snap["W_op"]
+                    ev.b_op = snap["b_op"]
+                    ev.W_act_query = snap["W_act_query"]
+                    ev.W_in = snap["W_in"]
+                    ev.W_rec = snap["W_rec"]
+                    ev.M = snap["M"]
+                    pb = float(probe_beneficial(ev, world, n_probe=N_PROBE))
                 best_probe = max(best_probe, pb)
                 if pb >= float(prereg["early_stop_probe"]):
                     streak += 1
@@ -235,7 +271,18 @@ def q1_fit_one_world(world: dict[str, Any], *, restart: int, max_steps: int = 20
                     streak = 0
                 if streak >= int(prereg["early_stop_streak"]):
                     break
-        final_probe = float(probe_beneficial(ag, world, n_probe=N_PROBE))
+        # Final behavioral probe on detached clone
+        with tempfile.TemporaryDirectory(prefix="wm_fin_") as etmp:
+            ev = make_cortex(Path(etmp) / "s", device="cpu")
+            ev.bind_actuators(list(world["handles"]))
+            freeze_plasticity(ev)
+            ev.W_op = ag.W_op.detach().clone()
+            ev.b_op = ag.b_op.detach().clone()
+            ev.W_act_query = ag.W_act_query.detach().clone()
+            ev.W_in = ag.W_in.detach().clone()
+            ev.W_rec = ag.W_rec.detach().clone()
+            ev.M = ag.M.detach().clone()
+            final_probe = float(probe_beneficial(ev, world, n_probe=N_PROBE))
         return {
             "world_seed": world["seed"],
             "restart": restart,
@@ -773,12 +820,12 @@ def smoke() -> dict[str, Any]:
 def write_runner_lock() -> dict[str, Any]:
     prereg = load_prereg()
     lock = {
-        "version": "TM.0.24.WALLMAP.RUNNER.V2",
+        "version": "TM.0.24.WALLMAP.RUNNER.V4",
         "product": "0.0.004",
         "earned_next": False,
         "ex0s": None,
         "eligible_for_000005": False,
-        "supersedes": "TM.0.24.WALLMAP.RUNNER",
+        "supersedes": "TM.0.24.WALLMAP.RUNNER.V3",
         "shas": wallmap_shas(),
         "prereg_sha": sha_file(PREREG),
         "contract_sha": sha_file(CONTRACT),
