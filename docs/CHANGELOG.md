@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.V20 / D5.R2 candidate:** `FAMILIARITY_ABS=16`. Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.058). [`cortex.candidate.v20.lock`](cortex.candidate.v20.lock) + [`cortex_mact_boundary.v20.lock`](cortex_mact_boundary.v20.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D5.R2 apparatus:** Isolated D5 after D5.R1 11/16. `FAMILIARITY_ABS=16` authorized; no neural edit yet. [`cortex_d5_r2.prereg.lock`](cortex_d5_r2.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D5.R1 result:** 11/16. D0 32, D5 26/32. Six reds miss `unknown_holds>=12` (8–11); known_nonhold already green. [`cortex_d5_r1_gate.lock`](cortex_d5_r1_gate.lock) + [`cortex_d5_r1.audit.lock`](cortex_d5_r1.audit.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V19 / D5.R1 candidate:** Habituation familiarity (decaying trace + absolute criterion). Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.058). [`cortex.candidate.v19.lock`](cortex.candidate.v19.lock) + [`cortex_mact_boundary.v19.lock`](cortex_mact_boundary.v19.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

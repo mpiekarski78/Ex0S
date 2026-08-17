@@ -2132,3 +2132,5 @@ Canonical main `c0574bf`. D5.R2 apparatus follows. Product **0.0.004**; `earned_
 
 D5.R2 apparatus: [`cortex_d5_r2.prereg.lock`](cortex_d5_r2.prereg.lock). `FAMILIARITY_ABS=16` authorized after this freeze. Reveal only from a clean tree pinning `git rev-parse HEAD`.
 
+Candidate (this cycle): [`cortex.candidate.v20.lock`](cortex.candidate.v20.lock). Longer neophobia. C4/C5/C6 green. Reveal D5.R2 only from a clean tree pinning `git rev-parse HEAD`.
+
