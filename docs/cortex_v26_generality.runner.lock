@@ -1,0 +1,33 @@
+{
+  "version": "TM.0.23.CORTEX.GENERALITY.V26.RUNNER",
+  "lab": "TM.0.23.CORTEX.GENERALITY.v26",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "contract": "docs/cortex_v26_generality_contract.md",
+  "contract_sha": "e3bc3c969f450d36746d132c1c00b34a5a16e5fd33ff983cd1cb439e2992b207",
+  "generality_module": "experiments.cortex_v26_generality",
+  "generality_module_sha": "1d71b5563f2bf307edb4dc57fc2db8d3dab7c6ff19e6bca7393a194f3e2e9306",
+  "candidate_under_test": "docs/cortex.candidate.v26.lock",
+  "candidate_v26_sha": "8610a7e7213d320831ae44eb80f02765463c9d3b9b1274c0c83c053b2fd08508",
+  "neural_cortex_sha": "25a445c2abb016030caa0285ea8ff3169f4c1e2544169ef263a7d8bc4d908edb",
+  "cortex_memory_sha": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+  "controls": [
+    "G1_no_scripted_phrase_machinery",
+    "G2_cross_modal_transfer",
+    "G3_non_echo_response",
+    "G4_order_length_counterfactuals",
+    "G5_stop_evidence",
+    "G6_neophobia_provenance",
+    "G7_ablations",
+    "G8_trace_purity"
+  ],
+  "refuse": [
+    "rewrite this lock after freeze",
+    "edit neural_cortex.py or cortex_memory.py",
+    "edit cortex_develop_scorers.py",
+    "reveal FULLDEV.R7 unless all_controls_green",
+    "stamp 0.0.005"
+  ],
+  "note": "Frozen before scoring v26. Candidate remains immutable."
+}

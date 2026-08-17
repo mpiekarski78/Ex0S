@@ -2220,7 +2220,13 @@ Candidate (this cycle): [`cortex.candidate.v26.lock`](cortex.candidate.v26.lock)
 
 Result: [`cortex_d5_r3_gate.lock`](cortex_d5_r3_gate.lock) **15/16**. Audit [`cortex_d5_r3.audit.lock`](cortex_d5_r3.audit.lock). Isolated D5 recovered. Do not rescore. Next is FULLDEV.R7 on unused domain `TM023.FULL.R7.`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+## TM.0.23.CORTEX.D5.R3 15/16 → GENERALITY.v26
+
+Canonical main `0984ef3`. Candidate v26 remains immutable. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Generality apparatus: [`cortex_v26_generality_contract.md`](cortex_v26_generality_contract.md) + [`cortex_v26_generality.runner.lock`](cortex_v26_generality.runner.lock). Score G1–G8 once. Do not reveal FULLDEV.R7 unless `all_controls_green`. Any red → diagnose isolated v27.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
-Canonical main `0984ef3`. FULLDEV.R7 apparatus follows. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
