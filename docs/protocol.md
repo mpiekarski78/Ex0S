@@ -2102,3 +2102,7 @@ Candidate (this cycle): [`cortex.candidate.v17.lock`](cortex.candidate.v17.lock)
 
 Result: [`cortex_d4_r1_gate.lock`](cortex_d4_r1_gate.lock) **0/16**. Audit [`cortex_d4_r1.audit.lock`](cortex_d4_r1.audit.lock). Diagnosis [`cortex_diagnosis.v17.lock`](cortex_diagnosis.v17.lock): RETRIEVE must break attention ties by recency. Do not rescore D4.R1.
 
+## TM.0.23.CORTEX.V17 D4.R1 0/16 → isolated D4.R2
+
+Canonical main `bc8af9f`. D4.R2 apparatus: [`cortex_d4_r2.prereg.lock`](cortex_d4_r2.prereg.lock). Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

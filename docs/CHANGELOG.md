@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.D4.R2 apparatus:** RETRIEVE breaks attention ties by recency. Frozen commitment, no neural edit yet. [`cortex_d4_r2.prereg.lock`](cortex_d4_r2.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D4.R1 result:** 0/16. D0 32/32, D4 2/32. Writes persist; `score_d4` re-runs RETRIEVE and fact_id ties hide `donor_fact`. [`cortex_d4_r1_gate.lock`](cortex_d4_r1_gate.lock) + [`cortex_d4_r1.audit.lock`](cortex_d4_r1.audit.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V17 / D4.R1 candidate:** S-write copies content into retrieval_buffer[0]. Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.058). [`cortex.candidate.v17.lock`](cortex.candidate.v17.lock) + [`cortex_mact_boundary.v17.lock`](cortex_mact_boundary.v17.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D4.R1 apparatus:** S-write copies content into retrieval_buffer[0]. C6 required. Frozen commitment, no neural edit yet. [`cortex_d4_r1.prereg.lock`](cortex_d4_r1.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

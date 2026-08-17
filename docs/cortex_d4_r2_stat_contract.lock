@@ -1,0 +1,24 @@
+{
+  "version": "TM.0.23.CORTEX.D4.R2.STAT.CONTRACT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "stat_md_sha": "f4f50eecceed1acbc92fc4f67a28028b5b47bd1ac0695b8bc2ef47bbbc0c19ee",
+  "gate_md_sha": "ba8b0b0e8e88dbb90887f85741923aa114869ad6033c13fcded82b5217e3d560",
+  "diagnosis_v17_sha": "ba047bc5ff9aaf36c0931494ff8e15f87b67cd71352700ab7118fca2644f9aed",
+  "neural_sha_at_freeze": "8785c1be50e61a203569abb8a8d6796054b875dd75b9ea146a4aa0514d9f41b1",
+  "neural_change_authorized": true,
+  "authorized_law": "retrieve_recency_tiebreak",
+  "d4_requires": [
+    "organism_write",
+    "persist",
+    "strip",
+    "donor_changes_retrieval"
+  ],
+  "gate_clear_min_pairs": 13,
+  "refuse": [
+    "edit cortex_develop_scorers.py",
+    "drop C6",
+    "skip D4"
+  ]
+}
