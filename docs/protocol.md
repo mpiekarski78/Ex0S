@@ -2464,7 +2464,7 @@ v32 apparatus: [`cortex_v32.prereg.lock`](cortex_v32.prereg.lock) + [`cortex_v32
 
 DEV first-match **architectural_wall_acquire**. Four-cue acquire/stability/reversal/specificity passed. Eight-cue acquire ranking is 7/8. The scored organism is REST mix-once after 16 replay epochs; awake store-wide replay is not in the scored credit path. Lineage stays closed. Addendum: [`lineage_twoscale.decision.addendum.lock`](lineage_twoscale.decision.addendum.lock). Historical DEV/decision/addendum hashes unchanged.
 
-v32 implementation erratum: [`cortex_v32.erratum.lock`](cortex_v32.erratum.lock). Tie-band uniqueness, P1 credit gating with missing-P1 fallback, checkpoint continuity. Not an eight-cue solve. Compat runner: [`lineage_twoscale.compat.runner.lock`](lineage_twoscale.compat.runner.lock) must be on origin/main before `--replay-frozen-dev`.
+v32 implementation erratum: [`cortex_v32.erratum.lock`](cortex_v32.erratum.lock). Tie-band uniqueness, P1 credit gating with missing-P1 fallback, checkpoint continuity. Not an eight-cue solve. Compat runner: [`lineage_twoscale.compat.runner.lock`](lineage_twoscale.compat.runner.lock). Replay: [`lineage_twoscale.compat.lock`](lineage_twoscale.compat.lock) — 36/36 semantic payload identical (`changed_fields=[]`). Historical `architectural_wall_acquire` stands. R3 unopened. SCORE unopened.
 
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 

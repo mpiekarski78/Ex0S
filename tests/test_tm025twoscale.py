@@ -29,6 +29,7 @@ EXPECTED_N_CELLS = 36
 ERRATUM_SHA = "35d9de54ffef1260bc9ea1151e808e7ce1821a38107a42be58e2e528a1c83395"
 ERRATUM_MD_SHA = "f42be4b00964b91cd98ebec42fd3a7f0653a9a90a6f95a9e405ef32fe9320bcc"
 COMPAT_RUNNER_SHA = "780718e4a6b5c2bc6ef676ede80faf322ac50f4c526e636d870a212977c6ba46"
+COMPAT_SHA = "bf74c92e8eaaf115946c74b2e1b030ba61757141c39fb01e757ea6ad2fe9983b"
 MEMORY = "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7"
 
 
@@ -411,9 +412,18 @@ def test_compat_runner_schema_and_gate() -> None:
     assert "git_head" in schema["exclude_provenance_prefixes"]
     assert "shas" in schema["exclude_provenance_prefixes"]
     assert comparison_schema()["exclude_provenance_prefixes"] == schema["exclude_provenance_prefixes"]
-    if not COMPAT_LOCK.exists() and not MISMATCH_LOCK.exists():
-        return
-    assert COMPAT_LOCK.exists() != MISMATCH_LOCK.exists()
+    assert COMPAT_LOCK.exists()
+    assert not MISMATCH_LOCK.exists()
+    assert sha(COMPAT_LOCK) == COMPAT_SHA
+    compat = json.loads(COMPAT_LOCK.read_text(encoding="utf-8"))
+    assert compat["compatible"] is True
+    assert compat["changed_fields"] == []
+    assert compat["max_abs_float_delta"] == 0.0
+    assert compat["exact_boolean_string_equality"] is True
+    assert compat["n_expected_cells"] == EXPECTED_N_CELLS
+    assert compat["n_unique_cell_ids"] == EXPECTED_N_CELLS
+    assert compat["decision_code"] == "architectural_wall_acquire"
+    assert compat["rewrite_historical_dev"] is False
     assert sha(REPO_ROOT / "docs" / "lineage_twoscale.dev.lock") == DEV_LOCK_SHA
 
 
