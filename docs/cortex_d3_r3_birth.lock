@@ -1,17 +1,16 @@
 {
-  "version": "TM.0.23.CORTEX.CANDIDATE.V16",
+  "version": "TM.0.23.CORTEX.D3.R3.BIRTH",
   "product": "0.0.004",
   "earned_next": false,
   "ex0s": null,
-  "factory": "experiments.run_tm023cortex.make_cortex",
-  "supersedes_v15_sha": "867eb808201d9cf02e6b570076d0674cc3fecd805ca51a9b65756acfa1b87e9b",
-  "d3_r3_birth_sha": "2569971bdeb5d3ec296aefde9e73b660e000aa1373269c94fc3dab0db70b3534",
+  "diagnosis_v15_sha": "5318f7ab86975431813e329b2cb9cdb29fd9bfd08d6ae1e5266ba5cdf3b2a65b",
+  "stat_contract_sha": "5242a258dc60f73acce15921401b7537c95cfb331a8b51f7189e85224d501af2",
   "architecture_amendment_sha": "9a5e4547bf99e12e07aa0cd8e5572f168733d5d991e1fbc5bc2c60a8f585197c",
-  "math_audit_sha": "7a14f7c9fb2b4ae57d745543eeff9726d52867676661b8fb94d2e9df85892d3b",
   "learning_law_ok": true,
   "gpu_scoring_ready": true,
   "all_sanity_ok": true,
   "neural_cortex_sha": "f67a3522d86ea41b144827b8968ff56a41515a04195431acb7f5ecadbed95db1",
+  "prior_v15_neural_sha": "10a9159bfbb6695a1db3c2fd244643caf852e1f852fec5509427ab2c6bb65efd",
   "cortex_memory_sha": "6106fc3556bde4813b2a98b9dbfaf1efe26ce760e56299e8e9a0b6994e512b9a",
   "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
   "env": {
@@ -66,5 +65,10 @@
       "HOLD": 0.0
     }
   },
-  "note": "Candidate v16 / D3.R3. Must re-earn C4/C5/C6 then D3. No FULLDEV reopen yet."
+  "checks": {
+    "bind_n": 2,
+    "b_op_act": 0.85,
+    "op_cost_act": 0.05
+  },
+  "note": "D3.R3 current-observe body_adv equal-evidence HOLD. No FULLDEV reopen yet."
 }

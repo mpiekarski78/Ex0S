@@ -616,9 +616,16 @@ class NeuralCortex:
 
         for u in ordered:
             self._symbol_obs_counts[u] = int(self._symbol_obs_counts.get(u, 0)) + 1
+        if self._pending is not None:
+            body_prev = np.asarray(self._pending["body"], dtype=np.float64)
+            cur_body_adv = float(
+                np.linalg.norm(body_prev - BODY_SETPOINT) - np.linalg.norm(body - BODY_SETPOINT)
+            )
+        else:
+            cur_body_adv = 0.0
         if (
             len(ordered) >= 2
-            and abs(float(self._last_act_body_adv)) <= CONFLICT_ADV_EPS
+            and abs(cur_body_adv) <= CONFLICT_ADV_EPS
             and len(self._symbol_obs_counts) >= EQUAL_EVIDENCE_MIN_SYMBOLS
         ):
             self._hold_after_conflict = True

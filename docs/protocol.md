@@ -2084,3 +2084,5 @@ Result: [`cortex_d3_r2_gate.lock`](cortex_d3_r2_gate.lock) **0/16**. D0 32, D3 7
 
 Canonical main `b19469f`. D3.R3 apparatus: [`cortex_d3_r3.prereg.lock`](cortex_d3_r3.prereg.lock). Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle): [`cortex.candidate.v16.lock`](cortex.candidate.v16.lock). Equal-evidence HOLD keys on current observe body_adv. C4/C5/C6 green (C6 label perm p=0.0962). Reveal D3.R3 only from a clean tree pinning `git rev-parse HEAD`.
+
