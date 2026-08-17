@@ -1,0 +1,75 @@
+{
+  "version": "TM.0.23.CORTEX.V13.GATE.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "gate_sha": "0b050692460a391724048db2f314ddd032e83d870eaaf8552ff61ef0aee0069b",
+  "n_pair_clear": 14,
+  "claimed_clear": true,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git_commit",
+      "ok": true,
+      "candidate_git_sha": "99c387326d36d8a047c079b917276b121fb24228"
+    },
+    {
+      "id": "d2_conflict_is_swapped",
+      "ok": true,
+      "d2_conflict": "swapped_press_harm"
+    },
+    {
+      "id": "d1_and_population_green",
+      "ok": true,
+      "d1_ok": 32,
+      "d2_ok": 30,
+      "population_d1": true,
+      "population_d2": true
+    },
+    {
+      "id": "clear_meets_13_of_16",
+      "ok": true,
+      "n_pair_clear": 14
+    },
+    {
+      "id": "remaining_reds_are_honest_d2_holds",
+      "ok": true,
+      "d2_hold_fails": 2,
+      "note": "Pair 4 main holds=3 extras_ok=false; pair 12 main holds=1 extras_ok=true. Floor remains 5. Not a soft clear."
+    },
+    {
+      "id": "no_failure_lock_on_clear",
+      "ok": true
+    },
+    {
+      "id": "no_develop_v13",
+      "ok": true
+    },
+    {
+      "id": "neural_matches_v13_candidate",
+      "ok": true,
+      "neural_cortex_sha": "156b2f4fe64cc65a4b7ad9eb52bae44798bc198a0b98433a8f52b0e26ccedba3"
+    },
+    {
+      "id": "product_not_stamped",
+      "ok": true,
+      "earned_next": false,
+      "ex0s": null
+    }
+  ],
+  "consequence": {
+    "develop_v13_on_v13_worlds": "refused",
+    "rescore_v13": "refused",
+    "product_stamp": "refused",
+    "next": "new_full_development_commitment",
+    "refuse": [
+      "rewrite docs/cortex_v13_gate.lock",
+      "edit-and-rescore candidate v13 on revealed v13 worlds",
+      "open DEVELOP.v13 on v13 gate worlds",
+      "reuse TM023.V8–V13 or DEVELOP.v1–v4 worlds",
+      "stamp earned_next or product 0.0.005"
+    ]
+  },
+  "note": "14/16 stands. First honest isolated D1–D2 clear after the planted v4 spellings. Full D0–D12 requires a later distinct commitment."
+}

@@ -1,0 +1,27 @@
+{
+  "version": "TM.0.23.CORTEX.V13.GATE.CLEAR.NOTE",
+  "lab": "TM.0.23.CORTEX.V13.GATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "sensorimotor_association_gate_clear": true,
+  "n_pair_clear": 14,
+  "gate_lock": "docs/cortex_v13_gate.lock",
+  "revealed_worlds_status": "diagnostic_only_for_full_battery",
+  "next_full_development": {
+    "required": true,
+    "steps": [
+      "freeze v13 gate result (this lock)",
+      "new full-development eval commitment distinct from V8–V13 gates and DEVELOP.v1–v4",
+      "freeze full D0–D12 runner on the v13 neural",
+      "reveal new held-out worlds",
+      "score D0–D12 on one continuously developing cortex"
+    ],
+    "refuse": [
+      "run full D0–D12 on revealed v13 gate worlds",
+      "reuse v8–v13 gate commitments or DEVELOP.v1–v4 commitments",
+      "stamp earned_next / product 0.0.005 from this narrow clear"
+    ]
+  },
+  "note": "Narrow gate cleared honestly. Permission to spend on a later full battery — not final developmental evaluation and not a product stamp."
+}

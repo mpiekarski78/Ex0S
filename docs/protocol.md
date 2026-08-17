@@ -2050,3 +2050,9 @@ v13 apparatus: [`cortex_v13_stat_contract.lock`](cortex_v13_stat_contract.lock),
 
 Candidate (this cycle, before reveal): [`cortex.candidate.v13.lock`](cortex.candidate.v13.lock). Opposite-sign vs slow `ema` sets the existing HOLD response and does not snap the baseline. Population C4 + C5 (31/32) + C6 green. Reveal must pin the pushed candidate git SHA.
 
+Outcome: candidate `99c3873` revealed after a clean push. Fresh seed-derived D1–D2 **14/16** — **clear**. D1 32/32; D2 30/32; population extras green. [`cortex_v13_gate.clear.note.lock`](cortex_v13_gate.clear.note.lock). **DEVELOP.v13 on v13 worlds refused.** Do not edit-rescore v13. Full D0–D12 requires a later distinct commitment. Product remains **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+## TM.0.23.CORTEX.V13 clear → later full development
+
+Canonical main `99c3873`. V13 gate **14/16** stands. Do not edit-rescore v13. Do not run D0–D12 on revealed v13 worlds. Do not stamp product.
+

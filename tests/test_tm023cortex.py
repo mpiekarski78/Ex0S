@@ -603,6 +603,14 @@ def test_verify_v13_gate_cli() -> None:
     assert v.get("pending") is False
     if v["sensorimotor_association_gate_clear"]:
         assert v["n_pair_clear"] >= 13
+        assert not (REPO_ROOT / "docs" / "cortex_v13_gate.failure.lock").exists()
+        assert not (REPO_ROOT / "docs" / "cortex_development.v13.lock").exists()
+        gate = json.loads((REPO_ROOT / "docs" / "cortex_v13_gate.lock").read_text(encoding="utf-8"))
+        assert gate["battery"]["n_pair_clear"] == 14
+        assert gate["battery"]["d2_conflict"] == "swapped_press_harm"
+        assert gate["battery"]["stage_ok_counts"]["D1"] == 32
+        assert gate["battery"]["stage_ok_counts"]["D2"] == 30
+        assert (REPO_ROOT / "docs" / "cortex_v13_gate.clear.note.lock").exists()
     else:
         assert v["refuse_develop_before_clear"] is True
         assert (REPO_ROOT / "docs" / "cortex_v13_gate.failure.lock").exists()
