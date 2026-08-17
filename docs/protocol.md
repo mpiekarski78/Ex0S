@@ -2346,6 +2346,18 @@ D-arm R2 runner: [`lineage_discrimmap.r2.runner.lock`](lineage_discrimmap.r2.run
 
 Result: [`lineage_discrimmap.r2.decision.lock`](lineage_discrimmap.r2.decision.lock) **robust_linear_boundary_absent**. Exact hard-margin D1 is feasible at eight cues (`optimal`) but does not meet the frozen 0.01 geometric floor on all required cells; probes/twins/perturbations fail. D3 and D4 fail every 8-cue rank cell. Not interpolation-only. Historical DISCRIMMAP not rescored. SCORE unopened. No v31/v32. The 1,536 eligibility budget stays closed. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
 
+Addendum: [`lineage_discrimmap.r2.decision.addendum.lock`](lineage_discrimmap.r2.decision.addendum.lock). Write-geometry branch closed. D3 does not authorize a better online rule. Frozen D4 is not a universal nonlinear proof. Next is PHASEMAP.
+
+## TM.0.24.DISCRIMMAP.R2 → isolated PHASEMAP
+
+Canonical main `3f0bc5f`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Hard-margin feasible interpolates captured teaching points. Robust boundary absent means the address is not stable enough for behavior. Do not try another optimizer, competitive rule, or prototype variant.
+
+PHASEMAP apparatus: [`lineage_phasemap.prereg.lock`](lineage_phasemap.prereg.lock) + [`lineage_phasemap.isolation.lock`](lineage_phasemap.isolation.lock). Generalize COLLISIONMAP to 2/4/8 cues. Capture P0–P5. Frozen D1 oracle only. Contraction \(C_t=\|\rho_{t+1}^A-\rho_{t+1}^B\|/\|\rho_t^A-\rho_t^B\|\). Unused `TM024.PHASEMAP.DEV.` / `TWIN.`. SCORE reserved. No D5. n stays 64. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
+
+Phase runner: [`lineage_phasemap.runner.lock`](lineage_phasemap.runner.lock). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

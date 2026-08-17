@@ -1,0 +1,158 @@
+{
+  "version": "TM.0.24.PHASEMAP.PREREG",
+  "lab": "TM.0.24.PHASEMAP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "investigation_justified": true,
+  "package_question": "At what exact causal transition does an eight-cue address stop being robust under the frozen D1 oracle?",
+  "authorized_by": [
+    "docs/lineage_discrimmap.r2.decision.lock",
+    "docs/lineage_discrimmap.r2.decision.addendum.lock"
+  ],
+  "r2_decision_sha": "a888a8af5495e19139f8691725241c2b31322f192218983d02c131ebf6c84675",
+  "r2_dev_sha": "99f9097a3f30df7b69d46d5c20f858e35f540faa387c8e9bcb9062db07ab3831",
+  "r2_runner_py_sha": "06f5f2c6edc0dffef570e75295708ea2816ea737cd0af9dab157cd94f4c26b41",
+  "candidate": "docs/cortex.candidate.v30.lock",
+  "candidate_v30_sha": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+  "n": 64,
+  "increase_n": false,
+  "eligibility_budget_installed": false,
+  "declared_budget_remains_closed": 1536,
+  "write_geometry_branch_closed": true,
+  "d1_oracle": {
+    "source": "experiments/run_tm024discrimmap_r2.py",
+    "function": "hard_margin_linear",
+    "no_new_solver": true,
+    "no_soft_margin": true
+  },
+  "domains": {
+    "DEV": "TM024.PHASEMAP.DEV.",
+    "TWIN": "TM024.PHASEMAP.TWIN.",
+    "SCORE": "TM024.PHASEMAP.SCORE."
+  },
+  "score_reserved_unopened": true,
+  "phases": ["P0", "P1", "P2", "P3", "P4", "P5"],
+  "phase_keys": {
+    "P0": "cue",
+    "P1": "event_end",
+    "P2": "observable",
+    "P3": "pre_motor",
+    "P4": "motor_last",
+    "P5": "rho_elig"
+  },
+  "contraction": {
+    "formula": "C_t = ||rho_{t+1}^A - rho_{t+1}^B|| / ||rho_t^A - rho_t^B||",
+    "contraction_lt_one": true,
+    "pairs": "all_cue_pairs",
+    "report": ["min", "mean"]
+  },
+  "capacity": [
+    {"n_cues": 2, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 4, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 8, "n_handles": 2, "balanced": true, "required": true}
+  ],
+  "teach_orders": ["A_then_B", "B_then_A"],
+  "n_repeats": 3,
+  "equal_advantage": true,
+  "margin": {
+    "kind": "normalized_geometric",
+    "geometric_margin_min": 0.01,
+    "w_norm_excludes_intercept": true,
+    "require_correct_classification": true,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19,
+    "frozen_before_dev": true
+  },
+  "separation": {
+    "cos_distinct_max": 0.99,
+    "l2_distinct_min": 0.05,
+    "within_l2_stable_max": 0.05,
+    "within_cos_stable_min": 0.99
+  },
+  "fit": {
+    "rows": "teach_select_phase_only",
+    "never_fit_probes": true,
+    "never_fit_repeats": true,
+    "never_fit_perturbations": true
+  },
+  "decision_ladder": [
+    {
+      "id": "revisit_discrimmap_apparatus",
+      "when": "all six phases robust at eight cues",
+      "then": "revisit_discrimmap_apparatus"
+    },
+    {
+      "id": "state_reinstatement_instability",
+      "when": "teaching states robust at the first failing phase but same-phase probes fail",
+      "then": "state_reinstatement_instability"
+    },
+    {
+      "id": "eligibility_snapshot_mismatch",
+      "when": "robust through P4, lost at P5",
+      "then": "eligibility_snapshot_mismatch"
+    },
+    {
+      "id": "motor_transition_address_collapse",
+      "when": "robust through P3, lost at P4",
+      "then": "motor_transition_address_collapse"
+    },
+    {
+      "id": "post_cue_dynamics_destroy_robust_address",
+      "when": "P0 robust and a later phase fails, including P1",
+      "then": "post_cue_dynamics_destroy_robust_address"
+    },
+    {
+      "id": "cue_representation_capacity_absent",
+      "when": "P0 already fails at eight cues",
+      "then": "cue_representation_capacity_absent"
+    }
+  ],
+  "fail_closed": [
+    "prereg_or_runner_hash_mismatch",
+    "missing_or_duplicated_cell",
+    "probe_or_repeat_in_fit",
+    "score_identifier_in_dev_payload",
+    "solver_nan_inf_or_unaccepted_status",
+    "same_frozen_dev_execution_again"
+  ],
+  "historical_immutable": [
+    "docs/lineage_collisionmap.decision.lock",
+    "docs/lineage_writegeom.decision.lock",
+    "docs/lineage_eligmap.decision.lock",
+    "docs/lineage_eligmap.dev.lock",
+    "docs/lineage_discrimmap.decision.lock",
+    "docs/lineage_discrimmap.dev.lock",
+    "docs/lineage_discrimmap.r2.decision.lock",
+    "docs/lineage_discrimmap.r2.dev.lock",
+    "docs/cortex.candidate.v30.lock"
+  ],
+  "another_lineage_run": false,
+  "q3": false,
+  "refuse": [
+    "D5",
+    "neural_edit_this_package",
+    "declare_v31",
+    "install_D1_D4_in_NeuralCortex",
+    "another_optimizer",
+    "another_competitive_rule",
+    "another_prototype_variant",
+    "open_SCORE",
+    "install_1536_eligibility_budget",
+    "increase_n",
+    "instincts",
+    "SFNN_cell_classes",
+    "lineage_evolution",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "rewrite_historical_locks",
+    "earned_next",
+    "stamp_0.0.005"
+  ],
+  "note": "Runner-only causal phase map. No neural law. Product remains 0.0.004."
+}

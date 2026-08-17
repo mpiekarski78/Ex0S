@@ -1,0 +1,73 @@
+{
+  "version": "TM.0.24.PHASEMAP.RUNNER.V1",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "write_geometry_branch_closed": true,
+  "shas": {
+    "runner": "716b726af3fec2167c061b804964b3b0f755685dd959b4c202edfa746455a50b",
+    "neural_cortex": "90dae9a652fdefa0e7942b775053e2b765991eb26ee3ee4cdcfdb994b901d9e0",
+    "cortex_memory": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+    "prereg": "a865002fd91a4229ab56d2434d6180fda028fc11e5d9dcf4634bbf652e93661b",
+    "contract": "03a68f8711c0aa801d038760b62b8ea6552d5ab2f3eeeedb74d3e0f2435980c8",
+    "isolation": "fa488a2a29b8509f8bf68bee0d8170afe63ef1c31a1b1d9d5d9c42c0371424fe",
+    "candidate_v30": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+    "r2_prereg": "22e4e9546c4668e9bee76c712a4efb529678e635e04a395d0ce5e052a50b5d13",
+    "r2_decision": "a888a8af5495e19139f8691725241c2b31322f192218983d02c131ebf6c84675",
+    "r2_addendum": "92642b4b4073d673c7385e0d6c24a991eddb62300bb0f2c04634928e0a66877d",
+    "r2_runner": "06f5f2c6edc0dffef570e75295708ea2816ea737cd0af9dab157cd94f4c26b41"
+  },
+  "n": 64,
+  "domain": "TM024.PHASEMAP.DEV.",
+  "twin_domain": "TM024.PHASEMAP.TWIN.",
+  "score_domain": "TM024.PHASEMAP.SCORE.",
+  "score_reserved_unopened": true,
+  "phases": [
+    "P0",
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5"
+  ],
+  "phase_keys": {
+    "P0": "cue",
+    "P1": "event_end",
+    "P2": "observable",
+    "P3": "pre_motor",
+    "P4": "motor_last",
+    "P5": "rho_elig"
+  },
+  "d1_oracle": {
+    "source": "experiments/run_tm024discrimmap_r2.py",
+    "function": "hard_margin_linear",
+    "no_new_solver": true,
+    "no_soft_margin": true
+  },
+  "geometric_margin_min": 0.01,
+  "n_repeats": 3,
+  "contraction": "C_t = ||rho_{t+1}^A - rho_{t+1}^B|| / ||rho_t^A - rho_t^B||",
+  "expected_n_rank": 72,
+  "expected_n_twin": 12,
+  "expected_n_cells": 84,
+  "fail_closed": [
+    "prereg_or_runner_hash_mismatch",
+    "missing_or_duplicated_cell",
+    "probe_or_repeat_in_fit",
+    "score_identifier_in_dev_payload",
+    "solver_nan_inf_or_unaccepted_status",
+    "same_frozen_dev_execution_again"
+  ],
+  "decision_ladder": [
+    "revisit_discrimmap_apparatus",
+    "state_reinstatement_instability",
+    "eligibility_snapshot_mismatch",
+    "motor_transition_address_collapse",
+    "post_cue_dynamics_destroy_robust_address",
+    "cue_representation_capacity_absent"
+  ],
+  "git_head": "3f0bc5f3c6e13c94202c7627489552a0679287b8",
+  "note": "Frozen PHASEMAP runner. DEV lock only after this file is on origin/main. No neural edit."
+}
