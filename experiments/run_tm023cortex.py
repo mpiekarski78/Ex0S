@@ -182,6 +182,10 @@ D5_R2_PREREG = REPO_ROOT / "docs" / "cortex_d5_r2.prereg.lock"
 D5_R2_GATE_LOCK = REPO_ROOT / "docs" / "cortex_d5_r2_gate.lock"
 D5_R2_GATE_FAIL = REPO_ROOT / "docs" / "cortex_d5_r2_gate.failure.lock"
 CANDIDATE_V20 = REPO_ROOT / "docs" / "cortex.candidate.v20.lock"
+D5_R3_PREREG = REPO_ROOT / "docs" / "cortex_d5_r3.prereg.lock"
+D5_R3_GATE_LOCK = REPO_ROOT / "docs" / "cortex_d5_r3_gate.lock"
+D5_R3_GATE_FAIL = REPO_ROOT / "docs" / "cortex_d5_r3_gate.failure.lock"
+CANDIDATE_V26 = REPO_ROOT / "docs" / "cortex.candidate.v26.lock"
 D6_R1_PREREG = REPO_ROOT / "docs" / "cortex_d6_r1.prereg.lock"
 D6_R1_GATE_LOCK = REPO_ROOT / "docs" / "cortex_d6_r1_gate.lock"
 D6_R1_GATE_FAIL = REPO_ROOT / "docs" / "cortex_d6_r1_gate.failure.lock"
@@ -2938,6 +2942,45 @@ def verify_d5_r2() -> dict[str, Any]:
     }
 
 
+def verify_d5_r3() -> dict[str, Any]:
+    """Verify isolated D5.R3 integrity without re-scoring. Pending-safe if unscored."""
+    if not D5_R3_PREREG.exists():
+        return {"ok": True, "pending": True, "why": "D5.R3 prereg not frozen yet"}
+    r3c = json.loads(D5_R3_PREREG.read_text(encoding="utf-8"))["eval_seed_commitment"]
+    for prior in (FULLDEV_R6_PREREG, D7_R2_PREREG, D5_R2_PREREG, D5_R1_PREREG, FULLDEV_R5_PREREG, FULLDEV_R4_PREREG, DEV_PREREG, PREREG):
+        if prior.exists() and json.loads(prior.read_text(encoding="utf-8")).get("eval_seed_commitment") == r3c:
+            return {"ok": False, "why": f"D5.R3 commitment reused {prior.name}"}
+    if json.loads(D5_R3_PREREG.read_text(encoding="utf-8")).get("domain") != "TM023.D5.R3.":
+        return {"ok": False, "why": "D5.R3 domain drifted"}
+    if not CANDIDATE_V26.exists():
+        return {"ok": True, "pending": True, "why": "candidate v26 not frozen yet"}
+    if not D5_R3_GATE_LOCK.exists():
+        return {"ok": True, "pending": True, "why": "D5.R3 gate result not frozen yet"}
+    gate = json.loads(D5_R3_GATE_LOCK.read_text(encoding="utf-8"))
+    if gate.get("product") != "0.0.004" or gate.get("earned_next") is not False or gate.get("ex0s") is not None:
+        return {"ok": False, "why": "product/earned_next/ex0s drift"}
+    battery = gate.get("battery") or {}
+    n_clear = int(battery.get("n_pair_clear") or 0)
+    clear = bool(gate.get("relation_gate_clear"))
+    if battery.get("domain") != "TM023.D5.R3.":
+        return {"ok": False, "why": "result domain drifted"}
+    if clear and n_clear < 13:
+        return {"ok": False, "why": "gate claims clear with n_pair_clear < 13"}
+    if (not clear) and not D5_R3_GATE_FAIL.exists():
+        return {"ok": False, "why": "missing cortex_d5_r3_gate.failure.lock"}
+    if clear and D5_R3_GATE_FAIL.exists():
+        return {"ok": False, "why": "failure lock present on a clear gate"}
+    return {
+        "ok": True,
+        "why": "D5.R3 integrity ok",
+        "pending": False,
+        "relation_gate_clear": clear,
+        "n_pair_clear": n_clear,
+        "refuse_rewrite": True,
+        "refuse_fulldev_before_clear": not clear,
+    }
+
+
 def verify_d6_r1() -> dict[str, Any]:
     """Verify isolated D6.R1 integrity without re-scoring. Pending-safe if unscored."""
     if not D6_R1_PREREG.exists():
@@ -3156,6 +3199,7 @@ def main() -> None:
     ap.add_argument("--verify-d4-r1", action="store_true")
     ap.add_argument("--verify-d5-r1", action="store_true")
     ap.add_argument("--verify-d5-r2", action="store_true")
+    ap.add_argument("--verify-d5-r3", action="store_true")
     ap.add_argument("--verify-d6-r1", action="store_true")
     ap.add_argument("--verify-d6-r2", action="store_true")
     ap.add_argument("--verify-d7-r1", action="store_true")
@@ -3262,6 +3306,9 @@ def main() -> None:
         return
     if args.verify_d5_r2:
         print(json.dumps(verify_d5_r2(), indent=2, default=str))
+        return
+    if args.verify_d5_r3:
+        print(json.dumps(verify_d5_r3(), indent=2, default=str))
         return
     if args.verify_d6_r1:
         print(json.dumps(verify_d6_r1(), indent=2, default=str))

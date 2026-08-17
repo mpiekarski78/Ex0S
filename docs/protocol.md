@@ -2214,3 +2214,5 @@ Result: [`cortex_fulldev_r6.lock`](cortex_fulldev_r6.lock) **0/16**. D7 30/32 tr
 
 Canonical main `71f5abe`. Isolated D5.R3 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+D5.R3 apparatus: [`cortex_d5_r3.prereg.lock`](cortex_d5_r3.prereg.lock). Neophobia on unfamiliar phrase authorized; no neural edit yet. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
