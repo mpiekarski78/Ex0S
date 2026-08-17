@@ -1,0 +1,80 @@
+{
+  "version": "TM.0.23.CORTEX.FULLDEV.R4.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "2a6196a372b40cf4b04b223f606f571d6103b9a249dc801a27139f7255090e6c",
+  "failure_sha": "e4018551e91edbd2ee90f96db503402709aa282d8a234a658a16fecd4c52efad",
+  "reveal_sha": "f9bbd6791a4680dff779fbdbc5ad74816d95687c916ef60428a7bcce68b52ae7",
+  "n_pair_clear": 0,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "apparatus_git_sha": "e7767b9a3a32acd90f79afafebc26203871e24fc",
+      "candidate_git_sha": "569ffe909c8a80bc14b10414ea021eef3440d451"
+    },
+    {
+      "id": "domain_is_full_r4",
+      "ok": true,
+      "domain": "TM023.FULL.R4."
+    },
+    {
+      "id": "d5_transferred",
+      "ok": true,
+      "d5_ok": 32,
+      "note": "Isolated D5.R2 habituation holds in full-dev (32/32)."
+    },
+    {
+      "id": "d4_d3_transferred",
+      "ok": true,
+      "d4_ok": 32,
+      "d3_ok": 31
+    },
+    {
+      "id": "first_fail_modes",
+      "ok": true,
+      "first_fail_histogram": {"D6": 15, "D1": 15, "D2": 1, "D3": 1},
+      "stage_pass_counts": {"D0": 32, "D1": 17, "D2": 30, "D3": 31, "D4": 32, "D5": 32, "D6": 2, "D7": 0, "D8": 0, "D9": 21, "D10": 10, "D11": 32, "D12": 31}
+    },
+    {
+      "id": "d6_is_the_post_d5_wall",
+      "ok": true,
+      "d6_ok": 2,
+      "matched_zero": 29,
+      "note": "30/32 lives miss D6. 29/32 have matched=0: EMIT fires but emit_sequence is not a taught sequence. holds are often already >=3. The miss is echoic/sequential match, not missing HOLD."
+    },
+    {
+      "id": "d6_scorer_not_soft",
+      "ok": true,
+      "note": "Historical score_d6 requires emits>=2, matched>=1, holds>=3. Do not edit cortex_develop_scorers.py."
+    },
+    {
+      "id": "d1_still_partial",
+      "ok": true,
+      "d1_ok": 17,
+      "note": "15 first-fails at D1 remain the get/drop lure (press=0). D6 is the 2/32 wall after D1–D5."
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_fulldev_r4": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d6",
+    "refuse": [
+      "rewrite docs/cortex_fulldev_r4.lock",
+      "edit-and-rescore on revealed FULLDEV.R4 worlds",
+      "stamp earned_next",
+      "open nursery conversation",
+      "skip D6 to attack D7–D12"
+    ]
+  },
+  "note": "0/16 stands. D5 transferred. The first post-D5 wall is D6: EMIT does not replay recently taught sequences."
+}

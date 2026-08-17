@@ -2142,3 +2142,9 @@ Canonical main `569ffe9`. FULLDEV.R4 apparatus follows. Live v20, no neural edit
 
 FULLDEV.R4 apparatus: [`cortex_fulldev_r4.prereg.lock`](cortex_fulldev_r4.prereg.lock). Live v20, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Result: [`cortex_fulldev_r4.lock`](cortex_fulldev_r4.lock) **0/16**. D5 32/32 transferred. First-fail `{D6:15, D1:15, D2:1, D3:1}`. D6 is 2/32: EMIT does not replay taught sequences. Audit [`cortex_fulldev_r4.audit.lock`](cortex_fulldev_r4.audit.lock). Diagnosis [`cortex_diagnosis.fulldev_r4.lock`](cortex_diagnosis.fulldev_r4.lock): echoic / phonological-loop emit. Do not rescore FULLDEV.R4. Next is isolated D6.R1.
+
+## TM.0.23.CORTEX.FULLDEV.R4 0/16 → isolated D6.R1
+
+Canonical main `e7767b9`. Isolated D6 after D5 transferred. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

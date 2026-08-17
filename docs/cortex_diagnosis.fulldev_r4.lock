@@ -1,0 +1,29 @@
+{
+  "version": "TM.0.23.CORTEX.FULLDEV.R4.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "e7767b9a3a32acd90f79afafebc26203871e24fc",
+  "neural_mechanism_changed": true,
+  "v21_authorized_only_if_this_lock": true,
+  "claim": "FULLDEV.R4 D6 is 2/32 because EMIT sequences do not match recently taught symbol sequences (matched=0 on 29/32 lives). EMIT token choice uses W_emit_query, which is cost-punished when body_adv≈0, so it does not bind to just-heard symbols. Biology: a phonological loop / echoic memory — recently observed symbols are available to emit. Missing generic law: an echoic buffer of recent observations that EMIT can replay, without a D6-named shortcut.",
+  "authorize_v21": [
+    "keep v16–v20 HOLD / habituation / S-write / RETRIEVE recency laws",
+    "maintain a decaying echoic buffer of recently observed symbols",
+    "when the motor chooses EMIT, prefer echoic-buffer symbols over ungrounded W_emit_query argmax",
+    "do not add capability-specific functions or planted emit1/emit2 names",
+    "do not edit cortex_develop_scorers.py",
+    "do not lower emits>=2, matched>=1, or holds>=3",
+    "new sealed commitment domain TM023.D6.R1.",
+    "isolated D6 lives must run D1–D5 scorers first",
+    "re-earn C4/C5/C6 before any D6 reveal",
+    "narrow D6 gate ≥13/16 before reopening full D0–D12"
+  ],
+  "refuse": [
+    "edit-and-rescore FULLDEV.R4",
+    "lower D6 floors",
+    "drop C6",
+    "skip D6",
+    "stamp product"
+  ]
+}
