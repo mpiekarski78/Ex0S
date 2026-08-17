@@ -18,6 +18,9 @@ jobs:
       - name: Install
         run: pip install -r requirements.txt
       - name: Freeze and batteries
+        # Live CPU/GPU cortex sanity is scored on the lab machine, not here.
+        env:
+          EX0S_SKIP_GPU_SANITY: "1"
         run: |
           python tests/test_tm011family.py
           python tests/test_tm011bound.py
