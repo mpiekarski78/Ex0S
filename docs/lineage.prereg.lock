@@ -1,0 +1,112 @@
+{
+  "version": "TM.0.24.LINEAGE.PREREG",
+  "lab": "TM.0.24.LINEAGE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "compute_frozen": false,
+  "package_question": "How far can automatic population evolution improve the learning of a fixed n=64 symbolic developmental substrate across L0\u2013L6 under frozen bounded conditions, and where does that architecture/search/data/compute stack reach an honest wall?",
+  "hypotheses": {
+    "H1": "Automatic lineage selection can produce organisms that learn better than v27 without inherited knowledge or manual neural edits, under frozen bounded conditions.",
+    "H2": "Determine the first level the n=64 substrate fails to acquire under the frozen architecture, search algorithm, data and compute budget."
+  },
+  "ancestor": {
+    "candidate": "docs/cortex.candidate.lock",
+    "version": "TM.0.23.CORTEX.CANDIDATE.V27",
+    "git": "1fd4306",
+    "neural_cortex_sha": "71bece5917893fae03c3a95c276cf93bc0e34fce6a7bfb6a99adf093bb7ebc08",
+    "cortex_memory_sha": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+    "make_cortex": "experiments.run_tm023cortex.make_cortex",
+    "immutable": true
+  },
+  "origin_main_at_phase_a_write": "de09c7723fbad5d34e3117ab9edff8c10376d8f7",
+  "cortex_architecture_contract_sha": "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2",
+  "phase_a_file_shas": {
+    "docs/lineage_architecture_contract.md": "72b07fc894fe1bfa632962e7b2ce17cbb59dc243d27c30a5a70574bc460bcdf1",
+    "docs/lineage_fitness_contract.md": "d44a35fe41effd9c88205b10b11c8e9759cb964abb0d583ddab195271cc353eb",
+    "docs/lineage_genome_layout.json": "b5950cc80ce5ff379d4c7bf317cf1e4df0740e378414c8c88ae0d7e2184edbfa",
+    "docs/lineage_world_generator.prereg.lock": "d7057f376d58f5835ace06e89da50eb2e989d8cbfb7cc7c2aac2fc76cf59448b",
+    "docs/lineage_wall.prereg.lock": "bda2ad56cc31a27addc9e98fa57491846c501d8c573ee99b195ce8ddde521766",
+    "docs/lineage_phase0a.lock": "cdc42eb0615dc65385fa3dd3bf5d8e6892aebc1b78473629a7d80df7ba19b7c8",
+    "experiments/lineage_genome_layout_spec.py": "711ffd376cb5568493352793fa7107ef7e275b2a42d37e33775d2b68804db9e8",
+    "experiments/run_tm024lineage_phase0a.py": "5c3b017ef5bb65bfee704b962e39d3cca3839fd21abfcd671c3a489517482903"
+  },
+  "layout": {
+    "path": "docs/lineage_genome_layout.json",
+    "arm_D_dim": 134,
+    "arm_C_dim": 38092
+  },
+  "search": {
+    "algorithm": "antithetic_evolution_strategies",
+    "outer_optimizer": "Adam",
+    "rank_transform": true,
+    "python_source_mutation": false,
+    "F_search": "adult_lower_quartile -> robustness -> efficiency",
+    "G_k_gates": [
+      "curriculum_unlock",
+      "qualification",
+      "RC_eligibility"
+    ],
+    "G_k_not_a_search_cliff": true,
+    "delta_B": 0.05,
+    "delta_P": 0.05,
+    "tau": {
+      "L0_C4": 0.6,
+      "L0_C5": 0.6,
+      "L1": 0.6,
+      "L2": 0.6,
+      "L3": 0.5,
+      "L4": 0.6,
+      "L5": 0.5,
+      "L6": 0.5
+    },
+    "C6": "remain_green_historical_not_G_k_margin"
+  },
+  "statistics": {
+    "method": "percentile_cluster_bootstrap",
+    "n_boot": 9999,
+    "alpha_one_sided": 0.05,
+    "resampling_seed": 20260817,
+    "ticks_never_iid": true,
+    "comparison_unit": "antithetic_pair",
+    "clusters": [
+      "world",
+      "birth"
+    ]
+  },
+  "dev_stream_seed_hex": "495968db12664c0be4e007242134dd57c654a672b8b6ebe5dfd58440630eef5c",
+  "dev_stream_public": true,
+  "qual_seed_commitment": "b3cbb4fe0222f9973f1e74b1cb525eab9ee6003ada5ab88f948224b46489c23d",
+  "eval_seed_commitment": "b57363135bc8986811c21c5aaeaa4097e9c0c40e7527d61e586c3c422a757a38",
+  "islands_provisional": {
+    "n_islands": 4,
+    "pairs_per_island": 32,
+    "note": "Provisional until Phase 0B compute amendment. Not frozen.",
+    "no_migration_pilot": true,
+    "no_migration_first_30_main_generations": true
+  },
+  "not_frozen": [
+    "P",
+    "B",
+    "W",
+    "E",
+    "N_wake",
+    "N_replay",
+    "gpu_hours",
+    "CI_precision_n",
+    "replication_tier_sizes"
+  ],
+  "frozen_compute": {},
+  "refuse": [
+    "pair_seeds for lineage worlds",
+    "FULLDEV.R7",
+    "rewrite historical locks",
+    "edit cortex_architecture_contract.md",
+    "edit experiments/cortex_develop_scorers.py",
+    "capability scoring before lineage_engine.candidate.lock",
+    "move tau/delta after seeing organism behavior",
+    "stamp 0.0.005 from lineage"
+  ],
+  "note": "Phase A scientific constitution. Compute freeze is Phase 0B. Product remains 0.0.004."
+}

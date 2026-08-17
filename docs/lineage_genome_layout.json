@@ -1,0 +1,2939 @@
+{
+  "version": "TM.0.24.LINEAGE.GENOME.LAYOUT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "topology_fixed": {
+    "n": 64,
+    "d_sym": 32,
+    "k_s": 8,
+    "d_body": 4,
+    "d_x": 293,
+    "n_op": 6,
+    "ops": [
+      "RETRIEVE",
+      "WRITE",
+      "EMIT",
+      "ACT",
+      "STOP",
+      "HOLD"
+    ],
+    "dtype": "float64",
+    "note": "Neural topology is fixed. World 'topology' means relation graph only."
+  },
+  "prohibited_genome_contents": [
+    "token_strings",
+    "english",
+    "actuator_handles",
+    "world_ids",
+    "domain_ids",
+    "stage_ids",
+    "expected_answers",
+    "target_output_lengths",
+    "response_sequences",
+    "scorer_thresholds",
+    "S_rows",
+    "phrase_buffers",
+    "capability_switches",
+    "life_rng_seeds"
+  ],
+  "arms": {
+    "D": {
+      "name": "developmental",
+      "role": "main_biological_lineage",
+      "dim": 134,
+      "slices": [
+        {
+          "name": "init.W_rec.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 0
+        },
+        {
+          "name": "init.W_rec.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 1
+        },
+        {
+          "name": "init.W_in.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 2
+        },
+        {
+          "name": "init.W_in.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.840086304508534,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 3
+        },
+        {
+          "name": "init.W_pred.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 4
+        },
+        {
+          "name": "init.W_pred.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 5
+        },
+        {
+          "name": "init.W_op.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 6
+        },
+        {
+          "name": "init.W_op.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 7
+        },
+        {
+          "name": "init.W_emit_query.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 8
+        },
+        {
+          "name": "init.W_emit_query.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 9
+        },
+        {
+          "name": "init.W_write.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 10
+        },
+        {
+          "name": "init.W_write.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 11
+        },
+        {
+          "name": "init.W_att.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 12
+        },
+        {
+          "name": "init.W_att.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 13
+        },
+        {
+          "name": "init.W_body.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 14
+        },
+        {
+          "name": "init.W_body.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -0.6931471805599453,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 15
+        },
+        {
+          "name": "init.b.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 16
+        },
+        {
+          "name": "init.b.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -20.0,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 17
+        },
+        {
+          "name": "init.v_start.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 18
+        },
+        {
+          "name": "init.v_start.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": 0.0,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 19
+        },
+        {
+          "name": "init.v_end.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 20
+        },
+        {
+          "name": "init.v_end.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": 0.0,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 21
+        },
+        {
+          "name": "init.W_act_query.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 22
+        },
+        {
+          "name": "init.W_act_query.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -20.0,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 23
+        },
+        {
+          "name": "init.b_op.ACT",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.85,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 24
+        },
+        {
+          "name": "init.b_op.RETRIEVE",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 25
+        },
+        {
+          "name": "init.b_op.WRITE",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 26
+        },
+        {
+          "name": "init.b_op.EMIT",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 27
+        },
+        {
+          "name": "init.b_op.STOP",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 28
+        },
+        {
+          "name": "init.b_op.HOLD",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 29
+        },
+        {
+          "name": "connect.p_connect",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.1,
+          "lo": 0.01,
+          "hi": 0.5,
+          "offset": 30
+        },
+        {
+          "name": "connect.growth_rate",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 0.2,
+          "offset": 31
+        },
+        {
+          "name": "connect.prune_rate",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 0.2,
+          "offset": 32
+        },
+        {
+          "name": "connect.prune_threshold",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 2.0,
+          "offset": 33
+        },
+        {
+          "name": "connect.region_0_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 34
+        },
+        {
+          "name": "connect.region_1_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 35
+        },
+        {
+          "name": "connect.region_2_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 36
+        },
+        {
+          "name": "connect.region_3_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37
+        },
+        {
+          "name": "dyn.eta_pred",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.05,
+          "lo": 0.0001,
+          "hi": 0.5,
+          "offset": 38
+        },
+        {
+          "name": "dyn.eta_act",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.15,
+          "lo": 0.0001,
+          "hi": 0.5,
+          "offset": 39
+        },
+        {
+          "name": "dyn.beta",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.01,
+          "lo": 0.0,
+          "hi": 0.2,
+          "offset": 40
+        },
+        {
+          "name": "dyn.clip",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 2.0,
+          "lo": 0.1,
+          "hi": 8.0,
+          "offset": 41
+        },
+        {
+          "name": "dyn.tau",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.1,
+          "hi": 8.0,
+          "offset": 42
+        },
+        {
+          "name": "dyn.t_max",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 8.0,
+          "lo": 1.0,
+          "hi": 16.0,
+          "offset": 43
+        },
+        {
+          "name": "dyn.cos_thresh",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.15,
+          "lo": 0.01,
+          "hi": 0.9,
+          "offset": 44
+        },
+        {
+          "name": "dyn.familiarity_ratio",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.5,
+          "lo": 0.0,
+          "hi": 2.0,
+          "offset": 45
+        },
+        {
+          "name": "dyn.familiarity_decay",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.98,
+          "lo": 0.5,
+          "hi": 0.999,
+          "offset": 46
+        },
+        {
+          "name": "dyn.familiarity_abs",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 16.0,
+          "lo": 1.0,
+          "hi": 64.0,
+          "offset": 47
+        },
+        {
+          "name": "dyn.echoic_max",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 8.0,
+          "lo": 1.0,
+          "hi": 16.0,
+          "offset": 48
+        },
+        {
+          "name": "dyn.echoic_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.08,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 49
+        },
+        {
+          "name": "dyn.vocal_refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 50
+        },
+        {
+          "name": "dyn.utterance_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 51
+        },
+        {
+          "name": "dyn.conflict_hold_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 2.0,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 52
+        },
+        {
+          "name": "dyn.adv_baseline_alpha",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.05,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 53
+        },
+        {
+          "name": "dyn.equal_evidence_min_symbols",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 3.0,
+          "lo": 1.0,
+          "hi": 8.0,
+          "offset": 54
+        },
+        {
+          "name": "dyn.explore_T0",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 55
+        },
+        {
+          "name": "dyn.explore_decay",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.5,
+          "hi": 1.0,
+          "offset": 56
+        },
+        {
+          "name": "dyn.eligibility_decay",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.5,
+          "hi": 1.0,
+          "offset": 57
+        },
+        {
+          "name": "dyn.retrieval_thresh",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 58
+        },
+        {
+          "name": "dyn.write_thresh",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 59
+        },
+        {
+          "name": "dyn.op_cost.RETRIEVE",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 60
+        },
+        {
+          "name": "dyn.op_cost.WRITE",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 61
+        },
+        {
+          "name": "dyn.op_cost.EMIT",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 62
+        },
+        {
+          "name": "dyn.op_cost.ACT",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.05,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 63
+        },
+        {
+          "name": "dyn.op_cost.STOP",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 64
+        },
+        {
+          "name": "dyn.op_cost.HOLD",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 65
+        },
+        {
+          "name": "dyn.body_setpoint.0",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 66
+        },
+        {
+          "name": "dyn.body_setpoint.1",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 67
+        },
+        {
+          "name": "dyn.body_setpoint.2",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 68
+        },
+        {
+          "name": "dyn.body_setpoint.3",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 69
+        },
+        {
+          "name": "replay.mix.recency",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.25,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 70
+        },
+        {
+          "name": "replay.mix.similarity",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.25,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 71
+        },
+        {
+          "name": "replay.mix.surprise",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.25,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 72
+        },
+        {
+          "name": "replay.mix.random",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.25,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 73
+        },
+        {
+          "name": "neuromod.gain.homeostasis",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 74
+        },
+        {
+          "name": "neuromod.gain.surprise",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 75
+        },
+        {
+          "name": "neuromod.gain.conflict",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 76
+        },
+        {
+          "name": "neuromod.gain.novelty",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 77
+        },
+        {
+          "name": "neuromod.gain.controllability",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 78
+        },
+        {
+          "name": "neuromod.gain.social",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 79
+        },
+        {
+          "name": "age.birth.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 80
+        },
+        {
+          "name": "age.birth.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 81
+        },
+        {
+          "name": "age.birth.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 82
+        },
+        {
+          "name": "age.birth.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 83
+        },
+        {
+          "name": "age.birth.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 84
+        },
+        {
+          "name": "age.birth.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 85
+        },
+        {
+          "name": "age.birth.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 86
+        },
+        {
+          "name": "age.birth.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 87
+        },
+        {
+          "name": "age.birth.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 88
+        },
+        {
+          "name": "age.high_plasticity.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 89
+        },
+        {
+          "name": "age.high_plasticity.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 90
+        },
+        {
+          "name": "age.high_plasticity.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 91
+        },
+        {
+          "name": "age.high_plasticity.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 92
+        },
+        {
+          "name": "age.high_plasticity.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 93
+        },
+        {
+          "name": "age.high_plasticity.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 94
+        },
+        {
+          "name": "age.high_plasticity.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 95
+        },
+        {
+          "name": "age.high_plasticity.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 96
+        },
+        {
+          "name": "age.high_plasticity.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 97
+        },
+        {
+          "name": "age.experience_replay.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 98
+        },
+        {
+          "name": "age.experience_replay.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 99
+        },
+        {
+          "name": "age.experience_replay.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 100
+        },
+        {
+          "name": "age.experience_replay.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 101
+        },
+        {
+          "name": "age.experience_replay.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 102
+        },
+        {
+          "name": "age.experience_replay.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 103
+        },
+        {
+          "name": "age.experience_replay.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 104
+        },
+        {
+          "name": "age.experience_replay.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 105
+        },
+        {
+          "name": "age.experience_replay.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 106
+        },
+        {
+          "name": "age.pruning_stabilization.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 107
+        },
+        {
+          "name": "age.pruning_stabilization.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 108
+        },
+        {
+          "name": "age.pruning_stabilization.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 109
+        },
+        {
+          "name": "age.pruning_stabilization.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 110
+        },
+        {
+          "name": "age.pruning_stabilization.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 111
+        },
+        {
+          "name": "age.pruning_stabilization.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 112
+        },
+        {
+          "name": "age.pruning_stabilization.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 113
+        },
+        {
+          "name": "age.pruning_stabilization.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 114
+        },
+        {
+          "name": "age.pruning_stabilization.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 115
+        },
+        {
+          "name": "age.mature_plasticity.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 116
+        },
+        {
+          "name": "age.mature_plasticity.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 117
+        },
+        {
+          "name": "age.mature_plasticity.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 118
+        },
+        {
+          "name": "age.mature_plasticity.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 119
+        },
+        {
+          "name": "age.mature_plasticity.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 120
+        },
+        {
+          "name": "age.mature_plasticity.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 121
+        },
+        {
+          "name": "age.mature_plasticity.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 122
+        },
+        {
+          "name": "age.mature_plasticity.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 123
+        },
+        {
+          "name": "age.mature_plasticity.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 124
+        },
+        {
+          "name": "age.novelty_reopen.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 125
+        },
+        {
+          "name": "age.novelty_reopen.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 126
+        },
+        {
+          "name": "age.novelty_reopen.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 127
+        },
+        {
+          "name": "age.novelty_reopen.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 128
+        },
+        {
+          "name": "age.novelty_reopen.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 129
+        },
+        {
+          "name": "age.novelty_reopen.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 130
+        },
+        {
+          "name": "age.novelty_reopen.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 131
+        },
+        {
+          "name": "age.novelty_reopen.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 132
+        },
+        {
+          "name": "age.novelty_reopen.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 133
+        }
+      ],
+      "birth_sampling": "life_specific_developmental_RNG",
+      "siblings_not_clones": true
+    },
+    "C": {
+      "name": "dense_theta",
+      "role": "engineering_control",
+      "dim": 38092,
+      "tensor_dim": 37958,
+      "dynamics_dim": 134,
+      "slices": [
+        {
+          "name": "tensor.W_rec",
+          "size": 4096,
+          "kind": "tensor",
+          "shape": [
+            64,
+            64
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 0
+        },
+        {
+          "name": "tensor.M",
+          "size": 4096,
+          "kind": "tensor",
+          "shape": [
+            64,
+            64
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 4096
+        },
+        {
+          "name": "tensor.W_in",
+          "size": 18752,
+          "kind": "tensor",
+          "shape": [
+            64,
+            293
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 8192
+        },
+        {
+          "name": "tensor.W_pred",
+          "size": 2048,
+          "kind": "tensor",
+          "shape": [
+            32,
+            64
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 26944
+        },
+        {
+          "name": "tensor.W_op",
+          "size": 384,
+          "kind": "tensor",
+          "shape": [
+            6,
+            64
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 28992
+        },
+        {
+          "name": "tensor.W_emit_query",
+          "size": 2048,
+          "kind": "tensor",
+          "shape": [
+            32,
+            64
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 29376
+        },
+        {
+          "name": "tensor.W_act_query",
+          "size": 2048,
+          "kind": "tensor",
+          "shape": [
+            32,
+            64
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 31424
+        },
+        {
+          "name": "tensor.W_write",
+          "size": 2048,
+          "kind": "tensor",
+          "shape": [
+            32,
+            64
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 33472
+        },
+        {
+          "name": "tensor.W_att",
+          "size": 2048,
+          "kind": "tensor",
+          "shape": [
+            32,
+            64
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 35520
+        },
+        {
+          "name": "tensor.W_body",
+          "size": 256,
+          "kind": "tensor",
+          "shape": [
+            64,
+            4
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 37568
+        },
+        {
+          "name": "tensor.b",
+          "size": 64,
+          "kind": "tensor",
+          "shape": [
+            64
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 37824
+        },
+        {
+          "name": "tensor.b_op",
+          "size": 6,
+          "kind": "tensor",
+          "shape": [
+            6
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 37888
+        },
+        {
+          "name": "tensor.v_start",
+          "size": 32,
+          "kind": "tensor",
+          "shape": [
+            32
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 37894
+        },
+        {
+          "name": "tensor.v_end",
+          "size": 32,
+          "kind": "tensor",
+          "shape": [
+            32
+          ],
+          "unit": "linear",
+          "default": "v27_birth_sample",
+          "lo": -8.0,
+          "hi": 8.0,
+          "offset": 37926
+        },
+        {
+          "name": "init.W_rec.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37958
+        },
+        {
+          "name": "init.W_rec.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37959
+        },
+        {
+          "name": "init.W_in.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37960
+        },
+        {
+          "name": "init.W_in.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.840086304508534,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37961
+        },
+        {
+          "name": "init.W_pred.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37962
+        },
+        {
+          "name": "init.W_pred.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37963
+        },
+        {
+          "name": "init.W_op.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37964
+        },
+        {
+          "name": "init.W_op.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37965
+        },
+        {
+          "name": "init.W_emit_query.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37966
+        },
+        {
+          "name": "init.W_emit_query.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37967
+        },
+        {
+          "name": "init.W_write.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37968
+        },
+        {
+          "name": "init.W_write.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37969
+        },
+        {
+          "name": "init.W_att.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37970
+        },
+        {
+          "name": "init.W_att.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -2.0794415416798357,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37971
+        },
+        {
+          "name": "init.W_body.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37972
+        },
+        {
+          "name": "init.W_body.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -0.6931471805599453,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37973
+        },
+        {
+          "name": "init.b.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37974
+        },
+        {
+          "name": "init.b.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -20.0,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37975
+        },
+        {
+          "name": "init.v_start.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37976
+        },
+        {
+          "name": "init.v_start.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": 0.0,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37977
+        },
+        {
+          "name": "init.v_end.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37978
+        },
+        {
+          "name": "init.v_end.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": 0.0,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37979
+        },
+        {
+          "name": "init.W_act_query.mu",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37980
+        },
+        {
+          "name": "init.W_act_query.log_std",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "log_std",
+          "default": -20.0,
+          "lo": -20.0,
+          "hi": 2.0,
+          "offset": 37981
+        },
+        {
+          "name": "init.b_op.ACT",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.85,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37982
+        },
+        {
+          "name": "init.b_op.RETRIEVE",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37983
+        },
+        {
+          "name": "init.b_op.WRITE",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37984
+        },
+        {
+          "name": "init.b_op.EMIT",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37985
+        },
+        {
+          "name": "init.b_op.STOP",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37986
+        },
+        {
+          "name": "init.b_op.HOLD",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37987
+        },
+        {
+          "name": "connect.p_connect",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.1,
+          "lo": 0.01,
+          "hi": 0.5,
+          "offset": 37988
+        },
+        {
+          "name": "connect.growth_rate",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 0.2,
+          "offset": 37989
+        },
+        {
+          "name": "connect.prune_rate",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 0.2,
+          "offset": 37990
+        },
+        {
+          "name": "connect.prune_threshold",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 2.0,
+          "offset": 37991
+        },
+        {
+          "name": "connect.region_0_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37992
+        },
+        {
+          "name": "connect.region_1_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37993
+        },
+        {
+          "name": "connect.region_2_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37994
+        },
+        {
+          "name": "connect.region_3_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 37995
+        },
+        {
+          "name": "dyn.eta_pred",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.05,
+          "lo": 0.0001,
+          "hi": 0.5,
+          "offset": 37996
+        },
+        {
+          "name": "dyn.eta_act",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.15,
+          "lo": 0.0001,
+          "hi": 0.5,
+          "offset": 37997
+        },
+        {
+          "name": "dyn.beta",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.01,
+          "lo": 0.0,
+          "hi": 0.2,
+          "offset": 37998
+        },
+        {
+          "name": "dyn.clip",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 2.0,
+          "lo": 0.1,
+          "hi": 8.0,
+          "offset": 37999
+        },
+        {
+          "name": "dyn.tau",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.1,
+          "hi": 8.0,
+          "offset": 38000
+        },
+        {
+          "name": "dyn.t_max",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 8.0,
+          "lo": 1.0,
+          "hi": 16.0,
+          "offset": 38001
+        },
+        {
+          "name": "dyn.cos_thresh",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.15,
+          "lo": 0.01,
+          "hi": 0.9,
+          "offset": 38002
+        },
+        {
+          "name": "dyn.familiarity_ratio",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.5,
+          "lo": 0.0,
+          "hi": 2.0,
+          "offset": 38003
+        },
+        {
+          "name": "dyn.familiarity_decay",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.98,
+          "lo": 0.5,
+          "hi": 0.999,
+          "offset": 38004
+        },
+        {
+          "name": "dyn.familiarity_abs",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 16.0,
+          "lo": 1.0,
+          "hi": 64.0,
+          "offset": 38005
+        },
+        {
+          "name": "dyn.echoic_max",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 8.0,
+          "lo": 1.0,
+          "hi": 16.0,
+          "offset": 38006
+        },
+        {
+          "name": "dyn.echoic_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.08,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38007
+        },
+        {
+          "name": "dyn.vocal_refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38008
+        },
+        {
+          "name": "dyn.utterance_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38009
+        },
+        {
+          "name": "dyn.conflict_hold_bias",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 2.0,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38010
+        },
+        {
+          "name": "dyn.adv_baseline_alpha",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.05,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38011
+        },
+        {
+          "name": "dyn.equal_evidence_min_symbols",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 3.0,
+          "lo": 1.0,
+          "hi": 8.0,
+          "offset": 38012
+        },
+        {
+          "name": "dyn.explore_T0",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 38013
+        },
+        {
+          "name": "dyn.explore_decay",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.5,
+          "hi": 1.0,
+          "offset": 38014
+        },
+        {
+          "name": "dyn.eligibility_decay",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.5,
+          "hi": 1.0,
+          "offset": 38015
+        },
+        {
+          "name": "dyn.retrieval_thresh",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 38016
+        },
+        {
+          "name": "dyn.write_thresh",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": -2.0,
+          "hi": 2.0,
+          "offset": 38017
+        },
+        {
+          "name": "dyn.op_cost.RETRIEVE",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38018
+        },
+        {
+          "name": "dyn.op_cost.WRITE",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38019
+        },
+        {
+          "name": "dyn.op_cost.EMIT",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38020
+        },
+        {
+          "name": "dyn.op_cost.ACT",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.05,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38021
+        },
+        {
+          "name": "dyn.op_cost.STOP",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38022
+        },
+        {
+          "name": "dyn.op_cost.HOLD",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38023
+        },
+        {
+          "name": "dyn.body_setpoint.0",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38024
+        },
+        {
+          "name": "dyn.body_setpoint.1",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38025
+        },
+        {
+          "name": "dyn.body_setpoint.2",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38026
+        },
+        {
+          "name": "dyn.body_setpoint.3",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38027
+        },
+        {
+          "name": "replay.mix.recency",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.25,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38028
+        },
+        {
+          "name": "replay.mix.similarity",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.25,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38029
+        },
+        {
+          "name": "replay.mix.surprise",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.25,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38030
+        },
+        {
+          "name": "replay.mix.random",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.25,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38031
+        },
+        {
+          "name": "neuromod.gain.homeostasis",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38032
+        },
+        {
+          "name": "neuromod.gain.surprise",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38033
+        },
+        {
+          "name": "neuromod.gain.conflict",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38034
+        },
+        {
+          "name": "neuromod.gain.novelty",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38035
+        },
+        {
+          "name": "neuromod.gain.controllability",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38036
+        },
+        {
+          "name": "neuromod.gain.social",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38037
+        },
+        {
+          "name": "age.birth.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38038
+        },
+        {
+          "name": "age.birth.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38039
+        },
+        {
+          "name": "age.birth.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38040
+        },
+        {
+          "name": "age.birth.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 38041
+        },
+        {
+          "name": "age.birth.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38042
+        },
+        {
+          "name": "age.birth.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38043
+        },
+        {
+          "name": "age.birth.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38044
+        },
+        {
+          "name": "age.birth.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38045
+        },
+        {
+          "name": "age.birth.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38046
+        },
+        {
+          "name": "age.high_plasticity.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38047
+        },
+        {
+          "name": "age.high_plasticity.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38048
+        },
+        {
+          "name": "age.high_plasticity.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38049
+        },
+        {
+          "name": "age.high_plasticity.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 38050
+        },
+        {
+          "name": "age.high_plasticity.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38051
+        },
+        {
+          "name": "age.high_plasticity.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38052
+        },
+        {
+          "name": "age.high_plasticity.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38053
+        },
+        {
+          "name": "age.high_plasticity.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38054
+        },
+        {
+          "name": "age.high_plasticity.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38055
+        },
+        {
+          "name": "age.experience_replay.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38056
+        },
+        {
+          "name": "age.experience_replay.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38057
+        },
+        {
+          "name": "age.experience_replay.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38058
+        },
+        {
+          "name": "age.experience_replay.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 38059
+        },
+        {
+          "name": "age.experience_replay.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38060
+        },
+        {
+          "name": "age.experience_replay.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38061
+        },
+        {
+          "name": "age.experience_replay.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38062
+        },
+        {
+          "name": "age.experience_replay.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38063
+        },
+        {
+          "name": "age.experience_replay.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38064
+        },
+        {
+          "name": "age.pruning_stabilization.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38065
+        },
+        {
+          "name": "age.pruning_stabilization.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38066
+        },
+        {
+          "name": "age.pruning_stabilization.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38067
+        },
+        {
+          "name": "age.pruning_stabilization.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 38068
+        },
+        {
+          "name": "age.pruning_stabilization.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38069
+        },
+        {
+          "name": "age.pruning_stabilization.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38070
+        },
+        {
+          "name": "age.pruning_stabilization.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38071
+        },
+        {
+          "name": "age.pruning_stabilization.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38072
+        },
+        {
+          "name": "age.pruning_stabilization.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38073
+        },
+        {
+          "name": "age.mature_plasticity.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38074
+        },
+        {
+          "name": "age.mature_plasticity.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38075
+        },
+        {
+          "name": "age.mature_plasticity.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38076
+        },
+        {
+          "name": "age.mature_plasticity.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 38077
+        },
+        {
+          "name": "age.mature_plasticity.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38078
+        },
+        {
+          "name": "age.mature_plasticity.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38079
+        },
+        {
+          "name": "age.mature_plasticity.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38080
+        },
+        {
+          "name": "age.mature_plasticity.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38081
+        },
+        {
+          "name": "age.mature_plasticity.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38082
+        },
+        {
+          "name": "age.novelty_reopen.eta_pred_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38083
+        },
+        {
+          "name": "age.novelty_reopen.eta_act_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38084
+        },
+        {
+          "name": "age.novelty_reopen.beta_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38085
+        },
+        {
+          "name": "age.novelty_reopen.explore_T",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.05,
+          "hi": 8.0,
+          "offset": 38086
+        },
+        {
+          "name": "age.novelty_reopen.conflict_hold_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.0,
+          "lo": 0.0,
+          "hi": 4.0,
+          "offset": 38087
+        },
+        {
+          "name": "age.novelty_reopen.growth_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38088
+        },
+        {
+          "name": "age.novelty_reopen.prune_scale",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 0.0,
+          "lo": 0.0,
+          "hi": 1.0,
+          "offset": 38089
+        },
+        {
+          "name": "age.novelty_reopen.wm_persist",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38090
+        },
+        {
+          "name": "age.novelty_reopen.refractory",
+          "size": 1,
+          "kind": "scalar",
+          "unit": "linear",
+          "default": 1.5,
+          "lo": 0.0,
+          "hi": 8.0,
+          "offset": 38091
+        }
+      ],
+      "note": "Success here does not support the strongest developmental claim and cannot set eligible_for_000005."
+    }
+  },
+  "refuse_audit": [
+    "decoded_theta_contains_no_utf8_tokens",
+    "no_S_rows",
+    "no_stage_or_world_ids",
+    "all_scalars_within_preregistered_bounds"
+  ]
+}

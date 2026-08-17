@@ -1,0 +1,41 @@
+{
+  "version": "TM.0.24.LINEAGE.WALL.PREREG",
+  "lab": "TM.0.24.LINEAGE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "need_not_fully_pass": true,
+  "invoke_architecture_review_when_all": [
+    "at_least_two_independent_islands_plateau",
+    "CIs_show_no_meaningful_DEV_improvement",
+    "confirmatory_replication_does_not_resolve",
+    "dense_theta_and_optional_expressivity_control_have_been_run",
+    "Arm_D_cannot_acquire_the_level_under_frozen_search_data_compute",
+    "no_identified_implementation_or_fitness_bug_remains"
+  ],
+  "interpretation": {
+    "dense_passes_armD_fails": "representation exists; development/search failed",
+    "dense_passes_train_only": "generalization failure",
+    "both_pass_held_out": "genuine candidate",
+    "both_fail": "bounded unresolved substrate/search wall (not proven impossibility)"
+  },
+  "also_stop_run_for": [
+    "GPU_or_runtime_budget_exceeded",
+    "NaN_rate_exceeded",
+    "HOLD_or_single_slot_collapse",
+    "train_rises_while_DEV_declines",
+    "plasticity_off_rises_with_trained",
+    "hard_shortcut"
+  ],
+  "refuse": [
+    "soften_scorers",
+    "add_capability_specific_functions",
+    "ad_hoc_sample_increase_beyond_hard_maximum",
+    "three_blind_full_lineage_versions_instead_of_this_review",
+    "earned_next=true",
+    "non_null_ex0s",
+    "stamp_0.0.005"
+  ],
+  "note": "A rigorous L1/L2 wall is a successful TM.0.24 result and stays 0.0.004."
+}

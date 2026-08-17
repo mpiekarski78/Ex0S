@@ -1,0 +1,94 @@
+{
+  "version": "TM.0.24.LINEAGE.WORLD.GENERATOR.PREREG",
+  "lab": "TM.0.24.LINEAGE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "status": "specification_only",
+  "generator_lock": "docs/lineage_world_generator.lock",
+  "generator_lock_written_after": "generator_code_exists_and_SHA_can_be_pinned",
+  "physics": "experiments.run_tm023cortex.physics",
+  "observe_keys": [
+    "interaction_token",
+    "source_token",
+    "ordered_symbols",
+    "observable_state",
+    "body_state"
+  ],
+  "banned_observe_keys": [
+    "homeostatic_delta",
+    "correct",
+    "reward",
+    "result",
+    "stage",
+    "lab",
+    "capability",
+    "answer",
+    "intended",
+    "expected"
+  ],
+  "domains": {
+    "train": "TM024.LINEAGE.TRAIN.g{N}.",
+    "dev": "TM024.LINEAGE.DEV.",
+    "qual": "TM024.LINEAGE.QUAL.",
+    "eval": "TM024.LINEAGE.EVAL."
+  },
+  "randomize_each_world": [
+    "symbol_spellings",
+    "neural_symbol_vectors",
+    "actuator_handles",
+    "actuator_vectors",
+    "beneficial_slot",
+    "binding_order",
+    "event_order",
+    "distractors",
+    "world_relation_graph_topology",
+    "required_output_sequence",
+    "STOP_boundary",
+    "teaching_duration",
+    "teacher_convention"
+  ],
+  "topology_note": "World relation-graph topology only. Neural n=64 is fixed.",
+  "teacher": {
+    "sees": "observable_interaction_history_public_convention_teacher_local_state_teacher_RNG",
+    "must_not_see": [
+      "scorer_output",
+      "expected_organism_response",
+      "hidden_cortex_state",
+      "curriculum_id",
+      "intended_answer"
+    ],
+    "simplify_after_failure_observables": [
+      "no_response_before_timeout",
+      "repeated_incompatible_actuator_result",
+      "failed_shared_observable_goal",
+      "explicit_HOLD",
+      "contradiction_with_public_convention"
+    ],
+    "deterministic_given_visible_history_and_teacher_RNG": true,
+    "audit": "identical_observable_histories_with_different_scorer_annotations_produce_identical_teacher_behavior"
+  ],
+  "body": {
+    "keys": ["energy", "damage", "resource", "analog"],
+    "must_not_improve_for_correct_utterance": true,
+    "ACT_reports_physical_state_change_regardless_of_scorer_usefulness": true
+  },
+  "splits": {
+    "train": "fresh_each_generation_ES_update_only",
+    "dev": "disjoint_panel_triplets_curriculum_and_stopping_not_held_out",
+    "qual": "sealed_one_shot_after_both_arm_prospects_frozen",
+    "eval": "separate_sealed_one_shot_after_formal_RC"
+  },
+  "refuse": [
+    "pair_seeds()",
+    "FULLDEV.R7",
+    "reuse_failed_DEV_panel",
+    "feed_scorer_only_into_observe",
+    "host_homeostatic_delta",
+    "reveal_QUAL_before_both_prospects_on_origin/main"
+  ],
+  "qual_seed_commitment": "b3cbb4fe0222f9973f1e74b1cb525eab9ee6003ada5ab88f948224b46489c23d",
+  "eval_seed_commitment": "b57363135bc8986811c21c5aaeaa4097e9c0c40e7527d61e586c3c422a757a38",
+  "note": "This prereg is the specification. docs/lineage_world_generator.lock is written only after generator code exists."
+}

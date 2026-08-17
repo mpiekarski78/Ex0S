@@ -1,0 +1,147 @@
+{
+  "version": "TM.0.24.LINEAGE.PHASE0A",
+  "lab": "TM.0.24.LINEAGE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "rest_implemented": false,
+  "ancestor": {
+    "candidate": "docs/cortex.candidate.lock",
+    "version": "TM.0.23.CORTEX.CANDIDATE.V27",
+    "neural_cortex_sha": "71bece5917893fae03c3a95c276cf93bc0e34fce6a7bfb6a99adf093bb7ebc08",
+    "cortex_memory_sha": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+    "git": "de09c77"
+  },
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "gpu_wake": {
+    "n": 400,
+    "seconds": 0.5512149380519986,
+    "ticks_per_second": 725.6697385843818,
+    "op_counts": {
+      "HOLD": 142,
+      "ACT": 147,
+      "STOP": 111
+    }
+  },
+  "gpu_rest_proxy": {
+    "n": 200,
+    "seconds": 0.17131089698523283,
+    "ticks_per_second": 1167.4680567298658,
+    "note": "empty-symbol observe proxy; REST/replay not implemented on v27"
+  },
+  "cpu_wake": {
+    "n": 80,
+    "seconds": 0.02330642193555832,
+    "ticks_per_second": 3432.5303223805877,
+    "op_counts": {
+      "HOLD": 31,
+      "ACT": 42,
+      "STOP": 7
+    }
+  },
+  "life_duration_seconds_by_n_wake": {
+    "80": 0.07776383403688669,
+    "200": 0.19646585080772638,
+    "500": 0.4867320293560624
+  },
+  "complete_life_n_wake": 200,
+  "complete_life_seconds": [
+    0.18879381008446217,
+    0.18986754026263952,
+    0.18987945932894945,
+    0.19321029540151358,
+    0.21408295445144176
+  ],
+  "complete_life_p50": 0.18987945932894945,
+  "complete_life_p95": 0.21408295445144176,
+  "s_overhead": {
+    "n": 200,
+    "disk_s_ticks_per_second": 991.275983901297,
+    "memory_only_ticks_per_second": 1010.8450153466506,
+    "disk_over_memory_ratio": 1.0197412544671334
+  },
+  "vram": {
+    "cuda_available": true,
+    "device_name": "NVIDIA GB10",
+    "allocated_bytes": 38816768,
+    "peak_allocated_bytes": 39434752,
+    "reserved_bytes": 39845888
+  },
+  "cpu_gpu_divergence": {
+    "n": 40,
+    "op_agree": 40,
+    "op_agree_rate": 1.0,
+    "rho_maxabs_p50": 3.3306690738754696e-16,
+    "rho_maxabs_p95": 6.133982211053988e-16,
+    "rho_maxabs_max": 6.661338147750939e-16,
+    "note": "float64 CPU gold vs CUDA; not a capability score"
+  },
+  "analytical": {
+    "formula": "T_generation \u2248 2P*B*W*E*(N_wake + c_r*N_replay)*t_tick",
+    "t_tick_seconds_gpu_wake": 0.0013780373451299963,
+    "illustrative_128x4x4x1_500plus25": {
+      "P_antithetic_pairs": 128,
+      "B_births": 4,
+      "W_worlds": 4,
+      "E_epochs": 1,
+      "N_wake": 500,
+      "N_replay": 25,
+      "c_r": 1.0,
+      "steps": 2150400.0,
+      "seconds": 2963.331506967544,
+      "hours": 0.8231476408243178,
+      "days": 0.03429781836767991
+    },
+    "illustrative_four_epochs": {
+      "P_antithetic_pairs": 128,
+      "B_births": 4,
+      "W_worlds": 4,
+      "E_epochs": 4,
+      "N_wake": 500,
+      "N_replay": 25,
+      "c_r": 1.0,
+      "steps": 8601600.0,
+      "seconds": 11853.326027870176,
+      "hours": 3.292590563297271,
+      "days": 0.13719127347071963
+    },
+    "illustrative_smoke_16x1x1x1_80plus10": {
+      "P_antithetic_pairs": 16,
+      "B_births": 1,
+      "W_worlds": 1,
+      "E_epochs": 1,
+      "N_wake": 80,
+      "N_replay": 10,
+      "c_r": 1.0,
+      "steps": 2880.0,
+      "seconds": 3.9687475539743895,
+      "hours": 0.0011024298761039971,
+      "days": 4.593457817099988e-05
+    },
+    "illustrative_pilot_32x2x2x1_200plus15": {
+      "P_antithetic_pairs": 32,
+      "B_births": 2,
+      "W_worlds": 2,
+      "E_epochs": 1,
+      "N_wake": 200,
+      "N_replay": 15,
+      "c_r": 1.0,
+      "steps": 55040.0,
+      "seconds": 75.847175475955,
+      "hours": 0.021068659854431945,
+      "days": 0.0008778608272679976
+    },
+    "note": "Planning estimate only. Compute freeze is Phase 0B after the real engine exists."
+  },
+  "note": "Phase 0A baseline on immutable v27. REST is a no-op/proxy. Dummy Arm D codec does not exist. Do not freeze P/B/W/E from this lock. Not a capability score. Product remains 0.0.004."
+}
