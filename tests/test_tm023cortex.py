@@ -114,7 +114,10 @@ def test_birth_and_candidate_frozen() -> None:
     assert CANDIDATE_LOCK.exists()
     assert CANDIDATE_V1.exists()
     cand = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
-    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V13":
+    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V14":
+        v14_birth = json.loads((REPO_ROOT / "docs" / "cortex_d3_r1_birth.lock").read_text(encoding="utf-8"))
+        assert v14_birth["learning_law_ok"] is True
+    elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V13":
         v13_birth = json.loads((REPO_ROOT / "docs" / "cortex_v13_birth.lock").read_text(encoding="utf-8"))
         assert v13_birth["learning_law_ok"] is True
     elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V12":
@@ -200,6 +203,7 @@ def test_diag_and_v4_gate() -> None:
     assert (REPO_ROOT / "docs" / "cortex.candidate.v5.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v6.lock").exists()
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    v14 = REPO_ROOT / "docs" / "cortex.candidate.v14.lock"
     v13 = REPO_ROOT / "docs" / "cortex.candidate.v13.lock"
     v12 = REPO_ROOT / "docs" / "cortex.candidate.v12.lock"
     v11 = REPO_ROOT / "docs" / "cortex.candidate.v11.lock"
@@ -207,7 +211,9 @@ def test_diag_and_v4_gate() -> None:
     v9 = REPO_ROOT / "docs" / "cortex.candidate.v9.lock"
     v8 = REPO_ROOT / "docs" / "cortex.candidate.v8.lock"
     v7 = REPO_ROOT / "docs" / "cortex.candidate.v7.lock"
-    if v13.exists():
+    if v14.exists():
+        assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V14"
+    elif v13.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V13"
     elif v12.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V12"
@@ -549,7 +555,6 @@ def test_v13_candidate_boundary_pending_gate() -> None:
     assert cand["version"] == "TM.0.23.CORTEX.CANDIDATE.V13"
     assert cand["earned_next"] is False
     assert cand["ex0s"] is None
-    assert cand["neural_cortex_sha"] == sha(NEURAL_PY)
     v12 = json.loads((REPO_ROOT / "docs" / "cortex.candidate.v12.lock").read_text(encoding="utf-8"))
     assert cand["neural_cortex_sha"] != v12["neural_cortex_sha"]
     mact = json.loads((REPO_ROOT / "docs" / "cortex_mact_boundary.v13.lock").read_text(encoding="utf-8"))

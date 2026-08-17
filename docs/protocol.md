@@ -2068,3 +2068,5 @@ Canonical main `c633df5`. FULLDEV.R1 **0/16** stands. Do not edit-rescore. Do no
 
 D3.R1 apparatus: [`cortex_d3_r1.prereg.lock`](cortex_d3_r1.prereg.lock). Authorizes equal-evidence / low-familiarity HOLD after this freeze is on `origin/main`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle, reveal refused): [`cortex.candidate.v14.lock`](cortex.candidate.v14.lock). C4/C5 green; C6 label permutation p=0.0217 < 0.05. Two-symbol zero-advantage HOLD contaminates no-consequence motor teaching. Do not reveal D3.R1.
+

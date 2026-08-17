@@ -58,6 +58,7 @@ BODY_SETPOINT = np.array([1.0, 0.0, 1.0, 0.0], dtype=np.float64)
 CONFLICT_ADV_EPS = 1e-9
 CONFLICT_HOLD_BIAS = 2.0
 ADV_BASELINE_ALPHA = 0.05
+FAMILIARITY_RATIO = 0.5
 
 
 @dataclass
@@ -211,6 +212,7 @@ class NeuralCortex:
         self._last_act_body_adv = 0.0
         self._adv_baseline = 0.0
         self._hold_after_conflict = False
+        self._symbol_obs_counts: dict[str, int] = {}
         self.last_action: dict[str, Any] | None = None
         self.last_trajectory: list[np.ndarray] = []
         self.sensory_trajectory: list[np.ndarray] = []
@@ -611,6 +613,15 @@ class NeuralCortex:
         self._sensory_tick(self.v_end, body, same_ix, record_sensory=True)
         self._sensory_tick(s_t, body, same_ix, record_sensory=True)
 
+        for u in ordered:
+            self._symbol_obs_counts[u] = int(self._symbol_obs_counts.get(u, 0)) + 1
+        if len(ordered) >= 2 and abs(float(self._last_act_body_adv)) <= CONFLICT_ADV_EPS:
+            self._hold_after_conflict = True
+        elif len(ordered) == 1:
+            mx = max(self._symbol_obs_counts.values()) if self._symbol_obs_counts else 0
+            if mx > 0 and float(self._symbol_obs_counts.get(ordered[0], 0)) < FAMILIARITY_RATIO * float(mx):
+                self._hold_after_conflict = True
+
         action = self._motor_loop(body, same_ix)
         # store eligibility for next observe
         self._pending = {
@@ -665,6 +676,7 @@ class NeuralCortex:
         self._last_act_body_adv = 0.0
         self._adv_baseline = 0.0
         self._hold_after_conflict = False
+        self._symbol_obs_counts = {}
         self.reset_rho()
 
     def checkpoint(self) -> dict[str, Any]:
@@ -721,6 +733,7 @@ class NeuralCortex:
             "last_act_body_adv": float(self._last_act_body_adv),
             "adv_baseline": float(self._adv_baseline),
             "hold_after_conflict": bool(self._hold_after_conflict),
+            "symbol_obs_counts": {k: int(v) for k, v in self._symbol_obs_counts.items()},
         }
 
     def load_checkpoint(self, snap: dict[str, Any]) -> None:
@@ -797,6 +810,7 @@ class NeuralCortex:
         self._last_act_body_adv = float(snap.get("last_act_body_adv") or 0.0)
         self._adv_baseline = float(snap.get("adv_baseline") or 0.0)
         self._hold_after_conflict = bool(snap.get("hold_after_conflict") or False)
+        self._symbol_obs_counts = {str(k): int(v) for k, v in (snap.get("symbol_obs_counts") or {}).items()}
 
     def weight_hash(self) -> str:
         h = hashlib.sha256()
