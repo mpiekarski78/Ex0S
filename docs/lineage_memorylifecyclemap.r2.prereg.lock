@@ -1,0 +1,359 @@
+{
+  "version": "TM.0.24.MEMORYLIFECYCLEMAP.R2.PREREG",
+  "lab": "TM.0.24.MEMORYLIFECYCLEMAP.R2",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "investigation_justified": true,
+  "package_question": "Does a fixed eight-slot P1 episode store with matched live reversal on L1–L3, error-driven replay, and content-addressed invalidation satisfy a phased acquire/stable/plasticity/specificity contract, with ecological match at frozen σ=0.01?",
+  "authorized_by": [
+    "docs/lineage_convergencemap.decision.lock",
+    "docs/lineage_convergencemap.decision.addendum.lock",
+    "docs/lineage_memorylifecyclemap.runner.addendum.lock"
+  ],
+  "historical_runner_lock": "docs/lineage_memorylifecyclemap.runner.lock",
+  "historical_runner_lock_sha": "28cc70a50de9c9f65d3ea351f8d598dd5274751d4bbd956dff5212e1156fa593",
+  "historical_runner_py_sha": "edec8809938f3f1ab77948feb3661bea4fc3e6bb1abf573a81089ae628dfc974",
+  "historical_prereg_sha": "dc2e7f09e80576b65a355448c8ab90a7055086db91cb47825768add5fa0fb247",
+  "historical_contract_sha": "909fbd708e816d6298fd9599e1d39788df9a11f43d20ee123d7b9521b8df18f6",
+  "historical_isolation_sha": "dec9d1125d70342b14f9d1a556af58e88e95cb239b37849614fe2cde57fda825",
+  "historical_git_head": "ec317baee17ddbbc82cad4921e8f1aeab573fed4",
+  "rewrite_historical_runner": false,
+  "rescore_historical_worlds": false,
+  "convergencemap_decision_sha": "6de34e295b54ef51c2684b0ce1cf7295064300db75e9e7ee258c7bb95665072d",
+  "convergencemap_dev_sha": "7aa13d1bbd172cadb565d5d6cafd27d91f47b120491069a00a34111a6d505ca6",
+  "convergencemap_addendum_sha": "04a5e91cdc23839c9e3c954dc8c921f902c092de14acd906ada7caa678a6b083",
+  "convergencemap_runner_py_sha": "232cffa23619de1fcdbde7b8c82fc3de8e1c2fbe84a014a40bc27f3723cbbcf6",
+  "tracebridge_runner_py_sha": "db6c4e73cac57dd79cb86fcfa371fee1e2fc5753bf1d03402faea690ff4de551",
+  "writegeom_runner_py_sha": "b210cc621ccd93e016483e3d9d8dc8adbc284eb8fabc01a4b15bbb4ecb1f4d31",
+  "phasemap_decision_sha": "55807477c1a16157a890f2ecb6c2e7fbc305905b7cc04a1ead48b70bc91e3852",
+  "phasemap_dev_sha": "fff8040db45958a325cd6ff4dcf5468b63961d547c62c0cff321beedb88ff5d9",
+  "phasemap_prereg_sha": "a865002fd91a4229ab56d2434d6180fda028fc11e5d9dcf4634bbf652e93661b",
+  "candidate": "docs/cortex.candidate.v30.lock",
+  "candidate_v30_sha": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+  "n": 64,
+  "increase_n": false,
+  "act_score_mode": "query",
+  "w1_resurrected": false,
+  "eligibility_budget_installed": false,
+  "trace_rows_installed": false,
+  "write_geometry_branch_closed": true,
+  "stop_isolated_write_formulas": true,
+  "declared_budget_if_later_authorized": {
+    "fast_slow_proto": 1024,
+    "event_end_trace_rows": 512,
+    "total": 1536,
+    "opened": false
+  },
+  "declared_budget_remains_closed": 1536,
+  "episode_store": {
+    "n_slots": 8,
+    "row_dim": 64,
+    "max_state_scalars": 512,
+    "runner_only": true,
+    "not_installed_trace": true,
+    "fields": ["p1", "handle", "adv", "age", "version", "valid"],
+    "forbidden_fields": ["cue", "symbol", "name", "spelling", "identity", "answer"],
+    "no_cue_string": true,
+    "no_semantic_identity": true,
+    "no_direct_answer_channel": true
+  },
+  "match": {
+    "metric": "l2_unit_p1",
+    "radius": 0.05,
+    "threshold": 0.05,
+    "role": "preregistered_match_radius",
+    "not_same_cue_ceiling": true,
+    "source_numeric": "docs/lineage_phasemap.prereg.lock.separation.within_l2_stable_max",
+    "not_cue_name": true,
+    "selection": "nearest_distance",
+    "tie_break": ["distance", "age", "slot_index"],
+    "distributions_overlap": true,
+    "ranking_ties_are_non_unique": true,
+    "observed_p1_8cue_rank": {
+      "within_l2_max": 0.19865124178509572,
+      "between_l2_min": 0.18383334876555732,
+      "within_cos_min": 0.9802688420686201,
+      "between_cos_max": 0.9831026499408205,
+      "within_max_exceeds_between_min": true,
+      "radius_below_between_l2_min": true,
+      "note": "PHASEMAP P1 8-cue rank cells overlap (between_l2_min <= within_l2_max). 0.05 is a match radius, not a same-cue ceiling. It may avoid false matches while missing genuine same-cue reversals."
+    },
+    "perturbation": {
+      "bounded_match_sanity": {
+        "role": "implementation_sanity",
+        "sigma": "min(rho_perturb_sigma, radius / (2 * sqrt(n)))",
+        "cannot_satisfy_lifecycle_stability_gate": true
+      },
+      "ecological_match_stability": {
+        "role": "scientific_robustness",
+        "sigma": 0.01,
+        "source": "margin.rho_perturb_sigma",
+        "failure_is_episode_reinstatement_match_failure": true
+      }
+    },
+    "report": [
+      "same_cue_recall",
+      "cross_cue_false_match_rate",
+      "reversal_match_recall",
+      "twin_match_stable",
+      "bounded_match_sanity",
+      "ecological_match_stability",
+      "n_no_match",
+      "n_unique_match",
+      "n_multiple_match"
+    ]
+  },
+  "domains": {
+    "DEV": "TM024.MEMORYLIFECYCLEMAP.R2.DEV.",
+    "TWIN": "TM024.MEMORYLIFECYCLEMAP.R2.TWIN.",
+    "SCORE": "TM024.MEMORYLIFECYCLEMAP.R2.SCORE."
+  },
+  "score_reserved_unopened": true,
+  "p1_bridge": {
+    "source": "experiments/run_tm024tracebridge.py",
+    "teach_arm": "B3",
+    "inject_pending": false,
+    "capture": "event_end_rho",
+    "exact_p1": true
+  },
+  "learner": {
+    "error_only": true,
+    "source": "experiments/run_tm024convergencemap.py.ErrorOnlyBank",
+    "eta": 0.15,
+    "c_max": 1.0
+  },
+  "arms": {
+    "L0": {
+      "role": "c1_live_repetition_no_episode_store",
+      "store": false,
+      "live_cycles": 16,
+      "replay_epochs": 0,
+      "live_reversal_trains_learner": false,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "L1": {
+      "role": "fixed_eight_slot_p1_store_error_driven_replay_fifo",
+      "store": true,
+      "policy": "fifo",
+      "invalidation": false,
+      "live_reversal_trains_learner": true,
+      "matched_live_reversal": true,
+      "live_capture_passes": 1,
+      "replay_epochs": 16,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "L2": {
+      "role": "same_store_content_addressed_replacement_on_reversal",
+      "store": true,
+      "policy": "replace",
+      "invalidation": true,
+      "live_reversal_trains_learner": true,
+      "matched_live_reversal": true,
+      "replaces_exactly_one_selected_slot": true,
+      "live_capture_passes": 1,
+      "replay_epochs": 16,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "L3": {
+      "role": "stale_replay_control_refuse_contradictory_replacement",
+      "store": true,
+      "policy": "retain_stale",
+      "invalidation": false,
+      "refuse_contradictory_replacement": true,
+      "live_reversal_trains_learner": true,
+      "matched_live_reversal": true,
+      "replay_presents_stale_episode": true,
+      "no_eviction_on_matched_contradiction": true,
+      "refuse_does_not_mutate_store_or_captured": true,
+      "live_capture_passes": 1,
+      "replay_epochs": 16,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "L4": {
+      "role": "sequential_rls_ceiling",
+      "store": false,
+      "learner": "sequential_rls",
+      "lambda": 0.01,
+      "replay_epochs": 16,
+      "live_reversal_trains_learner": false,
+      "source": "experiments/run_tm024writegeom.py",
+      "diagnostic_only": true,
+      "ceiling_only": true,
+      "implementation_authorized": false,
+      "v_eligible": false
+    }
+  },
+  "matched_live_reversal_arms": ["L1", "L2", "L3"],
+  "contradiction": {
+    "opposite_adv_sign": true,
+    "different_handle_with_positive_adv": true,
+    "match_then_replace_on_L2": true,
+    "match_then_refuse_replacement_on_L3": true,
+    "matched_live_reversal_on_L1_L2_L3": true,
+    "l4_no_live_reversal": true,
+    "l3_replay_keeps_stale": true,
+    "l3_refuse_does_not_mutate_store_or_captured": true,
+    "l2_replaces_exactly_one_selected_slot": true
+  },
+  "phased_contract": {
+    "acquisition": "final_ranking_correct_unique_winners_within_budget",
+    "stability": "retain_ranking_native_margin_0.01_and_ranking_perturbation_sigma_0.01_after_no_update_and_REST",
+    "plasticity": "adapt_after_genuine_reversal",
+    "specificity": "reversal_must_not_erase_unrelated_cues_4cue_reverse_one",
+    "honesty": "temporary_early_errors_reported_not_automatic_acquire_failure",
+    "monotonic_retention_not_acquire_fail": true,
+    "acquire_does_not_require_native_margin": true,
+    "stable_requires_native_margin_and_perturbation": true,
+    "lifecycle_stability_gate": "ranking_perturb_sigma_0.01",
+    "bounded_match_sanity_cannot_satisfy_stability_gate": true
+  },
+  "capacity": [
+    {"n_cues": 2, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 4, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 8, "n_handles": 2, "balanced": true, "required": true}
+  ],
+  "teach_orders": ["A_then_B", "B_then_A"],
+  "equal_advantage": true,
+  "pos_delta": [0.25, -0.1, 0.15, 0.0],
+  "neg_delta": [-0.35, 0.45, -0.15, 0.0],
+  "n_rest_ticks": 4,
+  "margin": {
+    "native_ranking_min": 0.01,
+    "geometric_margin_min": 0.01,
+    "w_norm_excludes_intercept": true,
+    "require_correct_classification": true,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19,
+    "frozen_before_dev": true
+  },
+  "fit": {
+    "rows": "teach_select_address_only",
+    "never_fit_probes": true,
+    "never_fit_perturbations": true
+  },
+  "controls": {
+    "delayed_consequences": true,
+    "positive_and_negative": true,
+    "ecological_reversal": true,
+    "hold": false,
+    "rest": true,
+    "renamed_twins": true,
+    "frozen_perturbations": true,
+    "specificity_reverse_one_of_four": true
+  },
+  "expected_n_cells": 140,
+  "expected_kind_counts": {
+    "acquire": 60,
+    "stable": 60,
+    "twin": 10,
+    "eco": 5,
+    "spec": 5
+  },
+  "assert_unique_ids_and_manifest_before_dev": true,
+  "l4_ceiling_only": true,
+  "decision_ladder": [
+    {
+      "id": "live_repetition_sufficient",
+      "when": "L0 passes all phases",
+      "then": "live_repetition_sufficient"
+    },
+    {
+      "id": "fifo_replay_sufficient",
+      "when": "L0 fails and L1 passes all phases",
+      "then": "fifo_replay_sufficient"
+    },
+    {
+      "id": "content_addressed_invalidation_supported",
+      "when": "L1 fails reversal, L2 passes all phases, L3 fails reversal",
+      "then": "content_addressed_invalidation_supported"
+    },
+    {
+      "id": "replacement_not_causal",
+      "when": "L2 and L3 both pass all phases under matched live reversal",
+      "then": "replacement_not_causal"
+    },
+    {
+      "id": "episode_reinstatement_match_failure",
+      "when": "L2 fails with reversal matcher misses or ecological_match_failure",
+      "then": "episode_reinstatement_match_failure"
+    },
+    {
+      "id": "covariance_memory_ceiling_only",
+      "when": "only L4 passes all phases",
+      "then": "covariance_memory_ceiling_only"
+    },
+    {
+      "id": "memory_lifecycle_insufficient",
+      "when": "nothing above",
+      "then": "memory_lifecycle_insufficient"
+    }
+  ],
+  "fail_closed": [
+    "prereg_or_runner_hash_mismatch",
+    "missing_or_duplicated_cell",
+    "probe_in_fit",
+    "score_identifier_in_dev_payload",
+    "act_score_mode_not_query",
+    "w1_or_v31_present",
+    "same_frozen_dev_execution_again",
+    "cue_string_in_episode",
+    "l4_treated_as_implementation",
+    "dev_without_manifest_or_unique_ids",
+    "rewrite_historical_locks",
+    "rewrite_historical_v1_runner",
+    "bounded_match_used_as_stability_gate",
+    "l3_mutated_on_refuse",
+    "unmatched_l2_l3_live_reversal"
+  ],
+  "historical_immutable": [
+    "docs/lineage_memorylifecyclemap.prereg.lock",
+    "docs/lineage_memorylifecyclemap.isolation.lock",
+    "docs/lineage_memorylifecyclemap_contract.md",
+    "docs/lineage_memorylifecyclemap.runner.lock",
+    "experiments/run_tm024memorylifecyclemap.py",
+    "docs/lineage_convergencemap.decision.lock",
+    "docs/lineage_convergencemap.dev.lock",
+    "docs/lineage_convergencemap.runner.lock",
+    "experiments/run_tm024convergencemap.py",
+    "docs/lineage_tracebridge.decision.lock",
+    "experiments/run_tm024tracebridge.py",
+    "docs/lineage_phasemap.decision.lock",
+    "docs/lineage_writegeom.decision.lock",
+    "docs/cortex.candidate.v30.lock"
+  ],
+  "another_lineage_run": false,
+  "q3": false,
+  "refuse": [
+    "D5",
+    "neural_edit_this_package",
+    "declare_v31",
+    "declare_v32",
+    "resurrect_W1",
+    "open_SCORE",
+    "install_512_trace_this_package",
+    "install_1536_eligibility_budget",
+    "increase_n",
+    "instincts",
+    "SFNN_cell_classes",
+    "lineage_evolution",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "rewrite_historical_locks",
+    "earned_next",
+    "stamp_0.0.005",
+    "another_isolated_write_formula_grid",
+    "cue_string_in_episode",
+    "bounded_match_sanity_as_stability_gate"
+  ],
+  "note": "R2 runner-only memory-lifecycle factorial on exact P1. V1 freeze preserved. Matched live reversal on L1–L3. Dual match perturbation. No neural law. Product remains 0.0.004."
+}

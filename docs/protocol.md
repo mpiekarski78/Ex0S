@@ -2400,6 +2400,18 @@ MEMORYLIFECYCLEMAP apparatus: [`lineage_memorylifecyclemap.prereg.lock`](lineage
 
 Memory-lifecycle runner: [`lineage_memorylifecyclemap.runner.lock`](lineage_memorylifecyclemap.runner.lock). 140 cells. Phased contract. Matcher diagnostics. L3 refuse-on-contradiction. L4 ceiling-only. DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
+Addendum: [`lineage_memorylifecyclemap.runner.addendum.lock`](lineage_memorylifecyclemap.runner.addendum.lock). Historical V1 runner.lock on `ec317ba` preserved. L3-only live reversal is not a matched L2/L3 contrast. Radius-scaled match noise is not the frozen σ=0.01 robustness test. Next is MEMORYLIFECYCLEMAP.R2.
+
+## TM.0.24.MEMORYLIFECYCLEMAP → isolated MEMORYLIFECYCLEMAP.R2
+
+Canonical main `ec317ba`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+L1–L3 share one live reversal update, then differ only in store/replay. Report `bounded_match_sanity` and `ecological_match_stability` (σ=0.01). Bounded sanity cannot satisfy the lifecycle stability gate. Unused `TM024.MEMORYLIFECYCLEMAP.R2.DEV.` / `TWIN.`. SCORE reserved. n stays 64.
+
+MEMORYLIFECYCLEMAP R2 apparatus: [`lineage_memorylifecyclemap.r2.prereg.lock`](lineage_memorylifecyclemap.r2.prereg.lock) + [`lineage_memorylifecyclemap.r2.isolation.lock`](lineage_memorylifecyclemap.r2.isolation.lock). Manifest: [`lineage_memorylifecyclemap.r2.manifest.lock`](lineage_memorylifecyclemap.r2.manifest.lock).
+
+Memory-lifecycle R2 runner: [`lineage_memorylifecyclemap.r2.runner.lock`](lineage_memorylifecyclemap.r2.runner.lock). 140 cells. Matched live reversal. Dual match perturbation. L4 ceiling-only. DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

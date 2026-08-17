@@ -1,0 +1,57 @@
+{
+  "version": "TM.0.24.MEMORYLIFECYCLEMAP.RUNNER.ADDENDUM",
+  "lab": "TM.0.24.MEMORYLIFECYCLEMAP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "n": 64,
+  "rewrite_historical_runner": false,
+  "historical_runner_lock": "docs/lineage_memorylifecyclemap.runner.lock",
+  "historical_runner_lock_sha": "28cc70a50de9c9f65d3ea351f8d598dd5274751d4bbd956dff5212e1156fa593",
+  "historical_runner_py": "experiments/run_tm024memorylifecyclemap.py",
+  "historical_runner_py_sha": "edec8809938f3f1ab77948feb3661bea4fc3e6bb1abf573a81089ae628dfc974",
+  "historical_prereg_sha": "dc2e7f09e80576b65a355448c8ab90a7055086db91cb47825768add5fa0fb247",
+  "historical_contract_sha": "909fbd708e816d6298fd9599e1d39788df9a11f43d20ee123d7b9521b8df18f6",
+  "historical_isolation_sha": "dec9d1125d70342b14f9d1a556af58e88e95cb239b37849614fe2cde57fda825",
+  "historical_git_head": "ec317baee17ddbbc82cad4921e8f1aeab573fed4",
+  "historical_dev_opened": false,
+  "issues": [
+    "L3-only live reversal is not a matched L2/L3 store/replay contrast",
+    "radius-scaled match noise is not the frozen sigma=0.01 robustness test"
+  ],
+  "interpret_v1_as": "published_runner_freeze_not_a_matched_lifecycle_contrast",
+  "does_not_rescore_v1_worlds": true,
+  "r2": {
+    "lab": "TM.0.24.MEMORYLIFECYCLEMAP.R2",
+    "matched_live_reversal_arms": ["L1", "L2", "L3"],
+    "l4_no_live_reversal": true,
+    "replacement_not_causal_requires_matched_live": true,
+    "l3_refuse_does_not_mutate_store_or_captured": true,
+    "l2_replaces_exactly_one_selected_slot": true,
+    "ranking_ties_are_non_unique": true,
+    "perturbation": {
+      "bounded_match_sanity": "radius_scaled_implementation_sanity",
+      "ecological_match_stability": 0.01,
+      "lifecycle_stability_gate": "ranking_perturb_sigma_0.01",
+      "bounded_cannot_satisfy_stability_gate": true,
+      "ecological_match_failure_is_episode_reinstatement_match_failure": true
+    },
+    "domains": {
+      "DEV": "TM024.MEMORYLIFECYCLEMAP.R2.DEV.",
+      "TWIN": "TM024.MEMORYLIFECYCLEMAP.R2.TWIN.",
+      "SCORE": "TM024.MEMORYLIFECYCLEMAP.R2.SCORE."
+    }
+  },
+  "next": "TM.0.24.MEMORYLIFECYCLEMAP.R2",
+  "next_kind": "runner_only_matched_live_reversal_and_dual_perturbation",
+  "not_neural_amendment": true,
+  "implementation_authorized": false,
+  "neural_edit_this_addendum": false,
+  "trace_rows_installed": false,
+  "eligibility_budget_installed": false,
+  "declared_budget_remains_closed": 1536,
+  "w1_resurrected": false,
+  "note": "Historical MEMORYLIFECYCLEMAP runner.lock on ec317ba is preserved and not rewritten. R2 is a new freeze on unused R2 domains. Product remains 0.0.004."
+}
