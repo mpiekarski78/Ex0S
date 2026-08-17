@@ -17,8 +17,8 @@ TB_ADD = "f1bdaa606dc21779bae73b63be139fa8282a788c9a4261c4c87fe9cd961f7eb0"
 TB_RUNNER_PY = "db6c4e73cac57dd79cb86fcfa371fee1e2fc5753bf1d03402faea690ff4de551"
 WG_RUNNER_PY = "b210cc621ccd93e016483e3d9d8dc8adbc284eb8fabc01a4b15bbb4ecb1f4d31"
 V30_CAND = "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c"
-RUNNER_LOCK_SHA = "090a274e60cb5bd4effd78036dc82df758aa37fc3661df8771657b53cfbb3e96"
-RUNNER_SHA = "b61360f5823724803c22a82c8455282186cc4ca8f44f0b9c9f5f1b03092b8fbe"
+RUNNER_LOCK_SHA = "bd876e2c6d4c9fdfa7b77e12c5ad15f0bd32f33ef96c02a3a86d62563afcf7b7"
+RUNNER_SHA = "232cffa23619de1fcdbde7b8c82fc3de8e1c2fbe84a014a40bc27f3723cbbcf6"
 DEV_LOCK_SHA = None
 DEV_MANIFEST_SHA = None
 DECISION_SHA = None
@@ -65,9 +65,19 @@ def test_phase_a_files() -> None:
     assert prereg["arms"]["C2"]["geometric_margin_target"] == 0.01
     assert prereg["arms"]["C3"]["cycles"] == [2, 4, 8, 16]
     assert prereg["arms"]["C4"]["lambda"] == 0.01
-    assert prereg["arms"]["C4"]["exposure"] == "replay"
+    assert prereg["arms"]["C4"]["exposure_mode"] == "replay"
+    assert prereg["arms"]["C4"]["ceiling_only"] is True
+    assert prereg["arms"]["C2"]["status_is_post_update_normalized_geometric"] is True
+    assert prereg["arms"]["C2"]["functional_margin_is_not_pass_criterion"] is True
+    assert prereg["repetition"]["k_means"] == "complete_passes_through_cue_set"
+    assert prereg["repetition"]["exposure_mode_field"] == "exposure_mode"
+    assert prereg["retention"]["probes_never_update_weights_or_organism"] is True
+    assert prereg["c0_vs_c1_k1"] == "always_update_versus_error_only"
+    assert prereg["c4_ceiling_only"] is True
+    assert prereg["assert_unique_ids_and_manifest_before_dev"] is True
     assert prereg["expected_n_cells"] == EXPECTED_N_CELLS
     assert prereg["expected_kind_counts"] == {"rank": 168, "twin": 28, "eco": 12, "rest": 12}
+    assert prereg["expected_exposure_mode_counts"] == {"live": 176, "replay": 44}
     assert prereg["controls"]["hold"] is False
     assert prereg["domains"]["DEV"] == "TM024.CONVERGENCEMAP.DEV."
     assert prereg["score_reserved_unopened"] is True
@@ -98,6 +108,9 @@ def test_phase_a_files() -> None:
         assert runner["act_score_mode"] == "query"
         assert runner["w1_resurrected"] is False
         assert runner["pa_learning_rate_grid"] is False
+        assert runner["exposure_mode_field"] == "exposure_mode"
+        assert runner["c4_ceiling_only"] is True
+        assert runner["pa_status_is_normalized_geometric"] is True
 
 
 def _cell(
@@ -106,7 +119,7 @@ def _cell(
     n_cues: int,
     *,
     cycles: int,
-    exposure: str,
+    exposure_mode: str,
     passed: bool,
     world: int = 0,
     order: str = "A_then_B",
@@ -116,26 +129,30 @@ def _cell(
         "kind": kind,
         "n_cues": n_cues,
         "cycles": cycles,
-        "exposure": exposure,
+        "order": order,
+        "world": world,
+        "exposure_mode": exposure_mode,
         "passed": passed,
         "retention_ok": passed,
-        "id": f"{kind}|{arm}|c{n_cues}|{order}|w{world}|k{cycles}|{exposure}",
+        "c4_ceiling_only": arm == "C4",
+        "p1_source": "live_regenerated" if exposure_mode == "live" else "frozen_first_pass",
+        "id": f"{kind}|{arm}|c{n_cues}|{order}|w{world}|k{cycles}|{exposure_mode}",
     }
 
 
-def _spec_cells(arm: str, cycles: int, exposure: str, *, robust: bool, include_eco_rest: bool) -> list[dict[str, object]]:
+def _spec_cells(arm: str, cycles: int, exposure_mode: str, *, robust: bool, include_eco_rest: bool) -> list[dict[str, object]]:
     cells: list[dict[str, object]] = []
     for n in (2, 4, 8):
         for wi in range(2):
             for order in ("A_then_B", "B_then_A"):
                 cells.append(
-                    _cell(arm, "rank", n, cycles=cycles, exposure=exposure, passed=robust, world=wi, order=order)
+                    _cell(arm, "rank", n, cycles=cycles, exposure_mode=exposure_mode, passed=robust, world=wi, order=order)
                 )
     for order in ("A_then_B", "B_then_A"):
-        cells.append(_cell(arm, "twin", 2, cycles=cycles, exposure=exposure, passed=robust, world=1, order=order))
+        cells.append(_cell(arm, "twin", 2, cycles=cycles, exposure_mode=exposure_mode, passed=robust, world=1, order=order))
     if include_eco_rest:
-        cells.append(_cell(arm, "eco", 2, cycles=cycles, exposure=exposure, passed=robust))
-        cells.append(_cell(arm, "rest", 2, cycles=cycles, exposure=exposure, passed=robust))
+        cells.append(_cell(arm, "eco", 2, cycles=cycles, exposure_mode=exposure_mode, passed=robust))
+        cells.append(_cell(arm, "rest", 2, cycles=cycles, exposure_mode=exposure_mode, passed=robust))
     return cells
 
 
@@ -184,7 +201,7 @@ def test_decision_ladder() -> None:
 def test_min_tau() -> None:
     import numpy as np
 
-    from experiments.run_tm024convergencemap import geometric_margin, min_tau_for_margin
+    from experiments.run_tm024convergencemap import geometric_margin, min_tau_for_margin, pa_step
     from experiments.run_tm024eligmap import unit_or_zero
 
     x = unit_or_zero(np.arange(64, dtype=np.float64) + 1.0)
@@ -202,6 +219,71 @@ def test_min_tau() -> None:
     assert geometric_margin(w2_ch, w2_ot, x) >= 0.01 - 1e-6
 
 
+def test_pa_normalized_margin_not_functional() -> None:
+    import numpy as np
+
+    from experiments.run_tm024convergencemap import geometric_margin, pa_step
+    from experiments.run_tm024eligmap import unit_or_zero
+
+    x = unit_or_zero(np.arange(64, dtype=np.float64) + 1.0)
+    e = np.zeros(64, dtype=np.float64)
+    e[0] = 1.0
+    e = e - float(np.dot(e, x)) * x
+    e = unit_or_zero(e)
+    w = 200.0 * e + 0.5 * x
+    tau_f = max(0.0, 1.0 - float(np.dot(w, x)))
+    w_f = w + tau_f * x
+    geo_f = float(np.dot(w_f, x) / np.linalg.norm(w_f))
+    assert geo_f < 0.01
+    step = pa_step(w, np.zeros(64), x, 0.01)
+    assert step["status"] == "met"
+    assert step["geometric"] >= 0.01 - 1e-9
+    assert geometric_margin(step["w_ch"], step["w_ot"], x) >= 0.01 - 1e-9
+    blocked = pa_step(np.zeros(64), np.zeros(64), x, 0.01, row_c_max=0.0)
+    assert blocked["status"] == "infeasible"
+    assert blocked["geometric"] < 0.01
+
+
+def test_c0_c1_differ_only_error_gate() -> None:
+    import numpy as np
+
+    from experiments.run_tm024convergencemap import AlwaysBank, ErrorOnlyBank
+    from experiments.run_tm024eligmap import unit_or_zero
+
+    handles = ["h1", "h2"]
+    x = unit_or_zero(np.arange(64, dtype=np.float64) + 1.0)
+    always = AlwaysBank(handles, eta=0.15, c_max=1.0)
+    err = ErrorOnlyBank(handles, eta=0.15, c_max=1.0)
+    always.update(x, "h1", 1.0)
+    err.update(x, "h1", 1.0)
+    assert always.n_updates == 1
+    assert err.n_updates == 1
+    always.update(x, "h1", 1.0)
+    err.update(x, "h1", 1.0)
+    assert always.n_updates == 2
+    assert err.n_updates == 1
+
+
+def test_exposure_mode_grid() -> None:
+    from experiments.run_tm024convergencemap import (
+        EXPECTED_N_CELLS,
+        assert_cell_coverage,
+        cell_id,
+        expected_cell_ids,
+    )
+
+    ids = expected_cell_ids()
+    assert len(ids) == EXPECTED_N_CELLS
+    assert len(set(ids)) == EXPECTED_N_CELLS
+    live = cell_id("rank", "C1", 8, "A_then_B", 0, 16, "live")
+    replay = cell_id("rank", "C1", 8, "A_then_B", 0, 16, "replay")
+    assert live != replay
+    assert live.endswith("|live")
+    assert replay.endswith("|replay")
+    cells = _full_grid(set())
+    assert assert_cell_coverage(cells)
+
+
 def test_contract_stance() -> None:
     text = (REPO_ROOT / "docs" / "lineage_convergencemap_contract.md").read_text(encoding="utf-8")
     assert "0.0.004" in text
@@ -209,6 +291,7 @@ def test_contract_stance() -> None:
     assert "C0" in text and "C4" in text
     assert "not a neural amendment" in text.lower()
     assert "0.01" in text
+    assert "exposure_mode" in text
     assert "W1" in text
 
 
@@ -225,9 +308,16 @@ def test_smoke() -> None:
     assert out["product"] == "0.0.004"
     assert out["c0_n_live"] == 2
     assert out["c2_n_live"] == 2
+    assert out["c0_exposure_mode"] == "live"
+    assert out["c0_p1_source"] == "live_regenerated"
+    assert out["c2_exposure_mode"] == "live"
     assert out["tau_zero_init"] == 0.01
     assert out["tau_already_met"] == 0.0
-    assert out["expected_n_cells"] == EXPECTED_N_CELLS
+    assert out["pa_zero_status"] == "met"
+    assert out["pa_zero_geometric"] >= 0.01 - 1e-9
+    assert out["c1_k16_ids_distinct"] is True
+    assert out["expected_id_count"] == EXPECTED_N_CELLS
+    assert out["c4_ceiling_only"] is True
 
 
 def test_score_and_dev_lock_gate() -> None:
@@ -268,7 +358,7 @@ def convergencemap_manifest(dev: dict) -> str:
                 "kind": c["kind"],
                 "n_cues": c["n_cues"],
                 "cycles": c["cycles"],
-                "exposure": c["exposure"],
+                "exposure_mode": c.get("exposure_mode") or c.get("exposure"),
                 "passed": c["passed"],
                 "retention_ok": c.get("retention_ok"),
             }
@@ -313,7 +403,10 @@ def test_dev_coverage_if_present() -> None:
         "rest": 12,
     }
     assert all("retention_ok" in c for c in dev["cells"])
-    assert all(c["exposure"] in ("live", "replay") for c in dev["cells"])
+    assert all(c.get("exposure_mode") in ("live", "replay") for c in dev["cells"])
+    assert "manifest_sha" in dev
+    assert dev.get("c4_ceiling_only") is True
+    assert Counter(c.get("exposure_mode") for c in dev["cells"]) == {"live": 176, "replay": 44}
     if DEV_MANIFEST_SHA is not None:
         assert convergencemap_manifest(dev) == DEV_MANIFEST_SHA
 
@@ -322,6 +415,9 @@ def main() -> None:
     test_phase_a_files()
     test_decision_ladder()
     test_min_tau()
+    test_pa_normalized_margin_not_functional()
+    test_c0_c1_differ_only_error_gate()
+    test_exposure_mode_grid()
     test_contract_stance()
     test_smoke()
     test_score_and_dev_lock_gate()

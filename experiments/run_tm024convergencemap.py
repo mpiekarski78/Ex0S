@@ -9,9 +9,11 @@ SCORE reserved and unopened. No trace or neural candidate.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import subprocess
 import tempfile
+from collections import Counter
 from pathlib import Path
 from typing import Any, Callable
 
@@ -19,7 +21,7 @@ import numpy as np
 
 from experiments.run_tm023cortex import torch_env
 from experiments.run_tm024actorcredit import MID_BODY, clone_frozen, observe_cue
-from experiments.run_tm024eligmap import _fresh, capacity_world, mapping_pairs, record_rest, unit_or_zero
+from experiments.run_tm024eligmap import _fresh, capacity_world, clipnorm, mapping_pairs, record_rest, unit_or_zero
 from experiments.run_tm024motorpersist import TEACH_ORDERS
 from experiments.run_tm024tracebridge import CompetitiveBank, probe_address, require_query, teach_bridged, winner_of
 from experiments.run_tm024writegeom import NEG_DELTA, SequentialRLS, domain_seed, ranking_margin, set_handle_delta
@@ -60,7 +62,14 @@ EXPECTED_N_TWIN = 28
 EXPECTED_N_ECO = 12
 EXPECTED_N_REST = 12
 EXPECTED_N_CELLS = EXPECTED_N_RANK + EXPECTED_N_TWIN + EXPECTED_N_ECO + EXPECTED_N_REST
+EXPECTED_N_LIVE = 176
+EXPECTED_N_REPLAY = 44
+EXPECTED_C1_K16_LIVE = 16
+EXPECTED_C1_K16_REPLAY = 14
+EXPECTED_C3_K16_LIVE = 16
+EXPECTED_C3_K16_REPLAY = 14
 PA_BISECT = 50
+PA_GEO_ATOL = 1e-9
 
 
 def load_prereg() -> dict[str, Any]:
@@ -101,8 +110,17 @@ def _git_head() -> str:
     return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT).decode().strip()
 
 
-def cell_id(kind: str, arm: str, n_cues: int, order: str, world: int, cycles: int, exposure: str) -> str:
-    return f"{kind}|{arm}|c{n_cues}|{order}|w{world}|k{cycles}|{exposure}"
+def cell_id(kind: str, arm: str, n_cues: int, order: str, world: int, cycles: int, exposure_mode: str) -> str:
+    if exposure_mode not in ("live", "replay"):
+        raise RuntimeError(f"exposure_mode must be live|replay, got {exposure_mode}")
+    return f"{kind}|{arm}|c{n_cues}|{order}|w{world}|k{cycles}|{exposure_mode}"
+
+
+def cell_exposure_mode(cell: dict[str, Any]) -> str:
+    mode = cell.get("exposure_mode") or cell.get("exposure")
+    if mode not in ("live", "replay"):
+        raise RuntimeError(f"cell missing exposure_mode: {cell.get('id')}")
+    return str(mode)
 
 
 def assert_runner_frozen() -> dict[str, Any]:
@@ -219,6 +237,75 @@ def min_tau_for_margin(
     return float(hi)
 
 
+def functional_margin(w_ch: np.ndarray, w_ot: np.ndarray, x: np.ndarray) -> float:
+    """Unsigned-direction functional margin (w_ch-w_ot)·x. Not the pass criterion."""
+    d = np.asarray(w_ch, dtype=np.float64).reshape(-1) - np.asarray(w_ot, dtype=np.float64).reshape(-1)
+    return float(np.dot(d, unit_or_zero(x)))
+
+
+def apply_pa_delta(
+    w_ch: np.ndarray,
+    w_ot: np.ndarray,
+    x: np.ndarray,
+    tau: float,
+    *,
+    row_c_max: float | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    xn = unit_or_zero(x)
+    ch = np.asarray(w_ch, dtype=np.float64).reshape(-1) + float(tau) * xn
+    ot = np.asarray(w_ot, dtype=np.float64).reshape(-1) - float(tau) * xn
+    if row_c_max is not None:
+        ch = clipnorm(ch, float(row_c_max))
+        ot = clipnorm(ot, float(row_c_max))
+    return ch, ot
+
+
+def pa_step(
+    w_ch: np.ndarray,
+    w_ot: np.ndarray,
+    x: np.ndarray,
+    gamma: float,
+    *,
+    row_c_max: float | None = None,
+) -> dict[str, Any]:
+    """Minimal-τ PA. Status is post-update *normalized* geometric margin, never functional margin."""
+    xn = unit_or_zero(x)
+    target = float(gamma)
+    g0 = geometric_margin(w_ch, w_ot, xn)
+    f0 = functional_margin(w_ch, w_ot, xn)
+    if float(np.linalg.norm(xn)) <= EPS:
+        return {
+            "tau": 0.0,
+            "status": "infeasible",
+            "geometric": float(g0),
+            "functional": float(f0),
+            "w_ch": np.asarray(w_ch, dtype=np.float64).reshape(-1).copy(),
+            "w_ot": np.asarray(w_ot, dtype=np.float64).reshape(-1).copy(),
+        }
+    if g0 >= target - PA_GEO_ATOL and f0 > 0.0:
+        return {
+            "tau": 0.0,
+            "status": "skipped",
+            "geometric": float(g0),
+            "functional": float(f0),
+            "w_ch": np.asarray(w_ch, dtype=np.float64).reshape(-1).copy(),
+            "w_ot": np.asarray(w_ot, dtype=np.float64).reshape(-1).copy(),
+        }
+    tau = min_tau_for_margin(w_ch, w_ot, xn, target)
+    ch, ot = apply_pa_delta(w_ch, w_ot, xn, tau, row_c_max=row_c_max)
+    g1 = geometric_margin(ch, ot, xn)
+    f1 = functional_margin(ch, ot, xn)
+    status = "met" if g1 >= target - PA_GEO_ATOL else "infeasible"
+    return {
+        "tau": float(tau),
+        "status": status,
+        "geometric": float(g1),
+        "functional": float(f1),
+        "w_ch": ch,
+        "w_ot": ot,
+    }
+
+
 class AlwaysBank:
     def __init__(self, handles: list[str], *, eta: float, c_max: float):
         self.inner = CompetitiveBank(handles, eta=eta, c_max=c_max)
@@ -252,26 +339,37 @@ class ErrorOnlyBank:
 
 
 class PassiveAggressive:
-    def __init__(self, handles: list[str], *, gamma: float):
+    def __init__(self, handles: list[str], *, gamma: float, row_c_max: float | None = None):
         self.handles = list(handles)
         self.gamma = float(gamma)
+        self.row_c_max = row_c_max
         self.rows = {h: np.zeros(64, dtype=np.float64) for h in self.handles}
         self.n_updates = 0
+        self.n_infeasible = 0
         self.last_tau = 0.0
+        self.last_status = "skipped"
+        self.last_geometric = 0.0
+        self.last_functional = 0.0
 
     def update(self, addr: np.ndarray, chosen: str, adv: float) -> None:
         if abs(float(adv)) <= EPS or chosen not in self.rows:
             self.last_tau = 0.0
+            self.last_status = "skipped"
             return
         x = unit_or_zero(addr)
         ch, ot = desired_pair(self.handles, chosen, adv)
-        tau = min_tau_for_margin(self.rows[ch], self.rows[ot], x, self.gamma)
-        self.last_tau = float(tau)
-        if tau <= EPS:
+        step = pa_step(self.rows[ch], self.rows[ot], x, self.gamma, row_c_max=self.row_c_max)
+        self.last_tau = float(step["tau"])
+        self.last_status = str(step["status"])
+        self.last_geometric = float(step["geometric"])
+        self.last_functional = float(step["functional"])
+        if step["status"] == "skipped":
             return
-        self.rows[ch] = self.rows[ch] + tau * x
-        self.rows[ot] = self.rows[ot] - tau * x
+        self.rows[ch] = np.asarray(step["w_ch"], dtype=np.float64)
+        self.rows[ot] = np.asarray(step["w_ot"], dtype=np.float64)
         self.n_updates += 1
+        if step["status"] == "infeasible":
+            self.n_infeasible += 1
 
     def scores(self, addr: np.ndarray) -> dict[str, float]:
         x = unit_or_zero(addr)
@@ -350,11 +448,17 @@ def live_probe(
     *,
     tag: str,
 ) -> dict[str, Any]:
+    n0 = int(getattr(learner, "n_updates", 0))
+    w0 = ag.W_act_query.detach().clone()
     probe = clone_frozen(ag)
     require_query(probe)
     observe_cue(probe, world, tag=tag, body=list(MID_BODY), symbols=[cue])
     addr = probe_address("B3", probe, None)
     scores = learner.scores(addr)
+    if int(getattr(learner, "n_updates", 0)) != n0:
+        raise RuntimeError("retention/final probe updated learner weights")
+    if float((ag.W_act_query - w0).abs().max().item()) > 1e-12:
+        raise RuntimeError("retention/final probe updated organism state")
     win = winner_of(scores)
     margin = ranking_margin(scores, win or "") if win else 0.0
     return {"cue": cue, "winner": win, "addr": addr, "scores": scores, "margin": float(margin)}
@@ -364,13 +468,15 @@ def eval_learner_block(
     *,
     arm: str,
     cycles: int,
-    exposure: str,
+    exposure_mode: str,
     world: dict[str, Any],
     pairs: list[tuple[str, str]],
     order: str,
     tag: str,
     rest: bool = False,
 ) -> dict[str, Any]:
+    if exposure_mode not in ("live", "replay"):
+        raise RuntimeError(f"exposure_mode must be live|replay, got {exposure_mode}")
     p = load_prereg()
     refuse_pa_grid(p)
     gmin = float(p["margin"]["native_ranking_min"])
@@ -382,19 +488,29 @@ def eval_learner_block(
     n_checkpoints = 0
     n_live = 0
     n_capture = 0
+    n_replay = 0
     last_by_cue: dict[str, dict[str, Any]] = {}
     stored: list[dict[str, Any]] = []
     taught_cues: list[str] = []
+    p1_source = "live_regenerated" if exposure_mode == "live" else "frozen_first_pass"
 
     def mark_retention(ok: bool) -> None:
         nonlocal retention_ok, n_checkpoints
         n_checkpoints += 1
         retention_ok = retention_ok and bool(ok)
 
+    def freeze_row(rec: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "cue": rec["cue"],
+            "handle": rec["handle"],
+            "adv": rec["adv"],
+            "addr": np.asarray(rec["addr"], dtype=np.float64).copy(),
+        }
+
     with tempfile.TemporaryDirectory(prefix="cvg_") as tmp:
         ag = _fresh(tmp, "s", world)
         require_query(ag)
-        if exposure == "live":
+        if exposure_mode == "live":
             for cy in range(int(cycles)):
                 for i, (cue, handle) in enumerate(seq):
                     rec = teach_bridged(
@@ -402,7 +518,7 @@ def eval_learner_block(
                     )
                     n_live += 1
                     learner.update(rec["addr"], rec["handle"], rec["adv"])
-                    last_by_cue[cue] = rec
+                    last_by_cue[cue] = freeze_row(rec)
                     if cue not in taught_cues:
                         taught_cues.append(cue)
                     ok = True
@@ -416,15 +532,19 @@ def eval_learner_block(
                     ag, world, cue, handle, arm="B3", tracer=None, bank=None, tag=f"{tag}_cap{i}"
                 )
                 n_capture += 1
-                stored.append(rec)
-                last_by_cue[cue] = rec
+                stored.append(freeze_row(rec))
+                last_by_cue[cue] = stored[-1]
+            frozen_addrs = [np.asarray(r["addr"], dtype=np.float64).copy() for r in stored]
             if rest:
                 record_rest(ag, n_ticks=int(p["n_rest_ticks"]), tag=f"{tag}_rest")
                 rest = False
             seen: list[str] = []
             for cy in range(int(cycles)):
-                for rec in stored:
-                    learner.update(rec["addr"], rec["handle"], rec["adv"])
+                for j, rec in enumerate(stored):
+                    if not np.allclose(rec["addr"], frozen_addrs[j]):
+                        raise RuntimeError("replay mutated frozen first-pass P1 rows")
+                    learner.update(frozen_addrs[j], rec["handle"], rec["adv"])
+                    n_replay += 1
                     if rec["cue"] not in seen:
                         seen.append(rec["cue"])
                     rows = [r for r in stored if r["cue"] in seen]
@@ -460,8 +580,8 @@ def eval_learner_block(
                 }
             )
     passed = bool(all_ok and retention_ok)
-    n_train = int(getattr(learner, "n_updates", n_live + int(cycles) * n_capture))
-    return {
+    n_train = int(getattr(learner, "n_updates", n_live + n_replay))
+    out = {
         "passed": passed,
         "ranking_ok": ranking_ok,
         "train_ranking_ok": bool(train_rank),
@@ -474,21 +594,31 @@ def eval_learner_block(
         "n_train": n_train,
         "n_live_teaches": int(n_live),
         "n_capture": int(n_capture),
+        "n_replay_updates": int(n_replay),
         "n_probe": len(pairs),
         "n_updates": int(getattr(learner, "n_updates", 0)),
         "cycles": int(cycles),
-        "exposure": exposure,
+        "exposure_mode": exposure_mode,
+        "p1_source": p1_source,
+        "k_complete_passes": int(cycles),
     }
+    if isinstance(learner, PassiveAggressive):
+        out["pa_last_status"] = learner.last_status
+        out["pa_last_geometric"] = float(learner.last_geometric)
+        out["pa_n_infeasible"] = int(learner.n_infeasible)
+    return out
 
 
 def eval_ecological(
     arm: str,
     cycles: int,
-    exposure: str,
+    exposure_mode: str,
     world: dict[str, Any],
     *,
     tag: str,
 ) -> dict[str, Any]:
+    if exposure_mode not in ("live", "replay"):
+        raise RuntimeError(f"exposure_mode must be live|replay, got {exposure_mode}")
     cue = world["cue_handle"][0]["cue"]
     h1 = world["handles"][0]
     h2 = world["handles"][1]
@@ -499,11 +629,18 @@ def eval_ecological(
     retention_ok = True
     n_checkpoints = 0
     advs: list[float] = []
+    p1_source = "live_regenerated" if exposure_mode == "live" else "frozen_first_pass"
     with tempfile.TemporaryDirectory(prefix="cvg_eco_") as tmp:
         ag = _fresh(tmp, "s", world)
 
         def teach(w: dict[str, Any], handle: str, suffix: str) -> dict[str, Any]:
-            return teach_bridged(ag, w, cue, handle, arm="B3", tracer=None, bank=None, tag=f"{tag}_{suffix}")
+            rec = teach_bridged(ag, w, cue, handle, arm="B3", tracer=None, bank=None, tag=f"{tag}_{suffix}")
+            return {
+                "cue": rec["cue"],
+                "handle": rec["handle"],
+                "adv": rec["adv"],
+                "addr": np.asarray(rec["addr"], dtype=np.float64).copy(),
+            }
 
         def retain_live(want: str) -> None:
             nonlocal retention_ok, n_checkpoints
@@ -511,7 +648,7 @@ def eval_ecological(
             pr = live_probe(ag, world, cue, learner, tag=f"{tag}_r{n_checkpoints}")
             retention_ok = retention_ok and pr["winner"] == want
 
-        if exposure == "live":
+        if exposure_mode == "live":
             for cy in range(int(cycles)):
                 t1 = teach(world, h1, f"c{cy}p")
                 learner.update(t1["addr"], t1["handle"], t1["adv"])
@@ -536,11 +673,14 @@ def eval_ecological(
             t3 = teach(world, h2, "r")
             advs = [float(t1["adv"]), float(t2["adv"]), float(t3["adv"])]
             stored = [t1, t2, t3]
+            frozen = [np.asarray(r["addr"], dtype=np.float64).copy() for r in stored]
             wants = [h1, h2, h2]
             seen: list[int] = []
             for cy in range(int(cycles)):
                 for i, rec in enumerate(stored):
-                    learner.update(rec["addr"], rec["handle"], rec["adv"])
+                    if not np.allclose(rec["addr"], frozen[i]):
+                        raise RuntimeError("replay mutated frozen first-pass P1 rows")
+                    learner.update(frozen[i], rec["handle"], rec["adv"])
                     if i not in seen:
                         seen.append(i)
                     n_checkpoints += 1
@@ -569,7 +709,7 @@ def eval_ecological(
             and stab["stable"]
             and retention_ok
         )
-    return {
+    out = {
         "passed": ok,
         "required": True,
         "adv": advs,
@@ -581,8 +721,15 @@ def eval_ecological(
         "n_checkpoints": int(n_checkpoints),
         "n_updates": int(getattr(learner, "n_updates", 0)),
         "cycles": int(cycles),
-        "exposure": exposure,
+        "exposure_mode": exposure_mode,
+        "p1_source": p1_source,
+        "k_complete_passes": int(cycles),
     }
+    if isinstance(learner, PassiveAggressive):
+        out["pa_last_status"] = learner.last_status
+        out["pa_last_geometric"] = float(learner.last_geometric)
+        out["pa_n_infeasible"] = int(learner.n_infeasible)
+    return out
 
 
 def decorate(
@@ -595,11 +742,11 @@ def decorate(
     world: int,
     domain: str,
     cycles: int,
-    exposure: str,
+    exposure_mode: str,
 ) -> dict[str, Any]:
     out.update(
         {
-            "id": cell_id(kind, arm, n_cues, order, world, cycles, exposure),
+            "id": cell_id(kind, arm, n_cues, order, world, cycles, exposure_mode),
             "kind": kind,
             "arm": arm,
             "n_cues": n_cues,
@@ -607,30 +754,31 @@ def decorate(
             "world": world,
             "domain": domain,
             "cycles": int(cycles),
-            "exposure": exposure,
+            "exposure_mode": exposure_mode,
             "required": True,
+            "c4_ceiling_only": arm == "C4",
         }
     )
     return out
 
 
 def _decision(cells: list[dict[str, Any]], p: dict[str, Any]) -> tuple[str, str, dict[str, Any]]:
-    def rows(arm: str, cycles: int, exposure: str, *, kind: str | None = None) -> list[dict[str, Any]]:
+    def rows(arm: str, cycles: int, exposure_mode: str, *, kind: str | None = None) -> list[dict[str, Any]]:
         out = [
             c
             for c in cells
-            if c["arm"] == arm and int(c["cycles"]) == int(cycles) and c["exposure"] == exposure
+            if c["arm"] == arm and int(c["cycles"]) == int(cycles) and cell_exposure_mode(c) == exposure_mode
         ]
         if kind is not None:
             out = [c for c in out if c["kind"] == kind]
         return out
 
-    def robust(arm: str, cycles: int, exposure: str) -> bool:
-        rank = rows(arm, cycles, exposure, kind="rank")
-        twin = rows(arm, cycles, exposure, kind="twin")
+    def robust(arm: str, cycles: int, exposure_mode: str) -> bool:
+        rank = rows(arm, cycles, exposure_mode, kind="rank")
+        twin = rows(arm, cycles, exposure_mode, kind="twin")
         need = rank + twin
-        if exposure == "live" or arm == "C4":
-            need = need + rows(arm, cycles, exposure, kind="eco") + rows(arm, cycles, exposure, kind="rest")
+        if exposure_mode == "live" or arm == "C4":
+            need = need + rows(arm, cycles, exposure_mode, kind="eco") + rows(arm, cycles, exposure_mode, kind="rest")
         return bool(need) and all(bool(c["passed"]) for c in need)
 
     live_flags = {arm: {k: robust(arm, k, "live") for k in ks} for arm, ks in (
@@ -660,12 +808,97 @@ def _decision(cells: list[dict[str, Any]], p: dict[str, Any]) -> tuple[str, str,
     return ladder[4]["id"], ladder[4]["then"], extra
 
 
+def _ids_for(arm: str, cycles: int, exposure_mode: str, *, include_eco_rest: bool) -> list[str]:
+    ids: list[str] = []
+    for n in (2, 4, 8):
+        for wi in range(2):
+            for order in TEACH_ORDERS:
+                ids.append(cell_id("rank", arm, n, order, wi, cycles, exposure_mode))
+    for order in TEACH_ORDERS:
+        ids.append(cell_id("twin", arm, 2, order, 1, cycles, exposure_mode))
+    if include_eco_rest:
+        ids.append(cell_id("eco", arm, 2, "A_then_B", 0, cycles, exposure_mode))
+        ids.append(cell_id("rest", arm, 2, "A_then_B", 0, cycles, exposure_mode))
+    return ids
+
+
+def expected_cell_ids() -> list[str]:
+    ids: list[str] = []
+    for arm, k in live_specs():
+        ids.extend(_ids_for(arm, k, "live", include_eco_rest=True))
+    for arm, k in replay_specs():
+        ids.extend(_ids_for(arm, k, "replay", include_eco_rest=arm == "C4"))
+    return ids
+
+
+def cell_manifest_hash(cells: list[dict[str, Any]]) -> str:
+    rows = []
+    for c in cells:
+        rows.append(
+            {
+                "id": c["id"],
+                "arm": c["arm"],
+                "kind": c["kind"],
+                "n_cues": c["n_cues"],
+                "cycles": c["cycles"],
+                "exposure_mode": cell_exposure_mode(c),
+                "passed": c["passed"],
+                "retention_ok": c.get("retention_ok"),
+            }
+        )
+    return hashlib.sha256(json.dumps(rows, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def assert_cell_coverage(cells: list[dict[str, Any]]) -> str:
+    ids = [c["id"] for c in cells]
+    expected = expected_cell_ids()
+    if len(ids) != EXPECTED_N_CELLS or len(set(ids)) != EXPECTED_N_CELLS:
+        raise RuntimeError(f"missing or duplicated cell {len(ids)} unique {len(set(ids))}")
+    if set(ids) != set(expected):
+        raise RuntimeError("cell IDs do not match frozen exposure_mode grid")
+    kinds = Counter(c["kind"] for c in cells)
+    if dict(kinds) != {"rank": EXPECTED_N_RANK, "twin": EXPECTED_N_TWIN, "eco": EXPECTED_N_ECO, "rest": EXPECTED_N_REST}:
+        raise RuntimeError(f"kind counts {dict(kinds)}")
+    modes = Counter(cell_exposure_mode(c) for c in cells)
+    if dict(modes) != {"live": EXPECTED_N_LIVE, "replay": EXPECTED_N_REPLAY}:
+        raise RuntimeError(f"exposure_mode counts {dict(modes)}")
+    c1_live = [c for c in cells if c["arm"] == "C1" and int(c["cycles"]) == 16 and cell_exposure_mode(c) == "live"]
+    c1_rep = [c for c in cells if c["arm"] == "C1" and int(c["cycles"]) == 16 and cell_exposure_mode(c) == "replay"]
+    c3_live = [c for c in cells if c["arm"] == "C3" and int(c["cycles"]) == 16 and cell_exposure_mode(c) == "live"]
+    c3_rep = [c for c in cells if c["arm"] == "C3" and int(c["cycles"]) == 16 and cell_exposure_mode(c) == "replay"]
+    if len(c1_live) != EXPECTED_C1_K16_LIVE or len(c1_rep) != EXPECTED_C1_K16_REPLAY:
+        raise RuntimeError("C1 k=16 live/replay split")
+    if len(c3_live) != EXPECTED_C3_K16_LIVE or len(c3_rep) != EXPECTED_C3_K16_REPLAY:
+        raise RuntimeError("C3 k=16 live/replay split")
+    if set(c["id"] for c in c1_live) & set(c["id"] for c in c1_rep):
+        raise RuntimeError("C1 k=16 live/replay IDs collided")
+    if set(c["id"] for c in c3_live) & set(c["id"] for c in c3_rep):
+        raise RuntimeError("C3 k=16 live/replay IDs collided")
+    orders = Counter((c["kind"], c["order"]) for c in cells if c["kind"] in ("rank", "twin"))
+    if orders[("rank", "A_then_B")] != orders[("rank", "B_then_A")]:
+        raise RuntimeError("rank order counts unequal")
+    if orders[("twin", "A_then_B")] != orders[("twin", "B_then_A")]:
+        raise RuntimeError("twin order counts unequal")
+    for c in cells:
+        if c["arm"] == "C4" and not c.get("c4_ceiling_only", False):
+            raise RuntimeError("C4 must remain ceiling-only")
+        if c["arm"] == "C4" and cell_exposure_mode(c) != "replay":
+            raise RuntimeError("C4 must be replay")
+        if c.get("p1_source") not in ("live_regenerated", "frozen_first_pass", None):
+            raise RuntimeError(f"bad p1_source {c.get('p1_source')}")
+        if cell_exposure_mode(c) == "live" and c.get("p1_source") not in (None, "live_regenerated"):
+            raise RuntimeError("live cell must regenerate P1")
+        if cell_exposure_mode(c) == "replay" and c.get("p1_source") not in (None, "frozen_first_pass"):
+            raise RuntimeError("replay cell must reuse frozen first-pass P1")
+    return cell_manifest_hash(cells)
+
+
 def _append_map(
     cells: list[dict[str, Any]],
     *,
     arm: str,
     cycles: int,
-    exposure: str,
+    exposure_mode: str,
     include_eco_rest: bool,
 ) -> None:
     p = load_prereg()
@@ -680,11 +913,11 @@ def _append_map(
                 block = eval_learner_block(
                     arm=arm,
                     cycles=cycles,
-                    exposure=exposure,
+                    exposure_mode=exposure_mode,
                     world=world,
                     pairs=pairs,
                     order=order,
-                    tag=f"cvg_{arm}_{exposure}_{wi}_{n_cues}_{order}_k{cycles}",
+                    tag=f"cvg_{arm}_{exposure_mode}_{wi}_{n_cues}_{order}_k{cycles}",
                 )
                 cells.append(
                     decorate(
@@ -696,7 +929,7 @@ def _append_map(
                         world=wi,
                         domain=world["domain"],
                         cycles=cycles,
-                        exposure=exposure,
+                        exposure_mode=exposure_mode,
                     )
                 )
     world_t = capacity_world(1, TWIN_DOMAIN, n_cues=2, n_handles=2)
@@ -708,11 +941,11 @@ def _append_map(
         block = eval_learner_block(
             arm=arm,
             cycles=cycles,
-            exposure=exposure,
+            exposure_mode=exposure_mode,
             world=world_t,
             pairs=pairs_t,
             order=order,
-            tag=f"cvg_{arm}_{exposure}_twin_{order}_k{cycles}",
+            tag=f"cvg_{arm}_{exposure_mode}_twin_{order}_k{cycles}",
         )
         cells.append(
             decorate(
@@ -724,14 +957,14 @@ def _append_map(
                 world=1,
                 domain=world_t["domain"],
                 cycles=cycles,
-                exposure=exposure,
+                exposure_mode=exposure_mode,
             )
         )
     if not include_eco_rest:
         return
     world_c = capacity_world(0, DEV_DOMAIN, n_cues=2, n_handles=2)
     pairs_c = mapping_pairs(world_c, flip=False)
-    eco = eval_ecological(arm, cycles, exposure, world_c, tag=f"cvg_{arm}_{exposure}_eco_k{cycles}")
+    eco = eval_ecological(arm, cycles, exposure_mode, world_c, tag=f"cvg_{arm}_{exposure_mode}_eco_k{cycles}")
     cells.append(
         decorate(
             eco,
@@ -742,17 +975,17 @@ def _append_map(
             world=0,
             domain=world_c["domain"],
             cycles=cycles,
-            exposure=exposure,
+            exposure_mode=exposure_mode,
         )
     )
     rest = eval_learner_block(
         arm=arm,
         cycles=cycles,
-        exposure=exposure,
+        exposure_mode=exposure_mode,
         world=world_c,
         pairs=pairs_c,
         order="A_then_B",
-        tag=f"cvg_{arm}_{exposure}_rest_k{cycles}",
+        tag=f"cvg_{arm}_{exposure_mode}_rest_k{cycles}",
         rest=True,
     )
     cells.append(
@@ -765,7 +998,7 @@ def _append_map(
             world=0,
             domain=world_c["domain"],
             cycles=cycles,
-            exposure=exposure,
+            exposure_mode=exposure_mode,
         )
     )
 
@@ -780,24 +1013,24 @@ def run_dev() -> dict[str, Any]:
         raise RuntimeError("preregistration hash mismatch")
     cells: list[dict[str, Any]] = []
     for arm, k in live_specs():
-        _append_map(cells, arm=arm, cycles=k, exposure="live", include_eco_rest=True)
+        _append_map(cells, arm=arm, cycles=k, exposure_mode="live", include_eco_rest=True)
     for arm, k in replay_specs():
-        _append_map(cells, arm=arm, cycles=k, exposure="replay", include_eco_rest=arm == "C4")
-    ids = [c["id"] for c in cells]
-    if len(ids) != EXPECTED_N_CELLS or len(set(ids)) != EXPECTED_N_CELLS:
-        raise RuntimeError(f"missing or duplicated cell {len(ids)} unique {len(set(ids))}")
+        _append_map(cells, arm=arm, cycles=k, exposure_mode="replay", include_eco_rest=arm == "C4")
     for c in cells:
         if c["domain"] not in (DEV_DOMAIN, TWIN_DOMAIN):
             raise RuntimeError(f"unexpected domain {c['domain']}")
         if c["kind"] in ("rank", "twin", "rest"):
             if int(c.get("n_probe") or 0) != int(c["n_cues"]):
                 raise RuntimeError(f"empty probe {c['id']}")
-            if c["exposure"] == "live" and int(c.get("n_live_teaches") or 0) != int(c["n_cues"]) * int(c["cycles"]):
+            if cell_exposure_mode(c) == "live" and int(c.get("n_live_teaches") or 0) != int(c["n_cues"]) * int(c["cycles"]):
                 raise RuntimeError(f"live teach count {c['id']}")
-            if c["exposure"] == "replay" and int(c.get("n_capture") or 0) != int(c["n_cues"]):
+            if cell_exposure_mode(c) == "replay" and int(c.get("n_capture") or 0) != int(c["n_cues"]):
                 raise RuntimeError(f"replay capture count {c['id']}")
+            if cell_exposure_mode(c) == "replay" and int(c.get("n_replay_updates") or 0) != int(c["n_cues"]) * int(c["cycles"]):
+                raise RuntimeError(f"replay update count {c['id']}")
         if not c.get("retention_ok", True) and c["passed"]:
             raise RuntimeError(f"passed without retention {c['id']}")
+    manifest = assert_cell_coverage(cells)
     code, then, extra = _decision(cells, p)
     out = {
         "version": "TM.0.24.CONVERGENCEMAP.DEV",
@@ -811,6 +1044,7 @@ def run_dev() -> dict[str, Any]:
         "score_domain_opened": False,
         "neural_edit": False,
         "implementation_authorized": False,
+        "c4_ceiling_only": True,
         "write_geometry_branch_closed": True,
         "w1_resurrected": False,
         "act_score_mode": "query",
@@ -819,11 +1053,12 @@ def run_dev() -> dict[str, Any]:
         "decision_code": code,
         "decision_then": then,
         "n_cells": len(cells),
+        "manifest_sha": manifest,
         "cells": cells,
         "env": torch_env(),
         "git_head": _git_head(),
         "shas": convergencemap_shas(),
-        "note": "CONVERGENCEMAP DEV only. Write-geometry closed. No neural edit. Product remains 0.0.004.",
+        "note": "CONVERGENCEMAP DEV only. Write-geometry closed. C4 ceiling-only. No neural edit. Product remains 0.0.004.",
     }
     refuse_score_markers(json.dumps(out, default=str))
     return out
@@ -835,17 +1070,20 @@ def smoke() -> dict[str, Any]:
     world = capacity_world(0, "TM024.CONVERGENCEMAP.SMOKE.", n_cues=2, n_handles=2)
     pairs = mapping_pairs(world, flip=False)
     c0 = eval_learner_block(
-        arm="C0", cycles=1, exposure="live", world=world, pairs=pairs, order="A_then_B", tag="cvgsmk0"
+        arm="C0", cycles=1, exposure_mode="live", world=world, pairs=pairs, order="A_then_B", tag="cvgsmk0"
     )
     c2 = eval_learner_block(
-        arm="C2", cycles=1, exposure="live", world=world, pairs=pairs, order="A_then_B", tag="cvgsmk2"
+        arm="C2", cycles=1, exposure_mode="live", world=world, pairs=pairs, order="A_then_B", tag="cvgsmk2"
     )
     x = unit_or_zero(np.arange(64, dtype=np.float64) + 1.0)
     z = np.zeros(64, dtype=np.float64)
+    step0 = pa_step(z, z, x, 0.01)
     tau0 = min_tau_for_margin(z, z, x, 0.01)
     w_ch = z + 0.01 * x
     w_ot = z - 0.01 * x
     tau_done = min_tau_for_margin(w_ch, w_ot, x, 0.01)
+    live_id = cell_id("rank", "C1", 8, "A_then_B", 0, 16, "live")
+    replay_id = cell_id("rank", "C1", 8, "A_then_B", 0, 16, "replay")
     return {
         "product": "0.0.004",
         "earned_next": False,
@@ -854,16 +1092,26 @@ def smoke() -> dict[str, Any]:
         "n": 64,
         "c0_n_live": c0["n_live_teaches"],
         "c0_retention_ok": c0["retention_ok"],
+        "c0_exposure_mode": c0["exposure_mode"],
+        "c0_p1_source": c0["p1_source"],
         "c2_n_live": c2["n_live_teaches"],
         "c2_n_updates": c2["n_updates"],
+        "c2_exposure_mode": c2["exposure_mode"],
+        "c2_pa_last_status": c2.get("pa_last_status"),
+        "c2_pa_last_geometric": c2.get("pa_last_geometric"),
         "tau_zero_init": float(tau0),
         "tau_already_met": float(tau_done),
+        "pa_zero_status": step0["status"],
+        "pa_zero_geometric": float(step0["geometric"]),
+        "c1_k16_ids_distinct": live_id != replay_id,
         "expected_n_cells": EXPECTED_N_CELLS,
+        "expected_id_count": len(expected_cell_ids()),
         "neural_edit": False,
         "v31_exists": CANDIDATE_V31.exists(),
         "act_score_mode": p["act_score_mode"],
         "write_geometry_branch_closed": True,
         "w1_resurrected": False,
+        "c4_ceiling_only": True,
         "env": torch_env(),
     }
 
@@ -896,9 +1144,14 @@ def write_runner_lock() -> dict[str, Any]:
         "replay_cycles": REPLAY_CYCLES,
         "pa_geometric_margin_target": 0.01,
         "pa_learning_rate_grid": False,
+        "pa_status_is_normalized_geometric": True,
+        "exposure_mode_field": "exposure_mode",
+        "c4_ceiling_only": True,
         "trace_budget_unopened": 512,
         "declared_budget_remains_closed": 1536,
         "expected_n_cells": EXPECTED_N_CELLS,
+        "expected_n_live": EXPECTED_N_LIVE,
+        "expected_n_replay": EXPECTED_N_REPLAY,
         "fail_closed": prereg["fail_closed"],
         "decision_ladder": [r["then"] for r in prereg["decision_ladder"]],
         "git_head": _git_head(),
@@ -911,6 +1164,11 @@ def write_runner_lock() -> dict[str, Any]:
 def write_dev_lock(out: dict[str, Any]) -> dict[str, Any]:
     assert_runner_frozen()
     refuse_rerun()
+    manifest = assert_cell_coverage(out["cells"])
+    if len(set(c["id"] for c in out["cells"])) != EXPECTED_N_CELLS:
+        raise RuntimeError("unique IDs required before writing DEV")
+    if out.get("manifest_sha") != manifest:
+        raise RuntimeError("DEV manifest hash must be asserted before write")
     refuse_score_markers(json.dumps(out, default=str))
     DEV_LOCK.write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8")
     return out
@@ -939,6 +1197,7 @@ def write_decision(dev: dict[str, Any]) -> dict[str, Any]:
         "trace_rows_installed": False,
         "declared_budget_remains_closed": 1536,
         "write_geometry_branch_closed": True,
+        "c4_ceiling_only": True,
         "decision": {
             "code": dev["decision_code"],
             "then": dev["decision_then"],

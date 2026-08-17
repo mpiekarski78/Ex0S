@@ -9,12 +9,12 @@
   "w1_resurrected": false,
   "act_score_mode": "query",
   "shas": {
-    "runner": "b61360f5823724803c22a82c8455282186cc4ca8f44f0b9c9f5f1b03092b8fbe",
+    "runner": "232cffa23619de1fcdbde7b8c82fc3de8e1c2fbe84a014a40bc27f3723cbbcf6",
     "neural_cortex": "90dae9a652fdefa0e7942b775053e2b765991eb26ee3ee4cdcfdb994b901d9e0",
     "cortex_memory": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
-    "prereg": "348b328fbd72889b5d18c62c35adc5a3217d94e9ffa524568793674e132c11ed",
-    "contract": "8a21139ed34df1102eca794a8f1391964d3dee6ac9185100c033b7747b59ae29",
-    "isolation": "6e5e8859fb11868517d6fa917c52248d9ee55f5539619a1b0c3668e680cdf2d6",
+    "prereg": "321017334205929e7915da22efe808902ea0337a1291c03b606ad196aaa8d865",
+    "contract": "5a6681e627b39f2bb00bd5fa07c8666d02a9b8648742caa0afe9aedcff7c2242",
+    "isolation": "c17c52a3a2ca89afb91dfd084ab7823cc5fbe0999091987859d4f78776c37d79",
     "candidate_v30": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
     "tracebridge_decision": "284968d782c73727a2de8b34e24461bf75a236f7cc6d07770e9d39529fc038a1",
     "tracebridge_addendum": "f1bdaa606dc21779bae73b63be139fa8282a788c9a4261c4c87fe9cd961f7eb0",
@@ -50,9 +50,14 @@
   "replay_cycles": 16,
   "pa_geometric_margin_target": 0.01,
   "pa_learning_rate_grid": false,
+  "pa_status_is_normalized_geometric": true,
+  "exposure_mode_field": "exposure_mode",
+  "c4_ceiling_only": true,
   "trace_budget_unopened": 512,
   "declared_budget_remains_closed": 1536,
   "expected_n_cells": 220,
+  "expected_n_live": 176,
+  "expected_n_replay": 44,
   "fail_closed": [
     "prereg_or_runner_hash_mismatch",
     "missing_or_duplicated_cell",
@@ -61,7 +66,10 @@
     "act_score_mode_not_query",
     "w1_or_v31_present",
     "same_frozen_dev_execution_again",
-    "passive_aggressive_learning_rate_grid"
+    "passive_aggressive_learning_rate_grid",
+    "pa_functional_margin_accepted_as_geometric",
+    "live_replay_id_collision",
+    "dev_without_manifest_or_unique_ids"
   ],
   "decision_ladder": [
     "compact_error_correcting_write_sufficient",
@@ -70,6 +78,6 @@
     "covariance_aware_memory_required",
     "oracle_separability_not_operationally_reachable"
   ],
-  "git_head": "04ff63f0db7f728e7b3d39a21ee1c64c5d9fedaf",
+  "git_head": "7854772a94a807bde930c583496a3638671e16d9",
   "note": "Frozen CONVERGENCEMAP runner. DEV lock only after this file is on origin/main. No neural edit."
 }

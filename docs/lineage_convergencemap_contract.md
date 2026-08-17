@@ -28,9 +28,9 @@ Exact P1 bridge, runner-only. No v29 write-law change.
 
 C1/C3 also run a stored-P1 replay at 16 epochs (no live re-observe) so reinstatement can be separated from the learning rule.
 
-Passive-aggressive target is the existing **0.01 geometric margin**. The update is the minimal τ on the current example (`w_chosen += τx`, `w_other -= τx`). No learning-rate grid.
+Passive-aggressive target is the existing **0.01 geometric margin** \(y(w^\top x+b)/\|w\|\) with intercept \(b=0\). The update is the minimal τ on the current example (`w_chosen += τx`, `w_other -= τx`). Status is the **post-update** normalized geometric margin. A functional margin \(y(w^\top x+b)\) is not accepted as success. If a norm cap makes 0.01 impossible, the update is recorded `infeasible`. No learning-rate grid.
 
-Live re-exposure regenerates P1 through the organism each time. Exact replay reuses stored P1 rows.
+Live re-exposure (`exposure_mode=live`) regenerates P1 through the organism on every complete pass `k` through the cue set. Exact replay (`exposure_mode=replay`) reuses only frozen first-pass P1 rows. C1/C3 at k=16 have distinct cell IDs for live vs replay. Retention probes never update weights or organism state. C0 and C1@k=1 differ only by always-update vs error-only. C4 remains ceiling-only regardless of result. Unique IDs and the 220-cell manifest hash are asserted before writing DEV.
 
 ## Battery (frozen)
 

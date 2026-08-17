@@ -2384,7 +2384,7 @@ Is the eight-cue wall caused by one-shot exposure, or does it require covariance
 
 CONVERGENCEMAP apparatus: [`lineage_convergencemap.prereg.lock`](lineage_convergencemap.prereg.lock) + [`lineage_convergencemap.isolation.lock`](lineage_convergencemap.isolation.lock). Exact P1 bridge. C0 one-epoch D3; C1 error-only perceptron with live 1/2/4/8/16; C2 one-pass PA at 0.01 geometric margin; C3 PA with live repetition; C4 sequential RLS replay ceiling. Live re-exposure vs exact stored-row replay. Unused `TM024.CONVERGENCEMAP.DEV.` / `TWIN.`. SCORE reserved. 512/1536 unopened. n stays 64. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
 
-Convergence runner: [`lineage_convergencemap.runner.lock`](lineage_convergencemap.runner.lock). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
+Convergence runner: [`lineage_convergencemap.runner.lock`](lineage_convergencemap.runner.lock). `exposure_mode=live|replay` are distinct cells. PA status is post-update \(y(w^\top x)/\|w\|\). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 

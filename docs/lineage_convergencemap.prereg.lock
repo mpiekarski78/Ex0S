@@ -56,7 +56,7 @@
       "eta": 0.15,
       "c_max": 1.0,
       "cycles": [1],
-      "exposure": "live",
+      "exposure_mode": "live",
       "error_only": false,
       "diagnostic_only": true,
       "v_eligible": false
@@ -68,7 +68,7 @@
       "eta": 0.15,
       "c_max": 1.0,
       "cycles": [1, 2, 4, 8, 16],
-      "exposure": "live",
+      "exposure_mode": "live",
       "replay_cycles": [16],
       "error_only": true,
       "diagnostic_only": true,
@@ -79,9 +79,12 @@
       "address": "P1_event_end",
       "learner": "passive_aggressive_min_tau",
       "geometric_margin_target": 0.01,
+      "status_is_post_update_normalized_geometric": true,
+      "functional_margin_is_not_pass_criterion": true,
+      "infeasible_if_norm_cap_blocks_target": true,
       "learning_rate_grid": false,
       "cycles": [1],
-      "exposure": "live",
+      "exposure_mode": "live",
       "clipnorm": false,
       "diagnostic_only": true,
       "v_eligible": false
@@ -91,9 +94,12 @@
       "address": "P1_event_end",
       "learner": "passive_aggressive_min_tau",
       "geometric_margin_target": 0.01,
+      "status_is_post_update_normalized_geometric": true,
+      "functional_margin_is_not_pass_criterion": true,
+      "infeasible_if_norm_cap_blocks_target": true,
       "learning_rate_grid": false,
       "cycles": [2, 4, 8, 16],
-      "exposure": "live",
+      "exposure_mode": "live",
       "replay_cycles": [16],
       "clipnorm": false,
       "diagnostic_only": true,
@@ -105,15 +111,19 @@
       "learner": "sequential_rls",
       "lambda": 0.01,
       "cycles": [16],
-      "exposure": "replay",
+      "exposure_mode": "replay",
       "source": "experiments/run_tm024writegeom.py",
       "diagnostic_only": true,
+      "ceiling_only": true,
       "v_eligible": false
     }
   },
   "repetition": {
-    "live_reexposure": "regenerate_p1_through_organism",
-    "exact_replay": "reuse_stored_p1_rows_ceiling_only"
+    "k_means": "complete_passes_through_cue_set",
+    "live_reexposure": "regenerate_p1_through_organism_every_exposure",
+    "exact_replay": "reuse_frozen_first_pass_p1_rows_only",
+    "exposure_mode_field": "exposure_mode",
+    "exposure_mode_values": ["live", "replay"]
   },
   "capacity": [
     {"n_cues": 2, "n_handles": 2, "balanced": true, "required": true},
@@ -138,7 +148,8 @@
   "retention": {
     "after_every_cue": true,
     "intermediate_requires_correct_ranking_only": true,
-    "final_requires_margin_and_perturbation": true
+    "final_requires_margin_and_perturbation": true,
+    "probes_never_update_weights_or_organism": true
   },
   "fit": {
     "rows": "teach_select_address_only",
@@ -161,6 +172,17 @@
     "eco": 12,
     "rest": 12
   },
+  "expected_exposure_mode_counts": {
+    "live": 176,
+    "replay": 44
+  },
+  "expected_k16_split": {
+    "C1": {"live": 16, "replay": 14},
+    "C3": {"live": 16, "replay": 14}
+  },
+  "c0_vs_c1_k1": "always_update_versus_error_only",
+  "c4_ceiling_only": true,
+  "assert_unique_ids_and_manifest_before_dev": true,
   "decision_ladder": [
     {
       "id": "compact_error_correcting_write_sufficient",
@@ -196,7 +218,10 @@
     "act_score_mode_not_query",
     "w1_or_v31_present",
     "same_frozen_dev_execution_again",
-    "passive_aggressive_learning_rate_grid"
+    "passive_aggressive_learning_rate_grid",
+    "pa_functional_margin_accepted_as_geometric",
+    "live_replay_id_collision",
+    "dev_without_manifest_or_unique_ids"
   ],
   "historical_immutable": [
     "docs/lineage_tracebridge.decision.lock",
