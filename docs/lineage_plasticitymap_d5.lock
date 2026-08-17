@@ -1,0 +1,50 @@
+{
+  "version": "TM.0.24.PLASTICITYMAP.D5",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "passed": false,
+  "deterministic_world_pass": true,
+  "renamed_sibling_pass": false,
+  "zero_shot_transfer": {
+    "counts": {
+      "h_847771904": 0,
+      "h_427524995": 8,
+      "other": 32
+    },
+    "probe_beneficial": 0.0,
+    "motor_ben": 0.0945524508072574,
+    "motor_harm": 0.17452551877753258,
+    "ben_beats_harm_score": false,
+    "ben_beats_harm_count": false
+  },
+  "zero_shot_transfer_is_not_pass_gate": true,
+  "n": 64,
+  "world0": {
+    "counts": {
+      "h_427097508": 13,
+      "h_016271482": 0,
+      "other": 27
+    },
+    "probe_beneficial": 0.325,
+    "motor_ben": 0.22991508697223617,
+    "motor_harm": -0.9984684445546048,
+    "ben_beats_harm_score": true,
+    "ben_beats_harm_count": true
+  },
+  "world1": {
+    "counts": {
+      "h_847771904": 0,
+      "h_427524995": 0,
+      "other": 40
+    },
+    "probe_beneficial": 0.0,
+    "motor_ben": 0.12192395751334185,
+    "motor_harm": -0.999022063913489,
+    "ben_beats_harm_score": true,
+    "ben_beats_harm_count": false
+  },
+  "note": "Independent D2 procedure on renamed sibling. Zero-shot transfer is reported only."
+}
