@@ -2064,5 +2064,7 @@ Diagnosis ([`cortex_diagnosis.fulldev_r1.lock`](cortex_diagnosis.fulldev_r1.lock
 
 ## TM.0.23.CORTEX.FULLDEV.R1 audit → isolated D3
 
-Canonical main `41183aa`. FULLDEV.R1 **0/16** stands. Do not edit-rescore. Do not stamp product.
+Canonical main `c633df5`. FULLDEV.R1 **0/16** stands. Do not edit-rescore. Do not stamp product.
+
+D3.R1 apparatus: [`cortex_d3_r1.prereg.lock`](cortex_d3_r1.prereg.lock). Authorizes equal-evidence / low-familiarity HOLD after this freeze is on `origin/main`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 

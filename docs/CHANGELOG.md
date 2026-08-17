@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.D3.R1 apparatus:** Isolated equal-evidence / low-familiarity HOLD. Historical D3 floors retained. Frozen commitment, no neural edit yet. [`cortex_d3_r1.prereg.lock`](cortex_d3_r1.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R1 fail:** Apparatus `41183aa` revealed after a clean push. Seed-derived D0–D12 **0/16** — **not clear**. D0 32/32; D1 25; D2 31; first-fail **D3 22**. [`cortex_fulldev_r1.failure.lock`](cortex_fulldev_r1.failure.lock) + [`cortex_d3.isolation.lock`](cortex_d3.isolation.lock). Do not edit-rescore. Do not stamp product. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R1 apparatus:** New sealed D0–D12 commitment on unused `TM023.FULL.R1.` worlds after the v13 14/16 clear. Historical DEVELOP scorers retained. No neural edit. No score yet. [`cortex_fulldev_r1.prereg.lock`](cortex_fulldev_r1.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V13 gate clear:** Candidate `99c3873` revealed after a clean push (git SHA pinned). Seed-derived D1–D2 **14/16** — **clear**. D1 32/32, D2 30/32, both population extras green. Two remaining D2 reds are honest `holds>=5` misses. [`cortex_v13_gate.clear.note.lock`](cortex_v13_gate.clear.note.lock). **DEVELOP.v13 on these worlds refused.** Full D0–D12 needs a later distinct commitment. Do not stamp product. `earned_next=false`; `ex0s=null`; product **0.0.004**.
