@@ -1,0 +1,106 @@
+{
+  "version": "TM.0.24.PLASTICITYMAP.PREREG",
+  "lab": "TM.0.24.PLASTICITYMAP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "package_question": "Where does developmental motor learning fail, once the organism is forced to experience both causal alternatives under the ordinary v28 law?",
+  "candidate": "docs/cortex.candidate.v28.lock",
+  "candidate_v28_sha": "63ca21a540806501f03ec32aaa4a502c21a7c90cb44e0e207f7432e8abe1c1b3",
+  "n": 64,
+  "tau": 0.6,
+  "delta_B": 0.05,
+  "delta_P": 0.05,
+  "increase_n": false,
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_wallmap_q1.lock",
+    "docs/lineage_wallmap_q2.lock",
+    "docs/lineage_wallmap_q3.lock",
+    "docs/lineage_wallmap_q4.lock",
+    "docs/lineage_reach.lock",
+    "docs/cortex.candidate.v27.lock"
+  ],
+  "domains": {
+    "CREDIT": "TM024.PLASTICITYMAP.CREDIT.",
+    "READOUT": "TM024.PLASTICITYMAP.READOUT.",
+    "FORCE": "TM024.PLASTICITYMAP.FORCE.",
+    "AUTO": "TM024.PLASTICITYMAP.AUTO.",
+    "REST": "TM024.PLASTICITYMAP.REST.",
+    "SIBLING": "TM024.PLASTICITYMAP.SIBLING."
+  },
+  "D0": {
+    "id": "complete_v28_credit_chain",
+    "fresh_worlds": true,
+    "state_only": true,
+    "neural_edits_forbidden": true,
+    "links": [
+      "body_to_opposite_adv",
+      "zero_elig_no_plastic_motion",
+      "correct_prior_elig_used",
+      "wrong_tick_elig_fails",
+      "credit_to_handle_logit",
+      "later_probability_and_sampled_behavior",
+      "consolidation_boundary"
+    ],
+    "later_behavior_requires_both": true,
+    "mid_range_body": [0.5, 0.4, 0.5, 0.0],
+    "one_symbol_cue": true
+  },
+  "D1": {
+    "id": "readout_expressivity",
+    "direct_set_W_act_query": true
+  },
+  "D2": {
+    "id": "forced_balanced_act_exposure",
+    "n_cycles": 40,
+    "equal_opportunities": true,
+    "ordinary_v28_credit_only": true,
+    "reset_body_each_opportunity": true,
+    "one_symbol_cue": true,
+    "n_probe": 40,
+    "not_teaching_the_answer": true
+  },
+  "D3": {
+    "id": "autonomous_exploration",
+    "n_wake": 40,
+    "n_replay": 8,
+    "n_probe": 20
+  },
+  "D4": {
+    "id": "post_rest_retention",
+    "n_rest": 8
+  },
+  "D5": {
+    "id": "renamed_siblings",
+    "zero_shot_transfer_is_not_pass_gate": true
+  },
+  "D6": {
+    "id": "outer_search",
+    "score_only_if_D1_D2_D3_pass": true,
+    "historical_q3": "docs/lineage_wallmap_q3.lock"
+  },
+  "decision_precedence": {
+    "D0_over_developmental": true,
+    "D2_is_decisive_plasticity_test": true
+  },
+  "refuse": [
+    "neural_edit_in_this_package",
+    "soften_scorers",
+    "L0_specific_circuitry",
+    "QUAL_EVAL_reveal",
+    "rewrite_lineage_wallmap_reach_locks",
+    "earned_next",
+    "stamp_0.0.005",
+    "move_tau_or_delta",
+    "increase_n",
+    "FULLDEV_R7",
+    "treat_forced_exposure_as_capability_earn",
+    "another_lineage_run_before_decomposition"
+  ],
+  "note": "Phase A scientific freeze. Runner lock is next. Product remains 0.0.004."
+}
