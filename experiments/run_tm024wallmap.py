@@ -94,15 +94,30 @@ def _git_head() -> str:
 
 
 def assert_runner_frozen() -> dict[str, Any]:
+    """Integrity is SHA pin. Clean-tree gate is only at suite start (see assert_clean_to_begin)."""
     if not RUNNER_LOCK.exists():
         raise RuntimeError("no wallmap runner.lock — refuse diagnostic scoring")
     lock = json.loads(RUNNER_LOCK.read_text(encoding="utf-8"))
     live = wallmap_shas()
     if live != lock.get("shas"):
         raise RuntimeError("wallmap implementation drifted after runner.lock — versioned lock required")
-    if not _git_clean():
-        raise RuntimeError("working tree dirty — refuse diagnostic scoring on unclean tree")
     return lock
+
+
+def assert_clean_to_begin() -> None:
+    """Require a clean tree before the suite starts. Result locks may appear mid-run."""
+    porcelain = subprocess.check_output(["git", "status", "--porcelain"], cwd=REPO_ROOT).decode()
+    if not porcelain.strip():
+        return
+    allowed_prefix = (
+        "docs/lineage_wallmap_q",
+        "docs/lineage_wallmap.decision.lock",
+        "docs/tm024wallmap_results.md",
+    )
+    for line in porcelain.splitlines():
+        path = line[3:].strip().split(" -> ")[-1]
+        if not any(path == a or path.startswith(a) for a in allowed_prefix):
+            raise RuntimeError(f"working tree dirty ({path}) — refuse to begin diagnostic scoring")
 
 
 def op_logits(ag: NeuralCortex) -> np.ndarray:
@@ -758,11 +773,12 @@ def smoke() -> dict[str, Any]:
 def write_runner_lock() -> dict[str, Any]:
     prereg = load_prereg()
     lock = {
-        "version": "TM.0.24.WALLMAP.RUNNER",
+        "version": "TM.0.24.WALLMAP.RUNNER.V2",
         "product": "0.0.004",
         "earned_next": False,
         "ex0s": None,
         "eligible_for_000005": False,
+        "supersedes": "TM.0.24.WALLMAP.RUNNER",
         "shas": wallmap_shas(),
         "prereg_sha": sha_file(PREREG),
         "contract_sha": sha_file(CONTRACT),
@@ -775,13 +791,17 @@ def write_runner_lock() -> dict[str, Any]:
         "domains": prereg["domains"],
         "diagnostic_generator": "experiments.run_tm024wallmap.make_diag_world",
         "git_head_at_freeze": _git_head(),
-        "note": "No diagnostic answers before this lock on clean origin/main. Behavior-affecting changes need a versioned lock.",
+        "note": (
+            "Versioned runner lock. SHA pin is the integrity gate. "
+            "Clean tree required once at suite start; result locks may appear mid-run."
+        ),
     }
     RUNNER_LOCK.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
     return lock
 
 
 def run_all() -> dict[str, Any]:
+    assert_clean_to_begin()
     assert_runner_frozen()
     q4 = run_q4()
     q1 = run_q1()
