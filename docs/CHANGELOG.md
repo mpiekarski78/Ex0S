@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.FULLDEV.R3 apparatus:** Full D0–D12 on unused domain `TM023.FULL.R3.` after isolated D3.R3 and D4.R2 16/16. Live candidate v18, no neural edit. [`cortex_fulldev_r3.prereg.lock`](cortex_fulldev_r3.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D4.R2 result:** **16/16 clear.** D0 32/32, D4 32/32. donor_changes_retrieval true on every life. [`cortex_d4_r2_gate.lock`](cortex_d4_r2_gate.lock) + [`cortex_d4_r2.audit.lock`](cortex_d4_r2.audit.lock). Full D0–D12 still closed. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V18 / D4.R2 candidate:** RETRIEVE breaks attention ties by recency. Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.058). [`cortex.candidate.v18.lock`](cortex.candidate.v18.lock) + [`cortex_mact_boundary.v18.lock`](cortex_mact_boundary.v18.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D4.R2 apparatus:** RETRIEVE breaks attention ties by recency. Frozen commitment, no neural edit yet. [`cortex_d4_r2.prereg.lock`](cortex_d4_r2.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

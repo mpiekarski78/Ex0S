@@ -2110,3 +2110,7 @@ Candidate (this cycle): [`cortex.candidate.v18.lock`](cortex.candidate.v18.lock)
 
 Result: [`cortex_d4_r2_gate.lock`](cortex_d4_r2_gate.lock) **16/16**. Audit [`cortex_d4_r2.audit.lock`](cortex_d4_r2.audit.lock). Isolated D4 is green. Do not rescore. Next is FULLDEV.R3 on unused domain `TM023.FULL.R3.`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+## TM.0.23.CORTEX.D4.R2 16/16 → FULLDEV.R3
+
+Canonical main `25c6bfb`. FULLDEV.R3 apparatus: [`cortex_fulldev_r3.prereg.lock`](cortex_fulldev_r3.prereg.lock). Live v18, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
