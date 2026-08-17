@@ -1,0 +1,44 @@
+{
+  "version": "TM.0.24.WRITEGEOM.DECISION.ADDENDUM",
+  "lab": "TM.0.24.WRITEGEOM",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "n": 64,
+  "historical_decision": "docs/lineage_writegeom.decision.lock",
+  "historical_decision_sha": "babde6761df7c7aca4edbd88daa415a242f6c881b5fdcd021d0d43f9a9a5e538",
+  "historical_dev_lock": "docs/lineage_writegeom.dev.lock",
+  "historical_dev_lock_sha": "311fd79b9cf3e31c191c31677ca7707256bd81a6739e8a7bca2f44c457dcd78f",
+  "historical_code": "w1_ranking_crumb_margin_ecological_fail",
+  "refined_code": "w1_query_margin_insufficient__unit_norm_negative_inert",
+  "preserved": {
+    "w1_v31_eligible": false,
+    "w1_2cue_ranking": true,
+    "w1_2cue_opposing": false,
+    "ecological_w1": false,
+    "integrity": true,
+    "candidate_v31": false,
+    "scored_worlds": false,
+    "lineage_reopened": false,
+    "q3": false
+  },
+  "causes": {
+    "crumb_margin": {
+      "what": "live address remains nearly collinear after the zero-input motor tick",
+      "evidence": "W1 2-cue cosine margins ~3e-4, below frozen cosine_margin_min=0.01",
+      "implication": "actuator-local prototypes cannot turn a cosine difference of roughly 3e-4 into the preregistered robust margin of 0.01"
+    },
+    "ecological_negative": {
+      "what": "unit-normalization makes a single negative teach mathematically inert until the subtraction crosses zero",
+      "identity": "if proto = rho_hat and 0 < alpha < 1, normalize(proto - alpha * rho_hat) = normalize((1-alpha) * rho_hat) = rho_hat",
+      "implication": "this is a W1 law limitation, not additional evidence of missing cue identity"
+    }
+  },
+  "next": "TM.0.24.ELIGMAP",
+  "next_class": "runner_only_eligibility_address_diagnostic",
+  "neural_edit_this_addendum": false,
+  "rewrite_historical_decision": false,
+  "note": "Historical WRITEGEOM decision lock is preserved. The recorded refuse of v31, SCORE, and lineage is unchanged. Product remains 0.0.004."
+}

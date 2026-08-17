@@ -238,6 +238,19 @@ def test_decision_if_present() -> None:
         assert dev["w0_2cue_fails"] is True
 
 
+def test_decision_addendum() -> None:
+    p = REPO_ROOT / "docs" / "lineage_writegeom.decision.addendum.lock"
+    assert p.is_file()
+    add = json.loads(p.read_text(encoding="utf-8"))
+    assert add["refined_code"] == "w1_query_margin_insufficient__unit_norm_negative_inert"
+    assert add["historical_code"] == "w1_ranking_crumb_margin_ecological_fail"
+    assert add["historical_decision_sha"] == sha(REPO_ROOT / "docs" / "lineage_writegeom.decision.lock")
+    assert add["preserved"]["candidate_v31"] is False
+    assert add["preserved"]["scored_worlds"] is False
+    assert add["rewrite_historical_decision"] is False
+    assert add["next"] == "TM.0.24.ELIGMAP"
+
+
 def main() -> None:
     test_phase_a_files()
     test_contract_stance()
@@ -246,6 +259,7 @@ def main() -> None:
     test_w1_neural_law()
     test_smoke()
     test_decision_if_present()
+    test_decision_addendum()
     print("test_tm024writegeom: ok")
 
 

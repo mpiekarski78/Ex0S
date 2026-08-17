@@ -2310,7 +2310,23 @@ Diagnosis is strong enough to authorize one narrow neural amendment: exchangeabl
 
 v31 apparatus: [`cortex_v31.prereg.lock`](cortex_v31.prereg.lock) + [`lineage_writegeom.prereg.lock`](lineage_writegeom.prereg.lock). Neural edit only after this commit is on `origin/main`. Frozen `H_max=8`, state budget `2×8×64`, cosine margin `0.01` plus perturbation, ecological reversal required, positive-only reassignment diagnostic. Unused `TM024.WRITEGEOM.DEV.` / `TWIN.`. SCORE reserved. n stays 64. Lineage stays closed even if W1 passes (S10/S11 still unrepaired). FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
 
-Result: [`lineage_writegeom.decision.lock`](lineage_writegeom.decision.lock) **w1_ranking_crumb_margin_ecological_fail**. W1 can rank opposing 2-cue maps, but cosine margins stay crumbs below the frozen 0.01 floor, a single negative teach does not flip a unit prototype, and ecological reversal fails. Integrity holds. W0 still last-write-wins. SCORE unopened. No `cortex.candidate.v31.lock`. Next is compact connection-local eligibility inside n=64 — not instincts, not SFNN. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+Result: [`lineage_writegeom.decision.lock`](lineage_writegeom.decision.lock) **w1_ranking_crumb_margin_ecological_fail**, preserved. Addendum [`lineage_writegeom.decision.addendum.lock`](lineage_writegeom.decision.addendum.lock) refines the description to **w1_query_margin_insufficient__unit_norm_negative_inert**. W1 can rank opposing 2-cue maps, but the live address stays nearly collinear (cosine crumbs ~3e-4 below the frozen 0.01 floor), and unit-normalization makes a single negative teach mathematically inert until the subtraction crosses zero. Integrity holds. W0 still last-write-wins. SCORE unopened. No `cortex.candidate.v31.lock`. Next is runner-only ELIGMAP — not instincts, not SFNN. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+
+## TM.0.24.WRITEGEOM → isolated ELIGMAP
+
+Canonical main `58783bf`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+The two W1 failures have different causes. Crumb margin: actuator-local prototypes cannot turn a nearly collinear live query into the frozen 0.01 margin. Ecological negative: if `proto=ρ̂` and `0<α<1`, `normalize(proto−αρ̂)=ρ̂`. That is a law limitation, not extra evidence of missing cue identity. Refusing v31, SCORE, and lineage was correct.
+
+ELIGMAP apparatus: [`lineage_eligmap.prereg.lock`](lineage_eligmap.prereg.lock) + [`lineage_eligmap.isolation.lock`](lineage_eligmap.isolation.lock). Runner-only. No neural edit. Compare E0 (collapsed `ρ_elig`), E1 (pre-motor upper bound), Eλ (ungated leaky connection-local trace, frozen λ grid on DEV), and EΔ (motor-boundary innovation) from the same trajectories. N0/N1/N2 negative-write geometry stays runner-side. The trace must feed both live ACT scoring and delayed credit. Declared later budget: 1536 at `H_max=8` if one eligibility row per actuator is authorized. Unused `TM024.ELIGMAP.DEV.` / `TWIN.`. SCORE reserved. n stays 64. Instincts, survival/reproduction, SFNN cell classes, larger n, and lineage evolution still would not repair the missing robust address. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
+
+Result: [`lineage_eligmap.decision.lock`](lineage_eligmap.decision.lock) **trace_separates_linear_fails**, preserved. Addendum [`lineage_eligmap.decision.addendum.lock`](lineage_eligmap.decision.addendum.lock): “competitive/discriminative write geometry” means runner-only DISCRIMMAP, not a neural amendment. Pairwise COLLISIONMAP distinction is weaker than robust linear separability. N1/N2 remain secondary. The 1,536 eligibility budget stays closed. SCORE unopened. No v31/v32. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+
+## TM.0.24.ELIGMAP → isolated DISCRIMMAP
+
+Canonical main pending this freeze. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+DISCRIMMAP apparatus: [`lineage_discrimmap.prereg.lock`](lineage_discrimmap.prereg.lock) + [`lineage_discrimmap.isolation.lock`](lineage_discrimmap.isolation.lock). Runner-only separability ladder on captured E0/E1/Eλ/EΔ. D0 nearest-prototype control; D1 batch max-margin linear oracle; D2 frozen ridge λ=0.01; D3 online competitive (chosen +, unchosen −); D4 RBF kernel ridge ceiling only. Measurement is normalized geometric margin \(\gamma_i=y_i(w^\top x_i+b)/\|w\|\), frozen at 0.01 before DEV. Unused `TM024.DISCRIMMAP.DEV.` / `TWIN.`. SCORE reserved. DEV lock only after runner.lock on origin/main. n stays 64. Instincts, SFNN, larger n, lineage, and the 1,536 eligibility budget remain closed. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
 
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 

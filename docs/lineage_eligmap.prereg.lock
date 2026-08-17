@@ -1,0 +1,163 @@
+{
+  "version": "TM.0.24.ELIGMAP.PREREG",
+  "lab": "TM.0.24.ELIGMAP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "investigation_justified": true,
+  "package_question": "Which runner-only address from the same trajectories — collapsed rho_elig, pre-motor state, leaky connection-local trace, or motor-boundary innovation — can feed both live ACT scoring and delayed credit with frozen margin, and does clipnorm/confidence negative-write repair reversal without solving addressing?",
+  "authorized_by": [
+    "docs/lineage_writegeom.decision.lock",
+    "docs/lineage_writegeom.decision.addendum.lock"
+  ],
+  "writegeom_decision_sha": "babde6761df7c7aca4edbd88daa415a242f6c881b5fdcd021d0d43f9a9a5e538",
+  "writegeom_addendum_sha": "60973f27cc133310c9bffac91aec732d8ac80d7735120c79dc6c49c70914ce0c",
+  "writegeom_addendum_refined_code": "w1_query_margin_insufficient__unit_norm_negative_inert",
+  "candidate": "docs/cortex.candidate.v30.lock",
+  "candidate_v30_sha": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+  "n": 64,
+  "increase_n": false,
+  "H_max": 8,
+  "declared_budget_if_later_authorized": {
+    "fast_slow_proto": 1024,
+    "eligibility_rows": 512,
+    "total": 1536,
+    "note": "not installed in NeuralCortex this package"
+  },
+  "domains": {
+    "DEV": "TM024.ELIGMAP.DEV.",
+    "TWIN": "TM024.ELIGMAP.TWIN.",
+    "SCORE": "TM024.ELIGMAP.SCORE."
+  },
+  "score_reserved_unopened": true,
+  "addresses": {
+    "E0": "collapsed_rho_elig_control",
+    "E1": "state_immediately_before_zero_input_motor_transition",
+    "Elam": "ungated_leaky_connection_local_presynaptic_trace",
+    "Edelta": "input_recurrent_innovation_E1_minus_E0_diagnostic_only"
+  },
+  "elam": {
+    "law": "e_h,t+1 = lambda * e_h,t + (1-lambda) * rho_t",
+    "update": "every_last_trajectory_snapshot",
+    "rows": "one_per_bound_actuator_even_if_identical",
+    "gated_by_postsynaptic": false,
+    "lambda_grid": [0.0, 0.5, 0.9, 0.95, 0.99],
+    "lambda_1_refused": true,
+    "grid_domain": "DEV_only"
+  },
+  "negative_write": {
+    "N0": "unit_normalized_prototype_w1",
+    "N1": "clipnorm_signed_vector",
+    "N2": "unit_direction_plus_bounded_confidence",
+    "eta": 0.15,
+    "c_max": 1.0,
+    "eps": 1e-12,
+    "adv_zero": "bitwise_no_update",
+    "ranking_battery_law": "N0",
+    "reversal_battery_addresses": ["E0", "E1", "Elam_0.9"]
+  },
+  "capacity": [
+    {"n_cues": 2, "n_handles": 2, "balanced": true, "purpose": "minimal_opposing", "required": true},
+    {"n_cues": 4, "n_handles": 2, "balanced": true, "purpose": "multi_address_per_actuator", "required": true},
+    {"n_cues": 8, "n_handles": 2, "balanced": true, "purpose": "fixed_memory_cue_capacity", "required": true}
+  ],
+  "teach_orders": ["A_then_B", "B_then_A"],
+  "equal_advantage": true,
+  "pos_delta": [0.25, -0.1, 0.15, 0.0],
+  "neg_delta": [-0.35, 0.45, -0.15, 0.0],
+  "margin": {
+    "cosine_margin_min": 0.01,
+    "native_score_margin_min": 0.01,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19,
+    "reject_margin_gt_zero_alone": true,
+    "frozen_before_dev": true
+  },
+  "separation": {
+    "cos_distinct_max": 0.99,
+    "l2_distinct_min": 0.05
+  },
+  "must_feed": ["live_ACT_scoring", "delayed_credit"],
+  "credit_select_tick_not_credit_observe": true,
+  "decision_ladder": [
+    {
+      "id": "elam_robust_8cue",
+      "when": "Elam robustly passes at eight cues (ranking+margin+perturb+survival)",
+      "then": "authorize_bounded_connection_local_eligibility_with_declared_budget"
+    },
+    {
+      "id": "trace_separates_linear_fails",
+      "when": "trace pairwise-distinct at eight cues but local linear scoring fails frozen margin",
+      "then": "competitive_or_discriminative_write_geometry"
+    },
+    {
+      "id": "only_e1_passes",
+      "when": "only E1 ranking passes required capacities",
+      "then": "timing_wall_form_eligibility_before_motor_transition"
+    },
+    {
+      "id": "no_address_passes",
+      "when": "no candidate address passes required ranking",
+      "then": "do_not_install_another_local_learner_motor_transition_still_destroys_information"
+    },
+    {
+      "id": "n1n2_reversal_elam_fail",
+      "when": "N1 or N2 fixes ecological reversal but Elam ranking fails",
+      "then": "negative_plasticity_repaired_cue_addressing_unsolved"
+    }
+  ],
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_reach.lock",
+    "docs/lineage_plasticitymap.decision.lock",
+    "docs/lineage_actorcredit.lock",
+    "docs/lineage_actorcredit_reach.lock",
+    "docs/lineage_statemap.decision.lock",
+    "docs/lineage_collisionmap.decision.lock",
+    "docs/lineage_persistgate.prereg.lock",
+    "docs/lineage_motorpersist.decision.lock",
+    "docs/lineage_motorpersist.p.lock",
+    "docs/lineage_motorpersist.reaudit.lock",
+    "docs/lineage_writegeom.decision.lock",
+    "docs/lineage_writegeom.dev.lock",
+    "docs/cortex.candidate.v28.lock",
+    "docs/cortex.candidate.v29.lock",
+    "docs/cortex.candidate.v30.lock"
+  ],
+  "another_lineage_run": false,
+  "q3": false,
+  "refuse": [
+    "neural_edit_this_package",
+    "install_Elam_or_N1_or_N2_in_NeuralCortex",
+    "declare_v31",
+    "declare_v32",
+    "open_WRITEGEOM_SCORE",
+    "open_ELIGMAP_SCORE",
+    "instincts",
+    "survival_reproduction_objectives",
+    "SFNN_cell_classes",
+    "increase_n",
+    "lineage_evolution",
+    "semantic_channels",
+    "direct_reward",
+    "cue_keyed_traces",
+    "RLS_in_organism",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "rewrite_historical_locks",
+    "rewrite_writegeom_decision",
+    "earned_next",
+    "stamp_0.0.005",
+    "move_tau_or_delta",
+    "Q3",
+    "credit_historical_rho_only_while_live_reads_E0"
+  ],
+  "note": "Runner-only diagnostic. No neural law. Product remains 0.0.004."
+}
