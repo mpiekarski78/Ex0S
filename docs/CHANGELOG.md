@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.24.REACH runner freeze:** ABI smoke green; zero-elig credit precondition holds. Runner lock pins v28 neural SHA, unused FIT/CHECK domains, Q2 learning gates. Diagnostic answer next. [`lineage_reach.runner.lock`](lineage_reach.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.REACH apparatus:** Newly committed reachability diagnostic after v28 credit-path repair. Unused worlds `TM024.REACH.DIAG.FIT.` / `CHECK.`. Same Q2 learning gates; n stays 64. No answers yet. [`lineage_reach.prereg.lock`](lineage_reach.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V28 / credit-path candidate:** No eligibility ⇒ no plastic motion, including consolidation. Nine sanity + math audit pass. Zero-elig probe max ΔW=0. C4/C5/C6 green (C6 label perm p=0.483). [`cortex.candidate.v28.lock`](cortex.candidate.v28.lock) + [`cortex_mact_boundary.v28.lock`](cortex_mact_boundary.v28.lock). LINEAGE/WALLMAP historical. n stays 64. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V28 apparatus:** Isolated credit-path repair after WALLMAP Q4. Consolidate only tensors that received a nonzero credit/prediction update. No neural edit yet. n stays 64. LINEAGE/WALLMAP historical. [`cortex_v28.prereg.lock`](cortex_v28.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

@@ -1,0 +1,41 @@
+{
+  "version": "TM.0.24.REACH.RUNNER.V1",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "shas": {
+    "runner": "ee7ef8f1a4502ff6e9944e88a55608227d0241f3cd6c3db3492c0f252df5f3c0",
+    "neural_cortex": "0a4014ce91bf08b69693924ee645bdc912ae4c6e0a9b6529bda6a6fe8a281892",
+    "cortex_memory": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+    "prereg": "40abb5caa76a2fc7138ac654084477a70b76c4a657e7bfbd5298fd3b1a4c5458",
+    "contract": "41e89ed5fcb29c86cfe13963dc302613c58df23769ebe1cef632e0e20cf60cf8",
+    "candidate_v28": "63ca21a540806501f03ec32aaa4a502c21a7c90cb44e0e207f7432e8abe1c1b3",
+    "wallmap_evaluate": "95c64a7958c1b37b260b5cb69663a22bcc5c2059f6282bce735e4d0971dc0185",
+    "cortex_lineage": "58540efea926dc12cd2d268b820f581176c1d14b7e143f2babc037ae2ca91bac",
+    "v28_pipeline": "d96b7ebecc812066355985ca81162a350d0efedef6b7e16079c5d05a7defa488"
+  },
+  "prereg_sha": "40abb5caa76a2fc7138ac654084477a70b76c4a657e7bfbd5298fd3b1a4c5458",
+  "contract_sha": "41e89ed5fcb29c86cfe13963dc302613c58df23769ebe1cef632e0e20cf60cf8",
+  "candidate_v28_sha": "63ca21a540806501f03ec32aaa4a502c21a7c90cb44e0e207f7432e8abe1c1b3",
+  "n_wake": 40,
+  "n_replay": 8,
+  "n_probe": 20,
+  "tau": 0.6,
+  "delta_B": 0.05,
+  "delta_P": 0.05,
+  "n": 64,
+  "es": {
+    "gens": 5,
+    "pairs": 8,
+    "sigma": 0.05,
+    "adam_lr": 0.02,
+    "fit_worlds_per_child": 2,
+    "fit_births_per_child": 2,
+    "check_births": 4
+  },
+  "fit_domain": "TM024.REACH.DIAG.FIT.",
+  "check_domain": "TM024.REACH.DIAG.CHECK.",
+  "git_head_at_freeze": "e1ffa25b9b17e00d85db38513ad5c826dd5b27bb",
+  "note": "SHA pin is the integrity gate. Clean tree required once at suite start; result locks may appear mid-run."
+}
