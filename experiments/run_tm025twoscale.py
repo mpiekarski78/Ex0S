@@ -47,6 +47,11 @@ V32_ISO = REPO_ROOT / "docs" / "cortex_v32.isolation.lock"
 V32_AMEND = REPO_ROOT / "docs" / "cortex_v32_architecture_amendment.lock"
 DEV_LOCK = REPO_ROOT / "docs" / "lineage_twoscale.dev.lock"
 DECISION = REPO_ROOT / "docs" / "lineage_twoscale.decision.lock"
+ERRATUM = REPO_ROOT / "docs" / "cortex_v32.erratum.lock"
+ERRATUM_MD = REPO_ROOT / "docs" / "cortex_v32.erratum.md"
+COMPAT_RUNNER = REPO_ROOT / "docs" / "lineage_twoscale.compat.runner.lock"
+COMPAT_LOCK = REPO_ROOT / "docs" / "lineage_twoscale.compat.lock"
+MISMATCH_LOCK = REPO_ROOT / "docs" / "lineage_twoscale.compat.mismatch.lock"
 RESULT_MD = REPO_ROOT / "docs" / "tm025twoscale_results.md"
 NEURAL = REPO_ROOT / "three_memory" / "neural_cortex.py"
 MEMORY = REPO_ROOT / "three_memory" / "cortex_memory.py"
@@ -76,6 +81,9 @@ def twoscale_shas() -> dict[str, str]:
         "v32_prereg": V32_PREREG,
         "v32_isolation": V32_ISO,
         "v32_amendment": V32_AMEND,
+        "v32_erratum": ERRATUM,
+        "v32_erratum_md": ERRATUM_MD,
+        "compat_runner": COMPAT_RUNNER,
         "affinemap_r2_decision": REPO_ROOT / "docs" / "lineage_affinemap.r2.decision.lock",
         "affinemap_r2_addendum": REPO_ROOT / "docs" / "lineage_affinemap.r2.decision.addendum.lock",
         "candidate_v30": REPO_ROOT / "docs" / "cortex.candidate.v30.lock",
@@ -92,6 +100,113 @@ def refuse_dev_lock() -> None:
         raise RuntimeError("TM.0.25.TWOSCALE DEV lock exists; same frozen DEV execution refused again")
     if not V32_PREREG.exists():
         raise RuntimeError("TWOSCALE DEV lock must wait for cortex_v32.prereg.lock")
+
+
+FLOAT_ATOL = 1e-12
+PROVENANCE_PREFIXES = (
+    "git_head",
+    "shas",
+    "env",
+)
+PROVENANCE_KEY_TOKENS = (
+    "timestamp",
+    "executed_at",
+    "compat_at",
+    "execution_id",
+    "execution_identifier",
+)
+HISTORICAL_DEV_SHA = "d118d6ee6de95cbc88f05dd051f3c399f2dd2d7c59d796d7e55e9cd27dec0eaf"
+
+
+def _is_provenance(path: str) -> bool:
+    leaf = path.rsplit(".", 1)[-1]
+    if any(tok in leaf for tok in PROVENANCE_KEY_TOKENS):
+        return True
+    for pref in PROVENANCE_PREFIXES:
+        if path == pref or path.startswith(pref + "."):
+            return True
+    return False
+
+
+def compare_semantic_payload(
+    historical: Any,
+    live: Any,
+    *,
+    path: str = "",
+) -> dict[str, Any]:
+    """Recursive behavioral compare. Provenance paths are excluded, not ignored silently."""
+    changed: list[dict[str, Any]] = []
+    max_abs = 0.0
+    bool_str_ok = True
+
+    def walk(a: Any, b: Any, p: str) -> None:
+        nonlocal max_abs, bool_str_ok
+        if p and _is_provenance(p):
+            return
+        if isinstance(a, dict) and isinstance(b, dict):
+            keys = sorted(set(a) | set(b))
+            for k in keys:
+                child = f"{p}.{k}" if p else str(k)
+                if _is_provenance(child):
+                    continue
+                if k not in a or k not in b:
+                    changed.append(
+                        {
+                            "path": child,
+                            "historical": a.get(k) if k in a else "<missing>",
+                            "live": b.get(k) if k in b else "<missing>",
+                        }
+                    )
+                    continue
+                walk(a[k], b[k], child)
+            return
+        if isinstance(a, list) and isinstance(b, list):
+            if len(a) != len(b):
+                changed.append({"path": p, "historical": f"len={len(a)}", "live": f"len={len(b)}"})
+                return
+            for i, (x, y) in enumerate(zip(a, b, strict=True)):
+                walk(x, y, f"{p}[{i}]")
+            return
+        if (
+            isinstance(a, (int, float, np.floating, np.integer))
+            and isinstance(b, (int, float, np.floating, np.integer))
+            and not isinstance(a, bool)
+            and not isinstance(b, bool)
+        ):
+            da = float(a)
+            db = float(b)
+            delta = abs(da - db)
+            if delta > max_abs:
+                max_abs = delta
+            if delta > FLOAT_ATOL:
+                changed.append({"path": p, "historical": da, "live": db, "abs_delta": delta})
+            return
+        if a != b:
+            if isinstance(a, (bool, str)) or isinstance(b, (bool, str)) or a is None or b is None:
+                bool_str_ok = False
+            changed.append({"path": p, "historical": a, "live": b})
+
+    walk(historical, live, path)
+    hist_ids = [str(c.get("id")) for c in (historical.get("cells") or [])] if isinstance(historical, dict) else []
+    live_ids = [str(c.get("id")) for c in (live.get("cells") or [])] if isinstance(live, dict) else []
+    expect = expected_cell_ids()
+    id_ok = (
+        hist_ids == live_ids
+        and sorted(hist_ids) == sorted(expect)
+        and len(set(hist_ids)) == EXPECTED_N_CELLS
+    )
+    if not id_ok:
+        changed.append({"path": "cells.id", "historical": hist_ids, "live": live_ids})
+    return {
+        "compatible": len(changed) == 0 and id_ok and bool_str_ok,
+        "changed_fields": changed,
+        "max_abs_float_delta": float(max_abs),
+        "exact_boolean_string_equality": bool_str_ok,
+        "n_expected_cells": EXPECTED_N_CELLS,
+        "n_unique_cell_ids": len(set(live_ids)),
+        "expected_cell_ids": expect,
+        "live_cell_ids": live_ids,
+    }
 
 
 def _fresh(tmp: str, tag: str, world: dict[str, Any]) -> NeuralCortex:
@@ -365,8 +480,7 @@ def _decision(cells: list[dict[str, Any]], p: dict[str, Any]) -> tuple[str, str,
     return "two_timescale_battery_pass", "reopen_lineage_readiness", flags
 
 
-def run_dev() -> dict[str, Any]:
-    refuse_dev_lock()
+def eval_dev_battery() -> dict[str, Any]:
     p = load_prereg()
     cells: list[dict[str, Any]] = []
     for spec in p["capacity"]:
@@ -468,6 +582,138 @@ def run_dev() -> dict[str, Any]:
     }
 
 
+def run_dev() -> dict[str, Any]:
+    refuse_dev_lock()
+    return eval_dev_battery()
+
+
+def comparison_schema() -> dict[str, Any]:
+    return {
+        "mode": "recursive_semantic_payload",
+        "float_atol": FLOAT_ATOL,
+        "boolean_string_equality": "exact",
+        "exclude_provenance_prefixes": list(PROVENANCE_PREFIXES),
+        "exclude_provenance_key_tokens": list(PROVENANCE_KEY_TOKENS),
+        "record": [
+            "changed_fields",
+            "max_abs_float_delta",
+            "exact_boolean_string_equality",
+            "n_expected_cells",
+            "n_unique_cell_ids",
+        ],
+        "includes": [
+            "teaching_rows",
+            "episode_counts",
+            "phase_flags",
+            "rest_diagnostics",
+            "perturbation_details",
+            "every_probe",
+        ],
+    }
+
+
+def write_compat_runner_lock() -> dict[str, Any]:
+    if COMPAT_RUNNER.exists():
+        raise RuntimeError("compat runner lock exists; rewrite refused")
+    if not ERRATUM.exists():
+        raise RuntimeError("compat runner freeze requires cortex_v32.erratum.lock")
+    if sha_file(DEV_LOCK) != HISTORICAL_DEV_SHA:
+        raise RuntimeError("historical DEV SHA drifted; rewrite refused")
+    ids = expected_cell_ids()
+    out = {
+        "version": "TM.0.25.TWOSCALE.COMPAT.RUNNER",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eligible_for_000005": False,
+        "n": 64,
+        "historical_dev_lock": "docs/lineage_twoscale.dev.lock",
+        "historical_dev_lock_sha": HISTORICAL_DEV_SHA,
+        "erratum_lock_sha": sha_file(ERRATUM),
+        "neural_cortex_sha": sha_file(NEURAL),
+        "runner_sha": sha_file(THIS),
+        "expected_n_cells": EXPECTED_N_CELLS,
+        "expected_cell_ids": ids,
+        "n_unique_cell_ids": len(set(ids)),
+        "comparison_schema": comparison_schema(),
+        "rewrite_historical_dev": False,
+        "replay_writes_dev": False,
+        "score_opened": False,
+        "competitive_plasticity_authorized": False,
+        "note": "Comparator frozen before 36-cell replay. Product remains 0.0.004.",
+    }
+    COMPAT_RUNNER.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+    return out
+
+
+def refuse_replay() -> None:
+    if not COMPAT_RUNNER.exists():
+        raise RuntimeError("replay refused until lineage_twoscale.compat.runner.lock is on origin/main")
+    if not DEV_LOCK.exists():
+        raise RuntimeError("replay requires historical lineage_twoscale.dev.lock")
+    if sha_file(DEV_LOCK) != HISTORICAL_DEV_SHA:
+        raise RuntimeError("replay refused: historical DEV SHA drifted")
+    live_runner = json.loads(COMPAT_RUNNER.read_text(encoding="utf-8"))
+    if live_runner.get("neural_cortex_sha") != sha_file(NEURAL):
+        raise RuntimeError("replay refused: live neural SHA does not match frozen compat runner")
+    if live_runner.get("runner_sha") != sha_file(THIS):
+        raise RuntimeError("replay refused: live runner SHA does not match frozen compat runner")
+    if COMPAT_LOCK.exists() or MISMATCH_LOCK.exists():
+        raise RuntimeError("replay already recorded; same frozen comparison refused again")
+
+
+def replay_frozen_dev() -> dict[str, Any]:
+    refuse_replay()
+    before = sha_file(DEV_LOCK)
+    hist = json.loads(DEV_LOCK.read_text(encoding="utf-8"))
+    live = eval_dev_battery()
+    after = sha_file(DEV_LOCK)
+    if before != after or after != HISTORICAL_DEV_SHA:
+        raise RuntimeError("replay must not rewrite historical DEV lock")
+    cmp = compare_semantic_payload(hist, live)
+    git_head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT).decode().strip()
+    base = {
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eligible_for_000005": False,
+        "n": 64,
+        "historical_dev_lock_sha": HISTORICAL_DEV_SHA,
+        "erratum_lock_sha": sha_file(ERRATUM),
+        "compat_runner_sha": sha_file(COMPAT_RUNNER),
+        "live_neural_sha": sha_file(NEURAL),
+        "live_runner_sha": sha_file(THIS),
+        "git_head": git_head,
+        "decision_code": hist.get("decision_code"),
+        "changed_fields": cmp["changed_fields"],
+        "max_abs_float_delta": cmp["max_abs_float_delta"],
+        "exact_boolean_string_equality": cmp["exact_boolean_string_equality"],
+        "n_expected_cells": cmp["n_expected_cells"],
+        "n_unique_cell_ids": cmp["n_unique_cell_ids"],
+        "expected_cell_ids": cmp["expected_cell_ids"],
+        "rewrite_historical_dev": False,
+        "lineage_reopened": False,
+        "score_opened": False,
+    }
+    if cmp["compatible"]:
+        out = {
+            "version": "TM.0.25.TWOSCALE.COMPAT",
+            "compatible": True,
+            **base,
+            "note": "Erratum is measurement-compatible with scored v32. architectural_wall_acquire stands. Product remains 0.0.004.",
+        }
+        COMPAT_LOCK.write_text(json.dumps(out, indent=2, default=_json_default) + "\n", encoding="utf-8")
+        return out
+    out = {
+        "version": "TM.0.25.TWOSCALE.COMPAT.MISMATCH",
+        "compatible": False,
+        **base,
+        "note": "Compatibility failed. Historical DEV preserved. Unused R3 is next. Product remains 0.0.004.",
+    }
+    MISMATCH_LOCK.write_text(json.dumps(out, indent=2, default=_json_default) + "\n", encoding="utf-8")
+    return out
+
+
 def write_dev_lock(out: dict[str, Any]) -> None:
     refuse_dev_lock()
     DEV_LOCK.write_text(json.dumps(out, indent=2, default=_json_default) + "\n", encoding="utf-8")
@@ -542,11 +788,15 @@ def smoke() -> dict[str, Any]:
         rest = ag.rest_epoch(int(p["n_rest_ticks"]))
         live = p1_probe(ag, world, cue, tag="smk_p")
         snap = ag.checkpoint()
+        assert int(snap.get("dev_epoch") or 0) == int(ag.dev_epoch)
+        assert "episode_n_inserts" in snap
         twin = NeuralCortex(None, genome=ag.genome, device="cpu")
         twin.load_checkpoint(snap)
         twin.bind_actuators(list(world["handles"]))
         assert len(twin._episodes) == len(ag._episodes)
         assert twin._last_p1 is not None
+        assert int(twin.dev_epoch) == int(ag.dev_epoch)
+        assert int(twin._episode_n_inserts) == int(ag._episode_n_inserts)
     return {
         "smoke_ok": True,
         "expected_id_count": EXPECTED_N_CELLS,
@@ -571,9 +821,17 @@ def main() -> None:
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--write-dev-lock", action="store_true")
     ap.add_argument("--run-dev", action="store_true")
+    ap.add_argument("--write-compat-runner-lock", action="store_true")
+    ap.add_argument("--replay-frozen-dev", action="store_true")
     args = ap.parse_args()
     if args.smoke:
         print(json.dumps(smoke(), indent=2, default=_json_default))
+        return
+    if args.write_compat_runner_lock:
+        print(json.dumps(write_compat_runner_lock(), indent=2))
+        return
+    if args.replay_frozen_dev:
+        print(json.dumps(replay_frozen_dev(), indent=2, default=_json_default))
         return
     if args.write_dev_lock and not args.run_dev:
         refuse_dev_lock()

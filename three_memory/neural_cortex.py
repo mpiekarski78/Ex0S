@@ -57,6 +57,7 @@ BODY_SETPOINT = np.array([1.0, 0.0, 1.0, 0.0], dtype=np.float64)
 # v13: compare body_adv to a slow agreeing baseline instead of last-tick snap.
 CONFLICT_ADV_EPS = 1e-9
 ELIG_EPS = 1e-12
+TIE_EPS = 1e-12
 CONFLICT_HOLD_BIAS = 2.0
 ADV_BASELINE_ALPHA = 0.05
 FAMILIARITY_RATIO = 0.5
@@ -393,8 +394,11 @@ class NeuralCortex:
     def _unique_act_winner(self, scores: dict[str, float]) -> str | None:
         if not scores:
             return None
-        mx = max(float(v) for v in scores.values())
-        wins = [h for h, v in scores.items() if float(v) == mx]
+        vals = [float(v) for v in scores.values()]
+        if all(abs(s) <= TIE_EPS for s in vals):
+            return None
+        mx = max(vals)
+        wins = [h for h, v in scores.items() if abs(float(v) - mx) <= TIE_EPS]
         return wins[0] if len(wins) == 1 else None
 
     def _act_ranking_error(self, p1: np.ndarray, handle: str, adv: float) -> bool:
@@ -547,8 +551,8 @@ class NeuralCortex:
         if not scores:
             return None
         best = max(scores.values())
-        ties = sorted(h for h, s in scores.items() if abs(s - best) <= 1e-12)
-        if len(ties) > 1 or all(abs(s) <= 1e-12 for s in scores.values()):
+        ties = sorted(h for h, s in scores.items() if abs(s - best) <= TIE_EPS)
+        if len(ties) > 1 or all(abs(s) <= TIE_EPS for s in scores.values()):
             return str(self.rng_motor.choice(ties))
         return ties[0]
 
@@ -963,27 +967,42 @@ class NeuralCortex:
                 alpha = self._lp("adv_baseline_alpha", ADV_BASELINE_ALPHA)
                 self._adv_baseline = (1.0 - alpha) * ema + alpha * float(body_adv)
             self._last_act_body_adv = float(body_adv)
-        if elig_motor and p["token"] is not None and p["op"] in ("EMIT", "ACT") and not skip_act_cost:
-            if p["op"] == "ACT" and self._act_score_proto():
-                self._credit_proto(
-                    str(p["token"]),
-                    float(adv),
-                    p.get("rho_motor", p["rho_elig"]),
-                    eta_a,
-                )
-            elif p["op"] == "ACT":
-                p1_raw = p.get("rho_p1")
-                if p1_raw is None:
-                    p1_raw = p.get("rho_motor", p["rho_elig"])
-                p1 = np.asarray(p1_raw, dtype=np.float64)
-                if not self._resting:
-                    self._episode_write(p1, str(p["token"]), float(adv))
-                    if self._act_ranking_error(p1, str(p["token"]), float(adv)):
-                        self._apply_act_query_update(p1, str(p["token"]), float(adv), eta_a, mix_slow=False)
+        if p["op"] == "ACT" and p["token"] is not None and not skip_act_cost:
+            if self._act_score_proto():
+                if elig_motor:
+                    self._credit_proto(
+                        str(p["token"]),
+                        float(adv),
+                        p.get("rho_motor", p["rho_elig"]),
+                        eta_a,
+                    )
             else:
-                tok_v = self._to_t(self._vocab_vec(p["token"]))
-                self.W_emit_query = self.W_emit_query + eta_a * adv * torch.outer(tok_v, rho_motor)
-                updated.add("W_emit_query")
+                p1_raw = p.get("rho_p1")
+                if p1_raw is not None:
+                    p1 = np.asarray(p1_raw, dtype=np.float64)
+                    if float(np.max(np.abs(p1))) > ELIG_EPS and not self._resting:
+                        self._episode_write(p1, str(p["token"]), float(adv))
+                        if self._act_ranking_error(p1, str(p["token"]), float(adv)):
+                            self._apply_act_query_update(
+                                p1, str(p["token"]), float(adv), eta_a, mix_slow=False
+                            )
+                elif elig_motor:
+                    p1 = np.asarray(p.get("rho_motor", p["rho_elig"]), dtype=np.float64)
+                    if not self._resting:
+                        self._episode_write(p1, str(p["token"]), float(adv))
+                        if self._act_ranking_error(p1, str(p["token"]), float(adv)):
+                            self._apply_act_query_update(
+                                p1, str(p["token"]), float(adv), eta_a, mix_slow=False
+                            )
+        elif (
+            p["op"] == "EMIT"
+            and elig_motor
+            and p["token"] is not None
+            and not skip_act_cost
+        ):
+            tok_v = self._to_t(self._vocab_vec(p["token"]))
+            self.W_emit_query = self.W_emit_query + eta_a * adv * torch.outer(tok_v, rho_motor)
+            updated.add("W_emit_query")
         self._clip_and_consolidate(updated)
         self._pending = None
         self._pred_pending = None
@@ -1243,6 +1262,7 @@ class NeuralCortex:
             "device": str(self.device),
             "age": self.age,
             "t": self._t,
+            "dev_epoch": int(self.dev_epoch),
             "W": {name: tsave(getattr(self, name)) for name in self._plastic_names},
             "W_slow": {name: tsave(v) for name, v in self.W_slow.items()},
             "W_body": tsave(self.W_body),
@@ -1310,6 +1330,10 @@ class NeuralCortex:
                 for e in self._episodes
             ],
             "episode_clock": int(self._episode_clock),
+            "episode_n_inserts": int(self._episode_n_inserts),
+            "episode_n_replaced": int(self._episode_n_replaced),
+            "n_rest_replay": int(self._n_rest_replay),
+            "n_rest_strengthen": int(self._n_rest_strengthen),
             "sources": {k: v.tolist() for k, v in self.sources.items()},
             "v_start": self.v_start.tolist(),
             "v_end": self.v_end.tolist(),
@@ -1354,6 +1378,7 @@ class NeuralCortex:
         self.prev_interaction = snap.get("prev_interaction")
         self.age = int(snap.get("age") or 0)
         self._t = int(snap.get("t") or 0)
+        self.dev_epoch = int(snap.get("dev_epoch") or 0)
         self.v_start = np.asarray(snap["v_start"], dtype=np.float64)
         self.v_end = np.asarray(snap["v_end"], dtype=np.float64)
         self.vocab = {
@@ -1404,6 +1429,10 @@ class NeuralCortex:
                 }
             )
         self._episode_clock = int(snap.get("episode_clock") or 0)
+        self._episode_n_inserts = int(snap.get("episode_n_inserts") or 0)
+        self._episode_n_replaced = int(snap.get("episode_n_replaced") or 0)
+        self._n_rest_replay = int(snap.get("n_rest_replay") or 0)
+        self._n_rest_strengthen = int(snap.get("n_rest_strengthen") or 0)
         gsnap = snap.get("genome") or {}
         if "act_score_mode" in gsnap:
             self.genome.act_score_mode = str(gsnap["act_score_mode"])

@@ -26,6 +26,9 @@ ADDENDUM_SHA = "6fb1b0b133abcf64f4f55834d531d0ce87f07ae70e4eb5fdf82fc47f04772611
 R1_DEV_SHA = "43a100ed2a45636755e0c957fda188c216afc7246372bf40656a8bbaef29ecfc"
 R2_TS_DEV_SHA = "b202cdb23fdb56d406e5bf2bdf2d49ae999b2962451aa9da7d58d3ebaeab28b7"
 EXPECTED_N_CELLS = 36
+ERRATUM_SHA = "35d9de54ffef1260bc9ea1151e808e7ce1821a38107a42be58e2e528a1c83395"
+ERRATUM_MD_SHA = "f42be4b00964b91cd98ebec42fd3a7f0653a9a90a6f95a9e405ef32fe9320bcc"
+COMPAT_RUNNER_SHA = "780718e4a6b5c2bc6ef676ede80faf322ac50f4c526e636d870a212977c6ba46"
 MEMORY = "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7"
 
 
@@ -70,6 +73,23 @@ def test_freeze_files() -> None:
     assert cells["domains"]["DEV"] == "TM025.TWOSCALE.DEV."
     assert cells["domains"]["SCORE"] == "TM025.TWOSCALE.SCORE."
     assert cells["neural_edit_authorized"] is True
+    err = json.loads((REPO_ROOT / "docs" / "cortex_v32.erratum.lock").read_text(encoding="utf-8"))
+    assert sha(REPO_ROOT / "docs" / "cortex_v32.erratum.lock") == ERRATUM_SHA
+    assert sha(REPO_ROOT / "docs" / "cortex_v32.erratum.md") == ERRATUM_MD_SHA
+    assert err["historical_code"] == "architectural_wall_acquire"
+    assert err["preserve_missing_p1_fallback"] is True
+    assert err["r3_opened"] is False
+    assert err["candidate_v32_lock_written"] is False
+    assert "competitive_heterosynaptic_rival_depression" in err["refuse"]
+    assert "remove_missing_p1_fallback" in err["refuse"]
+    assert "execute_replay_before_compat_runner_freeze" in err["refuse"]
+    assert err["next_cycle"]["authorized_this_package"] is False
+    src = (REPO_ROOT / "three_memory" / "neural_cortex.py").read_text(encoding="utf-8")
+    assert "TIE_EPS" in src
+    credit = src.split("def _apply_credit")[1].split("def _clip_and_consolidate")[0]
+    assert "rho_p1" in credit
+    assert "elig_motor" in credit
+
 
 
 def test_cell_ids() -> None:
@@ -223,6 +243,212 @@ def test_scored_eight_cue_cell_reproduces() -> None:
     assert abs(float(live["min_normalized_geometric_margin"]) - float(rec["min_normalized_geometric_margin"])) < 1e-12
 
 
+def _pending(
+    ag,
+    handle: str,
+    *,
+    rho_p1,
+    rho_motor,
+):
+    import numpy as np
+
+    n = int(ag.genome.n)
+    z = np.zeros(n, dtype=np.float64)
+    motor = z if rho_motor is None else np.asarray(rho_motor, dtype=np.float64)
+    return {
+        "op": "ACT",
+        "token": handle,
+        "rho_elig": motor.copy(),
+        "rho_op": motor.copy(),
+        "rho_motor": motor.copy(),
+        "rho_p1": None if rho_p1 is None else np.asarray(rho_p1, dtype=np.float64).copy(),
+        "s_hat": np.zeros(ag.genome.d_sym, dtype=np.float64),
+        "body": np.zeros(4, dtype=np.float64),
+        "cost": 0.0,
+        "motor_vec": ag.motor_vocab[handle].copy(),
+        "authored": True,
+        "clamped": True,
+        "t": 0,
+        "interaction_token": "erratum",
+    }
+
+
+def _fresh_bound():
+    from experiments.run_tm023cortex import make_cortex
+
+    ag = make_cortex(None, device="cpu")
+    ag.bind_actuators(["h_a", "h_b"])
+    return ag
+
+
+def test_tie_band_unique_winner() -> None:
+    import numpy as np
+    from three_memory.neural_cortex import TIE_EPS
+
+    ag = _fresh_bound()
+    scores = {"h_a": 0.1, "h_b": 0.1 + TIE_EPS * 0.5}
+    assert ag._unique_act_winner(scores) is None
+    orig = ag.actuator_scores
+    ag.actuator_scores = lambda rho: scores  # type: ignore[method-assign]
+    pick = ag._choose_actuator(np.zeros(ag.genome.n))
+    ag.actuator_scores = orig
+    assert pick in ("h_a", "h_b")
+
+
+def test_p1_credit_three_cases() -> None:
+    import numpy as np
+    from three_memory.neural_cortex import BODY_SETPOINT, ELIG_EPS
+
+    n_ok = 0
+    p1 = np.zeros(64, dtype=np.float64)
+    p1[0] = 1.0
+    motor = np.zeros(64, dtype=np.float64)
+    motor[1] = 1.0
+    z = np.zeros(64, dtype=np.float64)
+
+    ag = _fresh_bound()
+    h = "h_a"
+    w0 = float(ag.W_act_query.abs().max().item())
+    ag._pending = _pending(ag, h, rho_p1=p1, rho_motor=z)
+    ag._apply_credit(np.zeros(ag.genome.d_sym), BODY_SETPOINT)
+    assert float(ag.W_act_query.abs().max().item()) > w0 + ELIG_EPS
+    assert len(ag._episodes) >= 1
+    n_ok += 1
+
+    ag = _fresh_bound()
+    ag._pending = _pending(ag, h, rho_p1=z, rho_motor=motor)
+    ag._apply_credit(np.zeros(ag.genome.d_sym), BODY_SETPOINT)
+    assert float(ag.W_act_query.abs().max().item()) <= ELIG_EPS
+    assert len(ag._episodes) == 0
+    n_ok += 1
+
+    ag = _fresh_bound()
+    ag._pending = _pending(ag, h, rho_p1=None, rho_motor=motor)
+    ag._apply_credit(np.zeros(ag.genome.d_sym), BODY_SETPOINT)
+    assert float(ag.W_act_query.abs().max().item()) > ELIG_EPS
+    assert len(ag._episodes) >= 1
+    n_ok += 1
+    assert n_ok == 3
+
+
+def test_checkpoint_dev_epoch_defaults_and_age_scale() -> None:
+    import numpy as np
+    from three_memory.neural_cortex import GenomeConfig, NeuralCortex
+
+    lp = {
+        "age.birth.eta_act_scale": 1.0,
+        "age.high_plasticity.eta_act_scale": 0.25,
+    }
+    g = GenomeConfig(lineage_params=dict(lp))
+    ag = NeuralCortex(None, genome=g, device="cpu")
+    ag.bind_actuators(["h_a", "h_b"])
+    ag.rest_epoch(1)
+    assert ag.dev_epoch == 1
+    assert ag._age_scale("eta_act_scale") == 0.25
+    snap = ag.checkpoint()
+    twin_g = GenomeConfig(lineage_params=dict(lp))
+    twin = NeuralCortex(None, genome=twin_g, device="cpu")
+    twin.bind_actuators(["h_a", "h_b"])
+    assert twin.dev_epoch == 0
+    assert twin._age_scale("eta_act_scale") == 1.0
+    twin.load_checkpoint(snap)
+    assert twin.dev_epoch == 1
+    assert twin._age_scale("eta_act_scale") == 0.25
+    p1 = np.zeros(ag.genome.n, dtype=np.float64)
+    p1[0] = 1.0
+    eta_live = float(ag.genome.eta_act) * ag._age_scale("eta_act_scale")
+    eta_twin = float(twin.genome.eta_act) * twin._age_scale("eta_act_scale")
+    assert abs(eta_live - eta_twin) < 1e-12
+    w0 = twin.W_act_query.detach().clone()
+    twin._apply_act_query_update(p1, "h_a", 1.0, eta_twin, mix_slow=False)
+    live_w0 = ag.W_act_query.detach().clone()
+    ag._apply_act_query_update(p1, "h_a", 1.0, eta_live, mix_slow=False)
+    assert float((ag.W_act_query - live_w0).abs().max().item()) > 0.0
+    assert abs(
+        float((ag.W_act_query - live_w0).abs().max().item())
+        - float((twin.W_act_query - w0).abs().max().item())
+    ) < 1e-12
+
+    missing = ag.checkpoint()
+    for k in ("dev_epoch", "episode_n_inserts", "episode_n_replaced", "n_rest_replay", "n_rest_strengthen"):
+        missing.pop(k, None)
+    blank = NeuralCortex(None, genome=GenomeConfig(lineage_params=dict(lp)), device="cpu")
+    blank.bind_actuators(["h_a", "h_b"])
+    blank.dev_epoch = 7
+    blank.load_checkpoint(missing)
+    assert blank.dev_epoch == 0
+    assert blank._episode_n_inserts == 0
+    assert blank._episode_n_replaced == 0
+    assert blank._n_rest_replay == 0
+    assert blank._n_rest_strengthen == 0
+
+
+def test_compat_runner_schema_and_gate() -> None:
+    from experiments.run_tm025twoscale import (
+        COMPAT_LOCK,
+        COMPAT_RUNNER,
+        MISMATCH_LOCK,
+        comparison_schema,
+    )
+
+    p = REPO_ROOT / "docs" / "lineage_twoscale.compat.runner.lock"
+    if not p.exists():
+        raise AssertionError("compat runner lock must be frozen before replay")
+    if COMPAT_RUNNER_SHA:
+        assert sha(p) == COMPAT_RUNNER_SHA
+    lock = json.loads(p.read_text(encoding="utf-8"))
+    assert lock["historical_dev_lock_sha"] == DEV_LOCK_SHA
+    assert lock["expected_n_cells"] == EXPECTED_N_CELLS
+    assert lock["n_unique_cell_ids"] == EXPECTED_N_CELLS
+    assert len(lock["expected_cell_ids"]) == EXPECTED_N_CELLS
+    assert len(set(lock["expected_cell_ids"])) == EXPECTED_N_CELLS
+    assert lock["rewrite_historical_dev"] is False
+    assert lock["replay_writes_dev"] is False
+    assert lock["competitive_plasticity_authorized"] is False
+    schema = lock["comparison_schema"]
+    assert schema["mode"] == "recursive_semantic_payload"
+    assert schema["float_atol"] == 1e-12
+    assert "git_head" in schema["exclude_provenance_prefixes"]
+    assert "shas" in schema["exclude_provenance_prefixes"]
+    assert comparison_schema()["exclude_provenance_prefixes"] == schema["exclude_provenance_prefixes"]
+    if not COMPAT_LOCK.exists() and not MISMATCH_LOCK.exists():
+        return
+    assert COMPAT_LOCK.exists() != MISMATCH_LOCK.exists()
+    assert sha(REPO_ROOT / "docs" / "lineage_twoscale.dev.lock") == DEV_LOCK_SHA
+
+
+def test_semantic_compare_excludes_provenance() -> None:
+    from experiments.run_tm025twoscale import compare_semantic_payload, expected_cell_ids
+
+    ids = expected_cell_ids()
+    cells = [{"id": i, "passed": True, "n_cues": 2} for i in ids]
+    hist = {
+        "decision_code": "architectural_wall_acquire",
+        "git_head": "aaa",
+        "shas": {"runner": "old", "neural_cortex": "oldn"},
+        "env": {"python": "3"},
+        "cells": cells,
+        "phase_flags": {"acquire_8": False},
+    }
+    live = {
+        "decision_code": "architectural_wall_acquire",
+        "git_head": "bbb",
+        "shas": {"runner": "new", "neural_cortex": "newn"},
+        "env": {"python": "9"},
+        "cells": cells,
+        "phase_flags": {"acquire_8": False},
+    }
+    out = compare_semantic_payload(hist, live)
+    assert out["compatible"] is True
+    assert out["changed_fields"] == []
+    live2 = json.loads(json.dumps(live))
+    live2["phase_flags"]["acquire_8"] = True
+    bad = compare_semantic_payload(hist, live2)
+    assert bad["compatible"] is False
+    assert bad["changed_fields"]
+    assert bad["exact_boolean_string_equality"] is False
+
+
 if __name__ == "__main__":
     test_freeze_files()
     test_cell_ids()
@@ -232,4 +458,9 @@ if __name__ == "__main__":
     test_dev_opened()
     test_addendum()
     test_scored_eight_cue_cell_reproduces()
+    test_tie_band_unique_winner()
+    test_p1_credit_three_cases()
+    test_checkpoint_dev_epoch_defaults_and_age_scale()
+    test_compat_runner_schema_and_gate()
+    test_semantic_compare_excludes_provenance()
     print("ok")
