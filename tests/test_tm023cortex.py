@@ -752,6 +752,25 @@ def test_verify_d3_r2_cli() -> None:
     assert not (REPO_ROOT / "docs" / "cortex_development.v15.lock").exists()
 
 
+def test_verify_d6_r2_cli() -> None:
+    from experiments.run_tm023cortex import verify_d6_r2
+
+    v = verify_d6_r2()
+    assert v["ok"] is True, v
+    if not (REPO_ROOT / "docs" / "cortex.candidate.v22.lock").exists() or not (
+        REPO_ROOT / "docs" / "cortex_d6_r2_gate.lock"
+    ).exists():
+        assert v.get("pending") is True
+        return
+    assert v.get("pending") is False
+    if v["relation_gate_clear"]:
+        assert v["n_pair_clear"] >= 13
+        assert not (REPO_ROOT / "docs" / "cortex_d6_r2_gate.failure.lock").exists()
+    else:
+        assert v["refuse_fulldev_before_clear"] is True
+        assert (REPO_ROOT / "docs" / "cortex_d6_r2_gate.failure.lock").exists()
+
+
 def test_verify_d6_r1_cli() -> None:
     from experiments.run_tm023cortex import verify_d6_r1
 
@@ -1043,6 +1062,7 @@ if __name__ == "__main__":
     test_v15_candidate_boundary_pending_gate()
     test_verify_d3_r3_cli()
     test_verify_d3_r2_cli()
+    test_verify_d6_r2_cli()
     test_verify_d6_r1_cli()
     test_verify_d5_r2_cli()
     test_verify_d5_r1_cli()
