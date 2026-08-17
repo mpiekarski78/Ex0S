@@ -1,0 +1,93 @@
+{
+  "version": "TM.0.23.CORTEX.FULLDEV.R5.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "76aa6183ea560aa681d93f065c666a2ef80fd27aec3ca2ee82c368a79ddb9ab5",
+  "failure_sha": "e4639e9565d71b1afbaf830e8fec5c9d1faa4d923c4f45d3dc80d0fb1a4a660c",
+  "reveal_sha": "76ebef3d35d4d3986112671cc05176d8de3c750109585f7cd6592306959e7528",
+  "n_pair_clear": 0,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "apparatus_git_sha": "75d3ba4327bdd0ac36218bb91268d09d52d716ee",
+      "candidate_git_sha": "09ca83436dca2d9d4b54d0a67b1210f0e52877da"
+    },
+    {
+      "id": "domain_is_full_r5",
+      "ok": true,
+      "domain": "TM023.FULL.R5."
+    },
+    {
+      "id": "d6_transferred",
+      "ok": true,
+      "d6_ok": 32,
+      "note": "Isolated D6.R3 echoic emit + vocal refractory holds in full-dev (32/32)."
+    },
+    {
+      "id": "d4_d3_transferred",
+      "ok": true,
+      "d4_ok": 32,
+      "d3_ok": 30
+    },
+    {
+      "id": "first_fail_modes",
+      "ok": true,
+      "first_fail_histogram": {"D7": 10, "D1": 9, "D8": 5, "D5": 5, "D3": 2, "D2": 1},
+      "stage_pass_counts": {"D0": 32, "D1": 23, "D2": 31, "D3": 30, "D4": 32, "D5": 22, "D6": 32, "D7": 10, "D8": 0, "D9": 27, "D10": 16, "D11": 32, "D12": 29}
+    },
+    {
+      "id": "d7_is_the_post_d6_wall",
+      "ok": true,
+      "d7_ok": 10,
+      "max_len_lt_4": 19,
+      "note": "22/32 lives miss D7. 19/22 reds have max_length<4: EMIT unrolls 0–3 tokens, not the taught variable-length phrase. Terminals are already high (vocal refractory). One red is terminals<15 only."
+    },
+    {
+      "id": "d8_also_red_do_not_skip_d7",
+      "ok": true,
+      "d8_ok": 0,
+      "target_hits_all_zero": true,
+      "note": "D8 is 0/32 (withheld X→Z composition). First-fail D8 is only 5 because D7 fails first. Do not skip D7."
+    },
+    {
+      "id": "d7_scorer_not_soft",
+      "ok": true,
+      "note": "Historical score_d7 requires distinct_lengths>=2, 4<=max_length<=8, terminals>=15, curriculum_hits>=2. Do not edit cortex_develop_scorers.py."
+    },
+    {
+      "id": "d5_partial_regression",
+      "ok": true,
+      "d5_ok": 22,
+      "note": "D5 is 22/32 vs 32/32 on FULLDEV.R4. Reds miss unknown_holds>=12 at 9–11; known_nonhold already green. Not the majority first-fail. Do not lower D5 floors."
+    },
+    {
+      "id": "d1_still_partial",
+      "ok": true,
+      "d1_ok": 23,
+      "note": "9 first-fails at D1 remain the get/drop lure (press=0). D7 is the 10/32 wall after D1–D6."
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_fulldev_r5": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d7",
+    "refuse": [
+      "rewrite docs/cortex_fulldev_r5.lock",
+      "edit-and-rescore on revealed FULLDEV.R5 worlds",
+      "stamp earned_next",
+      "open nursery conversation",
+      "skip D7 to attack D8"
+    ]
+  },
+  "note": "0/16 stands. D6 transferred. The first post-D6 wall is D7: EMIT does not unroll a variable-length phrase."
+}

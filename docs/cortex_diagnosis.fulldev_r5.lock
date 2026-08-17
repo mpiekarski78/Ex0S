@@ -1,0 +1,29 @@
+{
+  "version": "TM.0.23.CORTEX.FULLDEV.R5.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "75d3ba4327bdd0ac36218bb91268d09d52d716ee",
+  "neural_mechanism_changed": true,
+  "v24_authorized_only_if_this_lock": true,
+  "claim": "FULLDEV.R5 D7 is 10/32 because emit_sequence stays short (max_length<4 on 19/22 reds). Echoic emit can replay 1–2 just-heard symbols (D6 32/32) but the inner motor loop falls back to HOLD before a longer phrase unrolls. Biology: speech-motor programs continue an utterance once phonation starts, until a boundary (STOP), rather than pausing after each phoneme. Missing generic law: intra-utterance continuation — after the first EMIT in a motor cycle, keep emitting until STOP. Inter-observe vocal refractory / turn-taking stays. No D7-named shortcut, no planted length, no emit1/emit2 names.",
+  "authorize_v24": [
+    "keep v16–v23 HOLD / habituation / S-write / RETRIEVE recency / echoic emit / vocal refractory laws",
+    "after the first EMIT inside one motor loop, bias subsequent inner ticks toward EMIT until STOP",
+    "do not remove inter-observe vocal_next turn-taking",
+    "do not add capability-specific functions or planted emit1/emit2/length names",
+    "do not edit cortex_develop_scorers.py",
+    "do not lower distinct_lengths>=2, max_length>=4, terminals>=15, or curriculum_hits>=2",
+    "new sealed commitment domain TM023.D7.R1.",
+    "isolated D7 lives must run D1–D6 scorers first",
+    "re-earn C4/C5/C6 before any D7 reveal",
+    "narrow D7 gate ≥13/16 before reopening full D0–D12"
+  ],
+  "refuse": [
+    "edit-and-rescore FULLDEV.R5",
+    "lower D7 floors",
+    "drop C6",
+    "skip D7",
+    "stamp product"
+  ]
+}

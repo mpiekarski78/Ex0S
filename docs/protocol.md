@@ -2180,3 +2180,9 @@ Canonical main `09ca834`. FULLDEV.R5 apparatus follows. Live v23, no neural edit
 
 FULLDEV.R5 apparatus: [`cortex_fulldev_r5.prereg.lock`](cortex_fulldev_r5.prereg.lock). Live v23, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Result: [`cortex_fulldev_r5.lock`](cortex_fulldev_r5.lock) **0/16**. D6 32/32 transferred. First-fail `{D7:10, D1:9, D8:5, D5:5, D3:2, D2:1}`. D7 is 10/32: EMIT does not unroll a variable-length phrase. Audit [`cortex_fulldev_r5.audit.lock`](cortex_fulldev_r5.audit.lock). Diagnosis [`cortex_diagnosis.fulldev_r5.lock`](cortex_diagnosis.fulldev_r5.lock): intra-utterance continuation. Do not rescore FULLDEV.R5. Next is isolated D7.R1.
+
+## TM.0.23.CORTEX.FULLDEV.R5 0/16 → isolated D7.R1
+
+Canonical main `75d3ba4`. Isolated D7.R1 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
