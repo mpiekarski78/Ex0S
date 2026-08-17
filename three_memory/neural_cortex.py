@@ -203,6 +203,7 @@ class NeuralCortex:
         self.retrieval_buffer = torch.zeros(
             (g.k_s, g.d_sym), dtype=self.dtype, device=self.device
         )
+        self.memory.on_write = self._on_s_write
         self.emit_buffer: list[str] = []
         self.last_body = BODY_SETPOINT.copy()
         self.last_s = np.zeros(g.d_sym, dtype=np.float64)
@@ -369,6 +370,14 @@ class NeuralCortex:
         if rng is not None and len(ties) > 1:
             return str(rng.choice(ties))
         return ties[0]
+
+    def _on_s_write(self, rec: CortexRecord) -> None:
+        v = np.asarray(rec.content, dtype=np.float64).reshape(-1)
+        if v.shape[0] != self.genome.d_sym:
+            return
+        buf = self._from_t(self.retrieval_buffer)
+        buf[0] = v
+        self.retrieval_buffer = self._to_t(buf)
 
     def _do_retrieve(self) -> None:
         q = self.W_att @ self.rho

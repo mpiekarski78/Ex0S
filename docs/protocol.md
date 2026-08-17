@@ -2098,3 +2098,5 @@ Result: [`cortex_fulldev_r2.lock`](cortex_fulldev_r2.lock) **0/16**. D3 31/32 tr
 
 Canonical main `8fe8a96`. D4.R1 apparatus: [`cortex_d4_r1.prereg.lock`](cortex_d4_r1.prereg.lock). Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle): [`cortex.candidate.v17.lock`](cortex.candidate.v17.lock). S-write recency. C4/C5/C6 green (C6 label perm p=0.058). Reveal D4.R1 only from a clean tree pinning `git rev-parse HEAD`.
+

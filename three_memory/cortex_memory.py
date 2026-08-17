@@ -40,9 +40,10 @@ class CortexRecord:
 class CortexMemory:
     """Inspectable neural S. Capability-named sources are refused."""
 
-    def __init__(self, root: Path | None = None):
+    def __init__(self, root: Path | None = None, on_write=None):  # noqa: ANN001
         self.root = Path(root) if root is not None else None
         self._records: list[CortexRecord] = []
+        self.on_write = on_write
         if self.root is not None:
             self.root.mkdir(parents=True, exist_ok=True)
             self.reload()
@@ -64,6 +65,8 @@ class CortexMemory:
         if self.root is not None:
             path = self.root / f"{rec.fact_id}.json"
             path.write_text(json.dumps(rec.to_dict(), indent=2) + "\n", encoding="utf-8")
+        if self.on_write is not None:
+            self.on_write(rec)
         return True
 
     def delete(self, fact_id: str) -> bool:
@@ -87,6 +90,11 @@ class CortexMemory:
         return [r.to_dict() for r in self._records]
 
     def restore(self, rows: list[dict[str, Any]]) -> None:
-        self.clear()
-        for row in rows:
-            self.write(CortexRecord(**row))
+        prev = self.on_write
+        self.on_write = None
+        try:
+            self.clear()
+            for row in rows:
+                self.write(CortexRecord(**row))
+        finally:
+            self.on_write = prev

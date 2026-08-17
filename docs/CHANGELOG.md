@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.V17 / D4.R1 candidate:** S-write copies content into retrieval_buffer[0]. Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.058). [`cortex.candidate.v17.lock`](cortex.candidate.v17.lock) + [`cortex_mact_boundary.v17.lock`](cortex_mact_boundary.v17.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D4.R1 apparatus:** S-write copies content into retrieval_buffer[0]. C6 required. Frozen commitment, no neural edit yet. [`cortex_d4_r1.prereg.lock`](cortex_d4_r1.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R2 result:** 0/16. D0 32, D1 19, D2 32, D3 31, **D4 0**. D3 transferred. D4 writes persist but donor S does not change retrieval. [`cortex_fulldev_r2.lock`](cortex_fulldev_r2.lock) + [`cortex_fulldev_r2.audit.lock`](cortex_fulldev_r2.audit.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R2 apparatus:** Full D0–D12 on unused domain `TM023.FULL.R2.` after isolated D3.R3 16/16. Live candidate v16, no neural edit. [`cortex_fulldev_r2.prereg.lock`](cortex_fulldev_r2.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
