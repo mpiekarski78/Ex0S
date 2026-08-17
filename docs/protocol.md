@@ -2120,3 +2120,5 @@ Result: [`cortex_fulldev_r3.lock`](cortex_fulldev_r3.lock) **0/16**. D4 32/32 tr
 
 Canonical main `425a0ee`. Isolated D5 after D4 transferred. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+D5.R1 apparatus: [`cortex_d5_r1.prereg.lock`](cortex_d5_r1.prereg.lock). Habituation familiarity authorized after this freeze. Reveal only from a clean tree pinning `git rev-parse HEAD`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
