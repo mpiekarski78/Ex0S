@@ -1,0 +1,58 @@
+{
+  "version": "TM.0.24.PHASEMAP.DECISION",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "n": 64,
+  "scored_worlds": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "candidate_v31": false,
+  "lineage_reopened": false,
+  "q3": false,
+  "eligibility_budget_installed": false,
+  "declared_budget_remains_closed": 1536,
+  "write_geometry_branch_closed": true,
+  "decision": {
+    "code": "state_reinstatement_instability",
+    "then": "state_reinstatement_instability",
+    "first_fail": "P2",
+    "phase_robust_8cue": {
+      "P0": true,
+      "P1": true,
+      "P2": false,
+      "P3": false,
+      "P4": false,
+      "P5": false
+    },
+    "phase_train_clean_8cue": {
+      "P0": true,
+      "P1": true,
+      "P2": true,
+      "P3": true,
+      "P4": false,
+      "P5": false
+    },
+    "phase_probe_transfer_fail_8cue": {
+      "P0": false,
+      "P1": false,
+      "P2": true,
+      "P3": true,
+      "P4": true,
+      "P5": true
+    }
+  },
+  "dev_lock_sha": "fff8040db45958a325cd6ff4dcf5468b63961d547c62c0cff321beedb88ff5d9",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "git_head": "fa86101275d9d5b370aeee241ff964293f2e6a1d",
+  "note": "Runner-only causal phase map. Write-geometry closed. No v31. Lineage stays closed. Product remains 0.0.004."
+}

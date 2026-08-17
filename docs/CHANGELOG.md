@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.24.PHASEMAP result:** First-match **state_reinstatement_instability**. P0/P1 are robust at eight cues. First fail is P2: teaching is hard-margin clean but live probes do not transfer. P2=P3 and P4=P5. Last robust source is P1. SCORE unopened. No v31. [`lineage_phasemap.decision.lock`](lineage_phasemap.decision.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.PHASEMAP runner freeze:** Frozen P0–P5 keys, D1 oracle from R2, contraction formula, 84 cells. DEV lock only after this runner.lock is on origin/main. No neural edit. SCORE unopened. [`lineage_phasemap.runner.lock`](lineage_phasemap.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.PHASEMAP apparatus:** Write-geometry closed. Runner-only map of P0–P5 on the 2/4/8-cue battery with frozen D1 as instrument. Contraction \(C_t=\|\rho_{t+1}^A-\rho_{t+1}^B\|/\|\rho_t^A-\rho_t^B\|\). Unused `TM024.PHASEMAP.DEV.` / `TWIN.`. SCORE unopened. No D5/v31. [`lineage_phasemap.prereg.lock`](lineage_phasemap.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.DISCRIMMAP.R2 result:** First-match **robust_linear_boundary_absent**. Exact hard-margin D1 is feasible at eight cues but misses the frozen 0.01 geometric floor on required cells; D3/D4 fail every 8-cue rank cell. Historical DISCRIMMAP not rescored. SCORE unopened. No v31/v32. [`lineage_discrimmap.r2.decision.lock`](lineage_discrimmap.r2.decision.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

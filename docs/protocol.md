@@ -2350,13 +2350,15 @@ Addendum: [`lineage_discrimmap.r2.decision.addendum.lock`](lineage_discrimmap.r2
 
 ## TM.0.24.DISCRIMMAP.R2 → isolated PHASEMAP
 
-Canonical main `3f0bc5f`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+Canonical main `fa86101`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
 Hard-margin feasible interpolates captured teaching points. Robust boundary absent means the address is not stable enough for behavior. Do not try another optimizer, competitive rule, or prototype variant.
 
 PHASEMAP apparatus: [`lineage_phasemap.prereg.lock`](lineage_phasemap.prereg.lock) + [`lineage_phasemap.isolation.lock`](lineage_phasemap.isolation.lock). Generalize COLLISIONMAP to 2/4/8 cues. Capture P0–P5. Frozen D1 oracle only. Contraction \(C_t=\|\rho_{t+1}^A-\rho_{t+1}^B\|/\|\rho_t^A-\rho_t^B\|\). Unused `TM024.PHASEMAP.DEV.` / `TWIN.`. SCORE reserved. No D5. n stays 64. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
 
 Phase runner: [`lineage_phasemap.runner.lock`](lineage_phasemap.runner.lock). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
+
+Result: [`lineage_phasemap.decision.lock`](lineage_phasemap.decision.lock) **state_reinstatement_instability**. P0 and P1 are robust at eight cues. First fail is P2: teaching interpolates (`γ\approx 0.0102`) but same-phase probes do not transfer. P2 equals P3; P4 equals P5. Last robust causal source is P1 (event-end). A later freeze may capture P1 for both ACT scoring and credit; this package does not install it. SCORE unopened. No v31. The 1,536 eligibility budget stays closed. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
 
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
