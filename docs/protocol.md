@@ -2196,3 +2196,5 @@ Result: [`cortex_d7_r1_gate.lock`](cortex_d7_r1_gate.lock) **1/16**. Audit [`cor
 
 Canonical main `6ac9742`. Isolated D7.R2 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+D7.R2 apparatus: [`cortex_d7_r2.prereg.lock`](cortex_d7_r2.prereg.lock). Phrase-final STOP authorized; no neural edit yet. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
