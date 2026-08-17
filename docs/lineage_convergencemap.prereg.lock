@@ -1,0 +1,233 @@
+{
+  "version": "TM.0.24.CONVERGENCEMAP.PREREG",
+  "lab": "TM.0.24.CONVERGENCEMAP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "investigation_justified": true,
+  "package_question": "Is the eight-cue wall caused by one-shot exposure, or does it require covariance/replay machinery?",
+  "authorized_by": [
+    "docs/lineage_tracebridge.decision.lock",
+    "docs/lineage_tracebridge.decision.addendum.lock"
+  ],
+  "tracebridge_decision_sha": "284968d782c73727a2de8b34e24461bf75a236f7cc6d07770e9d39529fc038a1",
+  "tracebridge_dev_sha": "b734f0bd45aa52c65ce48fe57fd38b8693ce796d58c38547dc2391e87e49b384",
+  "tracebridge_addendum_sha": "f1bdaa606dc21779bae73b63be139fa8282a788c9a4261c4c87fe9cd961f7eb0",
+  "tracebridge_runner_py_sha": "db6c4e73cac57dd79cb86fcfa371fee1e2fc5753bf1d03402faea690ff4de551",
+  "writegeom_runner_py_sha": "b210cc621ccd93e016483e3d9d8dc8adbc284eb8fabc01a4b15bbb4ecb1f4d31",
+  "candidate": "docs/cortex.candidate.v30.lock",
+  "candidate_v30_sha": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+  "n": 64,
+  "increase_n": false,
+  "act_score_mode": "query",
+  "w1_resurrected": false,
+  "eligibility_budget_installed": false,
+  "trace_rows_installed": false,
+  "write_geometry_branch_closed": true,
+  "declared_budget_if_later_authorized": {
+    "fast_slow_proto": 1024,
+    "event_end_trace_rows": 512,
+    "total": 1536,
+    "opened": false
+  },
+  "declared_budget_remains_closed": 1536,
+  "domains": {
+    "DEV": "TM024.CONVERGENCEMAP.DEV.",
+    "TWIN": "TM024.CONVERGENCEMAP.TWIN.",
+    "SCORE": "TM024.CONVERGENCEMAP.SCORE."
+  },
+  "score_reserved_unopened": true,
+  "p1_bridge": {
+    "source": "experiments/run_tm024tracebridge.py",
+    "teach_arm": "B3",
+    "inject_pending": false,
+    "capture": "event_end_rho",
+    "exact_p1": true
+  },
+  "arms": {
+    "C0": {
+      "role": "one_epoch_always_update_d3_control",
+      "address": "P1_event_end",
+      "learner": "d3_competitive_always_update",
+      "eta": 0.15,
+      "c_max": 1.0,
+      "cycles": [1],
+      "exposure": "live",
+      "error_only": false,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "C1": {
+      "role": "error_only_competitive_perceptron",
+      "address": "P1_event_end",
+      "learner": "d3_competitive_error_only",
+      "eta": 0.15,
+      "c_max": 1.0,
+      "cycles": [1, 2, 4, 8, 16],
+      "exposure": "live",
+      "replay_cycles": [16],
+      "error_only": true,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "C2": {
+      "role": "one_pass_passive_aggressive_margin_correction",
+      "address": "P1_event_end",
+      "learner": "passive_aggressive_min_tau",
+      "geometric_margin_target": 0.01,
+      "learning_rate_grid": false,
+      "cycles": [1],
+      "exposure": "live",
+      "clipnorm": false,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "C3": {
+      "role": "passive_aggressive_repeated_live_exposure",
+      "address": "P1_event_end",
+      "learner": "passive_aggressive_min_tau",
+      "geometric_margin_target": 0.01,
+      "learning_rate_grid": false,
+      "cycles": [2, 4, 8, 16],
+      "exposure": "live",
+      "replay_cycles": [16],
+      "clipnorm": false,
+      "diagnostic_only": true,
+      "v_eligible": false
+    },
+    "C4": {
+      "role": "sequential_rls_replay_ceiling",
+      "address": "P1_event_end",
+      "learner": "sequential_rls",
+      "lambda": 0.01,
+      "cycles": [16],
+      "exposure": "replay",
+      "source": "experiments/run_tm024writegeom.py",
+      "diagnostic_only": true,
+      "v_eligible": false
+    }
+  },
+  "repetition": {
+    "live_reexposure": "regenerate_p1_through_organism",
+    "exact_replay": "reuse_stored_p1_rows_ceiling_only"
+  },
+  "capacity": [
+    {"n_cues": 2, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 4, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 8, "n_handles": 2, "balanced": true, "required": true}
+  ],
+  "teach_orders": ["A_then_B", "B_then_A"],
+  "equal_advantage": true,
+  "pos_delta": [0.25, -0.1, 0.15, 0.0],
+  "neg_delta": [-0.35, 0.45, -0.15, 0.0],
+  "n_rest_ticks": 4,
+  "margin": {
+    "native_ranking_min": 0.01,
+    "geometric_margin_min": 0.01,
+    "w_norm_excludes_intercept": true,
+    "require_correct_classification": true,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19,
+    "frozen_before_dev": true
+  },
+  "retention": {
+    "after_every_cue": true,
+    "intermediate_requires_correct_ranking_only": true,
+    "final_requires_margin_and_perturbation": true
+  },
+  "fit": {
+    "rows": "teach_select_address_only",
+    "never_fit_probes": true,
+    "never_fit_perturbations": true
+  },
+  "controls": {
+    "delayed_consequences": true,
+    "positive_and_negative": true,
+    "ecological_reversal": true,
+    "hold": false,
+    "rest": true,
+    "renamed_twins": true,
+    "frozen_perturbations": true
+  },
+  "expected_n_cells": 220,
+  "expected_kind_counts": {
+    "rank": 168,
+    "twin": 28,
+    "eco": 12,
+    "rest": 12
+  },
+  "decision_ladder": [
+    {
+      "id": "compact_error_correcting_write_sufficient",
+      "when": "C2 passes in one exposure, or C1 passes at one live cycle",
+      "then": "compact_error_correcting_write_sufficient"
+    },
+    {
+      "id": "repeated_exposure_suffices",
+      "when": "C1 or C3 pass only after live repetition",
+      "then": "repeated_exposure_suffices"
+    },
+    {
+      "id": "state_reinstatement_unstable_across_learning",
+      "when": "exact replay of C1 or C3 passes and live C1/C3 fail",
+      "then": "state_reinstatement_unstable_across_learning"
+    },
+    {
+      "id": "covariance_aware_memory_required",
+      "when": "only C4 passes",
+      "then": "covariance_aware_memory_required"
+    },
+    {
+      "id": "oracle_separability_not_operationally_reachable",
+      "when": "nothing below B4 passes",
+      "then": "oracle_separability_not_operationally_reachable"
+    }
+  ],
+  "fail_closed": [
+    "prereg_or_runner_hash_mismatch",
+    "missing_or_duplicated_cell",
+    "probe_in_fit",
+    "score_identifier_in_dev_payload",
+    "act_score_mode_not_query",
+    "w1_or_v31_present",
+    "same_frozen_dev_execution_again",
+    "passive_aggressive_learning_rate_grid"
+  ],
+  "historical_immutable": [
+    "docs/lineage_tracebridge.decision.lock",
+    "docs/lineage_tracebridge.dev.lock",
+    "docs/lineage_tracebridge.runner.lock",
+    "experiments/run_tm024tracebridge.py",
+    "docs/lineage_phasemap.decision.lock",
+    "docs/lineage_writegeom.decision.lock",
+    "docs/cortex.candidate.v30.lock"
+  ],
+  "another_lineage_run": false,
+  "q3": false,
+  "refuse": [
+    "D5",
+    "neural_edit_this_package",
+    "declare_v31",
+    "declare_v32",
+    "resurrect_W1",
+    "open_SCORE",
+    "install_512_trace_this_package",
+    "install_1536_eligibility_budget",
+    "increase_n",
+    "instincts",
+    "SFNN_cell_classes",
+    "lineage_evolution",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "rewrite_historical_locks",
+    "earned_next",
+    "stamp_0.0.005",
+    "learning_rate_grid_on_PA"
+  ],
+  "note": "Runner-only one-shot vs replay on exact P1. No neural law. Product remains 0.0.004."
+}

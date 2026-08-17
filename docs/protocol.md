@@ -2374,6 +2374,18 @@ Trace runner: [`lineage_tracebridge.runner.lock`](lineage_tracebridge.runner.loc
 
 Result: [`lineage_tracebridge.decision.lock`](lineage_tracebridge.decision.lock) **p1_not_usable_by_online_class**. B4 confirms P1 is D1-robust at eight cues. B1/B2 with unchanged v29 last-write-win even at two cues. B3 competitive writing on P1 passes 2/4 cues and fails eight. Do not install the 512-row trace. SCORE unopened. No v31/v32. W1 stays closed. The 1,536 budget stays closed. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
 
+Addendum: [`lineage_tracebridge.decision.addendum.lock`](lineage_tracebridge.decision.addendum.lock). Historical TRACEBRIDGE preserved. Interpret the refusal as **p1_not_usable_by_frozen_one_pass_online_rules**. B3 does not reject online learning generally. Next is CONVERGENCEMAP.
+
+## TM.0.24.TRACEBRIDGE → isolated CONVERGENCEMAP
+
+Canonical main `04ff63f`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Is the eight-cue wall caused by one-shot exposure, or does it require covariance/replay machinery? Do not open a trace or neural candidate. Do not resurrect W1. Do not declare v31/v32.
+
+CONVERGENCEMAP apparatus: [`lineage_convergencemap.prereg.lock`](lineage_convergencemap.prereg.lock) + [`lineage_convergencemap.isolation.lock`](lineage_convergencemap.isolation.lock). Exact P1 bridge. C0 one-epoch D3; C1 error-only perceptron with live 1/2/4/8/16; C2 one-pass PA at 0.01 geometric margin; C3 PA with live repetition; C4 sequential RLS replay ceiling. Live re-exposure vs exact stored-row replay. Unused `TM024.CONVERGENCEMAP.DEV.` / `TWIN.`. SCORE reserved. 512/1536 unopened. n stays 64. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
+
+Convergence runner: [`lineage_convergencemap.runner.lock`](lineage_convergencemap.runner.lock). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

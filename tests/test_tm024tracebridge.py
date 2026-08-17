@@ -46,6 +46,7 @@ def test_phase_a_files() -> None:
         "docs/cortex.candidate.v30.lock",
         "experiments/run_tm024tracebridge.py",
         "experiments/run_tm024discrimmap_r2.py",
+        "docs/lineage_tracebridge.decision.addendum.lock",
     ):
         assert (REPO_ROOT / rel).is_file(), rel
     prereg = json.loads((REPO_ROOT / "docs" / "lineage_tracebridge.prereg.lock").read_text(encoding="utf-8"))
@@ -70,6 +71,17 @@ def test_phase_a_files() -> None:
     add = json.loads((REPO_ROOT / "docs" / "lineage_phasemap.decision.addendum.lock").read_text(encoding="utf-8"))
     assert add["last_robust_phase"] == "P1"
     assert add["next"] == "TM.0.24.TRACEBRIDGE"
+    tb_add = json.loads(
+        (REPO_ROOT / "docs" / "lineage_tracebridge.decision.addendum.lock").read_text(encoding="utf-8")
+    )
+    assert tb_add["historical_code"] == "p1_not_usable_by_online_class"
+    assert tb_add["interpret_as"] == "p1_not_usable_by_frozen_one_pass_online_rules"
+    assert tb_add["rewrite_historical_decision"] is False
+    assert tb_add["next"] == "TM.0.24.CONVERGENCEMAP"
+    assert sha(REPO_ROOT / "docs" / "lineage_tracebridge.decision.lock") == DECISION_SHA
+    assert sha(REPO_ROOT / "docs" / "lineage_tracebridge.decision.addendum.lock") == (
+        "f1bdaa606dc21779bae73b63be139fa8282a788c9a4261c4c87fe9cd961f7eb0"
+    )
     runner_p = REPO_ROOT / "docs" / "lineage_tracebridge.runner.lock"
     if runner_p.exists():
         runner = json.loads(runner_p.read_text(encoding="utf-8"))
