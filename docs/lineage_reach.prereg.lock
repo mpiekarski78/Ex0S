@@ -1,0 +1,70 @@
+{
+  "version": "TM.0.24.REACH.PREREG",
+  "lab": "TM.0.24.REACH",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "package_question": "After the general credit-path repair, can one Arm D genotype learn bounded L0 on unused renamed worlds under ordinary teaching and credit?",
+  "wallmap_decision": "docs/lineage_wallmap.decision.lock",
+  "wallmap_decision_sha": "e48b8121d9e8cf8830c784a8f41c806a7b6debf726f354ef5892336a8f408409",
+  "candidate": "docs/cortex.candidate.v28.lock",
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_wallmap.runner.lock",
+    "docs/lineage_wallmap_q2.lock"
+  ],
+  "L0_unit": "probe_beneficial_after_teaching",
+  "tau": 0.6,
+  "delta_B": 0.05,
+  "delta_P": 0.05,
+  "n": 64,
+  "ci": {
+    "method": "percentile_cluster_bootstrap",
+    "n_boot": 9999,
+    "alpha_one_sided": 0.05,
+    "resampling_seed": 20260817
+  },
+  "one_genotype": true,
+  "fit_domain": "TM024.REACH.DIAG.FIT.",
+  "check_domain": "TM024.REACH.DIAG.CHECK.",
+  "n_check_worlds": 4,
+  "n_fit_worlds": 4,
+  "birth_below_tau": true,
+  "plasticity_off_below_tau": true,
+  "no_q1_weight_inheritance": true,
+  "ordinary_credit_only": true,
+  "es": {
+    "gens": 5,
+    "pairs": 8,
+    "sigma": 0.05,
+    "adam_lr": 0.02,
+    "fit_worlds_per_child": 2,
+    "fit_births_per_child": 2,
+    "check_births": 4
+  },
+  "credit_precondition": "zero_elig_no_plastic_motion",
+  "distinct_from_wallmap_q2": [
+    "TM024.WALLMAP.Q2.DIAG.FIT.",
+    "TM024.WALLMAP.Q2.DIAG.CHECK."
+  ],
+  "refuse": [
+    "soften_scorers",
+    "L0_specific_circuitry",
+    "QUAL_EVAL_reveal",
+    "reuse_wallmap_q2_worlds_as_held_out",
+    "rewrite_lineage_or_wallmap_locks",
+    "claim_impossibility",
+    "earned_next",
+    "stamp_0.0.005",
+    "move_tau_or_delta",
+    "increase_n",
+    "FULLDEV_R7",
+    "favorable_birth_as_pass",
+    "treat_DIAG_FIT_as_held_out"
+  ],
+  "note": "Phase A scientific freeze. Runner lock is next. Product remains 0.0.004."
+}
