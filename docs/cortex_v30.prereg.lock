@@ -1,0 +1,40 @@
+{
+  "version": "TM.0.23.CORTEX.V30.PREREG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "collisionmap_decision_sha": "b439a2ba1c5eb92c38fabb4724eafd9f134395ea7e093e61ea68c4f4ef01b134",
+  "persistgate_prereg_sha": "39179151be07a73c4c8fff506b84490af7ae21f2b24c2070638a93de9dd648c5",
+  "architecture_amendment_md_sha": "0e0015791c868d941f482d0f17ab68c53be5e33f06b50150d8843083a9042254",
+  "architecture_amendment_sha": "09f18b1965383d165b7ed0cc2c6bea19565e76651debbde101a6a352cc3c3e91",
+  "isolation_sha": "039b80892a2bd44a226f901e0881d1779ce618caa3cc14b094af67cb18b6dcc1",
+  "authorized_law": "scalar_persistence_on_zero_input_motor_tick",
+  "n": 64,
+  "tau": 0.6,
+  "delta_B": 0.05,
+  "delta_P": 0.05,
+  "p_grid": [0.0, 0.25, 0.5, 0.75, 0.9, 0.95],
+  "required_after_edit": [
+    "dev_p_selection_on_TM024.MOTORPERSIST.DEV.",
+    "freeze_selected_p",
+    "nine_sanity",
+    "C4",
+    "C5",
+    "C6",
+    "P0_P6_on_unused_score_worlds"
+  ],
+  "lineage_after_gates": false,
+  "refuse": [
+    "increase_n",
+    "move_tau_or_delta",
+    "rewrite_historical_locks",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "L0_specific_circuitry",
+    "credit_historical_rho_only",
+    "tune_p_on_scored_cells",
+    "another_lineage_run"
+  ],
+  "note": "Narrow v30 motor-tick persistence. Neural edit authorized after this freeze is on origin/main. Product remains 0.0.004."
+}

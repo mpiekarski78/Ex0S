@@ -1,0 +1,54 @@
+{
+  "version": "TM.0.23.CORTEX.V30.ISOLATION",
+  "lab": "TM.0.24.MOTORPERSIST",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "reason": "COLLISIONMAP: observable-state ρ is A/B-distinct; one zero-input motor tick makes ρ_elig A ≈ ρ_elig B. PERSISTGATE justified generic persistence investigation and forbade implementation until this authorization. Credit-historical-ρ-only is insufficient because the live actuator would still read the collapsed state.",
+  "collisionmap_decision": "docs/lineage_collisionmap.decision.lock",
+  "collisionmap_decision_sha": "b439a2ba1c5eb92c38fabb4724eafd9f134395ea7e093e61ea68c4f4ef01b134",
+  "persistgate_prereg": "docs/lineage_persistgate.prereg.lock",
+  "n": 64,
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_reach.lock",
+    "docs/lineage_plasticitymap.decision.lock",
+    "docs/lineage_actorcredit.lock",
+    "docs/lineage_actorcredit_reach.lock",
+    "docs/lineage_statemap.decision.lock",
+    "docs/lineage_collisionmap.decision.lock",
+    "docs/lineage_persistgate.prereg.lock",
+    "docs/cortex.candidate.v28.lock",
+    "docs/cortex.candidate.v29.lock"
+  ],
+  "refuse": [
+    "rewrite historical locks including v29 COLLISIONMAP STATEMAP PERSISTGATE",
+    "increase n",
+    "move tau or delta",
+    "L0-specific circuitry",
+    "reveal QUAL/EVAL",
+    "reveal FULLDEV.R7",
+    "credit historical rho only",
+    "tune p on scored cells",
+    "another lineage run",
+    "stamp earned_next",
+    "stamp 0.0.005"
+  ],
+  "next_cycle": {
+    "name": "isolated_v30_motorpersist",
+    "requires": [
+      "frozen architecture amendment authorizing scalar motor-tick persistence",
+      "apparatus on origin/main before any v30 neural edit",
+      "p grid on DEV worlds then freeze selected p",
+      "new birth + candidate.v30.lock",
+      "re-earn nine sanity and C4/C5/C6",
+      "P0-P6 on unused SCORE/TWIN/REGRESS worlds",
+      "n remains 64",
+      "lineage remains closed even if P0-P6 pass"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004."
+}

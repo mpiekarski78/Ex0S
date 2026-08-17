@@ -2288,6 +2288,14 @@ Result: [`lineage_collisionmap.decision.lock`](lineage_collisionmap.decision.loc
 
 PERSISTGATE freeze: [`lineage_persistgate.prereg.lock`](lineage_persistgate.prereg.lock). The wall is the zero-input motor transition, not credit algebra. Investigating generic state persistence is justified; a particular implementation is not authorized. Residual/leaky/gated recurrence inside 64 units is the first class to test **if** a later freeze authorizes an amendment. The live readout must remain distinct at `ρ_elig`; crediting a saved historical ρ is insufficient. Lineage stays closed until a newly committed reachability diagnostic passes after any such amendment. n stays 64. QUAL/EVAL sealed. Not 0.0.005.
 
+## TM.0.24.PERSISTGATE → isolated v30 MOTORPERSIST
+
+Canonical main `240e34a`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Diagnosis is strong enough to authorize one narrow neural amendment. More mapping without changing the motor transition would only repeat COLLISIONMAP.
+
+v30 apparatus: [`cortex_v30.prereg.lock`](cortex_v30.prereg.lock) + [`lineage_motorpersist.prereg.lock`](lineage_motorpersist.prereg.lock). Scalar persistence on the zero-input motor tick authorized after this freeze. Neural edit only after this commit is on `origin/main`. Preregistered `p ∈ {0.0, 0.25, 0.5, 0.75, 0.9, 0.95}` on unused `TM024.MOTORPERSIST.DEV.`; freeze the smallest usable `p` before scored worlds. n stays 64. Do not credit a saved earlier cue state while the live actuator still reads collapsed `ρ`. Lineage stays closed even if P0–P6 pass (S10/S11 still unrepaired). FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

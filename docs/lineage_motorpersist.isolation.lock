@@ -1,0 +1,70 @@
+{
+  "version": "TM.0.24.MOTORPERSIST.ISOLATION",
+  "lab": "TM.0.24.MOTORPERSIST",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "reason": "COLLISIONMAP localized S6 to one transition: observable-state ρ is A/B-distinct; one zero-input motor tick makes ρ_elig A ≈ ρ_elig B. PERSISTGATE justified generic persistence and forbade a particular implementation. This package authorizes one scalar mix on that tick only. Credit-historical-ρ-only remains insufficient because the live actuator would still read the collapsed state.",
+  "collisionmap_decision": "docs/lineage_collisionmap.decision.lock",
+  "collisionmap_decision_sha": "b439a2ba1c5eb92c38fabb4724eafd9f134395ea7e093e61ea68c4f4ef01b134",
+  "persistgate_prereg": "docs/lineage_persistgate.prereg.lock",
+  "persistgate_prereg_sha": "39179151be07a73c4c8fff506b84490af7ae21f2b24c2070638a93de9dd648c5",
+  "candidate": "docs/cortex.candidate.v29.lock",
+  "candidate_v29_sha": "484c7a3ab1acec815ef1f73e3f9dddbf0ad6b127313401fcbd6f75e17d9e0bf1",
+  "n": 64,
+  "investigation_justified": true,
+  "implementation_authorized": true,
+  "authorized_law": "scalar_persistence_on_zero_input_motor_tick",
+  "neural_edit_authorized_after_this_freeze": true,
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_reach.lock",
+    "docs/lineage_plasticitymap.decision.lock",
+    "docs/lineage_actorcredit.lock",
+    "docs/lineage_actorcredit_reach.lock",
+    "docs/lineage_statemap.decision.lock",
+    "docs/lineage_collisionmap.decision.lock",
+    "docs/lineage_persistgate.prereg.lock",
+    "docs/lineage_persistgate.isolation.lock",
+    "docs/cortex.candidate.v28.lock",
+    "docs/cortex.candidate.v29.lock"
+  ],
+  "refuse": [
+    "tune_p_on_scored_cells",
+    "increase n",
+    "semantic channels",
+    "direct reward",
+    "extra memory vector",
+    "credit historical rho only",
+    "structural growth",
+    "L0-specific circuitry",
+    "reveal QUAL/EVAL",
+    "reveal FULLDEV.R7",
+    "another lineage run",
+    "Q3",
+    "stamp earned_next",
+    "stamp 0.0.005"
+  ],
+  "next_cycle": {
+    "name": "isolated_v30_motorpersist",
+    "requires": [
+      "this freeze on origin/main before any v30 neural edit",
+      "p grid on DEV worlds then freeze selected p",
+      "new birth + candidate.v30.lock",
+      "re-earn nine sanity and C4/C5/C6",
+      "P0-P6 on unused SCORE/TWIN/REGRESS worlds",
+      "n remains 64",
+      "lineage remains closed even if P0-P6 pass"
+    ]
+  },
+  "escalation_if_fail": {
+    "identity_collapses_every_usable_p": "generic_context_motor_partition_inside_n64",
+    "identity_survives_opposing_learning_fails": "plastic_write_geometry_or_connection_local_state",
+    "high_p_preserves_identity_destroys_motor": "learned_gate_or_functional_cell_classes",
+    "succeeds": "freeze_v30_then_deterministic_reachability_lineage_still_closed"
+  },
+  "note": "Historical locks immutable, including PERSISTGATE and COLLISIONMAP. Product remains 0.0.004."
+}
