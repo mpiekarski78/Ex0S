@@ -2266,6 +2266,8 @@ v29 apparatus: [`cortex_v29.prereg.lock`](cortex_v29.prereg.lock) + [`lineage_ac
 
 Candidate (this cycle): [`cortex.candidate.v29.lock`](cortex.candidate.v29.lock). Action-owned delayed credit. Must re-earn C4/C5/C6 then A0–A11 on unused `TM024.ACTORCREDIT.CELLS.` worlds. n stays 64. LINEAGE/WALLMAP/REACH/PLASTICITYMAP/v28 historical.
 
+A-cell runner: [`lineage_actorcredit.runner.lock`](lineage_actorcredit.runner.lock). Score A0–A11 only after this lock is on `origin/main`. Reachability only if cells pass.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
