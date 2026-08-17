@@ -2130,3 +2130,5 @@ Result: [`cortex_d5_r1_gate.lock`](cortex_d5_r1_gate.lock) **11/16**. D5 26/32. 
 
 Canonical main `c0574bf`. D5.R2 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+D5.R2 apparatus: [`cortex_d5_r2.prereg.lock`](cortex_d5_r2.prereg.lock). `FAMILIARITY_ABS=16` authorized after this freeze. Reveal only from a clean tree pinning `git rev-parse HEAD`.
+

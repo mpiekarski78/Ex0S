@@ -1,0 +1,31 @@
+{
+  "version": "TM.0.23.CORTEX.D5.R2.STAT.CONTRACT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "stat_md_sha": "f158756be7fb7e7497bc690f4e1bb7ecaacf78011b1857070de50c22d9f268ce",
+  "gate_md_sha": "7baf7f48428af401d2d679b87b666e13f88ab41e2733edb172cbb8c5593ceb76",
+  "diagnosis_v19_sha": "9e17ab9fbf89de87247f3a84f4b0ffd6bbc2c5672b968f6bec1b0700fb2c47cd",
+  "isolation_sha": "c8338e596cb1aed60c96ba2a11a906a05e09eeee30970bb6c537c33a3cf89b65",
+  "neural_sha_at_freeze": "deedd35cca131a465273380e6ab8e6b610ebcea13fc575a1670218bfada2a342",
+  "neural_change_authorized": true,
+  "authorized_law": "longer_neophobia",
+  "d5_requires": [
+    "unknown_holds>=12",
+    "known_nonhold_rate>=0.30",
+    "known_minus_unknown>=0.15"
+  ],
+  "prefix_stages": [
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+  ],
+  "gate_clear_min_pairs": 13,
+  "refuse": [
+    "edit cortex_develop_scorers.py",
+    "drop C6",
+    "skip D5",
+    "isolate without D1\u2013D4 prefix"
+  ]
+}
