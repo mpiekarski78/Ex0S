@@ -1,0 +1,140 @@
+{
+  "version": "TM.0.24.WALLMAP.PREREG",
+  "lab": "TM.0.24.WALLMAP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "package_question": "Where does the bounded L0 failure decompose among representability, developmental reachability, ES signal-to-noise, and the causal credit path?",
+  "lineage_ancestor": {
+    "scored": "docs/lineage_scored.lock",
+    "wall": "docs/lineage_wall.lock",
+    "engine_candidate": "docs/lineage_engine.candidate.lock",
+    "immutable": true,
+    "L0_unlocked": false,
+    "champion_adult_means": {"A": 0.0875, "B": 0.125, "C": 0.1},
+    "tau_L0": 0.6
+  },
+  "questions": {
+    "Q1": "representability_dense_adult_n64",
+    "Q2": "developmental_reachability_one_genotype",
+    "Q3": "es_mutation_snr_and_gradient_stability",
+    "Q4": "credit_chain_state_only"
+  },
+  "L0_unit": "probe_beneficial_after_teaching",
+  "tau": 0.6,
+  "delta_B": 0.05,
+  "delta_P": 0.05,
+  "ci": {
+    "method": "percentile_cluster_bootstrap",
+    "n_boot": 9999,
+    "alpha_one_sided": 0.05,
+    "resampling_seed": 20260817
+  },
+  "Q1_optimizer": {
+    "type": "Adam",
+    "beta1": 0.9,
+    "beta2": 0.999,
+    "eps": 1e-8,
+    "matrices": ["W_in", "W_rec", "W_op", "b_op", "W_act_query"],
+    "M_frozen": true,
+    "sigma_init": 0.01,
+    "restarts": 3,
+    "max_steps": 2000,
+    "lr_start": 0.01,
+    "lr_end": 0.0001,
+    "schedule": "cosine",
+    "clip": 2.0,
+    "lambda_hold": 0.5,
+    "lambda_wrong": 0.5,
+    "early_stop_probe": 0.8,
+    "early_stop_streak": 20,
+    "eval_every": 50,
+    "n_fit_worlds": 4,
+    "pass_fit_worlds": 3,
+    "pass_probe": 0.6,
+    "surrogate_is_not_pass_gate": true
+  },
+  "Q2": {
+    "one_genotype": true,
+    "fit_domain": "TM024.WALLMAP.Q2.DIAG.FIT.",
+    "check_domain": "TM024.WALLMAP.Q2.DIAG.CHECK.",
+    "n_check_worlds": 4,
+    "birth_below_tau": true,
+    "plasticity_off_below_tau": true,
+    "no_q1_weight_inheritance": true,
+    "ordinary_credit_only": true,
+    "unwired_genes_not_search_axes": ["dyn.eligibility_decay", "neuromod.gain.*"]
+  },
+  "Q3": {
+    "snr": "|mean_r(Delta_ir)| / SE_r(Delta_ir)",
+    "denominator": "standard_error_not_variance_sum",
+    "report_variance_components_separately": true,
+    "P": 32,
+    "sigma": 0.05,
+    "R": 8,
+    "n_batches": 2,
+    "pass": {
+      "median_snr": 2.0,
+      "cosine_g1_g2": 0.3,
+      "sign_agreement": 0.6,
+      "spearman": 0.3,
+      "grad_over_bootstrap_se": 2.0,
+      "phenotype_change_fraction": 0.1
+    }
+  },
+  "Q4": {
+    "state_only": true,
+    "neural_edits_forbidden": true,
+    "interventions": [
+      "zero_rho_elig",
+      "swap_rho_elig",
+      "previous_tick_elig",
+      "wrong_tick_elig",
+      "flip_physics",
+      "zero_physics",
+      "snapshot_restore_plastic_tensors",
+      "restore_rng"
+    ],
+    "measure": ["pre_sampling_logits", "frozen_rng_sampled_behavior"],
+    "responsible_actuator": "credited_handle_projection_logit"
+  },
+  "domains": {
+    "Q1_FIT": "TM024.WALLMAP.Q1.DIAG.FIT.",
+    "Q1_TRANSFER": "TM024.WALLMAP.Q1.DIAG.TRANSFER.",
+    "Q2_FIT": "TM024.WALLMAP.Q2.DIAG.FIT.",
+    "Q2_CHECK": "TM024.WALLMAP.Q2.DIAG.CHECK.",
+    "Q3": "TM024.WALLMAP.Q3.DIAG.",
+    "Q4": "TM024.WALLMAP.Q4.DIAG."
+  },
+  "decision_precedence": {
+    "Q4_breaks_over_Q2": true,
+    "Q2_fail_with_broken_Q4_not_maturation_diagnosis": true
+  },
+  "order": [
+    "contract_prereg",
+    "runner_smoke",
+    "runner_lock_clean_origin_main",
+    "score_Q4_Q1_Q3_Q2",
+    "decision_lock"
+  ],
+  "refuse": [
+    "soften_scorers",
+    "L0_specific_circuitry",
+    "QUAL_EVAL_reveal",
+    "panel_reuse_as_held_out",
+    "claim_impossibility",
+    "ArmD_vs_ArmC_superiority",
+    "earned_next",
+    "stamp_0.0.005",
+    "edit_neural_in_Q4",
+    "treat_DIAG_FIT_as_held_out",
+    "favorable_birth_as_Q2_pass",
+    "variance_in_SNR_denominator",
+    "Q1_optimize_sampled_probe_without_surrogate",
+    "move_tau_or_delta",
+    "increase_n_before_representation_diagnosis"
+  ],
+  "note": "Phase A scientific freeze. Runner lock is next. Product remains 0.0.004."
+}
