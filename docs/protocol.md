@@ -2188,3 +2188,5 @@ Canonical main `75d3ba4`. Isolated D7.R1 apparatus follows. Product **0.0.004**;
 
 D7.R1 apparatus: [`cortex_d7_r1.prereg.lock`](cortex_d7_r1.prereg.lock). Utterance persistence authorized; no neural edit yet. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle): [`cortex.candidate.v24.lock`](cortex.candidate.v24.lock). Utterance persistence. C4/C5/C6 green. Reveal D7.R1 only from a clean tree pinning `git rev-parse HEAD`.
+

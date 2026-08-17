@@ -63,6 +63,7 @@ FAMILIARITY_DECAY = 0.98
 FAMILIARITY_ABS = 16.0
 ECHOIC_MAX = 8
 VOCAL_REFRACTORY = 1.5
+UTTERANCE_PERSIST = 1.5
 EQUAL_EVIDENCE_MIN_SYMBOLS = 3
 
 
@@ -436,6 +437,7 @@ class NeuralCortex:
         self._hold_after_conflict = False
         vocal_next = self._vocal_next
         self._vocal_next = None
+        uttering = False
 
         for _k in range(g.t_max):
             self._commit_pending_retrieve()
@@ -443,12 +445,15 @@ class NeuralCortex:
             zero = np.zeros(g.d_sym, dtype=np.float64)
             self._sensory_tick(zero, body, same_ix, record_sensory=False)
             logits = (self.W_op @ self.rho) + self.b_op
-            if conflict_hold or vocal_next:
+            if conflict_hold or vocal_next or uttering:
                 logits = logits.clone()
             if conflict_hold:
                 logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] + CONFLICT_HOLD_BIAS
                 logits[OPS.index("ACT")] = logits[OPS.index("ACT")] - CONFLICT_HOLD_BIAS
-            if vocal_next == "HOLD":
+            if uttering:
+                logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] + UTTERANCE_PERSIST
+                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] - UTTERANCE_PERSIST
+            elif vocal_next == "HOLD":
                 logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] + VOCAL_REFRACTORY
                 logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] - VOCAL_REFRACTORY
             elif vocal_next == "EMIT":
@@ -475,6 +480,7 @@ class NeuralCortex:
                     break
                 self.emit_buffer.append(tok)
                 chosen_token = tok
+                uttering = True
                 continue
             if op == "ACT":
                 # v2: argmax over M_act only; never force HOLD on cosine miss
