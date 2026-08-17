@@ -57,7 +57,11 @@ def test_contract_stance() -> None:
         "0470d5f8429317715d9f50bc9a3e2463dc1fd80039afb9fc650e364b28e7fac2"
     )
     cand = json.loads((REPO_ROOT / "docs" / "cortex.candidate.v29.lock").read_text(encoding="utf-8"))
-    assert cand["neural_cortex_sha"] == sha(REPO_ROOT / "three_memory" / "neural_cortex.py")
+    assert cand["neural_cortex_sha"] == "d75b8da7f251378c9638cf9a0c4a859f12b0215d9f6f7b1623e704d831f86d03"
+    v30p = REPO_ROOT / "docs" / "cortex.candidate.v30.lock"
+    if v30p.exists():
+        live = json.loads(v30p.read_text(encoding="utf-8"))
+        assert live["neural_cortex_sha"] == sha(REPO_ROOT / "three_memory" / "neural_cortex.py")
     assert cand["genome"]["n"] == 64
 
 
@@ -71,7 +75,9 @@ def test_runner_lock_if_present() -> None:
     assert lock["product"] == "0.0.004"
     assert lock["earned_next"] is False
     assert lock["n"] == 64
-    assert lock["shas"] == statemap_shas()
+    assert lock["shas"]["neural_cortex"] == "d75b8da7f251378c9638cf9a0c4a859f12b0215d9f6f7b1623e704d831f86d03"
+    if sha(REPO_ROOT / "three_memory" / "neural_cortex.py") == lock["shas"]["neural_cortex"]:
+        assert lock["shas"] == statemap_shas()
     assert lock["domain"] == "TM024.STATEMAP.CELLS."
     assert lock["twin_domain"] == "TM024.STATEMAP.TWIN."
 

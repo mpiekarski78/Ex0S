@@ -1,0 +1,37 @@
+{
+  "version": "TM.0.24.MOTORPERSIST.DECISION",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "n": 64,
+  "selected_p": null,
+  "usable_p_exists": false,
+  "module_p": 0.0,
+  "scored_worlds": false,
+  "identity_any_positive_p": true,
+  "opposing_any": false,
+  "motor_alive_any_positive_p": true,
+  "n_pass": 0,
+  "n_gates": 7,
+  "all_passed": false,
+  "decision": {
+    "code": "identity_survives_opposing_learning_fails",
+    "next": "plastic_write_geometry_or_connection_local_state",
+    "passed": false
+  },
+  "lineage_reopened": false,
+  "q3": false,
+  "p_lock_sha": "34690a19c7a486d6e67b588ec2de8d6a00b9d9e6e8fecfedd20b6390c60f6486",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "git_head": "db636e400c314994457b8c5ce48fa7db5abddf0d",
+  "note": "DEV grid: no p met identity+opposing+S0+motor simultaneously. Scored worlds not opened. Next is plastic-write geometry. Product remains 0.0.004."
+}

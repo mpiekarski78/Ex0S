@@ -581,7 +581,53 @@ def run_all() -> dict[str, Any]:
     return out
 
 
-def write_decision(out: dict[str, Any]) -> dict[str, Any]:
+def write_dev_decision() -> dict[str, Any]:
+    if not P_LOCK.exists():
+        raise RuntimeError("p.lock required")
+    plock = json.loads(P_LOCK.read_text(encoding="utf-8"))
+    rows = plock.get("rows") or []
+    identity_any = any(r.get("identity") and r.get("p", 0) > 0 for r in rows)
+    opposing_any = any(r.get("opposing") for r in rows)
+    motor_alive_pos = any(r.get("motor_alive") and r.get("p", 0) > 0 for r in rows)
+    decision = escalate([], plock if plock.get("selected_p") is None else {"selected_p": plock.get("selected_p"), "rows": rows})
+    # escalate() with empty gates and selected_p None uses rows from the second arg
+    out = {
+        "version": "TM.0.24.MOTORPERSIST.DECISION",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eligible_for_000005": False,
+        "capability_claim": False,
+        "n": 64,
+        "selected_p": plock.get("selected_p"),
+        "usable_p_exists": bool(plock.get("usable_p_exists")),
+        "module_p": plock.get("module_p"),
+        "scored_worlds": False,
+        "identity_any_positive_p": identity_any,
+        "opposing_any": opposing_any,
+        "motor_alive_any_positive_p": motor_alive_pos,
+        "n_pass": 0,
+        "n_gates": 7,
+        "all_passed": False,
+        "decision": decision,
+        "lineage_reopened": False,
+        "q3": False,
+        "p_lock_sha": sha_file(P_LOCK),
+        "env": torch_env(),
+        "git_head": _git_head(),
+        "note": "DEV grid: no p met identity+opposing+S0+motor simultaneously. Scored worlds not opened. Next is plastic-write geometry. Product remains 0.0.004.",
+    }
+    if DECISION.exists():
+        raise RuntimeError("decision.lock exists")
+    DECISION.write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8")
+    RESULT_MD.write_text(
+        "# TM.0.24.MOTORPERSIST result\n\n"
+        "No usable `p`. Identity can survive (`p≥0.25` by L2). Opposing sequential teaching failed at every grid value. "
+        "`p≥0.9` disables the motor step. Escalation: **plastic-write geometry / compact connection-local state**.\n\n"
+        "Scored worlds were not opened. Lineage stays closed. Product **0.0.004**. `earned_next=false`.\n",
+        encoding="utf-8",
+    )
+    return out
     if DECISION.exists():
         raise RuntimeError("decision.lock exists")
     DECISION.write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8")
@@ -629,6 +675,7 @@ def main() -> None:
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--dev-grid", action="store_true")
     ap.add_argument("--write-p-lock", action="store_true")
+    ap.add_argument("--write-dev-decision", action="store_true")
     ap.add_argument("--write-runner-lock", action="store_true")
     ap.add_argument("--score", action="store_true")
     ap.add_argument("--write-decision", action="store_true")
@@ -639,6 +686,8 @@ def main() -> None:
         print(json.dumps(run_dev_grid(), indent=2, default=str))
     elif args.write_p_lock:
         print(json.dumps(write_p_lock(), indent=2, default=str))
+    elif args.write_dev_decision:
+        print(json.dumps(write_dev_decision(), indent=2, default=str))
     elif args.write_runner_lock:
         print(json.dumps(write_runner_lock(), indent=2))
     elif args.score:

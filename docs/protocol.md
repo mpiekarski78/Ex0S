@@ -2296,6 +2296,10 @@ Diagnosis is strong enough to authorize one narrow neural amendment. More mappin
 
 v30 apparatus: [`cortex_v30.prereg.lock`](cortex_v30.prereg.lock) + [`lineage_motorpersist.prereg.lock`](lineage_motorpersist.prereg.lock). Scalar persistence on the zero-input motor tick authorized after this freeze. Neural edit only after this commit is on `origin/main`. Preregistered `p ∈ {0.0, 0.25, 0.5, 0.75, 0.9, 0.95}` on unused `TM024.MOTORPERSIST.DEV.`; freeze the smallest usable `p` before scored worlds. n stays 64. Do not credit a saved earlier cue state while the live actuator still reads collapsed `ρ`. Lineage stays closed even if P0–P6 pass (S10/S11 still unrepaired). FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
 
+Candidate (this cycle): [`cortex.candidate.v30.lock`](cortex.candidate.v30.lock). Scalar motor-tick persist. Default `p=0` recovers v29. C4/C5/C6 green. DEV found no usable `p`.
+
+Result: [`lineage_motorpersist.decision.lock`](lineage_motorpersist.decision.lock) **identity_survives_opposing_learning_fails**. No grid `p` kept A/B distinct *and* allowed opposing sequential teaching *and* left the motor map intact. Identity can survive at `p≥0.25` (L2); live A/B rankings stay the same handle. Next is plastic-write geometry / compact connection-local state — not a context/motor partition and not SFNN cell classes. Scored worlds not opened. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

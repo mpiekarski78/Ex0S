@@ -67,6 +67,8 @@ ECHOIC_BIAS = 0.08
 VOCAL_REFRACTORY = 1.5
 UTTERANCE_PERSIST = 1.5
 EQUAL_EVIDENCE_MIN_SYMBOLS = 3
+# v30: scalar mix on zero-input motor ticks only. 0 recovers v29. Freeze selected DEV p here.
+MOTOR_PERSIST_P = 0.0
 
 
 @dataclass
@@ -92,6 +94,8 @@ class GenomeConfig:
     dtype: str = "float64"
     # Optional lineage overlay. None → v27 module constants (make_cortex unchanged).
     lineage_params: dict[str, Any] | None = None
+    # None → MOTOR_PERSIST_P. DEV grid may override without editing the module constant.
+    motor_persist_p: float | None = None
 
     @property
     def d_x(self) -> int:
@@ -119,6 +123,7 @@ class GenomeConfig:
             "seed_permute": self.seed_permute,
             "seed_motor": self.seed_motor,
             "dtype": self.dtype,
+            "motor_persist_p": float(self.motor_persist_p if self.motor_persist_p is not None else MOTOR_PERSIST_P),
             "body_setpoint": BODY_SETPOINT.tolist(),
             "ops": list(OPS),
             "op_cost": dict(OP_COST),
@@ -379,7 +384,13 @@ class NeuralCortex:
         x = self._x_tick(injected, body, same_ix)
         pre = (self.W_rec * self.M) @ self.rho + self.W_in @ x + self.b
         pre = pre + self.W_body @ self._to_t(body)
-        self.rho = torch.tanh(pre)
+        rho_tilde = torch.tanh(pre)
+        p_raw = self.genome.motor_persist_p
+        p = float(MOTOR_PERSIST_P if p_raw is None else p_raw)
+        if (not record_sensory) and p > 0.0:
+            self.rho = p * self.rho + (1.0 - p) * rho_tilde
+        else:
+            self.rho = rho_tilde
         snap = self._from_t(self.rho)
         self.last_trajectory.append(snap)
         if record_sensory:

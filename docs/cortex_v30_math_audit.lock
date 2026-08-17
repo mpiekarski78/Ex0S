@@ -1,0 +1,172 @@
+{
+  "version": "TM.0.23.CORTEX.V30.MATH.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "checks": [
+    {
+      "id": "v1_contract_untouched",
+      "ok": true
+    },
+    {
+      "id": "n_stays_64",
+      "ok": true
+    },
+    {
+      "id": "motor_act_tokens_empty",
+      "ok": true
+    },
+    {
+      "id": "conflict_hold_bias_frozen",
+      "ok": true
+    },
+    {
+      "id": "familiarity_ratio_frozen",
+      "ok": true
+    },
+    {
+      "id": "familiarity_abs_frozen",
+      "ok": true
+    },
+    {
+      "id": "equal_evidence_min_symbols_3",
+      "ok": true
+    },
+    {
+      "id": "vocal_refractory_15",
+      "ok": true
+    },
+    {
+      "id": "echoic_bias_only",
+      "ok": true
+    },
+    {
+      "id": "no_phrase_replay",
+      "ok": true
+    },
+    {
+      "id": "elig_eps_present",
+      "ok": true
+    },
+    {
+      "id": "clamp_action_present",
+      "ok": true
+    },
+    {
+      "id": "drop_actor_pending_present",
+      "ok": true
+    },
+    {
+      "id": "actor_pending_act_emit_only",
+      "ok": true
+    },
+    {
+      "id": "no_l0_shortcut",
+      "ok": true
+    },
+    {
+      "id": "neural_changed_from_v29",
+      "ok": true
+    },
+    {
+      "id": "motor_persist_p_module",
+      "ok": true
+    },
+    {
+      "id": "mix_only_when_not_record_sensory",
+      "ok": true
+    },
+    {
+      "id": "no_extra_l2_on_mix",
+      "ok": true
+    },
+    {
+      "id": "default_p_is_zero",
+      "ok": true
+    },
+    {
+      "id": "zero_elig_no_plastic_motion",
+      "ok": true
+    },
+    {
+      "id": "active_elig_moves_credited_tensors_only",
+      "ok": true
+    },
+    {
+      "id": "actor_pending_only_for_act_emit",
+      "ok": true
+    },
+    {
+      "id": "clamp_credits_passive_does_not",
+      "ok": true
+    },
+    {
+      "id": "saved_action_tick_not_current_rho",
+      "ok": true
+    },
+    {
+      "id": "p0_recovers_tanh_mix_changes_motor_tick",
+      "ok": true
+    },
+    {
+      "id": "sensory_ticks_ignore_persist",
+      "ok": true
+    }
+  ],
+  "probes": {
+    "zero_elig_no_plastic_motion": {
+      "id": "zero_elig_no_plastic_motion",
+      "ok": true,
+      "max_abs_delta": 0.0,
+      "max_slow_delta": 0.0,
+      "elig_eps": 1e-12
+    },
+    "active_elig_moves_credited_tensors_only": {
+      "id": "active_elig_moves_credited_tensors_only",
+      "ok": true,
+      "W_act_query_delta": 0.002518971257740344,
+      "unused_max_delta": 0.0,
+      "consumed_once": true,
+      "unused": {
+        "W_rec": 0.0,
+        "W_in": 0.0,
+        "W_write": 0.0,
+        "W_att": 0.0,
+        "W_emit_query": 0.0
+      }
+    },
+    "actor_pending_only_for_act_emit": {
+      "id": "actor_pending_only_for_act_emit",
+      "ok": true,
+      "hold_seen": true,
+      "pending_on_hold": false
+    },
+    "clamp_credits_passive_does_not": {
+      "id": "clamp_credits_passive_does_not",
+      "ok": true,
+      "clamp_ok": true,
+      "clamp_actor_delta": 0.004733970782968416,
+      "passive_actor_delta": 0.0
+    },
+    "saved_action_tick_not_current_rho": {
+      "id": "saved_action_tick_not_current_rho",
+      "ok": true,
+      "score_saved": 0.005682574581179577,
+      "score_current": 0.0
+    },
+    "p0_recovers_tanh_mix_changes_motor_tick": {
+      "id": "p0_recovers_tanh_mix_changes_motor_tick",
+      "ok": true,
+      "motor_step_p0": 2.8314569064919537,
+      "motor_step_p075": 0.7078642266229884,
+      "mix_l2": 2.123592679868965,
+      "module_p": 0.0
+    },
+    "sensory_ticks_ignore_persist": {
+      "id": "sensory_ticks_ignore_persist",
+      "ok": true,
+      "l2": 0.0
+    }
+  }
+}

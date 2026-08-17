@@ -94,8 +94,8 @@ def test_contract_stance() -> None:
         assert live["neural_cortex_sha"] != cand["neural_cortex_sha"]
         assert live["genome"]["n"] == 64
     else:
-        assert cand["neural_cortex_sha"] == live_neural
         assert cand["neural_cortex_sha"] == V29_NEURAL
+        assert cand["genome"]["n"] == 64
     assert cand["genome"]["n"] == 64
 
 
@@ -124,11 +124,34 @@ def test_smoke() -> None:
     assert out["earned_next"] is False
 
 
+def test_decision_if_present() -> None:
+    p = REPO_ROOT / "docs" / "lineage_motorpersist.decision.lock"
+    if not p.exists():
+        return
+    d = json.loads(p.read_text(encoding="utf-8"))
+    assert d["product"] == "0.0.004"
+    assert d["earned_next"] is False
+    assert d["ex0s"] is None
+    assert d["n"] == 64
+    assert d["usable_p_exists"] is False
+    assert d["selected_p"] is None
+    assert d["scored_worlds"] is False
+    assert d["lineage_reopened"] is False
+    assert d["q3"] is False
+    assert d["decision"]["code"] == "identity_survives_opposing_learning_fails"
+    assert d["decision"]["next"] == "plastic_write_geometry_or_connection_local_state"
+    assert d["decision"]["passed"] is False
+    plock = json.loads((REPO_ROOT / "docs" / "lineage_motorpersist.p.lock").read_text(encoding="utf-8"))
+    assert plock["usable_p_exists"] is False
+    assert plock["module_p"] == 0.0
+
+
 def main() -> None:
     test_phase_a_files()
     test_contract_stance()
     test_runner_lock_if_present()
     test_smoke()
+    test_decision_if_present()
     print("test_tm024motorpersist: ok")
 
 

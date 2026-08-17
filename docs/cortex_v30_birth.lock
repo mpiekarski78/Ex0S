@@ -1,0 +1,131 @@
+{
+  "version": "TM.0.23.CORTEX.V30.BIRTH",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "architecture_amendment_sha": "09f18b1965383d165b7ed0cc2c6bea19565e76651debbde101a6a352cc3c3e91",
+  "learning_law_ok": true,
+  "gpu_scoring_ready": true,
+  "all_sanity_ok": true,
+  "neural_cortex_sha": "cc22cf381839049246776d2c223683078f8c13abf00cbd8e99ab2554206538b5",
+  "prior_v29_neural_sha": "d75b8da7f251378c9638cf9a0c4a859f12b0215d9f6f7b1623e704d831f86d03",
+  "cortex_memory_sha": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+  "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "genome": {
+    "n": 64,
+    "d_sym": 32,
+    "k_s": 8,
+    "d_body": 4,
+    "d_x": 293,
+    "p_connect": 0.1,
+    "t_max": 8,
+    "tau": 1.0,
+    "cos_thresh": 0.15,
+    "eta_pred": 0.05,
+    "eta_act": 0.15,
+    "beta": 0.01,
+    "clip": 2.0,
+    "seed_birth": 12345,
+    "seed_registry": 22222,
+    "seed_source": 33333,
+    "seed_action": 44444,
+    "seed_permute": 55555,
+    "seed_motor": 66666,
+    "dtype": "float64",
+    "motor_persist_p": 0.0,
+    "body_setpoint": [
+      1.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    "ops": [
+      "RETRIEVE",
+      "WRITE",
+      "EMIT",
+      "ACT",
+      "STOP",
+      "HOLD"
+    ],
+    "op_cost": {
+      "RETRIEVE": 1.0,
+      "WRITE": 1.0,
+      "EMIT": 1.0,
+      "ACT": 0.05,
+      "STOP": 0.0,
+      "HOLD": 0.0
+    }
+  },
+  "checks": {
+    "bind_n": 2,
+    "b_op_act": 0.85,
+    "op_cost_act": 0.05,
+    "n": 64,
+    "motor_persist_p": 0.0
+  },
+  "credit_probes": {
+    "zero_elig_no_plastic_motion": {
+      "id": "zero_elig_no_plastic_motion",
+      "ok": true,
+      "max_abs_delta": 0.0,
+      "max_slow_delta": 0.0,
+      "elig_eps": 1e-12
+    },
+    "active_elig_moves_credited_tensors_only": {
+      "id": "active_elig_moves_credited_tensors_only",
+      "ok": true,
+      "W_act_query_delta": 0.002518971257740344,
+      "unused_max_delta": 0.0,
+      "consumed_once": true,
+      "unused": {
+        "W_rec": 0.0,
+        "W_in": 0.0,
+        "W_write": 0.0,
+        "W_att": 0.0,
+        "W_emit_query": 0.0
+      }
+    },
+    "actor_pending_only_for_act_emit": {
+      "id": "actor_pending_only_for_act_emit",
+      "ok": true,
+      "hold_seen": true,
+      "pending_on_hold": false
+    },
+    "clamp_credits_passive_does_not": {
+      "id": "clamp_credits_passive_does_not",
+      "ok": true,
+      "clamp_ok": true,
+      "clamp_actor_delta": 0.004733970782968416,
+      "passive_actor_delta": 0.0
+    },
+    "saved_action_tick_not_current_rho": {
+      "id": "saved_action_tick_not_current_rho",
+      "ok": true,
+      "score_saved": 0.005682574581179577,
+      "score_current": 0.0
+    },
+    "p0_recovers_tanh_mix_changes_motor_tick": {
+      "id": "p0_recovers_tanh_mix_changes_motor_tick",
+      "ok": true,
+      "motor_step_p0": 2.8314569064919537,
+      "motor_step_p075": 0.7078642266229884,
+      "mix_l2": 2.123592679868965,
+      "module_p": 0.0
+    },
+    "sensory_ticks_ignore_persist": {
+      "id": "sensory_ticks_ignore_persist",
+      "ok": true,
+      "l2": 0.0
+    }
+  },
+  "note": "v30 scalar motor-tick persist. Default p=0 recovers v29. DEV found no usable p. LINEAGE closed. No FULLDEV.R7."
+}

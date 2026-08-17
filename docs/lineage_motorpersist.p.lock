@@ -1,0 +1,563 @@
+{
+  "version": "TM.0.24.MOTORPERSIST.P",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "n": 64,
+  "selected_p": null,
+  "module_p": 0.0,
+  "dev": {
+    "product": "0.0.004",
+    "earned_next": false,
+    "ex0s": null,
+    "n": 64,
+    "grid": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      0.9,
+      0.95
+    ],
+    "select": "smallest_p_meeting_all_dev_criteria",
+    "selected_p": null,
+    "p0_steps": [
+      2.547004437594626,
+      2.5303867096825794
+    ],
+    "note": "DEV only. Do not tune on SCORE worlds."
+  },
+  "rows": [
+    {
+      "p": 0.0,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "identity": false,
+      "elig_cosine": 0.9998620495015036,
+      "elig_l2": 0.047961366370770926,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_530180965",
+            "tok": "h_318221797",
+            "moved": true,
+            "adv": 0.23799941637852023
+          },
+          {
+            "cue": "s_848477718",
+            "tok": "h_574478241",
+            "moved": false,
+            "adv": -0.6041611964080489
+          }
+        ],
+        "live_a": {
+          "h1": 0.4979397474575803,
+          "h2": -0.9843298102498335,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "live_b": {
+          "h1": 0.4978426346063729,
+          "h2": -0.9843495501954407,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 2.547004437594626,
+      "motor_step_frac_of_p0": null,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.0,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "identity": true,
+      "elig_cosine": 0.9997321293074743,
+      "elig_l2": 0.06719504420722412,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_826493829",
+            "tok": "h_897903749",
+            "moved": true,
+            "adv": -0.6041611964080489
+          },
+          {
+            "cue": "s_760619829",
+            "tok": "h_264862539",
+            "moved": true,
+            "adv": 0.23799941637852023
+          }
+        ],
+        "live_a": {
+          "h1": -0.8164159308101792,
+          "h2": 0.6538826185220401,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "live_b": {
+          "h1": -0.8162436604821577,
+          "h2": 0.6541082511211395,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 2.5303867096825794,
+      "motor_step_frac_of_p0": null,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.25,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "identity": true,
+      "elig_cosine": 0.9998304640861602,
+      "elig_l2": 0.05317565974406176,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_530180965",
+            "tok": "h_318221797",
+            "moved": true,
+            "adv": 0.23799941637852023
+          },
+          {
+            "cue": "s_848477718",
+            "tok": "h_574478241",
+            "moved": false,
+            "adv": -0.6041611964080489
+          }
+        ],
+        "live_a": {
+          "h1": 0.49757500062758336,
+          "h2": -0.9844038812143011,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "live_b": {
+          "h1": 0.49748373508832827,
+          "h2": -0.9844223849428974,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 1.9102533281959697,
+      "motor_step_frac_of_p0": 0.75,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.25,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "identity": true,
+      "elig_cosine": 0.9998365203114731,
+      "elig_l2": 0.052205331428197305,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_826493829",
+            "tok": "h_897903749",
+            "moved": true,
+            "adv": -0.6041611964080489
+          },
+          {
+            "cue": "s_760619829",
+            "tok": "h_264862539",
+            "moved": true,
+            "adv": 0.23799941637852023
+          }
+        ],
+        "live_a": {
+          "h1": -0.8158182722259256,
+          "h2": 0.6546647513938426,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "live_b": {
+          "h1": -0.8156564452462223,
+          "h2": 0.6548762115833413,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 1.8977900322619348,
+      "motor_step_frac_of_p0": 0.7500000000000001,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.5,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "identity": true,
+      "elig_cosine": 0.9995618238350872,
+      "elig_l2": 0.08948475579866819,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_530180965",
+            "tok": "h_318221797",
+            "moved": true,
+            "adv": 0.23799941637852023
+          },
+          {
+            "cue": "s_848477718",
+            "tok": "h_574478241",
+            "moved": false,
+            "adv": -0.6041611964080489
+          }
+        ],
+        "live_a": {
+          "h1": 0.4974350137548185,
+          "h2": -0.9844322580833758,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "live_b": {
+          "h1": 0.4972114291486656,
+          "h2": -0.9844775225186575,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 1.273502218797313,
+      "motor_step_frac_of_p0": 0.5,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.5,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "identity": true,
+      "elig_cosine": 0.9995521688703857,
+      "elig_l2": 0.09060544359184772,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_826493829",
+            "tok": "h_897903749",
+            "moved": true,
+            "adv": -0.6041611964080489
+          },
+          {
+            "cue": "s_760619829",
+            "tok": "h_264862539",
+            "moved": true,
+            "adv": 0.23799941637852023
+          }
+        ],
+        "live_a": {
+          "h1": -0.8155625075266276,
+          "h2": 0.6549988987539789,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "live_b": {
+          "h1": -0.8151673846708022,
+          "h2": 0.6555144522528685,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 1.2651933548412897,
+      "motor_step_frac_of_p0": 0.5,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.75,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "identity": true,
+      "elig_cosine": 0.9991701071960908,
+      "elig_l2": 0.13356610669456695,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_530180965",
+            "tok": "h_318221797",
+            "moved": true,
+            "adv": 0.23799941637852023
+          },
+          {
+            "cue": "s_848477718",
+            "tok": "h_574478241",
+            "moved": false,
+            "adv": -0.6041611964080489
+          }
+        ],
+        "live_a": {
+          "h1": 0.49750737864128725,
+          "h2": -0.9844175924592371,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "live_b": {
+          "h1": 0.4970751934396518,
+          "h2": -0.9845050679438702,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 0.6367511093986565,
+      "motor_step_frac_of_p0": 0.25,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.75,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "identity": true,
+      "elig_cosine": 0.9990293465797193,
+      "elig_l2": 0.1447999423440959,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_826493829",
+            "tok": "h_897903749",
+            "moved": true,
+            "adv": -0.6041611964080489
+          },
+          {
+            "cue": "s_760619829",
+            "tok": "h_264862539",
+            "moved": true,
+            "adv": 0.23799941637852023
+          }
+        ],
+        "live_a": {
+          "h1": -0.8156457351549129,
+          "h2": 0.6548902017683118,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "live_b": {
+          "h1": -0.8148823147687356,
+          "h2": 0.6558859127590086,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 0.632596677420645,
+      "motor_step_frac_of_p0": 0.25000000000000006,
+      "motor_alive": true,
+      "usable": false
+    },
+    {
+      "p": 0.9,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "identity": true,
+      "elig_cosine": 0.9989271518844036,
+      "elig_l2": 0.16115998545164523,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_530180965",
+            "tok": "h_318221797",
+            "moved": true,
+            "adv": 0.23799941637852023
+          },
+          {
+            "cue": "s_848477718",
+            "tok": "h_574478241",
+            "moved": false,
+            "adv": -0.6041611964080489
+          }
+        ],
+        "live_a": {
+          "h1": 0.4976179093570174,
+          "h2": -0.9843951774871386,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "live_b": {
+          "h1": 0.4970529800314249,
+          "h2": -0.9845095567250298,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 0.2547004437594626,
+      "motor_step_frac_of_p0": 0.09999999999999999,
+      "motor_alive": false,
+      "usable": false
+    },
+    {
+      "p": 0.9,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "identity": true,
+      "elig_cosine": 0.998679672582896,
+      "elig_l2": 0.1792010559536046,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_826493829",
+            "tok": "h_897903749",
+            "moved": true,
+            "adv": -0.6041611964080489
+          },
+          {
+            "cue": "s_760619829",
+            "tok": "h_264862539",
+            "moved": true,
+            "adv": 0.23799941637852023
+          }
+        ],
+        "live_a": {
+          "h1": -0.8158073435316974,
+          "h2": 0.6546790362211884,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "live_b": {
+          "h1": -0.8148098381404725,
+          "h2": 0.6559802872163439,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 0.25303867096825794,
+      "motor_step_frac_of_p0": 0.1,
+      "motor_alive": false,
+      "usable": false
+    },
+    {
+      "p": 0.95,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 0,
+      "identity": true,
+      "elig_cosine": 0.9988489538860283,
+      "elig_l2": 0.17045709314566465,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_530180965",
+            "tok": "h_318221797",
+            "moved": true,
+            "adv": 0.23799941637852023
+          },
+          {
+            "cue": "s_848477718",
+            "tok": "h_574478241",
+            "moved": false,
+            "adv": -0.6041611964080489
+          }
+        ],
+        "live_a": {
+          "h1": 0.4976615247901293,
+          "h2": -0.984386327687497,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "live_b": {
+          "h1": 0.4970535057318037,
+          "h2": -0.9845094505022607,
+          "prefer_h1": true,
+          "prefer_h2": false
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 0.12735022187973144,
+      "motor_step_frac_of_p0": 0.05000000000000005,
+      "motor_alive": false,
+      "usable": false
+    },
+    {
+      "p": 0.95,
+      "domain": "TM024.MOTORPERSIST.DEV.",
+      "index": 1,
+      "identity": true,
+      "elig_cosine": 0.9985640732579318,
+      "elig_l2": 0.1908146963456061,
+      "s0": true,
+      "opposing": false,
+      "opposing_detail": {
+        "order": "A_then_B",
+        "taught": [
+          {
+            "cue": "s_826493829",
+            "tok": "h_897903749",
+            "moved": true,
+            "adv": -0.6041611964080489
+          },
+          {
+            "cue": "s_760619829",
+            "tok": "h_264862539",
+            "moved": true,
+            "adv": 0.23799941637852023
+          }
+        ],
+        "live_a": {
+          "h1": -0.8158729942357811,
+          "h2": 0.6545932153676977,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "live_b": {
+          "h1": -0.8147995995927715,
+          "h2": 0.6559936170389151,
+          "prefer_h1": false,
+          "prefer_h2": true
+        },
+        "opposing": false
+      },
+      "motor_step_l2": 0.12651933548412903,
+      "motor_step_frac_of_p0": 0.050000000000000024,
+      "motor_alive": false,
+      "usable": false
+    }
+  ],
+  "usable_p_exists": false,
+  "note": "No grid value met all DEV criteria. Do not score as a pass. Escalation table applies."
+}
