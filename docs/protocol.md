@@ -2106,3 +2106,5 @@ Result: [`cortex_d4_r1_gate.lock`](cortex_d4_r1_gate.lock) **0/16**. Audit [`cor
 
 Canonical main `bc8af9f`. D4.R2 apparatus: [`cortex_d4_r2.prereg.lock`](cortex_d4_r2.prereg.lock). Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle): [`cortex.candidate.v18.lock`](cortex.candidate.v18.lock). RETRIEVE recency tie-break. C4/C5/C6 green. Reveal D4.R2 only from a clean tree pinning `git rev-parse HEAD`.
+

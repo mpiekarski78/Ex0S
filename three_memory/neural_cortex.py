@@ -383,16 +383,16 @@ class NeuralCortex:
         q = self.W_att @ self.rho
         qn = self._from_t(q)
         qnorm = np.linalg.norm(qn) + 1e-12
-        scored: list[tuple[float, str, np.ndarray]] = []
+        scored: list[tuple[float, int, str, np.ndarray]] = []
         for rec in self.memory.records():
             v = np.asarray(rec.content, dtype=np.float64)
             if v.shape[0] != self.genome.d_sym:
                 continue
             cos = float(np.dot(qn, v) / (qnorm * (np.linalg.norm(v) + 1e-12)))
-            scored.append((cos, rec.fact_id, v))
-        scored.sort(key=lambda t: (-t[0], t[1]))
+            scored.append((cos, int(rec.when), rec.fact_id, v))
+        scored.sort(key=lambda t: (-t[0], -t[1], t[2]))
         buf = np.zeros((self.genome.k_s, self.genome.d_sym), dtype=np.float64)
-        for i, (_c, _fid, v) in enumerate(scored[: self.genome.k_s]):
+        for i, (_c, _when, _fid, v) in enumerate(scored[: self.genome.k_s]):
             buf[i] = v
         # populate for NEXT tick — store pending apply
         self._pending_retrieve = buf
