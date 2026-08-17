@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.FULLDEV.R6 result:** 0/16. D0 32, D1 17, D4 32, **D5 9**, D6 28, **D7 30**, D8 0. D7 transferred. D5 unknown HOLD regressed under phrase unroll. [`cortex_fulldev_r6.lock`](cortex_fulldev_r6.lock) + [`cortex_fulldev_r6.audit.lock`](cortex_fulldev_r6.audit.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R6 apparatus:** Full D0–D12 on unused domain `TM023.FULL.R6.` after isolated D7.R2 15/16. Live candidate v25, no neural edit. [`cortex_fulldev_r6.prereg.lock`](cortex_fulldev_r6.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D7.R2 result:** **15/16 clear.** D0 32/32, D7 31/32. [`cortex_d7_r2_gate.lock`](cortex_d7_r2_gate.lock) + [`cortex_d7_r2.audit.lock`](cortex_d7_r2.audit.lock). Full D0–D12 still closed. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V25 / D7.R2 candidate:** Phrase-final STOP / motor-program unroll. Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.662). [`cortex.candidate.v25.lock`](cortex.candidate.v25.lock) + [`cortex_mact_boundary.v25.lock`](cortex_mact_boundary.v25.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

@@ -1,0 +1,28 @@
+{
+  "version": "TM.0.23.CORTEX.FULLDEV.R6.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "71f5abe7276fadb33155e3d9bb543ab3e34774ae",
+  "neural_mechanism_changed": true,
+  "v26_authorized_only_if_this_lock": true,
+  "claim": "FULLDEV.R6 D5 is 9/32 because phrase-final STOP completes an utterance on unknown probes (last op STOP, not HOLD), so unknown_holds fall to 7–11 vs floor 12. known_nonhold stays green. Biology: neophobia — do not fluent-unroll a just-heard unfamiliar phrase; freeze/HOLD until the chunk is familiar. Missing generic law: block motor-program unroll when current-phrase familiarity is below FAMILIARITY_ABS. Keep phrase unroll + STOP for familiar phrases (D7). Do not lower D5 floors. Do not skip to D8.",
+  "authorize_v26": [
+    "keep v16–v25 HOLD / habituation / S-write / RETRIEVE recency / echoic emit / vocal refractory / phrase-final STOP",
+    "do not unroll a phrase when any current-phrase symbol has fam < FAMILIARITY_ABS; HOLD instead",
+    "do not add capability-specific functions or planted unknown/ground names",
+    "do not edit cortex_develop_scorers.py",
+    "do not lower unknown_holds>=12, known_nonhold_rate>=0.30, or the +0.15 margin",
+    "new sealed commitment domain TM023.D5.R3.",
+    "isolated D5 lives must run D1–D4 scorers first",
+    "re-earn C4/C5/C6 before any D5 reveal",
+    "narrow D5 gate ≥13/16 before reopening full D0–D12"
+  ],
+  "refuse": [
+    "edit-and-rescore FULLDEV.R6",
+    "lower D5 floors",
+    "drop C6",
+    "skip D5",
+    "stamp product"
+  ]
+}

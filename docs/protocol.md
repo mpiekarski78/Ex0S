@@ -2208,3 +2208,9 @@ Canonical main `8cb6591`. FULLDEV.R6 apparatus follows. Live v25, no neural edit
 
 FULLDEV.R6 apparatus: [`cortex_fulldev_r6.prereg.lock`](cortex_fulldev_r6.prereg.lock). Live v25, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Result: [`cortex_fulldev_r6.lock`](cortex_fulldev_r6.lock) **0/16**. D7 30/32 transferred. First-fail `{D1:15, D5:7, D2:4, D8:3, D3:2, D6:1}`. D5 is 9/32: phrase unroll ends unknown probes on STOP. Audit [`cortex_fulldev_r6.audit.lock`](cortex_fulldev_r6.audit.lock). Diagnosis [`cortex_diagnosis.fulldev_r6.lock`](cortex_diagnosis.fulldev_r6.lock): neophobia blocks unfamiliar phrase unroll. Do not rescore FULLDEV.R6. Next is isolated D5.R3.
+
+## TM.0.23.CORTEX.FULLDEV.R6 0/16 → isolated D5.R3
+
+Canonical main `71f5abe`. Isolated D5.R3 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

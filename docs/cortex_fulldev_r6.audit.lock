@@ -1,0 +1,79 @@
+{
+  "version": "TM.0.23.CORTEX.FULLDEV.R6.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "5f672a8e2c3ceb5cb8e5363829270cdc36cd09d6fcb82008d6204bc6c3d8f74f",
+  "failure_sha": "9d84611d78c48e5181f0c73d159cd778c319a8dbf4f6b8be5bcf44a2bbc9cb86",
+  "reveal_sha": "c7349a114e54228db29e3ed35e056cc136b18bdbececb9fc51559c32545ddf4b",
+  "n_pair_clear": 0,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "apparatus_git_sha": "71f5abe7276fadb33155e3d9bb543ab3e34774ae",
+      "candidate_git_sha": "8cb659112e1bfb3dedede7a8fc53226948876d71"
+    },
+    {
+      "id": "domain_is_full_r6",
+      "ok": true,
+      "domain": "TM023.FULL.R6."
+    },
+    {
+      "id": "d7_transferred",
+      "ok": true,
+      "d7_ok": 30,
+      "note": "Isolated D7.R2 phrase-final STOP holds in full-dev (30/32)."
+    },
+    {
+      "id": "d6_mostly_held",
+      "ok": true,
+      "d6_ok": 28
+    },
+    {
+      "id": "first_fail_modes",
+      "ok": true,
+      "first_fail_histogram": {"D1": 15, "D5": 7, "D2": 4, "D8": 3, "D3": 2, "D6": 1},
+      "stage_pass_counts": {"D0": 32, "D1": 17, "D2": 25, "D3": 29, "D4": 32, "D5": 9, "D6": 28, "D7": 30, "D8": 0, "D9": 32, "D10": 14, "D11": 32, "D12": 29}
+    },
+    {
+      "id": "d5_regressed",
+      "ok": true,
+      "d5_ok": 9,
+      "note": "D5 is 9/32 vs 32/32 on FULLDEV.R4. Reds miss unknown_holds>=12 at 7–11; known_nonhold already green. Phrase unroll turns some unknown EMITs into STOP, so they do not count as HOLD."
+    },
+    {
+      "id": "d8_still_zero_do_not_skip_d5",
+      "ok": true,
+      "d8_ok": 0,
+      "note": "D8 is 0/32 (withheld X→Z). First-fail D8 is only 3. Do not skip the D5 regression."
+    },
+    {
+      "id": "d1_still_partial",
+      "ok": true,
+      "d1_ok": 17,
+      "note": "15 first-fails at D1 remain the get/drop lure (press=0)."
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_fulldev_r6": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d5_r3",
+    "refuse": [
+      "rewrite docs/cortex_fulldev_r6.lock",
+      "edit-and-rescore on revealed FULLDEV.R6 worlds",
+      "stamp earned_next",
+      "open nursery conversation",
+      "skip D5 to attack D8"
+    ]
+  },
+  "note": "0/16 stands. D7 transferred. D5 habituation regressed under phrase unroll. Next is isolated D5.R3: neophobia blocks unfamiliar phrase unroll."
+}
