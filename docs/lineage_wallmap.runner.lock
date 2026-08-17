@@ -1,0 +1,89 @@
+{
+  "version": "TM.0.24.WALLMAP.RUNNER",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "shas": {
+    "runner": "f1e8585b3498cba02f49a00816f757669da8c1f08acbbe796fcd8043ddafadd6",
+    "neural_cortex": "2b563a9c5de3ec8b411121bd5518c09f49f422f44108138ec34a1d5708c98d2e",
+    "cortex_memory": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+    "prereg": "9f6f09aef81dd748354beef76b0d5d8a20cea7d0d075ca05b9b18f8c78157bc2",
+    "contract": "81856857a348c5b11674483d7f2af8308b2203a92adedef1b66f8dcc8498e87f",
+    "lineage_runner": "47da198301ebb81392256a5333bc08aa207366055ed1d2eda29934abfb393e52",
+    "cortex_lineage": "58540efea926dc12cd2d268b820f581176c1d14b7e143f2babc037ae2ca91bac"
+  },
+  "prereg_sha": "9f6f09aef81dd748354beef76b0d5d8a20cea7d0d075ca05b9b18f8c78157bc2",
+  "contract_sha": "81856857a348c5b11674483d7f2af8308b2203a92adedef1b66f8dcc8498e87f",
+  "n_wake": 40,
+  "n_replay": 8,
+  "n_probe": 20,
+  "Q1_optimizer": {
+    "type": "Adam",
+    "beta1": 0.9,
+    "beta2": 0.999,
+    "eps": 1e-08,
+    "matrices": [
+      "W_in",
+      "W_rec",
+      "W_op",
+      "b_op",
+      "W_act_query"
+    ],
+    "M_frozen": true,
+    "sigma_init": 0.01,
+    "restarts": 3,
+    "max_steps": 2000,
+    "lr_start": 0.01,
+    "lr_end": 0.0001,
+    "schedule": "cosine",
+    "clip": 2.0,
+    "lambda_hold": 0.5,
+    "lambda_wrong": 0.5,
+    "early_stop_probe": 0.8,
+    "early_stop_streak": 20,
+    "eval_every": 50,
+    "n_fit_worlds": 4,
+    "pass_fit_worlds": 3,
+    "pass_probe": 0.6,
+    "surrogate_is_not_pass_gate": true
+  },
+  "Q3": {
+    "snr": "|mean_r(Delta_ir)| / SE_r(Delta_ir)",
+    "denominator": "standard_error_not_variance_sum",
+    "report_variance_components_separately": true,
+    "P": 32,
+    "sigma": 0.05,
+    "R": 8,
+    "n_batches": 2,
+    "pass": {
+      "median_snr": 2.0,
+      "cosine_g1_g2": 0.3,
+      "sign_agreement": 0.6,
+      "spearman": 0.3,
+      "grad_over_bootstrap_se": 2.0,
+      "phenotype_change_fraction": 0.1
+    }
+  },
+  "Q4_interventions": [
+    "zero_rho_elig",
+    "swap_rho_elig",
+    "previous_tick_elig",
+    "wrong_tick_elig",
+    "flip_physics",
+    "zero_physics",
+    "snapshot_restore_plastic_tensors",
+    "restore_rng"
+  ],
+  "domains": {
+    "Q1_FIT": "TM024.WALLMAP.Q1.DIAG.FIT.",
+    "Q1_TRANSFER": "TM024.WALLMAP.Q1.DIAG.TRANSFER.",
+    "Q2_FIT": "TM024.WALLMAP.Q2.DIAG.FIT.",
+    "Q2_CHECK": "TM024.WALLMAP.Q2.DIAG.CHECK.",
+    "Q3": "TM024.WALLMAP.Q3.DIAG.",
+    "Q4": "TM024.WALLMAP.Q4.DIAG."
+  },
+  "diagnostic_generator": "experiments.run_tm024wallmap.make_diag_world",
+  "git_head_at_freeze": "e61385474d6010956b261c2690f6cea999c44894",
+  "note": "No diagnostic answers before this lock on clean origin/main. Behavior-affecting changes need a versioned lock."
+}

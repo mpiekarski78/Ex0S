@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.24.WALLMAP runner freeze:** ABI smoke green. Runner lock pins SHAs, Q1 optimizer budgets, Q3 SE-SNR sample, Q4 state interventions. Diagnostic answers next. [`lineage_wallmap.runner.lock`](lineage_wallmap.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.WALLMAP apparatus:** L0 wall decomposition prereg. Four diagnostics (representability, reachability, ES SNR with SE, state-only credit). Q4 precedence over Q2. No answers yet. [`lineage_wallmap.prereg.lock`](lineage_wallmap.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.LINEAGE scored L0 wall:** Five generations (P=8). Champion DEV triplet 0 adult means 0.09–0.13 vs τ=0.60. L0 not unlocked. QUAL/EVAL sealed. [`lineage_engine.candidate.lock`](lineage_engine.candidate.lock) equals Phase 0B SHAs. [`lineage_wall.lock`](lineage_wall.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.LINEAGE engine freeze:** Arm D/C codecs, observable teacher, REST, antithetic ES. v27-default C4/C5/C6 green. Phase 0B ~3349 ticks/s CPU. Compute amendment P=16 (floors unchanged). [`lineage_engine.preflight.lock`](lineage_engine.preflight.lock).

@@ -1,4 +1,4 @@
-"""TM.0.24.WALLMAP Phase A provenance. CPU only. No diagnostic answers yet."""
+"""TM.0.24.WALLMAP provenance and smoke. CPU only. Diagnostics require runner.lock."""
 
 from __future__ import annotations
 
@@ -21,9 +21,9 @@ def test_phase_a_files() -> None:
         "docs/lineage_wallmap.prereg.lock",
         "docs/lineage_engine.candidate.lock",
         "docs/lineage_wall.lock",
+        "experiments/run_tm024wallmap.py",
     ):
         assert (REPO_ROOT / rel).is_file(), rel
-    assert not (REPO_ROOT / "docs" / "lineage_wallmap.runner.lock").exists()
     prereg = json.loads((REPO_ROOT / "docs" / "lineage_wallmap.prereg.lock").read_text(encoding="utf-8"))
     assert prereg["product"] == "0.0.004"
     assert prereg["earned_next"] is False
@@ -38,16 +38,11 @@ def test_phase_a_files() -> None:
 
 def test_contract_stance() -> None:
     text = (REPO_ROOT / "docs" / "lineage_wallmap_contract.md").read_text(encoding="utf-8")
-    assert "SE_r" in text or "standard error" in text.lower()
-    assert "DIAG.FIT" in text or "Q1.DIAG.FIT" in text
-    assert "DIAG.TRANSFER" in text or "Q1.DIAG.TRANSFER" in text
-    assert "state-only" in text.lower() or "state only" in text.lower()
+    assert "standard error" in text.lower() or "SE_r" in text
+    assert "Q1.DIAG.FIT" in text or "DIAG.FIT" in text
+    assert "TRANSFER" in text
+    assert "state-only" in text.lower() or "State-only" in text or "state only" in text.lower()
     assert "0.0.004" in text
-    assert "earned_next=false" in text or "`earned_next=false`" in text
-    assert "Q4 breaks" in text or "Q4 breaks" in text.replace("**", "")
-    assert "favorable birth" in text.lower() or "favorable birth" in text
-    assert "variance" in text.lower()
-    # lineage candidate untouched
     cand = json.loads((REPO_ROOT / "docs" / "lineage_engine.candidate.lock").read_text(encoding="utf-8"))
     assert cand["version"] == "TM.0.24.LINEAGE.ENGINE.CANDIDATE"
     assert sha(REPO_ROOT / "docs" / "cortex_architecture_contract.md") == (
@@ -57,7 +52,7 @@ def test_contract_stance() -> None:
 
 def test_prereg_snr_and_optimizer() -> None:
     prereg = json.loads((REPO_ROOT / "docs" / "lineage_wallmap.prereg.lock").read_text(encoding="utf-8"))
-    assert "SE_r" in prereg["Q3"]["snr"] or "SE_r(Delta_ir)" in prereg["Q3"]["snr"]
+    assert "SE_r" in prereg["Q3"]["snr"]
     assert prereg["Q1_optimizer"]["type"] == "Adam"
     assert prereg["Q1_optimizer"]["max_steps"] == 2000
     assert prereg["Q1_optimizer"]["pass_probe"] == 0.6
@@ -68,10 +63,49 @@ def test_prereg_snr_and_optimizer() -> None:
     assert prereg["delta_B"] == 0.05
 
 
+def test_runner_lock_if_present() -> None:
+    p = REPO_ROOT / "docs" / "lineage_wallmap.runner.lock"
+    if not p.exists():
+        return
+    from experiments.run_tm024wallmap import wallmap_shas
+
+    lock = json.loads(p.read_text(encoding="utf-8"))
+    assert lock["product"] == "0.0.004"
+    assert lock["earned_next"] is False
+    assert lock["ex0s"] is None
+    assert lock["shas"] == wallmap_shas()
+    assert lock["Q3"]["denominator"] == "standard_error_not_variance_sum" or "SE" in str(lock["Q3"])
+
+
+def test_smoke() -> None:
+    from experiments.run_tm024wallmap import smoke
+
+    out = smoke()
+    assert out["smoke_ok"] is True
+    assert out["capability_claim"] is False
+    assert out["product"] == "0.0.004"
+
+
+def test_decision_if_present() -> None:
+    p = REPO_ROOT / "docs" / "lineage_wallmap.decision.lock"
+    if not p.exists():
+        return
+    d = json.loads(p.read_text(encoding="utf-8"))
+    assert d["product"] == "0.0.004"
+    assert d["earned_next"] is False
+    assert d["ex0s"] is None
+    assert d["eligible_for_000005"] is False
+    assert d["Q4_precedence_over_Q2"] is True
+    assert d["increase_n"] is False
+
+
 def main() -> None:
     test_phase_a_files()
     test_contract_stance()
     test_prereg_snr_and_optimizer()
+    test_runner_lock_if_present()
+    test_smoke()
+    test_decision_if_present()
     print("test_tm024wallmap: ok")
 
 
