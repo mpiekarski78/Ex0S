@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.23.CORTEX.D6.R3.ISOLATION",
+  "lab": "TM.0.23.CORTEX.D6.R2",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "D6.R2 scored 12/16. Same EMIT/HOLD balance. VOCAL_REFRACTORY=1.0 is too weak to leave a HOLD attractor on two lives.",
+  "d6_r2_gate": "docs/cortex_d6_r2_gate.lock",
+  "d6_r2_failure": "docs/cortex_d6_r2_gate.failure.lock",
+  "d6_r2_audit": "docs/cortex_d6_r2.audit.lock",
+  "v22_diagnosis": "docs/cortex_diagnosis.v22.lock",
+  "refuse": [
+    "edit-and-rescore D6.R2 on revealed worlds",
+    "reuse TM023.D6.R2. or D6.R1. or FULL.R* worlds",
+    "open FULLDEV or nursery before a later isolated D6 ≥13/16",
+    "stamp earned_next"
+  ],
+  "next_cycle": {
+    "name": "isolated_d6_r3",
+    "requires": [
+      "frozen diagnosis of weak vocal refractory",
+      "new amendment: VOCAL_REFRACTORY=1.5",
+      "new birth + candidate.v23.lock",
+      "new sealed commitment ≠ D6.R2",
+      "re-earn C4/C5/C6",
+      "fresh narrow D6 ≥13/16 before reopening FULLDEV"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004. Third isolated D6 miss of this balance law would require a new diagnosed mechanism."
+}

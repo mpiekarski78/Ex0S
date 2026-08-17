@@ -1,0 +1,65 @@
+{
+  "version": "TM.0.23.CORTEX.D6.R2.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "a535ba25b15c07e848614a20730207202ae1922ab9da602ae3c211fe0bd76918",
+  "failure_sha": "a98d5c6e5631d2e55c4e1233b21455b6d74204e45c5580666ad23c74a5fd8878",
+  "reveal_sha": "754da5824c88bed5131d8a5a97a27f951b0e20013f29be6df1d816c6a01c752b",
+  "n_pair_clear": 12,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "candidate_git_sha": "e756bf8eeb60300bf345618be3f8fda964ba21cc"
+    },
+    {
+      "id": "domain_is_d6_r2",
+      "ok": true,
+      "domain": "TM023.D6.R2."
+    },
+    {
+      "id": "moved_11_to_12",
+      "ok": true,
+      "d6_ok": 28,
+      "note": "Vocal refractory lifted pair clear 11→12 and D6 27→28. Still below 13/16."
+    },
+    {
+      "id": "remaining_reds",
+      "ok": true,
+      "n_d6_red": 4,
+      "reds": [
+        {"pair": 1, "role": "twin", "emits": 0, "matched": 0, "holds": 4},
+        {"pair": 3, "role": "twin", "emits": 4, "matched": 4, "holds": 1},
+        {"pair": 8, "role": "main", "emits": 2, "matched": 2, "holds": 2},
+        {"pair": 14, "role": "main", "emits": 0, "matched": 0, "holds": 4}
+      ],
+      "note": "Two lives never EMIT. One EMITs without enough HOLD. One is 2/2 (holds short by 1). Same balance law, not a new wall."
+    },
+    {
+      "id": "d6_scorer_not_soft",
+      "ok": true
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_d6_r2": "refused",
+    "fulldev": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d6_r3",
+    "refuse": [
+      "rewrite docs/cortex_d6_r2_gate.lock",
+      "edit-and-rescore on revealed D6.R2 worlds",
+      "lower D6 floors",
+      "stamp earned_next"
+    ]
+  },
+  "note": "12/16 stands. Same EMIT/HOLD balance. Next: stronger vocal refractory (1.0 → 1.5), not a new architecture."
+}

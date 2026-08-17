@@ -1,0 +1,26 @@
+{
+  "version": "TM.0.23.CORTEX.V22.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "e756bf8eeb60300bf345618be3f8fda964ba21cc",
+  "neural_mechanism_changed": true,
+  "v23_authorized_only_if_this_lock": true,
+  "claim": "D6.R2 scored 12/16. Vocal refractory at 1.0 moved the gate 11→12. Two remaining lives never EMIT (bias too weak to leave HOLD). One life holds=1 (already vocal). Biology: turn-taking needs a stronger pause/vocal flip to escape a HOLD attractor without wiping HOLD entirely. Raise VOCAL_REFRACTORY from 1.0 to 1.5. Keep echoic emit. Do not lower floors. This is the second isolated D6 miss of the same balance law.",
+  "authorize_v23": [
+    "keep v21 echoic emit and v22 vocal refractory mechanism",
+    "raise VOCAL_REFRACTORY from 1.0 to 1.5",
+    "do not change CONFLICT_HOLD_BIAS",
+    "do not edit cortex_develop_scorers.py",
+    "do not lower emits>=2, matched>=1, or holds>=3",
+    "new sealed commitment domain TM023.D6.R3.",
+    "re-earn C4/C5/C6 before reveal",
+    "narrow D6 gate ≥13/16 before reopening full D0–D12"
+  ],
+  "refuse": [
+    "edit-and-rescore D6.R2",
+    "lower D6 floors",
+    "drop C6",
+    "stamp product"
+  ]
+}

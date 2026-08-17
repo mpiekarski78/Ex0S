@@ -2162,3 +2162,9 @@ D6.R2 apparatus: [`cortex_d6_r2.prereg.lock`](cortex_d6_r2.prereg.lock). Vocal r
 
 Candidate (this cycle): [`cortex.candidate.v22.lock`](cortex.candidate.v22.lock). Vocal refractory. C4/C5/C6 green. Reveal D6.R2 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d6_r2_gate.lock`](cortex_d6_r2_gate.lock) **12/16**. D6 28/32. Audit [`cortex_d6_r2.audit.lock`](cortex_d6_r2.audit.lock). Diagnosis [`cortex_diagnosis.v22.lock`](cortex_diagnosis.v22.lock): raise `VOCAL_REFRACTORY` to 1.5. Do not rescore D6.R2.
+
+## TM.0.23.CORTEX.V22 D6.R2 12/16 → isolated D6.R3
+
+Canonical main `e756bf8`. D6.R3 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
