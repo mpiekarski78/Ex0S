@@ -2148,3 +2148,5 @@ Result: [`cortex_fulldev_r4.lock`](cortex_fulldev_r4.lock) **0/16**. D5 32/32 tr
 
 Canonical main `e7767b9`. Isolated D6 after D5 transferred. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+D6.R1 apparatus: [`cortex_d6_r1.prereg.lock`](cortex_d6_r1.prereg.lock). Echoic emit authorized after this freeze. Reveal only from a clean tree pinning `git rev-parse HEAD`.
+
