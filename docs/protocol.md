@@ -2252,6 +2252,8 @@ Reachability apparatus: [`lineage_reach.prereg.lock`](lineage_reach.prereg.lock)
 
 Result: [`lineage_reach.lock`](lineage_reach.lock) **false**. Credit precondition green (zero eligibility does not move unused tensors). CHECK adult mean 0.12 vs τ=0.60. n stays 64. Do not rescore. QUAL/EVAL sealed. Not 0.0.005.
 
+PLASTICITYMAP apparatus: [`lineage_plasticitymap.prereg.lock`](lineage_plasticitymap.prereg.lock). Complete v28 credit chain on fresh worlds, then forced balanced ACT exposure. Neural unchanged. Score only after `docs/lineage_plasticitymap.runner.lock` on clean `origin/main`. Another lineage run is unjustified until this decomposition. QUAL/EVAL sealed.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
