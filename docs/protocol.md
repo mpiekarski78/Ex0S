@@ -2238,6 +2238,14 @@ Candidate (this cycle): [`cortex.candidate.v27.lock`](cortex.candidate.v27.lock)
 
 Result: [`cortex_v27_gate.lock`](cortex_v27_gate.lock) **0/16**. G1 green. G3/G5 red (HOLD dominates; STOP length not taught). Audit [`cortex_v27.audit.lock`](cortex_v27.audit.lock). Diagnosis [`cortex_diagnosis.v27.lock`](cortex_diagnosis.v27.lock): delayed imitation / template match, not buffer copy. Do not rescore. Do not restore `phrase_program`. Do not reveal FULLDEV.R7.
 
+## TM.0.24.LINEAGE L0 wall → WALLMAP → isolated v28
+
+Canonical main `b69f2bc`. WALLMAP results remain historical. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+WALLMAP: Q4 credit chain failed (zero eligibility still moved unused tensors via consolidation). Q1/Q2/Q3 also failed. Primary bottleneck Q4. Frozen LINEAGE engine candidate immutable. n stays 64. QUAL/EVAL sealed.
+
+v28 apparatus: [`cortex_v28.prereg.lock`](cortex_v28.prereg.lock). General credit-path law authorized after this freeze. Neural edit only after this commit is on `origin/main`. Re-earn sanity and C4/C5/C6, then a newly committed reachability diagnostic. FULLDEV.R7 stays sealed.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

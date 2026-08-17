@@ -1,0 +1,50 @@
+{
+  "version": "TM.0.23.CORTEX.V28.ISOLATION",
+  "lab": "TM.0.24.WALLMAP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "reason": "WALLMAP Q4 failed: zero eligibility still moved unused plastic tensors via consolidation. Q2 is not independently diagnostic while Q4 is broken.",
+  "wallmap_decision": "docs/lineage_wallmap.decision.lock",
+  "wallmap_decision_sha": "e48b8121d9e8cf8830c784a8f41c806a7b6debf726f354ef5892336a8f408409",
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_scored.lock",
+    "docs/lineage_wallmap.prereg.lock",
+    "docs/lineage_wallmap.runner.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_wallmap_q1.lock",
+    "docs/lineage_wallmap_q2.lock",
+    "docs/lineage_wallmap_q3.lock",
+    "docs/lineage_wallmap_q4.lock",
+    "docs/cortex.candidate.v27.lock",
+    "docs/lineage_v27_default_compat.lock"
+  ],
+  "refuse": [
+    "rewrite LINEAGE or WALLMAP locks",
+    "increase n",
+    "move tau or delta",
+    "L0-specific circuitry",
+    "reveal QUAL/EVAL",
+    "reveal FULLDEV.R7",
+    "reuse WALLMAP Q2.DIAG worlds as held-out",
+    "treat WALLMAP Q2 fail as maturation/replay while Q4 was broken",
+    "stamp earned_next",
+    "stamp 0.0.005"
+  ],
+  "next_cycle": {
+    "name": "isolated_v28_credit_path",
+    "requires": [
+      "frozen architecture amendment authorizing only the general credit-path law",
+      "apparatus on origin/main before any v28 neural edit",
+      "new birth + candidate.v28.lock",
+      "re-earn nine sanity and C4/C5/C6",
+      "newly committed reachability diagnostic on unused domains",
+      "FULLDEV.R7 remains sealed",
+      "n remains 64"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004."
+}

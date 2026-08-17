@@ -114,7 +114,10 @@ def test_birth_and_candidate_frozen() -> None:
     assert CANDIDATE_LOCK.exists()
     assert CANDIDATE_V1.exists()
     cand = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
-    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V27":
+    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V28":
+        v28_birth = json.loads((REPO_ROOT / "docs" / "cortex_v28_birth.lock").read_text(encoding="utf-8"))
+        assert v28_birth["learning_law_ok"] is True
+    elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V27":
         v27_birth = json.loads((REPO_ROOT / "docs" / "cortex_v27_birth.lock").read_text(encoding="utf-8"))
         assert v27_birth["learning_law_ok"] is True
     elif cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V26":
@@ -181,7 +184,7 @@ def test_birth_and_candidate_frozen() -> None:
         assert cand["learning_law_ok"] is True
     assert cand["factory"] == "experiments.run_tm023cortex.make_cortex"
     lineage_compat = REPO_ROOT / "docs" / "lineage_v27_default_compat.lock"
-    if lineage_compat.exists() and cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V27":
+    if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V27" and lineage_compat.exists():
         compat = json.loads(lineage_compat.read_text(encoding="utf-8"))
         assert compat["ancestor_neural_sha"] == cand["neural_cortex_sha"]
         assert sha(NEURAL_PY) == compat["neural_cortex_sha"]
@@ -250,6 +253,7 @@ def test_diag_and_v4_gate() -> None:
     assert (REPO_ROOT / "docs" / "cortex.candidate.v5.lock").exists()
     assert (REPO_ROOT / "docs" / "cortex.candidate.v6.lock").exists()
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
+    v28 = REPO_ROOT / "docs" / "cortex.candidate.v28.lock"
     v27 = REPO_ROOT / "docs" / "cortex.candidate.v27.lock"
     v26 = REPO_ROOT / "docs" / "cortex.candidate.v26.lock"
     v25 = REPO_ROOT / "docs" / "cortex.candidate.v25.lock"
@@ -271,7 +275,9 @@ def test_diag_and_v4_gate() -> None:
     v9 = REPO_ROOT / "docs" / "cortex.candidate.v9.lock"
     v8 = REPO_ROOT / "docs" / "cortex.candidate.v8.lock"
     v7 = REPO_ROOT / "docs" / "cortex.candidate.v7.lock"
-    if v27.exists():
+    if v28.exists():
+        assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V28"
+    elif v27.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V27"
     elif v26.exists():
         assert live["version"] == "TM.0.23.CORTEX.CANDIDATE.V26"
@@ -706,6 +712,35 @@ def test_verify_v13_gate_cli() -> None:
         assert v["refuse_develop_before_clear"] is True
         assert (REPO_ROOT / "docs" / "cortex_v13_gate.failure.lock").exists()
         assert not (REPO_ROOT / "docs" / "cortex_development.v13.lock").exists()
+
+
+def test_v28_candidate_boundary_pending_gate() -> None:
+    amend = json.loads((REPO_ROOT / "docs" / "cortex_v28_architecture_amendment.lock").read_text(encoding="utf-8"))
+    prereg = json.loads((REPO_ROOT / "docs" / "cortex_v28.prereg.lock").read_text(encoding="utf-8"))
+    iso = json.loads((REPO_ROOT / "docs" / "cortex_v28.isolation.lock").read_text(encoding="utf-8"))
+    assert amend["n"] == 64
+    assert prereg["n"] == 64
+    assert prereg["authorized_law"] == "credit_and_consolidate_only_tensors_that_received_nonzero_update"
+    assert "increase_n" in prereg["refuse"]
+    assert iso["refuse"]
+    assert "increase n" in iso["refuse"]
+    assert not (REPO_ROOT / "docs" / "cortex_fulldev_r7.prereg.lock").exists()
+    cand_p = REPO_ROOT / "docs" / "cortex.candidate.v28.lock"
+    if not cand_p.exists():
+        return
+    cand = json.loads(cand_p.read_text(encoding="utf-8"))
+    assert cand["version"] == "TM.0.23.CORTEX.CANDIDATE.V28"
+    assert cand["earned_next"] is False
+    assert cand["ex0s"] is None
+    v27 = json.loads((REPO_ROOT / "docs" / "cortex.candidate.v27.lock").read_text(encoding="utf-8"))
+    assert cand["neural_cortex_sha"] != v27["neural_cortex_sha"]
+    assert cand["genome"]["n"] == 64
+    mact_p = REPO_ROOT / "docs" / "cortex_mact_boundary.v28.lock"
+    if mact_p.exists():
+        mact = json.loads(mact_p.read_text(encoding="utf-8"))
+        required = {"C4_consequence_swap_timed", "C5_plasticity_necessity", "C6_no_consequence_population"}
+        if mact.get("all_required_green"):
+            assert required.issubset({c["id"] for c in mact["controls"] if c.get("ok")})
 
 
 def test_v27_candidate_boundary_pending_gate() -> None:
@@ -1327,6 +1362,7 @@ if __name__ == "__main__":
     test_v13_candidate_boundary_pending_gate()
     test_verify_v12_gate_cli()
     test_verify_v13_gate_cli()
+    test_v28_candidate_boundary_pending_gate()
     test_v27_candidate_boundary_pending_gate()
     test_v26_candidate_boundary_pending_gate()
     test_v26_generality_red_refuses_fulldev_r7()

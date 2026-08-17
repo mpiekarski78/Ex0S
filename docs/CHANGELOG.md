@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.V28 apparatus:** Isolated credit-path repair after WALLMAP Q4. Consolidate only tensors that received a nonzero credit/prediction update. No neural edit yet. n stays 64. LINEAGE/WALLMAP historical. [`cortex_v28.prereg.lock`](cortex_v28.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.WALLMAP results:** Q4 credit chain fails (zero-eligibility still moves weights via consolidation); Q1/Q2/Q3 also fail. Primary bottleneck **Q4**. Next: repair general credit path in a new architecture candidate, then re-run reachability. [`lineage_wallmap.decision.lock`](lineage_wallmap.decision.lock). n stays 64. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.WALLMAP runner freeze:** ABI smoke green. Runner lock pins SHAs, Q1 optimizer budgets, Q3 SE-SNR sample, Q4 state interventions. Diagnostic answers next. [`lineage_wallmap.runner.lock`](lineage_wallmap.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.WALLMAP apparatus:** L0 wall decomposition prereg. Four diagnostics (representability, reachability, ES SNR with SE, state-only credit). Q4 precedence over Q2. No answers yet. [`lineage_wallmap.prereg.lock`](lineage_wallmap.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

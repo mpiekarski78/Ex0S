@@ -1,0 +1,41 @@
+{
+  "version": "TM.0.23.CORTEX.V28.PREREG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "wallmap_decision_sha": "e48b8121d9e8cf8830c784a8f41c806a7b6debf726f354ef5892336a8f408409",
+  "architecture_amendment_sha": "6f787b201d140faca262dee3f61becf32ce5c106e2b61a02016a957c154788b6",
+  "architecture_amendment_md_sha": "be0ede9343446f280d2b1f1785d00f032451eaaf583b8cf1d979edacc311fadb",
+  "isolation_sha": "1f01417e1ad998072b8fcdddb8fe68765e22b83662a8b5e38456c4f63d61f32c",
+  "authorized_law": "credit_and_consolidate_only_tensors_that_received_nonzero_update",
+  "n": 64,
+  "tau": 0.6,
+  "delta_B": 0.05,
+  "delta_P": 0.05,
+  "required_after_edit": [
+    "nine_sanity",
+    "C4",
+    "C5",
+    "C6",
+    "newly_committed_reachability_diagnostic"
+  ],
+  "reachability_domains_reserved": [
+    "TM024.REACH.DIAG.FIT.",
+    "TM024.REACH.DIAG.CHECK."
+  ],
+  "distinct_from_wallmap_q2": [
+    "TM024.WALLMAP.Q2.DIAG.FIT.",
+    "TM024.WALLMAP.Q2.DIAG.CHECK."
+  ],
+  "refuse": [
+    "increase_n",
+    "move_tau_or_delta",
+    "rewrite_lineage_or_wallmap_locks",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "L0_specific_circuitry",
+    "reuse_wallmap_q2_worlds_as_held_out"
+  ],
+  "note": "Narrow v28 credit-path causality. Neural edit authorized after this freeze is on origin/main. Not a G1+G3+G5 rescore."
+}
