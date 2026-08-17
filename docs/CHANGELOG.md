@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.V27 apparatus:** Isolated G1+G3+G5 after GENERALITY.v26 3/8. Learned internal motor program authorized; no neural edit yet. [`cortex_v27.prereg.lock`](cortex_v27.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.GENERALITY.v26 result:** **3/8 red.** G1/G2/G3/G5 fail (scripted phrase copy / echo-as-answer / STOP-from-copied-length). G4/G6/G8 green. FULLDEV.R7 refused. [`cortex_v26_generality.lock`](cortex_v26_generality.lock) + [`cortex_v26_generality.audit.lock`](cortex_v26_generality.audit.lock). Next is isolated v27. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.GENERALITY.v26 apparatus:** Frozen G1–G8 contract and runner on immutable candidate v26. No score yet. Do not reveal FULLDEV.R7 until all controls are green. [`cortex_v26_generality_contract.md`](cortex_v26_generality_contract.md) + [`cortex_v26_generality.runner.lock`](cortex_v26_generality.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D5.R3 result:** **15/16 clear.** D0 32/32, D5 31/32. unknown_holds 10–19, known_nonhold 0.75–1.00. [`cortex_d5_r3_gate.lock`](cortex_d5_r3_gate.lock) + [`cortex_d5_r3.audit.lock`](cortex_d5_r3.audit.lock). Full D0–D12 still closed. `earned_next=false`; `ex0s=null`; product **0.0.004**.

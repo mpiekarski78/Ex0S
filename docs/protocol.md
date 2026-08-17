@@ -2228,6 +2228,12 @@ Generality apparatus: [`cortex_v26_generality_contract.md`](cortex_v26_generalit
 
 Result: [`cortex_v26_generality.lock`](cortex_v26_generality.lock) **3/8 red**. G1/G2/G3/G5 fail (scripted phrase copy). G4/G6/G8 green. Audit [`cortex_v26_generality.audit.lock`](cortex_v26_generality.audit.lock). Diagnosis [`cortex_diagnosis.v26_generality.lock`](cortex_diagnosis.v26_generality.lock): learned internal motor program, not sensory-buffer replay. Do not rescore. Do not reveal FULLDEV.R7. Next is isolated v27.
 
+## TM.0.23.CORTEX.GENERALITY.v26 3/8 → isolated v27
+
+Canonical main `5696c3b`. Isolated v27 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+v27 apparatus: [`cortex_v27.prereg.lock`](cortex_v27.prereg.lock). Learned internal motor program authorized after this freeze. Neural edit only after this commit is on `origin/main`. Domain `TM023.V27.GEN.`. Narrow gate G1+G3+G5. FULLDEV.R7 stays sealed.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
