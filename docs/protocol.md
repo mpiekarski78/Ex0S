@@ -2216,3 +2216,5 @@ Canonical main `71f5abe`. Isolated D5.R3 apparatus follows. Product **0.0.004**;
 
 D5.R3 apparatus: [`cortex_d5_r3.prereg.lock`](cortex_d5_r3.prereg.lock). Neophobia on unfamiliar phrase authorized; no neural edit yet. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle): [`cortex.candidate.v26.lock`](cortex.candidate.v26.lock). Neophobia on unfamiliar phrase. C4/C5/C6 green. Reveal D5.R3 only from a clean tree pinning `git rev-parse HEAD`.
+

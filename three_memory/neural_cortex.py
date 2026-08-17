@@ -484,6 +484,11 @@ class NeuralCortex:
             if op == "EMIT":
                 program = [t for t in self._phrase if t]
                 if program:
+                    unfamiliar = any(float(self._symbol_fam.get(t, 0.0)) < FAMILIARITY_ABS for t in program)
+                    if unfamiliar:
+                        chosen_op = "HOLD"
+                        self.emit_buffer = []
+                        break
                     if 1 <= len(program) <= 2 and float(self.rng_motor.random()) < 0.5:
                         program = program + program
                     phrase_target = len(program)
