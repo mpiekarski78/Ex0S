@@ -2094,3 +2094,7 @@ Canonical main `24df253`. FULLDEV.R2 apparatus: [`cortex_fulldev_r2.prereg.lock`
 
 Result: [`cortex_fulldev_r2.lock`](cortex_fulldev_r2.lock) **0/16**. D3 31/32 transferred. First-fail `{D1:13, D4:19}`. D4 is 0/32: `donor_changes_retrieval=false` on every life. Audit [`cortex_fulldev_r2.audit.lock`](cortex_fulldev_r2.audit.lock). Diagnosis [`cortex_diagnosis.fulldev_r2.lock`](cortex_diagnosis.fulldev_r2.lock): S write must make the written content immediately recallable. Do not rescore FULLDEV.R2. Next is isolated D4.R1.
 
+## TM.0.23.CORTEX.FULLDEV.R2 0/16 → isolated D4.R1
+
+Canonical main `8fe8a96`. D4.R1 apparatus: [`cortex_d4_r1.prereg.lock`](cortex_d4_r1.prereg.lock). Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
