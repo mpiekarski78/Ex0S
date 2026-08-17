@@ -1,0 +1,1984 @@
+{
+  "version": "TM.0.24.STATEMAP.DECISION",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "n": 64,
+  "n_pass": 10,
+  "n_cells": 13,
+  "cells": [
+    {
+      "id": "S0",
+      "passed": true,
+      "pre": {
+        "p_act": 0.36555012387439484,
+        "p_hold": 0.15075488962687003,
+        "act_logit": 0.9146812272246777,
+        "motor_ben": 0.0,
+        "motor_harm": 0.0,
+        "p_handle": 0.2499999999999375
+      },
+      "post_ident": {
+        "p_act": 0.40101961359126725,
+        "p_hold": 0.14232680222609587,
+        "act_logit": 1.0648175903321613,
+        "motor_ben": 0.9999999999933393,
+        "motor_harm": -0.0820956704596887,
+        "p_handle": 0.49946860888278016
+      },
+      "d_w_op": 0.015018928789375594,
+      "d_w_q": 0.005659777494686842,
+      "adv": 0.23799941637852023,
+      "domain": "TM024.STATEMAP.CELLS."
+    },
+    {
+      "id": "S1",
+      "passed": true,
+      "ident_moved": true,
+      "event_moved": true,
+      "cosine_teach_vs_event": 0.9999988532661385,
+      "ident": {
+        "p_act": 0.40101961359126725,
+        "p_hold": 0.14232680222609587,
+        "act_logit": 1.0648175903321613,
+        "motor_ben": 0.9999999999933392,
+        "motor_harm": 0.08027580935788751,
+        "p_handle": 0.45139869549210887
+      },
+      "event": {
+        "p_act": 0.40084275434329814,
+        "p_hold": 0.14246350994215976,
+        "act_logit": 1.0640114715276887,
+        "motor_ben": 0.999999999993339,
+        "motor_harm": 0.08027580935788749,
+        "p_handle": 0.4513986954921088
+      }
+    },
+    {
+      "id": "S2",
+      "passed": true,
+      "ident_moved": true,
+      "delays": [
+        {
+          "delay": 1,
+          "moved": true,
+          "cosine": 0.9999993454243895,
+          "policy": {
+            "p_act": 0.4008334063689877,
+            "p_hold": 0.14244017769634737,
+            "act_logit": 1.0640226436462459,
+            "motor_ben": 0.9999999999933399,
+            "motor_harm": -0.13274806294222563,
+            "p_handle": 0.47955551976136424
+          }
+        },
+        {
+          "delay": 2,
+          "moved": true,
+          "cosine": 0.9999995065931027,
+          "policy": {
+            "p_act": 0.4008778745521845,
+            "p_hold": 0.14242780720191858,
+            "act_logit": 1.0643236932818374,
+            "motor_ben": 0.999999999993339,
+            "motor_harm": -0.13274806294222552,
+            "p_handle": 0.47955551976136407
+          }
+        },
+        {
+          "delay": 4,
+          "moved": true,
+          "cosine": 0.9692223001685477,
+          "policy": {
+            "p_act": 0.3724503913654935,
+            "p_hold": 0.1400097043926375,
+            "act_logit": 1.0178172413221498,
+            "motor_ben": 0.9999999999930212,
+            "motor_harm": -0.13274806294218328,
+            "p_handle": 0.4795555197612844
+          }
+        },
+        {
+          "delay": 8,
+          "moved": true,
+          "cosine": 0.9999995067758385,
+          "policy": {
+            "p_act": 0.40087798715597045,
+            "p_hold": 0.14242769837120225,
+            "act_logit": 1.0643243504063273,
+            "motor_ben": 0.9999999999933392,
+            "motor_harm": -0.13274806294222558,
+            "p_handle": 0.4795555197613641
+          }
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "passed": true,
+      "ident_moved": true,
+      "distractors": [
+        {
+          "n": 1,
+          "moved": true,
+          "cosine": 0.9999994966191421,
+          "policy": {
+            "p_act": 0.40087309792152576,
+            "p_hold": 0.142432777257184,
+            "act_logit": 1.0642671119017189,
+            "motor_ben": 0.9999999999933393,
+            "motor_harm": -0.14539407489765335,
+            "p_handle": 0.4565537169683064
+          }
+        },
+        {
+          "n": 2,
+          "moved": true,
+          "cosine": 0.9999995035269907,
+          "policy": {
+            "p_act": 0.40087483150982967,
+            "p_hold": 0.14243117449739073,
+            "act_logit": 1.0642879455743126,
+            "motor_ben": 0.9999999999933392,
+            "motor_harm": -0.1453940748976534,
+            "p_handle": 0.4565537169683063
+          }
+        },
+        {
+          "n": 4,
+          "moved": true,
+          "cosine": 0.999999503961835,
+          "policy": {
+            "p_act": 0.4008746221818579,
+            "p_hold": 0.1424307869183152,
+            "act_logit": 1.0642848180157851,
+            "motor_ben": 0.9999999999933394,
+            "motor_harm": -0.1453940748976534,
+            "p_handle": 0.4565537169683064
+          }
+        },
+        {
+          "n": 8,
+          "moved": true,
+          "cosine": 0.9999995041752201,
+          "policy": {
+            "p_act": 0.4008746723520369,
+            "p_hold": 0.14243076700685506,
+            "act_logit": 1.064285027584058,
+            "motor_ben": 0.9999999999933392,
+            "motor_harm": -0.14539407489765344,
+            "p_handle": 0.4565537169683063
+          }
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "passed": true,
+      "ident_moved": true,
+      "reset_moved": true,
+      "cosine_teach_vs_reset": 0.9999999999998799,
+      "ident": {
+        "p_act": 0.40101961359126725,
+        "p_hold": 0.14232680222609587,
+        "act_logit": 1.0648175903321613,
+        "motor_ben": 0.9999999999933393,
+        "motor_harm": 0.1849449479276137,
+        "p_handle": 0.471816139461291
+      },
+      "after_reset": {
+        "p_act": 0.40101961359126725,
+        "p_hold": 0.14232680222609587,
+        "act_logit": 1.0648175903321613,
+        "motor_ben": 0.9999999999933393,
+        "motor_harm": 0.1849449479276137,
+        "p_handle": 0.471816139461291
+      }
+    },
+    {
+      "id": "S5",
+      "passed": true,
+      "ident_moved": true,
+      "history_moved": true,
+      "cosine_teach_vs_history": 0.9999994966191421,
+      "ident": {
+        "p_act": 0.40101961359126725,
+        "p_hold": 0.14232680222609587,
+        "act_logit": 1.0648175903321613,
+        "motor_ben": 0.9999999999933393,
+        "motor_harm": -0.16667266955747992,
+        "p_handle": 0.47974824201119237
+      },
+      "after_history": {
+        "p_act": 0.40087309792152576,
+        "p_hold": 0.142432777257184,
+        "act_logit": 1.0642671119017189,
+        "motor_ben": 0.9999999999933393,
+        "motor_harm": -0.16667266955747997,
+        "p_handle": 0.47974824201119237
+      }
+    },
+    {
+      "id": "S6",
+      "passed": false,
+      "sep_ident": false,
+      "sep_live": false,
+      "cue_a_ident": {
+        "p_act": 0.40101961359126725,
+        "p_hold": 0.14232680222609587,
+        "act_logit": 1.0648175903321613,
+        "motor_ben": 0.9999999999933393,
+        "motor_harm": 0.0933385638080623,
+        "p_handle": 0.4497307331774714
+      },
+      "cue_b_ident": {
+        "p_act": 0.21555858130175715,
+        "p_hold": 0.241757095246867,
+        "act_logit": 0.2697290780368701,
+        "motor_ben": 0.10967255047448184,
+        "motor_harm": -0.9793918548663547,
+        "p_handle": 0.28157747319141185
+      },
+      "cue_a_live": {
+        "p_act": 0.2144838210205708,
+        "p_hold": 0.24069525088512594,
+        "act_logit": 0.2628872547292668,
+        "motor_ben": 0.10981377294131604,
+        "motor_harm": -0.9793631490554336,
+        "p_handle": 0.28160417592007675
+      },
+      "cue_b_live": {
+        "p_act": 0.21556203552370734,
+        "p_hold": 0.2416839858086672,
+        "act_logit": 0.2700653615580577,
+        "motor_ben": 0.10967552679444896,
+        "motor_harm": -0.9793912500884986,
+        "p_handle": 0.28157803594457903
+      },
+      "cosine_a": 0.9999989202534778,
+      "cosine_b": 0.9999975292760628
+    },
+    {
+      "id": "S7",
+      "passed": true,
+      "kind": "aligned",
+      "ident_moved": true,
+      "live_moved": true,
+      "substitute_moved": true,
+      "projected_moved": true,
+      "cosine_teach_vs_probe": 0.9999988532661385,
+      "act_logit_teach": 1.0648175903321613,
+      "act_logit_probe": 1.0640114715276887,
+      "handle_score_teach": 0.9999999999933393,
+      "handle_score_probe": 0.9999999999933396,
+      "ident": {
+        "p_act": 0.40101961359126725,
+        "p_hold": 0.14232680222609587,
+        "act_logit": 1.0648175903321613,
+        "motor_ben": 0.9999999999933393,
+        "motor_harm": -0.18328038241249264,
+        "p_handle": 0.4920439909685326
+      },
+      "live": {
+        "p_act": 0.40084275434329814,
+        "p_hold": 0.14246350994215976,
+        "act_logit": 1.0640114715276887,
+        "motor_ben": 0.9999999999933396,
+        "motor_harm": -0.1832803824124927,
+        "p_handle": 0.4920439909685327
+      },
+      "substitute": {
+        "p_act": 0.40101961359126725,
+        "p_hold": 0.14232680222609587,
+        "act_logit": 1.0648175903321613,
+        "motor_ben": 0.9999999999933393,
+        "motor_harm": -0.18328038241249264,
+        "p_handle": 0.4920439909685326
+      },
+      "projected": {
+        "p_act": 0.4010202100465903,
+        "p_hold": 0.14232682480875217,
+        "act_logit": 1.0648191258204207,
+        "motor_ben": 0.9999999999933396,
+        "motor_harm": -0.18328038241249267,
+        "p_handle": 0.4920439909685327
+      },
+      "domain": "TM024.STATEMAP.CELLS.",
+      "index": 7
+    },
+    {
+      "id": "S8",
+      "passed": true,
+      "ranking": true,
+      "act_increased": true,
+      "hold_competition": false,
+      "ident": {
+        "p_act": 0.40101961359126725,
+        "p_hold": 0.14232680222609587,
+        "act_logit": 1.0648175903321613,
+        "motor_ben": 0.9999999999933396,
+        "motor_harm": 0.08350578146037393,
+        "p_handle": 0.4634622771969432
+      },
+      "live": {
+        "p_act": 0.40084275434329814,
+        "p_hold": 0.14246350994215976,
+        "act_logit": 1.0640114715276887,
+        "motor_ben": 0.9999999999933394,
+        "motor_harm": 0.08350578146037396,
+        "p_handle": 0.4634622771969431
+      },
+      "pre": {
+        "p_act": 0.36555012387439484,
+        "p_hold": 0.15075488962687003,
+        "act_logit": 0.9146812272246777,
+        "motor_ben": 0.0,
+        "motor_harm": 0.0,
+        "p_handle": 0.2499999999999375
+      }
+    },
+    {
+      "id": "S9",
+      "passed": true,
+      "fast_moved": true,
+      "slow_moved": true,
+      "rest_moved": true,
+      "fast": {
+        "p_act": 0.40101961359126725,
+        "p_hold": 0.14232680222609587,
+        "act_logit": 1.0648175903321613,
+        "motor_ben": 0.9999999999933396,
+        "motor_harm": 0.21630596770111668,
+        "p_handle": 0.4499347513380273
+      },
+      "slow": {
+        "p_act": 0.36623990622203323,
+        "p_hold": 0.15059098690484576,
+        "act_logit": 0.9176542245139347,
+        "motor_ben": 0.9999999996636391,
+        "motor_harm": 0.21630596762980053,
+        "p_handle": 0.4499347512651077
+      },
+      "post_rest": {
+        "p_act": 0.37244064041504155,
+        "p_hold": 0.14000601693500603,
+        "act_logit": 1.0178209900550768,
+        "motor_ben": 0.9999999999930217,
+        "motor_harm": 0.21630596770104793,
+        "p_handle": 0.44993475133795696
+      },
+      "cosine_teach_vs_rest": 0.9692162871919009
+    },
+    {
+      "id": "S10",
+      "passed": false,
+      "live_stage_distinct": false,
+      "arm_d_default_stage_distinct": false,
+      "live_rows": [
+        {
+          "epoch": 0.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.0,
+          "refractory": 1.0,
+          "effective_eta_act": 0.15
+        },
+        {
+          "epoch": 1.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.0,
+          "refractory": 1.0,
+          "effective_eta_act": 0.15
+        },
+        {
+          "epoch": 2.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.0,
+          "refractory": 1.0,
+          "effective_eta_act": 0.15
+        },
+        {
+          "epoch": 3.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.0,
+          "refractory": 1.0,
+          "effective_eta_act": 0.15
+        },
+        {
+          "epoch": 4.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.0,
+          "refractory": 1.0,
+          "effective_eta_act": 0.15
+        },
+        {
+          "epoch": 5.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.0,
+          "refractory": 1.0,
+          "effective_eta_act": 0.15
+        }
+      ],
+      "arm_d_default_rows": [
+        {
+          "epoch": 0.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.5,
+          "refractory": 1.5,
+          "effective_eta_act": 0.15
+        },
+        {
+          "epoch": 1.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.5,
+          "refractory": 1.5,
+          "effective_eta_act": 0.15
+        },
+        {
+          "epoch": 2.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.5,
+          "refractory": 1.5,
+          "effective_eta_act": 0.15
+        },
+        {
+          "epoch": 3.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.5,
+          "refractory": 1.5,
+          "effective_eta_act": 0.15
+        },
+        {
+          "epoch": 4.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.5,
+          "refractory": 1.5,
+          "effective_eta_act": 0.15
+        },
+        {
+          "epoch": 5.0,
+          "eta_act_scale": 1.0,
+          "eta_pred_scale": 1.0,
+          "beta_scale": 1.0,
+          "explore_T": 1.0,
+          "conflict_hold_scale": 1.0,
+          "growth_scale": 0.0,
+          "prune_scale": 0.0,
+          "wm_persist": 1.5,
+          "refractory": 1.5,
+          "effective_eta_act": 0.15
+        }
+      ],
+      "live_lineage_params": false
+    },
+    {
+      "id": "S11",
+      "passed": false,
+      "n_genes": 134,
+      "n_effect": 105,
+      "n_dead": 29,
+      "dead": [
+        "connect.region_0_bias",
+        "connect.region_1_bias",
+        "connect.region_2_bias",
+        "connect.region_3_bias",
+        "dyn.familiarity_ratio",
+        "dyn.utterance_persist",
+        "dyn.explore_T0",
+        "dyn.explore_decay",
+        "dyn.eligibility_decay",
+        "dyn.retrieval_thresh",
+        "dyn.write_thresh",
+        "neuromod.gain.homeostasis",
+        "neuromod.gain.surprise",
+        "neuromod.gain.conflict",
+        "neuromod.gain.novelty",
+        "neuromod.gain.controllability",
+        "neuromod.gain.social",
+        "age.birth.explore_T",
+        "age.birth.wm_persist",
+        "age.high_plasticity.explore_T",
+        "age.high_plasticity.wm_persist",
+        "age.experience_replay.explore_T",
+        "age.experience_replay.wm_persist",
+        "age.pruning_stabilization.explore_T",
+        "age.pruning_stabilization.wm_persist",
+        "age.mature_plasticity.explore_T",
+        "age.mature_plasticity.wm_persist",
+        "age.novelty_reopen.explore_T",
+        "age.novelty_reopen.wm_persist"
+      ],
+      "rows": [
+        {
+          "name": "init.W_rec.mu",
+          "channel": "W_rec.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": -9.626288090653956e-05,
+          "v_perturbed": 0.22500139336909347
+        },
+        {
+          "name": "init.W_rec.log_std",
+          "channel": "W_rec.std",
+          "wired": true,
+          "effect": true,
+          "default": -2.0794415416798357,
+          "perturbed": 2.0,
+          "v_default": 0.041884958933881465,
+          "v_perturbed": 2.4759224901108525
+        },
+        {
+          "name": "init.W_in.mu",
+          "channel": "W_in.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": -0.00017121083273229795,
+          "v_perturbed": 1.9998287891672677
+        },
+        {
+          "name": "init.W_in.log_std",
+          "channel": "W_in.std",
+          "wired": true,
+          "effect": true,
+          "default": -2.840086304508534,
+          "perturbed": 2.0,
+          "v_default": 0.058180645159323224,
+          "v_perturbed": 7.358703538427032
+        },
+        {
+          "name": "init.W_pred.mu",
+          "channel": "W_pred.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": -0.001075184240717246,
+          "v_perturbed": 1.998924815759283
+        },
+        {
+          "name": "init.W_pred.log_std",
+          "channel": "W_pred.std",
+          "wired": true,
+          "effect": true,
+          "default": -2.0794415416798357,
+          "perturbed": 2.0,
+          "v_default": 0.12297947137099957,
+          "v_perturbed": 7.269617703817213
+        },
+        {
+          "name": "init.W_op.mu",
+          "channel": "W_op.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": 0.007625947750410561,
+          "v_perturbed": 2.0076259477504106
+        },
+        {
+          "name": "init.W_op.log_std",
+          "channel": "W_op.std",
+          "wired": true,
+          "effect": true,
+          "default": -2.0794415416798357,
+          "perturbed": 2.0,
+          "v_default": 0.12645368087641048,
+          "v_perturbed": 7.474986735296567
+        },
+        {
+          "name": "init.W_emit_query.mu",
+          "channel": "W_emit_query.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": -0.00018252461009771247,
+          "v_perturbed": 1.9998174753899023
+        },
+        {
+          "name": "init.W_emit_query.log_std",
+          "channel": "W_emit_query.std",
+          "wired": true,
+          "effect": true,
+          "default": -2.0794415416798357,
+          "perturbed": 2.0,
+          "v_default": 0.12666397789668163,
+          "v_perturbed": 7.487417907138338
+        },
+        {
+          "name": "init.W_write.mu",
+          "channel": "W_write.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": -0.0006133176028232474,
+          "v_perturbed": 1.9993866823971769
+        },
+        {
+          "name": "init.W_write.log_std",
+          "channel": "W_write.std",
+          "wired": true,
+          "effect": true,
+          "default": -2.0794415416798357,
+          "perturbed": 2.0,
+          "v_default": 0.12504758622060863,
+          "v_perturbed": 7.391869036959554
+        },
+        {
+          "name": "init.W_att.mu",
+          "channel": "W_att.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": -0.0003251789399876155,
+          "v_perturbed": 1.9996748210600122
+        },
+        {
+          "name": "init.W_att.log_std",
+          "channel": "W_att.std",
+          "wired": true,
+          "effect": true,
+          "default": -2.0794415416798357,
+          "perturbed": 2.0,
+          "v_default": 0.1250868168416485,
+          "v_perturbed": 7.394188055036831
+        },
+        {
+          "name": "init.W_body.mu",
+          "channel": "W_body.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": 0.03003074498220141,
+          "v_perturbed": 2.0300307449822013
+        },
+        {
+          "name": "init.W_body.log_std",
+          "channel": "W_body.std",
+          "wired": true,
+          "effect": true,
+          "default": -0.6931471805599453,
+          "perturbed": 2.0,
+          "v_default": 0.46918613551631316,
+          "v_perturbed": 6.9336853523410324
+        },
+        {
+          "name": "init.b.mu",
+          "channel": "b.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": -3.543025127575671e-10,
+          "v_perturbed": 1.9999999996456976
+        },
+        {
+          "name": "init.b.log_std",
+          "channel": "b.std",
+          "wired": true,
+          "effect": true,
+          "default": -20.0,
+          "perturbed": 2.0,
+          "v_default": 2.093680806997368e-09,
+          "v_perturbed": 7.505663220704024
+        },
+        {
+          "name": "init.v_start.mu",
+          "channel": "v_start.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": -0.21129585814500101,
+          "v_perturbed": 1.788704141854999
+        },
+        {
+          "name": "init.v_start.log_std",
+          "channel": "v_start.std",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": 0.8516030734291515,
+          "v_perturbed": 6.29254288358976
+        },
+        {
+          "name": "init.v_end.mu",
+          "channel": "v_end.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": 0.0008627451816305316,
+          "v_perturbed": 2.0008627451816308
+        },
+        {
+          "name": "init.v_end.log_std",
+          "channel": "v_end.std",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": 1.1320718941908903,
+          "v_perturbed": 8.364942734199172
+        },
+        {
+          "name": "init.W_act_query.mu",
+          "channel": "W_act_query.mean",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": -4.219478492587866e-11,
+          "v_perturbed": 1.9999999999578053
+        },
+        {
+          "name": "init.W_act_query.log_std",
+          "channel": "W_act_query.std",
+          "wired": true,
+          "effect": true,
+          "default": -20.0,
+          "perturbed": 2.0,
+          "v_default": 2.0685388290141686e-09,
+          "v_perturbed": 7.415531420854893
+        },
+        {
+          "name": "init.b_op.ACT",
+          "channel": "b_op.ACT",
+          "wired": true,
+          "effect": true,
+          "default": 0.85,
+          "perturbed": 2.0,
+          "v_default": 0.85,
+          "v_perturbed": 2.0
+        },
+        {
+          "name": "init.b_op.RETRIEVE",
+          "channel": "b_op.RETRIEVE",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": 0.0,
+          "v_perturbed": 2.0
+        },
+        {
+          "name": "init.b_op.WRITE",
+          "channel": "b_op.WRITE",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": 0.0,
+          "v_perturbed": 2.0
+        },
+        {
+          "name": "init.b_op.EMIT",
+          "channel": "b_op.EMIT",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": 0.0,
+          "v_perturbed": 2.0
+        },
+        {
+          "name": "init.b_op.STOP",
+          "channel": "b_op.STOP",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": 0.0,
+          "v_perturbed": 2.0
+        },
+        {
+          "name": "init.b_op.HOLD",
+          "channel": "b_op.HOLD",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": 0.0,
+          "v_perturbed": 2.0
+        },
+        {
+          "name": "connect.p_connect",
+          "channel": "genome.p_connect",
+          "wired": true,
+          "effect": true,
+          "default": 0.1,
+          "perturbed": 0.5,
+          "v_default": 0.1,
+          "v_perturbed": 0.5
+        },
+        {
+          "name": "connect.growth_rate",
+          "channel": "lp.connect.growth_rate",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 0.2,
+          "v_default": 0.0,
+          "v_perturbed": 0.2
+        },
+        {
+          "name": "connect.prune_rate",
+          "channel": "lp.connect.prune_rate",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 0.2,
+          "v_default": 0.0,
+          "v_perturbed": 0.2
+        },
+        {
+          "name": "connect.prune_threshold",
+          "channel": "lp.connect.prune_threshold",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": 0.0,
+          "v_perturbed": 2.0
+        },
+        {
+          "name": "connect.region_0_bias",
+          "channel": "connect.region_0_bias",
+          "wired": false,
+          "effect": false,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "connect.region_1_bias",
+          "channel": "connect.region_1_bias",
+          "wired": false,
+          "effect": false,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "connect.region_2_bias",
+          "channel": "connect.region_2_bias",
+          "wired": false,
+          "effect": false,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "connect.region_3_bias",
+          "channel": "connect.region_3_bias",
+          "wired": false,
+          "effect": false,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "dyn.eta_pred",
+          "channel": "genome.eta_pred",
+          "wired": true,
+          "effect": true,
+          "default": 0.05,
+          "perturbed": 0.5,
+          "v_default": 0.05,
+          "v_perturbed": 0.5
+        },
+        {
+          "name": "dyn.eta_act",
+          "channel": "genome.eta_act",
+          "wired": true,
+          "effect": true,
+          "default": 0.15,
+          "perturbed": 0.5,
+          "v_default": 0.15,
+          "v_perturbed": 0.5
+        },
+        {
+          "name": "dyn.beta",
+          "channel": "genome.beta",
+          "wired": true,
+          "effect": true,
+          "default": 0.01,
+          "perturbed": 0.2,
+          "v_default": 0.01,
+          "v_perturbed": 0.2
+        },
+        {
+          "name": "dyn.clip",
+          "channel": "genome.clip",
+          "wired": true,
+          "effect": true,
+          "default": 2.0,
+          "perturbed": 8.0,
+          "v_default": 2.0,
+          "v_perturbed": 8.0
+        },
+        {
+          "name": "dyn.tau",
+          "channel": "genome.tau",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 8.0,
+          "v_default": 1.0,
+          "v_perturbed": 8.0
+        },
+        {
+          "name": "dyn.t_max",
+          "channel": "genome.t_max",
+          "wired": true,
+          "effect": true,
+          "default": 8.0,
+          "perturbed": 16.0,
+          "v_default": 8.0,
+          "v_perturbed": 16.0
+        },
+        {
+          "name": "dyn.cos_thresh",
+          "channel": "genome.cos_thresh",
+          "wired": true,
+          "effect": true,
+          "default": 0.15,
+          "perturbed": 0.9,
+          "v_default": 0.15,
+          "v_perturbed": 0.9
+        },
+        {
+          "name": "dyn.familiarity_ratio",
+          "channel": "dyn.familiarity_ratio",
+          "wired": false,
+          "effect": false,
+          "default": 0.5,
+          "perturbed": 2.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "dyn.familiarity_decay",
+          "channel": "lp.familiarity_decay",
+          "wired": true,
+          "effect": true,
+          "default": 0.98,
+          "perturbed": 0.999,
+          "v_default": 0.98,
+          "v_perturbed": 0.999
+        },
+        {
+          "name": "dyn.familiarity_abs",
+          "channel": "lp.familiarity_abs",
+          "wired": true,
+          "effect": true,
+          "default": 16.0,
+          "perturbed": 64.0,
+          "v_default": 16.0,
+          "v_perturbed": 64.0
+        },
+        {
+          "name": "dyn.echoic_max",
+          "channel": "lp.echoic_max",
+          "wired": true,
+          "effect": true,
+          "default": 8.0,
+          "perturbed": 16.0,
+          "v_default": 8.0,
+          "v_perturbed": 16.0
+        },
+        {
+          "name": "dyn.echoic_bias",
+          "channel": "lp.echoic_bias",
+          "wired": true,
+          "effect": true,
+          "default": 0.08,
+          "perturbed": 1.0,
+          "v_default": 0.08,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "dyn.vocal_refractory",
+          "channel": "lp.vocal_refractory",
+          "wired": true,
+          "effect": true,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": 1.5,
+          "v_perturbed": 8.0
+        },
+        {
+          "name": "dyn.utterance_persist",
+          "channel": "dyn.utterance_persist",
+          "wired": false,
+          "effect": false,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "dyn.conflict_hold_bias",
+          "channel": "lp.conflict_hold_bias",
+          "wired": true,
+          "effect": true,
+          "default": 2.0,
+          "perturbed": 8.0,
+          "v_default": 2.0,
+          "v_perturbed": 8.0
+        },
+        {
+          "name": "dyn.adv_baseline_alpha",
+          "channel": "lp.adv_baseline_alpha",
+          "wired": true,
+          "effect": true,
+          "default": 0.05,
+          "perturbed": 1.0,
+          "v_default": 0.05,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "dyn.equal_evidence_min_symbols",
+          "channel": "lp.equal_evidence_min_symbols",
+          "wired": true,
+          "effect": true,
+          "default": 3.0,
+          "perturbed": 8.0,
+          "v_default": 3.0,
+          "v_perturbed": 8.0
+        },
+        {
+          "name": "dyn.explore_T0",
+          "channel": "dyn.explore_T0",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "dyn.explore_decay",
+          "channel": "dyn.explore_decay",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 0.5,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "dyn.eligibility_decay",
+          "channel": "dyn.eligibility_decay",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 0.5,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "dyn.retrieval_thresh",
+          "channel": "dyn.retrieval_thresh",
+          "wired": false,
+          "effect": false,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "dyn.write_thresh",
+          "channel": "dyn.write_thresh",
+          "wired": false,
+          "effect": false,
+          "default": 0.0,
+          "perturbed": 2.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "dyn.op_cost.RETRIEVE",
+          "channel": "op_cost.RETRIEVE",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "dyn.op_cost.WRITE",
+          "channel": "op_cost.WRITE",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "dyn.op_cost.EMIT",
+          "channel": "op_cost.EMIT",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "dyn.op_cost.ACT",
+          "channel": "op_cost.ACT",
+          "wired": true,
+          "effect": true,
+          "default": 0.05,
+          "perturbed": 4.0,
+          "v_default": 0.05,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "dyn.op_cost.STOP",
+          "channel": "op_cost.STOP",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 4.0,
+          "v_default": 0.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "dyn.op_cost.HOLD",
+          "channel": "op_cost.HOLD",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 4.0,
+          "v_default": 0.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "dyn.body_setpoint.0",
+          "channel": "body_setpoint.0",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 0.0,
+          "v_default": 1.0,
+          "v_perturbed": 0.0
+        },
+        {
+          "name": "dyn.body_setpoint.1",
+          "channel": "body_setpoint.1",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "dyn.body_setpoint.2",
+          "channel": "body_setpoint.2",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 0.0,
+          "v_default": 1.0,
+          "v_perturbed": 0.0
+        },
+        {
+          "name": "dyn.body_setpoint.3",
+          "channel": "body_setpoint.3",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "replay.mix.recency",
+          "channel": "lp.replay.mix.recency",
+          "wired": true,
+          "effect": true,
+          "default": 0.25,
+          "perturbed": 1.0,
+          "v_default": 0.25,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "replay.mix.similarity",
+          "channel": "lp.replay.mix.similarity",
+          "wired": true,
+          "effect": true,
+          "default": 0.25,
+          "perturbed": 1.0,
+          "v_default": 0.25,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "replay.mix.surprise",
+          "channel": "lp.replay.mix.surprise",
+          "wired": true,
+          "effect": true,
+          "default": 0.25,
+          "perturbed": 1.0,
+          "v_default": 0.25,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "replay.mix.random",
+          "channel": "lp.replay.mix.random",
+          "wired": true,
+          "effect": true,
+          "default": 0.25,
+          "perturbed": 1.0,
+          "v_default": 0.25,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "neuromod.gain.homeostasis",
+          "channel": "neuromod.gain.homeostasis",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "neuromod.gain.surprise",
+          "channel": "neuromod.gain.surprise",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "neuromod.gain.conflict",
+          "channel": "neuromod.gain.conflict",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "neuromod.gain.novelty",
+          "channel": "neuromod.gain.novelty",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "neuromod.gain.controllability",
+          "channel": "neuromod.gain.controllability",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "neuromod.gain.social",
+          "channel": "neuromod.gain.social",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.birth.eta_pred_scale",
+          "channel": "age.birth.eta_pred_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.birth.eta_act_scale",
+          "channel": "age.birth.eta_act_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.birth.beta_scale",
+          "channel": "age.birth.beta_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.birth.explore_T",
+          "channel": "age.birth.explore_T",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.birth.conflict_hold_scale",
+          "channel": "age.birth.conflict_hold_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.birth.growth_scale",
+          "channel": "age.birth.growth_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.birth.prune_scale",
+          "channel": "age.birth.prune_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.birth.wm_persist",
+          "channel": "age.birth.wm_persist",
+          "wired": false,
+          "effect": false,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.birth.refractory",
+          "channel": "age.birth.refractory",
+          "wired": true,
+          "effect": true,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": 1.5,
+          "v_perturbed": 8.0
+        },
+        {
+          "name": "age.high_plasticity.eta_pred_scale",
+          "channel": "age.high_plasticity.eta_pred_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.high_plasticity.eta_act_scale",
+          "channel": "age.high_plasticity.eta_act_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.high_plasticity.beta_scale",
+          "channel": "age.high_plasticity.beta_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.high_plasticity.explore_T",
+          "channel": "age.high_plasticity.explore_T",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.high_plasticity.conflict_hold_scale",
+          "channel": "age.high_plasticity.conflict_hold_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.high_plasticity.growth_scale",
+          "channel": "age.high_plasticity.growth_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.high_plasticity.prune_scale",
+          "channel": "age.high_plasticity.prune_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.high_plasticity.wm_persist",
+          "channel": "age.high_plasticity.wm_persist",
+          "wired": false,
+          "effect": false,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.high_plasticity.refractory",
+          "channel": "age.high_plasticity.refractory",
+          "wired": true,
+          "effect": true,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": 1.5,
+          "v_perturbed": 8.0
+        },
+        {
+          "name": "age.experience_replay.eta_pred_scale",
+          "channel": "age.experience_replay.eta_pred_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.experience_replay.eta_act_scale",
+          "channel": "age.experience_replay.eta_act_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.experience_replay.beta_scale",
+          "channel": "age.experience_replay.beta_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.experience_replay.explore_T",
+          "channel": "age.experience_replay.explore_T",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.experience_replay.conflict_hold_scale",
+          "channel": "age.experience_replay.conflict_hold_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.experience_replay.growth_scale",
+          "channel": "age.experience_replay.growth_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.experience_replay.prune_scale",
+          "channel": "age.experience_replay.prune_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.experience_replay.wm_persist",
+          "channel": "age.experience_replay.wm_persist",
+          "wired": false,
+          "effect": false,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.experience_replay.refractory",
+          "channel": "age.experience_replay.refractory",
+          "wired": true,
+          "effect": true,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": 1.5,
+          "v_perturbed": 8.0
+        },
+        {
+          "name": "age.pruning_stabilization.eta_pred_scale",
+          "channel": "age.pruning_stabilization.eta_pred_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.pruning_stabilization.eta_act_scale",
+          "channel": "age.pruning_stabilization.eta_act_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.pruning_stabilization.beta_scale",
+          "channel": "age.pruning_stabilization.beta_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.pruning_stabilization.explore_T",
+          "channel": "age.pruning_stabilization.explore_T",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.pruning_stabilization.conflict_hold_scale",
+          "channel": "age.pruning_stabilization.conflict_hold_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.pruning_stabilization.growth_scale",
+          "channel": "age.pruning_stabilization.growth_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.pruning_stabilization.prune_scale",
+          "channel": "age.pruning_stabilization.prune_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.pruning_stabilization.wm_persist",
+          "channel": "age.pruning_stabilization.wm_persist",
+          "wired": false,
+          "effect": false,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.pruning_stabilization.refractory",
+          "channel": "age.pruning_stabilization.refractory",
+          "wired": true,
+          "effect": true,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": 1.5,
+          "v_perturbed": 8.0
+        },
+        {
+          "name": "age.mature_plasticity.eta_pred_scale",
+          "channel": "age.mature_plasticity.eta_pred_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.mature_plasticity.eta_act_scale",
+          "channel": "age.mature_plasticity.eta_act_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.mature_plasticity.beta_scale",
+          "channel": "age.mature_plasticity.beta_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.mature_plasticity.explore_T",
+          "channel": "age.mature_plasticity.explore_T",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.mature_plasticity.conflict_hold_scale",
+          "channel": "age.mature_plasticity.conflict_hold_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.mature_plasticity.growth_scale",
+          "channel": "age.mature_plasticity.growth_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.mature_plasticity.prune_scale",
+          "channel": "age.mature_plasticity.prune_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.mature_plasticity.wm_persist",
+          "channel": "age.mature_plasticity.wm_persist",
+          "wired": false,
+          "effect": false,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.mature_plasticity.refractory",
+          "channel": "age.mature_plasticity.refractory",
+          "wired": true,
+          "effect": true,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": 1.5,
+          "v_perturbed": 8.0
+        },
+        {
+          "name": "age.novelty_reopen.eta_pred_scale",
+          "channel": "age.novelty_reopen.eta_pred_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.novelty_reopen.eta_act_scale",
+          "channel": "age.novelty_reopen.eta_act_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.novelty_reopen.beta_scale",
+          "channel": "age.novelty_reopen.beta_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.novelty_reopen.explore_T",
+          "channel": "age.novelty_reopen.explore_T",
+          "wired": false,
+          "effect": false,
+          "default": 1.0,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.novelty_reopen.conflict_hold_scale",
+          "channel": "age.novelty_reopen.conflict_hold_scale",
+          "wired": true,
+          "effect": true,
+          "default": 1.0,
+          "perturbed": 4.0,
+          "v_default": 1.0,
+          "v_perturbed": 4.0
+        },
+        {
+          "name": "age.novelty_reopen.growth_scale",
+          "channel": "age.novelty_reopen.growth_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.novelty_reopen.prune_scale",
+          "channel": "age.novelty_reopen.prune_scale",
+          "wired": true,
+          "effect": true,
+          "default": 0.0,
+          "perturbed": 1.0,
+          "v_default": 0.0,
+          "v_perturbed": 1.0
+        },
+        {
+          "name": "age.novelty_reopen.wm_persist",
+          "channel": "age.novelty_reopen.wm_persist",
+          "wired": false,
+          "effect": false,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": null,
+          "v_perturbed": null
+        },
+        {
+          "name": "age.novelty_reopen.refractory",
+          "channel": "age.novelty_reopen.refractory",
+          "wired": true,
+          "effect": true,
+          "default": 1.5,
+          "perturbed": 8.0,
+          "v_default": 1.5,
+          "v_perturbed": 8.0
+        }
+      ]
+    },
+    {
+      "id": "S12",
+      "passed": true,
+      "same_s0": true,
+      "same_s7": true,
+      "primary_s0": true,
+      "twin_s0": {
+        "passed": true,
+        "pre": {
+          "p_act": 0.36555012387439484,
+          "p_hold": 0.15075488962687003,
+          "act_logit": 0.9146812272246777,
+          "motor_ben": 0.0,
+          "motor_harm": 0.0,
+          "p_handle": 0.2499999999999375
+        },
+        "post_ident": {
+          "p_act": 0.40101961359126725,
+          "p_hold": 0.14232680222609587,
+          "act_logit": 1.0648175903321613,
+          "motor_ben": 0.9999999999933392,
+          "motor_harm": 0.12563437463709706,
+          "p_handle": 0.47264686723277344
+        },
+        "d_w_op": 0.015018928789375594,
+        "d_w_q": 0.006770189326310219
+      },
+      "primary_s7_kind": "aligned",
+      "twin_s7_kind": "aligned",
+      "twin_s7": {
+        "passed": true,
+        "kind": "aligned",
+        "cosine_teach_vs_probe": 0.9999988532661385,
+        "live_moved": true,
+        "substitute_moved": true,
+        "projected_moved": true
+      },
+      "domain": "TM024.STATEMAP.TWIN."
+    }
+  ],
+  "decision": {
+    "code": "cue_collision_insufficient_separation",
+    "note": "Two cues did not keep opposite actuator consequences.",
+    "two_timescale_hypothesis": false,
+    "amendment_authorized": false,
+    "increase_n": false,
+    "another_lineage_run": false
+  },
+  "another_lineage_run": false,
+  "q3": false,
+  "amendment_authorized": false,
+  "increase_n": false,
+  "git_head": "2d97bd1c7249b1bcf811fa58a33fe1c9f75160aa",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "note": "S0\u2013S12 on unused TM024.STATEMAP.CELLS. / TWIN. Diagnosis only. Not 0.0.005."
+}

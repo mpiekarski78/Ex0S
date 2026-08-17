@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.24.STATEMAP result:** **10/13.** First fail **S6** (two cues collapse to one motor ranking). S7 teacher→probe is aligned (cosine ≈ 1); the prior alignment hypothesis is not confirmed. S10/S11: flat age schedule; 29/134 Arm D genes have no runtime effect. n stays 64. No amendment this package. [`lineage_statemap.decision.lock`](lineage_statemap.decision.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.STATEMAP runner freeze:** ABI smoke green. Runner lock pins v29 neural SHA and unused `TM024.STATEMAP.CELLS.` / `TWIN.` S0–S12 answers next. [`lineage_statemap.runner.lock`](lineage_statemap.runner.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.STATEMAP apparatus:** Developmental state-transfer ladder after ACTORCREDIT reachability fail. Frozen S0–S12 on unused `TM024.STATEMAP.CELLS.` / `TWIN.`. No neural edit. n stays 64. Score only after runner.lock on origin/main. [`lineage_statemap.prereg.lock`](lineage_statemap.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.24.ACTORCREDIT.REACH result:** **false.** Credit precondition holds. CHECK adult mean 0.16 vs τ=0.60 (birth 0.00, plasticity-off 0.13, CI lower 0.04). Complete behavioral credit is not developmental reachability. Investigate state/developmental dynamics, not n. [`lineage_actorcredit_reach.lock`](lineage_actorcredit_reach.lock). n stays 64. Q3 closed. Another lineage run closed. `earned_next=false`; `ex0s=null`; product **0.0.004**.
