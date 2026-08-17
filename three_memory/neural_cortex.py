@@ -512,36 +512,179 @@ class NeuralCortex:
         self._clip_and_consolidate({"W_act_query"}, mix_slow=mix_slow)
         return True
 
-    def _replay_store_pass(self, eta_a: float, *, strengthen: bool) -> tuple[int, int]:
-        n_replay = 0
-        n_strengthen = 0
+    def _episode_matches_skip(
+        self,
+        ep: dict[str, Any],
+        skip_p1: np.ndarray | None,
+        skip_handle: str | None,
+    ) -> bool:
+        if skip_p1 is None or skip_handle is None:
+            return False
+        p1 = np.asarray(ep["p1"], dtype=np.float64)
+        sp = self._unit_or_zero(skip_p1)
+        if float(np.linalg.norm(sp)) <= PROTO_EPS:
+            return False
+        d = float(np.linalg.norm(p1 - sp))
+        return d <= EPISODE_MATCH_L2 + ELIG_EPS and str(ep["handle"]) == str(skip_handle)
+
+    def _episode_rehearsal_violation(self, p1: np.ndarray, handle: str, adv: float) -> bool:
+        if handle not in self.motor_vocab or abs(float(adv)) <= ELIG_EPS:
+            return False
+        n_handles = len(self.motor_vocab)
+        scores = self.actuator_scores(p1)
+        win = self._unique_act_winner(scores)
+        if n_handles <= 1:
+            if float(adv) > 0.0:
+                return self._act_geometric_margin(p1, handle) < ACT_MARGIN_FLOOR
+            return win == str(handle) or win is None
+        if float(adv) > 0.0:
+            if win != str(handle) or win is None:
+                return True
+            return self._act_geometric_margin(p1, handle) < ACT_MARGIN_FLOOR
+        return win == str(handle) or win is None
+
+    def _count_store_violations(self) -> int:
+        n = 0
+        for ep in self._episodes:
+            if not ep.get("valid"):
+                continue
+            if self._episode_rehearsal_violation(
+                np.asarray(ep["p1"], dtype=np.float64),
+                str(ep["handle"]),
+                float(ep["adv"]),
+            ):
+                n += 1
+        return n
+
+    def store_rehearsal_checkpoint(self) -> dict[str, int | bool]:
+        n_violations = self._count_store_violations()
+        n_valid = sum(1 for ep in self._episodes if ep.get("valid"))
+        return {
+            "n_violations": int(n_violations),
+            "all_margin_ok": bool(n_violations == 0),
+            "n_episodes": int(n_valid),
+        }
+
+    def _gated_rehearsal_pass(
+        self,
+        eta_a: float,
+        *,
+        pass_index: int,
+        skip_p1: np.ndarray | None = None,
+        skip_handle: str | None = None,
+    ) -> dict[str, int]:
+        violations_before = self._count_store_violations()
+        n_updates = 0
+        n_opportunities = 0
         for ep in list(self._episodes):
             if not ep.get("valid"):
                 continue
             p1 = np.asarray(ep["p1"], dtype=np.float64)
             handle = str(ep["handle"])
             adv = float(ep["adv"])
+            if self._episode_matches_skip(ep, skip_p1, skip_handle):
+                if not self._episode_rehearsal_violation(p1, handle, adv):
+                    continue
+            n_opportunities += 1
+            if not self._episode_rehearsal_violation(p1, handle, adv):
+                continue
             if self._apply_act_query_update(p1, handle, adv, eta_a, mix_slow=False):
-                n_replay += 1
-            if strengthen and float(adv) > 0.0 and self._unique_act_winner(self.actuator_scores(p1)) == handle:
-                if self._act_geometric_margin(p1, handle) < ACT_MARGIN_FLOOR:
-                    mag = abs(adv) if abs(adv) > ELIG_EPS else 1.0
-                    if self._apply_act_query_update(p1, handle, mag, eta_a, mix_slow=False):
-                        n_strengthen += 1
-        return n_replay, n_strengthen
+                n_updates += 1
+        violations_after = self._count_store_violations()
+        return {
+            "pass_index": int(pass_index),
+            "violations_before": int(violations_before),
+            "violations_after": int(violations_after),
+            "n_updates": int(n_updates),
+            "n_opportunities": int(n_opportunities),
+        }
 
-    def _replay_episodes(self) -> dict[str, int]:
+    def _run_awake_rehearsal_burst(
+        self,
+        *,
+        skip_p1: np.ndarray | None = None,
+        skip_handle: str | None = None,
+    ) -> dict[str, Any]:
         eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
-        n_replay = 0
-        n_strengthen = 0
-        for _epoch in range(EPISODE_REPLAY_EPOCHS):
-            r, s = self._replay_store_pass(eta_a, strengthen=True)
-            n_replay += r
-            n_strengthen += s
+        passes: list[dict[str, int]] = []
+        first_converged: int | None = None
+        total_updates = 0
+        budget_exhausted = False
+        for pass_index in range(1, EPISODE_REPLAY_EPOCHS + 1):
+            ps = self._gated_rehearsal_pass(
+                eta_a,
+                pass_index=pass_index,
+                skip_p1=skip_p1,
+                skip_handle=skip_handle,
+            )
+            passes.append(ps)
+            total_updates += int(ps["n_updates"])
+            if int(ps["violations_after"]) == 0:
+                if first_converged is None:
+                    first_converged = pass_index
+                break
+        else:
+            budget_exhausted = True
+        return {
+            "passes": passes,
+            "first_converged_pass": first_converged,
+            "budget_exhausted": bool(budget_exhausted),
+            "total_updates": int(total_updates),
+        }
+
+    def _credit_act_p1_episode(
+        self,
+        p1: np.ndarray,
+        handle: str,
+        adv: float,
+        eta_a: float,
+    ) -> dict[str, Any] | None:
+        if float(np.max(np.abs(p1))) <= ELIG_EPS or self._resting:
+            return None
+        self._episode_write(p1, handle, adv)
+        if self._act_ranking_error(p1, handle, adv):
+            self._apply_act_query_update(p1, handle, adv, eta_a, mix_slow=False)
+        burst = self._run_awake_rehearsal_burst(skip_p1=p1, skip_handle=handle)
+        return burst
+
+    def _replay_store_pass(self, eta_a: float, *, strengthen: bool) -> tuple[int, int]:
+        """Legacy v33 hook; v34 uses _gated_rehearsal_pass only."""
+        ps = self._gated_rehearsal_pass(eta_a, pass_index=1)
+        return int(ps["n_updates"]), 0
+
+    def _replay_episodes(self) -> dict[str, Any]:
+        eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
+        epochs: list[dict[str, int]] = []
+        first_converged: int | None = None
+        total_updates = 0
+        budget_exhausted = False
+        for epoch_index in range(1, EPISODE_REPLAY_EPOCHS + 1):
+            ps = self._gated_rehearsal_pass(eta_a, pass_index=epoch_index)
+            row = dict(ps)
+            row["epoch_index"] = int(epoch_index)
+            epochs.append(row)
+            total_updates += int(ps["n_updates"])
+            if int(ps["violations_after"]) == 0:
+                if first_converged is None:
+                    first_converged = epoch_index
+                break
+        else:
+            budget_exhausted = True
+        violations_pre_mix = self._count_store_violations()
         self._clip_and_consolidate({"W_act_query"}, mix_slow=True)
-        self._n_rest_replay += n_replay
-        self._n_rest_strengthen += n_strengthen
-        return {"n_replay": n_replay, "n_strengthen": n_strengthen}
+        violations_post_mix = self._count_store_violations()
+        self._n_rest_replay += total_updates
+        self._n_rest_strengthen = 0
+        return {
+            "epochs": epochs,
+            "first_converged_epoch": first_converged,
+            "budget_exhausted": bool(budget_exhausted),
+            "total_updates": int(total_updates),
+            "violations_pre_mix": int(violations_pre_mix),
+            "violations_post_mix": int(violations_post_mix),
+            "n_replay": int(total_updates),
+            "n_strengthen": 0,
+        }
 
     def actuator_scores(self, rho: Any) -> dict[str, float]:
         """Scalar ACT scores for every currently bound opaque handle."""
@@ -931,12 +1074,13 @@ class NeuralCortex:
         """Passive imposed movement: no organism actor credit on the next body change."""
         self._pending = None
 
-    def _apply_credit(self, s_t: np.ndarray, body_t: np.ndarray) -> dict[str, float]:
+    def _apply_credit(self, s_t: np.ndarray, body_t: np.ndarray) -> dict[str, Any]:
         updated: set[str] = set()
         eta_p = float(self.genome.eta_pred) * self._age_scale("eta_pred_scale", 1.0)
         eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
         adv = 0.0
         pred_err = 0.0
+        rehearsal_burst: dict[str, Any] | None = None
         p = self._pending
         if p is None:
             pp = self._pred_pending
@@ -1000,20 +1144,14 @@ class NeuralCortex:
                 p1_raw = p.get("rho_p1")
                 if p1_raw is not None:
                     p1 = np.asarray(p1_raw, dtype=np.float64)
-                    if float(np.max(np.abs(p1))) > ELIG_EPS and not self._resting:
-                        self._episode_write(p1, str(p["token"]), float(adv))
-                        if self._act_ranking_error(p1, str(p["token"]), float(adv)):
-                            self._apply_act_query_update(
-                                p1, str(p["token"]), float(adv), eta_a, mix_slow=False
-                            )
+                    burst = self._credit_act_p1_episode(p1, str(p["token"]), float(adv), eta_a)
+                    if burst is not None:
+                        rehearsal_burst = burst
                 elif elig_motor:
                     p1 = np.asarray(p.get("rho_motor", p["rho_elig"]), dtype=np.float64)
-                    if not self._resting:
-                        self._episode_write(p1, str(p["token"]), float(adv))
-                        if self._act_ranking_error(p1, str(p["token"]), float(adv)):
-                            self._apply_act_query_update(
-                                p1, str(p["token"]), float(adv), eta_a, mix_slow=False
-                            )
+                    burst = self._credit_act_p1_episode(p1, str(p["token"]), float(adv), eta_a)
+                    if burst is not None:
+                        rehearsal_burst = burst
         elif (
             p["op"] == "EMIT"
             and elig_motor
@@ -1027,7 +1165,10 @@ class NeuralCortex:
         self._pending = None
         self._pred_pending = None
         self._last_pred_err = pred_err
-        return {"adv": adv, "pred_err": pred_err}
+        out: dict[str, Any] = {"adv": adv, "pred_err": pred_err}
+        if rehearsal_burst is not None:
+            out["rehearsal_burst"] = rehearsal_burst
+        return out
 
     def _clip_and_consolidate(self, names: set[str] | None = None, *, mix_slow: bool = True) -> None:
         if not names:
@@ -1185,7 +1326,7 @@ class NeuralCortex:
             fatigued[3] = min(1.0, float(fatigued[3]) + 0.3)
         self._resting = True
         ops: dict[str, int] = {}
-        replay: dict[str, int] = {"n_replay": 0, "n_strengthen": 0}
+        replay: dict[str, Any] = {"n_replay": 0, "n_strengthen": 0}
         try:
             for i in range(n_ticks):
                 out = self.observe(
@@ -1212,6 +1353,7 @@ class NeuralCortex:
             "dev_epoch": int(self.dev_epoch),
             "n_replay": int(replay.get("n_replay", 0)),
             "n_strengthen": int(replay.get("n_strengthen", 0)),
+            "rehearsal": replay,
         }
 
     def _maybe_grow_prune(self) -> None:

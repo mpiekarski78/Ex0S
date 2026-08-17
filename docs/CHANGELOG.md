@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-18
+
+- **TM.0.27.GATEDREHEARSAL result:** First-match **gated_rehearsal_core_stability_fail**. Core acquire **8/8** (including eight-cue) passes live ranking; core stable fails (8-cue stable shows **reinstatement_wall**; stored rows converge post-REST but live margin/perturbation gate fails). Integrity/twin/eco/spec pass. Eight-cue acquire stored rows remain **store_nonconvergence** at post-awake despite live 8/8. No `cortex.candidate.v34.lock`. [`lineage_gatedrehearsal.decision.lock`](lineage_gatedrehearsal.decision.lock). `earned_next=false`; product **0.0.004**.
+- **TM.0.26.COMPETITIVE decision addendum:** Historical DEV/decision preserved. Honest first-match **competitive_core_acquire_fail** (7/8 eight-cue acquire; integrity/twin/eco/spec pass). Uniform-sum mechanism recorded as analytic interpretation consistent with DEV, not a separately measured causal claim. Test-only audit at `c74525b`; no DEV rerun. Refuses low-margin awake alone and unconditional replay escalation. Authorizes v34 prediction-error-gated competitive rehearsal only. [`lineage_competitive.decision.addendum.lock`](lineage_competitive.decision.addendum.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
+- **TM.0.27.GATEDREHEARSAL / v34 freeze:** v33 competitive closure authorized one bounded step: prediction-error-gated competitive rehearsal while preserving eight-slot P1 store, v33 competitive geometry, n=64, and hyperparameters. Awake bounded rehearsal after each episode write; REST violation-only replay replaces unconditional replay-all. Consolidation checkpoints separate store convergence from slow mix and live probes. Unused `TM027.GATEDREHEARSAL.DEV.` / `TWIN.`. [`cortex_v34.prereg.lock`](cortex_v34.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
+
 ## 2026-08-17
 
 - **TM.0.25.TWOSCALE erratum compatibility:** 36/36 cells match historical DEV (`changed_fields=[]`, max |Δ|=0). `architectural_wall_acquire` stands. R3 unopened. [`lineage_twoscale.compat.lock`](lineage_twoscale.compat.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

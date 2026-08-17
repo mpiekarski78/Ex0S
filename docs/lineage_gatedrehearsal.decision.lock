@@ -1,0 +1,34 @@
+{
+  "version": "TM.0.27.GATEDREHEARSAL.DECISION",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "n": 64,
+  "neural_edit": true,
+  "gated_rehearsal": true,
+  "pass_statistic": "normalized_geometric_margin",
+  "manifest_sha": "1140e68472d1cfc147d003bb158d68e3dba5b38a0b66348c8a7ee02a988c2e6d",
+  "decision": {
+    "code": "gated_rehearsal_core_stability_fail",
+    "then": "gated_rehearsal_core_stability_fail",
+    "phase_flags": {
+      "core_acquire_2": true,
+      "core_acquire_4": true,
+      "core_acquire_8": true,
+      "core_stable": false,
+      "twin": true,
+      "eco": true,
+      "spec": true,
+      "integrity": true,
+      "scale_acquire": false,
+      "scale_stable": false
+    }
+  },
+  "dev_lock_sha": "2d784be0d5b80f416aeb88114b43905fc72d3544ea6255d9f9c4339948ad603a",
+  "git_head": "c74525b534ec53bbd2b61f0d29eb206758a7865b",
+  "frozen_runner_sha": "2d3c9677ba23fb0a16899bdb12d6ce24797c50e7d5e6fb58a374fbe045e8a99b",
+  "lineage_reopened": false,
+  "candidate_v34_lock_written": false,
+  "note": "v34 gated competitive rehearsal battery. SCORE unopened. Product remains 0.0.004."
+}

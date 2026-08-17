@@ -1,0 +1,32 @@
+{
+  "version": "TM.0.27.GATEDREHEARSAL.ISOLATION",
+  "lab": "TM.0.27.GATEDREHEARSAL",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "reason": "v33 competitive plasticity closed at competitive_core_acquire_fail. Next bounded step: prediction-error-gated competitive rehearsal with consolidation checkpoints. Not another MAP.",
+  "competitive_addendum_sha": "17a523e4487fcfec88184c26dfa6ec818e73c5762f22bac518c637df006c6728",
+  "v34_prereg": "docs/cortex_v34.prereg.lock",
+  "v34_isolation": "docs/cortex_v34.isolation.lock",
+  "n": 64,
+  "implementation_authorized": true,
+  "neural_edit_authorized": true,
+  "score_opened": false,
+  "historical_immutable": [
+    "docs/lineage_competitive.dev.lock",
+    "docs/lineage_competitive.decision.lock",
+    "docs/lineage_competitive.decision.addendum.lock",
+    "experiments/run_tm026competitive.py"
+  ],
+  "refuse": [
+    "open SCORE",
+    "auto_cortex.candidate.v34.lock",
+    "unbounded_organism_diagnostic_memory",
+    "unconditional_rest_replay_all",
+    "rewrite TM026 competitive historical locks",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "Gated rehearsal lab isolation. Product remains 0.0.004."
+}

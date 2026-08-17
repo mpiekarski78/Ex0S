@@ -107,6 +107,7 @@ def test_cell_ids() -> None:
 
 
 def test_smoke() -> None:
+    """Basic TM025 runner wiring only — live REST replay counts owned by TM027 after v34."""
     from experiments.run_tm025twoscale import smoke
 
     out = smoke()
@@ -115,7 +116,6 @@ def test_smoke() -> None:
     assert out["n_episodes"] >= 1
     assert out["ranking_ok"] is True
     assert out["winner"] == out["want"]
-    assert out["n_replay"] >= 16
     assert out["neural_edit"] is True
     assert out["v31_exists"] is False
     assert out["v32_candidate_exists"] is False
@@ -222,7 +222,7 @@ def test_addendum() -> None:
 
 
 def test_twoscale_historical_boundary_immutable() -> None:
-    """Historical TWOSCALE 7/8 stays pinned; live v33 owns new behavior via TM026."""
+    """Historical TWOSCALE 7/8 stays pinned; live organism behavior owned by TM026/TM027."""
     dev = json.loads((REPO_ROOT / "docs" / "lineage_twoscale.dev.lock").read_text(encoding="utf-8"))
     dec = json.loads((REPO_ROOT / "docs" / "lineage_twoscale.decision.lock").read_text(encoding="utf-8"))
     assert dev["decision_code"] == "architectural_wall_acquire"
@@ -233,6 +233,7 @@ def test_twoscale_historical_boundary_immutable() -> None:
     assert rec["passed"] is False
     assert sha(REPO_ROOT / "docs" / "lineage_twoscale.dev.lock") == DEV_LOCK_SHA
     assert (REPO_ROOT / "docs" / "lineage_competitive.prereg.lock").exists()
+    assert (REPO_ROOT / "docs" / "lineage_gatedrehearsal.prereg.lock").exists()
 
 def _pending(
     ag,

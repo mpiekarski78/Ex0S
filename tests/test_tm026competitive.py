@@ -1,4 +1,8 @@
-"""TM.0.26.COMPETITIVE / v33 competitive plasticity provenance."""
+"""TM.0.26.COMPETITIVE / v33 competitive plasticity — historical pins only.
+
+Live v33 behavioral expectations must not rerun through post-v34 neural code.
+See tests/test_tm027gatedrehearsal.py for live organism tests after v34.
+"""
 
 from __future__ import annotations
 
@@ -18,9 +22,13 @@ COMP_PREREG = "9f3f206fa0532348cfa5ec4cd396636758f1605744b414662a6dd77e65820703"
 COMP_ISO = "a14eb7ccc45ab509c633a99049e33b81063437a021f7980409314b71dad6224f"
 COMP_CONTRACT = "4c79df93aa9d23790d11a287000aea52a47c6eac451b9333e74361302d826e83"
 RUNNER_SHA = "cf1844642fc346a85c4e74cea464f726f17148c3e2d3c676fa40d8fe8a5500f4"
+NEURAL_V33_SHA = "ead50d187845010b5cd81a80cf32adb6ab3665ef34e6d3452aab4a4e084b1fc5"
 MANIFEST_SHA = "06dcafcd1d3c108ca2ebcef4bf32ec5ff01e279d750b3cec8a1196eba2e4eedb"
 EXPECTED_N_CELLS = 54
 COMPAT_SHA = "bf74c92e8eaaf115946c74b2e1b030ba61757141c39fb01e757ea6ad2fe9983b"
+DEV_LOCK_SHA = "70e4787676b74b04c3eeadb250c20079bd1f03b3f2bce043a95f904d5496daad"
+DECISION_SHA = "71bcc14e471e3142c033d6b2ee817f6a14fd35f03736fabb446202f01b1a8e3e"
+ADDENDUM_SHA = "17a523e4487fcfec88184c26dfa6ec818e73c5762f22bac518c637df006c6728"
 
 
 def sha(path: Path) -> str:
@@ -45,7 +53,6 @@ def test_freeze_files() -> None:
     v33 = json.loads((REPO_ROOT / "docs" / "cortex_v33.prereg.lock").read_text(encoding="utf-8"))
     assert v33["authorized_law"] == "competitive_plasticity_at_p1_geometry_only"
     assert v33["low_margin_awake_refused"] is True
-    assert v33["preserve_missing_p1_fallback"] is True
     assert not (REPO_ROOT / "docs" / "cortex.candidate.v33.lock").exists()
 
 
@@ -54,8 +61,8 @@ def test_dev_opened() -> None:
     dec_p = REPO_ROOT / "docs" / "lineage_competitive.decision.lock"
     assert dev_p.exists()
     assert dec_p.exists()
-    assert sha(dev_p) == "70e4787676b74b04c3eeadb250c20079bd1f03b3f2bce043a95f904d5496daad"
-    assert sha(dec_p) == "71bcc14e471e3142c033d6b2ee817f6a14fd35f03736fabb446202f01b1a8e3e"
+    assert sha(dev_p) == DEV_LOCK_SHA
+    assert sha(dec_p) == DECISION_SHA
     dev = json.loads(dev_p.read_text(encoding="utf-8"))
     dec = json.loads(dec_p.read_text(encoding="utf-8"))
     assert dev["n_cells"] == EXPECTED_N_CELLS
@@ -78,9 +85,6 @@ def test_cell_ids() -> None:
     assert manifest_sha(ids) == MANIFEST_SHA
     prereg = json.loads((REPO_ROOT / "docs" / "lineage_competitive.prereg.lock").read_text(encoding="utf-8"))
     assert sorted(ids) == sorted(prereg["expected_cell_ids"])
-    assert "scale|acquire|c8h4|A_then_B|w0" in ids
-    assert "hold|w1" in ids
-    assert "neg|w0" in ids
 
 
 def test_decision_ladder() -> None:
@@ -141,157 +145,38 @@ def test_score_and_dev_lock_gate() -> None:
     refuse_dev_lock()
 
 
-def _fresh_bound():
-    from experiments.run_tm023cortex import make_cortex
-
-    ag = make_cortex(None, device="cpu")
-    ag.bind_actuators(["h_a", "h_b", "h_c", "h_d"])
-    return ag
-
-
-def test_positive_competitive_delta() -> None:
-    import numpy as np
-    import torch
-
-    ag = _fresh_bound()
-    p1 = np.zeros(64, dtype=np.float64)
-    p1[0] = 1.0
-    rho = ag._unit_or_zero(p1)
-    scores = {"h_a": 0.2, "h_b": 0.5, "h_c": 0.1, "h_d": 0.0}
-    orig = ag.actuator_scores
-    ag.actuator_scores = lambda _p: scores  # type: ignore[method-assign]
-    w0 = ag.W_act_query.detach().clone()
-    ag._apply_act_query_update(rho, "h_a", 1.0, 0.15, mix_slow=False)
-    dw = (ag.W_act_query - w0).detach()
-    m_h = ag._to_t(ag.motor_vocab["h_a"])
-    m_r = ag._to_t(ag._rival_mean_vector(rho, "h_a"))
-    expected = 0.15 * torch.outer(m_h - m_r, ag._to_t(rho))
-    pure = 0.15 * torch.outer(m_h, ag._to_t(rho))
-    assert float((dw - expected).abs().max().item()) < 1e-9
-    assert float((dw - pure).abs().max().item()) > 1e-9
-    ag.actuator_scores = orig
+def test_addendum() -> None:
+    p = REPO_ROOT / "docs" / "lineage_competitive.decision.addendum.lock"
+    assert p.exists()
+    add = json.loads(p.read_text(encoding="utf-8"))
+    assert add["historical_decision_sha"] == DECISION_SHA
+    assert add["historical_dev_lock_sha"] == DEV_LOCK_SHA
+    assert add["rewrite_historical_decision"] is False
+    assert add["rewrite_historical_dev"] is False
+    assert add["neural_edit_this_addendum"] is False
+    assert add["dev_rerun_required"] is False
+    assert add["honest_decision"] == "competitive_core_acquire_fail"
+    assert add["eight_cue_acquire_probes_correct"] == "7/8"
+    assert add["uniform_sum_mechanism"] == "analytic_interpretation_not_measured_causality"
+    assert add["authorize_next"] == "v34_prediction_error_gated_competitive_rehearsal"
+    assert add["candidate_v33_lock_written"] is False
+    assert sha(p) == ADDENDUM_SHA
 
 
-def test_negative_delta_mh_only() -> None:
-    import numpy as np
-    import torch
-
-    ag = _fresh_bound()
-    p1 = np.zeros(64, dtype=np.float64)
-    p1[1] = 1.0
-    rho = ag._unit_or_zero(p1)
-    w0 = ag.W_act_query.detach().clone()
-    ag._apply_act_query_update(rho, "h_b", -0.2, 0.15, mix_slow=False)
-    dw = (ag.W_act_query - w0).detach()
-    m_h = ag._to_t(ag.motor_vocab["h_b"])
-    expected = -0.2 * 0.15 * torch.outer(m_h, ag._to_t(rho))
-    assert float((dw - expected).abs().max().item()) < 1e-9
-
-
-def test_two_handle_rival_is_single() -> None:
-    import numpy as np
-
-    ag = _fresh_bound()
-    ag.bind_actuators(["h_a", "h_b"])
-    p1 = np.zeros(64, dtype=np.float64)
-    p1[2] = 1.0
-    rho = ag._unit_or_zero(p1)
-    scores = {"h_a": 0.3, "h_b": 0.6}
-    orig = ag.actuator_scores
-    ag.actuator_scores = lambda _p: scores  # type: ignore[method-assign]
-    m_r = ag._rival_mean_vector(rho, "h_a")
-    single = np.asarray(ag.motor_vocab["h_b"], dtype=np.float64).reshape(-1)
-    assert np.allclose(m_r, single)
-    ag.actuator_scores = orig
-
-
-def test_tie_mean_rival_exchangeable() -> None:
-    import numpy as np
-
-    ag = _fresh_bound()
-    p1 = np.zeros(64, dtype=np.float64)
-    p1[3] = 1.0
-    rho = ag._unit_or_zero(p1)
-    scores = {"h_a": 0.4, "h_b": 0.5, "h_c": 0.5, "h_d": 0.1}
-    orig = ag.actuator_scores
-    ag.actuator_scores = lambda _p: scores  # type: ignore[method-assign]
-    m_r = ag._rival_mean_vector(rho, "h_a")
-    b = np.asarray(ag.motor_vocab["h_b"], dtype=np.float64)
-    c = np.asarray(ag.motor_vocab["h_c"], dtype=np.float64)
-    assert np.allclose(m_r, 0.5 * (b + c))
-    ag.actuator_scores = orig
-
-
-def test_smoke() -> None:
-    from experiments.run_tm026competitive import smoke
-
-    out = smoke()
-    assert out["smoke_ok"] is True
-    assert out["expected_id_count"] == EXPECTED_N_CELLS
-    assert out["manifest_sha"] == MANIFEST_SHA
-    assert out["geometry_only"] is True
-    assert out["v33_candidate_exists"] is False
-
-
-def test_awake_no_update_when_ranking_correct() -> None:
-    import numpy as np
-
-    from three_memory.neural_cortex import BODY_SETPOINT
-
-    ag = _fresh_bound()
-    ag.bind_actuators(["h_a", "h_b"])
-    p1 = np.zeros(64, dtype=np.float64)
-    p1[0] = 1.0
-    scores = {"h_a": 0.9, "h_b": 0.1}
-    orig = ag.actuator_scores
-    ag.actuator_scores = lambda _p: scores  # type: ignore[method-assign]
-    assert ag._act_ranking_error(p1, "h_a", 1.0) is False
-    w0 = ag.W_act_query.detach().clone()
-    ag._pending = {
-        "op": "ACT",
-        "token": "h_a",
-        "rho_elig": p1.copy(),
-        "rho_op": p1.copy(),
-        "rho_motor": p1.copy(),
-        "rho_p1": p1.copy(),
-        "s_hat": np.zeros(ag.genome.d_sym, dtype=np.float64),
-        "body": np.zeros(4, dtype=np.float64),
-        "cost": 0.0,
-        "motor_vec": ag.motor_vocab["h_a"].copy(),
-        "authored": True,
-        "clamped": True,
-        "t": 0,
-        "interaction_token": "v33_awake",
-    }
-    ag._apply_credit(np.zeros(ag.genome.d_sym), BODY_SETPOINT)
-    assert float((ag.W_act_query - w0).abs().max().item()) == 0.0
-    ag.actuator_scores = orig
-
-
-def test_rest_strengthen_low_margin_only() -> None:
-    import numpy as np
-
-    from three_memory.neural_cortex import ACT_MARGIN_FLOOR
-
-    ag = _fresh_bound()
-    ag.bind_actuators(["h_a", "h_b"])
-    p1 = np.asarray(ag._unit_or_zero(np.array([1.0] + [0.0] * 63)), dtype=np.float64)
-    ag._episodes = [{"p1": p1.copy(), "handle": "h_a", "adv": 1.0, "age": 1, "version": 1, "valid": True}]
-    orig_scores = ag.actuator_scores
-    orig_margin = ag._act_geometric_margin
-    ag.actuator_scores = lambda _p: {"h_a": 0.2, "h_b": 0.1}  # type: ignore[method-assign]
-    ag._act_geometric_margin = lambda _p, _h: 0.005  # type: ignore[method-assign]
-    w0 = ag.W_act_query.detach().clone()
-    n_replay, n_strengthen = ag._replay_store_pass(0.15, strengthen=True)
-    assert n_replay >= 1
-    assert n_strengthen == 1
-    assert float((ag.W_act_query - w0).abs().max().item()) > 0.0
-    ag._act_geometric_margin = lambda _p, _h: ACT_MARGIN_FLOOR + 0.01  # type: ignore[method-assign]
-    _r, n_strengthen2 = ag._replay_store_pass(0.15, strengthen=True)
-    assert n_strengthen2 == 0
-    assert _r >= 1
-    ag.actuator_scores = orig_scores
-    ag._act_geometric_margin = orig_margin
+def test_competitive_historical_boundary_immutable() -> None:
+    """Historical TM026 7/8 stays pinned; live v34 owns new behavior via TM027."""
+    dev = json.loads((REPO_ROOT / "docs" / "lineage_competitive.dev.lock").read_text(encoding="utf-8"))
+    dec = json.loads((REPO_ROOT / "docs" / "lineage_competitive.decision.lock").read_text(encoding="utf-8"))
+    assert dev["decision_code"] == "competitive_core_acquire_fail"
+    assert dec["decision"]["code"] == "competitive_core_acquire_fail"
+    rec = next(c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|w0")
+    n_ok = sum(1 for p in rec["probes"] if p["ranking_ok"])
+    assert n_ok == 7
+    assert rec["passed"] is False
+    assert sha(REPO_ROOT / "docs" / "lineage_competitive.dev.lock") == DEV_LOCK_SHA
+    assert sha(REPO_ROOT / "docs" / "lineage_competitive.decision.lock") == DECISION_SHA
+    assert sha(REPO_ROOT / "experiments" / "run_tm026competitive.py") == RUNNER_SHA
+    assert (REPO_ROOT / "docs" / "lineage_gatedrehearsal.prereg.lock").exists()
 
 
 if __name__ == "__main__":

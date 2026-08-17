@@ -1,0 +1,68 @@
+{
+  "version": "TM.0.23.CORTEX.V34.PREREG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "competitive_addendum_sha": "17a523e4487fcfec88184c26dfa6ec818e73c5762f22bac518c637df006c6728",
+  "v33_prereg_sha": "badbc56923737fffc5712c89af9d594a77a310d5c44f44ef689a15b8157c1523",
+  "v33_isolation_sha": "ec92232595ef196b1dbceb40343be30fb296f2a38b4c537cad17ce83acc863f7",
+  "v33_amendment_lock_sha": "f68a44fa5778f7fd85eb2b4b61d6e3cde68c90f7ff804300ca40559252e47ae5",
+  "architecture_amendment_md_sha": "e2d9a59d03fa6528deff2bf53095710b3b8f386de6f86104ceb4398b954e8c96",
+  "isolation_sha": "ac7bb5370c10910a55fae6be7fd6f5d262f4bd5625f2daaa03d3f239bcd2ca49",
+  "authorized_law": "prediction_error_gated_competitive_rehearsal",
+  "geometry_preserved_from_v33": true,
+  "store_preserved": true,
+  "awake_ranking_error_trigger_preserved": true,
+  "rest_unconditional_replay_all_refused": true,
+  "rest_strengthen_path_refused": true,
+  "awake_rehearsal_after_episode_write": true,
+  "rehearsal_pass_budget_per_burst": 16,
+  "rehearsal_pass_budget_rest_epochs": 16,
+  "violation_predicate": {
+    "positive": "winner_ne_handle_or_tie_or_gamma_below_0.01",
+    "negative": "winner_eq_handle_or_tie",
+    "single_actuator_positive": "gamma_ge_0.01",
+    "single_actuator_negative": "winner_ne_handle"
+  },
+  "skip_current_episode_if_safe_after_immediate_update": true,
+  "bounded_diagnostics_only": true,
+  "consolidation_checkpoints": [
+    "stored_post_awake",
+    "stored_post_rest_rehearsal_pre_mix",
+    "stored_post_slow_mix",
+    "live_probe"
+  ],
+  "failure_classes": [
+    "store_nonconvergence",
+    "consolidation_margin_loss",
+    "reinstatement_wall",
+    "store_and_live_fail",
+    "none"
+  ],
+  "n": 64,
+  "eta_act": 0.15,
+  "episode_slots": 8,
+  "match_l2": 0.05,
+  "replay_epochs": 16,
+  "act_margin_floor": 0.01,
+  "beta": 0.01,
+  "required_after_edit": [
+    "dev_on_TM027.GATEDREHEARSAL.DEV.",
+    "gated_rehearsal_battery_54_cells"
+  ],
+  "candidate_v34_auto_write_refused": true,
+  "refuse": [
+    "unconditional_rest_replay_all",
+    "low_margin_awake_learning_alone",
+    "unbounded_organism_diagnostic_memory",
+    "auto_cortex.candidate.v34.lock",
+    "rewrite_historical_TM026_TWOSCALE_locks",
+    "increase_n",
+    "new_eta_radius_replay_margin_search",
+    "open_SCORE",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "Gated competitive rehearsal after v33 closure. Neural edit authorized after this freeze is on origin/main. Product remains 0.0.004."
+}
