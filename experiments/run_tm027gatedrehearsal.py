@@ -50,6 +50,10 @@ V34_ISO = REPO_ROOT / "docs" / "cortex_v34.isolation.lock"
 V34_AMEND = REPO_ROOT / "docs" / "cortex_v34_architecture_amendment.lock"
 DEV_LOCK = REPO_ROOT / "docs" / "lineage_gatedrehearsal.dev.lock"
 DECISION = REPO_ROOT / "docs" / "lineage_gatedrehearsal.decision.lock"
+V1_ADDENDUM = REPO_ROOT / "docs" / "lineage_gatedrehearsal.v1.addendum.lock"
+COMPAT_RUNNER = REPO_ROOT / "docs" / "lineage_gatedrehearsal.compat.runner.lock"
+COMPAT_LOCK = REPO_ROOT / "docs" / "lineage_gatedrehearsal.compat.lock"
+COMPAT_MISMATCH = REPO_ROOT / "docs" / "lineage_gatedrehearsal.compat.mismatch.lock"
 RESULT_MD = REPO_ROOT / "docs" / "tm027gatedrehearsal_results.md"
 NEURAL = REPO_ROOT / "three_memory" / "neural_cortex.py"
 MEMORY = REPO_ROOT / "three_memory" / "cortex_memory.py"
@@ -59,6 +63,17 @@ TWIN_DOMAIN = "TM027.GATEDREHEARSAL.TWIN."
 SCORE_DOMAIN = "TM027.GATEDREHEARSAL.SCORE."
 EXPECTED_N_CELLS = 54
 MANIFEST_SHA = "1140e68472d1cfc147d003bb158d68e3dba5b38a0b66348c8a7ee02a988c2e6d"
+
+HISTORICAL_DEV_SHA = "2d784be0d5b80f416aeb88114b43905fc72d3544ea6255d9f9c4339948ad603a"
+FLOAT_ATOL = 1e-12
+PROVENANCE_PREFIXES = ("git_head", "shas", "env", "frozen_runner_sha")
+PROVENANCE_KEY_TOKENS = (
+    "timestamp",
+    "executed_at",
+    "compat_at",
+    "execution_id",
+    "execution_identifier",
+)
 
 
 def load_prereg() -> dict[str, Any]:
@@ -271,18 +286,26 @@ def classify_failure(
     *,
     stored_pre_mix: dict[str, Any],
     stored_post_mix: dict[str, Any],
-    live_probes_pass: bool,
+    live_ranking_ok: bool,
+    live_geometric_ok: bool,
+    live_perturbation_ok: bool,
 ) -> str:
+    """Orthogonal store/live/perturb failure classes. Perturbation applies on stable cells."""
     pre_ok = bool(stored_pre_mix.get("all_margin_ok"))
     post_ok = bool(stored_post_mix.get("all_margin_ok"))
-    if not pre_ok and not live_probes_pass:
+    live_core = bool(live_ranking_ok and live_geometric_ok)
+    if not pre_ok and not live_core:
         return "store_and_live_fail"
     if not pre_ok:
         return "store_nonconvergence"
     if pre_ok and not post_ok:
         return "consolidation_margin_loss"
-    if post_ok and not live_probes_pass:
+    if post_ok and not live_ranking_ok:
         return "reinstatement_wall"
+    if post_ok and live_ranking_ok and not live_geometric_ok:
+        return "reinstatement_wall"
+    if post_ok and live_core and not live_perturbation_ok:
+        return "perturbation_instability"
     return "none"
 
 
@@ -415,10 +438,20 @@ def eval_acquire_stable(
         passed = bool(ranking_ok and probed["geometric_ok"] and probed["perturbation_ok"])
     pre_mix = stored_post_rest_rehearsal_pre_mix or stored_post_awake
     post_mix = stored_post_slow_mix or stored_post_awake
+    if kind == "acquire":
+        live_ranking_ok = bool(probed["ranking_ok"] and probed["probe_count_matches_cues"])
+        live_geometric_ok = live_ranking_ok
+        live_perturbation_ok = True
+    else:
+        live_ranking_ok = bool(probed["ranking_ok"])
+        live_geometric_ok = bool(probed["geometric_ok"])
+        live_perturbation_ok = bool(probed["perturbation_ok"])
     failure_class = classify_failure(
         stored_pre_mix=pre_mix,
         stored_post_mix=post_mix,
-        live_probes_pass=bool(probed["ranking_ok"] and (probed["probe_count_matches_cues"] if kind == "acquire" else probed["geometric_ok"])),
+        live_ranking_ok=live_ranking_ok,
+        live_geometric_ok=live_geometric_ok,
+        live_perturbation_ok=live_perturbation_ok,
     )
     out = {
         "kind": kind,
@@ -749,10 +782,10 @@ def _decision(cells: list[dict[str, Any]], p: dict[str, Any]) -> tuple[str, str,
     return "gated_rehearsal_battery_pass", "reopen_lineage_readiness", flags
 
 
-def eval_dev_battery() -> dict[str, Any]:
+def eval_dev_battery(*, skip_runner_mutation_check: bool = False) -> dict[str, Any]:
     p = load_prereg()
     frozen_runner_sha = str(p.get("frozen_runner_sha") or "")
-    if frozen_runner_sha:
+    if frozen_runner_sha and not skip_runner_mutation_check:
         refuse_runner_mutation(frozen_runner_sha)
     cells: list[dict[str, Any]] = []
     for spec in p["capacity"]:
@@ -969,6 +1002,211 @@ def _json_default(obj: Any) -> Any:
     raise TypeError(type(obj))
 
 
+def _is_provenance(path: str) -> bool:
+    leaf = path.rsplit(".", 1)[-1]
+    if leaf == "failure_class":
+        return True
+    if any(tok in leaf for tok in PROVENANCE_KEY_TOKENS):
+        return True
+    for pref in PROVENANCE_PREFIXES:
+        if path == pref or path.startswith(pref + "."):
+            return True
+    return False
+
+
+def compare_semantic_payload(historical: Any, live: Any, *, path: str = "") -> dict[str, Any]:
+    changed: list[dict[str, Any]] = []
+    max_abs = 0.0
+    bool_str_ok = True
+
+    def walk(a: Any, b: Any, p: str) -> None:
+        nonlocal max_abs, bool_str_ok
+        if p and _is_provenance(p):
+            return
+        if isinstance(a, dict) and isinstance(b, dict):
+            for k in sorted(set(a) | set(b)):
+                child = f"{p}.{k}" if p else str(k)
+                if _is_provenance(child):
+                    continue
+                if k not in a or k not in b:
+                    changed.append({"path": child, "historical": a.get(k), "live": b.get(k)})
+                    continue
+                walk(a[k], b[k], child)
+            return
+        if isinstance(a, list) and isinstance(b, list):
+            if len(a) != len(b):
+                changed.append({"path": p, "historical": f"len={len(a)}", "live": f"len={len(b)}"})
+                return
+            for i, (x, y) in enumerate(zip(a, b, strict=True)):
+                walk(x, y, f"{p}[{i}]")
+            return
+        if (
+            isinstance(a, (int, float, np.floating, np.integer))
+            and isinstance(b, (int, float, np.floating, np.integer))
+            and not isinstance(a, bool)
+            and not isinstance(b, bool)
+        ):
+            delta = abs(float(a) - float(b))
+            max_abs = max(max_abs, delta)
+            if delta > FLOAT_ATOL:
+                changed.append({"path": p, "historical": float(a), "live": float(b), "abs_delta": delta})
+            return
+        if a != b:
+            if isinstance(a, (bool, str)) or isinstance(b, (bool, str)) or a is None or b is None:
+                bool_str_ok = False
+            changed.append({"path": p, "historical": a, "live": b})
+
+    walk(historical, live, path)
+    hist_ids = [str(c.get("id")) for c in (historical.get("cells") or [])] if isinstance(historical, dict) else []
+    live_ids = [str(c.get("id")) for c in (live.get("cells") or [])] if isinstance(live, dict) else []
+    expect = expected_cell_ids()
+    id_ok = hist_ids == live_ids and sorted(hist_ids) == sorted(expect) and len(set(hist_ids)) == EXPECTED_N_CELLS
+    if not id_ok:
+        changed.append({"path": "cells.id", "historical": hist_ids, "live": live_ids})
+    return {
+        "compatible": len(changed) == 0 and id_ok and bool_str_ok,
+        "changed_fields": changed,
+        "max_abs_float_delta": float(max_abs),
+        "exact_boolean_string_equality": bool_str_ok,
+        "n_expected_cells": EXPECTED_N_CELLS,
+        "n_unique_cell_ids": len(set(live_ids)),
+        "expected_cell_ids": expect,
+        "live_cell_ids": live_ids,
+    }
+
+
+def comparison_schema() -> dict[str, Any]:
+    return {
+        "mode": "recursive_semantic_payload",
+        "float_atol": FLOAT_ATOL,
+        "boolean_string_equality": "exact",
+        "exclude_provenance_prefixes": list(PROVENANCE_PREFIXES),
+        "exclude_provenance_key_tokens": list(PROVENANCE_KEY_TOKENS),
+        "record": [
+            "changed_fields",
+            "max_abs_float_delta",
+            "exact_boolean_string_equality",
+            "n_expected_cells",
+            "n_unique_cell_ids",
+        ],
+        "includes": [
+            "teaching_rows",
+            "episode_counts",
+            "phase_flags",
+            "rest_diagnostics",
+            "perturbation_details",
+            "every_probe",
+        ],
+    }
+
+
+def write_compat_runner_lock() -> dict[str, Any]:
+    if COMPAT_RUNNER.exists():
+        raise RuntimeError("compat runner lock exists; rewrite refused")
+    if not DEV_LOCK.exists():
+        raise RuntimeError("compat runner freeze requires historical lineage_gatedrehearsal.dev.lock")
+    if sha_file(DEV_LOCK) != HISTORICAL_DEV_SHA:
+        raise RuntimeError("historical DEV SHA drifted; rewrite refused")
+    if not V1_ADDENDUM.exists():
+        raise RuntimeError("compat runner freeze requires lineage_gatedrehearsal.v1.addendum.lock")
+    ids = expected_cell_ids()
+    out = {
+        "version": "TM.0.27.GATEDREHEARSAL.COMPAT.RUNNER",
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eligible_for_000005": False,
+        "n": 64,
+        "historical_dev_lock": "docs/lineage_gatedrehearsal.dev.lock",
+        "historical_dev_lock_sha": HISTORICAL_DEV_SHA,
+        "v1_addendum_sha": sha_file(V1_ADDENDUM),
+        "neural_cortex_sha": sha_file(NEURAL),
+        "runner_sha": sha_file(THIS),
+        "expected_n_cells": EXPECTED_N_CELLS,
+        "expected_cell_ids": ids,
+        "n_unique_cell_ids": len(set(ids)),
+        "comparison_schema": comparison_schema(),
+        "rewrite_historical_dev": False,
+        "replay_writes_dev": False,
+        "score_opened": False,
+        "informative_preflight_only": True,
+        "not_confirmatory_r2": True,
+        "note": "Informative byte-compat preflight. Does not repair freeze-before-DEV. Product remains 0.0.004.",
+    }
+    COMPAT_RUNNER.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+    return out
+
+
+def refuse_compat_replay() -> None:
+    if not COMPAT_RUNNER.exists():
+        raise RuntimeError("compat replay refused until lineage_gatedrehearsal.compat.runner.lock exists")
+    if not DEV_LOCK.exists():
+        raise RuntimeError("compat replay requires historical lineage_gatedrehearsal.dev.lock")
+    if sha_file(DEV_LOCK) != HISTORICAL_DEV_SHA:
+        raise RuntimeError("compat replay refused: historical DEV SHA drifted")
+    live_runner = json.loads(COMPAT_RUNNER.read_text(encoding="utf-8"))
+    if live_runner.get("neural_cortex_sha") != sha_file(NEURAL):
+        raise RuntimeError("compat replay refused: live neural SHA does not match frozen compat runner")
+    if live_runner.get("runner_sha") != sha_file(THIS):
+        raise RuntimeError("compat replay refused: live runner SHA does not match frozen compat runner")
+    if COMPAT_LOCK.exists() or COMPAT_MISMATCH.exists():
+        raise RuntimeError("compat replay already recorded; same frozen comparison refused again")
+
+
+def replay_compat_dev() -> dict[str, Any]:
+    refuse_compat_replay()
+    before = sha_file(DEV_LOCK)
+    hist = json.loads(DEV_LOCK.read_text(encoding="utf-8"))
+    live = eval_dev_battery(skip_runner_mutation_check=True)
+    after = sha_file(DEV_LOCK)
+    if before != after or after != HISTORICAL_DEV_SHA:
+        raise RuntimeError("compat replay must not rewrite historical DEV lock")
+    cmp = compare_semantic_payload(hist, live)
+    git_head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT).decode().strip()
+    base = {
+        "product": "0.0.004",
+        "earned_next": False,
+        "ex0s": None,
+        "eligible_for_000005": False,
+        "n": 64,
+        "historical_dev_lock_sha": HISTORICAL_DEV_SHA,
+        "v1_addendum_sha": sha_file(V1_ADDENDUM),
+        "compat_runner_sha": sha_file(COMPAT_RUNNER),
+        "live_neural_sha": sha_file(NEURAL),
+        "live_runner_sha": sha_file(THIS),
+        "git_head": git_head,
+        "decision_code": hist.get("decision_code"),
+        "changed_fields": cmp["changed_fields"],
+        "max_abs_float_delta": cmp["max_abs_float_delta"],
+        "exact_boolean_string_equality": cmp["exact_boolean_string_equality"],
+        "n_expected_cells": cmp["n_expected_cells"],
+        "n_unique_cell_ids": cmp["n_unique_cell_ids"],
+        "expected_cell_ids": cmp["expected_cell_ids"],
+        "rewrite_historical_dev": False,
+        "lineage_reopened": False,
+        "score_opened": False,
+        "informative_preflight_only": True,
+        "not_confirmatory_r2": True,
+    }
+    if cmp["compatible"]:
+        out = {
+            "version": "TM.0.27.GATEDREHEARSAL.COMPAT",
+            "compatible": True,
+            **base,
+            "note": "Informative preflight: historical TM027 DEV measurement-compatible at pushed SHAs. R2 still required.",
+        }
+        COMPAT_LOCK.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+    else:
+        out = {
+            "version": "TM.0.27.GATEDREHEARSAL.COMPAT.MISMATCH",
+            "compatible": False,
+            **base,
+            "note": "Historical TM027 DEV semantic mismatch at replay. Investigate before R2.",
+        }
+        COMPAT_MISMATCH.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+    return out
+
+
 def smoke() -> dict[str, Any]:
     p = load_prereg()
     assert p["n"] == 64
@@ -1013,9 +1251,19 @@ def main() -> None:
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--dev", action="store_true")
     ap.add_argument("--run-dev", action="store_true")
+    ap.add_argument("--write-compat-runner", action="store_true")
+    ap.add_argument("--replay-compat", action="store_true")
     args = ap.parse_args()
     if args.smoke:
         print(json.dumps(smoke(), indent=2, default=_json_default))
+        return
+    if args.write_compat_runner:
+        out = write_compat_runner_lock()
+        print(json.dumps({"compat_runner_sha": sha_file(COMPAT_RUNNER), "expected_n_cells": out["expected_n_cells"]}, indent=2))
+        return
+    if args.replay_compat:
+        out = replay_compat_dev()
+        print(json.dumps({"compatible": out["compatible"], "max_abs_float_delta": out["max_abs_float_delta"]}, indent=2))
         return
     if args.dev or args.run_dev:
         out = run_dev()

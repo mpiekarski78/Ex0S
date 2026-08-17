@@ -1,0 +1,225 @@
+{
+  "version": "TM.0.27.GATEDREHEARSAL.R2.PREREG",
+  "lab": "TM.0.27.GATEDREHEARSAL.R2",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "implementation_authorized": true,
+  "investigation_justified": true,
+  "confirmatory_r2": true,
+  "package_question": "On fresh unused R2 worlds, with corrected failure classifier including perturbation_instability, does v34 gated competitive rehearsal reproduce the stored-training/live-query split under proper freeze-before-DEV?",
+  "authorized_by": [
+    "docs/lineage_gatedrehearsal.v1.addendum.lock",
+    "docs/lineage_gatedrehearsal.decision.lock",
+    "docs/cortex_v34.prereg.lock"
+  ],
+  "v1_addendum_sha": "fba1a9f69bf5ea4368a3a74cb1500add3ace82a03e9dca924657950de4f0a479",
+  "v1_decision_sha": "9f447bc7f1ecdd909daa3b4dab55776498003c35c79ef816f650c9ff7604a8a0",
+  "compat_lock_sha": "93981fe3838258d25061c8963d45fdebc396f9d590b6c848f37603a4a038bd09",
+  "historical_v1_dev_sha": "2d784be0d5b80f416aeb88114b43905fc72d3544ea6255d9f9c4339948ad603a",
+  "rewrite_historical_v1_dev": false,
+  "rewrite_historical_v1_decision": false,
+  "compat_is_informative_preflight_only": true,
+  "candidate_name": "v34",
+  "n": 64,
+  "eta_act": 0.15,
+  "increase_n": false,
+  "H_max": 8,
+  "episode_slots": 8,
+  "state_budget": 512,
+  "match_l2": 0.05,
+  "replay_epochs": 16,
+  "n_rest_ticks": 4,
+  "manifest_definition": "sha256(json({lab, sorted(domains), sorted(cell_ids)}))",
+  "domains": {
+    "DEV": "TM027.GATEDREHEARSAL.R2.DEV.",
+    "TWIN": "TM027.GATEDREHEARSAL.R2.TWIN.",
+    "SCORE": "TM027.GATEDREHEARSAL.R2.SCORE."
+  },
+  "capacity": [
+    {
+      "n_cues": 2,
+      "n_handles": 2,
+      "required": true
+    },
+    {
+      "n_cues": 4,
+      "n_handles": 2,
+      "required": true
+    },
+    {
+      "n_cues": 8,
+      "n_handles": 2,
+      "required": true
+    }
+  ],
+  "scaling": [
+    {
+      "n_cues": 8,
+      "n_handles": 4,
+      "balanced": true,
+      "purpose": "multi_actuator",
+      "required": true
+    }
+  ],
+  "integrity_gates": [
+    "neg",
+    "perm",
+    "ckpt",
+    "noteach",
+    "hold"
+  ],
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 2,
+  "expected_n_cells": 54,
+  "manifest_sha": "89f144c6ce13faa5093cbaaeb8f9599289725da6e9a0bfdad958b3d17ff9da10",
+  "expected_cell_ids": [
+    "acquire|c2|A_then_B|w0",
+    "acquire|c2|A_then_B|w1",
+    "acquire|c2|B_then_A|w0",
+    "acquire|c2|B_then_A|w1",
+    "acquire|c4|A_then_B|w0",
+    "acquire|c4|A_then_B|w1",
+    "acquire|c4|B_then_A|w0",
+    "acquire|c4|B_then_A|w1",
+    "acquire|c8|A_then_B|w0",
+    "acquire|c8|A_then_B|w1",
+    "acquire|c8|B_then_A|w0",
+    "acquire|c8|B_then_A|w1",
+    "ckpt|w0",
+    "ckpt|w1",
+    "eco|A_then_B|w0",
+    "eco|A_then_B|w1",
+    "eco|B_then_A|w0",
+    "eco|B_then_A|w1",
+    "hold|w0",
+    "hold|w1",
+    "neg|w0",
+    "neg|w1",
+    "noteach|w0",
+    "noteach|w1",
+    "perm|w0",
+    "perm|w1",
+    "scale|acquire|c8h4|A_then_B|w0",
+    "scale|acquire|c8h4|A_then_B|w1",
+    "scale|acquire|c8h4|B_then_A|w0",
+    "scale|acquire|c8h4|B_then_A|w1",
+    "scale|stable|c8h4|A_then_B|w0",
+    "scale|stable|c8h4|A_then_B|w1",
+    "scale|stable|c8h4|B_then_A|w0",
+    "scale|stable|c8h4|B_then_A|w1",
+    "spec|A_then_B|w0",
+    "spec|A_then_B|w1",
+    "spec|B_then_A|w0",
+    "spec|B_then_A|w1",
+    "stable|c2|A_then_B|w0",
+    "stable|c2|A_then_B|w1",
+    "stable|c2|B_then_A|w0",
+    "stable|c2|B_then_A|w1",
+    "stable|c4|A_then_B|w0",
+    "stable|c4|A_then_B|w1",
+    "stable|c4|B_then_A|w0",
+    "stable|c4|B_then_A|w1",
+    "stable|c8|A_then_B|w0",
+    "stable|c8|A_then_B|w1",
+    "stable|c8|B_then_A|w0",
+    "stable|c8|B_then_A|w1",
+    "twin|c2|A_then_B|w0",
+    "twin|c2|A_then_B|w1",
+    "twin|c2|B_then_A|w0",
+    "twin|c2|B_then_A|w1"
+  ],
+  "phased_contract": {
+    "acquire_pass": "ranking_ok_and_n_probe_correct_eq_n_cues",
+    "stability_gate": "ranking_ok_and_normalized_geometric_margin_0.01_and_perturbation",
+    "reversal": "ecological",
+    "specificity": "unrelated_map_intact",
+    "integrity": "neg_perm_ckpt_noteach_hold",
+    "scaling": "eight_cue_four_actuator",
+    "consolidation_checkpoints": [
+      "stored_post_awake",
+      "stored_post_rest_rehearsal_pre_mix",
+      "stored_post_slow_mix",
+      "live_probe"
+    ],
+    "failure_classifier": {
+      "inputs": [
+        "live_ranking_ok",
+        "live_geometric_ok",
+        "live_perturbation_ok",
+        "stored_pre_mix_ok",
+        "stored_post_mix_ok"
+      ],
+      "classes": [
+        "store_and_live_fail",
+        "store_nonconvergence",
+        "consolidation_margin_loss",
+        "reinstatement_wall",
+        "perturbation_instability",
+        "none"
+      ]
+    }
+  },
+  "margin": {
+    "pass_statistic": "normalized_geometric_margin",
+    "geometric_min": 0.01,
+    "pairwise_score_gap_is_not_pass_statistic": true,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19,
+    "reject_non_finite": true,
+    "frozen_before_dev": true
+  },
+  "decision_ladder": [
+    {
+      "code": "gated_rehearsal_r2_core_acquire_fail",
+      "when": "core acquire fails"
+    },
+    {
+      "code": "gated_rehearsal_r2_core_stability_fail",
+      "when": "core stable or twin fails"
+    },
+    {
+      "code": "gated_rehearsal_r2_reversal_fail",
+      "when": "ecological reversal fails"
+    },
+    {
+      "code": "gated_rehearsal_r2_specificity_fail",
+      "when": "specificity fails"
+    },
+    {
+      "code": "gated_rehearsal_r2_integrity_fail",
+      "when": "integrity gate fails"
+    },
+    {
+      "code": "gated_rehearsal_r2_multiactuator_acquire_fail",
+      "when": "8c4h acquire fails"
+    },
+    {
+      "code": "gated_rehearsal_r2_multiactuator_stability_fail",
+      "when": "8c4h stable fails"
+    },
+    {
+      "code": "gated_rehearsal_r2_battery_pass",
+      "when": "all 54 cells pass"
+    }
+  ],
+  "frozen_runner_sha": "7f487792a38970c6429469ee9781b942d8b606de434f91c915f7ab06441cc8cd",
+  "runner_byte_identical_through_dev": true,
+  "preregistered_decision_outcome": false,
+  "refuse": [
+    "open SCORE",
+    "rewrite historical V1 DEV/decision",
+    "auto_cortex.candidate.v34.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_r2_freeze_push"
+  ],
+  "note": "Confirmatory R2 on fresh worlds. Decision derived honestly from R2 cells only. Product remains 0.0.004."
+}

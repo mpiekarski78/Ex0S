@@ -110,6 +110,8 @@ class GenomeConfig:
     # v31: default query keeps live v30 until WRITEGEOM enables proto / candidate v31.
     act_score_mode: str = ACT_SCORE_QUERY
     actuator_proto_h_max: int = ACTUATOR_PROTO_H_MAX
+    # v35: hippocampal-style episodic P1 reinstatement at ACT scoring only (default off = v34).
+    episodic_act_recall: bool = False
 
     @property
     def d_x(self) -> int:
@@ -140,6 +142,7 @@ class GenomeConfig:
             "motor_persist_p": float(self.motor_persist_p if self.motor_persist_p is not None else MOTOR_PERSIST_P),
             "act_score_mode": str(self.act_score_mode),
             "actuator_proto_h_max": int(self.actuator_proto_h_max),
+            "episodic_act_recall": bool(self.episodic_act_recall),
             "body_setpoint": BODY_SETPOINT.tolist(),
             "ops": list(OPS),
             "op_cost": dict(OP_COST),
@@ -709,8 +712,68 @@ class NeuralCortex:
             out[h] = float(np.dot(q, v) / (qn * (np.linalg.norm(v) + 1e-12)))
         return out
 
-    def _choose_actuator(self, rho: Any) -> str | None:
-        scores = self.actuator_scores(rho)
+    def _episodic_act_recall_enabled(self) -> bool:
+        return bool(getattr(self.genome, "episodic_act_recall", False))
+
+    def _nearest_episode_for_recall(self, live_p1: np.ndarray) -> tuple[np.ndarray | None, dict[str, Any]]:
+        meta: dict[str, Any] = {
+            "path": "cortical",
+            "ambiguous": False,
+            "slot": None,
+            "nearest_dist": None,
+            "second_nearest_dist": None,
+            "reason": None,
+        }
+        if not self._episodic_act_recall_enabled():
+            return None, meta
+        x = self._unit_or_zero(live_p1)
+        if float(np.linalg.norm(x)) <= PROTO_EPS:
+            meta["path"] = "cortical_fallback"
+            meta["reason"] = "empty_live_p1"
+            return None, meta
+        candidates: list[tuple[float, int, dict[str, Any]]] = []
+        for i, ep in enumerate(self._episodes):
+            if not ep.get("valid"):
+                continue
+            d = float(np.linalg.norm(np.asarray(ep["p1"], dtype=np.float64) - x))
+            candidates.append((d, int(i), ep))
+        if not candidates:
+            meta["path"] = "cortical_fallback"
+            meta["reason"] = "no_valid_episodes"
+            return None, meta
+        candidates.sort(key=lambda t: t[0])
+        min_d = float(candidates[0][0])
+        nearest = [c for c in candidates if abs(c[0] - min_d) <= ELIG_EPS]
+        meta["nearest_dist"] = float(min_d)
+        meta["second_nearest_dist"] = float(candidates[1][0]) if len(candidates) > 1 else None
+        if len(nearest) > 1:
+            meta["path"] = "cortical_fallback"
+            meta["ambiguous"] = True
+            meta["reason"] = "ambiguous_nearest"
+            return None, meta
+        _d, slot_i, ep = nearest[0]
+        meta["slot"] = int(slot_i)
+        meta["path"] = "episodic_completed"
+        return np.asarray(ep["p1"], dtype=np.float64).copy(), meta
+
+    def _pattern_complete_p1(self, stored_p1: np.ndarray) -> np.ndarray:
+        return self._unit_or_zero(stored_p1)
+
+    def actuator_decision_scores(self, live_p1: Any) -> tuple[dict[str, float], np.ndarray, dict[str, Any]]:
+        """Canonical ACT motor path: optional episodic nearest-neighbor completion then query scoring."""
+        live = self._rho_np(live_p1)
+        stored, meta = self._nearest_episode_for_recall(live)
+        if stored is not None:
+            score_addr = self._pattern_complete_p1(stored)
+        else:
+            score_addr = self._unit_or_zero(live)
+            if self._episodic_act_recall_enabled() and meta.get("path") == "cortical":
+                meta["path"] = "cortical_fallback"
+        scores = self.actuator_scores(score_addr)
+        meta["scoring_address_norm"] = float(np.linalg.norm(score_addr))
+        return scores, score_addr, meta
+
+    def _choose_actuator_from_scores(self, scores: dict[str, float]) -> str | None:
         if not scores:
             return None
         best = max(scores.values())
@@ -718,6 +781,10 @@ class NeuralCortex:
         if len(ties) > 1 or all(abs(s) <= TIE_EPS for s in scores.values()):
             return str(self.rng_motor.choice(ties))
         return ties[0]
+
+    def _choose_actuator(self, rho: Any) -> str | None:
+        scores = self.actuator_scores(rho)
+        return self._choose_actuator_from_scores(scores)
 
     def _credit_proto(self, handle: str, adv: float, rho_elig: Any, eta_a: float) -> None:
         if adv == 0.0 or handle not in self._proto_fast:
@@ -959,7 +1026,8 @@ class NeuralCortex:
                 # v31: actuator_scores (query or proto); all-zero still rng_motor
                 # v32: score ACT at event-end P1 when captured
                 addr = self._last_p1 if self._last_p1 is not None else self._from_t(self.rho)
-                tok = self._choose_actuator(addr)
+                act_scores, _score_addr, _recall_meta = self.actuator_decision_scores(addr)
+                tok = self._choose_actuator_from_scores(act_scores)
                 if tok is None:
                     chosen_op = "HOLD"
                     break
@@ -1600,6 +1668,8 @@ class NeuralCortex:
             self.genome.act_score_mode = str(gsnap["act_score_mode"])
         if "actuator_proto_h_max" in gsnap:
             self.genome.actuator_proto_h_max = int(gsnap["actuator_proto_h_max"])
+        if "episodic_act_recall" in gsnap:
+            self.genome.episodic_act_recall = bool(gsnap["episodic_act_recall"])
         self.sources = {
             k: np.asarray(v, dtype=np.float64) for k, v in (snap.get("sources") or {}).items()
         }

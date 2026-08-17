@@ -1,0 +1,37 @@
+{
+  "version": "TM.0.27.GATEDREHEARSAL.R2.DECISION",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "n": 64,
+  "neural_edit": false,
+  "gated_rehearsal": true,
+  "confirmatory_r2": true,
+  "pass_statistic": "normalized_geometric_margin",
+  "manifest_sha": "89f144c6ce13faa5093cbaaeb8f9599289725da6e9a0bfdad958b3d17ff9da10",
+  "decision": {
+    "code": "gated_rehearsal_r2_core_stability_fail",
+    "then": "gated_rehearsal_r2_core_stability_fail",
+    "phase_flags": {
+      "core_acquire_2": true,
+      "core_acquire_4": true,
+      "core_acquire_8": true,
+      "core_stable": false,
+      "twin": true,
+      "eco": true,
+      "spec": true,
+      "integrity": true,
+      "scale_acquire": false,
+      "scale_stable": false
+    }
+  },
+  "dev_lock_sha": "de1c3e831ffdaf795bef615d5bbf01d36aa50fde0c43882e834dadaddb55e081",
+  "git_head": "6a845e3755823cf71bb693a7ad197ab3b5cf2f0d",
+  "frozen_runner_sha": "7f487792a38970c6429469ee9781b942d8b606de434f91c915f7ab06441cc8cd",
+  "compat_lock_sha": "93981fe3838258d25061c8963d45fdebc396f9d590b6c848f37603a4a038bd09",
+  "v1_addendum_sha": "fba1a9f69bf5ea4368a3a74cb1500add3ace82a03e9dca924657950de4f0a479",
+  "lineage_reopened": false,
+  "candidate_v34_lock_written": false,
+  "note": "Confirmatory R2 decision derived from fresh worlds. Product remains 0.0.004."
+}

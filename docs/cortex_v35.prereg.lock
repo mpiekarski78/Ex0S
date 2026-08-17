@@ -1,0 +1,28 @@
+{
+  "version": "TM.0.23.CORTEX.V35.PREREG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "r2_decision_sha": "98d51873109f98ccaf10eafb6aa88e26ddce3090b5b83096d4f25cfeaa295899",
+  "authorized_law": "complementary_episodic_cortical_act_recall",
+  "write_match_l2": 0.05,
+  "recall_rule": "unique_nearest_valid_episode_no_radius",
+  "recall_ambiguity": "elig_eps_tie_at_minimum_to_cortical_fallback",
+  "pattern_completion": "reinstate_stored_unit_p1",
+  "handle_shortcut_refused": true,
+  "episodic_act_recall_default": false,
+  "learning_path_frozen_from_v34": true,
+  "canonical_motor_api": "actuator_decision_scores",
+  "perturb_live_then_retrieve": true,
+  "n": 64,
+  "refuse": [
+    "recall_radius_tuning",
+    "cue_name_routing",
+    "direct_handle_return",
+    "auto_cortex.candidate.v35.lock",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "v35 complementary recall after R2 stability fail. Neural edit authorized after TM028 freeze on origin/main."
+}

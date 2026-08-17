@@ -1,0 +1,119 @@
+{
+  "version": "TM.0.28.COMPLEMENTARY.PREREG",
+  "lab": "TM.0.28.COMPLEMENTARY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": true,
+  "implementation_authorized": true,
+  "package_question": "Does v35 complementary episodic\u2013cortical ACT recall (nearest-neighbor pattern completion, no handle shortcut) restore stable mappings while matched OFF ablation reproduces R2 failure?",
+  "authorized_by": [
+    "docs/lineage_gatedrehearsal.r2.decision.lock",
+    "docs/cortex_v35.prereg.lock"
+  ],
+  "r2_decision_sha": "98d51873109f98ccaf10eafb6aa88e26ddce3090b5b83096d4f25cfeaa295899",
+  "v35_prereg_sha": "0b70e681c11f3532941ae44b3d7b370ef8ae1bbc3dad25980ba58ca13a69065a",
+  "candidate_name": "v35",
+  "n": 64,
+  "eta_act": 0.15,
+  "episode_slots": 8,
+  "write_match_l2": 0.05,
+  "recall_rule": "unique_nearest_no_radius",
+  "episodic_act_recall_treatment": true,
+  "matched_ablation": true,
+  "domains": {
+    "DEV": "TM028.COMPLEMENTARY.DEV.",
+    "TWIN": "TM028.COMPLEMENTARY.TWIN.",
+    "SCORE": "TM028.COMPLEMENTARY.SCORE."
+  },
+  "capacity": [
+    {
+      "n_cues": 2,
+      "n_handles": 2,
+      "required": true
+    },
+    {
+      "n_cues": 4,
+      "n_handles": 2,
+      "required": true
+    },
+    {
+      "n_cues": 8,
+      "n_handles": 2,
+      "required": true
+    }
+  ],
+  "scaling": [
+    {
+      "n_cues": 8,
+      "n_handles": 4,
+      "balanced": true,
+      "purpose": "multi_actuator",
+      "required": true
+    }
+  ],
+  "integrity_gates": [
+    "neg",
+    "perm",
+    "ckpt",
+    "noteach",
+    "hold"
+  ],
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 2,
+  "expected_n_cells": 66,
+  "manifest_sha": "4c59793a32573143a57b22a10a16728f1be3323b6c2d9b4d11b9b558e42f894c",
+  "extra_cells": [
+    "hist",
+    "novel",
+    "ablation"
+  ],
+  "margin": {
+    "pass_statistic": "normalized_geometric_margin",
+    "geometric_min": 0.01,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19
+  },
+  "n_rest_ticks": 4,
+  "ablation_expected_failure": [
+    "reinstatement_wall",
+    "perturbation_instability"
+  ],
+  "decision_ladder": [
+    {
+      "code": "complementary_core_acquire_fail",
+      "when": "treatment acquire fails"
+    },
+    {
+      "code": "complementary_core_stability_fail",
+      "when": "treatment stable fails"
+    },
+    {
+      "code": "complementary_episodic_overgeneralization",
+      "when": "novel cue confident false recall"
+    },
+    {
+      "code": "complementary_ablation_causal_fail",
+      "when": "ablation does not fail when treatment passes"
+    },
+    {
+      "code": "complementary_battery_pass",
+      "when": "all treatment pass and all ablation fail as preregistered"
+    }
+  ],
+  "frozen_runner_sha": "e36339cf7f7fcf59e520e4ed9fae65a380e6cc53b56ab0adbfeceb2b7b2569cd",
+  "refuse": [
+    "open SCORE",
+    "auto_cortex.candidate.v35.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "TM028 complementary battery. Product remains 0.0.004."
+}

@@ -1,0 +1,64 @@
+{
+  "version": "TM.0.27.GATEDREHEARSAL.V1.ADDENDUM",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "purpose": "Immutable V1 provenance note and corrected failure-classifier contract. Does not rewrite historical DEV or decision locks.",
+  "historical_immutable": [
+    "docs/lineage_gatedrehearsal.dev.lock",
+    "docs/lineage_gatedrehearsal.decision.lock"
+  ],
+  "rewrite_historical_dev": false,
+  "rewrite_historical_decision": false,
+  "provenance_gap": {
+    "decision_git_head": "c74525b534ec53bbd2b61f0d29eb206758a7865b",
+    "pushed_git_head": "6a845e3755823cf71bb693a7ad197ab3b5cf2f0d",
+    "frozen_runner_sha": "2d3c9677ba23fb0a16899bdb12d6ce24797c50e7d5e6fb58a374fbe045e8a99b",
+    "dev_neural_cortex_sha": "459219177691353f411ea2331de33e8e104840321ad90c865ba0d140ca00781c",
+    "note": "DEV behavioral SHAs match pushed tree; decision git_head predates audit-only commit 6a845e3."
+  },
+  "historical_dev_lock_sha": "2d784be0d5b80f416aeb88114b43905fc72d3544ea6255d9f9c4339948ad603a",
+  "historical_decision_code": "gated_rehearsal_core_stability_fail",
+  "failure_classifier_correction": {
+    "applies_to": "interpretation_only_on_V1",
+    "inputs": [
+      "live_ranking_ok",
+      "live_geometric_ok",
+      "live_perturbation_ok",
+      "stored_pre_mix_ok",
+      "stored_post_mix_ok"
+    ],
+    "classes": [
+      "store_and_live_fail",
+      "store_nonconvergence",
+      "consolidation_margin_loss",
+      "reinstatement_wall",
+      "perturbation_instability",
+      "none"
+    ],
+    "perturbation_instability": "stored converged; live ranking and gamma pass; sigma=0.01 perturbation fails"
+  },
+  "v1_stable_relabel_interpretive": [
+    {
+      "id": "stable|c4|A_then_B|w0",
+      "historical_failure_class": "none",
+      "corrected_failure_class": "perturbation_instability",
+      "passed": false
+    },
+    {
+      "id": "stable|c4|B_then_A|w0",
+      "historical_failure_class": "none",
+      "corrected_failure_class": "perturbation_instability",
+      "passed": false
+    },
+    {
+      "id": "stable|c4|A_then_B|w1",
+      "historical_failure_class": "none",
+      "corrected_failure_class": "perturbation_instability",
+      "passed": false
+    }
+  ],
+  "compat_is_informative_preflight_not_r2": true,
+  "note": "V1 addendum only. Confirmatory evidence requires fresh TM027.GATEDREHEARSAL.R2.* DEV after R2 freeze."
+}

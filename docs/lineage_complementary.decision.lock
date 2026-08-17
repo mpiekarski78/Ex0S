@@ -1,0 +1,27 @@
+{
+  "version": "TM.0.28.COMPLEMENTARY.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "4c59793a32573143a57b22a10a16728f1be3323b6c2d9b4d11b9b558e42f894c",
+  "decision": {
+    "code": "complementary_core_acquire_fail",
+    "then": "complementary_core_acquire_fail",
+    "phase_flags": {
+      "treatment_acquire_2": true,
+      "treatment_acquire_4": true,
+      "treatment_acquire_8": false,
+      "treatment_stable": false,
+      "treatment_twin": true,
+      "treatment_eco": true,
+      "treatment_spec": true,
+      "treatment_integrity": true,
+      "treatment_scale_acquire": false,
+      "treatment_scale_stable": false,
+      "novel_pass": false,
+      "ablation_expected_failure": true
+    }
+  },
+  "dev_lock_sha": "7aeb60f284aedd492a252db62be22a28882761244b1df94badbebfaaf5a823d0",
+  "git_head": "6a845e3755823cf71bb693a7ad197ab3b5cf2f0d",
+  "frozen_runner_sha": "e36339cf7f7fcf59e520e4ed9fae65a380e6cc53b56ab0adbfeceb2b7b2569cd",
+  "note": "v35 complementary battery decision. Product remains 0.0.004."
+}

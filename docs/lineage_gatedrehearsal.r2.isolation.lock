@@ -1,0 +1,22 @@
+{
+  "version": "TM.0.27.GATEDREHEARSAL.R2.ISOLATION",
+  "lab": "TM.0.27.GATEDREHEARSAL.R2",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "reason": "V1 freeze-order gap requires confirmatory R2 on fresh worlds with corrected failure classifier before v35 complementary recall.",
+  "v1_addendum_sha": "fba1a9f69bf5ea4368a3a74cb1500add3ace82a03e9dca924657950de4f0a479",
+  "historical_immutable": [
+    "docs/lineage_gatedrehearsal.dev.lock",
+    "docs/lineage_gatedrehearsal.decision.lock"
+  ],
+  "if_r2_confirms_stability_fail": "complementary_learning_episodic_p1_in_act_scoring",
+  "refuse": [
+    "rewrite historical V1 DEV/decision",
+    "open SCORE",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "R2 isolation. Product remains 0.0.004."
+}

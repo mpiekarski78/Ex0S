@@ -1,0 +1,19 @@
+{
+  "version": "TM.0.23.CORTEX.V35.ISOLATION",
+  "lab": "TM.0.28.COMPLEMENTARY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "reason": "R2 confirmatory gated_rehearsal_r2_core_stability_fail. Stored-training/live-query gap. Next: complementary episodic P1 reinstatement at ACT scoring only.",
+  "r2_decision_sha": "98d51873109f98ccaf10eafb6aa88e26ddce3090b5b83096d4f25cfeaa295899",
+  "if_v35_fails_next": "report_episodic_overgeneralization_no_radius_tuning",
+  "refuse": [
+    "rewrite R2/V1 historical locks",
+    "recall_radius_grid",
+    "auto_cortex.candidate.v35.lock",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "v35 isolation after R2. Product remains 0.0.004."
+}
