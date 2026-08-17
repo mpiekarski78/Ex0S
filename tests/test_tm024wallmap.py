@@ -73,7 +73,17 @@ def test_runner_lock_if_present() -> None:
     assert lock["product"] == "0.0.004"
     assert lock["earned_next"] is False
     assert lock["ex0s"] is None
-    assert lock["shas"] == wallmap_shas()
+    live = wallmap_shas()
+    frozen = lock["shas"]
+    if live.get("neural_cortex") != frozen.get("neural_cortex"):
+        assert (REPO_ROOT / "docs" / "cortex_v28_architecture_amendment.lock").is_file()
+        assert frozen["neural_cortex"] == "2b563a9c5de3ec8b411121bd5518c09f49f422f44108138ec34a1d5708c98d2e"
+        for key, val in frozen.items():
+            if key == "neural_cortex":
+                continue
+            assert live.get(key) == val, key
+    else:
+        assert frozen == live
     assert lock["Q3"]["denominator"] == "standard_error_not_variance_sum" or "SE" in str(lock["Q3"])
 
 

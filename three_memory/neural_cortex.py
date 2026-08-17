@@ -56,6 +56,7 @@ BODY_SETPOINT = np.array([1.0, 0.0, 1.0, 0.0], dtype=np.float64)
 # v12: opposite-sign ACT body_adv raises HOLD / lowers ACT on the next step.
 # v13: compare body_adv to a slow agreeing baseline instead of last-tick snap.
 CONFLICT_ADV_EPS = 1e-9
+ELIG_EPS = 1e-12
 CONFLICT_HOLD_BIAS = 2.0
 ADV_BASELINE_ALPHA = 0.05
 FAMILIARITY_RATIO = 0.5
@@ -612,35 +613,42 @@ class NeuralCortex:
         )
         adv = body_adv - p["cost"]
         rho_elig = self._to_t(p["rho_elig"])
+        elig_active = bool(torch.max(torch.abs(rho_elig)).item() > ELIG_EPS)
+        updated: set[str] = set()
         # directed prediction
         eta_p = float(self.genome.eta_pred) * self._age_scale("eta_pred_scale", 1.0)
         eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
-        self.W_pred = self.W_pred + eta_p * torch.outer(
-            self._to_t(eps), rho_elig
-        )
+        if elig_active:
+            self.W_pred = self.W_pred + eta_p * torch.outer(
+                self._to_t(eps), rho_elig
+            )
+            updated.add("W_pred")
         # three-factor on op / motor query used
         e_op = torch.zeros(len(OPS), dtype=self.dtype, device=self.device)
         e_op[OPS.index(p["op"])] = 1.0
         # v7: no-consequence ACT cost must not extinguish ACT (skip W_op when body_adv≈0)
         skip_act_cost = p["op"] == "ACT" and abs(body_adv) < 1e-9
-        if not skip_act_cost:
+        if elig_active and not skip_act_cost:
             self.W_op = self.W_op + eta_a * adv * torch.outer(e_op, rho_elig)
+            updated.add("W_op")
         # v13: opposite-sign vs slow baseline → HOLD; do not snap the baseline.
         if p["op"] == "ACT" and abs(body_adv) > CONFLICT_ADV_EPS:
             ema = float(self._adv_baseline)
             if abs(ema) > CONFLICT_ADV_EPS and (ema * body_adv) < 0.0:
                 self._hold_after_conflict = True
-                e_conf = torch.zeros(len(OPS), dtype=self.dtype, device=self.device)
-                e_conf[OPS.index("HOLD")] = 1.0
-                e_conf[OPS.index("ACT")] = -1.0
-                self.W_op = self.W_op + eta_a * abs(body_adv) * torch.outer(e_conf, rho_elig)
+                if elig_active:
+                    e_conf = torch.zeros(len(OPS), dtype=self.dtype, device=self.device)
+                    e_conf[OPS.index("HOLD")] = 1.0
+                    e_conf[OPS.index("ACT")] = -1.0
+                    self.W_op = self.W_op + eta_a * abs(body_adv) * torch.outer(e_conf, rho_elig)
+                    updated.add("W_op")
             else:
                 alpha = self._lp("adv_baseline_alpha", ADV_BASELINE_ALPHA)
                 self._adv_baseline = (1.0 - alpha) * ema + alpha * float(body_adv)
             self._last_act_body_adv = float(body_adv)
         # v4: b_op frozen (non-plastic)
         # v6: motor-query credit only when body consequences differ; use selected snapshot
-        if p["token"] is not None and p["op"] in ("EMIT", "ACT"):
+        if elig_active and p["token"] is not None and p["op"] in ("EMIT", "ACT"):
             skip_motor = skip_act_cost
             if not skip_motor:
                 if p["op"] == "ACT" and p.get("motor_vec") is not None:
@@ -656,15 +664,20 @@ class NeuralCortex:
                     mat_name,
                     W + eta_a * adv * torch.outer(tok_v, rho_elig),
                 )
-        self._clip_and_consolidate()
+                updated.add(mat_name)
+        self._clip_and_consolidate(updated)
         self._pending = None
         self._last_pred_err = float(np.linalg.norm(eps))
         return {"adv": adv, "pred_err": float(np.linalg.norm(eps))}
 
-    def _clip_and_consolidate(self) -> None:
+    def _clip_and_consolidate(self, names: set[str] | None = None) -> None:
+        if not names:
+            return
         c = self.genome.clip
         beta = float(self.genome.beta) * self._age_scale("beta_scale", 1.0)
         for name in self._plastic_names:
+            if name not in names:
+                continue
             W = getattr(self, name)
             W = torch.clamp(W, -c, c)
             if name == "W_rec":

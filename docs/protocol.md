@@ -2246,6 +2246,8 @@ WALLMAP: Q4 credit chain failed (zero eligibility still moved unused tensors via
 
 v28 apparatus: [`cortex_v28.prereg.lock`](cortex_v28.prereg.lock). General credit-path law authorized after this freeze. Neural edit only after this commit is on `origin/main`. Re-earn sanity and C4/C5/C6, then a newly committed reachability diagnostic. FULLDEV.R7 stays sealed.
 
+Candidate (this cycle): [`cortex.candidate.v28.lock`](cortex.candidate.v28.lock). Credit-path causality (no eligibility ⇒ no plastic motion). C4/C5/C6 green. n stays 64. LINEAGE/WALLMAP historical. Next is a newly committed reachability diagnostic on unused worlds.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

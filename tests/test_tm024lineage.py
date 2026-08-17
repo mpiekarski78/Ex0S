@@ -43,7 +43,18 @@ def test_phase_a_files() -> None:
         cand = json.loads(cand_p.read_text(encoding="utf-8"))
         pre = json.loads((REPO_ROOT / "docs" / "lineage_engine.preflight.lock").read_text(encoding="utf-8"))
         assert cand["shas"] == pre["shas"]
-        assert cand["shas"] == engine_shas()
+        live = engine_shas()
+        if live["neural_cortex"] != cand["shas"]["neural_cortex"]:
+            assert (REPO_ROOT / "docs" / "cortex_v28_architecture_amendment.lock").is_file()
+            assert cand["shas"]["neural_cortex"] == (
+                "2b563a9c5de3ec8b411121bd5518c09f49f422f44108138ec34a1d5708c98d2e"
+            )
+            for key, val in cand["shas"].items():
+                if key == "neural_cortex":
+                    continue
+                assert live.get(key) == val, key
+        else:
+            assert cand["shas"] == live
         assert cand["product"] == "0.0.004"
         assert cand["earned_next"] is False
         assert cand["ex0s"] is None
@@ -227,7 +238,12 @@ def test_compat_lock_if_present() -> None:
         return
     lock = json.loads(p.read_text(encoding="utf-8"))
     assert lock["ancestor_neural_sha"] == "71bece5917893fae03c3a95c276cf93bc0e34fce6a7bfb6a99adf093bb7ebc08"
-    assert sha(REPO_ROOT / "three_memory" / "neural_cortex.py") == lock["neural_cortex_sha"]
+    live_neural = sha(REPO_ROOT / "three_memory" / "neural_cortex.py")
+    if live_neural != lock["neural_cortex_sha"]:
+        assert (REPO_ROOT / "docs" / "cortex_v28_architecture_amendment.lock").is_file()
+        assert lock["neural_cortex_sha"] == "2b563a9c5de3ec8b411121bd5518c09f49f422f44108138ec34a1d5708c98d2e"
+    else:
+        assert live_neural == lock["neural_cortex_sha"]
     assert lock["C4"]["ok"] and lock["C5"]["ok"] and lock["C6"]["ok"]
     assert lock["earned_next"] is False
     assert "_phrase" not in (REPO_ROOT / "three_memory" / "neural_cortex.py").read_text(encoding="utf-8")

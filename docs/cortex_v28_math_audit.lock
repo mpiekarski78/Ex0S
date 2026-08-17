@@ -1,0 +1,97 @@
+{
+  "version": "TM.0.23.CORTEX.V28.MATH.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "ok": true,
+  "checks": [
+    {
+      "id": "v1_contract_untouched",
+      "ok": true
+    },
+    {
+      "id": "n_stays_64",
+      "ok": true
+    },
+    {
+      "id": "motor_act_tokens_empty",
+      "ok": true
+    },
+    {
+      "id": "conflict_hold_bias_frozen",
+      "ok": true
+    },
+    {
+      "id": "familiarity_ratio_frozen",
+      "ok": true
+    },
+    {
+      "id": "familiarity_abs_frozen",
+      "ok": true
+    },
+    {
+      "id": "equal_evidence_min_symbols_3",
+      "ok": true
+    },
+    {
+      "id": "vocal_refractory_15",
+      "ok": true
+    },
+    {
+      "id": "echoic_bias_only",
+      "ok": true
+    },
+    {
+      "id": "no_phrase_replay",
+      "ok": true
+    },
+    {
+      "id": "elig_eps_present",
+      "ok": true
+    },
+    {
+      "id": "consolidate_takes_names",
+      "ok": true
+    },
+    {
+      "id": "no_l0_shortcut",
+      "ok": true
+    },
+    {
+      "id": "neural_changed_from_freeze",
+      "ok": true
+    },
+    {
+      "id": "neural_changed_from_v27_ancestor",
+      "ok": true
+    },
+    {
+      "id": "zero_elig_no_plastic_motion",
+      "ok": true
+    },
+    {
+      "id": "active_elig_moves_credited_tensors_only",
+      "ok": true
+    }
+  ],
+  "zero_elig": {
+    "id": "zero_elig_no_plastic_motion",
+    "ok": true,
+    "max_abs_delta": 0.0,
+    "max_slow_delta": 0.0,
+    "elig_eps": 1e-12
+  },
+  "active_elig": {
+    "id": "active_elig_moves_credited_tensors_only",
+    "ok": true,
+    "W_act_query_delta": 0.002518971257740344,
+    "unused_max_delta": 0.0,
+    "unused": {
+      "W_rec": 0.0,
+      "W_in": 0.0,
+      "W_write": 0.0,
+      "W_att": 0.0,
+      "W_emit_query": 0.0
+    }
+  }
+}

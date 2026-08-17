@@ -251,7 +251,7 @@ LINEAGE_COMPAT = REPO_ROOT / "docs" / "lineage_v27_default_compat.lock"
 
 
 def live_matches_declared_neural() -> bool:
-    """v27 candidate lock stays immutable. Lineage substrate may pin a new live SHA."""
+    """Live candidate lock is the SHA pin. Historical lineage overlay is fallback for v27-era live lock."""
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
     neural = _sha_file(NEURAL_PY)
     memory = _sha_file(MEMORY_PY)

@@ -1,18 +1,16 @@
 {
-  "version": "TM.0.23.CORTEX.CANDIDATE.V28",
+  "version": "TM.0.23.CORTEX.V28.BIRTH",
   "product": "0.0.004",
   "earned_next": false,
   "ex0s": null,
   "eligible_for_000005": false,
-  "factory": "experiments.run_tm023cortex.make_cortex",
-  "supersedes_v27_sha": "b80c590968070c03ce4f3bed2ebf308d5bd322b3b908fbbfbdce2cd1d380dd56",
-  "v28_birth_sha": "e1843904baf4b0e25f0c3e60ecac3c2547eb1d4e319de9b32f4fabf9ab9e6bcb",
+  "wallmap_decision_sha": "e48b8121d9e8cf8830c784a8f41c806a7b6debf726f354ef5892336a8f408409",
   "architecture_amendment_sha": "6f787b201d140faca262dee3f61becf32ce5c106e2b61a02016a957c154788b6",
-  "math_audit_sha": "38b0c38fd53a4cf22d0d0389551f6e85701d3344559b39fc3107a26850c304d1",
   "learning_law_ok": true,
   "gpu_scoring_ready": true,
   "all_sanity_ok": true,
   "neural_cortex_sha": "0a4014ce91bf08b69693924ee645bdc912ae4c6e0a9b6529bda6a6fe8a281892",
+  "prior_lineage_neural_sha": "2b563a9c5de3ec8b411121bd5518c09f49f422f44108138ec34a1d5708c98d2e",
   "cortex_memory_sha": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
   "make_cortex_sha": "b0897d19e7058f22d55885f3060e9bda3b6d79e3f051a7fba65b9b5dd747dd8d",
   "env": {
@@ -67,5 +65,33 @@
       "HOLD": 0.0
     }
   },
-  "note": "Candidate v28 credit-path causality. Must re-earn C4/C5/C6 then a new reachability diagnostic. FULLDEV.R7 sealed. n=64."
+  "checks": {
+    "bind_n": 2,
+    "b_op_act": 0.85,
+    "op_cost_act": 0.05,
+    "n": 64
+  },
+  "credit_probes": {
+    "zero_elig": {
+      "id": "zero_elig_no_plastic_motion",
+      "ok": true,
+      "max_abs_delta": 0.0,
+      "max_slow_delta": 0.0,
+      "elig_eps": 1e-12
+    },
+    "active_elig": {
+      "id": "active_elig_moves_credited_tensors_only",
+      "ok": true,
+      "W_act_query_delta": 0.002518971257740344,
+      "unused_max_delta": 0.0,
+      "unused": {
+        "W_rec": 0.0,
+        "W_in": 0.0,
+        "W_write": 0.0,
+        "W_att": 0.0,
+        "W_emit_query": 0.0
+      }
+    }
+  },
+  "note": "v28 general credit path. LINEAGE/WALLMAP historical. No FULLDEV.R7."
 }
