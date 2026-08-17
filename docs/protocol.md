@@ -2344,6 +2344,8 @@ R2 apparatus: [`lineage_discrimmap.r2.prereg.lock`](lineage_discrimmap.r2.prereg
 
 D-arm R2 runner: [`lineage_discrimmap.r2.runner.lock`](lineage_discrimmap.r2.runner.lock). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
+Result: [`lineage_discrimmap.r2.decision.lock`](lineage_discrimmap.r2.decision.lock) **robust_linear_boundary_absent**. Exact hard-margin D1 is feasible at eight cues (`optimal`) but does not meet the frozen 0.01 geometric floor on all required cells; probes/twins/perturbations fail. D3 and D4 fail every 8-cue rank cell. Not interpolation-only. Historical DISCRIMMAP not rescored. SCORE unopened. No v31/v32. The 1,536 eligibility budget stays closed. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

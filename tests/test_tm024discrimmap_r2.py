@@ -18,9 +18,9 @@ HIST_RUNNER_PY = "9167437c33224cf35ce065a58c56afdb2e14dc5f6ca0677e8f39588a0c37f7
 V30_CAND = "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c"
 RUNNER_LOCK_SHA = "8605f6c9508667b8e02e2f87bef7bdd4fed6f2f2d30c73b89f61a8e289670abf"
 RUNNER_SHA = "06f5f2c6edc0dffef570e75295708ea2816ea737cd0af9dab157cd94f4c26b41"
-DEV_LOCK_SHA = None
-DEV_MANIFEST_SHA = None
-DECISION_SHA = None
+DEV_LOCK_SHA = "99f9097a3f30df7b69d46d5c20f858e35f540faa387c8e9bcb9062db07ab3831"
+DEV_MANIFEST_SHA = "9f6e7e38a56456bb25acd2dc3a9ec936c6ea033897beefd0d88f440d5a2b51f5"
+DECISION_SHA = "a888a8af5495e19139f8691725241c2b31322f192218983d02c131ebf6c84675"
 EXPECTED_N_RANK = 240
 EXPECTED_N_TWIN = 40
 EXPECTED_N_CELLS = 280
@@ -40,6 +40,9 @@ def test_phase_a_files() -> None:
         "docs/lineage_discrimmap.r2.contract.md",
         "docs/lineage_discrimmap.r2.prereg.lock",
         "docs/lineage_discrimmap.r2.isolation.lock",
+        "docs/lineage_discrimmap.r2.runner.lock",
+        "docs/lineage_discrimmap.r2.dev.lock",
+        "docs/lineage_discrimmap.r2.decision.lock",
         "docs/lineage_discrimmap.decision.addendum.lock",
         "docs/lineage_discrimmap.decision.lock",
         "docs/lineage_discrimmap.dev.lock",
@@ -145,7 +148,7 @@ def test_smoke() -> None:
 
 
 def test_score_and_dev_lock_gate() -> None:
-    from experiments.run_tm024discrimmap_r2 import RUNNER_LOCK, refuse_dev_lock, refuse_score
+    from experiments.run_tm024discrimmap_r2 import DEV_LOCK, RUNNER_LOCK, refuse_dev_lock, refuse_score
 
     try:
         refuse_score()
@@ -160,6 +163,14 @@ def test_score_and_dev_lock_gate() -> None:
             assert "runner.lock" in str(e)
         else:
             raise AssertionError("DEV lock must wait for runner.lock")
+        return
+    if DEV_LOCK.exists():
+        try:
+            refuse_dev_lock()
+        except RuntimeError as e:
+            assert "again" in str(e)
+        else:
+            raise AssertionError("same frozen DEV execution must be refused")
         return
     refuse_dev_lock()
 
@@ -214,13 +225,12 @@ def test_decision_if_present() -> None:
     assert d["implementation_authorized"] is False
     assert d["candidate_v31"] is False
     assert d["historical_discrimmap_preserved"] is True
-    assert d["decision"]["code"] in {
-        "robust_linear_boundary_absent",
-        "linear_boundary_exists_local_rule_fails",
-        "competitive_local_rule_supported",
-        "nonlinear_ceiling_only",
-        "linear_interpolation_only",
-    }
+    assert d["decision"]["code"] == "robust_linear_boundary_absent"
+    assert d["decision"]["d1_robust"] is False
+    assert d["decision"]["d3_robust"] is False
+    assert d["decision"]["d4_robust"] is False
+    assert d["decision"]["d1_train_clean"] is False
+    assert d["dev_lock_sha"] == DEV_LOCK_SHA
     assert "TM024.DISCRIMMAP.R2.SCORE." not in json.dumps(d)
     assert "TM024.DISCRIMMAP.SCORE." not in json.dumps(d)
 
