@@ -2086,3 +2086,5 @@ Canonical main `b19469f`. D3.R3 apparatus: [`cortex_d3_r3.prereg.lock`](cortex_d
 
 Candidate (this cycle): [`cortex.candidate.v16.lock`](cortex.candidate.v16.lock). Equal-evidence HOLD keys on current observe body_adv. C4/C5/C6 green (C6 label perm p=0.0962). Reveal D3.R3 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d3_r3_gate.lock`](cortex_d3_r3_gate.lock) **16/16**. Audit [`cortex_d3_r3.audit.lock`](cortex_d3_r3.audit.lock). Isolated D3 is green. Do not rescore. Next is FULLDEV.R2 on unused domain `TM023.FULL.R2.`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

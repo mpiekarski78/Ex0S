@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.D3.R3 result:** **16/16 clear.** D0 32/32, D3 32/32. equal_holds 11–19, not a rubber HOLD. [`cortex_d3_r3_gate.lock`](cortex_d3_r3_gate.lock) + [`cortex_d3_r3.audit.lock`](cortex_d3_r3.audit.lock). Full D0–D12 still closed. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V16 / D3.R3 candidate:** Equal-evidence HOLD now uses the current observe's body_adv. Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.0962). [`cortex.candidate.v16.lock`](cortex.candidate.v16.lock) + [`cortex_mact_boundary.v16.lock`](cortex_mact_boundary.v16.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D3.R3 apparatus:** Keys equal-evidence HOLD to the current observe's body_adv, not sticky last-ACT residue. C6 and three-symbol minimum retained. Frozen commitment, no neural edit yet. [`cortex_d3_r3.prereg.lock`](cortex_d3_r3.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D3.R2 result:** 0/16. D0 32/32, D3 7/32 lives, 0 pairs. C6 stayed green. Primary miss is `equal_holds<8` after a consequential teach ACT sticks `_last_act_body_adv`. [`cortex_d3_r2_gate.lock`](cortex_d3_r2_gate.lock) + [`cortex_d3_r2.audit.lock`](cortex_d3_r2.audit.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

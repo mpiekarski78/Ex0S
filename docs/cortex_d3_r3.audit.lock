@@ -1,0 +1,75 @@
+{
+  "version": "TM.0.23.CORTEX.D3.R3.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "cf9bb58c1dcb4610498cd667373a5edf82e1dbf031d86cbcca81076e3f08b153",
+  "reveal_sha": "33fc83a3019ed60a54b2da73f624776542b97a124420db3f9ce8be4c51899ee5",
+  "n_pair_clear": 16,
+  "claimed_clear": true,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_candidate_git",
+      "ok": true,
+      "candidate_git_sha": "dd3d0798316ae095a31aa87803b4ebc130604dbe"
+    },
+    {
+      "id": "domain_is_d3_r3",
+      "ok": true,
+      "domain": "TM023.D3.R3."
+    },
+    {
+      "id": "d0_and_d3_all_green",
+      "ok": true,
+      "d0_ok": 32,
+      "d3_ok": 32
+    },
+    {
+      "id": "floors_not_lowered",
+      "ok": true,
+      "equal_holds_min_observed": 11,
+      "clear_nonhold_min_observed": 11,
+      "any_equal_holds_below_8": false,
+      "scorer_sha_matches_d3_r2": true
+    },
+    {
+      "id": "not_always_hold_rubber_stamp",
+      "ok": true,
+      "note": "equal_holds ranges 11–19, not 20/20. clear_nonhold ranges 11–20. distractor_hold is high but not uniform. clear_nonhold > distractor_nonhold and distractor_hold > clear_hold on every life."
+    },
+    {
+      "id": "c6_stayed_green",
+      "ok": true,
+      "note": "v16 boundary C6 label_perm_p=0.0962. Three-symbol minimum retained."
+    },
+    {
+      "id": "no_failure_lock_on_clear",
+      "ok": true
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    },
+    {
+      "id": "fulldev_still_closed",
+      "ok": true,
+      "note": "Isolated D3 clear does not reopen D0–D12. Next is a new FULLDEV.R2 commitment on unused domain TM023.FULL.R2."
+    }
+  ],
+  "consequence": {
+    "rescore_d3_r3": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "fulldev_r2",
+    "refuse": [
+      "rewrite docs/cortex_d3_r3_gate.lock",
+      "edit-and-rescore on revealed D3.R3 worlds",
+      "reuse TM023.FULL.R1. or pair_seeds or V8–V16 / D3.R* worlds",
+      "stamp earned_next",
+      "open nursery conversation before D0–D12 clears"
+    ]
+  },
+  "note": "16/16 stands. Isolated D3 is honestly green. Full D0–D12 requires a new unused-domain commitment."
+}
