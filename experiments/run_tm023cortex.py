@@ -148,6 +148,11 @@ STAT_V13 = REPO_ROOT / "docs" / "cortex_v13_stat_contract.lock"
 FULLDEV_R1_PREREG = REPO_ROOT / "docs" / "cortex_fulldev_r1.prereg.lock"
 FULLDEV_R1_LOCK = REPO_ROOT / "docs" / "cortex_fulldev_r1.lock"
 FULLDEV_R1_FAIL = REPO_ROOT / "docs" / "cortex_fulldev_r1.failure.lock"
+D3_R1_PREREG = REPO_ROOT / "docs" / "cortex_d3_r1.prereg.lock"
+D3_R2_PREREG = REPO_ROOT / "docs" / "cortex_d3_r2.prereg.lock"
+D3_R2_GATE_LOCK = REPO_ROOT / "docs" / "cortex_d3_r2_gate.lock"
+D3_R2_GATE_FAIL = REPO_ROOT / "docs" / "cortex_d3_r2_gate.failure.lock"
+CANDIDATE_V15 = REPO_ROOT / "docs" / "cortex.candidate.v15.lock"
 
 PHENOTYPE_PATHS = [
     "docs/CURRENT_ORGANISM.md",
@@ -2453,6 +2458,47 @@ def verify_fulldev_r1() -> dict[str, Any]:
     }
 
 
+def verify_d3_r2() -> dict[str, Any]:
+    """Verify isolated D3.R2 integrity without re-scoring. Pending-safe if unscored."""
+    if not D3_R2_PREREG.exists():
+        return {"ok": True, "pending": True, "why": "D3.R2 prereg not frozen yet"}
+    r2c = json.loads(D3_R2_PREREG.read_text(encoding="utf-8"))["eval_seed_commitment"]
+    for prior in (D3_R1_PREREG, FULLDEV_R1_PREREG, V13_PREREG, V12_PREREG, DEV_PREREG, PREREG):
+        if prior.exists() and json.loads(prior.read_text(encoding="utf-8")).get("eval_seed_commitment") == r2c:
+            return {"ok": False, "why": f"D3.R2 commitment reused {prior.name}"}
+    if json.loads(D3_R2_PREREG.read_text(encoding="utf-8")).get("domain") != "TM023.D3.R2.":
+        return {"ok": False, "why": "D3.R2 domain drifted"}
+    if not CANDIDATE_V15.exists():
+        return {"ok": True, "pending": True, "why": "candidate v15 not frozen yet"}
+    if not D3_R2_GATE_LOCK.exists():
+        return {"ok": True, "pending": True, "why": "D3.R2 gate result not frozen yet"}
+    gate = json.loads(D3_R2_GATE_LOCK.read_text(encoding="utf-8"))
+    if gate.get("product") != "0.0.004" or gate.get("earned_next") is not False or gate.get("ex0s") is not None:
+        return {"ok": False, "why": "product/earned_next/ex0s drift"}
+    if gate.get("candidate_v15_sha") != _sha_file(CANDIDATE_V15):
+        return {"ok": False, "why": "gate/candidate v15 sha mismatch"}
+    battery = gate.get("battery") or {}
+    n_clear = int(battery.get("n_pair_clear") or 0)
+    clear = bool(gate.get("relation_gate_clear"))
+    if battery.get("domain") != "TM023.D3.R2.":
+        return {"ok": False, "why": "result domain drifted"}
+    if clear and n_clear < 13:
+        return {"ok": False, "why": "gate claims clear with n_pair_clear < 13"}
+    if (not clear) and not D3_R2_GATE_FAIL.exists():
+        return {"ok": False, "why": "missing cortex_d3_r2_gate.failure.lock"}
+    if clear and D3_R2_GATE_FAIL.exists():
+        return {"ok": False, "why": "failure lock present on a clear gate"}
+    return {
+        "ok": True,
+        "why": "D3.R2 integrity ok",
+        "pending": False,
+        "relation_gate_clear": clear,
+        "n_pair_clear": n_clear,
+        "refuse_rewrite": True,
+        "refuse_fulldev_before_clear": not clear,
+    }
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-phase-a", action="store_true")
@@ -2483,6 +2529,7 @@ def main() -> None:
     ap.add_argument("--verify-v12-gate", action="store_true")
     ap.add_argument("--verify-v13-gate", action="store_true")
     ap.add_argument("--verify-fulldev-r1", action="store_true")
+    ap.add_argument("--verify-d3-r2", action="store_true")
     ap.add_argument("--mact-v6-audit", action="store_true")
     ap.add_argument("--v4-math-audit", action="store_true")
     ap.add_argument("--write-v2-birth", action="store_true")
@@ -2555,6 +2602,9 @@ def main() -> None:
         return
     if args.verify_fulldev_r1:
         print(json.dumps(verify_fulldev_r1(), indent=2, default=str))
+        return
+    if args.verify_d3_r2:
+        print(json.dumps(verify_d3_r2(), indent=2, default=str))
         return
     if args.mact_v6_audit:
         from experiments.cortex_mact_boundary import write_v6_boundary_audit

@@ -2076,3 +2076,5 @@ Diagnosis ([`cortex_diagnosis.v14.lock`](cortex_diagnosis.v14.lock)): equal-evid
 
 Canonical main `b0fd058`. Do not reveal v14. D3.R2 apparatus: [`cortex_d3_r2.prereg.lock`](cortex_d3_r2.prereg.lock). Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle): [`cortex.candidate.v15.lock`](cortex.candidate.v15.lock). Equal-evidence HOLD waits until ≥3 distinct symbols have been observed. C4/C5/C6 green (C6 label perm p=0.0962). Reveal D3.R2 only from a clean tree pinning `git rev-parse HEAD`.
+

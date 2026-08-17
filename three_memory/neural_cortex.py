@@ -59,6 +59,7 @@ CONFLICT_ADV_EPS = 1e-9
 CONFLICT_HOLD_BIAS = 2.0
 ADV_BASELINE_ALPHA = 0.05
 FAMILIARITY_RATIO = 0.5
+EQUAL_EVIDENCE_MIN_SYMBOLS = 3
 
 
 @dataclass
@@ -615,7 +616,11 @@ class NeuralCortex:
 
         for u in ordered:
             self._symbol_obs_counts[u] = int(self._symbol_obs_counts.get(u, 0)) + 1
-        if len(ordered) >= 2 and abs(float(self._last_act_body_adv)) <= CONFLICT_ADV_EPS:
+        if (
+            len(ordered) >= 2
+            and abs(float(self._last_act_body_adv)) <= CONFLICT_ADV_EPS
+            and len(self._symbol_obs_counts) >= EQUAL_EVIDENCE_MIN_SYMBOLS
+        ):
             self._hold_after_conflict = True
         elif len(ordered) == 1:
             mx = max(self._symbol_obs_counts.values()) if self._symbol_obs_counts else 0
