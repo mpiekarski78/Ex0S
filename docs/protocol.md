@@ -2178,3 +2178,5 @@ Result: [`cortex_d6_r3_gate.lock`](cortex_d6_r3_gate.lock) **15/16**. Audit [`co
 
 Canonical main `09ca834`. FULLDEV.R5 apparatus follows. Live v23, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+FULLDEV.R5 apparatus: [`cortex_fulldev_r5.prereg.lock`](cortex_fulldev_r5.prereg.lock). Live v23, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

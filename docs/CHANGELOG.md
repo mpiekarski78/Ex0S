@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.FULLDEV.R5 apparatus:** Full D0–D12 on unused domain `TM023.FULL.R5.` after isolated D6.R3 15/16. Live candidate v23, no neural edit. [`cortex_fulldev_r5.prereg.lock`](cortex_fulldev_r5.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D6.R3 result:** **15/16 clear.** D0 32/32, D6 31/32. [`cortex_d6_r3_gate.lock`](cortex_d6_r3_gate.lock) + [`cortex_d6_r3.audit.lock`](cortex_d6_r3.audit.lock). Full D0–D12 still closed. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V23 / D6.R3 candidate:** `VOCAL_REFRACTORY=1.5`. Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.106). [`cortex.candidate.v23.lock`](cortex.candidate.v23.lock) + [`cortex_mact_boundary.v23.lock`](cortex_mact_boundary.v23.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D6.R3 apparatus:** Isolated D6 after D6.R2 12/16. `VOCAL_REFRACTORY=1.5` authorized; no neural edit yet. [`cortex_d6_r3.prereg.lock`](cortex_d6_r3.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
