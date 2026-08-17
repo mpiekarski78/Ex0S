@@ -2198,3 +2198,5 @@ Canonical main `6ac9742`. Isolated D7.R2 apparatus follows. Product **0.0.004**;
 
 D7.R2 apparatus: [`cortex_d7_r2.prereg.lock`](cortex_d7_r2.prereg.lock). Phrase-final STOP authorized; no neural edit yet. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+Candidate (this cycle): [`cortex.candidate.v25.lock`](cortex.candidate.v25.lock). Phrase-final STOP. C4/C5/C6 green. Reveal D7.R2 only from a clean tree pinning `git rev-parse HEAD`.
+

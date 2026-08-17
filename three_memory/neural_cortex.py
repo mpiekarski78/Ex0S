@@ -222,6 +222,7 @@ class NeuralCortex:
         self._symbol_obs_counts: dict[str, int] = {}
         self._symbol_fam: dict[str, float] = {}
         self._echoic: list[str] = []
+        self._phrase: list[str] = []
         self._vocal_next: str | None = None
         self.last_action: dict[str, Any] | None = None
         self.last_trajectory: list[np.ndarray] = []
@@ -437,23 +438,33 @@ class NeuralCortex:
         self._hold_after_conflict = False
         vocal_next = self._vocal_next
         self._vocal_next = None
-        uttering = False
+        phrase_program: list[str] | None = None
 
         for _k in range(g.t_max):
             self._commit_pending_retrieve()
             # internal tick sensory: zeros inject except buffer/body/same_ix
             zero = np.zeros(g.d_sym, dtype=np.float64)
             self._sensory_tick(zero, body, same_ix, record_sensory=False)
+            if phrase_program is not None:
+                if len(self.emit_buffer) < len(phrase_program):
+                    op = "EMIT"
+                    tok = phrase_program[len(self.emit_buffer)]
+                    self.emit_buffer.append(tok)
+                    chosen_token = tok
+                    chosen_op = op
+                    rho_elig = self._from_t(self.rho)
+                    continue
+                op = "STOP"
+                chosen_op = op
+                rho_elig = self._from_t(self.rho)
+                break
             logits = (self.W_op @ self.rho) + self.b_op
-            if conflict_hold or vocal_next or uttering:
+            if conflict_hold or vocal_next:
                 logits = logits.clone()
             if conflict_hold:
                 logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] + CONFLICT_HOLD_BIAS
                 logits[OPS.index("ACT")] = logits[OPS.index("ACT")] - CONFLICT_HOLD_BIAS
-            if uttering:
-                logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] + UTTERANCE_PERSIST
-                logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] - UTTERANCE_PERSIST
-            elif vocal_next == "HOLD":
+            if vocal_next == "HOLD":
                 logits[OPS.index("HOLD")] = logits[OPS.index("HOLD")] + VOCAL_REFRACTORY
                 logits[OPS.index("EMIT")] = logits[OPS.index("EMIT")] - VOCAL_REFRACTORY
             elif vocal_next == "EMIT":
@@ -471,6 +482,16 @@ class NeuralCortex:
             if op == "STOP":
                 break
             if op == "EMIT":
+                program = [t for t in self._phrase if t]
+                if program:
+                    if 1 <= len(program) <= 2 and float(self.rng_motor.random()) < 0.5:
+                        program = program + program
+                    phrase_target = len(program)
+                    phrase_program = program[: min(g.t_max, phrase_target)]
+                    tok = phrase_program[0]
+                    self.emit_buffer.append(tok)
+                    chosen_token = tok
+                    continue
                 tok = self._echoic_emit_token()
                 if tok is None:
                     tok = self._best_token(self.W_emit_query @ self.rho)
@@ -480,7 +501,6 @@ class NeuralCortex:
                     break
                 self.emit_buffer.append(tok)
                 chosen_token = tok
-                uttering = True
                 continue
             if op == "ACT":
                 # v2: argmax over M_act only; never force HOLD on cosine miss
@@ -680,6 +700,7 @@ class NeuralCortex:
             self._echoic.append(u)
         if len(self._echoic) > ECHOIC_MAX:
             self._echoic = self._echoic[-ECHOIC_MAX:]
+        self._phrase = [str(u) for u in ordered]
         if self._pending is not None:
             body_prev = np.asarray(self._pending["body"], dtype=np.float64)
             cur_body_adv = float(
@@ -754,6 +775,7 @@ class NeuralCortex:
         self._symbol_obs_counts = {}
         self._symbol_fam = {}
         self._echoic = []
+        self._phrase = []
         self._vocal_next = None
         self.reset_rho()
 
@@ -814,6 +836,7 @@ class NeuralCortex:
             "symbol_obs_counts": {k: int(v) for k, v in self._symbol_obs_counts.items()},
             "symbol_fam": {k: float(v) for k, v in self._symbol_fam.items()},
             "echoic": list(self._echoic),
+            "phrase": list(self._phrase),
             "vocal_next": self._vocal_next,
         }
 
@@ -894,6 +917,7 @@ class NeuralCortex:
         self._symbol_obs_counts = {str(k): int(v) for k, v in (snap.get("symbol_obs_counts") or {}).items()}
         self._symbol_fam = {str(k): float(v) for k, v in (snap.get("symbol_fam") or {}).items()}
         self._echoic = [str(x) for x in (snap.get("echoic") or [])][-ECHOIC_MAX:]
+        self._phrase = [str(x) for x in (snap.get("phrase") or [])]
         vn = snap.get("vocal_next")
         self._vocal_next = str(vn) if vn in ("HOLD", "EMIT") else None
 
