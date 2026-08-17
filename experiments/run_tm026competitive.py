@@ -108,9 +108,18 @@ def _finite(x: float) -> bool:
 
 
 def assert_finite_record(rec: dict[str, Any], *, ctx: str) -> None:
-    blob = json.dumps(rec, default=str)
-    if "nan" in blob.lower() or "inf" in blob.lower():
-        raise RuntimeError(f"non-finite measurement in {ctx}")
+    def walk(x: Any) -> None:
+        if isinstance(x, dict):
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+        elif isinstance(x, (float, np.floating)):
+            if not _finite(float(x)):
+                raise RuntimeError(f"non-finite float in {ctx}: {x!r}")
+
+    walk(rec)
 
 
 def manifest_sha(ids: list[str] | None = None) -> str:

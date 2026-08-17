@@ -221,28 +221,18 @@ def test_addendum() -> None:
     assert add["candidate_v32_lock_written"] is False
 
 
-def test_scored_eight_cue_cell_reproduces() -> None:
-    from experiments.run_tm024writegeom import capacity_world, mapping_pairs
-    from experiments.run_tm025twoscale import eval_acquire_stable
-
+def test_twoscale_historical_boundary_immutable() -> None:
+    """Historical TWOSCALE 7/8 stays pinned; live v33 owns new behavior via TM026."""
     dev = json.loads((REPO_ROOT / "docs" / "lineage_twoscale.dev.lock").read_text(encoding="utf-8"))
+    dec = json.loads((REPO_ROOT / "docs" / "lineage_twoscale.decision.lock").read_text(encoding="utf-8"))
+    assert dev["decision_code"] == "architectural_wall_acquire"
+    assert dec["decision"]["code"] == "architectural_wall_acquire"
     rec = next(c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|w0")
-    world = capacity_world(0, "TM025.TWOSCALE.DEV.", n_cues=8, n_handles=2)
-    pairs = mapping_pairs(world, flip=False)
-    live = eval_acquire_stable(
-        kind="acquire",
-        world=world,
-        pairs=pairs,
-        order="A_then_B",
-        tag="audit_c8",
-        rest=False,
-    )
-    assert live["passed"] is False
-    assert live["n_episodes"] == 8
-    n_ok = sum(1 for p in live["probes"] if p["ranking_ok"])
+    n_ok = sum(1 for p in rec["probes"] if p["ranking_ok"])
     assert n_ok == 7
-    assert abs(float(live["min_normalized_geometric_margin"]) - float(rec["min_normalized_geometric_margin"])) < 1e-12
-
+    assert rec["passed"] is False
+    assert sha(REPO_ROOT / "docs" / "lineage_twoscale.dev.lock") == DEV_LOCK_SHA
+    assert (REPO_ROOT / "docs" / "lineage_competitive.prereg.lock").exists()
 
 def _pending(
     ag,

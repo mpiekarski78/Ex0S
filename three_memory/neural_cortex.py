@@ -407,6 +407,21 @@ class NeuralCortex:
             return win != str(handle)
         return win == str(handle) or win is None
 
+    def _rival_mean_vector(self, p1: np.ndarray, handle: str) -> np.ndarray:
+        scores = self.actuator_scores(p1)
+        others = {h: float(v) for h, v in scores.items() if h != handle}
+        m_h = np.asarray(self.motor_vocab[handle], dtype=np.float64).reshape(-1)
+        if not others:
+            return np.zeros_like(m_h)
+        mx = max(others.values())
+        rivals = [h for h, s in others.items() if s >= mx - TIE_EPS]
+        if not rivals:
+            return np.zeros_like(m_h)
+        acc = np.zeros_like(m_h)
+        for r in rivals:
+            acc += np.asarray(self.motor_vocab[r], dtype=np.float64).reshape(-1)
+        return acc / float(len(rivals))
+
     def _act_effective_row(self, handle: str) -> np.ndarray:
         W = self._from_t(self.W_act_query)
         v = np.asarray(self.motor_vocab[handle], dtype=np.float64).reshape(-1)
@@ -485,9 +500,14 @@ class NeuralCortex:
         rho = self._unit_or_zero(p1)
         if float(np.max(np.abs(rho))) <= ELIG_EPS:
             return False
-        tok_v = self._to_t(self.motor_vocab[handle])
+        m_h = np.asarray(self.motor_vocab[handle], dtype=np.float64).reshape(-1)
+        if float(adv) > 0.0:
+            m_r = self._rival_mean_vector(rho, handle)
+            delta_m = m_h - m_r
+        else:
+            delta_m = m_h
         self.W_act_query = self.W_act_query + float(eta_a) * float(adv) * torch.outer(
-            tok_v, self._to_t(rho)
+            self._to_t(delta_m), self._to_t(rho)
         )
         self._clip_and_consolidate({"W_act_query"}, mix_slow=mix_slow)
         return True
