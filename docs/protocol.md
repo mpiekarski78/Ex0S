@@ -2172,3 +2172,9 @@ D6.R3 apparatus: [`cortex_d6_r3.prereg.lock`](cortex_d6_r3.prereg.lock). `VOCAL_
 
 Candidate (this cycle): [`cortex.candidate.v23.lock`](cortex.candidate.v23.lock). Stronger vocal refractory. C4/C5/C6 green. Reveal D6.R3 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d6_r3_gate.lock`](cortex_d6_r3_gate.lock) **15/16**. Audit [`cortex_d6_r3.audit.lock`](cortex_d6_r3.audit.lock). Isolated D6 is green. Do not rescore. Next is FULLDEV.R5 on unused domain `TM023.FULL.R5.`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+## TM.0.23.CORTEX.D6.R3 15/16 → FULLDEV.R5
+
+Canonical main `09ca834`. FULLDEV.R5 apparatus follows. Live v23, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+

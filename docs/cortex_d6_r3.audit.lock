@@ -1,0 +1,54 @@
+{
+  "version": "TM.0.23.CORTEX.D6.R3.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "92fd931c40a8e4f7d1c053695db462f8b899034a672a7b6adf988be52ef37513",
+  "reveal_sha": "4770e7ffa7e8f92d300f5ceb8475ded39d0b6cd97de49fd758aff66f71a8d8cd",
+  "n_pair_clear": 15,
+  "claimed_clear": true,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_git",
+      "ok": true,
+      "candidate_git_sha": "09ca83436dca2d9d4b54d0a67b1210f0e52877da"
+    },
+    {
+      "id": "domain_is_d6_r3",
+      "ok": true,
+      "domain": "TM023.D6.R3."
+    },
+    {
+      "id": "d6_green",
+      "ok": true,
+      "d6_ok": 31,
+      "emits_range": [2, 13],
+      "matched_range": [0, 7],
+      "holds_range": [3, 12],
+      "note": "One red life (pair 1 main) has emits=2 matched=0 holds=8. Gate is 15/16, above 13."
+    },
+    {
+      "id": "d6_scorer_not_soft",
+      "ok": true
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_d6_r3": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "fulldev_r5",
+    "refuse": [
+      "rewrite docs/cortex_d6_r3_gate.lock",
+      "edit-and-rescore on revealed D6.R3 worlds",
+      "stamp earned_next",
+      "open nursery conversation"
+    ]
+  },
+  "note": "15/16 stands. Isolated D6 is green. Next is FULLDEV.R5 on unused domain TM023.FULL.R5."
+}
