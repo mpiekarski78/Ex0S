@@ -2268,6 +2268,10 @@ Candidate (this cycle): [`cortex.candidate.v29.lock`](cortex.candidate.v29.lock)
 
 A-cell runner: [`lineage_actorcredit.runner.lock`](lineage_actorcredit.runner.lock). Score A0–A11 only after this lock is on `origin/main`. Reachability only if cells pass.
 
+Result: [`lineage_actorcredit.lock`](lineage_actorcredit.lock) **12/12**. Credit is action-owned. Both factors of `P(beneficial ACT)` move. Clamp ≠ passive. HOLD integrity holds. n stays 64. Do not treat this as L0 reachability. Next is a newly committed reachability diagnostic on unused `TM024.ACTORCREDIT.REACH.FIT.` / `CHECK.` QUAL/EVAL sealed. Not 0.0.005.
+
+Reachability apparatus: [`lineage_actorcredit_reach.prereg.lock`](lineage_actorcredit_reach.prereg.lock). Unused domains `TM024.ACTORCREDIT.REACH.FIT.` / `CHECK.`. Same Q2 learning gates. Historical REACH not rescored. Score only after `docs/lineage_actorcredit_reach.runner.lock` on clean `origin/main`. If this still fails despite complete behavioral credit, investigate state/developmental dynamics — not n.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

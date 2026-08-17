@@ -1,0 +1,206 @@
+{
+  "version": "TM.0.24.ACTORCREDIT.RESULT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "n": 64,
+  "all_cells_pass": true,
+  "n_pass": 12,
+  "n_cells": 12,
+  "cells": [
+    {
+      "id": "A0",
+      "passed": true,
+      "max_fast": 0.0,
+      "max_slow": 0.0,
+      "elig_eps": 1e-12
+    },
+    {
+      "id": "A1",
+      "passed": true,
+      "clamped_delta": 0.015017515604798984,
+      "passive_delta": 0.0
+    },
+    {
+      "id": "A2",
+      "passed": true,
+      "motor_saved": 0.01802845579066754,
+      "motor_current": 0.0,
+      "op_saved": 0.018028455790672908,
+      "op_current": 0.0
+    },
+    {
+      "id": "A3",
+      "passed": true,
+      "repeat_delta": 0.0,
+      "consumed": true
+    },
+    {
+      "id": "A4",
+      "passed": true,
+      "ben": {
+        "p_act": [
+          0.36555012387439484,
+          0.43754987530103634
+        ],
+        "p_handle": [
+          0.2499999999999375,
+          0.5159740426675656
+        ]
+      },
+      "harm": {
+        "p_act": [
+          0.36555012387439484,
+          0.19754863926689725
+        ],
+        "p_handle_harm": [
+          0.2499999999999375,
+          0.10527804880613639
+        ]
+      }
+    },
+    {
+      "id": "A5",
+      "passed": true,
+      "delta_chosen": 0.9999999999969246,
+      "delta_unrelated": 0.2687779943279639
+    },
+    {
+      "id": "A6",
+      "passed": true,
+      "p_act_before": 0.36555012387439484,
+      "p_act_after": 0.4502337120266406
+    },
+    {
+      "id": "A7",
+      "passed": true,
+      "p_handle_before": 0.2499999999999375,
+      "p_handle_after": 0.45737416096113687,
+      "motor_ben": 0.9999999999973691,
+      "motor_harm": 0.011669267570367518
+    },
+    {
+      "id": "A8",
+      "passed": true,
+      "pre": {
+        "counts": {
+          "h_879719273": 1,
+          "h_963699966": 0,
+          "HOLD": 13,
+          "other": 6,
+          "ACT": 3
+        },
+        "p_act": 0.36540793882859895,
+        "p_ben_given_act": 0.2499999999999375,
+        "motor_ben": 0.0,
+        "motor_harm": 0.0,
+        "sampled_ben": 1,
+        "sampled_act": 3,
+        "sampled_hold": 13
+      },
+      "post": {
+        "counts": {
+          "h_879719273": 9,
+          "h_963699966": 0,
+          "HOLD": 10,
+          "other": 1,
+          "ACT": 9
+        },
+        "p_act": 0.3855926476200135,
+        "p_ben_given_act": 0.4439575767272211,
+        "motor_ben": 0.9999999999962748,
+        "motor_harm": 0.07134558908066428,
+        "sampled_ben": 9,
+        "sampled_act": 9,
+        "sampled_hold": 10
+      }
+    },
+    {
+      "id": "A9",
+      "passed": true,
+      "rename_ok": true,
+      "bind_order_ok": true,
+      "sibling_ok": true,
+      "swap_ok": true,
+      "swap": {
+        "id": "C4_consequence_swap_timed",
+        "ok": true,
+        "swap_revise_episodes": 40,
+        "pref_a": true,
+        "stale_ok": true,
+        "pref_b": true,
+        "restore_a": true,
+        "counts_before": {
+          "h_d6d045e64b97": 15
+        },
+        "counts_stale": {
+          "h_d6d045e64b97": 7
+        },
+        "counts_revised": {
+          "h_0212ab081a3e": 16
+        },
+        "counts_restored": {
+          "h_d6d045e64b97": 15
+        },
+        "why": null
+      }
+    },
+    {
+      "id": "A10",
+      "passed": true,
+      "before": {
+        "counts": {
+          "h_998909978": 6,
+          "h_467341360": 0,
+          "HOLD": 7,
+          "other": 3,
+          "ACT": 6
+        },
+        "p_act": 0.2967538139728173,
+        "p_ben_given_act": 0.449984165009031,
+        "motor_ben": 0.9999999999818212,
+        "motor_harm": -0.025370649308165634,
+        "sampled_ben": 6,
+        "sampled_act": 6,
+        "sampled_hold": 7
+      },
+      "after": {
+        "counts": {
+          "h_998909978": 6,
+          "h_467341360": 0,
+          "HOLD": 8,
+          "other": 2,
+          "ACT": 6
+        },
+        "p_act": 0.32427926758771597,
+        "p_ben_given_act": 0.44998416500890104,
+        "motor_ben": 0.9999999999812239,
+        "motor_harm": -0.025370649308150427,
+        "sampled_ben": 6,
+        "sampled_act": 6,
+        "sampled_hold": 8
+      }
+    },
+    {
+      "id": "A11",
+      "passed": true,
+      "two_symbol_hold": 16,
+      "novel_hold": 16,
+      "n_probe": 20
+    }
+  ],
+  "reachability_authorized": true,
+  "another_lineage_run": false,
+  "git_head": "58648e1ccbed22da21066852f1096de3b326c5e4",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "note": "A0\u2013A11 on unused TM024.ACTORCREDIT.CELLS. Reachability only if all pass. Not 0.0.005."
+}
