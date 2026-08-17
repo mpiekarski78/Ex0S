@@ -1,0 +1,51 @@
+{
+  "version": "TM.0.24.WALLMAP.Q4",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "passed": false,
+  "state_only": true,
+  "neural_edited": false,
+  "links": {
+    "act_to_body": {
+      "ok": true,
+      "body_before": [
+        0.5,
+        0.4,
+        0.5,
+        0.0
+      ],
+      "body_after": [
+        0.75,
+        0.30000000000000004,
+        0.65,
+        0.0
+      ]
+    },
+    "body_to_adv": {
+      "ok": true,
+      "adv_beneficial": 0.23799941637852023,
+      "adv_harmful": -0.6041611964080489
+    },
+    "adv_to_elig": {
+      "ok": false,
+      "zero_elig_max_abs_delta": 0.0057573493580276745
+    },
+    "credit_to_handle_logit": {
+      "ok": true,
+      "delta_beneficial": 1.999999999947062,
+      "delta_distractor": 0.39449985583963665
+    },
+    "later_behavior": {
+      "ok": true,
+      "probe_on": 0.25,
+      "probe_off": 0.05,
+      "p_act_on": 0.27757691493031716,
+      "p_act_off": 0.2770555122013819,
+      "hypothesis_equal_evidence_hold": "teacher two-symbol cues may suppress ACT; Q4 used one-symbol teach"
+    }
+  },
+  "note": "State-only interventions. Q4 precedence over Q2 if failed."
+}
