@@ -1,0 +1,33 @@
+{
+  "version": "TM.0.23.CORTEX.V15.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "ad9639e8dd5fe0788758fccfd3b3c4e6141c5f29",
+  "neural_mechanism_changed": true,
+  "v16_authorized_only_if_this_lock": true,
+  "c4_retained": true,
+  "c5_green": true,
+  "c6_green": true,
+  "d3_r2_n_pair_clear": 0,
+  "claim": "v15 three-symbol restriction made C6 green. Isolated D3.R2 still failed 0/16 because equal-evidence HOLD is keyed to sticky _last_act_body_adv (updated only on ACT with |body_adv|>1e-9). After any consequential teach ACT, the residue stays nonzero through later zero-adv observes, so two-symbol equal probes no longer HOLD. D3 needs HOLD when the current observe itself has no distinguishing body evidence, not when the last historical ACT happened to have ~0 body_adv.",
+  "authorize_v16": [
+    "keep EQUAL_EVIDENCE_MIN_SYMBOLS=3",
+    "keep FAMILIARITY_RATIO=0.5 and low-familiarity HOLD",
+    "keep CONFLICT_HOLD_BIAS=2.0",
+    "equal-evidence HOLD if n_sym>=2 AND current observe |body_adv|<=1e-9 (pending body vs current body) AND distinct observed symbols >= 3",
+    "do not key equal-evidence HOLD on sticky _last_act_body_adv",
+    "new sealed commitment ≠ D3.R2 ≠ D3.R1 ≠ FULLDEV.R1",
+    "re-earn C4/C5/C6 before any D3 reveal",
+    "do not add capability-specific functions",
+    "do not edit cortex_develop_scorers.py",
+    "do not lower equal_holds"
+  ],
+  "refuse": [
+    "edit-and-rescore D3.R2",
+    "lower equal_holds",
+    "drop C6 as a required green",
+    "reopen FULLDEV before isolated D3 ≥13/16",
+    "stamp product"
+  ]
+}

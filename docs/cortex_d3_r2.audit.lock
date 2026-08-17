@@ -1,0 +1,76 @@
+{
+  "version": "TM.0.23.CORTEX.D3.R2.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "dca5c00168ed819dfc22e487faff03f6f21cdaf0edc0b53ce414613ab40d961d",
+  "failure_sha": "1cc41c8e175b1a4d20c57ec73b7e8584814adc66cf0ef131a63f538e59cb3a96",
+  "reveal_sha": "84a79738c36035ca712b89e8c8ff843fb9214682a61985d726d51664cd63fbeb",
+  "n_pair_clear": 0,
+  "n_d3_ok_lives": 7,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "reveal_pins_candidate_git",
+      "ok": true,
+      "candidate_git_sha": "ad9639e8dd5fe0788758fccfd3b3c4e6141c5f29"
+    },
+    {
+      "id": "domain_is_d3_r2",
+      "ok": true,
+      "domain": "TM023.D3.R2."
+    },
+    {
+      "id": "d0_green",
+      "ok": true,
+      "d0_ok": 32
+    },
+    {
+      "id": "c6_stayed_green",
+      "ok": true,
+      "note": "v15 boundary C6 label_perm_p=0.0962. Three-symbol restriction did what it was authorized to do."
+    },
+    {
+      "id": "primary_fail_equal_holds",
+      "ok": true,
+      "equal_holds_below_8": 25,
+      "clear_nonhold_below_5": 0,
+      "pair_both_ok": 0,
+      "pair_one_ok": 7,
+      "note": "25/32 lives miss equal_holds>=8. clear_nonhold always >=11. Familiarity HOLD on the rarer distractor is working. The missing piece is reliable two-symbol HOLD after teaching."
+    },
+    {
+      "id": "d3_scorer_not_soft",
+      "ok": true,
+      "note": "Historical score_d3 floors unchanged: equal_holds>=8, clear_nonhold>=5, clear more actionable than distractor. Do not lower equal_holds."
+    },
+    {
+      "id": "sticky_last_act_body_adv",
+      "ok": true,
+      "note": "Equal-evidence HOLD is keyed to _last_act_body_adv, which updates only on ACT with |body_adv|>1e-9. Throwaway (not sealed) D3 life: teaching HOLDs while last_act=0, then a late teach ACT moves body via physics and sticks last_act≠0. After that, equal-evidence HOLD never re-arms. Remaining HOLDs are one-step conflict remnants. This is why isolated D3 and FULLDEV.R1 D3 both under-HOLD on equal cues after any consequential ACT."
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_d3_r2": "refused",
+    "fulldev": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_d3_r3",
+    "refuse": [
+      "rewrite docs/cortex_d3_r2_gate.lock",
+      "edit-and-rescore on revealed D3.R2 worlds",
+      "lower equal_holds",
+      "drop C6",
+      "stamp earned_next",
+      "open nursery conversation",
+      "reopen FULLDEV before a later isolated D3 ≥13/16"
+    ]
+  },
+  "note": "0/16 stands. C6 is fixed. Equal-evidence HOLD must key off the current observe's body evidence, not a sticky last-ACT residue."
+}

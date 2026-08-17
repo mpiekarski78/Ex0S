@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.23.CORTEX.D3.R3.ISOLATION",
+  "lab": "TM.0.23.CORTEX.D3.R2",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "D3.R2 scored 0/16. C6 green. Equal-evidence HOLD dies after a consequential ACT because it is keyed to sticky last_act_body_adv.",
+  "d3_r2_gate": "docs/cortex_d3_r2_gate.lock",
+  "d3_r2_failure": "docs/cortex_d3_r2_gate.failure.lock",
+  "d3_r2_audit": "docs/cortex_d3_r2.audit.lock",
+  "v15_diagnosis": "docs/cortex_diagnosis.v15.lock",
+  "refuse": [
+    "edit-and-rescore D3.R2 on revealed worlds",
+    "reuse TM023.D3.R2. or D3.R1 or FULLDEV.R1 or pair_seeds worlds",
+    "open FULLDEV or nursery before a later isolated D3 ≥13/16",
+    "stamp earned_next"
+  ],
+  "next_cycle": {
+    "name": "isolated_d3_r3",
+    "requires": [
+      "frozen diagnosis of sticky last_act_body_adv",
+      "new amendment: equal-evidence HOLD on current observe body_adv",
+      "new birth + candidate.v16.lock",
+      "new sealed commitment ≠ D3.R2",
+      "re-earn C4/C5/C6",
+      "fresh narrow D3 ≥13/16 before reopening FULLDEV"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004."
+}

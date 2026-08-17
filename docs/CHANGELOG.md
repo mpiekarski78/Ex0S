@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.D3.R2 result:** 0/16. D0 32/32, D3 7/32 lives, 0 pairs. C6 stayed green. Primary miss is `equal_holds<8` after a consequential teach ACT sticks `_last_act_body_adv`. [`cortex_d3_r2_gate.lock`](cortex_d3_r2_gate.lock) + [`cortex_d3_r2.audit.lock`](cortex_d3_r2.audit.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V15 / D3.R2 candidate:** Equal-evidence HOLD now requires ≥3 distinct observed symbols. Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.0962). [`cortex.candidate.v15.lock`](cortex.candidate.v15.lock) + [`cortex_mact_boundary.v15.lock`](cortex_mact_boundary.v15.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D3.R2 apparatus:** Narrows equal-evidence HOLD to lives that have observed ≥3 distinct symbols. C6 required. Frozen commitment, no neural edit yet. [`cortex_d3_r2.prereg.lock`](cortex_d3_r2.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V14 / D3.R1 candidate (C6 red):** Equal-evidence / low-familiarity HOLD implemented. Nine sanity + math audit pass. C4/C5 green; **C6 red** (label perm p=0.0217). Reveal refused. [`cortex.candidate.v14.lock`](cortex.candidate.v14.lock) + [`cortex_mact_boundary.v14.lock`](cortex_mact_boundary.v14.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

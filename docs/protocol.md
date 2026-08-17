@@ -2078,3 +2078,5 @@ Canonical main `b0fd058`. Do not reveal v14. D3.R2 apparatus: [`cortex_d3_r2.pre
 
 Candidate (this cycle): [`cortex.candidate.v15.lock`](cortex.candidate.v15.lock). Equal-evidence HOLD waits until ≥3 distinct symbols have been observed. C4/C5/C6 green (C6 label perm p=0.0962). Reveal D3.R2 only from a clean tree pinning `git rev-parse HEAD`.
 
+Result: [`cortex_d3_r2_gate.lock`](cortex_d3_r2_gate.lock) **0/16**. D0 32, D3 7 lives / 0 pairs. Audit [`cortex_d3_r2.audit.lock`](cortex_d3_r2.audit.lock). Diagnosis [`cortex_diagnosis.v15.lock`](cortex_diagnosis.v15.lock): key equal-evidence HOLD to the current observe's body_adv, not sticky last-ACT residue. Do not rescore D3.R2.
+
