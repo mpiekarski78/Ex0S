@@ -1,0 +1,81 @@
+{
+  "version": "TM.0.24.MEMORYLIFECYCLEMAP.R2.DECISION",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "n": 64,
+  "scored_worlds": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "candidate_v31": false,
+  "candidate_v32": false,
+  "w1_resurrected": false,
+  "lineage_reopened": false,
+  "q3": false,
+  "eligibility_budget_installed": false,
+  "trace_rows_installed": false,
+  "declared_budget_remains_closed": 1536,
+  "write_geometry_branch_closed": true,
+  "l4_ceiling_only": true,
+  "decision": {
+    "code": "episode_reinstatement_match_failure",
+    "then": "episode_reinstatement_match_failure",
+    "phase_flags": {
+      "L0": {
+        "acquire_all": false,
+        "acquire8": false,
+        "twin": false,
+        "stable": false,
+        "plasticity": true,
+        "specificity": false
+      },
+      "L1": {
+        "acquire_all": true,
+        "acquire8": true,
+        "twin": true,
+        "stable": false,
+        "plasticity": true,
+        "specificity": false
+      },
+      "L2": {
+        "acquire_all": true,
+        "acquire8": true,
+        "twin": true,
+        "stable": false,
+        "plasticity": true,
+        "specificity": true
+      },
+      "L3": {
+        "acquire_all": true,
+        "acquire8": true,
+        "twin": true,
+        "stable": false,
+        "plasticity": false,
+        "specificity": false
+      },
+      "L4": {
+        "acquire_all": true,
+        "acquire8": true,
+        "twin": true,
+        "stable": true,
+        "plasticity": true,
+        "specificity": false
+      },
+      "l2_reversal_matcher_miss": true,
+      "l2_match_failure": true
+    }
+  },
+  "dev_lock_sha": "9321e57bb4f3bd1f4fe108c8fcb7751eca4fdb9da3d23401da5e5e2abd09eaed",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "git_head": "0e210e18afb2287df354ce612e106c78fdbd4120",
+  "note": "R2 runner-only memory lifecycle on P1. V1 freeze preserved. Write-geometry closed. No v31. Lineage stays closed. Product remains 0.0.004."
+}

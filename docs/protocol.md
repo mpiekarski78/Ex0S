@@ -2412,6 +2412,8 @@ MEMORYLIFECYCLEMAP R2 apparatus: [`lineage_memorylifecyclemap.r2.prereg.lock`](l
 
 Memory-lifecycle R2 runner: [`lineage_memorylifecyclemap.r2.runner.lock`](lineage_memorylifecyclemap.r2.runner.lock). 140 cells. Matched live reversal. Dual match perturbation. L4 ceiling-only. DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
+Result: [`lineage_memorylifecyclemap.r2.decision.lock`](lineage_memorylifecyclemap.r2.decision.lock) **episode_reinstatement_match_failure**. L2 exact reversal match succeeded; `bounded_match_sanity=1.0`; `ecological_match_stability=0.0` at σ=0.01. L1–L3 live reversal counts matched. Do not install the 512-row trace. SCORE unopened. No v31/v32. W1 stays closed. V1 freeze preserved. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
