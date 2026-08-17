@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.FULLDEV.R4 apparatus:** Full D0–D12 on unused domain `TM023.FULL.R4.` after isolated D5.R2 16/16. Live candidate v20, no neural edit. [`cortex_fulldev_r4.prereg.lock`](cortex_fulldev_r4.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D5.R2 result:** **16/16 clear.** D0 32/32, D5 32/32. unknown_holds 14–19, not a rubber HOLD. [`cortex_d5_r2_gate.lock`](cortex_d5_r2_gate.lock) + [`cortex_d5_r2.audit.lock`](cortex_d5_r2.audit.lock). Full D0–D12 still closed. `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.V20 / D5.R2 candidate:** `FAMILIARITY_ABS=16`. Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.058). [`cortex.candidate.v20.lock`](cortex.candidate.v20.lock) + [`cortex_mact_boundary.v20.lock`](cortex_mact_boundary.v20.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D5.R2 apparatus:** Isolated D5 after D5.R1 11/16. `FAMILIARITY_ABS=16` authorized; no neural edit yet. [`cortex_d5_r2.prereg.lock`](cortex_d5_r2.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
