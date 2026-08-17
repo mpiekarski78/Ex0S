@@ -2310,6 +2310,8 @@ Diagnosis is strong enough to authorize one narrow neural amendment: exchangeabl
 
 v31 apparatus: [`cortex_v31.prereg.lock`](cortex_v31.prereg.lock) + [`lineage_writegeom.prereg.lock`](lineage_writegeom.prereg.lock). Neural edit only after this commit is on `origin/main`. Frozen `H_max=8`, state budget `2×8×64`, cosine margin `0.01` plus perturbation, ecological reversal required, positive-only reassignment diagnostic. Unused `TM024.WRITEGEOM.DEV.` / `TWIN.`. SCORE reserved. n stays 64. Lineage stays closed even if W1 passes (S10/S11 still unrepaired). FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
 
+Result: [`lineage_writegeom.decision.lock`](lineage_writegeom.decision.lock) **w1_ranking_crumb_margin_ecological_fail**. W1 can rank opposing 2-cue maps, but cosine margins stay crumbs below the frozen 0.01 floor, a single negative teach does not flip a unit prototype, and ecological reversal fails. Integrity holds. W0 still last-write-wins. SCORE unopened. No `cortex.candidate.v31.lock`. Next is compact connection-local eligibility inside n=64 — not instincts, not SFNN. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

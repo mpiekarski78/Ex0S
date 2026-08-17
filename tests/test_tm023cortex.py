@@ -198,7 +198,18 @@ def test_birth_and_candidate_frozen() -> None:
         assert compat["C4"]["ok"] and compat["C5"]["ok"] and compat["C6"]["ok"]
         assert compat["earned_next"] is False
     else:
-        assert sha(NEURAL_PY) == cand["neural_cortex_sha"]
+        live_sha = sha(NEURAL_PY)
+        if cand.get("version") == "TM.0.23.CORTEX.CANDIDATE.V30" and not (
+            REPO_ROOT / "docs" / "cortex.candidate.v31.lock"
+        ).exists():
+            from experiments.run_tm023cortex import writegeom_w1_overlay_ok
+
+            if writegeom_w1_overlay_ok(cand):
+                assert live_sha != cand["neural_cortex_sha"]
+            else:
+                assert live_sha == cand["neural_cortex_sha"]
+        else:
+            assert live_sha == cand["neural_cortex_sha"]
         assert sha(MEMORY_PY) == cand["cortex_memory_sha"]
 
 

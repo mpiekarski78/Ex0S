@@ -1,0 +1,36 @@
+{
+  "version": "TM.0.24.WRITEGEOM.DECISION",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "n": 64,
+  "H_max": 8,
+  "state_budget": 1024,
+  "scored_worlds": false,
+  "w1_v31_eligible": false,
+  "w1_2cue_ranking": true,
+  "w1_2cue_opposing": false,
+  "ecological_w1": false,
+  "integrity": true,
+  "candidate_v31": false,
+  "lineage_reopened": false,
+  "q3": false,
+  "decision": {
+    "code": "w1_ranking_crumb_margin_ecological_fail",
+    "next": "compact_connection_local_eligibility_inside_n64",
+    "passed": false
+  },
+  "dev_lock_sha": "311fd79b9cf3e31c191c31677ca7707256bd81a6739e8a7bca2f44c457dcd78f",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "git_head": "056df4070524764ad60ab7215085c8a11b908475",
+  "note": "W1 ranking can oppose two cues but fails the frozen 0.01 margin/perturbation gate and ecological reversal. SCORE unopened. No v31 candidate. Lineage stays closed. Product remains 0.0.004."
+}

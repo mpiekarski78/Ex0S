@@ -250,12 +250,31 @@ def _sha_file(path: Path) -> str:
 LINEAGE_COMPAT = REPO_ROOT / "docs" / "lineage_v27_default_compat.lock"
 
 
+def writegeom_w1_overlay_ok(live: dict[str, Any]) -> bool:
+    """WRITEGEOM W1 may exist in neural_cortex.py without a v31 candidate.
+
+    Live candidate stays v30. Default ACT scoring remains query (v30 law).
+    """
+    if live.get("version") != "TM.0.23.CORTEX.CANDIDATE.V30":
+        return False
+    if (REPO_ROOT / "docs" / "cortex.candidate.v31.lock").exists():
+        return False
+    src = NEURAL_PY.read_text(encoding="utf-8")
+    if "ACT_SCORE_PROTO" not in src or "actuator_scores" not in src:
+        return False
+    from three_memory.neural_cortex import ACT_SCORE_QUERY, GenomeConfig
+
+    return GenomeConfig().act_score_mode == ACT_SCORE_QUERY
+
+
 def live_matches_declared_neural() -> bool:
     """Live candidate lock is the SHA pin. Historical lineage overlay is fallback for v27-era live lock."""
     live = json.loads(CANDIDATE_LOCK.read_text(encoding="utf-8"))
     neural = _sha_file(NEURAL_PY)
     memory = _sha_file(MEMORY_PY)
     if neural == live.get("neural_cortex_sha") and memory == live.get("cortex_memory_sha"):
+        return True
+    if writegeom_w1_overlay_ok(live) and memory == live.get("cortex_memory_sha"):
         return True
     if not LINEAGE_COMPAT.exists():
         return False

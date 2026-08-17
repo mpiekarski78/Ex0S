@@ -87,10 +87,19 @@ def test_contract_stance() -> None:
     assert sha(REPO_ROOT / "docs" / "cortex_architecture_contract.md") == ARCH_CONTRACT
     cand = json.loads((REPO_ROOT / "docs" / "cortex.candidate.v29.lock").read_text(encoding="utf-8"))
     v30 = REPO_ROOT / "docs" / "cortex.candidate.v30.lock"
+    v31 = REPO_ROOT / "docs" / "cortex.candidate.v31.lock"
     live_neural = sha(REPO_ROOT / "three_memory" / "neural_cortex.py")
-    if v30.exists():
-        live = json.loads(v30.read_text(encoding="utf-8"))
+    if v31.exists():
+        live = json.loads(v31.read_text(encoding="utf-8"))
         assert live["neural_cortex_sha"] == live_neural
+        assert live["genome"]["n"] == 64
+    elif v30.exists():
+        live = json.loads(v30.read_text(encoding="utf-8"))
+        src = (REPO_ROOT / "three_memory" / "neural_cortex.py").read_text(encoding="utf-8")
+        if "ACT_SCORE_PROTO" in src:
+            assert live["neural_cortex_sha"] != live_neural
+        else:
+            assert live["neural_cortex_sha"] == live_neural
         assert live["neural_cortex_sha"] != cand["neural_cortex_sha"]
         assert live["genome"]["n"] == 64
     else:

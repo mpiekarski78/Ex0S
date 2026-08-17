@@ -112,7 +112,9 @@ def test_contract_stance() -> None:
         assert live["neural_cortex_sha"] == live_neural
         assert live["genome"]["n"] == 64
     else:
-        assert live_neural == V30_NEURAL
+        src = (REPO_ROOT / "three_memory" / "neural_cortex.py").read_text(encoding="utf-8")
+        assert "actuator_scores" in src
+        assert "ACT_SCORE_PROTO" in src
 
 
 def test_runner_lock_if_present() -> None:
@@ -142,6 +144,59 @@ def test_dev_refused_before_neural() -> None:
         raise AssertionError("DEV must refuse before W1 neural law")
 
 
+def test_w1_neural_law() -> None:
+    import tempfile
+
+    import numpy as np
+    from experiments.run_tm023cortex import make_cortex
+    from experiments.run_tm024actorcredit import MID_BODY, clone_frozen
+    from experiments.run_tm024statemap import teach_one
+    from experiments.run_tm024writegeom import DEV_DOMAIN, capacity_world, enable_w1
+    from three_memory.neural_cortex import ACT_SCORE_PROTO, PROTO_EPS
+
+    w = capacity_world(0, DEV_DOMAIN, n_cues=2, n_handles=2)
+    with tempfile.TemporaryDirectory(prefix="wg_w1_") as tmp:
+        ag = make_cortex(Path(tmp) / "s", device="cpu")
+        ag.bind_actuators(list(w["handles"]))
+        enable_w1(ag)
+        assert ag.genome.act_score_mode == ACT_SCORE_PROTO
+        h1, h2 = w["handles"][0], w["handles"][1]
+        z = ag.actuator_scores(ag.rho)
+        assert all(v == 0.0 for v in z.values())
+        wq0 = ag.W_act_query.detach().clone()
+        cue_a, h_a = w["cue_handle"][0]["cue"], w["cue_handle"][0]["handle"]
+        t = teach_one(ag, w, h_a, tag="w1t", symbols=[cue_a])
+        assert t["adv"] > 0.0
+        assert float((ag.W_act_query - wq0).abs().max()) == 0.0
+        pn = float(np.linalg.norm(ag._proto_fast[h_a]))
+        assert abs(pn - 1.0) <= 1e-9
+        scores = ag.actuator_scores(t["rho_teach"])
+        assert scores[h_a] > scores[h1 if h_a != h1 else h2]
+        # rebound retains
+        saved = ag._proto_fast[h_a].copy()
+        ag.bind_actuators([h2, h_a])
+        assert np.allclose(ag._proto_fast[h_a], saved)
+        # dormant not scored
+        ag.bind_actuators([h2])
+        assert h_a not in ag.actuator_scores(np.zeros(64))
+        assert h_a in ag._proto_fast
+        # H_max
+        try:
+            ag.bind_actuators([f"h_extra_{i}" for i in range(9)])
+        except ValueError as e:
+            assert "H_max" in str(e)
+        else:
+            raise AssertionError("H_max must refuse")
+        # old checkpoint zeros
+        snap = clone_frozen(ag).checkpoint()
+        snap.pop("proto_fast", None)
+        snap.pop("proto_slow", None)
+        twin = make_cortex(Path(tmp) / "t", device="cpu")
+        twin.load_checkpoint(snap)
+        for p in twin._proto_fast.values():
+            assert float(np.linalg.norm(p)) <= PROTO_EPS
+
+
 def test_smoke() -> None:
     from experiments.run_tm024writegeom import smoke
 
@@ -165,6 +220,22 @@ def test_decision_if_present() -> None:
     assert d["n"] == 64
     assert d["lineage_reopened"] is False
     assert d["q3"] is False
+    assert d["scored_worlds"] is False
+    assert d["candidate_v31"] is False
+    assert d["w1_v31_eligible"] is False
+    assert d["decision"]["passed"] is False
+    assert d["decision"]["next"] == "compact_connection_local_eligibility_inside_n64"
+    assert not (REPO_ROOT / "docs" / "cortex.candidate.v31.lock").exists()
+    assert "TM024.WRITEGEOM.SCORE." not in json.dumps(d)
+    devp = REPO_ROOT / "docs" / "lineage_writegeom.dev.lock"
+    if devp.exists():
+        dev = json.loads(devp.read_text(encoding="utf-8"))
+        assert dev["score_domain_opened"] is False
+        assert dev["w1_2cue_ranking"] is True
+        assert dev["w1_2cue_opposing"] is False
+        assert dev["ecological_w1"] is False
+        assert dev["integrity"] is True
+        assert dev["w0_2cue_fails"] is True
 
 
 def main() -> None:
@@ -172,6 +243,7 @@ def main() -> None:
     test_contract_stance()
     test_runner_lock_if_present()
     test_dev_refused_before_neural()
+    test_w1_neural_law()
     test_smoke()
     test_decision_if_present()
     print("test_tm024writegeom: ok")

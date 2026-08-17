@@ -126,11 +126,7 @@ def op_logits(ag: NeuralCortex) -> np.ndarray:
 
 
 def motor_scores(ag: NeuralCortex) -> dict[str, float]:
-    q = ag._from_t(ag.W_act_query @ ag.rho)
-    out: dict[str, float] = {}
-    for h, v in ag.motor_vocab.items():
-        out[h] = float(np.dot(q, v) / (np.linalg.norm(q) * np.linalg.norm(v) + 1e-12))
-    return out
+    return ag.actuator_scores(ag.rho)
 
 
 def softmax_np(x: np.ndarray) -> np.ndarray:

@@ -69,6 +69,11 @@ UTTERANCE_PERSIST = 1.5
 EQUAL_EVIDENCE_MIN_SYMBOLS = 3
 # v30: scalar mix on zero-input motor ticks only. 0 recovers v29. Freeze selected DEV p here.
 MOTOR_PERSIST_P = 0.0
+# v31: ACT ranking. "query" is v30 W_act_query; "proto" is actuator-local prototypes.
+ACT_SCORE_QUERY = "query"
+ACT_SCORE_PROTO = "proto"
+PROTO_EPS = 1e-12
+ACTUATOR_PROTO_H_MAX = 8
 
 
 @dataclass
@@ -96,6 +101,9 @@ class GenomeConfig:
     lineage_params: dict[str, Any] | None = None
     # None → MOTOR_PERSIST_P. DEV grid may override without editing the module constant.
     motor_persist_p: float | None = None
+    # v31: default query keeps live v30 until WRITEGEOM enables proto / candidate v31.
+    act_score_mode: str = ACT_SCORE_QUERY
+    actuator_proto_h_max: int = ACTUATOR_PROTO_H_MAX
 
     @property
     def d_x(self) -> int:
@@ -124,6 +132,8 @@ class GenomeConfig:
             "seed_motor": self.seed_motor,
             "dtype": self.dtype,
             "motor_persist_p": float(self.motor_persist_p if self.motor_persist_p is not None else MOTOR_PERSIST_P),
+            "act_score_mode": str(self.act_score_mode),
+            "actuator_proto_h_max": int(self.actuator_proto_h_max),
             "body_setpoint": BODY_SETPOINT.tolist(),
             "ops": list(OPS),
             "op_cost": dict(OP_COST),
@@ -190,6 +200,9 @@ class NeuralCortex:
         # v5: empty at birth; bind_actuators fills motor_vocab from motor-registry RNG
         self.motor_vocab: dict[str, np.ndarray] = {}
         self._motor_registry: dict[str, np.ndarray] = {}
+        # v31: actuator-local prototype rows (fast/slow). Keyed by opaque handle, never by cue.
+        self._proto_fast: dict[str, np.ndarray] = {}
+        self._proto_slow: dict[str, np.ndarray] = {}
 
         self.M = self._init_mask()
         self.W_rec = self._init_masked_rec()
@@ -307,11 +320,11 @@ class NeuralCortex:
 
         Forbidden: runner-supplied vectors. Handle strings never enter sensory vocab.
         Rebinding the same handle restores its previously assigned vector.
+        New handle → zero prototype. Rebound retains prototype. Unbound rows stay dormant.
         """
         if not isinstance(handle_ids, (list, tuple)):
             raise TypeError("bind_actuators requires a list of opaque handle id strings")
-        bound: list[str] = []
-        self.motor_vocab = {}
+        hids: list[str] = []
         for raw in handle_ids:
             if isinstance(raw, dict):
                 raise TypeError(
@@ -320,6 +333,17 @@ class NeuralCortex:
             hid = str(raw)
             if not hid or hid != hid.strip():
                 raise ValueError(f"invalid actuator handle: {raw!r}")
+            hids.append(hid)
+        unique = set(self._proto_fast) | set(hids)
+        h_max = int(self.genome.actuator_proto_h_max)
+        if len(unique) > h_max:
+            raise ValueError(
+                f"actuator prototype H_max={h_max} exceeded ({len(unique)} unique handles)"
+            )
+        bound: list[str] = []
+        self.motor_vocab = {}
+        z = np.zeros(self.genome.n, dtype=np.float64)
+        for hid in hids:
             if hid in self._motor_registry:
                 vec = self._motor_registry[hid].copy()
             else:
@@ -327,14 +351,84 @@ class NeuralCortex:
                 material = f"{int(self.genome.seed_motor):d}\0{hid}".encode()
                 seed = int.from_bytes(hashlib.sha256(material).digest()[:8], "little")
                 rng = np.random.default_rng(seed)
-                raw = rng.normal(0.0, 1.0, size=self.genome.d_sym).astype(np.float64)
-                nrm = float(np.linalg.norm(raw)) + 1e-12
-                vec = (raw / nrm).astype(np.float64)
+                rawv = rng.normal(0.0, 1.0, size=self.genome.d_sym).astype(np.float64)
+                nrm = float(np.linalg.norm(rawv)) + 1e-12
+                vec = (rawv / nrm).astype(np.float64)
                 self._motor_registry[hid] = vec.copy()
             self.motor_vocab[hid] = vec
+            if hid not in self._proto_fast:
+                self._proto_fast[hid] = z.copy()
+                self._proto_slow[hid] = z.copy()
             # deliberately do NOT insert into self.vocab (not neural sensory input)
             bound.append(hid)
         return {"bound": bound, "n": len(bound)}
+
+    def _act_score_proto(self) -> bool:
+        return str(self.genome.act_score_mode) == ACT_SCORE_PROTO
+
+    def _rho_np(self, rho: Any) -> np.ndarray:
+        if isinstance(rho, torch.Tensor):
+            return self._from_t(rho)
+        return np.asarray(rho, dtype=np.float64).reshape(-1)
+
+    def _unit_or_zero(self, z: np.ndarray) -> np.ndarray:
+        nrm = float(np.linalg.norm(z))
+        if not np.isfinite(nrm) or nrm <= PROTO_EPS:
+            return np.zeros(self.genome.n, dtype=np.float64)
+        return (np.asarray(z, dtype=np.float64) / nrm).astype(np.float64)
+
+    def actuator_scores(self, rho: Any) -> dict[str, float]:
+        """Scalar ACT scores for every currently bound opaque handle."""
+        r = self._rho_np(rho)
+        rn = float(np.linalg.norm(r)) + 1e-12
+        out: dict[str, float] = {}
+        if self._act_score_proto():
+            for h in self.motor_vocab:
+                p = self._proto_fast.get(h)
+                if p is None:
+                    out[h] = 0.0
+                    continue
+                pn = float(np.linalg.norm(p))
+                if pn <= PROTO_EPS:
+                    out[h] = 0.0
+                else:
+                    out[h] = float(np.dot(p, r) / (pn * rn))
+            return out
+        q = self._from_t(self.W_act_query @ self._to_t(r))
+        qn = float(np.linalg.norm(q)) + 1e-12
+        for h, v in self.motor_vocab.items():
+            out[h] = float(np.dot(q, v) / (qn * (np.linalg.norm(v) + 1e-12)))
+        return out
+
+    def _choose_actuator(self, rho: Any) -> str | None:
+        scores = self.actuator_scores(rho)
+        if not scores:
+            return None
+        best = max(scores.values())
+        ties = sorted(h for h, s in scores.items() if abs(s - best) <= 1e-12)
+        if len(ties) > 1 or all(abs(s) <= 1e-12 for s in scores.values()):
+            return str(self.rng_motor.choice(ties))
+        return ties[0]
+
+    def _credit_proto(self, handle: str, adv: float, rho_elig: Any, eta_a: float) -> None:
+        if adv == 0.0 or handle not in self._proto_fast:
+            return
+        rho = self._rho_np(rho_elig)
+        if float(np.max(np.abs(rho))) <= ELIG_EPS:
+            return
+        rn = float(np.linalg.norm(rho))
+        if not np.isfinite(rn) or rn <= PROTO_EPS:
+            return
+        rhat = rho / rn
+        live = np.asarray(self._proto_fast[handle], dtype=np.float64)
+        z = live + float(eta_a) * float(adv) * rhat
+        live = self._unit_or_zero(z)
+        beta = float(self.genome.beta) * self._age_scale("beta_scale", 1.0)
+        slow = np.asarray(self._proto_slow.get(handle, np.zeros(self.genome.n)), dtype=np.float64)
+        slow = (1.0 - beta) * slow + beta * live
+        live = slow + 0.5 * (live - slow)
+        self._proto_fast[handle] = self._unit_or_zero(live)
+        self._proto_slow[handle] = self._unit_or_zero(slow)
 
     # --- registries ---
 
@@ -553,12 +647,8 @@ class NeuralCortex:
             if op == "ACT":
                 # v2: argmax over M_act only; never force HOLD on cosine miss
                 # v6: tie-break via motor RNG (exchangeable slots)
-                tok = self._best_token(
-                    self.W_act_query @ self.rho,
-                    lexicon=self.motor_vocab,
-                    require_thresh=False,
-                    rng=self.rng_motor,
-                )
+                # v31: actuator_scores (query or proto); all-zero still rng_motor
+                tok = self._choose_actuator(self.rho)
                 if tok is None:
                     chosen_op = "HOLD"
                     break
@@ -729,16 +819,24 @@ class NeuralCortex:
                 self._adv_baseline = (1.0 - alpha) * ema + alpha * float(body_adv)
             self._last_act_body_adv = float(body_adv)
         if elig_motor and p["token"] is not None and p["op"] in ("EMIT", "ACT") and not skip_act_cost:
-            if p["op"] == "ACT" and p.get("motor_vec") is not None:
-                tok_v = self._to_t(np.asarray(p["motor_vec"], dtype=np.float64))
-            elif p["op"] == "ACT" and p["token"] in self.motor_vocab:
-                tok_v = self._to_t(self.motor_vocab[p["token"]])
+            if p["op"] == "ACT" and self._act_score_proto():
+                self._credit_proto(
+                    str(p["token"]),
+                    float(adv),
+                    p.get("rho_motor", p["rho_elig"]),
+                    eta_a,
+                )
             else:
-                tok_v = self._to_t(self._vocab_vec(p["token"]))
-            mat_name = "W_emit_query" if p["op"] == "EMIT" else "W_act_query"
-            W = getattr(self, mat_name)
-            setattr(self, mat_name, W + eta_a * adv * torch.outer(tok_v, rho_motor))
-            updated.add(mat_name)
+                if p["op"] == "ACT" and p.get("motor_vec") is not None:
+                    tok_v = self._to_t(np.asarray(p["motor_vec"], dtype=np.float64))
+                elif p["op"] == "ACT" and p["token"] in self.motor_vocab:
+                    tok_v = self._to_t(self.motor_vocab[p["token"]])
+                else:
+                    tok_v = self._to_t(self._vocab_vec(p["token"]))
+                mat_name = "W_emit_query" if p["op"] == "EMIT" else "W_act_query"
+                W = getattr(self, mat_name)
+                setattr(self, mat_name, W + eta_a * adv * torch.outer(tok_v, rho_motor))
+                updated.add(mat_name)
         self._clip_and_consolidate(updated)
         self._pending = None
         self._pred_pending = None
@@ -965,6 +1063,10 @@ class NeuralCortex:
         self._vocal_next = None
         self._last_motor_class = None
         self.reset_rho()
+        z = np.zeros(self.genome.n, dtype=np.float64)
+        for h in list(self._proto_fast):
+            self._proto_fast[h] = z.copy()
+            self._proto_slow[h] = z.copy()
 
     def checkpoint(self) -> dict[str, Any]:
         def tsave(x: Tensor) -> list:
@@ -1023,6 +1125,8 @@ class NeuralCortex:
             "vocab": {k: v.tolist() for k, v in self.vocab.items()},
             "motor_vocab": {k: v.tolist() for k, v in self.motor_vocab.items()},
             "motor_registry": {k: v.tolist() for k, v in self._motor_registry.items()},
+            "proto_fast": {k: v.tolist() for k, v in self._proto_fast.items()},
+            "proto_slow": {k: v.tolist() for k, v in self._proto_slow.items()},
             "sources": {k: v.tolist() for k, v in self.sources.items()},
             "v_start": self.v_start.tolist(),
             "v_end": self.v_end.tolist(),
@@ -1087,6 +1191,26 @@ class NeuralCortex:
         else:
             # migrate: registry from motor_vocab snapshot
             self._motor_registry = {k: v.copy() for k, v in self.motor_vocab.items()}
+        z = np.zeros(self.genome.n, dtype=np.float64)
+        pf = snap.get("proto_fast")
+        ps = snap.get("proto_slow")
+        if pf:
+            self._proto_fast = {k: np.asarray(v, dtype=np.float64) for k, v in pf.items()}
+        else:
+            # v29/v30: missing prototypes initialize to zero; never infer from motor_vocab
+            keys = set(self.motor_vocab) | set(self._motor_registry)
+            self._proto_fast = {k: z.copy() for k in keys}
+        if ps:
+            self._proto_slow = {k: np.asarray(v, dtype=np.float64) for k, v in ps.items()}
+        else:
+            self._proto_slow = {k: z.copy() for k in self._proto_fast}
+        for k in set(self._proto_fast) - set(self._proto_slow):
+            self._proto_slow[k] = z.copy()
+        gsnap = snap.get("genome") or {}
+        if "act_score_mode" in gsnap:
+            self.genome.act_score_mode = str(gsnap["act_score_mode"])
+        if "actuator_proto_h_max" in gsnap:
+            self.genome.actuator_proto_h_max = int(gsnap["actuator_proto_h_max"])
         self.sources = {
             k: np.asarray(v, dtype=np.float64) for k, v in (snap.get("sources") or {}).items()
         }

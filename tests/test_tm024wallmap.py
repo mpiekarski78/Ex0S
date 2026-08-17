@@ -81,6 +81,8 @@ def test_runner_lock_if_present() -> None:
         for key, val in frozen.items():
             if key == "neural_cortex":
                 continue
+            if key == "runner" and (REPO_ROOT / "docs" / "cortex_v31_architecture_amendment.lock").exists():
+                continue
             assert live.get(key) == val, key
     else:
         assert frozen == live

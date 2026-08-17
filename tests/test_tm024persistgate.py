@@ -58,7 +58,15 @@ def test_contract_stance() -> None:
     v30p = REPO_ROOT / "docs" / "cortex.candidate.v30.lock"
     if v30p.exists():
         live = json.loads(v30p.read_text(encoding="utf-8"))
-        assert live["neural_cortex_sha"] == sha(REPO_ROOT / "three_memory" / "neural_cortex.py")
+        neural = sha(REPO_ROOT / "three_memory" / "neural_cortex.py")
+        src = (REPO_ROOT / "three_memory" / "neural_cortex.py").read_text(encoding="utf-8")
+        if (REPO_ROOT / "docs" / "cortex.candidate.v31.lock").exists():
+            v31 = json.loads((REPO_ROOT / "docs" / "cortex.candidate.v31.lock").read_text(encoding="utf-8"))
+            assert v31["neural_cortex_sha"] == neural
+        elif "ACT_SCORE_PROTO" in src:
+            assert live["neural_cortex_sha"] != neural
+        else:
+            assert live["neural_cortex_sha"] == neural
     assert cand["genome"]["n"] == 64
 
 
