@@ -2,6 +2,7 @@
 
 ## 2026-08-17
 
+- **TM.0.23.CORTEX.V21 / D6.R1 candidate:** Echoic emit (phonological loop). Nine sanity + math audit pass. C4/C5/C6 green (C6 label perm p=0.0606). [`cortex.candidate.v21.lock`](cortex.candidate.v21.lock) + [`cortex_mact_boundary.v21.lock`](cortex_mact_boundary.v21.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.D6.R1 apparatus:** Isolated D6 after FULLDEV.R4 0/16. Echoic emit authorized; no neural edit yet. Lives run D1–D5 prefix then historical `score_d6`. [`cortex_d6_r1.prereg.lock`](cortex_d6_r1.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R4 result:** 0/16. D0 32, D1 17, D2 30, D3 31, D4 32, **D5 32**, **D6 2**. D5 transferred. D6 EMIT fires but taught sequences do not match (matched=0 on 29/32). [`cortex_fulldev_r4.lock`](cortex_fulldev_r4.lock) + [`cortex_fulldev_r4.audit.lock`](cortex_fulldev_r4.audit.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.
 - **TM.0.23.CORTEX.FULLDEV.R4 apparatus:** Full D0–D12 on unused domain `TM023.FULL.R4.` after isolated D5.R2 16/16. Live candidate v20, no neural edit. [`cortex_fulldev_r4.prereg.lock`](cortex_fulldev_r4.prereg.lock). `earned_next=false`; `ex0s=null`; product **0.0.004**.

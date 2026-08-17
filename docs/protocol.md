@@ -2150,3 +2150,5 @@ Canonical main `e7767b9`. Isolated D6 after D5 transferred. Product **0.0.004**;
 
 D6.R1 apparatus: [`cortex_d6_r1.prereg.lock`](cortex_d6_r1.prereg.lock). Echoic emit authorized after this freeze. Reveal only from a clean tree pinning `git rev-parse HEAD`.
 
+Candidate (this cycle): [`cortex.candidate.v21.lock`](cortex.candidate.v21.lock). Echoic emit. C4/C5/C6 green. Reveal D6.R1 only from a clean tree pinning `git rev-parse HEAD`.
+

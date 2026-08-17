@@ -61,6 +61,7 @@ ADV_BASELINE_ALPHA = 0.05
 FAMILIARITY_RATIO = 0.5
 FAMILIARITY_DECAY = 0.98
 FAMILIARITY_ABS = 16.0
+ECHOIC_MAX = 8
 EQUAL_EVIDENCE_MIN_SYMBOLS = 3
 
 
@@ -218,6 +219,7 @@ class NeuralCortex:
         self._hold_after_conflict = False
         self._symbol_obs_counts: dict[str, int] = {}
         self._symbol_fam: dict[str, float] = {}
+        self._echoic: list[str] = []
         self.last_action: dict[str, Any] | None = None
         self.last_trajectory: list[np.ndarray] = []
         self.sensory_trajectory: list[np.ndarray] = []
@@ -374,6 +376,21 @@ class NeuralCortex:
             return str(rng.choice(ties))
         return ties[0]
 
+    def _echoic_emit_token(self) -> str | None:
+        if not self._echoic:
+            return None
+        idx = len(self.emit_buffer)
+        for step in (idx, 0):
+            pos = -(1 + step)
+            if abs(pos) <= len(self._echoic):
+                tok = self._echoic[pos]
+                if tok in self.vocab:
+                    return tok
+        for tok in reversed(self._echoic):
+            if tok in self.vocab:
+                return tok
+        return None
+
     def _on_s_write(self, rec: CortexRecord) -> None:
         v = np.asarray(rec.content, dtype=np.float64).reshape(-1)
         if v.shape[0] != self.genome.d_sym:
@@ -438,7 +455,9 @@ class NeuralCortex:
             if op == "STOP":
                 break
             if op == "EMIT":
-                tok = self._best_token(self.W_emit_query @ self.rho)
+                tok = self._echoic_emit_token()
+                if tok is None:
+                    tok = self._best_token(self.W_emit_query @ self.rho)
                 if tok is None:
                     chosen_op = "HOLD"
                     self.emit_buffer = []
@@ -635,6 +654,9 @@ class NeuralCortex:
         for u in ordered:
             self._symbol_obs_counts[u] = int(self._symbol_obs_counts.get(u, 0)) + 1
             self._symbol_fam[u] = float(self._symbol_fam.get(u, 0.0)) + 1.0
+            self._echoic.append(u)
+        if len(self._echoic) > ECHOIC_MAX:
+            self._echoic = self._echoic[-ECHOIC_MAX:]
         if self._pending is not None:
             body_prev = np.asarray(self._pending["body"], dtype=np.float64)
             cur_body_adv = float(
@@ -708,6 +730,7 @@ class NeuralCortex:
         self._hold_after_conflict = False
         self._symbol_obs_counts = {}
         self._symbol_fam = {}
+        self._echoic = []
         self.reset_rho()
 
     def checkpoint(self) -> dict[str, Any]:
@@ -766,6 +789,7 @@ class NeuralCortex:
             "hold_after_conflict": bool(self._hold_after_conflict),
             "symbol_obs_counts": {k: int(v) for k, v in self._symbol_obs_counts.items()},
             "symbol_fam": {k: float(v) for k, v in self._symbol_fam.items()},
+            "echoic": list(self._echoic),
         }
 
     def load_checkpoint(self, snap: dict[str, Any]) -> None:
@@ -844,6 +868,7 @@ class NeuralCortex:
         self._hold_after_conflict = bool(snap.get("hold_after_conflict") or False)
         self._symbol_obs_counts = {str(k): int(v) for k, v in (snap.get("symbol_obs_counts") or {}).items()}
         self._symbol_fam = {str(k): float(v) for k, v in (snap.get("symbol_fam") or {}).items()}
+        self._echoic = [str(x) for x in (snap.get("echoic") or [])][-ECHOIC_MAX:]
 
     def weight_hash(self) -> str:
         h = hashlib.sha256()
