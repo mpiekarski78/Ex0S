@@ -2426,6 +2426,8 @@ LIFECYCLEMARGINMAP apparatus: [`lineage_lifecyclemarginmap.prereg.lock`](lineage
 
 Margin-trigger runner: [`lineage_lifecyclemarginmap.runner.lock`](lineage_lifecyclemarginmap.runner.lock). 112 cells. M0 error-only L2 control; M1 C3 PA on L2; M2 C3 PA on L3 stale store; M3 D1 ceiling. Report acquisition→replay→REST→perturbation on acquire/stable cells; eco/spec REST fields stay null. Ladder rungs are disjoint: PA-replay-supported requires M2 reversal still passing; M1 never-reaches does not hide an M3 ceiling. DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
+Result: [`lineage_lifecyclemarginmap.decision.lock`](lineage_lifecyclemarginmap.decision.lock) **consolidation_margin_loss**. M1 8-cue live min margin reached 0.01 before REST and fell to 0.00017 after; ranking was already incorrect on 3/8 probes. M0 reproduced the R2 L2 control (14/128 updates; REST raised 0.00211→0.00643). M3 8-cue stability passes; M3 eco fails, so not a four-phase ceiling. SCORE unopened. No v31. Runner not corrected after DEV. Product **0.0.004**. `earned_next=false`.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

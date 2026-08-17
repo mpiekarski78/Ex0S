@@ -1,0 +1,74 @@
+{
+  "version": "TM.0.24.LIFECYCLEMARGINMAP.DECISION",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "n": 64,
+  "scored_worlds": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "candidate_v31": false,
+  "candidate_v32": false,
+  "w1_resurrected": false,
+  "lineage_reopened": false,
+  "eligibility_budget_installed": false,
+  "trace_rows_installed": false,
+  "declared_budget_remains_closed": 1536,
+  "write_geometry_branch_closed": true,
+  "m3_ceiling_only": true,
+  "decision": {
+    "code": "consolidation_margin_loss",
+    "then": "consolidation_margin_loss",
+    "phase_flags": {
+      "M0": {
+        "acquire_all": true,
+        "acquire8": true,
+        "twin": true,
+        "stable": false,
+        "plasticity": true,
+        "specificity": true
+      },
+      "M1": {
+        "acquire_all": false,
+        "acquire8": false,
+        "twin": true,
+        "stable": false,
+        "plasticity": true,
+        "specificity": false
+      },
+      "M2": {
+        "acquire_all": false,
+        "acquire8": false,
+        "twin": true,
+        "stable": false,
+        "plasticity": false,
+        "specificity": false
+      },
+      "M3": {
+        "acquire_all": true,
+        "acquire8": true,
+        "twin": true,
+        "stable": true,
+        "plasticity": false,
+        "specificity": true
+      },
+      "m1_pre_rest_reaches_0.01": true,
+      "m1_post_rest_below_0.01": true,
+      "m1_never_reaches_0.01": false,
+      "ecological_match_not_first_failure": true
+    }
+  },
+  "dev_lock_sha": "57015fef334b533a77173bb06323e3f28e8d9bc5ad41e3453bfe126ee4a34bf8",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "git_head": "607b834e22dbd1fd159ec21d8f5fe05f05406be8",
+  "note": "LIFECYCLEMARGINMAP runner-only margin trigger on frozen L2 lifecycle. R2 preserved. No v31. Product remains 0.0.004."
+}
