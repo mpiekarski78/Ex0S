@@ -160,6 +160,9 @@ FULLDEV_R4_FAIL = REPO_ROOT / "docs" / "cortex_fulldev_r4.failure.lock"
 FULLDEV_R5_PREREG = REPO_ROOT / "docs" / "cortex_fulldev_r5.prereg.lock"
 FULLDEV_R5_LOCK = REPO_ROOT / "docs" / "cortex_fulldev_r5.lock"
 FULLDEV_R5_FAIL = REPO_ROOT / "docs" / "cortex_fulldev_r5.failure.lock"
+FULLDEV_R6_PREREG = REPO_ROOT / "docs" / "cortex_fulldev_r6.prereg.lock"
+FULLDEV_R6_LOCK = REPO_ROOT / "docs" / "cortex_fulldev_r6.lock"
+FULLDEV_R6_FAIL = REPO_ROOT / "docs" / "cortex_fulldev_r6.failure.lock"
 D3_R1_PREREG = REPO_ROOT / "docs" / "cortex_d3_r1.prereg.lock"
 D3_R2_PREREG = REPO_ROOT / "docs" / "cortex_d3_r2.prereg.lock"
 D3_R2_GATE_LOCK = REPO_ROOT / "docs" / "cortex_d3_r2_gate.lock"
@@ -2682,6 +2685,60 @@ def verify_fulldev_r5() -> dict[str, Any]:
     }
 
 
+def verify_fulldev_r6() -> dict[str, Any]:
+    """Verify FULLDEV.R6 integrity without re-scoring. Pending-safe if unscored."""
+    if not FULLDEV_R6_PREREG.exists():
+        return {"ok": True, "pending": True, "why": "FULLDEV.R6 prereg not frozen yet"}
+    if DEV_V13_LOCK.exists():
+        return {"ok": False, "why": "DEVELOP.v13 exists — refuse"}
+    r6c = json.loads(FULLDEV_R6_PREREG.read_text(encoding="utf-8"))["eval_seed_commitment"]
+    for prior in (
+        FULLDEV_R5_PREREG,
+        D7_R2_PREREG,
+        D7_R1_PREREG,
+        D6_R3_PREREG,
+        FULLDEV_R4_PREREG,
+        D5_R2_PREREG,
+        FULLDEV_R3_PREREG,
+        D4_R2_PREREG,
+        D3_R3_PREREG,
+        FULLDEV_R2_PREREG,
+        FULLDEV_R1_PREREG,
+        DEV_PREREG,
+        PREREG,
+    ):
+        if prior.exists() and json.loads(prior.read_text(encoding="utf-8")).get("eval_seed_commitment") == r6c:
+            return {"ok": False, "why": f"FULLDEV.R6 commitment reused {prior.name}"}
+    if json.loads(FULLDEV_R6_PREREG.read_text(encoding="utf-8")).get("domain") != "TM023.FULL.R6.":
+        return {"ok": False, "why": "FULLDEV.R6 domain drifted"}
+    if not FULLDEV_R6_LOCK.exists():
+        return {"ok": True, "pending": True, "why": "FULLDEV.R6 result not frozen yet"}
+    res = json.loads(FULLDEV_R6_LOCK.read_text(encoding="utf-8"))
+    if res.get("product") != "0.0.004" or res.get("earned_next") is not False or res.get("ex0s") is not None:
+        return {"ok": False, "why": "product/earned_next/ex0s drift"}
+    if res.get("eligible_for_000005") is not False:
+        return {"ok": False, "why": "eligible_for_000005 must stay false until nursery clears"}
+    battery = res.get("battery") or {}
+    n_clear = int(battery.get("n_pair_clear") or 0)
+    clear = bool(res.get("development_gate_clear"))
+    if battery.get("domain") != "TM023.FULL.R6.":
+        return {"ok": False, "why": "result domain drifted"}
+    if clear and n_clear < 13:
+        return {"ok": False, "why": "gate claims clear with n_pair_clear < 13"}
+    if (not clear) and not FULLDEV_R6_FAIL.exists():
+        return {"ok": False, "why": "missing cortex_fulldev_r6.failure.lock"}
+    if clear and FULLDEV_R6_FAIL.exists():
+        return {"ok": False, "why": "failure lock present on a clear battery"}
+    return {
+        "ok": True,
+        "why": "FULLDEV.R6 integrity ok",
+        "pending": False,
+        "development_gate_clear": clear,
+        "n_pair_clear": n_clear,
+        "refuse_rewrite": True,
+    }
+
+
 def verify_d3_r2() -> dict[str, Any]:
     """Verify isolated D3.R2 integrity without re-scoring. Pending-safe if unscored."""
     if not D3_R2_PREREG.exists():
@@ -3095,6 +3152,7 @@ def main() -> None:
     ap.add_argument("--verify-fulldev-r3", action="store_true")
     ap.add_argument("--verify-fulldev-r4", action="store_true")
     ap.add_argument("--verify-fulldev-r5", action="store_true")
+    ap.add_argument("--verify-fulldev-r6", action="store_true")
     ap.add_argument("--verify-d4-r1", action="store_true")
     ap.add_argument("--verify-d5-r1", action="store_true")
     ap.add_argument("--verify-d5-r2", action="store_true")
@@ -3192,6 +3250,9 @@ def main() -> None:
         return
     if args.verify_fulldev_r5:
         print(json.dumps(verify_fulldev_r5(), indent=2, default=str))
+        return
+    if args.verify_fulldev_r6:
+        print(json.dumps(verify_fulldev_r6(), indent=2, default=str))
         return
     if args.verify_d4_r1:
         print(json.dumps(verify_d4_r1(), indent=2, default=str))
