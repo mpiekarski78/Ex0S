@@ -726,6 +726,33 @@ def test_verify_v13_gate_cli() -> None:
         assert not (REPO_ROOT / "docs" / "cortex_development.v13.lock").exists()
 
 
+def test_v31_candidate_boundary_pending_gate() -> None:
+    amend = json.loads((REPO_ROOT / "docs" / "cortex_v31_architecture_amendment.lock").read_text(encoding="utf-8"))
+    prereg = json.loads((REPO_ROOT / "docs" / "cortex_v31.prereg.lock").read_text(encoding="utf-8"))
+    iso = json.loads((REPO_ROOT / "docs" / "cortex_v31.isolation.lock").read_text(encoding="utf-8"))
+    cells = json.loads((REPO_ROOT / "docs" / "lineage_writegeom.prereg.lock").read_text(encoding="utf-8"))
+    assert amend["n"] == 64
+    assert prereg["n"] == 64
+    assert prereg["authorized_law"] == "exchangeable_actuator_local_prototype"
+    assert "increase_n" in prereg["refuse"]
+    assert "increase n" in iso["refuse"]
+    assert cells["H_max"] == 8
+    assert cells["state_budget"] == 1024
+    assert cells["margin"]["cosine_margin_min"] == 0.01
+    assert cells["lineage_after_v31_pass"] is False
+    assert not (REPO_ROOT / "docs" / "cortex_fulldev_r7.prereg.lock").exists()
+    cand_p = REPO_ROOT / "docs" / "cortex.candidate.v31.lock"
+    if not cand_p.exists():
+        return
+    cand = json.loads(cand_p.read_text(encoding="utf-8"))
+    assert cand["version"] == "TM.0.23.CORTEX.CANDIDATE.V31"
+    assert cand["earned_next"] is False
+    assert cand["ex0s"] is None
+    v30 = json.loads((REPO_ROOT / "docs" / "cortex.candidate.v30.lock").read_text(encoding="utf-8"))
+    assert cand["neural_cortex_sha"] != v30["neural_cortex_sha"]
+    assert cand["genome"]["n"] == 64
+
+
 def test_v30_candidate_boundary_pending_gate() -> None:
     amend = json.loads((REPO_ROOT / "docs" / "cortex_v30_architecture_amendment.lock").read_text(encoding="utf-8"))
     prereg = json.loads((REPO_ROOT / "docs" / "cortex_v30.prereg.lock").read_text(encoding="utf-8"))
@@ -1424,6 +1451,7 @@ if __name__ == "__main__":
     test_v13_candidate_boundary_pending_gate()
     test_verify_v12_gate_cli()
     test_verify_v13_gate_cli()
+    test_v31_candidate_boundary_pending_gate()
     test_v30_candidate_boundary_pending_gate()
     test_v29_candidate_boundary_pending_gate()
     test_v28_candidate_boundary_pending_gate()

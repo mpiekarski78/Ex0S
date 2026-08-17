@@ -1,0 +1,56 @@
+{
+  "version": "TM.0.23.CORTEX.V31.ISOLATION",
+  "lab": "TM.0.24.WRITEGEOM",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "reason": "MOTORPERSIST re-audit isolated last-write-wins on shared outer-product ACT credit. v31 may replace ACT ranking/credit with actuator-local prototypes. W2 RLS stays runner-only.",
+  "motorpersist_decision": "docs/lineage_motorpersist.decision.lock",
+  "motorpersist_decision_sha": "75d0ab57de8c4e394d42f78fa2af0494722b85348f123b9796de3e9b74af93b9",
+  "motorpersist_reaudit_sha": "a076fc5a4f1199e0463756d66e9686e889ba5d200ecf63131387c440e6094a30",
+  "n": 64,
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_reach.lock",
+    "docs/lineage_plasticitymap.decision.lock",
+    "docs/lineage_actorcredit.lock",
+    "docs/lineage_actorcredit_reach.lock",
+    "docs/lineage_statemap.decision.lock",
+    "docs/lineage_collisionmap.decision.lock",
+    "docs/lineage_persistgate.prereg.lock",
+    "docs/lineage_motorpersist.decision.lock",
+    "docs/lineage_motorpersist.reaudit.lock",
+    "docs/cortex.candidate.v28.lock",
+    "docs/cortex.candidate.v29.lock",
+    "docs/cortex.candidate.v30.lock"
+  ],
+  "refuse": [
+    "rewrite historical locks including v30 MOTORPERSIST COLLISIONMAP STATEMAP",
+    "increase n",
+    "move tau or delta",
+    "L0-specific circuitry",
+    "reveal QUAL/EVAL",
+    "reveal FULLDEV.R7",
+    "install RLS in organism",
+    "second global recurrent context state",
+    "another lineage run",
+    "stamp earned_next",
+    "stamp 0.0.005"
+  ],
+  "next_cycle": {
+    "name": "isolated_v31_writegeom",
+    "requires": [
+      "frozen architecture amendment authorizing actuator-local prototypes",
+      "apparatus on origin/main before any v31 neural edit",
+      "DEV then freeze W1 before scored worlds",
+      "new birth + candidate.v31.lock only if W1 2-cue opposing passes",
+      "re-earn nine sanity, A0-A11, and C4/C5/C6",
+      "n remains 64",
+      "lineage remains closed even if WRITEGEOM passes"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004."
+}

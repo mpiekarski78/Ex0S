@@ -2302,6 +2302,14 @@ Result: [`lineage_motorpersist.decision.lock`](lineage_motorpersist.decision.loc
 
 Equal-advantage re-audit: [`lineage_motorpersist.reaudit.lock`](lineage_motorpersist.reaudit.lock). Both handles share one positive MID delta; 24 DEV sequences (grid × 2 worlds × both orders). A→B makes both select B; B→A makes both select A. Teaching-state cosine and L2 recorded. SCORE unopened. Historical MOTORPERSIST locks untouched. Diagnosis direction unchanged: shared-write last-write-wins. Next is plastic-write geometry.
 
+## TM.0.24.MOTORPERSIST → isolated v31 WRITEGEOM
+
+Canonical main `3104f37`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+Diagnosis is strong enough to authorize one narrow neural amendment: exchangeable actuator-local prototypes. Not instincts. Not another recurrent population. Not RLS in the organism.
+
+v31 apparatus: [`cortex_v31.prereg.lock`](cortex_v31.prereg.lock) + [`lineage_writegeom.prereg.lock`](lineage_writegeom.prereg.lock). Neural edit only after this commit is on `origin/main`. Frozen `H_max=8`, state budget `2×8×64`, cosine margin `0.01` plus perturbation, ecological reversal required, positive-only reassignment diagnostic. Unused `TM024.WRITEGEOM.DEV.` / `TWIN.`. SCORE reserved. n stays 64. Lineage stays closed even if W1 passes (S10/S11 still unrepaired). FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

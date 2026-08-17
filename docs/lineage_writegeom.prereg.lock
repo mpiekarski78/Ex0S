@@ -1,0 +1,124 @@
+{
+  "version": "TM.0.24.WRITEGEOM.PREREG",
+  "lab": "TM.0.24.WRITEGEOM",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "candidate_name": "v31",
+  "neural_edit_authorized_after_this_freeze": true,
+  "implementation_on_scored_cells_before_w1_freeze": false,
+  "package_question": "Does an exchangeable actuator-local prototype (one fast and one slow 64-d row per bound handle) learn opposing cue-to-handle maps that sequential outer-product ACT credit cannot, without allocating a prototype per cue and without a second recurrent population?",
+  "authorized_by": [
+    "docs/lineage_motorpersist.decision.lock",
+    "docs/lineage_motorpersist.reaudit.lock"
+  ],
+  "motorpersist_decision_sha": "75d0ab57de8c4e394d42f78fa2af0494722b85348f123b9796de3e9b74af93b9",
+  "motorpersist_reaudit_sha": "a076fc5a4f1199e0463756d66e9686e889ba5d200ecf63131387c440e6094a30",
+  "candidate_v30_sha": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+  "n": 64,
+  "increase_n": false,
+  "H_max": 8,
+  "state_budget": 1024,
+  "proto_dim": 64,
+  "proto_eps": 1e-12,
+  "no_confidence_representation": true,
+  "arms": {
+    "W0": {"role": "outer_product_control", "where": "neural_p0", "v31_eligible": false},
+    "W1": {"role": "actuator_local_prototype", "where": "neural", "v31_eligible": true},
+    "W2": {"role": "sequential_RLS_upper_bound", "where": "runner_only", "v31_eligible": false, "lambda": 0.01}
+  },
+  "domains": {
+    "DEV": "TM024.WRITEGEOM.DEV.",
+    "SCORE": "TM024.WRITEGEOM.SCORE.",
+    "TWIN": "TM024.WRITEGEOM.TWIN.",
+    "REGRESS": "TM024.WRITEGEOM.REGRESS."
+  },
+  "capacity": [
+    {"n_cues": 2, "n_handles": 2, "balanced": true, "purpose": "minimal_opposing", "required": true},
+    {"n_cues": 4, "n_handles": 2, "balanced": true, "purpose": "multi_address_per_actuator", "required": true},
+    {"n_cues": 8, "n_handles": 2, "balanced": true, "purpose": "fixed_memory_cue_capacity", "required": true},
+    {"n_cues": 8, "n_handles": 4, "balanced": true, "purpose": "actuator_scaling", "required": true},
+    {"n_cues": 8, "n_handles": 8, "balanced": true, "purpose": "calibration_only", "required": false}
+  ],
+  "reversal": {
+    "ecological": {"required_w1_pass": true, "sequence": ["A_h1_pos", "A_h1_neg", "A_h2_pos"]},
+    "positive_only_reassignment": {"required_w1_pass": false, "diagnostic": true, "sequence": ["A_h1_pos", "A_h2_pos"]}
+  },
+  "margin": {
+    "cosine_margin_min": 0.01,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19,
+    "reject_margin_gt_zero_alone": true,
+    "frozen_before_dev": true
+  },
+  "lifecycle": {
+    "new_handle": "zero_prototype",
+    "same_handle_rebound": "retain",
+    "removed_handle": "dormant_not_scored",
+    "handle_permutation": "exact_row_permutation",
+    "cue_rename": "no_prototype_effect",
+    "old_checkpoint_missing_proto": "zeros_not_inferred_from_motor_vocab"
+  },
+  "scoring": {
+    "method": "actuator_scores",
+    "zero_scores_tiebreak": "rng_motor",
+    "live_uses": "post_blend_live_row",
+    "slow_normalized_after_beta": true,
+    "w_act_query": "checkpoint_compat_only_no_w1_update"
+  },
+  "w2": {
+    "lambda": 0.01,
+    "train_on": "teaching_rho_elig_only",
+    "never_probe_states": true,
+    "update_order": "sequential_after_each_teach"
+  },
+  "equal_advantage": true,
+  "pos_delta": [0.25, -0.1, 0.15, 0.0],
+  "teach_orders": ["A_then_B", "B_then_A"],
+  "lineage_after_v31_pass": false,
+  "s10_s11_repair_this_package": false,
+  "q3": false,
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_reach.lock",
+    "docs/lineage_plasticitymap.decision.lock",
+    "docs/lineage_actorcredit.lock",
+    "docs/lineage_actorcredit_reach.lock",
+    "docs/lineage_statemap.decision.lock",
+    "docs/lineage_collisionmap.decision.lock",
+    "docs/lineage_persistgate.prereg.lock",
+    "docs/lineage_motorpersist.decision.lock",
+    "docs/lineage_motorpersist.p.lock",
+    "docs/lineage_motorpersist.reaudit.lock",
+    "docs/cortex.candidate.v28.lock",
+    "docs/cortex.candidate.v29.lock",
+    "docs/cortex.candidate.v30.lock"
+  ],
+  "refuse": [
+    "tune_thresholds_after_WRITEGEOM_DEV",
+    "increase_n",
+    "semantic_channels",
+    "direct_reward",
+    "second_global_recurrent_context_state",
+    "cue_keyed_prototypes",
+    "RLS_in_organism",
+    "instincts",
+    "SFNN_GRUs",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "rewrite_historical_locks",
+    "earned_next",
+    "stamp_0.0.005",
+    "move_tau_or_delta",
+    "another_lineage_run",
+    "Q3",
+    "treat_8cue_8handle_as_sufficient",
+    "silent_positive_only_reassignment_pass"
+  ],
+  "note": "Neural edit authorized after this freeze is on origin/main. Freeze W1 law and thresholds before scored worlds. Product remains 0.0.004."
+}

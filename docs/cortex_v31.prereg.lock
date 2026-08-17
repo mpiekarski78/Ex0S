@@ -1,0 +1,43 @@
+{
+  "version": "TM.0.23.CORTEX.V31.PREREG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "motorpersist_decision_sha": "75d0ab57de8c4e394d42f78fa2af0494722b85348f123b9796de3e9b74af93b9",
+  "motorpersist_reaudit_sha": "a076fc5a4f1199e0463756d66e9686e889ba5d200ecf63131387c440e6094a30",
+  "architecture_amendment_md_sha": "0436dfbc63e819aa74c5b20bfd31b7c68cad3b50fb915e85835c2e8d808d77de",
+  "architecture_amendment_sha": "d52bdad3f2a94909cddeae565440c3b22199e47be25f7662fb0d92746345e3f0",
+  "isolation_sha": "9e463501b6608c0774b3a28c8aeae99a992e66473e07ca1f95bdc1b8258ce7ef",
+  "authorized_law": "exchangeable_actuator_local_prototype",
+  "n": 64,
+  "tau": 0.6,
+  "delta_B": 0.05,
+  "delta_P": 0.05,
+  "H_max": 8,
+  "state_budget": 1024,
+  "required_after_edit": [
+    "dev_on_TM024.WRITEGEOM.DEV.",
+    "w1_2cue_opposing_required",
+    "nine_sanity",
+    "A0_A11",
+    "C4",
+    "C5",
+    "C6",
+    "freeze_v31_before_SCORE"
+  ],
+  "lineage_after_gates": false,
+  "refuse": [
+    "increase_n",
+    "move_tau_or_delta",
+    "rewrite_historical_locks",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "L0_specific_circuitry",
+    "install_RLS_in_organism",
+    "second_global_recurrent_context_state",
+    "tune_thresholds_after_WRITEGEOM_DEV",
+    "another_lineage_run"
+  ],
+  "note": "Narrow v31 actuator-local prototypes. Neural edit authorized after this freeze is on origin/main. Product remains 0.0.004."
+}
