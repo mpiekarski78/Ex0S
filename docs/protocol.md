@@ -2450,6 +2450,20 @@ AFFINEMAP R2 apparatus: [`lineage_affinemap.r2.prereg.lock`](lineage_affinemap.r
 
 Common-margin runner: [`lineage_affinemap.r2.runner.lock`](lineage_affinemap.r2.runner.lock). 104 cells. DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
 
+## TM.0.24.AFFINEMAP.R2 → isolated two-timescale candidate
+
+Canonical main `7f2d8e1`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+DEV first-match **online_optimization_failure**. A1 passed four- and eight-cue acquire ranking and the 0.01 geometric floor. A2 failed four-cue acquire ranking. A3 did not uniquely help. Representation is sufficient; online optimization is the wall. V1 intercept extract stands. Pass statistic remains normalized geometric margin.
+
+No further solver MAP. No SCORE. No oracle reaudit. Compact PA is not the success path. Learned actuator bias does not join. Authorize **one** two-timescale candidate: capture robust P1 at event-end; store up to eight content-addressed P1 episodes; replace contradictory matches; error-driven learning while awake; REST replay; strengthen low-margin correct associations during REST; consolidate into slow actuator weights; n stays 64; zero innate cue-action mappings. Not v31 W1. Not a 512-row event-end TRACE. Not 1536 eligibility.
+
+Addendum: [`lineage_affinemap.r2.decision.addendum.lock`](lineage_affinemap.r2.decision.addendum.lock). Historical DEV/decision/runner preserved.
+
+v32 apparatus: [`cortex_v32.prereg.lock`](cortex_v32.prereg.lock) + [`cortex_v32.isolation.lock`](cortex_v32.isolation.lock). Battery: [`lineage_twoscale.prereg.lock`](lineage_twoscale.prereg.lock). 36 cells on unused `TM025.TWOSCALE.DEV.` / `TWIN.`. SCORE reserved. n stays 64.
+
+DEV first-match **architectural_wall_acquire**. Four-cue acquire/stability/reversal/specificity passed. Eight-cue acquire ranking is 7/8. The scored organism is REST mix-once after 16 replay epochs; awake store-wide replay is not in the scored credit path. Lineage stays closed. Addendum: [`lineage_twoscale.decision.addendum.lock`](lineage_twoscale.decision.addendum.lock). Historical DEV/decision/addendum hashes unchanged.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

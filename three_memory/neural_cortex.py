@@ -74,6 +74,11 @@ ACT_SCORE_QUERY = "query"
 ACT_SCORE_PROTO = "proto"
 PROTO_EPS = 1e-12
 ACTUATOR_PROTO_H_MAX = 8
+# v32: eight content-addressed P1 episodes. Frozen budgets, not a search.
+EPISODE_SLOTS = 8
+EPISODE_MATCH_L2 = 0.05
+EPISODE_REPLAY_EPOCHS = 16
+ACT_MARGIN_FLOOR = 0.01
 
 
 @dataclass
@@ -265,6 +270,14 @@ class NeuralCortex:
         self.last_action: dict[str, Any] | None = None
         self.last_trajectory: list[np.ndarray] = []
         self.sensory_trajectory: list[np.ndarray] = []
+        # v32: event-end P1 + eight-slot episode store. Empty at birth.
+        self._last_p1: np.ndarray | None = None
+        self._episodes: list[dict[str, Any]] = []
+        self._episode_clock = 0
+        self._episode_n_inserts = 0
+        self._episode_n_replaced = 0
+        self._n_rest_replay = 0
+        self._n_rest_strengthen = 0
 
     # --- init helpers ---
 
@@ -376,6 +389,135 @@ class NeuralCortex:
         if not np.isfinite(nrm) or nrm <= PROTO_EPS:
             return np.zeros(self.genome.n, dtype=np.float64)
         return (np.asarray(z, dtype=np.float64) / nrm).astype(np.float64)
+
+    def _unique_act_winner(self, scores: dict[str, float]) -> str | None:
+        if not scores:
+            return None
+        mx = max(float(v) for v in scores.values())
+        wins = [h for h, v in scores.items() if float(v) == mx]
+        return wins[0] if len(wins) == 1 else None
+
+    def _act_ranking_error(self, p1: np.ndarray, handle: str, adv: float) -> bool:
+        win = self._unique_act_winner(self.actuator_scores(p1))
+        if float(adv) > 0.0:
+            return win != str(handle)
+        return win == str(handle) or win is None
+
+    def _act_effective_row(self, handle: str) -> np.ndarray:
+        W = self._from_t(self.W_act_query)
+        v = np.asarray(self.motor_vocab[handle], dtype=np.float64).reshape(-1)
+        return (W.T @ v).astype(np.float64)
+
+    def _act_geometric_margin(self, p1: np.ndarray, handle: str) -> float:
+        scores = self.actuator_scores(p1)
+        others = [h for h in scores if h != handle]
+        if not others:
+            return 0.0
+        rival = max(others, key=lambda h: float(scores[h]))
+        w_ch = self._act_effective_row(handle)
+        w_ot = self._act_effective_row(rival)
+        x = self._unit_or_zero(p1)
+        d = w_ch - w_ot
+        dn = float(np.linalg.norm(d))
+        if dn <= PROTO_EPS:
+            return 0.0
+        return float(np.dot(d, x) / dn)
+
+    def _episode_write(self, p1: np.ndarray, handle: str, adv: float) -> None:
+        x = self._unit_or_zero(p1)
+        if float(np.linalg.norm(x)) <= PROTO_EPS or abs(float(adv)) <= ELIG_EPS:
+            return
+        self._episode_clock += 1
+        match_i: int | None = None
+        best_d: float | None = None
+        for i, old in enumerate(self._episodes):
+            d = float(np.linalg.norm(old["p1"] - x))
+            if d <= EPISODE_MATCH_L2 + ELIG_EPS and (best_d is None or d < best_d):
+                match_i = i
+                best_d = d
+        ep = {
+            "p1": x.copy(),
+            "handle": str(handle),
+            "adv": float(adv),
+            "age": int(self._episode_clock),
+            "version": 1,
+            "valid": True,
+        }
+        if match_i is None:
+            if len(self._episodes) < EPISODE_SLOTS:
+                self._episodes.append(ep)
+            else:
+                evict = min(range(len(self._episodes)), key=lambda i: (int(self._episodes[i]["age"]), i))
+                self._episodes[evict] = ep
+            self._episode_n_inserts += 1
+            return
+        old = self._episodes[int(match_i)]
+        old_pos = float(old["adv"]) > 0.0
+        new_pos = float(adv) > 0.0
+        contradictory = False
+        if old_pos != new_pos and abs(float(old["adv"])) > ELIG_EPS and abs(float(adv)) > ELIG_EPS:
+            contradictory = True
+        if str(handle) != str(old["handle"]) and float(adv) > 0.0:
+            contradictory = True
+        if contradictory:
+            ep["version"] = int(old["version"]) + 1
+            self._episodes[int(match_i)] = ep
+            self._episode_n_replaced += 1
+            return
+        old["age"] = int(self._episode_clock)
+        old["adv"] = float(adv)
+
+    def _apply_act_query_update(
+        self,
+        p1: np.ndarray,
+        handle: str,
+        adv: float,
+        eta_a: float,
+        *,
+        mix_slow: bool,
+    ) -> bool:
+        if handle not in self.motor_vocab or abs(float(adv)) <= ELIG_EPS:
+            return False
+        rho = self._unit_or_zero(p1)
+        if float(np.max(np.abs(rho))) <= ELIG_EPS:
+            return False
+        tok_v = self._to_t(self.motor_vocab[handle])
+        self.W_act_query = self.W_act_query + float(eta_a) * float(adv) * torch.outer(
+            tok_v, self._to_t(rho)
+        )
+        self._clip_and_consolidate({"W_act_query"}, mix_slow=mix_slow)
+        return True
+
+    def _replay_store_pass(self, eta_a: float, *, strengthen: bool) -> tuple[int, int]:
+        n_replay = 0
+        n_strengthen = 0
+        for ep in list(self._episodes):
+            if not ep.get("valid"):
+                continue
+            p1 = np.asarray(ep["p1"], dtype=np.float64)
+            handle = str(ep["handle"])
+            adv = float(ep["adv"])
+            if self._apply_act_query_update(p1, handle, adv, eta_a, mix_slow=False):
+                n_replay += 1
+            if strengthen and float(adv) > 0.0 and self._unique_act_winner(self.actuator_scores(p1)) == handle:
+                if self._act_geometric_margin(p1, handle) < ACT_MARGIN_FLOOR:
+                    mag = abs(adv) if abs(adv) > ELIG_EPS else 1.0
+                    if self._apply_act_query_update(p1, handle, mag, eta_a, mix_slow=False):
+                        n_strengthen += 1
+        return n_replay, n_strengthen
+
+    def _replay_episodes(self) -> dict[str, int]:
+        eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
+        n_replay = 0
+        n_strengthen = 0
+        for _epoch in range(EPISODE_REPLAY_EPOCHS):
+            r, s = self._replay_store_pass(eta_a, strengthen=True)
+            n_replay += r
+            n_strengthen += s
+        self._clip_and_consolidate({"W_act_query"}, mix_slow=True)
+        self._n_rest_replay += n_replay
+        self._n_rest_strengthen += n_strengthen
+        return {"n_replay": n_replay, "n_strengthen": n_strengthen}
 
     def actuator_scores(self, rho: Any) -> dict[str, float]:
         """Scalar ACT scores for every currently bound opaque handle."""
@@ -648,7 +790,9 @@ class NeuralCortex:
                 # v2: argmax over M_act only; never force HOLD on cosine miss
                 # v6: tie-break via motor RNG (exchangeable slots)
                 # v31: actuator_scores (query or proto); all-zero still rng_motor
-                tok = self._choose_actuator(self.rho)
+                # v32: score ACT at event-end P1 when captured
+                addr = self._last_p1 if self._last_p1 is not None else self._from_t(self.rho)
+                tok = self._choose_actuator(addr)
                 if tok is None:
                     chosen_op = "HOLD"
                     break
@@ -727,6 +871,7 @@ class NeuralCortex:
             "rho_elig": rho,
             "rho_op": rho.copy(),
             "rho_motor": rho.copy(),
+            "rho_p1": None if self._last_p1 is None else np.asarray(self._last_p1, dtype=np.float64).copy(),
             "s_hat": np.asarray(action["s_hat"], dtype=np.float64).copy(),
             "body": np.asarray(action.get("body", self.last_body), dtype=np.float64).copy(),
             "cost": float(self._op_cost.get(chosen_op, action.get("cost") or 0.0)),
@@ -826,24 +971,26 @@ class NeuralCortex:
                     p.get("rho_motor", p["rho_elig"]),
                     eta_a,
                 )
+            elif p["op"] == "ACT":
+                p1_raw = p.get("rho_p1")
+                if p1_raw is None:
+                    p1_raw = p.get("rho_motor", p["rho_elig"])
+                p1 = np.asarray(p1_raw, dtype=np.float64)
+                if not self._resting:
+                    self._episode_write(p1, str(p["token"]), float(adv))
+                    if self._act_ranking_error(p1, str(p["token"]), float(adv)):
+                        self._apply_act_query_update(p1, str(p["token"]), float(adv), eta_a, mix_slow=False)
             else:
-                if p["op"] == "ACT" and p.get("motor_vec") is not None:
-                    tok_v = self._to_t(np.asarray(p["motor_vec"], dtype=np.float64))
-                elif p["op"] == "ACT" and p["token"] in self.motor_vocab:
-                    tok_v = self._to_t(self.motor_vocab[p["token"]])
-                else:
-                    tok_v = self._to_t(self._vocab_vec(p["token"]))
-                mat_name = "W_emit_query" if p["op"] == "EMIT" else "W_act_query"
-                W = getattr(self, mat_name)
-                setattr(self, mat_name, W + eta_a * adv * torch.outer(tok_v, rho_motor))
-                updated.add(mat_name)
+                tok_v = self._to_t(self._vocab_vec(p["token"]))
+                self.W_emit_query = self.W_emit_query + eta_a * adv * torch.outer(tok_v, rho_motor)
+                updated.add("W_emit_query")
         self._clip_and_consolidate(updated)
         self._pending = None
         self._pred_pending = None
         self._last_pred_err = pred_err
         return {"adv": adv, "pred_err": pred_err}
 
-    def _clip_and_consolidate(self, names: set[str] | None = None) -> None:
+    def _clip_and_consolidate(self, names: set[str] | None = None, *, mix_slow: bool = True) -> None:
         if not names:
             return
         c = self.genome.clip
@@ -855,13 +1002,14 @@ class NeuralCortex:
             W = torch.clamp(W, -c, c)
             if name == "W_rec":
                 W = W * self.M
-            slow = self.W_slow[name]
-            slow = (1.0 - beta) * slow + beta * W
-            W = slow + 0.5 * (W - slow)
-            if name == "W_rec":
-                W = W * self.M
+            if mix_slow:
+                slow = self.W_slow[name]
+                slow = (1.0 - beta) * slow + beta * W
+                W = slow + 0.5 * (W - slow)
+                if name == "W_rec":
+                    W = W * self.M
+                self.W_slow[name] = slow.detach().clone()
             setattr(self, name, W)
-            self.W_slow[name] = slow.detach().clone()
 
     # --- public ABI ---
 
@@ -913,6 +1061,8 @@ class NeuralCortex:
         for u in ordered:
             self._sensory_tick(self._vocab_vec(u), body, same_ix, record_sensory=True)
         self._sensory_tick(self.v_end, body, same_ix, record_sensory=True)
+        if not self._resting:
+            self._last_p1 = self._unit_or_zero(self._from_t(self.rho))
         self._sensory_tick(s_t, body, same_ix, record_sensory=True)
 
         for k in list(self._symbol_fam):
@@ -988,7 +1138,7 @@ class NeuralCortex:
         self.last_trajectory = []
 
     def rest_epoch(self, n_ticks: int, *, body: np.ndarray | None = None) -> dict[str, Any]:
-        """Host rest opportunity. Replay selection is cortical RETRIEVE. Host does not pick S rows."""
+        """Host rest opportunity. Cortical RETRIEVE plus v32 P1 episode replay. Host does not pick S rows."""
         n_ticks = int(max(0, n_ticks))
         body_arr = np.asarray(body if body is not None else self.last_body, dtype=np.float64)
         fatigued = body_arr.copy()
@@ -996,6 +1146,7 @@ class NeuralCortex:
             fatigued[3] = min(1.0, float(fatigued[3]) + 0.3)
         self._resting = True
         ops: dict[str, int] = {}
+        replay: dict[str, int] = {"n_replay": 0, "n_strengthen": 0}
         try:
             for i in range(n_ticks):
                 out = self.observe(
@@ -1009,12 +1160,20 @@ class NeuralCortex:
                 )
                 op = str((out.get("action") or {}).get("op") or "?")
                 ops[op] = ops.get(op, 0) + 1
+            replay = self._replay_episodes()
         finally:
             self._resting = False
         self.reset_rho()
         self._maybe_grow_prune()
         self.dev_epoch += 1
-        return {"ok": True, "n": n_ticks, "op_counts": ops, "dev_epoch": int(self.dev_epoch)}
+        return {
+            "ok": True,
+            "n": n_ticks,
+            "op_counts": ops,
+            "dev_epoch": int(self.dev_epoch),
+            "n_replay": int(replay.get("n_replay", 0)),
+            "n_strengthen": int(replay.get("n_strengthen", 0)),
+        }
 
     def _maybe_grow_prune(self) -> None:
         grow = self._lp("connect.growth_rate", 0.0) * self._age_scale("growth_scale", 0.0)
@@ -1063,6 +1222,13 @@ class NeuralCortex:
         self._vocal_next = None
         self._last_motor_class = None
         self.reset_rho()
+        self._last_p1 = None
+        self._episodes = []
+        self._episode_clock = 0
+        self._episode_n_inserts = 0
+        self._episode_n_replaced = 0
+        self._n_rest_replay = 0
+        self._n_rest_strengthen = 0
         z = np.zeros(self.genome.n, dtype=np.float64)
         for h in list(self._proto_fast):
             self._proto_fast[h] = z.copy()
@@ -1100,6 +1266,7 @@ class NeuralCortex:
                         "rho_elig",
                         "rho_op",
                         "rho_motor",
+                        "rho_p1",
                         "s_hat",
                         "body",
                         "motor_vec",
@@ -1110,6 +1277,9 @@ class NeuralCortex:
                 "rho_motor": np.asarray(
                     self._pending.get("rho_motor", self._pending["rho_elig"])
                 ).tolist(),
+                "rho_p1": None
+                if self._pending.get("rho_p1") is None
+                else np.asarray(self._pending["rho_p1"]).tolist(),
                 "s_hat": np.asarray(self._pending["s_hat"]).tolist(),
                 "body": np.asarray(self._pending["body"]).tolist(),
                 "motor_vec": None
@@ -1127,6 +1297,19 @@ class NeuralCortex:
             "motor_registry": {k: v.tolist() for k, v in self._motor_registry.items()},
             "proto_fast": {k: v.tolist() for k, v in self._proto_fast.items()},
             "proto_slow": {k: v.tolist() for k, v in self._proto_slow.items()},
+            "last_p1": None if self._last_p1 is None else self._last_p1.tolist(),
+            "episodes": [
+                {
+                    "p1": np.asarray(e["p1"]).tolist(),
+                    "handle": str(e["handle"]),
+                    "adv": float(e["adv"]),
+                    "age": int(e["age"]),
+                    "version": int(e["version"]),
+                    "valid": bool(e["valid"]),
+                }
+                for e in self._episodes
+            ],
+            "episode_clock": int(self._episode_clock),
             "sources": {k: v.tolist() for k, v in self.sources.items()},
             "v_start": self.v_start.tolist(),
             "v_end": self.v_end.tolist(),
@@ -1206,6 +1389,21 @@ class NeuralCortex:
             self._proto_slow = {k: z.copy() for k in self._proto_fast}
         for k in set(self._proto_fast) - set(self._proto_slow):
             self._proto_slow[k] = z.copy()
+        lp1 = snap.get("last_p1")
+        self._last_p1 = None if lp1 is None else np.asarray(lp1, dtype=np.float64)
+        self._episodes = []
+        for raw in snap.get("episodes") or []:
+            self._episodes.append(
+                {
+                    "p1": np.asarray(raw["p1"], dtype=np.float64),
+                    "handle": str(raw["handle"]),
+                    "adv": float(raw["adv"]),
+                    "age": int(raw.get("age") or 0),
+                    "version": int(raw.get("version") or 1),
+                    "valid": bool(raw.get("valid", True)),
+                }
+            )
+        self._episode_clock = int(snap.get("episode_clock") or 0)
         gsnap = snap.get("genome") or {}
         if "act_score_mode" in gsnap:
             self.genome.act_score_mode = str(gsnap["act_score_mode"])
@@ -1225,6 +1423,9 @@ class NeuralCortex:
                 "rho_elig": rho_elig,
                 "rho_op": np.asarray(pend.get("rho_op", rho_elig), dtype=np.float64),
                 "rho_motor": np.asarray(pend.get("rho_motor", rho_elig), dtype=np.float64),
+                "rho_p1": None
+                if pend.get("rho_p1") is None
+                else np.asarray(pend["rho_p1"], dtype=np.float64),
                 "s_hat": np.asarray(pend["s_hat"], dtype=np.float64),
                 "body": np.asarray(pend["body"], dtype=np.float64),
                 "cost": float(pend["cost"]),

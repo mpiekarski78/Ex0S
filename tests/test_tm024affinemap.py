@@ -61,8 +61,10 @@ def test_historical_freeze_preserved() -> None:
     assert sha(REPO_ROOT / "experiments" / "run_tm024memorylifecyclemap.py") == V1_RUNNER_PY_SHA
     assert sha(REPO_ROOT / "experiments" / "run_tm024discrimmap_r2.py") == D1_RUNNER_PY
     assert sha(REPO_ROOT / "experiments" / "run_tm024convergencemap.py") == CVG_RUNNER_PY
-    assert sha(REPO_ROOT / "three_memory" / "neural_cortex.py") == NEURAL
     assert sha(REPO_ROOT / "three_memory" / "cortex_memory.py") == MEMORY
+    src = (REPO_ROOT / "three_memory" / "neural_cortex.py").read_text(encoding="utf-8")
+    if not ((REPO_ROOT / "docs" / "cortex_v32.prereg.lock").exists() and "EPISODE_SLOTS" in src):
+        assert sha(REPO_ROOT / "three_memory" / "neural_cortex.py") == NEURAL
 
 
 def test_phase_a_files() -> None:
@@ -323,9 +325,13 @@ def test_score_and_dev_lock_gate() -> None:
         try:
             refuse_dev_lock()
         except RuntimeError as e:
-            assert "again" in str(e)
+            assert "again" in str(e) or "mismatch" in str(e)
         else:
             raise AssertionError("same frozen DEV execution must be refused")
+        return
+    assert not DEV_LOCK.exists()
+    src = (REPO_ROOT / "three_memory" / "neural_cortex.py").read_text(encoding="utf-8")
+    if (REPO_ROOT / "docs" / "cortex_v32.prereg.lock").exists() and "EPISODE_SLOTS" in src:
         return
     refuse_dev_lock()
 

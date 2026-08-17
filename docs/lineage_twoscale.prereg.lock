@@ -1,0 +1,77 @@
+{
+  "version": "TM.0.25.TWOSCALE.PREREG",
+  "lab": "TM.0.25.TWOSCALE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": true,
+  "implementation_authorized": true,
+  "package_question": "Does fast episodic P1 memory plus REST replay and slow W_act_query consolidation acquire, hold, reverse, and stay specific at two, four, and eight cues on unused worlds?",
+  "authorized_by": [
+    "docs/lineage_affinemap.r2.decision.lock",
+    "docs/lineage_affinemap.r2.decision.addendum.lock",
+    "docs/cortex_v32.prereg.lock"
+  ],
+  "affinemap_r2_decision_sha": "dc71c767858cc3fbc982a8fc6a3736c15d33f107087878810942ec4182b323bf",
+  "affinemap_r2_dev_sha": "3ca78f2ec5a383ee38ea644ef476f8308f302b75d59becfe34b861ca0fa761ef",
+  "affinemap_r2_addendum_sha": "d6a2cdbf0869ff7a78b6c2fe2f1d20b6e31011c1333b464f006cfc34b45b7bc4",
+  "candidate_name": "v32",
+  "n": 64,
+  "increase_n": false,
+  "H_max": 8,
+  "episode_slots": 8,
+  "state_budget": 512,
+  "match_l2": 0.05,
+  "replay_epochs": 16,
+  "n_rest_ticks": 4,
+  "domains": {
+    "DEV": "TM025.TWOSCALE.DEV.",
+    "TWIN": "TM025.TWOSCALE.TWIN.",
+    "SCORE": "TM025.TWOSCALE.SCORE."
+  },
+  "capacity": [
+    {"n_cues": 2, "n_handles": 2, "required": true},
+    {"n_cues": 4, "n_handles": 2, "required": true},
+    {"n_cues": 8, "n_handles": 2, "required": true}
+  ],
+  "orders": ["A_then_B", "B_then_A"],
+  "n_worlds": 2,
+  "phased_contract": {
+    "acquire_pass": "ranking_ok",
+    "stability_gate": "ranking_ok_and_normalized_geometric_margin_0.01_and_perturbation",
+    "reversal": "ecological",
+    "specificity": "unrelated_map_intact"
+  },
+  "margin": {
+    "pass_statistic": "normalized_geometric_margin",
+    "geometric_min": 0.01,
+    "pairwise_score_gap_is_not_pass_statistic": true,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19,
+    "frozen_before_dev": true
+  },
+  "expected_n_cells": 36,
+  "decision_ladder": [
+    {"code": "architectural_wall_acquire", "when": "acquire ranking fails at 4 or 8 cues"},
+    {"code": "architectural_wall_stability", "when": "stability fails ranking or γ<0.01 or perturbation after REST"},
+    {"code": "architectural_wall_reversal", "when": "ecological reversal fails"},
+    {"code": "architectural_wall_specificity", "when": "specificity fails"},
+    {"code": "two_timescale_battery_pass", "when": "acquire, twin, stable, eco, and spec all pass"}
+  ],
+  "lineage_after_pass": false,
+  "reopen_lineage_readiness_only_if_battery_passes": true,
+  "refuse": [
+    "open SCORE",
+    "another solver MAP",
+    "increase n",
+    "new eta / radius / replay / margin search",
+    "W1",
+    "A3",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "Organism battery for v32. SCORE reserved. Product remains 0.0.004."
+}

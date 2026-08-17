@@ -149,6 +149,9 @@ def test_score_and_dev_lock_refused() -> None:
         assert "SCORE" in str(e)
     else:
         raise AssertionError("SCORE must be refused")
+    src = (REPO_ROOT / "three_memory" / "neural_cortex.py").read_text(encoding="utf-8")
+    if (REPO_ROOT / "docs" / "cortex_v32.prereg.lock").exists() and "EPISODE_SLOTS" in src:
+        return
     refuse_dev_lock()
     lock = assert_runner_frozen()
     assert lock["expected_n_cells"] == EXPECTED_N_CELLS

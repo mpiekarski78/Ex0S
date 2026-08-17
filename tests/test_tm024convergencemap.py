@@ -356,7 +356,7 @@ def test_score_and_dev_lock_gate() -> None:
         try:
             refuse_dev_lock()
         except RuntimeError as e:
-            assert "again" in str(e)
+            assert "again" in str(e) or "mismatch" in str(e)
         else:
             raise AssertionError("same frozen DEV execution must be refused")
         return

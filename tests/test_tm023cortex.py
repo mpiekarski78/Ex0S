@@ -737,6 +737,30 @@ def test_verify_v13_gate_cli() -> None:
         assert not (REPO_ROOT / "docs" / "cortex_development.v13.lock").exists()
 
 
+def test_v32_candidate_boundary_pending_gate() -> None:
+    amend = json.loads((REPO_ROOT / "docs" / "cortex_v32_architecture_amendment.lock").read_text(encoding="utf-8"))
+    prereg = json.loads((REPO_ROOT / "docs" / "cortex_v32.prereg.lock").read_text(encoding="utf-8"))
+    iso = json.loads((REPO_ROOT / "docs" / "cortex_v32.isolation.lock").read_text(encoding="utf-8"))
+    cells = json.loads((REPO_ROOT / "docs" / "lineage_twoscale.prereg.lock").read_text(encoding="utf-8"))
+    assert amend["n"] == 64
+    assert prereg["n"] == 64
+    assert prereg["authorized_law"] == "fast_episodic_p1_memory_plus_slow_cortical_consolidation"
+    assert prereg["episode_slots"] == 8
+    assert prereg["state_budget"] == 512
+    assert prereg["act_score_mode"] == "query"
+    assert prereg["a3_bias"] is False
+    assert prereg["w1_proto"] is False
+    assert "increase_n" in prereg["refuse"]
+    assert "another solver MAP" in iso["refuse"]
+    assert cells["expected_n_cells"] == 36
+    assert cells["margin"]["geometric_min"] == 0.01
+    assert cells["lineage_after_pass"] is False
+    assert not (REPO_ROOT / "docs" / "cortex.candidate.v31.lock").exists()
+    assert not (REPO_ROOT / "docs" / "cortex_fulldev_r7.prereg.lock").exists()
+    cand_p = REPO_ROOT / "docs" / "cortex.candidate.v32.lock"
+    assert not cand_p.exists()
+
+
 def test_v31_candidate_boundary_pending_gate() -> None:
     amend = json.loads((REPO_ROOT / "docs" / "cortex_v31_architecture_amendment.lock").read_text(encoding="utf-8"))
     prereg = json.loads((REPO_ROOT / "docs" / "cortex_v31.prereg.lock").read_text(encoding="utf-8"))
@@ -1462,6 +1486,7 @@ if __name__ == "__main__":
     test_v13_candidate_boundary_pending_gate()
     test_verify_v12_gate_cli()
     test_verify_v13_gate_cli()
+    test_v32_candidate_boundary_pending_gate()
     test_v31_candidate_boundary_pending_gate()
     test_v30_candidate_boundary_pending_gate()
     test_v29_candidate_boundary_pending_gate()

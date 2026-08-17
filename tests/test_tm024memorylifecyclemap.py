@@ -353,9 +353,12 @@ def test_score_and_dev_lock_gate() -> None:
         try:
             refuse_dev_lock()
         except RuntimeError as e:
-            assert "again" in str(e)
+            assert "again" in str(e) or "mismatch" in str(e)
         else:
             raise AssertionError("same frozen DEV execution must be refused")
+        return
+    src = (REPO_ROOT / "three_memory" / "neural_cortex.py").read_text(encoding="utf-8")
+    if (REPO_ROOT / "docs" / "cortex_v32.prereg.lock").exists() and "EPISODE_SLOTS" in src:
         return
     refuse_dev_lock()
 

@@ -1,0 +1,2844 @@
+{
+  "version": "TM.0.25.TWOSCALE.DEV",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "n": 64,
+  "n_cells": 36,
+  "domain": "TM025.TWOSCALE.DEV.",
+  "twin_domain": "TM025.TWOSCALE.TWIN.",
+  "score_domain_opened": false,
+  "neural_edit": true,
+  "act_score_mode": "query",
+  "episode_slots": 8,
+  "match_l2": 0.05,
+  "replay_epochs": 16,
+  "pass_statistic": "normalized_geometric_margin",
+  "geometric_min": 0.01,
+  "decision_code": "architectural_wall_acquire",
+  "decision_then": "architectural_wall_acquire",
+  "phase_flags": {
+    "acquire_2": true,
+    "acquire_4": true,
+    "acquire_8": false,
+    "stable_2": true,
+    "stable_4": true,
+    "stable_8": false,
+    "twin": true,
+    "eco": true,
+    "spec": true
+  },
+  "cells": [
+    {
+      "kind": "acquire",
+      "order": "A_then_B",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11409034764412808,
+          "pairwise_score_gap": 0.0205230306529659,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11539804891446731,
+          "pairwise_score_gap": 0.02075893187742872,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.11409034764412808,
+      "min_pairwise_score_gap": 0.0205230306529659,
+      "n_episodes": 2,
+      "id": "acquire|c2|A_then_B|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "A_then_B",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "ACT": 2,
+          "STOP": 2
+        },
+        "dev_epoch": 1,
+        "n_replay": 32,
+        "n_strengthen": 0
+      },
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11536524793036637,
+          "pairwise_score_gap": 0.020752950645177792,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11502060610192691,
+          "pairwise_score_gap": 0.02069244744651677,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.11502060610192691,
+      "min_pairwise_score_gap": 0.02069244744651677,
+      "n_episodes": 2,
+      "id": "stable|c2|A_then_B|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "acquire",
+      "order": "B_then_A",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11539804891424175,
+          "pairwise_score_gap": 0.020758931877407405,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11409034764435355,
+          "pairwise_score_gap": 0.020523030652986884,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.11409034764435355,
+      "min_pairwise_score_gap": 0.020523030652986884,
+      "n_episodes": 2,
+      "id": "acquire|c2|B_then_A|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "B_then_A",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "ACT": 2,
+          "STOP": 2
+        },
+        "dev_epoch": 1,
+        "n_replay": 32,
+        "n_strengthen": 0
+      },
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11502060610170108,
+          "pairwise_score_gap": 0.020692447446495565,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11536524793059223,
+          "pairwise_score_gap": 0.02075295064519933,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.11502060610170108,
+      "min_pairwise_score_gap": 0.020692447446495565,
+      "n_episodes": 2,
+      "id": "stable|c2|B_then_A|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "acquire",
+      "order": "A_then_B",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11409034764428247,
+          "pairwise_score_gap": 0.016909728591177564,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11539804891431285,
+          "pairwise_score_gap": 0.01710410579652033,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.11409034764428247,
+      "min_pairwise_score_gap": 0.016909728591177564,
+      "n_episodes": 2,
+      "id": "acquire|c2|A_then_B|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "A_then_B",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "ACT": 2,
+          "STOP": 2
+        },
+        "dev_epoch": 1,
+        "n_replay": 32,
+        "n_strengthen": 0
+      },
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11536524793052111,
+          "pairwise_score_gap": 0.01709917739437994,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.1150206061017722,
+          "pairwise_score_gap": 0.017049324117429987,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.1150206061017722,
+      "min_pairwise_score_gap": 0.017049324117429987,
+      "n_episodes": 2,
+      "id": "stable|c2|A_then_B|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "acquire",
+      "order": "B_then_A",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.115398048914397,
+          "pairwise_score_gap": 0.01710410579652588,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11409034764419831,
+          "pairwise_score_gap": 0.016909728591171902,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.11409034764419831,
+      "min_pairwise_score_gap": 0.016909728591171902,
+      "n_episodes": 2,
+      "id": "acquire|c2|B_then_A|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "B_then_A",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "ACT": 2,
+          "STOP": 2
+        },
+        "dev_epoch": 1,
+        "n_replay": 32,
+        "n_strengthen": 0
+      },
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11502060610185617,
+          "pairwise_score_gap": 0.01704932411743576,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11536524793043708,
+          "pairwise_score_gap": 0.017099177394374276,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.11502060610185617,
+      "min_pairwise_score_gap": 0.01704932411743576,
+      "n_episodes": 2,
+      "id": "stable|c2|B_then_A|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "acquire",
+      "order": "A_then_B",
+      "n_cues": 4,
+      "taught": [
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_503458621",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_915087192",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08965326573128052,
+          "pairwise_score_gap": 0.009371918851795336,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.0810533591822247,
+          "pairwise_score_gap": 0.008467126932968139,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_503458621",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.04216218807919645,
+          "pairwise_score_gap": 0.0043944050688282665,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_915087192",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05489824972830431,
+          "pairwise_score_gap": 0.0057246679572771075,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.04216218807919645,
+      "min_pairwise_score_gap": 0.0043944050688282665,
+      "n_episodes": 4,
+      "id": "acquire|c4|A_then_B|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "A_then_B",
+      "n_cues": 4,
+      "taught": [
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_503458621",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_915087192",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "ACT": 3,
+          "HOLD": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 64,
+        "n_strengthen": 0
+      },
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08877963299980988,
+          "pairwise_score_gap": 0.0092822503752501,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08222099170798328,
+          "pairwise_score_gap": 0.008591034387270602,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_503458621",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.042283734367234836,
+          "pairwise_score_gap": 0.004405638313043636,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_915087192",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05458175571008397,
+          "pairwise_score_gap": 0.005692833249328233,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.042283734367234836,
+      "min_pairwise_score_gap": 0.004405638313043636,
+      "n_episodes": 4,
+      "id": "stable|c4|A_then_B|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "acquire",
+      "order": "B_then_A",
+      "n_cues": 4,
+      "taught": [
+        {
+          "cue": "s_915087192",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_503458621",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.0548982497279148,
+          "pairwise_score_gap": 0.005724667957255791,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.04216218807958619,
+          "pairwise_score_gap": 0.004394405068849583,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_503458621",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08105335918183589,
+          "pairwise_score_gap": 0.0084671269329466,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_915087192",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08965326573166917,
+          "pairwise_score_gap": 0.009371918851816319,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.04216218807958619,
+      "min_pairwise_score_gap": 0.004394405068849583,
+      "n_episodes": 4,
+      "id": "acquire|c4|B_then_A|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "B_then_A",
+      "n_cues": 4,
+      "taught": [
+        {
+          "cue": "s_915087192",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_503458621",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "ACT": 3,
+          "HOLD": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 64,
+        "n_strengthen": 0
+      },
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.054581755709694764,
+          "pairwise_score_gap": 0.005692833249306917,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.042283734367624504,
+          "pairwise_score_gap": 0.004405638313065285,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_503458621",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08222099170759475,
+          "pairwise_score_gap": 0.008591034387249619,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_915087192",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08877963300019824,
+          "pairwise_score_gap": 0.009282250375271417,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.042283734367624504,
+      "min_pairwise_score_gap": 0.004405638313065285,
+      "n_episodes": 4,
+      "id": "stable|c4|B_then_A|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "acquire",
+      "order": "A_then_B",
+      "n_cues": 4,
+      "taught": [
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_412398225",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_701050410",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08965326573154651,
+          "pairwise_score_gap": 0.007721752626348,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.0810533591819586,
+          "pairwise_score_gap": 0.006976266437066281,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_412398225",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.04216218807946315,
+          "pairwise_score_gap": 0.0036206442353565738,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_701050410",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05489824972803778,
+          "pairwise_score_gap": 0.004716679665074719,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.04216218807946315,
+      "min_pairwise_score_gap": 0.0036206442353565738,
+      "n_episodes": 4,
+      "id": "acquire|c4|A_then_B|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "A_then_B",
+      "n_cues": 4,
+      "taught": [
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_412398225",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_701050410",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "ACT": 3,
+          "HOLD": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 64,
+        "n_strengthen": 0
+      },
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08877963300007591,
+          "pairwise_score_gap": 0.007647871893238456,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08222099170771717,
+          "pairwise_score_gap": 0.007078357527382173,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_412398225",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.04228373436750174,
+          "pairwise_score_gap": 0.003629899564572381,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_701050410",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05458175570981737,
+          "pairwise_score_gap": 0.004690450258391432,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.04228373436750174,
+      "min_pairwise_score_gap": 0.003629899564572381,
+      "n_episodes": 4,
+      "id": "stable|c4|A_then_B|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "acquire",
+      "order": "B_then_A",
+      "n_cues": 4,
+      "taught": [
+        {
+          "cue": "s_701050410",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_412398225",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.054898249728182164,
+          "pairwise_score_gap": 0.004716679665080381,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.042162188079318624,
+          "pairwise_score_gap": 0.0036206442353512447,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_412398225",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08105335918210275,
+          "pairwise_score_gap": 0.006976266437071832,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_701050410",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08965326573140248,
+          "pairwise_score_gap": 0.0077217526263424485,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.042162188079318624,
+      "min_pairwise_score_gap": 0.0036206442353512447,
+      "n_episodes": 4,
+      "id": "acquire|c4|B_then_A|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "B_then_A",
+      "n_cues": 4,
+      "taught": [
+        {
+          "cue": "s_701050410",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_412398225",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "ACT": 3,
+          "HOLD": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 64,
+        "n_strengthen": 0
+      },
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.054581755709961884,
+          "pairwise_score_gap": 0.004690450258397094,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.04228373436735709,
+          "pairwise_score_gap": 0.0036298995645668297,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_412398225",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08222099170786136,
+          "pairwise_score_gap": 0.007078357527387946,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_701050410",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08877963299993175,
+          "pairwise_score_gap": 0.007647871893233127,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.04228373436735709,
+      "min_pairwise_score_gap": 0.0036298995645668297,
+      "n_episodes": 4,
+      "id": "stable|c4|B_then_A|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "acquire",
+      "order": "A_then_B",
+      "n_cues": 8,
+      "taught": [
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_503458621",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_915087192",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        },
+        {
+          "cue": "s_331435538",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 5
+        },
+        {
+          "cue": "s_315008021",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 6
+        },
+        {
+          "cue": "s_133853068",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 7
+        },
+        {
+          "cue": "s_224987340",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 8
+        }
+      ],
+      "rest": null,
+      "passed": false,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.07283678234982174,
+          "pairwise_score_gap": 0.0055009947699951045,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.020278542166756754,
+          "pairwise_score_gap": 0.0015268821695717527,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_503458621",
+          "want": "h_638298452",
+          "winner": "h_726173329",
+          "ranking_ok": false,
+          "normalized_geometric_margin": -0.016091823175357522,
+          "pairwise_score_gap": 0.0012132587224857883,
+          "perturbation_ok": false
+        },
+        {
+          "cue": "s_915087192",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05569233489282089,
+          "pairwise_score_gap": 0.0042038788652526415,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_331435538",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.03630932382023957,
+          "pairwise_score_gap": 0.002775521994386243,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_315008021",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.0897531557384561,
+          "pairwise_score_gap": 0.0067935984256697335,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_133853068",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05775444289054121,
+          "pairwise_score_gap": 0.004366710693590403,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_224987340",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05295640809647583,
+          "pairwise_score_gap": 0.004011309909054739,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": false,
+      "perturbation_ok": false,
+      "geometric_ok": false,
+      "min_normalized_geometric_margin": -0.016091823175357522,
+      "min_pairwise_score_gap": 0.0012132587224857883,
+      "n_episodes": 8,
+      "id": "acquire|c8|A_then_B|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "A_then_B",
+      "n_cues": 8,
+      "taught": [
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_503458621",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_915087192",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        },
+        {
+          "cue": "s_331435538",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 5
+        },
+        {
+          "cue": "s_315008021",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 6
+        },
+        {
+          "cue": "s_133853068",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 7
+        },
+        {
+          "cue": "s_224987340",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 8
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "STOP": 1,
+          "HOLD": 2,
+          "ACT": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 128,
+        "n_strengthen": 0
+      },
+      "passed": false,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.06419016875502592,
+          "pairwise_score_gap": 0.004779103582250976,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.033486035325696606,
+          "pairwise_score_gap": 0.002494051230600536,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_503458621",
+          "want": "h_638298452",
+          "winner": "h_726173329",
+          "ranking_ok": false,
+          "normalized_geometric_margin": -0.025869613437985176,
+          "pairwise_score_gap": 0.001928564713451375,
+          "perturbation_ok": false
+        },
+        {
+          "cue": "s_915087192",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.06386434899478159,
+          "pairwise_score_gap": 0.004743699342394714,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_331435538",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.02900014236563974,
+          "pairwise_score_gap": 0.0021696843954351896,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_315008021",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.09800276205857894,
+          "pairwise_score_gap": 0.007302563275579321,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_133853068",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05064694136372084,
+          "pairwise_score_gap": 0.0037761815952078726,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_224987340",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.058848312729867416,
+          "pairwise_score_gap": 0.00438810308889559,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": false,
+      "perturbation_ok": false,
+      "geometric_ok": false,
+      "min_normalized_geometric_margin": -0.025869613437985176,
+      "min_pairwise_score_gap": 0.001928564713451375,
+      "n_episodes": 8,
+      "id": "stable|c8|A_then_B|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "acquire",
+      "order": "B_then_A",
+      "n_cues": 8,
+      "taught": [
+        {
+          "cue": "s_224987340",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_133853068",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_315008021",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_331435538",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        },
+        {
+          "cue": "s_915087192",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 5
+        },
+        {
+          "cue": "s_503458621",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 6
+        },
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 7
+        },
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 8
+        }
+      ],
+      "rest": null,
+      "passed": false,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05295640809594107,
+          "pairwise_score_gap": 0.0040113099090334225,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05775444289107807,
+          "pairwise_score_gap": 0.0043667106936116085,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_503458621",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08975315573792117,
+          "pairwise_score_gap": 0.006793598425648306,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_915087192",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.036309323820770484,
+          "pairwise_score_gap": 0.0027755219944074483,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_331435538",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05569233489228423,
+          "pairwise_score_gap": 0.004203878865231103,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_315008021",
+          "want": "h_726173329",
+          "winner": "h_638298452",
+          "ranking_ok": false,
+          "normalized_geometric_margin": -0.016091823174819886,
+          "pairwise_score_gap": 0.001213258722464472,
+          "perturbation_ok": false
+        },
+        {
+          "cue": "s_133853068",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.020278542166218383,
+          "pairwise_score_gap": 0.0015268821695503254,
+          "perturbation_ok": false
+        },
+        {
+          "cue": "s_224987340",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.07283678235035936,
+          "pairwise_score_gap": 0.005500994770016532,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": false,
+      "perturbation_ok": false,
+      "geometric_ok": false,
+      "min_normalized_geometric_margin": -0.016091823174819886,
+      "min_pairwise_score_gap": 0.001213258722464472,
+      "n_episodes": 8,
+      "id": "acquire|c8|B_then_A|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "B_then_A",
+      "n_cues": 8,
+      "taught": [
+        {
+          "cue": "s_224987340",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_133853068",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_315008021",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_331435538",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        },
+        {
+          "cue": "s_915087192",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 5
+        },
+        {
+          "cue": "s_503458621",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 6
+        },
+        {
+          "cue": "s_034517172",
+          "handle": "h_726173329",
+          "adv": 0.23799941637852023,
+          "n_episodes": 7
+        },
+        {
+          "cue": "s_363326221",
+          "handle": "h_638298452",
+          "adv": 0.23799941637852023,
+          "n_episodes": 8
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "STOP": 1,
+          "HOLD": 2,
+          "ACT": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 128,
+        "n_strengthen": 0
+      },
+      "passed": false,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_363326221",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05884831272932554,
+          "pairwise_score_gap": 0.004388103088874051,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_034517172",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05064694136426378,
+          "pairwise_score_gap": 0.003776181595229411,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_503458621",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.098002762058037,
+          "pairwise_score_gap": 0.007302563275557894,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_915087192",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.02900014236618066,
+          "pairwise_score_gap": 0.002169684395456728,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_331435538",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.0638643489942376,
+          "pairwise_score_gap": 0.0047436993423735085,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_315008021",
+          "want": "h_726173329",
+          "winner": "h_638298452",
+          "ranking_ok": false,
+          "normalized_geometric_margin": -0.02586961343744271,
+          "pairwise_score_gap": 0.0019285647134300588,
+          "perturbation_ok": false
+        },
+        {
+          "cue": "s_133853068",
+          "want": "h_638298452",
+          "winner": "h_638298452",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.03348603532515375,
+          "pairwise_score_gap": 0.0024940512305792195,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_224987340",
+          "want": "h_726173329",
+          "winner": "h_726173329",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.06419016875556978,
+          "pairwise_score_gap": 0.004779103582272515,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": false,
+      "perturbation_ok": false,
+      "geometric_ok": false,
+      "min_normalized_geometric_margin": -0.02586961343744271,
+      "min_pairwise_score_gap": 0.0019285647134300588,
+      "n_episodes": 8,
+      "id": "stable|c8|B_then_A|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "acquire",
+      "order": "A_then_B",
+      "n_cues": 8,
+      "taught": [
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_412398225",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_701050410",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        },
+        {
+          "cue": "s_585903520",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 5
+        },
+        {
+          "cue": "s_437780588",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 6
+        },
+        {
+          "cue": "s_885136720",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 7
+        },
+        {
+          "cue": "s_009347673",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 8
+        }
+      ],
+      "rest": null,
+      "passed": false,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.07283678235019175,
+          "pairwise_score_gap": 0.004532389801994885,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.020278542166386384,
+          "pairwise_score_gap": 0.0012580296981500316,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_412398225",
+          "want": "h_956012276",
+          "winner": "h_142040918",
+          "ranking_ok": false,
+          "normalized_geometric_margin": -0.01609182317498751,
+          "pairwise_score_gap": 0.0009996288281907129,
+          "perturbation_ok": false
+        },
+        {
+          "cue": "s_701050410",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05569233489245155,
+          "pairwise_score_gap": 0.0034636653202226864,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_585903520",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.03630932382060476,
+          "pairwise_score_gap": 0.0022868104521736043,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_437780588",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.089753155738088,
+          "pairwise_score_gap": 0.005597398979643953,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_885136720",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05775444289091059,
+          "pairwise_score_gap": 0.003597826200928078,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_009347673",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05295640809610792,
+          "pairwise_score_gap": 0.0033050033754863373,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": false,
+      "perturbation_ok": false,
+      "geometric_ok": false,
+      "min_normalized_geometric_margin": -0.01609182317498751,
+      "min_pairwise_score_gap": 0.0009996288281907129,
+      "n_episodes": 8,
+      "id": "acquire|c8|A_then_B|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "A_then_B",
+      "n_cues": 8,
+      "taught": [
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_412398225",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_701050410",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        },
+        {
+          "cue": "s_585903520",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 5
+        },
+        {
+          "cue": "s_437780588",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 6
+        },
+        {
+          "cue": "s_885136720",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 7
+        },
+        {
+          "cue": "s_009347673",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 8
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "STOP": 1,
+          "HOLD": 2,
+          "ACT": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 128,
+        "n_strengthen": 0
+      },
+      "passed": false,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.06419016875539953,
+          "pairwise_score_gap": 0.00393760630731077,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.03348603532532379,
+          "pairwise_score_gap": 0.0020549006563034267,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_412398225",
+          "want": "h_956012276",
+          "winner": "h_142040918",
+          "ranking_ok": false,
+          "normalized_geometric_margin": -0.025869613437612647,
+          "pairwise_score_gap": 0.0015889843457468356,
+          "perturbation_ok": false
+        },
+        {
+          "cue": "s_701050410",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.0638643489944079,
+          "pairwise_score_gap": 0.003908435921231357,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_585903520",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.02900014236601128,
+          "pairwise_score_gap": 0.0017876479324688832,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_437780588",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.09800276205820678,
+          "pairwise_score_gap": 0.006016748918846515,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_885136720",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.050646941364093756,
+          "pairwise_score_gap": 0.0031112758609863622,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_009347673",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.058848312729495166,
+          "pairwise_score_gap": 0.0036154518886544196,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": false,
+      "perturbation_ok": false,
+      "geometric_ok": false,
+      "min_normalized_geometric_margin": -0.025869613437612647,
+      "min_pairwise_score_gap": 0.0015889843457468356,
+      "n_episodes": 8,
+      "id": "stable|c8|A_then_B|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "acquire",
+      "order": "B_then_A",
+      "n_cues": 8,
+      "taught": [
+        {
+          "cue": "s_009347673",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_885136720",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_437780588",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_585903520",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        },
+        {
+          "cue": "s_701050410",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 5
+        },
+        {
+          "cue": "s_412398225",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 6
+        },
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 7
+        },
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 8
+        }
+      ],
+      "rest": null,
+      "passed": false,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05295640809630794,
+          "pairwise_score_gap": 0.0033050033754918884,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05775444289070995,
+          "pairwise_score_gap": 0.003597826200922083,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_412398225",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.08975315573828789,
+          "pairwise_score_gap": 0.005597398979649393,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_701050410",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.03630932382040629,
+          "pairwise_score_gap": 0.00228681045216772,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_585903520",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.055692334892652254,
+          "pairwise_score_gap": 0.0034636653202280154,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_437780588",
+          "want": "h_142040918",
+          "winner": "h_956012276",
+          "ranking_ok": false,
+          "normalized_geometric_margin": -0.016091823175188404,
+          "pairwise_score_gap": 0.000999628828196375,
+          "perturbation_ok": false
+        },
+        {
+          "cue": "s_885136720",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.02027854216658749,
+          "pairwise_score_gap": 0.0012580296981554717,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_009347673",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.07283678234999072,
+          "pairwise_score_gap": 0.004532389801989334,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": false,
+      "perturbation_ok": false,
+      "geometric_ok": false,
+      "min_normalized_geometric_margin": -0.016091823175188404,
+      "min_pairwise_score_gap": 0.000999628828196375,
+      "n_episodes": 8,
+      "id": "acquire|c8|B_then_A|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "stable",
+      "order": "B_then_A",
+      "n_cues": 8,
+      "taught": [
+        {
+          "cue": "s_009347673",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_885136720",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        },
+        {
+          "cue": "s_437780588",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 3
+        },
+        {
+          "cue": "s_585903520",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 4
+        },
+        {
+          "cue": "s_701050410",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 5
+        },
+        {
+          "cue": "s_412398225",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 6
+        },
+        {
+          "cue": "s_476603652",
+          "handle": "h_142040918",
+          "adv": 0.23799941637852023,
+          "n_episodes": 7
+        },
+        {
+          "cue": "s_911915828",
+          "handle": "h_956012276",
+          "adv": 0.23799941637852023,
+          "n_episodes": 8
+        }
+      ],
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "STOP": 1,
+          "HOLD": 2,
+          "ACT": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 128,
+        "n_strengthen": 0
+      },
+      "passed": false,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_911915828",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.05884831272969754,
+          "pairwise_score_gap": 0.0036154518886599707,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_476603652",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.050646941363890995,
+          "pairwise_score_gap": 0.003111275860980589,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_412398225",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.0980027620584091,
+          "pairwise_score_gap": 0.006016748918852399,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_701050410",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.029000142365809264,
+          "pairwise_score_gap": 0.00178764793246311,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_585903520",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.06386434899461123,
+          "pairwise_score_gap": 0.003908435921237241,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_437780588",
+          "want": "h_142040918",
+          "winner": "h_956012276",
+          "ranking_ok": false,
+          "normalized_geometric_margin": -0.025869613437815166,
+          "pairwise_score_gap": 0.0015889843457522757,
+          "perturbation_ok": false
+        },
+        {
+          "cue": "s_885136720",
+          "want": "h_956012276",
+          "winner": "h_956012276",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.03348603532552646,
+          "pairwise_score_gap": 0.0020549006563089778,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_009347673",
+          "want": "h_142040918",
+          "winner": "h_142040918",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.0641901687551964,
+          "pairwise_score_gap": 0.003937606307304886,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": false,
+      "perturbation_ok": false,
+      "geometric_ok": false,
+      "min_normalized_geometric_margin": -0.025869613437815166,
+      "min_pairwise_score_gap": 0.0015889843457522757,
+      "n_episodes": 8,
+      "id": "stable|c8|B_then_A|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "twin",
+      "order": "A_then_B",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_228273126",
+          "handle": "h_978011745",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_421459336",
+          "handle": "h_973115913",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_228273126",
+          "want": "h_978011745",
+          "winner": "h_978011745",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.1140903476440352,
+          "pairwise_score_gap": 0.0200599640161383,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_421459336",
+          "want": "h_973115913",
+          "winner": "h_973115913",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11539804891456011,
+          "pairwise_score_gap": 0.02029054396229002,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.1140903476440352,
+      "min_pairwise_score_gap": 0.0200599640161383,
+      "n_episodes": 2,
+      "id": "twin|c2|A_then_B|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.TWIN."
+    },
+    {
+      "kind": "eco",
+      "order": "A_then_B",
+      "n_cues": 2,
+      "passed": true,
+      "ranking_ok": true,
+      "geometric_ok": true,
+      "perturbation_ok": true,
+      "normalized_geometric_margin": 0.9998897183250164,
+      "min_normalized_geometric_margin": 0.9998897183250164,
+      "pairwise_score_gap": 1.1468265928529198,
+      "winner": "h_726173329",
+      "want": "h_726173329",
+      "adv": [
+        0.23799941637852023,
+        -0.6041611964080489,
+        0.23799941637852023
+      ],
+      "n_replaced": 2,
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "HOLD": 2,
+          "ACT": 1,
+          "STOP": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 16,
+        "n_strengthen": 0
+      },
+      "n_episodes": 1,
+      "pass_statistic": "normalized_geometric_margin",
+      "id": "eco|A_then_B|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "spec",
+      "order": "A_then_B",
+      "n_cues": 2,
+      "passed": true,
+      "ranking_ok": true,
+      "geometric_ok": true,
+      "perturbation_ok": true,
+      "min_normalized_geometric_margin": 0.9929540023409987,
+      "normalized_geometric_margin": 0.9929540023409987,
+      "a_winner": "h_726173329",
+      "b_winner": "h_726173329",
+      "want_a": "h_726173329",
+      "want_b": "h_726173329",
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "HOLD": 3,
+          "ACT": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 32,
+        "n_strengthen": 0
+      },
+      "n_episodes": 2,
+      "pass_statistic": "normalized_geometric_margin",
+      "id": "spec|A_then_B|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "twin",
+      "order": "B_then_A",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_421459336",
+          "handle": "h_973115913",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_228273126",
+          "handle": "h_978011745",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_228273126",
+          "want": "h_978011745",
+          "winner": "h_978011745",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.1153980489141495,
+          "pairwise_score_gap": 0.020290543962252827,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_421459336",
+          "want": "h_973115913",
+          "winner": "h_973115913",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11409034764444585,
+          "pairwise_score_gap": 0.020059964016175602,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.11409034764444585,
+      "min_pairwise_score_gap": 0.020059964016175602,
+      "n_episodes": 2,
+      "id": "twin|c2|B_then_A|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.TWIN."
+    },
+    {
+      "kind": "eco",
+      "order": "B_then_A",
+      "n_cues": 2,
+      "passed": true,
+      "ranking_ok": true,
+      "geometric_ok": true,
+      "perturbation_ok": true,
+      "normalized_geometric_margin": 0.9998897183250163,
+      "min_normalized_geometric_margin": 0.9998897183250163,
+      "pairwise_score_gap": 1.1468265928529222,
+      "winner": "h_638298452",
+      "want": "h_638298452",
+      "adv": [
+        0.23799941637852023,
+        -0.6041611964080489,
+        0.23799941637852023
+      ],
+      "n_replaced": 2,
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "HOLD": 2,
+          "ACT": 1,
+          "STOP": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 16,
+        "n_strengthen": 0
+      },
+      "n_episodes": 1,
+      "pass_statistic": "normalized_geometric_margin",
+      "id": "eco|B_then_A|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "spec",
+      "order": "B_then_A",
+      "n_cues": 2,
+      "passed": true,
+      "ranking_ok": true,
+      "geometric_ok": true,
+      "perturbation_ok": true,
+      "min_normalized_geometric_margin": 0.9929540023409987,
+      "normalized_geometric_margin": 0.9929540023409987,
+      "a_winner": "h_638298452",
+      "b_winner": "h_638298452",
+      "want_a": "h_638298452",
+      "want_b": "h_638298452",
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "HOLD": 3,
+          "ACT": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 32,
+        "n_strengthen": 0
+      },
+      "n_episodes": 2,
+      "pass_statistic": "normalized_geometric_margin",
+      "id": "spec|B_then_A|w0",
+      "world": 0,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "twin",
+      "order": "A_then_B",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_077336776",
+          "handle": "h_267251081",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_675074303",
+          "handle": "h_432932223",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_077336776",
+          "want": "h_267251081",
+          "winner": "h_267251081",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11409034764320998,
+          "pairwise_score_gap": 0.012596217704475055,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_675074303",
+          "want": "h_432932223",
+          "winner": "h_432932223",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11539804891538531,
+          "pairwise_score_gap": 0.012741018189906472,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.11409034764320998,
+      "min_pairwise_score_gap": 0.012596217704475055,
+      "n_episodes": 2,
+      "id": "twin|c2|A_then_B|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.TWIN."
+    },
+    {
+      "kind": "eco",
+      "order": "A_then_B",
+      "n_cues": 2,
+      "passed": true,
+      "ranking_ok": true,
+      "geometric_ok": true,
+      "perturbation_ok": true,
+      "normalized_geometric_margin": 0.9998897183250167,
+      "min_normalized_geometric_margin": 0.9998897183250167,
+      "pairwise_score_gap": 1.019686985667162,
+      "winner": "h_142040918",
+      "want": "h_142040918",
+      "adv": [
+        0.23799941637852023,
+        -0.6041611964080489,
+        0.23799941637852023
+      ],
+      "n_replaced": 2,
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "HOLD": 2,
+          "ACT": 1,
+          "STOP": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 16,
+        "n_strengthen": 0
+      },
+      "n_episodes": 1,
+      "pass_statistic": "normalized_geometric_margin",
+      "id": "eco|A_then_B|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "spec",
+      "order": "A_then_B",
+      "n_cues": 2,
+      "passed": true,
+      "ranking_ok": true,
+      "geometric_ok": true,
+      "perturbation_ok": true,
+      "min_normalized_geometric_margin": 0.9929540023409987,
+      "normalized_geometric_margin": 0.9929540023409987,
+      "a_winner": "h_142040918",
+      "b_winner": "h_142040918",
+      "want_a": "h_142040918",
+      "want_b": "h_142040918",
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "HOLD": 3,
+          "ACT": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 32,
+        "n_strengthen": 0
+      },
+      "n_episodes": 2,
+      "pass_statistic": "normalized_geometric_margin",
+      "id": "spec|A_then_B|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "twin",
+      "order": "B_then_A",
+      "n_cues": 2,
+      "taught": [
+        {
+          "cue": "s_675074303",
+          "handle": "h_432932223",
+          "adv": 0.23799941637852023,
+          "n_episodes": 1
+        },
+        {
+          "cue": "s_077336776",
+          "handle": "h_267251081",
+          "adv": 0.23799941637852023,
+          "n_episodes": 2
+        }
+      ],
+      "rest": null,
+      "passed": true,
+      "pass_statistic": "normalized_geometric_margin",
+      "probes": [
+        {
+          "cue": "s_077336776",
+          "want": "h_267251081",
+          "winner": "h_267251081",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11539804891332377,
+          "pairwise_score_gap": 0.012741018189821207,
+          "perturbation_ok": true
+        },
+        {
+          "cue": "s_675074303",
+          "want": "h_432932223",
+          "winner": "h_432932223",
+          "ranking_ok": true,
+          "normalized_geometric_margin": 0.11409034764527154,
+          "pairwise_score_gap": 0.012596217704560209,
+          "perturbation_ok": true
+        }
+      ],
+      "ranking_ok": true,
+      "perturbation_ok": true,
+      "geometric_ok": true,
+      "min_normalized_geometric_margin": 0.11409034764527154,
+      "min_pairwise_score_gap": 0.012596217704560209,
+      "n_episodes": 2,
+      "id": "twin|c2|B_then_A|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.TWIN."
+    },
+    {
+      "kind": "eco",
+      "order": "B_then_A",
+      "n_cues": 2,
+      "passed": true,
+      "ranking_ok": true,
+      "geometric_ok": true,
+      "perturbation_ok": true,
+      "normalized_geometric_margin": 0.9998897183250163,
+      "min_normalized_geometric_margin": 0.9998897183250163,
+      "pairwise_score_gap": 1.0196869856671615,
+      "winner": "h_956012276",
+      "want": "h_956012276",
+      "adv": [
+        0.23799941637852023,
+        -0.6041611964080489,
+        0.23799941637852023
+      ],
+      "n_replaced": 2,
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "HOLD": 2,
+          "ACT": 1,
+          "STOP": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 16,
+        "n_strengthen": 0
+      },
+      "n_episodes": 1,
+      "pass_statistic": "normalized_geometric_margin",
+      "id": "eco|B_then_A|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    },
+    {
+      "kind": "spec",
+      "order": "B_then_A",
+      "n_cues": 2,
+      "passed": true,
+      "ranking_ok": true,
+      "geometric_ok": true,
+      "perturbation_ok": true,
+      "min_normalized_geometric_margin": 0.9929540023409987,
+      "normalized_geometric_margin": 0.9929540023409987,
+      "a_winner": "h_956012276",
+      "b_winner": "h_956012276",
+      "want_a": "h_956012276",
+      "want_b": "h_956012276",
+      "rest": {
+        "ok": true,
+        "n": 4,
+        "op_counts": {
+          "HOLD": 3,
+          "ACT": 1
+        },
+        "dev_epoch": 1,
+        "n_replay": 32,
+        "n_strengthen": 0
+      },
+      "n_episodes": 2,
+      "pass_statistic": "normalized_geometric_margin",
+      "id": "spec|B_then_A|w1",
+      "world": 1,
+      "domain": "TM025.TWOSCALE.DEV."
+    }
+  ],
+  "shas": {
+    "runner": "667bee2b7c2c5bd9096a533482f67267811293dfe6af9d72be616a91c368a52c",
+    "neural_cortex": "f74201aef590dcdfab9949185d5b8d98b8766c1e24f2e4ec078b9bb8d594c6be",
+    "cortex_memory": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+    "prereg": "49151e3e4ec1673beb3c8fa2a2210201a772516221c6d032e162eb311c964ff1",
+    "contract": "a7beb8df820263decfb915b134b7414b006c5dab396990d6a7118c02dce05c62",
+    "isolation": "9243750a1ba2d9652251a71b4d4f9cb04cd2b5722c95f71dedf11b23ce51e01d",
+    "v32_prereg": "110705ba8ee005ed13816dcb592cdf2fc5d9903cb6a3ec91f18a36cd743b77d6",
+    "v32_isolation": "09ae0d9680d62d2a4415205342db421356086d0d17acb849eed5fbcbc323baf2",
+    "v32_amendment": "6304cb702f3e043d1deb491ec08437e53e212a803ab5ab3045cb87030d201de0",
+    "affinemap_r2_decision": "dc71c767858cc3fbc982a8fc6a3736c15d33f107087878810942ec4182b323bf",
+    "affinemap_r2_addendum": "d6a2cdbf0869ff7a78b6c2fe2f1d20b6e31011c1333b464f006cfc34b45b7bc4",
+    "candidate_v30": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c"
+  },
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "git_head": "7f2d8e1b066331bfeb66786f8e7c1e414802491d",
+  "w1_resurrected": false,
+  "a3_bias": false,
+  "note": "v32 two-timescale organism battery. SCORE unopened. Product remains 0.0.004."
+}

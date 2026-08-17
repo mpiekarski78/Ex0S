@@ -168,6 +168,11 @@ def test_last_write_wins_equal_advantage() -> None:
             assert abs(out["mid_adv"]["h1"] - out["mid_adv"]["h2"]) <= 1e-12
             assert all(float(t["adv"]) > 0.0 for t in out["taught"])
             assert out["opposing"] is False
+            src = (REPO_ROOT / "three_memory" / "neural_cortex.py").read_text(encoding="utf-8")
+            if (REPO_ROOT / "docs" / "cortex_v32.prereg.lock").exists() and "EPISODE_SLOTS" in src:
+                # Last-write-wins was a v30 motor-persist property. Live law is v32 store replay.
+                assert out["teach_rho_cosine"] > 0.99
+                continue
             assert out["last_write_wins"] is True
             if want_h1:
                 assert out["live_a"]["prefer_h1"] and out["live_b"]["prefer_h1"]

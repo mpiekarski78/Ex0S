@@ -29,6 +29,11 @@ V30_CAND = "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c"
 RUNNER_LOCK_SHA = "636bd7d68a95b43e0ba9b5d4b4ff0d31c08071bbd03e97603da1ca6cf81b4f46"
 RUNNER_SHA = "d6289b9b35da2377fa4ef0ee704ecd2b064044dc9ef0f1b43f7723fcba89c9db"
 MANIFEST_SHA = "ce1c83435458da32b4892279204283c2979a55189ee1d280a9b2bfd9cd73cf3c"
+DEV_LOCK_SHA = "3ca78f2ec5a383ee38ea644ef476f8308f302b75d59becfe34b861ca0fa761ef"
+DECISION_SHA = "dc71c767858cc3fbc982a8fc6a3736c15d33f107087878810942ec4182b323bf"
+ADDENDUM_SHA = "d6a2cdbf0869ff7a78b6c2fe2f1d20b6e31011c1333b464f006cfc34b45b7bc4"
+DEV_MANIFEST_SHA = "7aedf8c4e7ce1602939e46ca1a7a392de4d0f268f1a92b3f9f2e417a838cb1d1"
+FREEZE_GIT = "7f2d8e1b066331bfeb66786f8e7c1e414802491d"
 EXPECTED_N_CELLS = 104
 RECORDED_FIELDS = (
     "ranking_ok",
@@ -52,8 +57,14 @@ def test_v1_freeze_preserved() -> None:
     assert sha(REPO_ROOT / "docs" / "lineage_lifecyclemarginmap.decision.lock") == LMM_DEC
     assert sha(REPO_ROOT / "docs" / "lineage_lifecyclemarginmap.dev.lock") == LMM_DEV
     assert sha(REPO_ROOT / "docs" / "lineage_lifecyclemarginmap.decision.addendum.lock") == LMM_ADD
-    assert sha(REPO_ROOT / "three_memory" / "neural_cortex.py") == NEURAL
     assert sha(REPO_ROOT / "three_memory" / "cortex_memory.py") == MEMORY
+    src = (REPO_ROOT / "three_memory" / "neural_cortex.py").read_text(encoding="utf-8")
+    if (REPO_ROOT / "docs" / "cortex_v32.prereg.lock").exists() and "EPISODE_SLOTS" in src:
+        devp = REPO_ROOT / "docs" / "lineage_affinemap.r2.dev.lock"
+        if devp.exists():
+            assert json.loads(devp.read_text(encoding="utf-8"))["shas"]["neural_cortex"] == NEURAL
+    else:
+        assert sha(REPO_ROOT / "three_memory" / "neural_cortex.py") == NEURAL
     assert not (REPO_ROOT / "docs" / "lineage_affinemap.dev.lock").exists()
     assert not (REPO_ROOT / "docs" / "cortex.candidate.v31.lock").exists()
 
@@ -443,7 +454,7 @@ def test_smoke() -> None:
 
 
 def test_score_and_dev_lock_gate() -> None:
-    from experiments.run_tm024affinemap_r2 import DEV_LOCK, RUNNER_LOCK, refuse_dev_lock, refuse_score
+    from experiments.run_tm024affinemap_r2 import DEV_LOCK, RUNNER_LOCK, refuse_dev_lock, refuse_rerun, refuse_score
 
     try:
         refuse_score()
@@ -461,7 +472,7 @@ def test_score_and_dev_lock_gate() -> None:
         return
     if DEV_LOCK.exists():
         try:
-            refuse_dev_lock()
+            refuse_rerun()
         except RuntimeError as e:
             assert "again" in str(e)
         else:
@@ -470,10 +481,70 @@ def test_score_and_dev_lock_gate() -> None:
     refuse_dev_lock()
 
 
-def test_dev_unopened() -> None:
-    assert not (REPO_ROOT / "docs" / "lineage_affinemap.r2.dev.lock").exists()
-    assert not (REPO_ROOT / "docs" / "lineage_affinemap.r2.decision.lock").exists()
+def test_dev_opened() -> None:
     assert not (REPO_ROOT / "docs" / "lineage_affinemap.dev.lock").exists()
+    p = REPO_ROOT / "docs" / "lineage_affinemap.r2.dev.lock"
+    d = REPO_ROOT / "docs" / "lineage_affinemap.r2.decision.lock"
+    assert sha(p) == DEV_LOCK_SHA
+    assert sha(d) == DECISION_SHA
+    dev = json.loads(p.read_text(encoding="utf-8"))
+    dec = json.loads(d.read_text(encoding="utf-8"))
+    assert dev["n_cells"] == EXPECTED_N_CELLS
+    assert len({c["id"] for c in dev["cells"]}) == EXPECTED_N_CELLS
+    assert dev["domain"] == "TM024.AFFINEMAP.R2.DEV."
+    assert sorted({c["domain"] for c in dev["cells"]}) == [
+        "TM024.AFFINEMAP.R2.DEV.",
+        "TM024.AFFINEMAP.R2.TWIN.",
+    ]
+    blob = json.dumps(dev)
+    assert "TM024.AFFINEMAP.R2.SCORE." not in blob
+    assert "TM024.AFFINEMAP.SCORE." not in blob
+    assert dev["decision_code"] == "online_optimization_failure"
+    assert dev["phase_flags"]["A1_acquire_4"] is True
+    assert dev["phase_flags"]["A1_acquire_8"] is True
+    assert dev["phase_flags"]["A2_acquire_4"] is False
+    assert dev["phase_flags"]["A2_acquire_8"] is False
+    assert dev["phase_flags"]["A3_acquire_4"] is False
+    assert dev["phase_flags"]["A3_robust_4"] is False
+    assert dev["a3_implementation_authorized"] is False
+    assert dev["neural_edit"] is False
+    assert dev["pass_statistic"] == "normalized_geometric_margin"
+    assert dev["manifest_sha"] == DEV_MANIFEST_SHA
+    assert dev["git_head"] == FREEZE_GIT
+    assert sha(REPO_ROOT / "experiments" / "run_tm024affinemap_r2.py") == RUNNER_SHA
+    assert dec["decision"]["code"] == "online_optimization_failure"
+    assert dec["a3_implementation_authorized"] is False
+    assert dec["implementation_authorized"] is False
+    assert dec["dev_lock_sha"] == DEV_LOCK_SHA
+    assert dec["n"] == 64
+    assert dec["earned_next"] is False
+
+
+def test_addendum() -> None:
+    p = REPO_ROOT / "docs" / "lineage_affinemap.r2.decision.addendum.lock"
+    assert sha(p) == ADDENDUM_SHA
+    add = json.loads(p.read_text(encoding="utf-8"))
+    assert add["historical_code"] == "online_optimization_failure"
+    assert add["honest_first_match_on_these_cells"] == "online_optimization_failure"
+    assert add["rewrite_historical_decision"] is False
+    assert add["rewrite_historical_dev"] is False
+    assert add["rewrite_historical_runner"] is False
+    assert add["a1_acquire_4"] is True
+    assert add["a1_acquire_8"] is True
+    assert add["a2_acquire_4"] is False
+    assert add["a3_uniquely_helpful"] is False
+    assert add["a3_joins_candidate"] is False
+    assert add["compact_pa_path"] is False
+    assert add["oracle_reaudit"] is False
+    assert add["two_timescale_candidate_authorized"] is True
+    assert add["no_further_solver_map"] is True
+    assert add["next"] == "two_timescale_episodic_consolidation_candidate"
+    assert add["historical_decision_sha"] == DECISION_SHA
+    assert add["historical_dev_lock_sha"] == DEV_LOCK_SHA
+    assert add["historical_runner_lock_sha"] == RUNNER_LOCK_SHA
+    assert add["historical_runner_py_sha"] == RUNNER_SHA
+    assert sha(REPO_ROOT / "experiments" / "run_tm024affinemap_r2.py") == RUNNER_SHA
+    assert add["neural_edit_this_addendum"] is False
 
 
 if __name__ == "__main__":
@@ -489,5 +560,6 @@ if __name__ == "__main__":
     test_cell_ids()
     test_smoke()
     test_score_and_dev_lock_gate()
-    test_dev_unopened()
+    test_dev_opened()
+    test_addendum()
     print("ok")
