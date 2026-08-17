@@ -1,0 +1,62 @@
+{
+  "version": "TM.0.23.CORTEX.GENERALITY.V26.AUDIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "historical_lock_rewritten": false,
+  "result_sha": "4e561f31bc947b409785cf26c037940811aafe2c6fa64994182e1b0657ca4c04",
+  "candidate_v26_sha": "8610a7e7213d320831ae44eb80f02765463c9d3b9b1274c0c83c053b2fd08508",
+  "runner_sha": "3571ce556afd4100c8f8d683b898ce282915ec3f57ed836d147cd1dcee2f9897",
+  "n_ok": 3,
+  "n_controls": 8,
+  "all_controls_green": false,
+  "claimed_clear": false,
+  "contract_literal_result_stands": true,
+  "findings": [
+    {
+      "id": "candidate_immutable",
+      "ok": true,
+      "neural_cortex_sha": "25a445c2abb016030caa0285ea8ff3169f4c1e2544169ef263a7d8bc4d908edb"
+    },
+    {
+      "id": "g1_source_hits_are_real",
+      "ok": true,
+      "note": "phrase_program, phrase_target, _phrase are live identifiers in neural_cortex.py. Not a search false positive."
+    },
+    {
+      "id": "g4_bar_not_softened",
+      "ok": true,
+      "reverse_copy": 2,
+      "distractor_copy": 0,
+      "unseen_len5": 1,
+      "note": "Copy rates are under the frozen <8/20 bar. Neophobia HOLD on mixed probes may contribute. Do not rescore."
+    },
+    {
+      "id": "g7_birth_probe_physics",
+      "ok": true,
+      "note": "Birth fork used _act_token_counts, which applies physics, so the 40 probes themselves teach. Plasticity-off was green. Do not rewrite G7. Not the v27 law."
+    },
+    {
+      "id": "no_product_stamp",
+      "ok": true
+    },
+    {
+      "id": "fulldev_r7_not_revealed",
+      "ok": true
+    }
+  ],
+  "consequence": {
+    "rescore_generality_v26": "refused",
+    "fulldev_r7": "refused",
+    "nursery": "refused",
+    "product_stamp": "refused",
+    "next": "isolated_v27",
+    "refuse": [
+      "rewrite docs/cortex_v26_generality.lock",
+      "soften G1–G8 bars",
+      "reveal FULLDEV.R7",
+      "stamp earned_next"
+    ]
+  },
+  "note": "3/8 stands. Scripted phrase copy is the load-bearing red cluster (G1/G2/G3/G5). Next is isolated v27."
+}

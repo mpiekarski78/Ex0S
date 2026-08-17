@@ -1,0 +1,32 @@
+{
+  "version": "TM.0.23.CORTEX.V27.ISOLATION",
+  "lab": "TM.0.23.CORTEX.GENERALITY.v26",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "reason": "GENERALITY.v26 failed 3/8. Load-bearing reds are scripted current-observe phrase replay (G1), echo-as-answer (G3), STOP-from-copied-length (G5), and EMIT-only continuation (G2). Isolated D6/D7 greens do not transfer.",
+  "generality_lock": "docs/cortex_v26_generality.lock",
+  "generality_audit_lock": "docs/cortex_v26_generality.audit.lock",
+  "generality_diagnosis_lock": "docs/cortex_diagnosis.v26_generality.lock",
+  "refuse": [
+    "edit-and-rescore GENERALITY.v26",
+    "reveal FULLDEV.R7",
+    "reuse pair_seeds or FULLDEV.R* or D5–D7.R* worlds for the v27 gate",
+    "keep phrase_program to protect historical D7",
+    "open nursery conversation",
+    "stamp earned_next"
+  ],
+  "next_cycle": {
+    "name": "isolated_v27_gen",
+    "requires": [
+      "frozen diagnosis of learned internal motor program, not sensory-buffer replay",
+      "new architecture amendment authorizing only that generic law",
+      "apparatus on origin/main before any v27 neural edit",
+      "new birth + candidate.v27.lock",
+      "new sealed commitment domain TM023.V27.GEN.",
+      "narrow gate requires G1+G3+G5 green and C4/C5/C6 green",
+      "FULLDEV.R7 remains sealed"
+    ]
+  },
+  "note": "Historical locks immutable. Product remains 0.0.004."
+}

@@ -2226,6 +2226,8 @@ Canonical main `0984ef3`. Candidate v26 remains immutable. Product **0.0.004**; 
 
 Generality apparatus: [`cortex_v26_generality_contract.md`](cortex_v26_generality_contract.md) + [`cortex_v26_generality.runner.lock`](cortex_v26_generality.runner.lock). Score G1–G8 once. Do not reveal FULLDEV.R7 unless `all_controls_green`. Any red → diagnose isolated v27.
 
+Result: [`cortex_v26_generality.lock`](cortex_v26_generality.lock) **3/8 red**. G1/G2/G3/G5 fail (scripted phrase copy). G4/G6/G8 green. Audit [`cortex_v26_generality.audit.lock`](cortex_v26_generality.audit.lock). Diagnosis [`cortex_diagnosis.v26_generality.lock`](cortex_diagnosis.v26_generality.lock): learned internal motor program, not sensory-buffer replay. Do not rescore. Do not reveal FULLDEV.R7. Next is isolated v27.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

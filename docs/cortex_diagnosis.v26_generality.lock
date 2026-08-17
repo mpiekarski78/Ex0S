@@ -1,0 +1,38 @@
+{
+  "version": "TM.0.23.CORTEX.GENERALITY.V26.DIAGNOSIS",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "canonical_main": "ab16ff7",
+  "candidate_git_sha": "0984ef3",
+  "neural_mechanism_changed": true,
+  "v27_authorized_only_if_this_lock": true,
+  "claim": "v26 emit/STOP is a scripted replay of the current observe token queue (_phrase copied into phrase_program, then hard STOP). Echoic emit is the answer function (heard A → emit A), not a bias. Vocal refractory is EMIT-tagged and is skipped when phrase-final STOP is the chosen op, so ACT sequences do not share continuation. STOP length tracks the copied probe (~3.6 vs 3.6), not taught boundaries at 2 vs 4. Biology: an internal motor program is learned and can be a different sequence than the just-heard buffer; echo is a bias; STOP is a boundary prediction; refractory applies after any committed motor act.",
+  "load_bearing_reds": ["G1_no_scripted_phrase_machinery", "G2_cross_modal_transfer", "G3_non_echo_response", "G5_stop_evidence"],
+  "greens": ["G4_order_length_counterfactuals", "G6_neophobia_provenance", "G8_trace_purity"],
+  "not_the_v27_law": [
+    "G7 birth ACT preference under probe physics",
+    "D8 composition",
+    "INQUIRE"
+  ],
+  "authorize_v27": [
+    "remove _phrase / phrase_program / phrase_target / phrase-final hard STOP / length-2 reduplication",
+    "keep echoic persistence only as a bias on EMIT token ranking, never as a hard emit of the heard queue",
+    "make continuation/refractory generic after EMIT or ACT, not EMIT-only",
+    "STOP must be chosen from evidence, not assigned when a copied queue empties",
+    "keep v16 equal-evidence HOLD, v18 RETRIEVE recency, v20 habituation, v23 vocal magnitude, v26 neophobia-on-unfamiliar-single-symbol HOLD",
+    "do not add known_chunks, stage/domain branches, stored expected lengths, or capability-named shortcuts",
+    "do not edit cortex_develop_scorers.py",
+    "do not lower D5/D6/D7 floors",
+    "re-earn C4/C5/C6 after the neural edit",
+    "narrow gate is G1+G3+G5 (source clean, non-echo, STOP evidence), not a D7 rescore of probe-copy",
+    "isolated D6/D7 are diagnostic only on this cycle; they were earned by the script being removed",
+    "do not reveal FULLDEV.R7"
+  ],
+  "refuse": [
+    "edit-and-rescore GENERALITY.v26",
+    "reveal FULLDEV.R7",
+    "stamp product",
+    "keep phrase_program to protect D7 greens"
+  ]
+}

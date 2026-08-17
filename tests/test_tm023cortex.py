@@ -717,6 +717,28 @@ def test_v26_candidate_boundary_pending_gate() -> None:
     assert prereg["domain"] == "TM023.D5.R3."
 
 
+def test_v26_generality_red_refuses_fulldev_r7() -> None:
+    from experiments.cortex_v26_generality import verify_generality_v26
+
+    v = verify_generality_v26()
+    assert v["ok"] is True, v
+    if v.get("pending"):
+        return
+    assert v["all_controls_green"] is False
+    assert v["n_ok"] == 3
+    assert v["refuse_fulldev_r7"] is True
+    result = json.loads((REPO_ROOT / "docs" / "cortex_v26_generality.lock").read_text(encoding="utf-8"))
+    assert result["earned_next"] is False
+    assert result["ex0s"] is None
+    reds = {c["id"] for c in result["controls"] if not c.get("ok")}
+    assert "G1_no_scripted_phrase_machinery" in reds
+    assert "G3_non_echo_response" in reds
+    assert "G5_stop_evidence" in reds
+    assert not (REPO_ROOT / "docs" / "cortex_fulldev_r7.prereg.lock").exists()
+    isol = json.loads((REPO_ROOT / "docs" / "cortex_v27.isolation.lock").read_text(encoding="utf-8"))
+    assert isol["next_cycle"]["name"] == "isolated_v27_gen"
+
+
 def test_v25_candidate_boundary_pending_gate() -> None:
     cand_p = REPO_ROOT / "docs" / "cortex.candidate.v25.lock"
     if not cand_p.exists():
@@ -1249,6 +1271,7 @@ if __name__ == "__main__":
     test_verify_v12_gate_cli()
     test_verify_v13_gate_cli()
     test_v26_candidate_boundary_pending_gate()
+    test_v26_generality_red_refuses_fulldev_r7()
     test_v25_candidate_boundary_pending_gate()
     test_v24_candidate_boundary_pending_gate()
     test_v16_candidate_boundary_pending_gate()
