@@ -1,8 +1,8 @@
 # Ex0S · three-memory (TM)
 
 **Repo:** [mpiekarski78/Ex0S](https://github.com/mpiekarski78/Ex0S)  
-**Current:** **Ex0S 0.0.004** (TM.0.13.FAMILY — Contextual Composition). Toy series: v0–v23.  
-**Start here:** [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md) · [`docs/CLAIM.md`](docs/CLAIM.md)  
+**Current:** **Ex0S 0.0.004** (TM.0.13.FAMILY — Contextual Composition). Toy series: v0–v23. Live developmental cortex: **TM.0.23.CORTEX candidate v26**.  
+**Start here:** [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md) · [`docs/CLAIM.md`](docs/CLAIM.md) · [`docs/protocol.md`](docs/protocol.md)  
 **License:** Apache-2.0 ([`LICENSE`](LICENSE) · [`NOTICE`](NOTICE)). Cite via [`CITATION.cff`](CITATION.cff). The Ex0S name and logo are project identity, not licensed marks.
 
 > Sibling of the BDH experience-driven state work. **Not** a fork of Pathway BDH.  
@@ -64,7 +64,21 @@ Ex0S 0.0.004  ←  TM.0.13.FAMILY
 
 Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enough to treat as a lineage, not only a series of demos.
 
-**Next:** CORTEX DEVELOP scored D0–D12 (gate not cleared; not eligible for 0.0.005). Wall hint after INTERPRET remains **honesty**. Product stamp stays a human decision (`ex0s=null`). No Ex0S 1.0.
+**Next (lab, not a stamp):** TM.0.23.CORTEX full D0–D12 on a fresh sealed domain (`FULLDEV.R7`), then INQUIRE, then a frozen nursery conversation. Isolated D3, D4, D5, D6, and D7 are green. Full D0–D12 is still closed (`eligible_for_000005=false`). Product stamp stays a human decision (`ex0s=null`). No Ex0S 1.0.
+
+### TM.0.23.CORTEX (under 0.0.004)
+
+Separate birth organism: `make_cortex` / `NeuralCortex`. Not a wrap of INTERPRET. Not an LLM. Live lock: [`docs/cortex.candidate.lock`](docs/cortex.candidate.lock) = **v26**.
+
+| Isolated gate | Result | Law that earned it |
+|---------------|--------|--------------------|
+| D3.R3 | **16/16** | equal-evidence HOLD on current observe `body_adv` |
+| D4.R2 | **16/16** | RETRIEVE recency tie-break |
+| D5.R2 then D5.R3 | **16/16** then **15/16** | habituation / neophobia; recovered after phrase-unroll regression |
+| D6.R3 | **15/16** | echoic emit + vocal refractory |
+| D7.R2 | **15/16** | phrase unroll, then STOP |
+
+Latest full battery: **FULLDEV.R6 0/16** ([`docs/cortex_fulldev_r6.lock`](docs/cortex_fulldev_r6.lock)). D7 transferred (30/32). D5 recovered in isolation after that run. Remaining full-dev walls: **D1** (get/drop lure) and/or **D8** (withheld X→Z). Do not stamp 0.0.005 from a full-dev pass alone.
 
 ## Question
 
@@ -74,7 +88,7 @@ Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enou
 
 > Can a frozen cortex plus boxed learning rules fill an inspectable store from a free life, and learn to use those files — without putting facts into genome weights, and without wiring the answer as English or as a USE_KEY/WAIT table?
 
-Honest status: **Ex0S 0.0.004 — Contextual Composition** (TM.0.13.FAMILY **288/288** planted contextual worlds). TM.0.14.ACQUIRE **16/16** then FAMILY **288/288** (`earned_next=true`, **`ex0s=null`**). TM.0.15.SKELETON **16/16** observed-transition acquisition (`earned_next=false`). TM.0.16.RELATE **16/16** candidate relations under ambiguity (`earned_next=false`). TM.0.16.ALIASWALL **6/6** opaque-alias Kill on frozen RELATE (`earned_next=false`). TM.0.16.ALIASFINGER **7/7** opt-in behavioral fingerprints complete Kill routes without rewriting `experience_skel`. TM.0.16.GAPWALL **6/6** measures empty-event skip, episode loss, distractor fragmentation, and two-peer HOLD on that frozen organism (`earned_next=false`, **`ex0s=null`**). Continuity-evidence contract: [`docs/continuity_evidence_contract.md`](docs/continuity_evidence_contract.md). TM.0.16.PERSIST **9/9** opt-in mark-continuity persistence under that contract (`earned_next=false`, **`ex0s=null`**). TM.0.16.LIFEWALL cleared through **32** concurrent histories on one interleaved lifetime + twin (`earned_next=false`, **`ex0s=null`**). TM.0.17.SYMBOLWORLD cleared through **S10** grounded symbolic learning (`earned_next=false`, **`ex0s=null`**). TM.0.18.SEQUENCE cleared through **E12** grounded symbolic expression (`earned_next=false`, **`ex0s=null`**). TM.0.19.INQUIRE cleared through **I12** active evidence acquisition; wall → source reliability (`earned_next=false`, **`ex0s=null`**). TM.0.20.RELIABILITY cleared through **R12** evidence-source calibration; wall → honesty (`earned_next=false`, **`ex0s=null`**). TM.0.21.PERSPECTIVE cleared through **P12** source exposure & report alignment; wall → comprehension (`earned_next=false`, **`ex0s=null`**). TM.0.22.INTERPRET cleared through **J15** behaviorally evidenced interpretation; wall → honesty (`earned_next=false`, **`ex0s=null`**). TM.0.23.CORTEX birth + DEVELOP D0–D12 scored (`development_gate_clear=false`, `eligible_for_000005=false`, `earned_next=false`, **`ex0s=null`**; product stays **0.0.004**). **B Fail** on the no-cue English motor bar stays. See [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md).
+Honest status: **Ex0S 0.0.004 — Contextual Composition** (TM.0.13.FAMILY **288/288** planted contextual worlds). TM.0.14.ACQUIRE **16/16** then FAMILY **288/288** (`earned_next=true`, **`ex0s=null`**). TM.0.15.SKELETON **16/16** observed-transition acquisition (`earned_next=false`). TM.0.16.RELATE **16/16** candidate relations under ambiguity (`earned_next=false`). TM.0.16.ALIASWALL **6/6** opaque-alias Kill on frozen RELATE (`earned_next=false`). TM.0.16.ALIASFINGER **7/7** opt-in behavioral fingerprints complete Kill routes without rewriting `experience_skel`. TM.0.16.GAPWALL **6/6** measures empty-event skip, episode loss, distractor fragmentation, and two-peer HOLD on that frozen organism (`earned_next=false`, **`ex0s=null`**). Continuity-evidence contract: [`docs/continuity_evidence_contract.md`](docs/continuity_evidence_contract.md). TM.0.16.PERSIST **9/9** opt-in mark-continuity persistence under that contract (`earned_next=false`, **`ex0s=null`**). TM.0.16.LIFEWALL cleared through **32** concurrent histories on one interleaved lifetime + twin (`earned_next=false`, **`ex0s=null`**). TM.0.17.SYMBOLWORLD cleared through **S10** grounded symbolic learning (`earned_next=false`, **`ex0s=null`**). TM.0.18.SEQUENCE cleared through **E12** grounded symbolic expression (`earned_next=false`, **`ex0s=null`**). TM.0.19.INQUIRE cleared through **I12** active evidence acquisition; wall → source reliability (`earned_next=false`, **`ex0s=null`**). TM.0.20.RELIABILITY cleared through **R12** evidence-source calibration; wall → honesty (`earned_next=false`, **`ex0s=null`**). TM.0.21.PERSPECTIVE cleared through **P12** source exposure & report alignment; wall → comprehension (`earned_next=false`, **`ex0s=null`**). TM.0.22.INTERPRET cleared through **J15** behaviorally evidenced interpretation; wall → honesty (`earned_next=false`, **`ex0s=null`**). TM.0.23.CORTEX live candidate **v26**: isolated D3–D7 green; latest full D0–D12 **FULLDEV.R6 0/16** (`development_gate_clear=false`, `eligible_for_000005=false`, `earned_next=false`, **`ex0s=null`**; product stays **0.0.004**). **B Fail** on the no-cue English motor bar stays. See [`docs/CURRENT_ORGANISM.md`](docs/CURRENT_ORGANISM.md).
 
 ## Result (v0–v23 toy, TM.0.x)
 
@@ -160,6 +174,11 @@ TM.0.20.RELIABILITY evidence-source calibration (R12): [`docs/tm020reliability_r
 TM.0.21.PERSPECTIVE source exposure & report alignment (P12): [`docs/tm021perspective_results.md`](docs/tm021perspective_results.md).
 TM.0.22.INTERPRET behaviorally evidenced interpretation (J15): [`docs/tm022interpret_results.md`](docs/tm022interpret_results.md).
 TM.0.23.CORTEX developmental artificial cortex (birth): [`docs/tm023cortex_results.md`](docs/tm023cortex_results.md).
+TM.0.23.CORTEX live candidate v26: [`docs/cortex.candidate.v26.lock`](docs/cortex.candidate.v26.lock).
+TM.0.23.CORTEX isolated D5.R3 **15/16**: [`docs/cortex_d5_r3_gate.lock`](docs/cortex_d5_r3_gate.lock).
+TM.0.23.CORTEX isolated D6.R3 **15/16**: [`docs/cortex_d6_r3_gate.lock`](docs/cortex_d6_r3_gate.lock).
+TM.0.23.CORTEX isolated D7.R2 **15/16**: [`docs/cortex_d7_r2_gate.lock`](docs/cortex_d7_r2_gate.lock).
+TM.0.23.CORTEX FULLDEV.R6 **0/16**: [`docs/cortex_fulldev_r6.lock`](docs/cortex_fulldev_r6.lock).
 Ex0S lineage: [`docs/ex0s.md`](docs/ex0s.md).  
 Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 
@@ -402,6 +421,7 @@ python tests/test_tm019inquire.py
 python tests/test_tm020reliability.py
 python tests/test_tm021perspective.py
 python tests/test_tm022interpret.py
+PYTHONPATH=. python tests/test_tm023cortex.py
 python -m experiments.run_v0
 python -m experiments.train_prior
 python -m experiments.run_v1
@@ -477,9 +497,9 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 ## Layout
 
 ```text
-three_memory/     # cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010 … run_tm091box, train_prior
-docs/             # protocol, comparison, conclusion, v1–v23 and TM.0.x results
+three_memory/     # cortex, neural_cortex, ρ, S, W library, drives, agent, env, byte LM
+experiments/      # run_v0 … run_v23, run_tm010 … run_tm023cortex, train_prior
+docs/             # protocol, comparison, conclusion, v1–v23, TM.0.x, CORTEX locks
 tests/
 runs/             # gitignored
 checkpoints/      # gitignored (prior.pt)
