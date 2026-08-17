@@ -1,0 +1,54 @@
+{
+  "version": "TM.0.24.COLLISIONMAP.ISOLATION",
+  "lab": "TM.0.24.COLLISIONMAP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "reason": "STATEMAP 10/13. First fail S6: two cues collapse to one motor ranking. S7 teacher→probe aligned (cosine ≈ 1). One cue–action consequence is learnable and retained. The wall is cross-cue collision or interference, not delayed credit, event boundaries, HOLD, consolidation, or teaching/probe mismatch. S10/S11 are separate wiring defects and do not explain S6 yet.",
+  "statemap_decision": "docs/lineage_statemap.decision.lock",
+  "statemap_decision_sha": "d1fe680e158570529e6de84d6067c301d3409a47f181dfbf34490ee1a2faf13b",
+  "candidate": "docs/cortex.candidate.v29.lock",
+  "n": 64,
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_reach.lock",
+    "docs/lineage_plasticitymap.decision.lock",
+    "docs/lineage_actorcredit.lock",
+    "docs/lineage_actorcredit_reach.lock",
+    "docs/lineage_statemap.decision.lock",
+    "docs/cortex.candidate.v28.lock",
+    "docs/cortex.candidate.v29.lock"
+  ],
+  "refuse": [
+    "neural edit this package",
+    "two-timescale state",
+    "increase n",
+    "move tau or delta",
+    "L0-specific circuitry",
+    "reveal QUAL/EVAL",
+    "reveal FULLDEV.R7",
+    "another lineage run",
+    "Q3",
+    "stamp earned_next",
+    "stamp 0.0.005",
+    "reward leakage",
+    "semantic outputs",
+    "structural growth",
+    "post-hoc optimizer after scored output"
+  ],
+  "next_cycle": {
+    "name": "collisionmap_c0_c5",
+    "requires": [
+      "frozen COLLISIONMAP contract and prereg on origin/main",
+      "no neural edit",
+      "C0-C5 on unused worlds",
+      "preregistered thresholds and closed-form ridge",
+      "decision table before any architecture amendment",
+      "n remains 64"
+    ]
+  },
+  "note": "Historical locks immutable, including STATEMAP. Product remains 0.0.004."
+}

@@ -1,0 +1,101 @@
+{
+  "version": "TM.0.24.COLLISIONMAP.PREREG",
+  "lab": "TM.0.24.COLLISIONMAP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "package_question": "When two cues require opposing actuator consequences, do A/B states collapse in the recurrent/motor loop, does teaching B overwrite A, is ρ rank-deficient for a linear readout, or does v29 credit geometry fail while a frozen fit succeeds?",
+  "authorized_by": "docs/lineage_statemap.decision.lock",
+  "authorized_by_sha": "d1fe680e158570529e6de84d6067c301d3409a47f181dfbf34490ee1a2faf13b",
+  "candidate": "docs/cortex.candidate.v29.lock",
+  "candidate_v29_sha": "484c7a3ab1acec815ef1f73e3f9dddbf0ad6b127313401fcbd6f75e17d9e0bf1",
+  "n": 64,
+  "increase_n": false,
+  "cells": ["C0", "C1", "C2", "C3", "C4", "C5"],
+  "domains": {
+    "CELLS": "TM024.COLLISIONMAP.CELLS.",
+    "TWIN": "TM024.COLLISIONMAP.TWIN."
+  },
+  "trace_stages": [
+    "start",
+    "cue",
+    "event_end",
+    "observable",
+    "motor_ticks",
+    "motor_last",
+    "rho_elig",
+    "op_readout",
+    "actuator_readout"
+  ],
+  "thresholds": {
+    "cos_distinct_max": 0.99,
+    "l2_distinct_min": 0.05,
+    "rank_rel_tol": 0.001,
+    "n_rank_cues": 8,
+    "n_sep_repeats": 8,
+    "linear_sep_acc_min": 0.99,
+    "direct_fit_both_correct": true
+  },
+  "frozen_readout_fit": {
+    "method": "closed_form_ridge",
+    "lambda": 0.01,
+    "state": "rho_elig",
+    "targets": "bound_motor_vectors",
+    "iterative": false,
+    "sklearn": false,
+    "note": "W = Y X^T (X X^T + lambda I)^{-1}. No post-hoc lambda search."
+  },
+  "teaching": {
+    "protocol": "statemap_s6",
+    "n_clamp_each": 1,
+    "cue_a": "teacher_pair[0]",
+    "cue_b": "first_nonpair_symbol",
+    "handle_a": "beneficial",
+    "handle_b": "harmful",
+    "body": [0.5, 0.4, 0.5, 0.0]
+  },
+  "decision_order": [
+    "attractor_collapse",
+    "sequential_plastic_write_interference",
+    "representation_rank_failure",
+    "plastic_update_geometry_failure"
+  ],
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_reach.lock",
+    "docs/lineage_plasticitymap.decision.lock",
+    "docs/lineage_actorcredit.lock",
+    "docs/lineage_actorcredit_reach.lock",
+    "docs/lineage_statemap.decision.lock",
+    "docs/cortex.candidate.v28.lock",
+    "docs/cortex.candidate.v29.lock"
+  ],
+  "another_lineage_run": false,
+  "q3": false,
+  "amendment_only_after_decision": true,
+  "refuse": [
+    "neural_edit_this_package",
+    "two_timescale_state",
+    "soften_scorers",
+    "L0_specific_circuitry",
+    "QUAL_EVAL_reveal",
+    "rewrite_historical_locks",
+    "earned_next",
+    "stamp_0.0.005",
+    "move_tau_or_delta",
+    "increase_n",
+    "FULLDEV_R7",
+    "another_lineage_run",
+    "Q3",
+    "reward_leakage",
+    "semantic_outputs",
+    "structural_growth",
+    "post_hoc_optimizer"
+  ],
+  "note": "Phase A scientific freeze. Pass/fail thresholds and ridge lambda are frozen here. Score only after runner.lock on origin/main. Product remains 0.0.004."
+}
