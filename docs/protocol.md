@@ -2284,6 +2284,8 @@ COLLISIONMAP apparatus: [`lineage_collisionmap.prereg.lock`](lineage_collisionma
 
 C-cell runner: [`lineage_collisionmap.runner.lock`](lineage_collisionmap.runner.lock). Score C0–C5 only after this lock is on `origin/main`. No neural edit. n stays 64.
 
+Result: [`lineage_collisionmap.decision.lock`](lineage_collisionmap.decision.lock) **attractor_collapse**. Cue identity is present after sensing and is lost on the first zero-input motor tick, which is the credited `ρ_elig`. Sequential-write, rank, and geometry arms did not fire first. Do not increase n. Do not authorize a two-timescale amendment from this package alone. Another lineage run stays closed. QUAL/EVAL sealed. Not 0.0.005.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

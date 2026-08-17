@@ -1,0 +1,829 @@
+{
+  "version": "TM.0.24.COLLISIONMAP.DECISION",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "n": 64,
+  "n_pass": 6,
+  "n_cells": 6,
+  "cells": [
+    {
+      "id": "C0",
+      "passed": true,
+      "attractor_collapse": true,
+      "sensory_collapse": false,
+      "remain_distinct": false,
+      "distinct_cue": true,
+      "distinct_rho_elig": false,
+      "trace": {
+        "stages": {
+          "start": {
+            "cosine": 0.9999999999999278,
+            "l2": 0.0,
+            "distinct": false,
+            "a": {
+              "act_logit": 0.9227460827802743,
+              "hold_logit": -0.33347803783708835,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9227460827802743,
+              "hold_logit": -0.33347803783708835,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "cue": {
+            "cosine": 0.7118926308401485,
+            "l2": 2.6130096792052453,
+            "distinct": true,
+            "a": {
+              "act_logit": 0.7638225661539697,
+              "hold_logit": -0.27365830846930284,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9587460443795326,
+              "hold_logit": -0.1732241843041058,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "event_end": {
+            "cosine": 0.9774663535333972,
+            "l2": 0.7358258631036816,
+            "distinct": true,
+            "a": {
+              "act_logit": 0.9399842803571498,
+              "hold_logit": 0.033144609027776537,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9883135680309594,
+              "hold_logit": -0.02843670085356698,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "observable": {
+            "cosine": 0.998772854906521,
+            "l2": 0.1797909919901655,
+            "distinct": true,
+            "a": {
+              "act_logit": 0.8589472474133845,
+              "hold_logit": 0.4362398843595235,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.8635364879590187,
+              "hold_logit": 0.417601455654393,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "motor_last": {
+            "cosine": 0.9998620495015036,
+            "l2": 0.047961366370770926,
+            "distinct": false,
+            "a": {
+              "act_logit": 0.9146812272246777,
+              "hold_logit": 0.028933090031203174,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9164828347113947,
+              "hold_logit": 0.037267385053457586,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "final": {
+            "cosine": 0.9998620495015036,
+            "l2": 0.047961366370770926,
+            "distinct": false,
+            "a": {
+              "act_logit": 0.9146812272246777,
+              "hold_logit": 0.028933090031203174,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9164828347113947,
+              "hold_logit": 0.037267385053457586,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "rho_elig": {
+            "cosine": 0.9998620495015036,
+            "l2": 0.047961366370770926,
+            "distinct": false,
+            "a": {
+              "act_logit": 0.9146812272246777,
+              "hold_logit": 0.028933090031203174,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9164828347113947,
+              "hold_logit": 0.037267385053457586,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          }
+        },
+        "motor_ticks": [
+          {
+            "tick": "motor_0",
+            "cosine": 0.9998620495015036,
+            "l2": 0.047961366370770926,
+            "distinct": false
+          }
+        ],
+        "distinct_cue": true,
+        "distinct_observable": true,
+        "distinct_motor_last": false,
+        "distinct_rho_elig": false,
+        "attractor_collapse": true,
+        "sensory_collapse": false,
+        "remain_distinct": false,
+        "n_motor_a": 1,
+        "n_motor_b": 1
+      },
+      "thresholds": {
+        "cos_distinct_max": 0.99,
+        "l2_distinct_min": 0.05,
+        "rank_rel_tol": 0.001,
+        "n_rank_cues": 8,
+        "n_sep_repeats": 8,
+        "linear_sep_acc_min": 0.99,
+        "direct_fit_both_correct": true
+      },
+      "domain": "TM024.COLLISIONMAP.CELLS."
+    },
+    {
+      "id": "C1",
+      "passed": true,
+      "birth_attractor_collapse": false,
+      "after_a_attractor_collapse": true,
+      "birth_distinct_cue": true,
+      "after_a_distinct_cue": true,
+      "birth_distinct_rho_elig": true,
+      "after_a_distinct_rho_elig": false,
+      "birth": {
+        "stages": {
+          "start": {
+            "cosine": 0.9999999999999278,
+            "l2": 0.0,
+            "distinct": false,
+            "a": {
+              "act_logit": 0.9227460827802743,
+              "hold_logit": -0.33347803783708835,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9227460827802743,
+              "hold_logit": -0.33347803783708835,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "cue": {
+            "cosine": 0.738664433903996,
+            "l2": 2.675409071864442,
+            "distinct": true,
+            "a": {
+              "act_logit": 0.8878835780528863,
+              "hold_logit": -0.01598426499662814,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9587460443795326,
+              "hold_logit": -0.1732241843041058,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "event_end": {
+            "cosine": 0.982389515953584,
+            "l2": 0.6476743634006283,
+            "distinct": true,
+            "a": {
+              "act_logit": 1.0009993644796293,
+              "hold_logit": -0.046681632894317655,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9883135680309594,
+              "hold_logit": -0.02843670085356698,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "observable": {
+            "cosine": 0.9984502688961366,
+            "l2": 0.2024806838013493,
+            "distinct": true,
+            "a": {
+              "act_logit": 0.8822997020058879,
+              "hold_logit": 0.4402221523506893,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.8635364879590187,
+              "hold_logit": 0.417601455654393,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "motor_last": {
+            "cosine": 0.9997321293074743,
+            "l2": 0.06719504420722412,
+            "distinct": true,
+            "a": {
+              "act_logit": 0.9206398716320829,
+              "hold_logit": 0.03602819693564813,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9164828347113947,
+              "hold_logit": 0.037267385053457586,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "final": {
+            "cosine": 0.9997321293074743,
+            "l2": 0.06719504420722412,
+            "distinct": true,
+            "a": {
+              "act_logit": 0.9206398716320829,
+              "hold_logit": 0.03602819693564813,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9164828347113947,
+              "hold_logit": 0.037267385053457586,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          },
+          "rho_elig": {
+            "cosine": 0.9997321293074743,
+            "l2": 0.06719504420722412,
+            "distinct": true,
+            "a": {
+              "act_logit": 0.9206398716320829,
+              "hold_logit": 0.03602819693564813,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            },
+            "b": {
+              "act_logit": 0.9164828347113947,
+              "hold_logit": 0.037267385053457586,
+              "motor_ben": 0.0,
+              "motor_harm": 0.0,
+              "p_handle_ben": 0.2499999999999375
+            }
+          }
+        },
+        "motor_ticks": [
+          {
+            "tick": "motor_0",
+            "cosine": 0.9997321293074743,
+            "l2": 0.06719504420722412,
+            "distinct": true
+          }
+        ],
+        "distinct_cue": true,
+        "distinct_observable": true,
+        "distinct_motor_last": true,
+        "distinct_rho_elig": true,
+        "attractor_collapse": false,
+        "sensory_collapse": false,
+        "remain_distinct": true,
+        "n_motor_a": 1,
+        "n_motor_b": 1
+      },
+      "after_a": {
+        "stages": {
+          "start": {
+            "cosine": 0.9999999999999278,
+            "l2": 0.0,
+            "distinct": false,
+            "a": {
+              "act_logit": 1.0444343041659527,
+              "hold_logit": -0.33347803783708835,
+              "motor_ben": 0.9999999999917825,
+              "motor_harm": -0.04408088772989587,
+              "p_handle_ben": 0.5170313421997188
+            },
+            "b": {
+              "act_logit": 1.0444343041659527,
+              "hold_logit": -0.33347803783708835,
+              "motor_ben": 0.9999999999917825,
+              "motor_harm": -0.04408088772989587,
+              "p_handle_ben": 0.5170313421997188
+            }
+          },
+          "cue": {
+            "cosine": 0.738664433903996,
+            "l2": 2.675409071864442,
+            "distinct": true,
+            "a": {
+              "act_logit": 1.0356903149961745,
+              "hold_logit": -0.015984264996628167,
+              "motor_ben": 0.9999999999932344,
+              "motor_harm": -0.04408088772995988,
+              "p_handle_ben": 0.5170313422001362
+            },
+            "b": {
+              "act_logit": 1.0912201718017658,
+              "hold_logit": -0.17322418430410583,
+              "motor_ben": 0.9999999999924515,
+              "motor_harm": -0.044080887729925376,
+              "p_handle_ben": 0.5170313421999112
+            }
+          },
+          "event_end": {
+            "cosine": 0.982389515953584,
+            "l2": 0.6476743634006283,
+            "distinct": true,
+            "a": {
+              "act_logit": 1.127478141374669,
+              "hold_logit": -0.04668163289431766,
+              "motor_ben": 0.9999999999920933,
+              "motor_harm": -0.044080887729909625,
+              "p_handle_ben": 0.5170313421998082
+            },
+            "b": {
+              "act_logit": 1.1119669353182262,
+              "hold_logit": -0.02843670085356699,
+              "motor_ben": 0.9999999999919129,
+              "motor_harm": -0.044080887729901645,
+              "p_handle_ben": 0.5170313421997563
+            }
+          },
+          "observable": {
+            "cosine": 0.9984502688961366,
+            "l2": 0.2024806838013493,
+            "distinct": true,
+            "a": {
+              "act_logit": 1.0186085598306382,
+              "hold_logit": 0.4402221523506893,
+              "motor_ben": 0.9999999999926639,
+              "motor_harm": -0.04408088772993474,
+              "p_handle_ben": 0.5170313421999723
+            },
+            "b": {
+              "act_logit": 0.9987649931757571,
+              "hold_logit": 0.417601455654393,
+              "motor_ben": 0.9999999999926049,
+              "motor_harm": -0.044080887729932156,
+              "p_handle_ben": 0.5170313421999553
+            }
+          },
+          "motor_last": {
+            "cosine": 0.9999779456696074,
+            "l2": 0.018867962172136536,
+            "distinct": false,
+            "a": {
+              "act_logit": 1.01564573049624,
+              "hold_logit": 0.039770274597286645,
+              "motor_ben": 0.9999999999930046,
+              "motor_harm": -0.04408088772994977,
+              "p_handle_ben": 0.5170313422000702
+            },
+            "b": {
+              "act_logit": 1.0170535893179034,
+              "hold_logit": 0.039353080152096945,
+              "motor_ben": 0.9999999999930035,
+              "motor_harm": -0.044080887729949725,
+              "p_handle_ben": 0.51703134220007
+            }
+          },
+          "final": {
+            "cosine": 0.9999779456696074,
+            "l2": 0.018867962172136536,
+            "distinct": false,
+            "a": {
+              "act_logit": 1.01564573049624,
+              "hold_logit": 0.039770274597286645,
+              "motor_ben": 0.9999999999930046,
+              "motor_harm": -0.04408088772994977,
+              "p_handle_ben": 0.5170313422000702
+            },
+            "b": {
+              "act_logit": 1.0170535893179034,
+              "hold_logit": 0.039353080152096945,
+              "motor_ben": 0.9999999999930035,
+              "motor_harm": -0.044080887729949725,
+              "p_handle_ben": 0.51703134220007
+            }
+          },
+          "rho_elig": {
+            "cosine": 0.9999779456696074,
+            "l2": 0.018867962172136536,
+            "distinct": false,
+            "a": {
+              "act_logit": 1.01564573049624,
+              "hold_logit": 0.039770274597286645,
+              "motor_ben": 0.9999999999930046,
+              "motor_harm": -0.04408088772994977,
+              "p_handle_ben": 0.5170313422000702
+            },
+            "b": {
+              "act_logit": 1.0170535893179034,
+              "hold_logit": 0.039353080152096945,
+              "motor_ben": 0.9999999999930035,
+              "motor_harm": -0.044080887729949725,
+              "p_handle_ben": 0.51703134220007
+            }
+          }
+        },
+        "motor_ticks": [
+          {
+            "tick": "motor_0",
+            "cosine": 0.9997321293074743,
+            "l2": 0.06719504420722412,
+            "distinct": true
+          },
+          {
+            "tick": "motor_1",
+            "cosine": 0.9999779456696074,
+            "l2": 0.018867962172136536,
+            "distinct": false
+          }
+        ],
+        "distinct_cue": true,
+        "distinct_observable": true,
+        "distinct_motor_last": false,
+        "distinct_rho_elig": false,
+        "attractor_collapse": true,
+        "sensory_collapse": false,
+        "remain_distinct": false,
+        "n_motor_a": 2,
+        "n_motor_b": 2
+      }
+    },
+    {
+      "id": "C2",
+      "passed": true,
+      "a_ok_after_a": true,
+      "a_ok_after_b": true,
+      "b_ok_after_b": false,
+      "teaching_b_destroys_a": false,
+      "substitute_rho_a_restores": true,
+      "remain_distinct_after_ab": false,
+      "attractor_collapse_after_ab": true,
+      "adv_a": 0.23799941637852023,
+      "adv_b": -0.6041611964080489,
+      "live_a": {
+        "act_logit": 0.2949714792078143,
+        "hold_logit": 0.3623898997121583,
+        "motor_ben": 0.199605885859869,
+        "motor_harm": -0.9780596946714846,
+        "p_handle_ben": 0.34479764510995337
+      },
+      "live_b": {
+        "act_logit": 0.29687242775253775,
+        "hold_logit": 0.3706879750833833,
+        "motor_ben": 0.1996887856980008,
+        "motor_harm": -0.978042066248576,
+        "p_handle_ben": 0.3448149618306855
+      },
+      "after_a": {
+        "act_logit": 1.0178209900550768,
+        "hold_logit": 0.03942871931720457,
+        "motor_ben": 0.9999999999930215,
+        "motor_harm": 0.008906081399284633,
+        "p_handle_ben": 0.4676022638189334
+      },
+      "untought_b_after_a": {
+        "act_logit": 1.0173314998961218,
+        "hold_logit": 0.039353080152096945,
+        "motor_ben": 0.9999999999930173,
+        "motor_harm": 0.008906081399284588,
+        "p_handle_ben": 0.46760226381893244
+      },
+      "substitute": {
+        "act_logit": 0.2949714792078143,
+        "hold_logit": 0.3623898997121583,
+        "motor_ben": 0.199605885859869,
+        "motor_harm": -0.9780596946714846,
+        "p_handle_ben": 0.34479764510995337
+      },
+      "other_elig_readout": {
+        "act_logit": 0.29687242775253775,
+        "hold_logit": 0.3706879750833833,
+        "motor_ben": 0.1996887856980008,
+        "motor_harm": -0.978042066248576,
+        "p_handle_ben": 0.3448149618306855
+      },
+      "pair_after_ab": {
+        "stages": {
+          "start": {
+            "cosine": 0.9999999999999278,
+            "l2": 0.0,
+            "distinct": false,
+            "a": {
+              "act_logit": 0.37148071740245087,
+              "hold_logit": -0.039483277326530314,
+              "motor_ben": 0.18517822080416318,
+              "motor_harm": -0.9810167676410755,
+              "p_handle_ben": 0.3417853321645343
+            },
+            "b": {
+              "act_logit": 0.37148071740245087,
+              "hold_logit": -0.039483277326530314,
+              "motor_ben": 0.18517822080416318,
+              "motor_harm": -0.9810167676410755,
+              "p_handle_ben": 0.3417853321645343
+            }
+          },
+          "cue": {
+            "cosine": 0.7118926308401485,
+            "l2": 2.6130096792052453,
+            "distinct": true,
+            "a": {
+              "act_logit": 0.15527830671552856,
+              "hold_logit": 0.0531590746542078,
+              "motor_ben": 0.19650413340013118,
+              "motor_harm": -0.9787140277099552,
+              "p_handle_ben": 0.3441497938279519
+            },
+            "b": {
+              "act_logit": 0.35490272073287843,
+              "hold_logit": 0.1483221397987722,
+              "motor_ben": 0.18269550143182467,
+              "motor_harm": -0.981503451321972,
+              "p_handle_ben": 0.3412672786404248
+            }
+          },
+          "event_end": {
+            "cosine": 0.9774663535333972,
+            "l2": 0.7358258631036816,
+            "distinct": true,
+            "a": {
+              "act_logit": 0.37751505864727963,
+              "hold_logit": 0.33359221387548965,
+              "motor_ben": 0.18777166423303943,
+              "motor_harm": -0.980501442946505,
+              "p_handle_ben": 0.3423265897314338
+            },
+            "b": {
+              "act_logit": 0.44869062968325496,
+              "hold_logit": 0.26021763774277434,
+              "motor_ben": 0.19008287693288242,
+              "motor_harm": -0.9800362174807206,
+              "p_handle_ben": 0.3428090291427362
+            }
+          },
+          "observable": {
+            "cosine": 0.998772854906521,
+            "l2": 0.1797909919901655,
+            "distinct": true,
+            "a": {
+              "act_logit": 0.25845807190823245,
+              "hold_logit": 0.756851237880964,
+              "motor_ben": 0.18703595588522148,
+              "motor_harm": -0.9806483510035773,
+              "p_handle_ben": 0.34217303548532085
+            },
+            "b": {
+              "act_logit": 0.26152556692672946,
+              "hold_logit": 0.7389950139063294,
+              "motor_ben": 0.18688250048074034,
+              "motor_harm": -0.9806789213852161,
+              "p_handle_ben": 0.3421410078734211
+            }
+          },
+          "motor_last": {
+            "cosine": 0.9998620495015036,
+            "l2": 0.047961366370770926,
+            "distinct": false,
+            "a": {
+              "act_logit": 0.2949714792078143,
+              "hold_logit": 0.3623898997121583,
+              "motor_ben": 0.199605885859869,
+              "motor_harm": -0.9780596946714846,
+              "p_handle_ben": 0.34479764510995337
+            },
+            "b": {
+              "act_logit": 0.29687242775253775,
+              "hold_logit": 0.3706879750833833,
+              "motor_ben": 0.1996887856980008,
+              "motor_harm": -0.978042066248576,
+              "p_handle_ben": 0.3448149618306855
+            }
+          },
+          "final": {
+            "cosine": 0.9998620495015036,
+            "l2": 0.047961366370770926,
+            "distinct": false,
+            "a": {
+              "act_logit": 0.2949714792078143,
+              "hold_logit": 0.3623898997121583,
+              "motor_ben": 0.199605885859869,
+              "motor_harm": -0.9780596946714846,
+              "p_handle_ben": 0.34479764510995337
+            },
+            "b": {
+              "act_logit": 0.29687242775253775,
+              "hold_logit": 0.3706879750833833,
+              "motor_ben": 0.1996887856980008,
+              "motor_harm": -0.978042066248576,
+              "p_handle_ben": 0.3448149618306855
+            }
+          },
+          "rho_elig": {
+            "cosine": 0.9998620495015036,
+            "l2": 0.047961366370770926,
+            "distinct": false,
+            "a": {
+              "act_logit": 0.2949714792078143,
+              "hold_logit": 0.3623898997121583,
+              "motor_ben": 0.199605885859869,
+              "motor_harm": -0.9780596946714846,
+              "p_handle_ben": 0.34479764510995337
+            },
+            "b": {
+              "act_logit": 0.29687242775253775,
+              "hold_logit": 0.3706879750833833,
+              "motor_ben": 0.1996887856980008,
+              "motor_harm": -0.978042066248576,
+              "p_handle_ben": 0.3448149618306855
+            }
+          }
+        },
+        "motor_ticks": [
+          {
+            "tick": "motor_0",
+            "cosine": 0.9998620495015036,
+            "l2": 0.047961366370770926,
+            "distinct": false
+          }
+        ],
+        "distinct_cue": true,
+        "distinct_observable": true,
+        "distinct_motor_last": false,
+        "distinct_rho_elig": false,
+        "attractor_collapse": true,
+        "sensory_collapse": false,
+        "remain_distinct": false,
+        "n_motor_a": 1,
+        "n_motor_b": 1
+      },
+      "domain": "TM024.COLLISIONMAP.CELLS."
+    },
+    {
+      "id": "C3",
+      "passed": true,
+      "eff_rank_rho_elig": 6,
+      "n_cues": 8,
+      "linear_sep_acc": 1.0,
+      "linear_sep_ok": true,
+      "mean_cosine_a_b": 0.9999779456696074,
+      "mean_l2_a_b": 0.018867962172136463,
+      "singular_rel_tol": 0.001,
+      "rank_ge2": true,
+      "domain": "TM024.COLLISIONMAP.CELLS."
+    },
+    {
+      "id": "C4",
+      "passed": true,
+      "direct_fit_elig_ok": true,
+      "direct_fit_cue_ok": true,
+      "v29_sequential_ok": false,
+      "geometry_failure": true,
+      "lambda": 0.01,
+      "state": "rho_elig",
+      "fit_elig": {
+        "a_prefers_ben": true,
+        "b_prefers_harm": true
+      },
+      "fit_cue": {
+        "a_prefers_ben": true,
+        "b_prefers_harm": true
+      },
+      "v29": {
+        "a": {
+          "act_logit": 0.2949714792078143,
+          "hold_logit": 0.3623898997121583,
+          "motor_ben": 0.37131255455457024,
+          "motor_harm": -0.9803222719340182,
+          "p_handle_ben": 0.34562209359528856
+        },
+        "b": {
+          "act_logit": 0.29687242775253775,
+          "hold_logit": 0.3706879750833833,
+          "motor_ben": 0.3713842647114094,
+          "motor_harm": -0.9803070229661275,
+          "p_handle_ben": 0.3456366351436738
+        }
+      },
+      "elig_cosine": 0.9998620495015036,
+      "elig_l2": 0.047961366370770926,
+      "cue_cosine": 0.7118926308401485,
+      "cue_l2": 2.6130096792052453,
+      "domain": "TM024.COLLISIONMAP.CELLS."
+    },
+    {
+      "id": "C5",
+      "passed": true,
+      "same_bits": true,
+      "primary": {
+        "attractor_collapse": true,
+        "sequential_destroy": false,
+        "remain_distinct": false,
+        "linear_sep_ok": true,
+        "rank_ge2": true,
+        "direct_fit_ok": true,
+        "v29_ok": false
+      },
+      "twin": {
+        "attractor_collapse": true,
+        "sequential_destroy": false,
+        "remain_distinct": false,
+        "linear_sep_ok": true,
+        "rank_ge2": true,
+        "direct_fit_ok": true,
+        "v29_ok": false
+      },
+      "domain": "TM024.COLLISIONMAP.TWIN."
+    }
+  ],
+  "decision": {
+    "code": "attractor_collapse",
+    "note": "A/B separate after cue ingestion, then are not distinct at \u03c1_elig.",
+    "bits": {
+      "attractor_collapse": true,
+      "sequential_destroy": false,
+      "remain_distinct": false,
+      "linear_sep_ok": true,
+      "rank_ge2": true,
+      "direct_fit_ok": true,
+      "v29_ok": false
+    },
+    "amendment_authorized": false,
+    "two_timescale_authorized": false,
+    "increase_n": false,
+    "another_lineage_run": false
+  },
+  "another_lineage_run": false,
+  "q3": false,
+  "amendment_authorized": false,
+  "two_timescale_authorized": false,
+  "increase_n": false,
+  "git_head": "23f82fe027cc9ecd176950c924433fe29897527b",
+  "env": {
+    "torch_version": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cuda_available": true,
+    "python": "3.12.3",
+    "device_name": "NVIDIA GB10",
+    "cudnn": 92000
+  },
+  "note": "C0\u2013C5 on unused TM024.COLLISIONMAP.CELLS. / TWIN. Diagnosis only. Not 0.0.005."
+}
