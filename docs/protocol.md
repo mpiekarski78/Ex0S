@@ -2298,7 +2298,7 @@ v30 apparatus: [`cortex_v30.prereg.lock`](cortex_v30.prereg.lock) + [`lineage_mo
 
 Candidate (this cycle): [`cortex.candidate.v30.lock`](cortex.candidate.v30.lock). Scalar motor-tick persist. Default `p=0` recovers v29. C4/C5/C6 green. DEV found no usable `p`.
 
-Result: [`lineage_motorpersist.decision.lock`](lineage_motorpersist.decision.lock) **identity_survives_opposing_learning_fails**. No grid `p` kept A/B distinct *and* allowed opposing sequential teaching *and* left the motor map intact. Identity can survive at `p≥0.25` (L2); live A/B rankings stay the same handle. Next is plastic-write geometry / compact connection-local state — not a context/motor partition and not SFNN cell classes. Scored worlds not opened. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
+Result: [`lineage_motorpersist.decision.lock`](lineage_motorpersist.decision.lock) **identity_survives_opposing_learning_fails**. No grid `p` kept A/B distinct *and* allowed opposing sequential teaching *and* left the motor map intact. The first opposing protocol taught a negative-advantage handle; retest with two positive-advantage actuators still fails (last write wins for both cues). Identity can survive at `p≥0.25` (L2); live A/B rankings stay the same handle. Next is plastic-write geometry / compact connection-local state — not a context/motor partition and not SFNN cell classes. Scored worlds not opened. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
 
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 

@@ -114,6 +114,15 @@ def test_runner_lock_if_present() -> None:
     assert "p" in lock
 
 
+def test_opposing_handles_positive_advantage() -> None:
+    from experiments.run_tm024motorpersist import DEV_DOMAIN, handles, make_cell_world, mid_adv, opposing_world
+
+    w = opposing_world(make_cell_world(0, DEV_DOMAIN))
+    h1, h2 = handles(w)
+    assert mid_adv(w, h1) > 0.0
+    assert mid_adv(w, h2) > 0.0
+
+
 def test_smoke() -> None:
     from experiments.run_tm024motorpersist import smoke
 
@@ -144,12 +153,18 @@ def test_decision_if_present() -> None:
     plock = json.loads((REPO_ROOT / "docs" / "lineage_motorpersist.p.lock").read_text(encoding="utf-8"))
     assert plock["usable_p_exists"] is False
     assert plock["module_p"] == 0.0
+    opp_rows = [r for r in plock.get("rows") or [] if r.get("opposing_detail")]
+    assert opp_rows
+    for r in opp_rows:
+        advs = [float(t["adv"]) for t in r["opposing_detail"]["taught"]]
+        assert all(a > 0.0 for a in advs), advs
 
 
 def main() -> None:
     test_phase_a_files()
     test_contract_stance()
     test_runner_lock_if_present()
+    test_opposing_handles_positive_advantage()
     test_smoke()
     test_decision_if_present()
     print("test_tm024motorpersist: ok")

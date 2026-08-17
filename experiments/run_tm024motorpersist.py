@@ -9,6 +9,7 @@ after selected p is frozen.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import subprocess
@@ -18,7 +19,7 @@ from typing import Any
 
 import numpy as np
 
-from experiments.run_tm023cortex import make_cortex, torch_env
+from experiments.run_tm023cortex import make_cortex, physics, torch_env
 from experiments.run_tm024actorcredit import MID_BODY, clone_frozen, motor_scores, observe_cue, prep_eval
 from experiments.run_tm024collisionmap import (
     cosine,
@@ -126,6 +127,33 @@ def handles(world: dict[str, Any]) -> tuple[str, str]:
     return str(world["handles"][0]), str(world["handles"][1])
 
 
+# Two distinct homeostatic-positive deltas from MID. The stock synthetic world
+# has one beneficial and one harmful actuator; teaching the harmful handle from
+# MID yields negative advantage, which suppresses that handle and trips
+# opposite-sign conflict-HOLD. That made "A→h1, B→h2, opposing rankings"
+# unteachable even with perfect cue identity.
+POS_DELTA_H1 = [0.25, -0.1, 0.15, 0.0]
+POS_DELTA_H2 = [0.15, -0.2, 0.25, 0.0]
+
+
+def opposing_world(world: dict[str, Any]) -> dict[str, Any]:
+    w = copy.deepcopy(world)
+    h1, h2 = handles(w)
+    effects = dict(w["latent"]["act_effects"])
+    effects[h1] = {"state": ["st_p1"], "delta": list(POS_DELTA_H1)}
+    effects[h2] = {"state": ["st_p2"], "delta": list(POS_DELTA_H2)}
+    w["latent"] = {"act_effects": effects}
+    return w
+
+
+def mid_adv(world: dict[str, Any], tok: str) -> float:
+    body = list(MID_BODY)
+    _, body2 = physics(body, tok, world["latent"])
+    sp = np.array([1.0, 0.0, 1.0, 0.0], dtype=np.float64)
+    body_adv = float(np.linalg.norm(np.asarray(body) - sp) - np.linalg.norm(np.asarray(body2) - sp))
+    return body_adv - 0.05
+
+
 def live_handles(ag: NeuralCortex, world: dict[str, Any], cue: str, *, tag: str) -> dict[str, Any]:
     probe = clone_frozen(ag)
     observe_cue(probe, world, tag=tag, body=list(MID_BODY), symbols=[cue])
@@ -176,18 +204,25 @@ def teach_opposing(
     tag: str,
     order: str = "A_then_B",
 ) -> dict[str, Any]:
-    a, b = cue_pair(world)
-    h1, h2 = handles(world)
+    w = opposing_world(world)
+    a, b = cue_pair(w)
+    h1, h2 = handles(w)
+    adv1 = mid_adv(w, h1)
+    adv2 = mid_adv(w, h2)
+    if adv1 <= 0.0 or adv2 <= 0.0:
+        raise RuntimeError(f"opposing handles must both have positive MID advantage, got {adv1}, {adv2}")
     if order == "B_then_A":
         seq = ((b, h2, "b"), (a, h1, "a"))
     else:
         seq = ((a, h1, "a"), (b, h2, "b"))
     taught = []
     for cue, tok, name in seq:
-        t = teach_one(ag, world, tok, tag=f"{tag}_{name}", symbols=[cue])
+        t = teach_one(ag, w, tok, tag=f"{tag}_{name}", symbols=[cue])
         taught.append({"cue": cue, "tok": tok, "moved": bool(t["moved"]), "adv": t["adv"]})
-    pa = live_handles(ag, world, a, tag=f"{tag}_pa")
-    pb = live_handles(ag, world, b, tag=f"{tag}_pb")
+    if any(float(row["adv"]) <= 0.0 for row in taught):
+        raise RuntimeError(f"opposing teach applied non-positive advantage: {taught}")
+    pa = live_handles(ag, w, a, tag=f"{tag}_pa")
+    pb = live_handles(ag, w, b, tag=f"{tag}_pb")
     opposing = bool(pa["prefer_h1"] and pb["prefer_h2"])
     return {
         "order": order,
@@ -195,6 +230,7 @@ def teach_opposing(
         "live_a": {k: pa[k] for k in ("h1", "h2", "prefer_h1", "prefer_h2")},
         "live_b": {k: pb[k] for k in ("h1", "h2", "prefer_h1", "prefer_h2")},
         "opposing": opposing,
+        "mid_adv": {"h1": adv1, "h2": adv2},
     }
 
 
@@ -261,7 +297,7 @@ def run_dev_grid() -> dict[str, Any]:
         "selected_p": selected,
         "p0_steps": p0_steps,
         "rows": rows,
-        "note": "DEV only. Do not tune on SCORE worlds.",
+            "note": "DEV only. Do not tune on SCORE worlds. Opposing teach uses two homeostatic-positive handles so both updates have positive advantage.",
     }
 
 
@@ -290,7 +326,7 @@ def write_p_lock(dev: dict[str, Any] | None = None) -> dict[str, Any]:
             "dev": {k: v for k, v in dev.items() if k != "rows"},
             "rows": dev["rows"],
             "usable_p_exists": False,
-            "note": "No grid value met all DEV criteria. Do not score as a pass. Escalation table applies.",
+            "note": "No grid value met all DEV criteria after teaching two positive-advantage handles. Do not score as a pass. Escalation table applies.",
         }
     else:
         if abs(frozen_p - float(dev["selected_p"])) > 1e-12:
@@ -402,15 +438,16 @@ def run_p1(*, domain: str = SCORE_DOMAIN, index: int = 0, order: str = "A_then_B
 
 def run_p3(*, domain: str = SCORE_DOMAIN, index: int = 1) -> dict[str, Any]:
     world = make_cell_world(index, domain)
-    a, b = cue_pair(world)
-    h1, h2 = handles(world)
+    w = opposing_world(world)
+    a, b = cue_pair(w)
+    h1, h2 = handles(w)
     with tempfile.TemporaryDirectory(prefix="mp_p3_") as tmp:
         ag = _fresh(tmp, "s", world)
         teach_opposing(ag, world, tag="p3base", order="A_then_B")
-        before_b = live_handles(ag, world, b, tag="p3_bb")
-        teach_one(ag, world, h2, tag="p3_rev_a", symbols=[a])
-        after_a = live_handles(ag, world, a, tag="p3_aa")
-        after_b = live_handles(ag, world, b, tag="p3_ba")
+        before_b = live_handles(ag, w, b, tag="p3_bb")
+        teach_one(ag, w, h2, tag="p3_rev_a", symbols=[a])
+        after_a = live_handles(ag, w, a, tag="p3_aa")
+        after_b = live_handles(ag, w, b, tag="p3_ba")
         a_flipped = bool(after_a["prefer_h2"])
         b_stable = bool(after_b["prefer_h2"] == before_b["prefer_h2"] and after_b["prefer_h2"])
         passed = bool(a_flipped and b_stable)
@@ -615,14 +652,14 @@ def write_dev_decision() -> dict[str, Any]:
         "p_lock_sha": sha_file(P_LOCK),
         "env": torch_env(),
         "git_head": _git_head(),
-        "note": "DEV grid: no p met identity+opposing+S0+motor simultaneously. Scored worlds not opened. Next is plastic-write geometry. Product remains 0.0.004.",
+        "note": "DEV grid: no p met identity+opposing+S0+motor simultaneously. Opposing teach uses two positive-advantage handles. Scored worlds not opened. Next is plastic-write geometry. Product remains 0.0.004.",
     }
     if DECISION.exists():
         raise RuntimeError("decision.lock exists")
     DECISION.write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8")
     RESULT_MD.write_text(
         "# TM.0.24.MOTORPERSIST result\n\n"
-        "No usable `p`. Identity can survive (`p≥0.25` by L2). Opposing sequential teaching failed at every grid value. "
+        "No usable `p`. Identity can survive (`p≥0.25` by L2). Opposing sequential teaching failed at every grid value even after teaching two positive-advantage handles. "
         "`p≥0.9` disables the motor step. Escalation: **plastic-write geometry / compact connection-local state**.\n\n"
         "Scored worlds were not opened. Lineage stays closed. Product **0.0.004**. `earned_next=false`.\n",
         encoding="utf-8",
