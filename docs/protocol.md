@@ -2168,3 +2168,5 @@ Result: [`cortex_d6_r2_gate.lock`](cortex_d6_r2_gate.lock) **12/16**. D6 28/32. 
 
 Canonical main `e756bf8`. D6.R3 apparatus follows. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
 
+D6.R3 apparatus: [`cortex_d6_r3.prereg.lock`](cortex_d6_r3.prereg.lock). `VOCAL_REFRACTORY=1.5` authorized after this freeze.
+
