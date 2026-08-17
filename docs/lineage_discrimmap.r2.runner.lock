@@ -1,0 +1,122 @@
+{
+  "version": "TM.0.24.DISCRIMMAP.R2.RUNNER.V1",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "shas": {
+    "runner": "06f5f2c6edc0dffef570e75295708ea2816ea737cd0af9dab157cd94f4c26b41",
+    "neural_cortex": "90dae9a652fdefa0e7942b775053e2b765991eb26ee3ee4cdcfdb994b901d9e0",
+    "cortex_memory": "fc3942efaffb8b18e891c545510aa4949b52c86c773c707036bbc6d162fe35d7",
+    "prereg": "22e4e9546c4668e9bee76c712a4efb529678e635e04a395d0ce5e052a50b5d13",
+    "contract": "12b013c533469261a50484c89b4e2c3a97f32791c64db180a36465bda1069a6a",
+    "isolation": "6ef2a722431e085800a4d6e77f8a329b16bff76a66c2e6dc3b68161ff8bc4b56",
+    "candidate_v30": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+    "historical_decision": "183b9a5f582f2c645adfe2df1424af92072255a59ad0cf8ec6358325f42083b0",
+    "historical_dev": "4c0c8677e7e95f18b9adaa788ec941f5cf17cb62bc486bca4099a1f2b5dcea13",
+    "historical_runner": "ae0dd8752341b2b727453010bcef6b380425b03a59c36c7c788bb40c7cff8c88",
+    "historical_addendum": "2ab8b0c10175ba719c9f1f96af1fbb9dccee9d7e8fa3e2dab186168a1b937cad"
+  },
+  "n": 64,
+  "domain": "TM024.DISCRIMMAP.R2.DEV.",
+  "twin_domain": "TM024.DISCRIMMAP.R2.TWIN.",
+  "score_domain": "TM024.DISCRIMMAP.R2.SCORE.",
+  "score_reserved_unopened": true,
+  "addresses": [
+    "E0",
+    "E1",
+    "Edelta",
+    "Elam_0.9"
+  ],
+  "arms": [
+    "D0",
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+  ],
+  "d1": {
+    "role": "hard_margin_linear_oracle",
+    "v_eligible": false,
+    "kind": "hard_margin_svm",
+    "method": "sv_subset_kkt_enumeration",
+    "soft_margin": false,
+    "soft_margin_C": null,
+    "no_automatic_soft_margin": true,
+    "sklearn": false,
+    "intercept": true,
+    "intercept_in_norm": false,
+    "y_encoding": [
+      -1,
+      1
+    ],
+    "alpha_min": 0.0,
+    "kkt_residual_max": 1e-06,
+    "constraint_tol": 1e-07,
+    "accepted_status": [
+      "optimal",
+      "infeasible"
+    ]
+  },
+  "d2": {
+    "role": "frozen_ridge_linear_oracle",
+    "v_eligible": false,
+    "lambda": 0.01,
+    "sklearn": false,
+    "y_encoding": [
+      -1,
+      1
+    ],
+    "row_unit_l2": true,
+    "mean_center": false,
+    "per_feature_std": false,
+    "intercept": true,
+    "intercept_in_norm": false
+  },
+  "d3": {
+    "role": "online_competitive_chosen_pos_unchosen_neg",
+    "v_eligible": false,
+    "eta": 0.15,
+    "epochs": 1,
+    "sample_order": "teach_sequence",
+    "shuffle": false,
+    "init": "zeros",
+    "c_max": 1.0,
+    "error_only": false,
+    "intercept": false,
+    "pool_orders": false
+  },
+  "d4": {
+    "role": "rbf_kernel_ridge_nonlinear_ceiling",
+    "v_eligible": false,
+    "lambda": 0.01,
+    "rbf_gamma": 0.5,
+    "intercept": false,
+    "sklearn": false
+  },
+  "geometric_margin_min": 0.01,
+  "w_norm_excludes_intercept": true,
+  "reject_raw_linear_margin": true,
+  "fail_closed": [
+    "prereg_or_runner_hash_mismatch",
+    "missing_or_duplicated_cell",
+    "probe_or_perturbation_in_fit",
+    "score_identifier_in_dev_payload",
+    "solver_nan_inf_or_unaccepted_status",
+    "same_frozen_dev_execution_again"
+  ],
+  "decision_ladder": [
+    "competitive_local_rule_supported",
+    "linear_boundary_exists_local_rule_fails",
+    "nonlinear_ceiling_only",
+    "linear_interpolation_only",
+    "robust_linear_boundary_absent"
+  ],
+  "expected_n_rank": 240,
+  "expected_n_twin": 40,
+  "expected_n_cells": 280,
+  "git_head": "2491afd0869dd809e7801973f121c079d1e454d2",
+  "note": "Frozen R2 runner. DEV lock only after this file is on origin/main. No neural edit."
+}

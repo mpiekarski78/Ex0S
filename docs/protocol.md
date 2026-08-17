@@ -2332,6 +2332,18 @@ D-arm runner: [`lineage_discrimmap.runner.lock`](lineage_discrimmap.runner.lock)
 
 Result: [`lineage_discrimmap.decision.lock`](lineage_discrimmap.decision.lock) **d1_fails_robustly**. The batch max-margin linear oracle cannot fit eight-cue training addresses (0/16 train-rank). D3 and D4 fail every 8-cue rank cell. Two-cue can rank in some cells; that is not robust separability. Address geometry remains insufficient; do not install a competitive linear write law. SCORE unopened. No v31/v32. The 1,536 eligibility budget stays closed. Lineage stays closed. QUAL/EVAL sealed. Not 0.0.005.
 
+Addendum: [`lineage_discrimmap.decision.addendum.lock`](lineage_discrimmap.decision.addendum.lock). The first runner left hidden scoring degrees of freedom. Historical DEV is not rescored. Next is pinned R2 on unused worlds.
+
+## TM.0.24.DISCRIMMAP → isolated DISCRIMMAP.R2
+
+Canonical main `2491afd`. Product **0.0.004**; `earned_next=false`; `ex0s=null`.
+
+The first DISCRIMMAP DEV is historical. Scoring-law changes after that DEV require a new runner lock and unused worlds.
+
+R2 apparatus: [`lineage_discrimmap.r2.prereg.lock`](lineage_discrimmap.r2.prereg.lock) + [`lineage_discrimmap.r2.isolation.lock`](lineage_discrimmap.r2.isolation.lock). Hard-margin infeasibility is explicit (no soft-margin \(C\)). D2 freezes \(y\in\{-1,+1\}\), unit-row features, intercept excluded from \(\|w\|\). D3 freezes \(\eta=0.15\), one epoch, teach-sequence order, zero init, \(\|w_h\|\le 1\), not error-only. D4 freezes RBF \(\gamma=0.5\), \(\lambda=0.01\), ceiling only. Unused `TM024.DISCRIMMAP.R2.DEV.` / `TWIN.`. SCORE reserved. n stays 64. FULLDEV.R7 sealed. QUAL/EVAL sealed. Not 0.0.005.
+
+D-arm R2 runner: [`lineage_discrimmap.r2.runner.lock`](lineage_discrimmap.r2.runner.lock). DEV lock only after this lock is on `origin/main`. No neural edit. n stays 64.
+
 ## TM.0.23.CORTEX.D5.R3 15/16 → FULLDEV.R7
 
 Canonical main `0984ef3`. FULLDEV.R7 apparatus follows **only if GENERALITY.v26 is all-green**. Live v26, no neural edit. Product **0.0.004**; `earned_next=false`; `ex0s=null`.

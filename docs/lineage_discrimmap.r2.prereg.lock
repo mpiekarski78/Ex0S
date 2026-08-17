@@ -1,0 +1,208 @@
+{
+  "version": "TM.0.24.DISCRIMMAP.R2.PREREG",
+  "lab": "TM.0.24.DISCRIMMAP.R2",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit": false,
+  "implementation_authorized": false,
+  "investigation_justified": true,
+  "package_question": "With hard-margin infeasibility, frozen D2/D3/D4, and no hidden solver degrees of freedom, does a linear boundary exist on captured E0/E1/Elam/Edelta teaching addresses, and can the local competitive rule reach it on probes, twins, and perturbations?",
+  "authorized_by": [
+    "docs/lineage_discrimmap.decision.lock",
+    "docs/lineage_discrimmap.decision.addendum.lock"
+  ],
+  "historical_discrimmap_decision_sha": "183b9a5f582f2c645adfe2df1424af92072255a59ad0cf8ec6358325f42083b0",
+  "historical_discrimmap_dev_sha": "4c0c8677e7e95f18b9adaa788ec941f5cf17cb62bc486bca4099a1f2b5dcea13",
+  "historical_discrimmap_runner_lock_sha": "ae0dd8752341b2b727453010bcef6b380425b03a59c36c7c788bb40c7cff8c88",
+  "candidate": "docs/cortex.candidate.v30.lock",
+  "candidate_v30_sha": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+  "n": 64,
+  "increase_n": false,
+  "eligibility_budget_installed": false,
+  "declared_budget_remains_closed": 1536,
+  "domains": {
+    "DEV": "TM024.DISCRIMMAP.R2.DEV.",
+    "TWIN": "TM024.DISCRIMMAP.R2.TWIN.",
+    "SCORE": "TM024.DISCRIMMAP.R2.SCORE."
+  },
+  "score_reserved_unopened": true,
+  "rescore_historical_worlds": false,
+  "addresses": ["E0", "E1", "Edelta", "Elam_0.9"],
+  "elam_lambda_frozen": 0.9,
+  "fit": {
+    "rows": "teach_select_adv_nonzero_only",
+    "never_fit_probes": true,
+    "never_fit_perturbations": true,
+    "evaluate_on": ["probe", "twin", "perturbation"]
+  },
+  "arms": {
+    "D0": {
+      "role": "nearest_prototype_control",
+      "v_eligible": false,
+      "solver": "not_applicable"
+    },
+    "D1": {
+      "role": "hard_margin_linear_oracle",
+      "v_eligible": false,
+      "kind": "hard_margin_svm",
+      "method": "sv_subset_kkt_enumeration",
+      "soft_margin": false,
+      "soft_margin_C": null,
+      "no_automatic_soft_margin": true,
+      "sklearn": false,
+      "intercept": true,
+      "intercept_in_norm": false,
+      "y_encoding": [-1, 1],
+      "alpha_min": 0.0,
+      "kkt_residual_max": 1e-6,
+      "constraint_tol": 1e-7,
+      "accepted_status": ["optimal", "infeasible"]
+    },
+    "D2": {
+      "role": "frozen_ridge_linear_oracle",
+      "v_eligible": false,
+      "lambda": 0.01,
+      "sklearn": false,
+      "y_encoding": [-1, 1],
+      "row_unit_l2": true,
+      "mean_center": false,
+      "per_feature_std": false,
+      "intercept": true,
+      "intercept_in_norm": false
+    },
+    "D3": {
+      "role": "online_competitive_chosen_pos_unchosen_neg",
+      "v_eligible": false,
+      "eta": 0.15,
+      "epochs": 1,
+      "sample_order": "teach_sequence",
+      "shuffle": false,
+      "init": "zeros",
+      "c_max": 1.0,
+      "error_only": false,
+      "intercept": false,
+      "pool_orders": false
+    },
+    "D4": {
+      "role": "rbf_kernel_ridge_nonlinear_ceiling",
+      "v_eligible": false,
+      "lambda": 0.01,
+      "rbf_gamma": 0.5,
+      "intercept": false,
+      "sklearn": false
+    }
+  },
+  "capacity": [
+    {"n_cues": 2, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 4, "n_handles": 2, "balanced": true, "required": true},
+    {"n_cues": 8, "n_handles": 2, "balanced": true, "required": true}
+  ],
+  "teach_orders": ["A_then_B", "B_then_A"],
+  "equal_advantage": true,
+  "pos_delta": [0.25, -0.1, 0.15, 0.0],
+  "margin": {
+    "kind": "normalized_geometric",
+    "formula": "gamma_i = y_i * (w^T x_i + b) / ||w||",
+    "w_norm_excludes_intercept": true,
+    "geometric_margin_min": 0.01,
+    "reject_raw_linear_margin": true,
+    "require_correct_classification": true,
+    "report_train_and_probe_separately": true,
+    "training_only_pass_is_interpolation": true,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19,
+    "frozen_before_dev": true
+  },
+  "d0_control": {
+    "score": "cosine_nearest_prototype_N0",
+    "cosine_margin_min": 0.01,
+    "cannot_pass_by_rescaling": true
+  },
+  "n1n2_secondary": true,
+  "decision_ladder": [
+    {
+      "id": "competitive_local_rule_supported",
+      "when": "D1 and D3 pass robustly",
+      "then": "competitive_local_rule_supported"
+    },
+    {
+      "id": "linear_boundary_exists_local_rule_fails",
+      "when": "D1 passes robustly and D3 fails",
+      "then": "linear_boundary_exists_local_rule_fails"
+    },
+    {
+      "id": "nonlinear_ceiling_only",
+      "when": "D1 does not pass robustly and D4 does",
+      "then": "nonlinear_ceiling_only"
+    },
+    {
+      "id": "linear_interpolation_only",
+      "when": "D1 clean training passes but probe/twin/perturbation fails",
+      "then": "linear_interpolation_only"
+    },
+    {
+      "id": "robust_linear_boundary_absent",
+      "when": "D1 robustly fails (hard-margin infeasible or training sign+gamma fail; not interpolation; D4 does not pass)",
+      "then": "robust_linear_boundary_absent"
+    }
+  ],
+  "fail_closed": [
+    "prereg_or_runner_hash_mismatch",
+    "missing_or_duplicated_cell",
+    "probe_or_perturbation_in_fit",
+    "score_identifier_in_dev_payload",
+    "solver_nan_inf_or_unaccepted_status",
+    "same_frozen_dev_execution_again"
+  ],
+  "historical_immutable": [
+    "docs/lineage_engine.candidate.lock",
+    "docs/lineage_wall.lock",
+    "docs/lineage_wallmap.decision.lock",
+    "docs/lineage_reach.lock",
+    "docs/lineage_plasticitymap.decision.lock",
+    "docs/lineage_actorcredit.lock",
+    "docs/lineage_actorcredit_reach.lock",
+    "docs/lineage_statemap.decision.lock",
+    "docs/lineage_collisionmap.decision.lock",
+    "docs/lineage_persistgate.prereg.lock",
+    "docs/lineage_motorpersist.decision.lock",
+    "docs/lineage_writegeom.decision.lock",
+    "docs/lineage_eligmap.decision.lock",
+    "docs/lineage_eligmap.dev.lock",
+    "docs/lineage_discrimmap.prereg.lock",
+    "docs/lineage_discrimmap.runner.lock",
+    "docs/lineage_discrimmap.dev.lock",
+    "docs/lineage_discrimmap.decision.lock",
+    "docs/cortex.candidate.v30.lock"
+  ],
+  "another_lineage_run": false,
+  "q3": false,
+  "refuse": [
+    "neural_edit_this_package",
+    "install_D1_D2_D3_D4_in_NeuralCortex",
+    "declare_v31",
+    "declare_v32",
+    "open_SCORE",
+    "rescore_historical_DISCRIMMAP_worlds",
+    "sklearn",
+    "post_hoc_lambda",
+    "automatic_soft_margin",
+    "treat_pairwise_collisionmap_distinct_as_linear_separability",
+    "treat_N1N2_reversal_as_eight_cue_capacity",
+    "install_1536_eligibility_budget",
+    "instincts",
+    "increase_n",
+    "SFNN_cell_classes",
+    "lineage_evolution",
+    "QUAL_EVAL_reveal",
+    "FULLDEV_R7",
+    "rewrite_historical_locks",
+    "earned_next",
+    "stamp_0.0.005"
+  ],
+  "note": "Pinned R2 runner-only diagnostic on unused worlds. No neural law. Product remains 0.0.004."
+}
