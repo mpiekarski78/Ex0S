@@ -35,6 +35,11 @@ HISTORICAL_TM032_RUNNER_SHA = "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb77
 V38_ISO_SHA = "73543f2f67f6356e2218aa162cdf00db6beeea033a3cb177299efdf9237af866"
 V38_PREREG_SHA = "de924a8df50f0b20c902bf3cd3f689e882a162df0d28fe33e509ac6cb074c510"
 FROZEN_RUNNER_SHA = "91d8074d74b3724bd38e69b1d3860ea8ad0ba9835eb615a513cc9fcf620f5a49"
+HISTORICAL_DEV_SHA = "a049f5fc44e921e77b762e6da9fd0c19285b0b6143beab758e26a22ace337375"
+HISTORICAL_DEC_SHA = "cc22cbe82378164d61793b14727639ace35dca7fc95f5f5fc824bbc27ce081e6"
+NEURAL_SHA = "53227d84ee2163c223ded10a1bfbaebe39e665ff5a769007936fcd10d51cfebc"
+DEV = REPO / "docs" / "lineage_adaptrehearse.dev.lock"
+DEC = REPO / "docs" / "lineage_adaptrehearse.decision.lock"
 GENOME_TO_DICT_KEYS = {
     "n",
     "d_sym",
@@ -362,3 +367,30 @@ def test_checkpoint_serializes_debt_and_arm():
     assert bare._rehearsal_pass_debt == 0
     assert bare._rehearsal_update_debt == 0
     assert bare._act_rehearse_arm == ACT_REHEARSE_V37
+
+
+def test_dev_lock_records_implementation_and_first_match():
+    assert DEV.is_file()
+    assert DEC.is_file()
+    assert _sha(DEV) == HISTORICAL_DEV_SHA
+    assert _sha(DEC) == HISTORICAL_DEC_SHA
+    assert _sha(REPO / "three_memory" / "neural_cortex.py") == NEURAL_SHA
+    assert _sha(RUNNER) == FROZEN_RUNNER_SHA
+    dev = json.loads(DEV.read_text())
+    dec = json.loads(DEC.read_text())
+    assert dev["git_head"] == "64883d5c8e21d2121f5f541792218c88b83b3312"
+    assert dev["neural_sha"] == NEURAL_SHA
+    assert dev["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dev["clean_tree"] is True
+    assert dev["clean_tree_status"] == "clean"
+    assert dev["fit_44_row_updates"] is False
+    assert dev["hard_budget_passes"] == 16
+    assert dev["decision_code"] == "adaptrehearse_core_acquire_fail"
+    assert dev["phase_flags"]["n_diagnostic"] == 2
+    assert dev["phase_flags"]["n_debt_remaining_after_rest"] == 0
+    assert set(dev["phase_flags"]["routes"]) == {"v37_already_converged", "both_fail"}
+    assert dec["decision"]["code"] == "adaptrehearse_core_acquire_fail"
+    assert dec["dev_lock_sha"] == HISTORICAL_DEV_SHA
+    assert dec["git_head"] == dev["git_head"]
+    assert dec["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dec["fit_44_row_updates"] is False

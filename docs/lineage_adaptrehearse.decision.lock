@@ -1,0 +1,36 @@
+{
+  "version": "TM.0.33.ADAPTREHEARSE.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "5fa2dac5200a6944b0a31530d57983d7dd61cbe84d69ace45ac361a93079a3ad",
+  "decision": {
+    "code": "adaptrehearse_core_acquire_fail",
+    "then": "adaptrehearse_core_acquire_fail",
+    "phase_flags": {
+      "n_triples": 8,
+      "n_diagnostic": 2,
+      "n_v37_already_converged": 6,
+      "n_budget_exhausted": 4,
+      "n_debt_remaining_after_rest": 0,
+      "debt_remaining_ids": [],
+      "routes": [
+        "v37_already_converged",
+        "v37_already_converged",
+        "both_fail",
+        "both_fail",
+        "v37_already_converged",
+        "v37_already_converged",
+        "v37_already_converged",
+        "v37_already_converged"
+      ]
+    }
+  },
+  "dev_lock_sha": "a049f5fc44e921e77b762e6da9fd0c19285b0b6143beab758e26a22ace337375",
+  "git_head": "64883d5c8e21d2121f5f541792218c88b83b3312",
+  "frozen_runner_sha": "91d8074d74b3724bd38e69b1d3860ea8ad0ba9835eb615a513cc9fcf620f5a49",
+  "hard_budget_passes": 16,
+  "fit_44_row_updates": false,
+  "limitation": "two_tm032_reg1_splits",
+  "modify_R": false,
+  "act_recall_modes_tuple_untouched": true,
+  "note": "TM033 adaptive-rehearsal decision. Product remains 0.0.004."
+}
