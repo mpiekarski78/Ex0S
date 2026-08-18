@@ -1,0 +1,35 @@
+{
+  "version": "TM.0.47.REINSTATE.ISOLATION",
+  "lab": "TM.0.47.REINSTATE",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "kqv_edit_authorized": false,
+  "decoder_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "v41_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM047.REINSTATE.DEV.",
+    "TWIN": "TM047.REINSTATE.TWIN."
+  },
+  "historical_immutable": [
+    "experiments/run_tm046oneshot.py",
+    "docs/lineage_oneshot.dev.lock",
+    "docs/lineage_oneshot.decision.lock",
+    "docs/lineage_oneshot.prereg.lock",
+    "three_memory/joint_socp.py",
+    "three_memory/neural_cortex.py"
+  ],
+  "refuse": [
+    "tune_kqv",
+    "train_new_decoder",
+    "rerun TM046 DEV",
+    "edit experiments/run_tm046oneshot.py",
+    "auto_cortex.candidate.v41.lock",
+    "edit_joint_socp.py",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Split reinstatement failures on the frozen TM046 checkpoint. Do not repair K/Q/V or retrain the decoder. Product remains 0.0.004."
+}

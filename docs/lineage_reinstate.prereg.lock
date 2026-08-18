@@ -1,0 +1,73 @@
+{
+  "version": "TM.0.47.REINSTATE.PREREG",
+  "lab": "TM.0.47.REINSTATE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": false,
+  "kqv_edit_authorized": false,
+  "decoder_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "v41_candidate_authorized": false,
+  "package_question": "On the same TM046 common checkpoint, where does one-shot reinstatement lose the action: development reference, credit rho, stored S value, post-reinstatement injection, or canonical scoring only?",
+  "authorized_by": [
+    "docs/lineage_oneshot.decision.lock",
+    "docs/lineage_oneshot.decision.addendum.lock"
+  ],
+  "tm046_decision_code": "generic_reinstatement_fail",
+  "tm046_decision_sha": "da0e4e82cbaca107543029af16cd0bfe5cfc6027b457c2798b5c34134ec24323",
+  "tm046_dev_sha": "68088c1728e9c3367c5cd30bd88b7adc8df30502afa7db3d5a1546b13fa6110d",
+  "tm046_runner_sha": "8dbadd143f0fed629496a70c9d6288e60c65301fadd392cab6e3d77ea0b5d6b0",
+  "tm046_addendum_sha": "8afcc27a9919baaf4052323b46b639129961848c4a7a30a6c9bfa920d0b6f337",
+  "joint_socp_sha": "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895",
+  "neural_cortex_sha": "b0785af069c79c62bd3972a0a3f03f53f9bfbb7221accfb76061b6ee52bb0f1c",
+  "n": 64,
+  "n_handles": 4,
+  "n_facts": 4,
+  "n_worlds": 2,
+  "reconstruction_seed_registry": 404600046,
+  "reconstruction_domain": "TM046.ONESHOT.DEV.",
+  "seed_registry": 404600046,
+  "forbidden_seeds": [22222, 404000039, 404200040, 404200042, 404300043, 404400044, 404500045],
+  "domains": {
+    "DEV": "TM047.REINSTATE.DEV.",
+    "TWIN": "TM047.REINSTATE.TWIN."
+  },
+  "arms": ["symbolic_oracle", "no_persistent_memory"],
+  "boundaries": [
+    "development_reference",
+    "credit_full_rho",
+    "stored_value_direct",
+    "post_reinstatement",
+    "canonical_path"
+  ],
+  "kqv_not_tuned": true,
+  "decoder_not_retrained": true,
+  "expected_n_cells": 6,
+  "manifest_sha": "e06ea0bc9ee5aae6dfe03438e5569f20fa890fdc010ef366917ca414e2b91969",
+  "decision_ladder": [
+    {"code": "setup_precondition_fail", "when": "reconstructed decoder cannot express every action"},
+    {"code": "development_reference_fail", "when": "the known development state no longer ranks its action"},
+    {"code": "credit_rho_fail", "when": "the one-shot credit state never represented the action"},
+    {"code": "stored_value_direct_fail", "when": "the value written to S destroyed motor-relevant information"},
+    {"code": "post_reinstatement_fail", "when": "injection/mixing corrupted a valid stored value"},
+    {"code": "canonical_only_fail", "when": "only the canonical organism path disagrees with the post-reinstatement address"},
+    {"code": "reinstatement_interface_earned", "when": "exact replay of stored/credit state passes and no-memory canonical fails"},
+    {"code": "split_unresolved", "when": "no boundary isolates the loss"}
+  ],
+  "refuse": [
+    "tune_kqv",
+    "train_new_decoder",
+    "rerun TM046 DEV",
+    "edit experiments/run_tm046oneshot.py",
+    "auto_cortex.candidate.v41.lock",
+    "edit_joint_socp.py",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Reinstatement split on the TM046 common checkpoint. Product remains 0.0.004. Freeze runner before DEV.",
+  "frozen_runner_sha": "c5d5a0be88e8704039c8c2e0d8e3fb86de1fc85ec69863129c5f11c26eccc6c4"
+}
