@@ -1,0 +1,39 @@
+{
+  "version": "TM.0.39.JOINTSOCP.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "86ea21ead0395860ca7284ec27546b7d438847eab7354d6c827679fd5a2daf5c",
+  "decision": {
+    "code": "jointsocp_fallback_sufficient",
+    "then": "jointsocp_fallback_sufficient",
+    "phase_flags": {
+      "n_worlds": 8,
+      "n_diagnostic": 2,
+      "n_v37_already": 6,
+      "routes": [
+        "v37_already_converged",
+        "v37_already_converged",
+        "fallback_sufficient",
+        "fallback_sufficient",
+        "v37_already_converged",
+        "v37_already_converged",
+        "v37_already_converged",
+        "v37_already_converged"
+      ],
+      "diagnostic_routes": [
+        "fallback_sufficient",
+        "fallback_sufficient"
+      ],
+      "candidate_v40_lock": false,
+      "n_both_fixed": 8,
+      "n_both_fixed_hash_mismatch": 8
+    }
+  },
+  "dev_lock_sha": "c2f5dae06f591c6e09a651122a4f893d2e4ccac45d42c5bf7965ba8b9891b21d",
+  "git_head": "9da95277ac702a48ea0947531d89a1cfc0410c2c",
+  "frozen_runner_sha": "e40304ee4ece2c834390094c9853d122bb89cb8fb18923aa348e052d146e288d",
+  "hard_budget_passes": 16,
+  "not_an_exact_projector": true,
+  "oracle_installed_in_organism": false,
+  "candidate_v40_lock": false,
+  "note": "TM039 joint SOCP decision. Product remains 0.0.004. No cortex.candidate.v40.lock."
+}

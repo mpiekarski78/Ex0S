@@ -52,6 +52,10 @@ V40_PREREG_SHA = "c60a5a55980c633453df47eac18126df81fdc9153c6a6a0dd7186f563ab6e3
 V40_AMD_SHA = "e4310c701006d7feda5b63d896a864f4f1b10e80c104d51d2af3448d2ea01fbf"
 SOLVER_SHA = "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895"
 FROZEN_RUNNER_SHA = "e40304ee4ece2c834390094c9853d122bb89cb8fb18923aa348e052d146e288d"
+HISTORICAL_DEV_SHA = "c2f5dae06f591c6e09a651122a4f893d2e4ccac45d42c5bf7965ba8b9891b21d"
+HISTORICAL_DEC_SHA = "0275f20ebc9d0ff528b4edbf2767d21c69689b94f6559a25ce00eca9f7d1618d"
+DEV = REPO / "docs" / "lineage_jointsocp.dev.lock"
+DEC = REPO / "docs" / "lineage_jointsocp.decision.lock"
 GENOME_TO_DICT_KEYS = {
     "n",
     "d_sym",
@@ -274,3 +278,40 @@ def test_socp_reject_does_not_partial_install():
     assert rec["status"] in ("no_constraints", "reject")
     assert weight_hash(ag._from_t(ag.W_act_query)) == h0
     assert np.allclose(ag._from_t(ag.W_act_query), w0)
+
+
+def test_dev_lock_fallback_sufficient_and_no_candidate():
+    assert _sha(DEV) == HISTORICAL_DEV_SHA
+    assert _sha(DEC) == HISTORICAL_DEC_SHA
+    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()
+    assert not (REPO / "docs" / "cortex.candidate.v39.lock").exists()
+    dev = json.loads(DEV.read_text())
+    dec = json.loads(DEC.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "9da95277ac702a48ea0947531d89a1cfc0410c2c"
+    assert dev["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dev["decision_code"] == "jointsocp_fallback_sufficient"
+    assert dev["candidate_v40_lock"] is False
+    assert dev["not_an_exact_projector"] is True
+    assert dev["oracle_installed_in_organism"] is False
+    assert dev["phase_flags"]["n_diagnostic"] == 2
+    assert dev["phase_flags"]["n_v37_already"] == 6
+    assert set(dev["phase_flags"]["diagnostic_routes"]) == {"fallback_sufficient"}
+    assert int(dev["phase_flags"]["n_both_fixed_hash_mismatch"]) == 8
+    assert dec["decision"]["code"] == "jointsocp_fallback_sufficient"
+    assert dec["candidate_v40_lock"] is False
+    v37 = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg1|v37"][0]
+    fb = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg1|fallback_joint"][0]
+    aj = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg1|always_joint"][0]
+    assert v37["fixed"] is False
+    assert int(v37["n_store_violations"]) == 3
+    assert int(v37["n_probe_correct"]) == 6
+    assert fb["fixed"] is True
+    assert aj["fixed"] is True
+    assert int(fb["n_store_violations"]) == 0
+    assert int(aj["n_store_violations"]) == 0
+    assert bool(fb["process"]["socp_invoked"]) is True
+    assert str(fb["process"]["socp"]["status"]) == "optimal"
+    assert bool(fb["process"]["socp"]["applied"]) is True
+    assert str(aj["process"]["socp"]["status"]) == "optimal"
+    assert fb["w_hash"] != aj["w_hash"]
