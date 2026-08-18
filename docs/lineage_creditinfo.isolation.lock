@@ -1,0 +1,47 @@
+{
+  "version": "TM.0.48.CREDITINFO.ISOLATION",
+  "lab": "TM.0.48.CREDITINFO",
+  "product": "0.0.004",
+  "implementation_authorized": false,
+  "neural_edit_authorized": false,
+  "kqv_edit_authorized": false,
+  "decoder_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "action_feedback_edit_authorized": false,
+  "v41_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM048.CREDITINFO.DEV.",
+    "TWIN": "TM048.CREDITINFO.TWIN."
+  },
+  "historical_immutable": [
+    "experiments/run_tm046oneshot.py",
+    "docs/lineage_oneshot.dev.lock",
+    "docs/lineage_oneshot.decision.lock",
+    "docs/lineage_oneshot.prereg.lock",
+    "docs/lineage_oneshot.decision.addendum.lock",
+    "experiments/run_tm047reinstate.py",
+    "docs/lineage_reinstate.dev.lock",
+    "docs/lineage_reinstate.decision.lock",
+    "docs/lineage_reinstate.prereg.lock",
+    "three_memory/joint_socp.py",
+    "three_memory/neural_cortex.py"
+  ],
+  "refuse": [
+    "tune_kqv",
+    "train_new_decoder",
+    "implement_action_feedback",
+    "copy_action_into_S",
+    "select_memory_row",
+    "manufacture_stored_value",
+    "rerun TM046 DEV",
+    "rerun TM047 DEV",
+    "edit experiments/run_tm046oneshot.py",
+    "edit experiments/run_tm047reinstate.py",
+    "auto_cortex.candidate.v41.lock",
+    "edit_joint_socp.py",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Credit-information wall on the frozen TM046 checkpoint. Do not add action feedback, repair K/Q/V, or retrain the decoder. Product remains 0.0.004."
+}
