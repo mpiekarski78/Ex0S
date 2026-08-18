@@ -545,10 +545,11 @@ def eval_dev_battery() -> dict[str, Any]:
     cells: list[dict[str, Any]] = []
     tmp = tempfile.TemporaryDirectory(prefix="sf_dev_")
     try:
-        for wi in range(int(p["n_worlds"])):
-            bundle = collect_world(wi=int(wi), tmp=tmp.name)
+        bundles = [collect_world(wi=int(wi), tmp=tmp.name) for wi in range(int(p["n_worlds"]))]
+        for bundle in bundles:
             cells.append(bundle["decoder"])
-            for ceiling in list(p["ceilings"]):
+        for ceiling in list(p["ceilings"]):
+            for wi, bundle in enumerate(bundles):
                 cells.append(eval_ceiling(bundle, ceiling=str(ceiling), wi=int(wi)))
     finally:
         tmp.cleanup()
