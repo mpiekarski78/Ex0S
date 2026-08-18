@@ -177,3 +177,51 @@ def test_runner_refuses_socp_and_smoke():
     assert out["candidate_exists"] is False
     assert "memproj_arm" not in GenomeConfig().to_dict()
     assert not hasattr(NeuralCortex, "set_feedback_ticks")
+
+
+DEV_SHA = "0f16bdbd3a068d788e138df0545ed0aa1e395c6875ce4b5ec365405412a05543"
+DEC_SHA = "9ac7a14f6776c04a9bbfe6f4f44418e4f28d830b6b5e49514deba6a34f5f393e"
+DEV_GIT = "4e7706ca8e5e6dcd739e368ad6a0538030cba2e4"
+
+
+def test_dev_lock_state_generator_mismatch_no_socp():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm054provenance import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_provenance.dev.lock"
+    decp = REPO / "docs" / "lineage_provenance.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert _sha(TM053_RUNNER) == TM053_RUNNER_SHA
+    assert _sha(TM053_DEV) == TM053_DEV_SHA
+    assert _sha(TM053_ADD) == TM053_ADD_SHA
+    assert _sha(TM052_DEV) == TM052_DEV_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "state_generator_mismatch"
+    assert dev["socp_scored"] is False
+    assert dev["install_W_star"] is False
+    assert dev["episode_match_l2_retuned"] is False
+    assert dec["architectural_conclusion"] == "none"
+    assert dec["decision"]["code"] == "state_generator_mismatch"
+    assert dec["decision"]["phase_flags"]["genuine_coverage_curve_earned"] is False
+    assert dec["decision"]["phase_flags"]["one_exemplar_grounding_earned"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["decoder|w0"]["tm052_train_hash_match"] is True
+    assert cells["decoder|w0"]["tm052_hold_hash_match"] is True
+    assert cells["canonical|w0"]["n1_hold_matches_pin"] is True
+    assert cells["canonical|w0"]["n1_train_matches_pin"] is False
+    assert cells["canonical|w1"]["n1_hold_matches_pin"] is True
+    assert cells["canonical|w1"]["n1_train_matches_pin"] is False
+    assert cells["boundary|w0"]["first_mismatch_site"] == "frozen_dev_probe_vs_write_last_p1"
+    assert cells["boundary|w0"]["frozen_wrap_action_invariant"] is True
+    assert cells["boundary|w0"]["reset_changes_hold"] is False
+    assert cells["boundary|w0"]["scored_socp"] is False
+
