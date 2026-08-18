@@ -415,6 +415,8 @@ class NeuralCortex:
         self._memproj_arm = MEMPROJ_OFF
         self._memproj_frozen = False
         self._memproj_rho_obs: np.ndarray | None = None
+        # TM049: instance flag, not a GenomeConfig field, not an ACT_RECALL_MODE.
+        self._action_feedback_enabled = False
         self.opaque = OpaqueMemory()
 
     def set_act_rehearse_arm(self, arm: str) -> None:
@@ -444,6 +446,58 @@ class NeuralCortex:
 
     def freeze_memproj_projection(self, frozen: bool = True) -> None:
         self._memproj_frozen = bool(frozen)
+
+    def set_action_feedback_enabled(self, enabled: bool) -> None:
+        self._action_feedback_enabled = bool(enabled)
+
+    def _legal_feedback_motor_vec(self, mv: Any) -> np.ndarray | None:
+        if mv is None:
+            return None
+        try:
+            v = np.asarray(mv, dtype=np.float64).reshape(-1)
+        except (TypeError, ValueError):
+            return None
+        if v.shape[0] != int(self.genome.d_sym):
+            return None
+        if not np.all(np.isfinite(v)):
+            return None
+        if float(np.linalg.norm(v)) <= PROTO_EPS:
+            return None
+        return v
+
+    def _commit_action_feedback(
+        self,
+        *,
+        injected: bool,
+        handle: str | None,
+        adv: float,
+        event_key: np.ndarray | None,
+        key_rho: np.ndarray | None,
+        rho_obs: np.ndarray | None,
+    ) -> dict[str, Any]:
+        extra: dict[str, Any] = {}
+        if not injected or not handle or self._resting or self._last_p1 is None:
+            return extra
+        if float(adv) <= ELIG_EPS:
+            return extra
+        eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
+        burst = self._credit_act_p1_episode(
+            np.asarray(self._last_p1, dtype=np.float64),
+            str(handle),
+            float(adv),
+            eta_a,
+            event_key=event_key,
+            key_rho=key_rho,
+        )
+        if burst is not None:
+            extra["rehearsal_burst"] = burst
+        mp = self._memproj_write_after_credit(
+            np.asarray(self._last_p1, dtype=np.float64),
+            rho_obs=None if rho_obs is None else np.asarray(rho_obs, dtype=np.float64),
+        )
+        if mp is not None:
+            extra["memproj_write"] = mp
+        return extra
 
     def restore_birth_memproj(self) -> None:
         self.W_k = self._birth_W_k.detach().clone()
@@ -2124,6 +2178,7 @@ class NeuralCortex:
                 alpha = self._lp("adv_baseline_alpha", ADV_BASELINE_ALPHA)
                 self._adv_baseline = (1.0 - alpha) * ema + alpha * float(body_adv)
             self._last_act_body_adv = float(body_adv)
+        defer_fb = bool(getattr(self, "_action_feedback_enabled", False))
         if p["op"] == "ACT" and p["token"] is not None and not skip_act_cost:
             if self._act_score_proto():
                 if elig_motor:
@@ -2133,7 +2188,7 @@ class NeuralCortex:
                         p.get("rho_motor", p["rho_elig"]),
                         eta_a,
                     )
-            else:
+            elif not defer_fb:
                 p1_raw = p.get("rho_p1")
                 ek = p.get("event_key")
                 kr = p.get("key_rho")
@@ -2177,7 +2232,7 @@ class NeuralCortex:
         out: dict[str, Any] = {"adv": adv, "pred_err": pred_err}
         if rehearsal_burst is not None:
             out["rehearsal_burst"] = rehearsal_burst
-        if p["op"] == "ACT":
+        if p["op"] == "ACT" and not defer_fb:
             rho_obs = p.get("rho_p1")
             mp = self._memproj_write_after_credit(
                 self._from_t(self.rho),
@@ -2248,6 +2303,23 @@ class NeuralCortex:
 
         same_ix = 1.0 if (self.prev_interaction is not None and self.prev_interaction == ix) else 0.0
         s_t = self.encode_state_set(state_syms)
+        fb = bool(getattr(self, "_action_feedback_enabled", False))
+        p0 = self._pending
+        fb_motor = None
+        fb_key = None
+        fb_ek = None
+        fb_handle = None
+        fb_rho_obs = None
+        if fb and p0 is not None:
+            fb_motor = self._legal_feedback_motor_vec(p0.get("motor_vec"))
+            fb_key = self._copy_or_none(p0.get("key_rho"))
+            fb_ek = self._copy_or_none(p0.get("event_key"))
+            tok = p0.get("token")
+            fb_handle = None if tok is None else str(tok)
+            rp = p0.get("rho_p1")
+            fb_rho_obs = None if rp is None else np.asarray(rp, dtype=np.float64).copy()
+            p0["motor_vec"] = None
+            p0["key_rho"] = None
         metrics = self._apply_credit(s_t, body)
 
         self.last_trajectory = []
@@ -2258,6 +2330,10 @@ class NeuralCortex:
         self._sensory_tick(start_inj, body, same_ix, record_sensory=True)
         for u in ordered:
             self._sensory_tick(self._vocab_vec(u), body, same_ix, record_sensory=True)
+        injected = False
+        if fb and fb_motor is not None:
+            self._sensory_tick(fb_motor, body, same_ix, record_sensory=True)
+            injected = True
         if not self._resting:
             self._last_key_rho = self._unit_or_zero(self._from_t(self.rho))
             self._last_event_key = self._separate_event_key(self._last_key_rho)
@@ -2265,6 +2341,17 @@ class NeuralCortex:
         if not self._resting:
             self._last_p1 = self._unit_or_zero(self._from_t(self.rho))
             self._memproj_rho_obs = np.asarray(self._last_p1, dtype=np.float64).copy()
+            if fb:
+                extra = self._commit_action_feedback(
+                    injected=injected,
+                    handle=fb_handle,
+                    adv=float(metrics.get("adv") or 0.0),
+                    event_key=fb_ek,
+                    key_rho=fb_key,
+                    rho_obs=fb_rho_obs,
+                )
+                if extra:
+                    metrics.update(extra)
         self._sensory_tick(s_t, body, same_ix, record_sensory=True)
 
         for k in list(self._symbol_fam):
@@ -2541,6 +2628,7 @@ class NeuralCortex:
             "act_socp_arm": str(getattr(self, "_act_socp_arm", ACT_SOCP_OFF) or ACT_SOCP_OFF),
             "memproj_arm": str(getattr(self, "_memproj_arm", MEMPROJ_OFF) or MEMPROJ_OFF),
             "memproj_frozen": bool(getattr(self, "_memproj_frozen", False)),
+            "action_feedback_enabled": bool(getattr(self, "_action_feedback_enabled", False)),
             "W_k": tsave(self.W_k),
             "W_q": tsave(self.W_q),
             "W_v": tsave(self.W_v),
@@ -2671,6 +2759,7 @@ class NeuralCortex:
         mp = str(snap.get("memproj_arm") or MEMPROJ_OFF)
         self._memproj_arm = mp if mp in MEMPROJ_ARMS else MEMPROJ_OFF
         self._memproj_frozen = bool(snap.get("memproj_frozen", False))
+        self._action_feedback_enabled = bool(snap.get("action_feedback_enabled", False))
         if "W_k" in snap:
             self.W_k = tload(snap["W_k"])
             self.W_q = tload(snap["W_q"])

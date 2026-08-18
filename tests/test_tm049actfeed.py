@@ -16,6 +16,7 @@ from pathlib import Path
 from three_memory.neural_cortex import (
     ACT_RECALL_EARLY_RAW_HALF,
     ACT_RECALL_MODES,
+    ELIG_EPS,
     EPISODE_MATCH_L2,
     GenomeConfig,
     NeuralCortex,
@@ -38,6 +39,7 @@ TM048_DEC = REPO / "docs" / "lineage_creditinfo.decision.lock"
 TM048_ADD = REPO / "docs" / "lineage_creditinfo.decision.addendum.lock"
 MANIFEST = "08bcc7153ac5548bed92061c6e1eef45bf90701d5e8ccf782dba15c4dc1f6608"
 NEURAL_SHA_AT_FREEZE = "b0785af069c79c62bd3972a0a3f03f53f9bfbb7221accfb76061b6ee52bb0f1c"
+NEURAL_SHA_AFTER_EDIT = "a33f04479716d21624f9f8d0167ceaf4a658fd57a9070b058933f71fa1ae155c"
 JOINT_SOCP_SHA = "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895"
 TM046_RUNNER_SHA = "8dbadd143f0fed629496a70c9d6288e60c65301fadd392cab6e3d77ea0b5d6b0"
 TM047_RUNNER_SHA = "c5d5a0be88e8704039c8c2e0d8e3fb86de1fc85ec69863129c5f11c26eccc6c4"
@@ -134,11 +136,112 @@ def test_prereg_pins_transition_and_lifecycle():
     assert frozen != "PLACEHOLDER"
     assert frozen == RUNNER_SHA
     assert frozen == sha_file(RUNNER)
+    assert p["neural_cortex_sha_at_freeze"] == NEURAL_SHA_AT_FREEZE
 
 
-def test_no_premature_neural_edit():
-    assert _sha(NEURAL) == NEURAL_SHA_AT_FREEZE
-    assert not hasattr(NeuralCortex, "set_action_feedback_enabled")
+def test_authorized_neural_edit_matches_freeze():
+    import numpy as np
+
+    assert _sha(NEURAL) == NEURAL_SHA_AFTER_EDIT
+    assert _sha(NEURAL) != NEURAL_SHA_AT_FREEZE
+    assert hasattr(NeuralCortex, "set_action_feedback_enabled")
+    ag = NeuralCortex(None, genome=GenomeConfig(), device="cpu")
+    assert ag._action_feedback_enabled is False
+    assert "action_feedback_enabled" not in GenomeConfig().to_dict()
+    assert "action_feedback" not in ACT_RECALL_MODES
+    ag.set_action_feedback_enabled(True)
+    snap = ag.checkpoint()
+    assert snap["action_feedback_enabled"] is True
+    ag2 = NeuralCortex(None, genome=GenomeConfig(), device="cpu")
+    ag2.load_checkpoint(snap)
+    assert ag2._action_feedback_enabled is True
+    src = NEURAL.read_text()
+    assert "new_fitted_matrix" not in src
+    assert "W_feedback" not in src
+    assert "feedback_scale" not in src
+
+
+def _obs(ag: NeuralCortex, tag: str, body: list[float], symbols: list[str] | None = None) -> dict:
+    return ag.observe(
+        {
+            "interaction_token": tag,
+            "source_token": "src_t",
+            "ordered_symbols": list(symbols or ["cue"]),
+            "observable_state": ["st_idle"],
+            "body_state": list(body),
+        }
+    )
+
+
+def test_action_feedback_lifecycle_and_transition():
+    import numpy as np
+
+    mid = [0.5, 0.4, 0.5, 0.0]
+    better = [1.0, 0.0, 1.0, 0.0]
+    worse = [0.0, 1.0, 0.0, 1.0]
+    birth = NeuralCortex(None, genome=GenomeConfig(), device="cpu")
+    birth.bind_actuators(["h_a", "h_b"])
+    _obs(birth, "warm", mid)
+    frozen = birth.checkpoint()
+
+    def credit(flag: bool, handle: str, body2: list[float], tag: str):
+        ag = NeuralCortex(None, genome=GenomeConfig(), device="cpu")
+        ag.load_checkpoint(frozen)
+        ag.set_action_feedback_enabled(flag)
+        n0 = len(ag._episodes)
+        _obs(ag, f"{tag}_sel", mid)
+        key_cue = None if ag._last_key_rho is None else np.asarray(ag._last_key_rho).copy()
+        p1_cue = None if ag._last_p1 is None else np.asarray(ag._last_p1).copy()
+        clamped = ag.clamp_action("ACT", handle)
+        assert clamped["ok"] is True
+        mv = np.asarray(ag._pending["motor_vec"], dtype=np.float64).copy()
+        _obs(ag, f"{tag}_obs", body2)
+        p1 = None if ag._last_p1 is None else np.asarray(ag._last_p1).copy()
+        return ag, n0, key_cue, p1_cue, mv, p1
+
+    off_a = credit(False, "h_a", better, "offa")
+    off_b = credit(False, "h_b", better, "offb")
+    assert np.allclose(off_a[5], off_b[5])
+
+    on_a = credit(True, "h_a", better, "ona")
+    on_b = credit(True, "h_b", better, "onb")
+    assert not np.allclose(on_a[5], on_b[5])
+    ag_a = on_a[0]
+    assert len(ag_a._episodes) == on_a[1] + 1
+    stored = ag_a._episodes[-1]
+    assert stored["handle"] == "h_a"
+    assert float(stored["adv"]) > ELIG_EPS
+    assert np.allclose(stored["p1"], on_a[5])
+    assert not np.allclose(stored["p1"], on_a[3])
+    assert np.allclose(stored["key_rho"], on_a[2])
+    if ag_a._pending is not None and ag_a._pending.get("motor_vec") is not None:
+        assert not (
+            str(ag_a._pending.get("token")) == "h_a"
+            and np.allclose(ag_a._pending["motor_vec"], on_a[4])
+            and ag_a._pending.get("key_rho") is not None
+            and np.allclose(ag_a._pending["key_rho"], on_a[2])
+        )
+
+    closed = NeuralCortex(None, genome=GenomeConfig(), device="cpu")
+    closed.load_checkpoint(frozen)
+    closed.set_action_feedback_enabled(True)
+    n0 = len(closed._episodes)
+    _obs(closed, "nopend", better)
+    assert len(closed._episodes) == n0
+
+    neg = credit(True, "h_a", worse, "neg")
+    assert neg[5] is not None
+    assert len(neg[0]._episodes) == neg[1]
+
+    stale = NeuralCortex(None, genome=GenomeConfig(), device="cpu")
+    stale.load_checkpoint(frozen)
+    stale.set_action_feedback_enabled(True)
+    _obs(stale, "stale_sel", mid)
+    stale.clamp_action("ACT", "h_a")
+    stale._pending["motor_vec"] = np.zeros(stale.genome.d_sym)
+    n0 = len(stale._episodes)
+    _obs(stale, "stale_obs", better)
+    assert len(stale._episodes) == n0
 
 
 def test_ids_and_decision_ladder():
@@ -212,6 +315,6 @@ def test_runner_refuses_v41_and_smoke():
     assert out["candidate_exists"] is False
     assert out["action_feedback_in_recall_modes"] is False
     assert out["action_feedback_in_genome"] is False
-    assert out["api_present"] is False
+    assert out["api_present"] is True
     assert out["transition"]["n_ticks"] == 1
     assert "memproj_arm" not in GenomeConfig().to_dict()

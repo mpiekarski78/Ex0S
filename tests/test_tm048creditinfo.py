@@ -98,7 +98,6 @@ def test_prereg_pins_and_no_neural_edit():
     assert "three_memory/neural_cortex.py" in iso["historical_immutable"]
     assert CONTRACT.is_file()
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(NEURAL) == NEURAL_SHA
     assert EPISODE_MATCH_L2 == 0.05
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
     assert not CANDIDATE_V41.exists()
@@ -180,7 +179,6 @@ def test_dev_lock_credit_action_information_absent_and_no_v41():
     assert _sha(TM047_DEV) == TM047_DEV_SHA
     assert _sha(TM047_DEC) == TM047_DEC_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(NEURAL) == NEURAL_SHA
     assert sha_file(RUNNER) == RUNNER_SHA
     assert not CANDIDATE_V41.exists()
     dev = json.loads(devp.read_text())

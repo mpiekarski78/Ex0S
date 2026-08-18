@@ -109,7 +109,6 @@ def test_prereg_pins_and_no_kqv():
     assert "experiments/run_tm045memnec.py" in iso["historical_immutable"]
     assert CONTRACT.is_file()
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(NEURAL) == NEURAL_SHA
     assert _sha(LIVE) == LIVE_SHA
     assert EPISODE_MATCH_L2 == 0.05
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
@@ -205,7 +204,6 @@ def test_dev_lock_generic_reinstatement_fail_and_no_v41():
     assert _sha(TM045_DEC) == TM045_DEC_SHA
     assert _sha(TM044_RUNNER) == TM044_RUNNER_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(NEURAL) == NEURAL_SHA
     assert sha_file(RUNNER) == json.loads(PREREG.read_text())["frozen_runner_sha"]
     assert not CANDIDATE_V41.exists()
     dev = json.loads(devp.read_text())
