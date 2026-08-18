@@ -1,0 +1,64 @@
+{
+  "version": "TM.0.58.STOREINT.ISOLATION",
+  "lab": "TM.0.58.STOREINT",
+  "product": "0.0.004",
+  "implementation_authorized": false,
+  "neural_edit_authorized": false,
+  "opaque_memory_edit_authorized": false,
+  "kqv_edit_authorized": false,
+  "decoder_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "install_oracle_authorized": false,
+  "extend_socp_authorized": false,
+  "episode_match_l2_retune_authorized": false,
+  "canonical_law_reconsider_authorized": false,
+  "v41_candidate_authorized": false,
+  "dev_authorized_before_implementation": false,
+  "domains": {
+    "DEV": "TM058.STOREINT.DEV.",
+    "TWIN": "TM058.STOREINT.TWIN."
+  },
+  "historical_immutable": [
+    "experiments/run_tm046oneshot.py",
+    "experiments/run_tm051fbground.py",
+    "experiments/run_tm052sharefeas.py",
+    "experiments/run_tm053cover.py",
+    "experiments/run_tm054provenance.py",
+    "experiments/run_tm055drift.py",
+    "experiments/run_tm056epprov.py",
+    "experiments/run_tm057dual.py",
+    "docs/lineage_dual.dev.lock",
+    "docs/lineage_dual.decision.lock",
+    "docs/lineage_dual.decision.addendum.lock",
+    "docs/lineage_write_time_law.lock",
+    "docs/lineage_opaque_store_law.lock",
+    "three_memory/joint_socp.py"
+  ],
+  "implementation_earned_later": [
+    "three_memory/neural_cortex.py",
+    "three_memory/opaque_memory.py"
+  ],
+  "runner_may": [
+    "enable opaque_store_enabled after the flag exists",
+    "call write_opaque_kv with synthetic keys and values",
+    "wrap write_opaque_kv as an observer and stamp receipts",
+    "checkpoint and restore the flag and opaque rows"
+  ],
+  "refuse": [
+    "implement write law in this freeze",
+    "tune_kqv",
+    "install_W_star",
+    "retune_EPISODE_MATCH_L2",
+    "change historical _episode_write when flag off",
+    "put the flag in GenomeConfig or ACT_RECALL_MODES",
+    "resume drift or grounding",
+    "edit experiments/run_tm057dual.py",
+    "rerun TM057 DEV rewrite",
+    "auto_cortex.candidate.v41.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push",
+    "DEV before write_opaque_kv exists"
+  ],
+  "note": "Storage-integrity wall. Product remains 0.0.004. Freeze before implementation. Floor 0.05 unchanged."
+}
