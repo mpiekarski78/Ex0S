@@ -1,0 +1,132 @@
+{
+  "version": "TM.0.35.CREDITSPLIT.PREREG",
+  "lab": "TM.0.35.CREDITSPLIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": false,
+  "neural_edit_before_runner_freeze": false,
+  "implementation_authorized": true,
+  "v38_repair_authorized": false,
+  "v39_freeze_authorized": false,
+  "package_question": "On fresh domains, which credit-7 component rebreaks previously correct stored rows: episode write, the ranking-error one-shot, the v37 awake burst, only their complete interaction, or a mixed one-shot-and-burst cause?",
+  "authorized_by": [
+    "docs/lineage_temporalwall.decision.lock",
+    "docs/lineage_adaptrehearse.closure.lock"
+  ],
+  "tm034_decision_sha": "31943d48ac6170e1d60551c537418f3f09fefa875ad23941e86cea524e99e625",
+  "tm034_dev_sha": "084bad8780674a00a75848f9ef0c7443a55aea89f4f989406f0a5607d3666ffe",
+  "tm034_runner_sha": "f097b6e2685d9b4ffe10854ced7ed0418a10f49ded5ef8a6815e873ed137415c",
+  "tm032_decision_sha": "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e112be4c7a4c7",
+  "tm032_dev_sha": "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56514974c9644d",
+  "tm032_runner_sha": "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503",
+  "candidate_name": "not_v39",
+  "n": 64,
+  "eta_act": 0.15,
+  "episode_slots": 8,
+  "write_match_l2": 0.05,
+  "treatment_mode": "early_raw_half_spacing",
+  "n_cues": 8,
+  "n_handles": 2,
+  "hard_budget_passes": 16,
+  "fit_44_row_updates": false,
+  "plateau_relaxed": false,
+  "act_recall_modes_tuple_untouched": true,
+  "registry_seeds": [
+    936835019,
+    1584000025,
+    2133183397,
+    520283234
+  ],
+  "registry_seeds_are_replicates_not_a_grid": true,
+  "genome_varies_only": "seed_registry",
+  "default_seed_registry_forbidden": 22222,
+  "domains": {
+    "DEV": "TM035.CREDITSPLIT.DEV.",
+    "TWIN": "TM035.CREDITSPLIT.TWIN."
+  },
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 1,
+  "world_index": 0,
+  "n_registry_seeds": 4,
+  "arms": [
+    "write_only",
+    "oneshot_only",
+    "burst_only",
+    "complete"
+  ],
+  "parent_credits": "0_through_6",
+  "component_credit": 7,
+  "exclude_newly_written_slot": true,
+  "complete_is_native_credit_act_p1_episode": true,
+  "probes_on_another_clone": true,
+  "pure_helpers_only": true,
+  "expected_n_cells": 32,
+  "expected_n_worlds": 8,
+  "manifest_sha": "249430e64d794562b93fa11f91e79916b9ee44f063df3d3717c9c48767e60e09",
+  "fix_gate": {
+    "live_ranking_ok": true,
+    "n_probe_correct": 8,
+    "n_store_violations": 0,
+    "margin_is_recorded_not_a_gate": true
+  },
+  "decision_ladder": [
+    {
+      "code": "creditsplit_no_diagnostic",
+      "when": "no world where complete rebreaks previously correct rows (new slot excluded)"
+    },
+    {
+      "code": "creditsplit_write_causal",
+      "when": "all diagnostic worlds: write_only already breaks previously correct rows"
+    },
+    {
+      "code": "creditsplit_oneshot_causal",
+      "when": "all diagnostic worlds: write leaves them correct, one-shot breaks them, burst-only does not"
+    },
+    {
+      "code": "creditsplit_burst_causal",
+      "when": "all diagnostic worlds: prefix leaves them correct; burst-only breaks them; one-shot does not"
+    },
+    {
+      "code": "creditsplit_interaction_only",
+      "when": "all diagnostic worlds: only complete breaks previously correct rows"
+    },
+    {
+      "code": "creditsplit_mixed_oneshot_and_burst",
+      "when": "diagnostic worlds disagree, or both one-shot and burst independently break previously correct rows"
+    }
+  ],
+  "v39_gate": "proceed_only_if_every_diagnostic_world_is_creditsplit_oneshot_causal",
+  "refuse": [
+    "open SCORE",
+    "plateau_relaxation",
+    "hard_budget_gt_16",
+    "fit_tm032_44_row_updates_as_constant",
+    "v38_repair",
+    "GEM_projection_as_v39",
+    "auto_cortex.candidate.v38.lock",
+    "auto_cortex.candidate.v39.lock",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "rewrite TM034 historical locks",
+    "rewrite TM033 historical locks",
+    "rewrite TM032 historical locks",
+    "rewrite TM031 historical locks",
+    "tm034_dev_rerun",
+    "tm033_dev_rerun",
+    "tm032_dev_rerun",
+    "TM032_monkey_patch",
+    "TM034_monkey_patch",
+    "one_shot_only_v39_after_mixed_causality",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "TM035 credit-7 component split. Freeze runner before DEV. Product remains 0.0.004.",
+  "frozen_runner_sha": "52a5f32cf690fd3efde3e594fcb59f62970d78bf35d2939933d25d42be4c8ca2"
+}

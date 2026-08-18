@@ -2,6 +2,7 @@
 
 ## 2026-08-18
 
+- **TM.0.35.CREDITSPLIT freeze:** Credit-7 write / one-shot / burst / complete split on fresh domains. Identical pre-credit-7 clones; previously correct rows exclude the new slot; complete is native `_credit_act_p1_episode`; probes on another clone; pure TM032 helpers. No neural edit. v39 gated on oneshot-causal DEV. [`lineage_creditsplit.prereg.lock`](lineage_creditsplit.prereg.lock). Product **0.0.004**.
 - **TM.0.34.TEMPORALWALL DEV:** First-match **temporalwall_temporal_interference**. Exact TM032 `awake_only` still fixes the diagnostic post-awake snapshots (44 updates). v37/fixed sit at zero violations for credits 0–6; the last credit reintroduces slots 0/4/6. Not a v38 repair. [`lineage_temporalwall.decision.lock`](lineage_temporalwall.decision.lock). Product **0.0.004**.
 - **TM.0.34.TEMPORALWALL freeze:** After v38 close. Runner-side per-credit/per-pass traces plus exact frozen TM032 `awake_only` rescue on a v37 post-awake clone. Fresh domains. No neural edit, no plateau change, no 44. [`lineage_temporalwall.prereg.lock`](lineage_temporalwall.prereg.lock). Product **0.0.004**.
 - **v38 closed:** First-match **adaptrehearse_core_acquire_fail** stands. No plateau relaxation, no cap >16, no 44, no `cortex.candidate.v38.lock`. Leftover debt 0. Next is TM034, not a v38 repair. [`lineage_adaptrehearse.closure.lock`](lineage_adaptrehearse.closure.lock). Product **0.0.004**.
