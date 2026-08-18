@@ -27,6 +27,10 @@ HISTORICAL_TM032_DEV_SHA = "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56
 HISTORICAL_TM032_DEC_SHA = "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e112be4c7a4c7"
 HISTORICAL_TM032_RUNNER_SHA = "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503"
 FROZEN_RUNNER_SHA = "fdcd11d376d22965670f8bb4dcd411720d2d759c953933dd278b64a4e4c6c927"
+HISTORICAL_DEV_SHA = "885c6b7b1d6fad934996d849dd84fd6e4c46fc2644c37257a6f18eb6f8784183"
+HISTORICAL_DEC_SHA = "0a029bf7cd0cffec37707ad5ce65e7c5c161701d279e6aac26fb9d5684b8601a"
+DEV = REPO / "docs" / "lineage_updategeom.dev.lock"
+DEC = REPO / "docs" / "lineage_updategeom.decision.lock"
 
 
 def _sha(p: Path) -> str:
@@ -133,3 +137,40 @@ def test_smoke():
     assert out["probes_on_another_clone"] is True
     assert out["hard_budget_passes"] == 16
     assert len(out["interference_slots"]) >= 1
+
+
+def test_dev_lock_first_match_and_no_v39():
+    assert _sha(DEV) == HISTORICAL_DEV_SHA
+    assert _sha(DEC) == HISTORICAL_DEC_SHA
+    dev = json.loads(DEV.read_text())
+    dec = json.loads(DEC.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "f27b618894c3a9ceba1dd9eafa06eeddb13e82eb"
+    assert dev["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dev["decision_code"] == "updategeom_oracle_only"
+    assert dev["fit_44_row_updates"] is False
+    assert dev["hard_budget_passes"] == 16
+    assert dev["v39_freeze"] is False
+    assert dev["phase_flags"]["n_diagnostic"] == 2
+    assert set(dev["phase_flags"]["diagnostic_routes"]) == {"oracle_only"}
+    native = [c for c in dev["cells"] if c["id"] == "geometry|c8|A_then_B|reg1|native"][0]
+    jacobi = [c for c in dev["cells"] if c["id"] == "geometry|c8|A_then_B|reg1|jacobi"][0]
+    protect = [c for c in dev["cells"] if c["id"] == "geometry|c8|A_then_B|reg1|protect"][0]
+    oracle = [c for c in dev["cells"] if c["id"] == "geometry|c8|A_then_B|reg1|oracle"][0]
+    inter = [c for c in dev["cells"] if c["id"] == "geometry|c8|A_then_B|reg1|interference"][0]
+    assert native["fixed"] is False
+    assert native["broke_slots"] == [0, 4, 6]
+    assert int(native["process"]["n_awake_updates"]) == 122
+    assert jacobi["fixed"] is False
+    assert jacobi["broke_slots"] == [1, 3, 5]
+    assert protect["fixed"] is False
+    assert protect["previously_correct_broke"] is False
+    assert int(protect["n_store_violations"]) == 1
+    assert int(protect["n_probe_correct"]) == 7
+    assert oracle["fixed"] is True
+    assert oracle["process"]["status"] == "feasible"
+    assert float(oracle["process"]["gamma_star"]) > 0.01
+    assert int(inter["process"]["n_negative_offdiag"]) == 32
+    assert dec["decision"]["code"] == "updategeom_oracle_only"
+    assert dec["dev_lock_sha"] == HISTORICAL_DEV_SHA
+    assert dec["v39_freeze"] is False

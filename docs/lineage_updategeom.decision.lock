@@ -1,0 +1,38 @@
+{
+  "version": "TM.0.36.UPDATEGEOM.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "2c24982d66b4cd0d51e312c61adc049f3e6064d1bf3bc9063109e6ed8fcfc7c6",
+  "decision": {
+    "code": "updategeom_oracle_only",
+    "then": "updategeom_oracle_only",
+    "phase_flags": {
+      "n_worlds": 8,
+      "n_diagnostic": 2,
+      "n_native_already": 6,
+      "routes": [
+        "native_already_converged",
+        "native_already_converged",
+        "oracle_only",
+        "oracle_only",
+        "native_already_converged",
+        "native_already_converged",
+        "native_already_converged",
+        "native_already_converged"
+      ],
+      "diagnostic_routes": [
+        "oracle_only",
+        "oracle_only"
+      ],
+      "v39_freeze": false
+    }
+  },
+  "dev_lock_sha": "885c6b7b1d6fad934996d849dd84fd6e4c46fc2644c37257a6f18eb6f8784183",
+  "git_head": "f27b618894c3a9ceba1dd9eafa06eeddb13e82eb",
+  "frozen_runner_sha": "fdcd11d376d22965670f8bb4dcd411720d2d759c953933dd278b64a4e4c6c927",
+  "hard_budget_passes": 16,
+  "fit_44_row_updates": false,
+  "plateau_relaxed": false,
+  "v38_repair": false,
+  "v39_freeze": false,
+  "note": "TM036 update-geometry decision. Product remains 0.0.004. v39 is not frozen here."
+}
