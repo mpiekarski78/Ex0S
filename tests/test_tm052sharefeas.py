@@ -47,6 +47,8 @@ TM051_DEV_SHA = "87148c7e5fc181d8558e3a80caa23ac282676123b87e1e7ca09f4d196825b57
 TM051_DEC_SHA = "404c5401a4ffb66708f8c541593fc7a5dd153ce2cfaa60b30b80b84a817c5443"
 TM051_PREREG_SHA = "70d62ecb25682c9b97a93583d686796bb202ac3022a221e02de590551975d652"
 RUNNER_SHA = "36c119262be5a7b2e186b22d3a5e37ffc4e27c4706249156562905f7d025abeb"
+ADDENDUM = REPO / "docs" / "lineage_sharefeas.decision.addendum.lock"
+ADD_SHA = "4d388b024e5d9836c8296cf384cfb974557366576c98ed06491b546d4aa6cf43"
 LADDER = [
     "setup_precondition_fail",
     "training_infeasible",
@@ -275,4 +277,34 @@ def test_dev_lock_shared_W_star_satisfies_and_no_install():
         "4533bafecb2c96c543c40acde6ea5d5f1559fb2a7b3703b5ea6455ff5f72f471",
         "191ddeaa64b0129170154c45d97cf4271e3d679606745822eed947731d63145a",
     ]
+
+
+def test_addendum_narrow_interpretation_without_rewrite():
+    assert ADD_SHA != "PLACEHOLDER"
+    assert _sha(ADDENDUM) == ADD_SHA
+    assert _sha(REPO / "docs" / "lineage_sharefeas.dev.lock") == DEV_SHA
+    assert _sha(REPO / "docs" / "lineage_sharefeas.decision.lock") == DEC_SHA
+    assert _sha(RUNNER) == RUNNER_SHA
+    add = json.loads(ADDENDUM.read_text())
+    assert add["rewrite_historical_decision"] is False
+    assert add["rewrite_historical_dev"] is False
+    assert add["rerun_dev"] is False
+    assert add["frozen_first_match_unchanged"] is True
+    assert add["historical_decision_code"] == "shared_W_star_satisfies"
+    assert add["install_socp_not_licensed"] is True
+    assert add["install_W_star"] is False
+    assert add["extend_socp"] is False
+    assert add["new_decoder"] is False
+    assert add["interpretation"] == "sampled_capacity_without_generalizable_grounding"
+    assert add["audit"]["no_second_decoder_required_by_sampled_capacity"] is True
+    assert add["audit"]["local_plasticity_insufficient"] is True
+    assert add["audit"]["observed_grounding_set_insufficient_for_generalization"] is True
+    assert add["audit"]["full_oracle_contains_future_test_information"] is True
+    assert add["audit"]["full_oracle_weights_diagnostic_only"] is True
+    assert add["audit"]["train_only_W_star_hold_w0"] == "1/4"
+    assert add["audit"]["train_only_W_star_hold_w1"] == "1/4"
+    assert add["audit"]["next_wall"] == "TM.0.53.COVER"
+    assert add["historical_dev_lock_sha"] == DEV_SHA
+    assert add["historical_decision_sha"] == DEC_SHA
+    assert add["frozen_runner_sha"] == RUNNER_SHA
 
