@@ -225,3 +225,36 @@ def test_dev_lock_state_generator_mismatch_no_socp():
     assert cells["boundary|w0"]["reset_changes_hold"] is False
     assert cells["boundary|w0"]["scored_socp"] is False
 
+
+ADD_SHA = "bfa9b1937041afa28c4813b6366751f0e12e0edf9941e9f9585dfe23f5d37fb8"
+LAW_SHA = "73f96668385282fc29a0bcf0c28e17c484ac1e51a473aa183f4b6fa148c9d068"
+
+
+def test_addendum_chooses_write_time_last_p1_without_rewrite():
+    addp = REPO / "docs" / "lineage_provenance.decision.addendum.lock"
+    lawp = REPO / "docs" / "lineage_write_time_law.lock"
+    assert _sha(addp) == ADD_SHA
+    assert _sha(lawp) == LAW_SHA
+    assert _sha(REPO / "docs" / "lineage_provenance.dev.lock") == DEV_SHA
+    assert _sha(REPO / "docs" / "lineage_provenance.decision.lock") == DEC_SHA
+    assert _sha(RUNNER) == RUNNER_SHA
+    add = json.loads(addp.read_text())
+    law = json.loads(lawp.read_text())
+    dec = json.loads((REPO / "docs" / "lineage_provenance.decision.lock").read_text())
+    assert add["rewrite_historical_decision"] is False
+    assert add["rewrite_historical_dev"] is False
+    assert add["rerun_dev"] is False
+    assert add["frozen_first_match_unchanged"] is True
+    assert add["historical_decision_code"] == "state_generator_mismatch"
+    assert add["canonical_state_generator"] == "write_time_last_p1"
+    assert add["frozen_wrap_is_not_canonical"] is True
+    assert add["architectural_conclusion"] == "none"
+    assert add["episode_match_l2_retuned"] is False
+    assert law["canonical_state_generator"] == "write_time_last_p1"
+    assert law["v_t"] if False else law["law"]["v_t"] == "unit(rho_post_feedback_t)"
+    assert law["law"]["captured"] == "at_event_time"
+    assert dec["decision"]["code"] == "state_generator_mismatch"
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+
+

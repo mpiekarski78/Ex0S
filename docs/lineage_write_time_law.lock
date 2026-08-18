@@ -1,0 +1,39 @@
+{
+  "version": "TM.0.55.WRITE_TIME_LAW",
+  "product": "0.0.004",
+  "earned_next": false,
+  "eligible_for_000005": false,
+  "canonical_state_generator": "write_time_last_p1",
+  "frozen_wrap_is_not_canonical": true,
+  "frozen_wrap_role": "diagnostic_prediction_of_future_encoding",
+  "k_is_cue_context_identity": true,
+  "v_is_action_experience": true,
+  "value_need_not_carry_cue_context": true,
+  "law": {
+    "k_t": "W_k rho_cue_t",
+    "v_t": "unit(rho_post_feedback_t)",
+    "captured": "at_event_time",
+    "stored": "historical_memory_trace_in_S",
+    "never_regenerate_from_later_checkpoint": true
+  },
+  "why": "A frozen wrap generated later from a checkpoint is a counterfactual reconstruction by a more developed cortex, not the historical memory trace. Using it as canonical would let future weights reinterpret a past event, replace what was stored, and change historical memories without an explicit consolidation process. That conflicts with causal provenance in S.",
+  "authorized_by": [
+    "docs/lineage_provenance.decision.lock",
+    "docs/lineage_provenance.decision.addendum.lock"
+  ],
+  "tm054_decision_code": "state_generator_mismatch",
+  "tm054_canonical_choice": "write_time_last_p1",
+  "episode_match_l2": 0.05,
+  "episode_match_l2_retune_authorized": false,
+  "install_W_star": false,
+  "candidate_v41_lock": false,
+  "refuse": [
+    "treat frozen wrap as canonical",
+    "regenerate historical values from a later checkpoint",
+    "force_cue_into_value",
+    "retune_EPISODE_MATCH_L2",
+    "install_W_star",
+    "auto_cortex.candidate.v41.lock"
+  ],
+  "note": "Frozen law. Product remains 0.0.004. No neural edit."
+}
