@@ -15,6 +15,7 @@ from three_memory.neural_cortex import (
     EPISODE_MATCH_L2,
     EPISODE_REPLAY_EPOCHS,
     GenomeConfig,
+    NeuralCortex,
     PROTO_EPS,
 )
 
@@ -214,3 +215,62 @@ def test_smoke():
     assert out["clone_matched"] is True
     assert out["hard_budget_passes"] == 16
     assert out["not_an_exact_projector"] is True
+    assert hasattr(NeuralCortex, "set_act_socp_arm")
+    assert out["neural_ready"] is True
+
+
+def test_v40_default_off_checkpoints_and_credit_order():
+    from three_memory.neural_cortex import (
+        ACT_SOCP_ARMS,
+        ACT_SOCP_FALLBACK,
+        ACT_SOCP_OFF,
+    )
+
+    ag = NeuralCortex()
+    assert ag._act_socp_arm == ACT_SOCP_OFF
+    assert ag._act_socp_always() is False
+    assert ag._act_socp_fallback() is False
+    assert "exact_projector" not in ACT_SOCP_ARMS
+    try:
+        ag.set_act_socp_arm("exact_projector")
+        raise AssertionError("exact projector must not be a socp arm")
+    except ValueError:
+        pass
+    ag.set_act_socp_arm(ACT_SOCP_FALLBACK)
+    snap = ag.checkpoint()
+    assert snap["act_socp_arm"] == ACT_SOCP_FALLBACK
+    twin = NeuralCortex()
+    twin.load_checkpoint(snap)
+    assert twin._act_socp_arm == ACT_SOCP_FALLBACK
+    missing = dict(snap)
+    missing.pop("act_socp_arm")
+    twin2 = NeuralCortex()
+    twin2.load_checkpoint(missing)
+    assert twin2._act_socp_arm == ACT_SOCP_OFF
+    g = GenomeConfig().to_dict()
+    assert "act_socp_arm" not in g
+    credit = NeuralCortex._credit_act_p1_episode
+    import inspect
+
+    body = inspect.getsource(credit)
+    assert body.index("_act_socp_always") < body.index("_act_proj_arm_active")
+    assert body.index("_act_proj_arm_active") < body.index("_apply_act_query_update")
+    assert body.index("_apply_act_query_update") < body.index("_run_awake_rehearsal_burst")
+    assert body.index("_run_awake_rehearsal_burst") < body.index("_act_socp_fallback")
+    src = (REPO / "three_memory" / "neural_cortex.py").read_text()
+    assert "closest_feasible_W" not in src
+    assert "ACT_SOCP_ALWAYS" in src
+
+
+def test_socp_reject_does_not_partial_install():
+    from three_memory.joint_socp import weight_hash
+
+    ag = NeuralCortex()
+    ag.set_act_socp_arm("fallback_joint")
+    w0 = ag._from_t(ag.W_act_query).copy()
+    h0 = weight_hash(w0)
+    rec = ag._run_joint_socp_consolidation()
+    assert rec["applied"] is False
+    assert rec["status"] in ("no_constraints", "reject")
+    assert weight_hash(ag._from_t(ag.W_act_query)) == h0
+    assert np.allclose(ag._from_t(ag.W_act_query), w0)

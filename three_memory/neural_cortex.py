@@ -91,6 +91,12 @@ ACT_PROJ_OFF = "off"
 ACT_PROJ_PA = "pa_cyclic"
 ACT_PROJ_DYKSTRA = "dykstra"
 ACT_PROJ_ARMS = (ACT_PROJ_OFF, ACT_PROJ_PA, ACT_PROJ_DYKSTRA)
+# v40: instance-level numerical joint SOCP. Not a GenomeConfig field (TM031 to_dict).
+# Not an exact projector. Default off = frozen v37.
+ACT_SOCP_OFF = "off"
+ACT_SOCP_FALLBACK = "fallback_joint"
+ACT_SOCP_ALWAYS = "always_joint"
+ACT_SOCP_ARMS = (ACT_SOCP_OFF, ACT_SOCP_FALLBACK, ACT_SOCP_ALWAYS)
 # v36: sparse hippocampal index. 12.5% sparsity; unrelated to EPISODE_SLOTS.
 SEP_DIM = 64
 SEP_K = 8
@@ -373,6 +379,7 @@ class NeuralCortex:
         self._rehearsal_update_debt = 0
         self._act_proj_arm = ACT_PROJ_OFF
         self._act_proj_corrections: dict[str, np.ndarray] = {}
+        self._act_socp_arm = ACT_SOCP_OFF
 
     def set_act_rehearse_arm(self, arm: str) -> None:
         if arm not in ACT_REHEARSE_ARMS:
@@ -385,9 +392,78 @@ class NeuralCortex:
             raise ValueError(arm)
         self._act_proj_arm = str(arm)
 
+    def set_act_socp_arm(self, arm: str) -> None:
+        if arm not in ACT_SOCP_ARMS:
+            raise ValueError(arm)
+        self._act_socp_arm = str(arm)
+
     def _act_proj_arm_active(self) -> bool:
         arm = str(getattr(self, "_act_proj_arm", ACT_PROJ_OFF) or ACT_PROJ_OFF)
         return arm in (ACT_PROJ_PA, ACT_PROJ_DYKSTRA)
+
+    def _act_socp_always(self) -> bool:
+        return str(getattr(self, "_act_socp_arm", ACT_SOCP_OFF) or ACT_SOCP_OFF) == ACT_SOCP_ALWAYS
+
+    def _act_socp_fallback(self) -> bool:
+        return str(getattr(self, "_act_socp_arm", ACT_SOCP_OFF) or ACT_SOCP_OFF) == ACT_SOCP_FALLBACK
+
+    def _socp_constraints(self) -> list[dict[str, np.ndarray]]:
+        rows: list[dict[str, np.ndarray]] = []
+        rivals = sorted(str(h) for h in self.motor_vocab)
+        for slot, ep in enumerate(self._episodes):
+            if not ep.get("valid"):
+                continue
+            if float(ep["adv"]) <= ELIG_EPS:
+                continue
+            handle = str(ep["handle"])
+            if handle not in self.motor_vocab:
+                continue
+            x = self._unit_or_zero(np.asarray(ep["p1"], dtype=np.float64))
+            if float(np.max(np.abs(x))) <= ELIG_EPS:
+                continue
+            v_h = np.asarray(self.motor_vocab[handle], dtype=np.float64).reshape(-1)
+            for rival in rivals:
+                if rival == handle:
+                    continue
+                v_r = np.asarray(self.motor_vocab[rival], dtype=np.float64).reshape(-1)
+                d = v_h - v_r
+                rows.append({"d": d, "x": x, "key": f"{int(slot)}|{handle}|{rival}"})
+        return rows
+
+    def _run_joint_socp_consolidation(self) -> dict[str, Any]:
+        from three_memory.joint_socp import solve_min_change_socp, weight_hash
+
+        w0 = self._from_t(self.W_act_query)
+        w0_t = self.W_act_query.detach().clone()
+        cons = self._socp_constraints()
+        solved = solve_min_change_socp(w0, cons, float(ACT_MARGIN_FLOOR), float(PROTO_EPS))
+        rec = {k: v for k, v in solved.items() if k != "W"}
+        rec["not_an_exact_projector"] = True
+        rec["violations_before"] = int(self._count_store_violations())
+        rec["applied"] = False
+        if solved.get("status") != "optimal" or solved.get("W") is None:
+            rec["violations_after"] = rec["violations_before"]
+            rec["w_hash_after"] = weight_hash(w0)
+            return rec
+        self.W_act_query = self._to_t(np.asarray(solved["W"], dtype=np.float64))
+        self._clip_and_consolidate({"W_act_query"}, mix_slow=False)
+        n_after = int(self._count_store_violations())
+        rec["violations_after"] = n_after
+        rec["w_hash_after"] = weight_hash(self._from_t(self.W_act_query))
+        rec["frobenius_delta_after_clip"] = float(
+            np.linalg.norm(self._from_t(self.W_act_query) - w0)
+        )
+        if n_after != 0:
+            self.W_act_query = w0_t
+            rec["applied"] = False
+            rec["reject_reason"] = "organism_violation_after_clip"
+            rec["status"] = "reject"
+            rec["violations_after"] = int(self._count_store_violations())
+            rec["w_hash_after"] = weight_hash(self._from_t(self.W_act_query))
+            return rec
+        rec["applied"] = True
+        rec["reject_reason"] = None
+        return rec
 
     def _zero_rehearsal_debt(self) -> None:
         self._rehearsal_pass_debt = 0
@@ -988,11 +1064,26 @@ class NeuralCortex:
         if float(np.max(np.abs(p1))) <= ELIG_EPS or self._resting:
             return None
         self._episode_write(p1, handle, adv, event_key=event_key, key_rho=key_rho)
-        if self._act_proj_arm_active():
+        if self._act_socp_always():
+            return self._run_joint_socp_consolidation()
+        if self._act_proj_arm_active() and str(
+            getattr(self, "_act_socp_arm", ACT_SOCP_OFF) or ACT_SOCP_OFF
+        ) == ACT_SOCP_OFF:
             return self._run_joint_projection_cycles()
         if self._act_ranking_error(p1, handle, adv):
             self._apply_act_query_update(p1, handle, adv, eta_a, mix_slow=False)
         burst = self._run_awake_rehearsal_burst(skip_p1=p1, skip_handle=handle)
+        if self._act_socp_fallback():
+            n_after_v37 = int(self._count_store_violations())
+            socp: dict[str, Any] | None = None
+            if n_after_v37 > 0:
+                socp = self._run_joint_socp_consolidation()
+            return {
+                "v37": burst,
+                "violations_after_v37": n_after_v37,
+                "socp_invoked": bool(n_after_v37 > 0),
+                "socp": socp,
+            }
         return burst
 
     def _replay_store_pass(self, eta_a: float, *, strengthen: bool) -> tuple[int, int]:
@@ -2226,6 +2317,7 @@ class NeuralCortex:
             "rehearsal_update_debt": int(self._rehearsal_update_debt),
             "act_rehearse_arm": str(self._act_rehearse_arm),
             "act_proj_arm": str(getattr(self, "_act_proj_arm", ACT_PROJ_OFF) or ACT_PROJ_OFF),
+            "act_socp_arm": str(getattr(self, "_act_socp_arm", ACT_SOCP_OFF) or ACT_SOCP_OFF),
             "act_proj_corrections": {
                 str(k): np.asarray(v, dtype=np.float64).tolist()
                 for k, v in (getattr(self, "_act_proj_corrections", None) or {}).items()
@@ -2344,6 +2436,8 @@ class NeuralCortex:
         self._rehearse_targeting = ACT_REHEARSE_TARGETING
         proj = str(snap.get("act_proj_arm") or ACT_PROJ_OFF)
         self._act_proj_arm = proj if proj in ACT_PROJ_ARMS else ACT_PROJ_OFF
+        socp_arm = str(snap.get("act_socp_arm") or ACT_SOCP_OFF)
+        self._act_socp_arm = socp_arm if socp_arm in ACT_SOCP_ARMS else ACT_SOCP_OFF
         corr = snap.get("act_proj_corrections") or {}
         loaded: dict[str, np.ndarray] = {}
         for k, v in corr.items():
