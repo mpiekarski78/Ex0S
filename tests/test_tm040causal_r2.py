@@ -200,3 +200,43 @@ def test_ids_and_smoke():
     src = RUNNER.read_text()
     assert "set_act_proj_arm" not in src
     assert ".actuator_scores(" not in src
+
+
+def test_dev_lock_canonical_acquire_pass_and_no_candidate():
+    devp = REPO / "docs" / "lineage_causalbattery.r2.dev.lock"
+    decp = REPO / "docs" / "lineage_causalbattery.r2.decision.lock"
+    assert _sha(devp) == "a13838622a76fb3b7f62a73ef3e58001db0a4bf99cb9ede9c575bd7f7c438ab3"
+    assert _sha(decp) == "bcd40fba96ff96d90958aaf4c03fd4bb8fa2995dccd313600a09e9fc50124f23"
+    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()
+    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert _sha(TM040_DEC) == TM040_DEC_SHA
+    assert _sha(TM040_DEV) == TM040_DEV_SHA
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "220d53d76be22cf96058eaa0390212bfa84ab0c4"
+    assert dev["decision_code"] == "canonical_r2_later_learning_not_exercised"
+    assert dev["historical_decision_code"] == "jointsocp_fallback_acquire_fail"
+    assert dev["interpretation"] == "invalidated_measurement__canonical_path_mismatch"
+    assert dev["architectural_conclusion"] is None
+    assert dev["candidate_v40_lock"] is False
+    assert dec["candidate_v40_lock"] is False
+    flags = dev["phase_flags"]
+    assert flags["fallback_acquire"] is True
+    assert flags["fallback_eco"] is True
+    assert flags["fallback_spec"] is True
+    assert flags["fallback_contradict"] is True
+    assert int(flags["n_later_after_socp"]) == 0
+    acq = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|w0|fallback_joint"][0]
+    assert acq["passed"] is True
+    assert int(acq["n_store_violations"]) == 0
+    assert int(acq["n_probe_correct"]) == 8
+    row = acq["probes"][0]
+    assert row["live_p1_hash"]
+    assert row["scoring_address_hash"]
+    assert row["retrieval_path"]
+    assert "retrieved_slot" in row
+    v37 = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|w0|v37"][0]
+    assert v37["passed"] is True
+    assert int(v37["n_probe_correct"]) == 8

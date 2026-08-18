@@ -1,0 +1,50 @@
+{
+  "version": "TM.0.40.CAUSALBATTERY.R2.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "1bfe74604d1f0cb26eca700639613aa361c473bcec00e87649dbebffcd16200d",
+  "historical_decision_code": "jointsocp_fallback_acquire_fail",
+  "interpretation": "invalidated_measurement__canonical_path_mismatch",
+  "architectural_conclusion": null,
+  "decision": {
+    "code": "canonical_r2_later_learning_not_exercised",
+    "then": "canonical_r2_later_learning_not_exercised",
+    "phase_flags": {
+      "n_cells": 102,
+      "fallback_acquire": true,
+      "fallback_stable": true,
+      "fallback_hist": true,
+      "fallback_novel": true,
+      "fallback_eco": true,
+      "fallback_spec": true,
+      "fallback_scale": true,
+      "fallback_later": true,
+      "fallback_contradict": true,
+      "n_untouched_fallback_cells": 32,
+      "n_untouched_socp_activated": 4,
+      "n_untouched_socp_installed": 4,
+      "n_causal_rescues": 3,
+      "causal_rescue_stems": [
+        "scale|acquire|c8h4|A_then_B|w0",
+        "scale|acquire|c8h4|A_then_B|w1",
+        "scale|acquire|c8h4|B_then_A|w1"
+      ],
+      "n_later_after_socp": 0,
+      "candidate_v40_lock": false,
+      "always_joint_observational": true,
+      "always_joint_read": "scheduling_efficiency",
+      "fallback_total_frobenius": 0.3335311828632614,
+      "always_total_frobenius": 0.014938835628392412,
+      "fallback_n_socp_calls": 26,
+      "always_n_socp_calls": 226,
+      "historical_decision_code": "jointsocp_fallback_acquire_fail",
+      "interpretation": "invalidated_measurement__canonical_path_mismatch",
+      "architectural_conclusion": "none",
+      "always_joint_tm040_behavioral_fix": "invalidated"
+    }
+  },
+  "dev_lock_sha": "a13838622a76fb3b7f62a73ef3e58001db0a4bf99cb9ede9c575bd7f7c438ab3",
+  "git_head": "220d53d76be22cf96058eaa0390212bfa84ab0c4",
+  "frozen_runner_sha": "a72f0c8f924510df163089396a67036cfd05836aca3220053d2b10b0da6803e3",
+  "candidate_v40_lock": false,
+  "note": "Canonical-probe R2. TM040 historical first-match stays on file. Product remains 0.0.004."
+}
