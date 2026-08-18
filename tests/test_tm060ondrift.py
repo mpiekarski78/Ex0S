@@ -237,3 +237,54 @@ def test_runner_follows_receipts_and_discards_w_star():
     assert out["floor"] == 0.05
     assert out["slots"] == 8
     assert out["candidate_exists"] is False
+
+
+DEV_SHA = "64ec147180c343549b20c97e9e2a00789e0a02dc33d062378eb763fa9cf2d0fb"
+DEC_SHA = "5b9f0ee91c76e04be984a50c8d4b77802e91a570d54ef307d2d30849ad851eb4"
+DEV_GIT = "a56427f9508a62df7c5caf970adc80983408425b"
+
+
+def test_dev_lock_representation_drift():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm060ondrift import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_ondrift.dev.lock"
+    decp = REPO / "docs" / "lineage_ondrift.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert sha_file(RUNNER) == "c783babf8cb1e63bda402ee7c1f22461718be6ef2007a6177f7b735805b38a42"
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "representation_drift"
+    assert dev["install_W_star"] is False
+    assert dev["neural_untouched"] is True
+    assert dec["architectural_conclusion"] == "none"
+    assert dec["decision"]["code"] == "representation_drift"
+    assert dec["decision"]["phase_flags"]["representation_drift"] is True
+    assert dec["decision"]["phase_flags"]["generic_consolidation_earned"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["decoder|w0"]["passed"] is True
+    assert cells["decoder|w1"]["passed"] is True
+    assert cells["decoder|w0"]["full_oracle_feasible"] is True
+    assert cells["decoder|w1"]["full_oracle_feasible"] is True
+    assert cells["decoder|w0"]["parent_w_act_query_unchanged"] is True
+    for cid in expected_cell_ids():
+        if cells[cid].get("kind") != "scored":
+            continue
+        assert cells[cid]["W_installed"] is False
+        assert cells[cid]["discarded"] is True
+        assert cells[cid]["future_never_socp_constraints"] is True
+        assert cells[cid]["action_roles_recur"] is True
+        assert cells[cid]["no_duplicate_heldout_support"] is True
+        assert cells[cid]["parent_w_act_query_unchanged"] is True
+        assert cells[cid]["future_ok"] is False
+    assert cells["attempts|n4|w0"]["feasible"] is True
+    assert cells["attempts|n4|w0"]["cell_code"] == "n_prefix_only"
