@@ -1,0 +1,42 @@
+{
+  "version": "TM.0.40.CAUSALBATTERY.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "7f422a2d81d2258c764334db8a802c06c5f28b13b58fa819b50a160438493f33",
+  "decision": {
+    "code": "jointsocp_fallback_acquire_fail",
+    "then": "jointsocp_fallback_acquire_fail",
+    "phase_flags": {
+      "n_cells": 102,
+      "fallback_acquire": false,
+      "fallback_stable": false,
+      "fallback_hist": false,
+      "fallback_novel": false,
+      "fallback_eco": true,
+      "fallback_spec": true,
+      "fallback_scale": false,
+      "fallback_later": false,
+      "fallback_contradict": true,
+      "n_untouched_fallback_cells": 32,
+      "n_untouched_socp_activated": 4,
+      "n_untouched_socp_installed": 4,
+      "n_causal_rescues": 2,
+      "causal_rescue_stems": [
+        "stable|c8|A_then_B|w0",
+        "hist|c8|A_then_B|w0"
+      ],
+      "n_later_after_socp": 0,
+      "candidate_v40_lock": false,
+      "always_joint_observational": true,
+      "always_joint_read": "optimizer_does_not_generalize",
+      "fallback_total_frobenius": 0.21693012374411935,
+      "always_total_frobenius": 0.015086873128225398,
+      "fallback_n_socp_calls": 15,
+      "always_n_socp_calls": 226
+    }
+  },
+  "dev_lock_sha": "b10865b5f6fea382396db736549488c68dcdc5000932907a3612e29b53354ad7",
+  "git_head": "3a9b64f67c61bade2745a7a18d13e13e667e309f",
+  "frozen_runner_sha": "0739de3225e36bf88b66001ae9af2c3232a937d0bc6bc3b64eb34bdf7d2f9c6b",
+  "candidate_v40_lock": false,
+  "note": "TM040 untouched causal battery. Product remains 0.0.004. No cortex.candidate.v40.lock."
+}

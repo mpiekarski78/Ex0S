@@ -217,3 +217,41 @@ def test_smoke_and_neural_untouched():
     src = RUNNER.read_text()
     assert "set_act_proj_arm" not in src
     assert "closest_feasible_W" not in src
+
+
+def test_dev_lock_acquire_fail_and_no_candidate():
+    devp = REPO / "docs" / "lineage_causalbattery.dev.lock"
+    decp = REPO / "docs" / "lineage_causalbattery.decision.lock"
+    assert _sha(devp) == "b10865b5f6fea382396db736549488c68dcdc5000932907a3612e29b53354ad7"
+    assert _sha(decp) == "734204f628362f58e4f3b19237dd82398016544655d2c13800f3408854bd1b99"
+    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()
+    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "3a9b64f67c61bade2745a7a18d13e13e667e309f"
+    assert dev["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dev["decision_code"] == "jointsocp_fallback_acquire_fail"
+    assert dev["candidate_v40_lock"] is False
+    assert dec["candidate_v40_lock"] is False
+    flags = dev["phase_flags"]
+    assert flags["fallback_acquire"] is False
+    assert flags["fallback_eco"] is True
+    assert flags["fallback_spec"] is True
+    assert flags["fallback_contradict"] is True
+    assert int(flags["n_untouched_socp_activated"]) == 4
+    assert int(flags["n_causal_rescues"]) == 2
+    assert set(flags["causal_rescue_stems"]) == {"stable|c8|A_then_B|w0", "hist|c8|A_then_B|w0"}
+    acq_fb = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|w0|fallback_joint"][0]
+    acq_aj = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|w0|always_joint"][0]
+    acq_v = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|w0|v37"][0]
+    assert acq_fb["passed"] is False
+    assert int(acq_fb["n_store_violations"]) == 0
+    assert int(acq_fb["n_probe_correct"]) == 7
+    assert bool(acq_fb["socp_activated"]) is False
+    assert acq_v["passed"] is False
+    assert acq_aj["passed"] is True
+    assert int(acq_aj["n_probe_correct"]) == 8
+    ct = [c for c in dev["cells"] if c["id"] == "contradict|w0|fallback_joint"][0]
+    assert ct["passed"] is True

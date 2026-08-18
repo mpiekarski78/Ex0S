@@ -2,6 +2,7 @@
 
 ## 2026-08-18
 
+- **TM.0.40.CAUSALBATTERY DEV:** First-match **jointsocp_fallback_acquire_fail**. Untouched eight-cue acquire is live 7/8 with **zero store violations**, so fallback never invokes; `always_joint` restores 8/8. Two causal rescues (stable/hist on one stem). Eco/spec/contradict pass. No candidate lock. [`lineage_causalbattery.decision.lock`](lineage_causalbattery.decision.lock). Product **0.0.004**.
 - **TM.0.40.CAUSALBATTERY freeze:** Untouched full causal battery for `fallback_joint` (acquire, stability/perturbation, history, novelty, reversal, specificity, 8×4, later-learning after installed SOCP). `always_joint` observational. No neural or solver edits. No candidate lock if the solver is never exercised. [`lineage_causalbattery.prereg.lock`](lineage_causalbattery.prereg.lock). Product **0.0.004**.
 - **TM.0.39.JOINTSOCP DEV:** First-match **jointsocp_fallback_sufficient**. Diagnostic `reg1`: v37 leftover 3/live 6; v37-then-SOCP restores 8/8. Always-joint also restores but installs a different \(W\) (8/8 hash mismatches). Not a candidate lock. [`lineage_jointsocp.decision.lock`](lineage_jointsocp.decision.lock). Product **0.0.004**.
 - **v40 joint-SOCP controller:** After the TM039 freeze on origin, credit path is write then fallback/always numerical joint SOCP when the instance flag is on. Default remains frozen v37. Organism predicate stays authoritative. Not a candidate lock. [`cortex_v40.prereg.lock`](cortex_v40.prereg.lock). Product **0.0.004**.
