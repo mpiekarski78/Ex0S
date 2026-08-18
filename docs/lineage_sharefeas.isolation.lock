@@ -1,0 +1,61 @@
+{
+  "version": "TM.0.52.SHAREFEAS.ISOLATION",
+  "lab": "TM.0.52.SHAREFEAS",
+  "product": "0.0.004",
+  "implementation_authorized": false,
+  "neural_edit_authorized": false,
+  "kqv_edit_authorized": false,
+  "decoder_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "action_feedback_edit_authorized": false,
+  "install_oracle_authorized": false,
+  "extend_socp_authorized": false,
+  "n_dev_repeats_increase_authorized": false,
+  "v41_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM052.SHAREFEAS.DEV.",
+    "TWIN": "TM052.SHAREFEAS.TWIN."
+  },
+  "historical_immutable": [
+    "experiments/run_tm046oneshot.py",
+    "experiments/run_tm047reinstate.py",
+    "experiments/run_tm048creditinfo.py",
+    "experiments/run_tm049actfeed.py",
+    "experiments/run_tm050feedgeom.py",
+    "experiments/run_tm051fbground.py",
+    "docs/lineage_fbground.dev.lock",
+    "docs/lineage_fbground.decision.lock",
+    "docs/lineage_fbground.prereg.lock",
+    "docs/lineage_feedgeom.dev.lock",
+    "docs/lineage_feedgeom.decision.lock",
+    "three_memory/neural_cortex.py",
+    "three_memory/joint_socp.py"
+  ],
+  "runner_may": [
+    "import frozen TM051 develop_protocol, wrap path, credit_tagged",
+    "call solve_min_change_socp without writing W_act_query",
+    "score W_star off-line with the organism predicate formulas",
+    "assert parent W_act_query hash unchanged"
+  ],
+  "refuse": [
+    "tune_kqv",
+    "train_new_decoder",
+    "install_W_star",
+    "extend_joint_socp",
+    "increase_n_dev_repeats",
+    "edit three_memory/neural_cortex.py",
+    "edit three_memory/joint_socp.py",
+    "edit experiments/run_tm051fbground.py",
+    "rerun TM051 DEV rewrite",
+    "rerun TM050 DEV",
+    "rerun TM049 DEV",
+    "copy_handle_into_S",
+    "runner_constructs_rho_k_v",
+    "auto_cortex.candidate.v41.lock",
+    "earned_next",
+    "0.0.005",
+    "learned_opaque_addressing_on_this_wall",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Side-effect-free shared-decoder feasibility. Product remains 0.0.004. No neural edit."
+}
