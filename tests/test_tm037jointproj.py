@@ -217,3 +217,45 @@ def test_smoke():
     assert out["hard_budget_passes"] == 16
     assert out["pa_fitted_lr"] is False
     assert hasattr(NeuralCortex, "set_act_rehearse_arm")
+    assert hasattr(NeuralCortex, "set_act_proj_arm")
+    assert out["neural_ready"] is True
+
+
+def test_v39_default_off_rejects_oracle_and_checkpoints():
+    from three_memory.neural_cortex import ACT_PROJ_ARMS, ACT_PROJ_OFF, ACT_PROJ_PA, ACT_PROJ_DYKSTRA
+
+    ag = NeuralCortex()
+    assert ag._act_proj_arm == ACT_PROJ_OFF
+    assert ag._act_proj_arm_active() is False
+    assert "oracle" not in ACT_PROJ_ARMS
+    try:
+        ag.set_act_proj_arm("oracle")
+        raise AssertionError("oracle must not be a proj arm")
+    except ValueError:
+        pass
+    ag.set_act_proj_arm(ACT_PROJ_DYKSTRA)
+    ag._act_proj_corrections = {"0|h|r": np.ones((2, 3), dtype=np.float64)}
+    snap = ag.checkpoint()
+    assert snap["act_proj_arm"] == ACT_PROJ_DYKSTRA
+    assert "0|h|r" in snap["act_proj_corrections"]
+    twin = NeuralCortex()
+    twin.load_checkpoint(snap)
+    assert twin._act_proj_arm == ACT_PROJ_DYKSTRA
+    assert np.allclose(twin._act_proj_corrections["0|h|r"], 1.0)
+    missing = dict(snap)
+    missing.pop("act_proj_arm")
+    missing.pop("act_proj_corrections")
+    twin2 = NeuralCortex()
+    twin2.load_checkpoint(missing)
+    assert twin2._act_proj_arm == ACT_PROJ_OFF
+    assert twin2._act_proj_corrections == {}
+    src = Path(REPO / "three_memory" / "neural_cortex.py").read_text()
+    assert "closest_feasible_W" not in src
+    assert ACT_PROJ_PA in src
+    credit = NeuralCortex._credit_act_p1_episode
+    import inspect
+
+    body = inspect.getsource(credit)
+    assert body.index("_act_proj_arm_active") < body.index("_apply_act_query_update")
+    assert body.index("_apply_act_query_update") < body.index("_run_awake_rehearsal_burst")
+

@@ -374,7 +374,6 @@ def test_dev_lock_records_implementation_and_first_match():
     assert DEC.is_file()
     assert _sha(DEV) == HISTORICAL_DEV_SHA
     assert _sha(DEC) == HISTORICAL_DEC_SHA
-    assert _sha(REPO / "three_memory" / "neural_cortex.py") == NEURAL_SHA
     assert _sha(RUNNER) == FROZEN_RUNNER_SHA
     dev = json.loads(DEV.read_text())
     dec = json.loads(DEC.read_text())

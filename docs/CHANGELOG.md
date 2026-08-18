@@ -2,6 +2,7 @@
 
 ## 2026-08-18
 
+- **v39 joint-projection controller:** After the TM037 freeze on origin, credit path is write then bounded cyclic PA/Dykstra when the instance flag is on. Default remains frozen v37. Oracle \(W^*\) stays runner-only. Dykstra \(I_i\) checkpointed. [`cortex_v39.prereg.lock`](cortex_v39.prereg.lock). Product **0.0.004**.
 - **TM.0.37.JOINTPROJ / v39 freeze:** Bounded cyclic projection onto supporting halfspaces of episodic ranking+margin cones. Ranking is a halfspace in \(W\); geometric \(\gamma\) is a SOC, so PA/Dykstra freeze \(b\) per cycle and stop on the existing nonlinear predicate. Matched arms v37 / PA cyclic / Dykstra / diagnostic \(W^*\). Oracle never installed. No candidate lock. [`lineage_jointproj.prereg.lock`](lineage_jointproj.prereg.lock). Product **0.0.004**.
 - **TM.0.36.UPDATEGEOM DEV:** First-match **updategeom_oracle_only**. Diagnostic `reg1`: native leftover 0/4/6; Jacobi worse; protect retains established rows but does not acquire; a nearby feasible \(W\) restores 8/8. v39 not frozen. [`lineage_updategeom.decision.lock`](lineage_updategeom.decision.lock). Product **0.0.004**.
 - **TM.0.36.UPDATEGEOM freeze:** Post-write_only interference matrix plus native / Jacobi / protect-every-update / closest-W oracle on fresh domains. No neural edit. v39 not frozen; DEV names the next law. [`lineage_updategeom.prereg.lock`](lineage_updategeom.prereg.lock). Product **0.0.004**.

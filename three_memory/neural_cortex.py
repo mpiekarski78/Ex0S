@@ -86,6 +86,11 @@ ACT_REHEARSE_ADAPTIVE = "adaptive_violation"
 ACT_REHEARSE_FIXED = "fixed_extra_replay"
 ACT_REHEARSE_ARMS = (ACT_REHEARSE_V37, ACT_REHEARSE_ADAPTIVE, ACT_REHEARSE_FIXED)
 ACT_REHEARSE_TARGETING = "violation_rows"
+# v39: instance-level joint projection. Not a GenomeConfig field (TM031 to_dict).
+ACT_PROJ_OFF = "off"
+ACT_PROJ_PA = "pa_cyclic"
+ACT_PROJ_DYKSTRA = "dykstra"
+ACT_PROJ_ARMS = (ACT_PROJ_OFF, ACT_PROJ_PA, ACT_PROJ_DYKSTRA)
 # v36: sparse hippocampal index. 12.5% sparsity; unrelated to EPISODE_SLOTS.
 SEP_DIM = 64
 SEP_K = 8
@@ -366,6 +371,8 @@ class NeuralCortex:
         self._rehearse_targeting = ACT_REHEARSE_TARGETING
         self._rehearsal_pass_debt = 0
         self._rehearsal_update_debt = 0
+        self._act_proj_arm = ACT_PROJ_OFF
+        self._act_proj_corrections: dict[str, np.ndarray] = {}
 
     def set_act_rehearse_arm(self, arm: str) -> None:
         if arm not in ACT_REHEARSE_ARMS:
@@ -373,9 +380,141 @@ class NeuralCortex:
         self._act_rehearse_arm = str(arm)
         self._rehearse_targeting = ACT_REHEARSE_TARGETING
 
+    def set_act_proj_arm(self, arm: str) -> None:
+        if arm not in ACT_PROJ_ARMS:
+            raise ValueError(arm)
+        self._act_proj_arm = str(arm)
+
+    def _act_proj_arm_active(self) -> bool:
+        arm = str(getattr(self, "_act_proj_arm", ACT_PROJ_OFF) or ACT_PROJ_OFF)
+        return arm in (ACT_PROJ_PA, ACT_PROJ_DYKSTRA)
+
     def _zero_rehearsal_debt(self) -> None:
         self._rehearsal_pass_debt = 0
         self._rehearsal_update_debt = 0
+
+    def _reset_proj_corrections_for_slot(self, slot: int) -> None:
+        prefix = f"{int(slot)}|"
+        raw = getattr(self, "_act_proj_corrections", None) or {}
+        self._act_proj_corrections = {
+            str(k): v for k, v in raw.items() if not str(k).startswith(prefix)
+        }
+
+    def _pa_project_W(
+        self, W: np.ndarray, d: np.ndarray, x: np.ndarray, b: float
+    ) -> tuple[np.ndarray, bool]:
+        inner = float(np.dot(d, W @ x))
+        a_f2 = float(np.dot(d, d) * np.dot(x, x))
+        if a_f2 <= PROTO_EPS:
+            return W, False
+        if inner >= b:
+            return W, False
+        step = (b - inner) / a_f2
+        return W + step * np.outer(d, x), True
+
+    def _supporting_proj_constraints(self, W_ref: np.ndarray) -> list[dict[str, Any]]:
+        rows: list[dict[str, Any]] = []
+        rivals = sorted(str(h) for h in self.motor_vocab)
+        tau = float(ACT_MARGIN_FLOOR)
+        for slot, ep in enumerate(self._episodes):
+            if not ep.get("valid"):
+                continue
+            if float(ep["adv"]) <= ELIG_EPS:
+                continue
+            handle = str(ep["handle"])
+            if handle not in self.motor_vocab:
+                continue
+            x = self._unit_or_zero(np.asarray(ep["p1"], dtype=np.float64))
+            if float(np.max(np.abs(x))) <= ELIG_EPS:
+                continue
+            v_h = np.asarray(self.motor_vocab[handle], dtype=np.float64).reshape(-1)
+            for rival in rivals:
+                if rival == handle:
+                    continue
+                v_r = np.asarray(self.motor_vocab[rival], dtype=np.float64).reshape(-1)
+                d = v_h - v_r
+                if float(np.linalg.norm(d)) <= PROTO_EPS:
+                    continue
+                b = tau * float(np.linalg.norm(W_ref.T @ d))
+                rows.append(
+                    {
+                        "key": f"{int(slot)}|{handle}|{rival}",
+                        "d": d,
+                        "x": x,
+                        "b": float(b),
+                    }
+                )
+        return rows
+
+    def _run_joint_projection_cycles(self) -> dict[str, Any]:
+        corrections = str(getattr(self, "_act_proj_arm", ACT_PROJ_OFF) or ACT_PROJ_OFF) == ACT_PROJ_DYKSTRA
+        W0 = self._from_t(self.W_act_query)
+        corrections_state: dict[str, np.ndarray] = {}
+        if corrections:
+            raw = getattr(self, "_act_proj_corrections", None) or {}
+            for k, v in raw.items():
+                corrections_state[str(k)] = np.asarray(v, dtype=np.float64).copy()
+        W = W0.copy()
+        passes: list[dict[str, Any]] = []
+        total_proj = 0
+        first: int | None = None
+        exhausted = False
+        n_constraints = 0
+        for idx in range(1, EPISODE_REPLAY_EPOCHS + 1):
+            n_before = int(self._count_store_violations())
+            cons = self._supporting_proj_constraints(W)
+            n_constraints = len(cons)
+            n_hit = 0
+            for c in cons:
+                key = str(c["key"])
+                if corrections:
+                    I = corrections_state.get(key)
+                    if I is None:
+                        I = np.zeros_like(W)
+                    y = W - I
+                    Wp, hit = self._pa_project_W(y, c["d"], c["x"], float(c["b"]))
+                    corrections_state[key] = Wp - y
+                    W = Wp
+                else:
+                    W, hit = self._pa_project_W(W, c["d"], c["x"], float(c["b"]))
+                n_hit += int(hit)
+                total_proj += int(hit)
+            self.W_act_query = self._to_t(W)
+            self._clip_and_consolidate({"W_act_query"}, mix_slow=False)
+            W = self._from_t(self.W_act_query)
+            n_after = int(self._count_store_violations())
+            passes.append(
+                {
+                    "pass_index": int(idx),
+                    "n_projections": int(n_hit),
+                    "n_constraints": int(n_constraints),
+                    "violations_before": int(n_before),
+                    "violations_after": int(n_after),
+                }
+            )
+            if n_after == 0:
+                first = idx
+                break
+        else:
+            exhausted = True
+        if corrections:
+            self._act_proj_corrections = {k: v.copy() for k, v in corrections_state.items()}
+        delta = float(np.linalg.norm(W - W0))
+        return {
+            "n_awake_updates": int(total_proj),
+            "n_projections": int(total_proj),
+            "n_passes": len(passes),
+            "n_constraints": int(n_constraints),
+            "budget_exhausted": bool(exhausted),
+            "first_converged_pass": first,
+            "corrections": bool(corrections),
+            "b_frozen_per_cycle": True,
+            "clip_at_end_of_pass": True,
+            "mix_slow": False,
+            "fitted_learning_rate": False,
+            "frobenius_delta": delta,
+            "passes": passes,
+        }
 
     # --- init helpers ---
 
@@ -574,6 +713,7 @@ class NeuralCortex:
                 self._episodes.append(ep)
             else:
                 evict = min(range(len(self._episodes)), key=lambda i: (int(self._episodes[i]["age"]), i))
+                self._reset_proj_corrections_for_slot(int(evict))
                 self._episodes[evict] = ep
             self._episode_n_inserts += 1
             return
@@ -587,6 +727,7 @@ class NeuralCortex:
             contradictory = True
         if contradictory:
             ep["version"] = int(old["version"]) + 1
+            self._reset_proj_corrections_for_slot(int(match_i))
             self._episodes[int(match_i)] = ep
             self._episode_n_replaced += 1
             return
@@ -847,6 +988,8 @@ class NeuralCortex:
         if float(np.max(np.abs(p1))) <= ELIG_EPS or self._resting:
             return None
         self._episode_write(p1, handle, adv, event_key=event_key, key_rho=key_rho)
+        if self._act_proj_arm_active():
+            return self._run_joint_projection_cycles()
         if self._act_ranking_error(p1, handle, adv):
             self._apply_act_query_update(p1, handle, adv, eta_a, mix_slow=False)
         burst = self._run_awake_rehearsal_burst(skip_p1=p1, skip_handle=handle)
@@ -1979,6 +2122,7 @@ class NeuralCortex:
         self._n_rest_replay = 0
         self._n_rest_strengthen = 0
         self._zero_rehearsal_debt()
+        self._act_proj_corrections = {}
         z = np.zeros(self.genome.n, dtype=np.float64)
         for h in list(self._proto_fast):
             self._proto_fast[h] = z.copy()
@@ -2081,6 +2225,11 @@ class NeuralCortex:
             "rehearsal_pass_debt": int(self._rehearsal_pass_debt),
             "rehearsal_update_debt": int(self._rehearsal_update_debt),
             "act_rehearse_arm": str(self._act_rehearse_arm),
+            "act_proj_arm": str(getattr(self, "_act_proj_arm", ACT_PROJ_OFF) or ACT_PROJ_OFF),
+            "act_proj_corrections": {
+                str(k): np.asarray(v, dtype=np.float64).tolist()
+                for k, v in (getattr(self, "_act_proj_corrections", None) or {}).items()
+            },
             "sources": {k: v.tolist() for k, v in self.sources.items()},
             "v_start": self.v_start.tolist(),
             "v_end": self.v_end.tolist(),
@@ -2193,6 +2342,14 @@ class NeuralCortex:
         arm = str(snap.get("act_rehearse_arm") or ACT_REHEARSE_V37)
         self._act_rehearse_arm = arm if arm in ACT_REHEARSE_ARMS else ACT_REHEARSE_V37
         self._rehearse_targeting = ACT_REHEARSE_TARGETING
+        proj = str(snap.get("act_proj_arm") or ACT_PROJ_OFF)
+        self._act_proj_arm = proj if proj in ACT_PROJ_ARMS else ACT_PROJ_OFF
+        corr = snap.get("act_proj_corrections") or {}
+        loaded: dict[str, np.ndarray] = {}
+        for k, v in corr.items():
+            arr = np.asarray(v, dtype=np.float64)
+            loaded[str(k)] = arr
+        self._act_proj_corrections = loaded
         gsnap = snap.get("genome") or {}
         if "act_score_mode" in gsnap:
             self.genome.act_score_mode = str(gsnap["act_score_mode"])
