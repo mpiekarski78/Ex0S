@@ -1,0 +1,26 @@
+{
+  "version": "TM.0.31.HALFSPACE.DECISION.ADDENDUM",
+  "product": "0.0.004",
+  "rewrite_historical_decision": false,
+  "historical_decision_lock": "docs/lineage_halfspace.decision.lock",
+  "historical_decision_sha": "00d5e289068a68967af2c53669a0f4c2d16abc6617c851014261a1358dea07c6",
+  "historical_dev_lock_sha": "56dc67affd8fe5d2bb2263dc617c4d28922bfbac03c40b8bf8f6b7cccad67d9a",
+  "frozen_runner_sha": "480f7400ada06143acaa3242e75aed315e941f40ebb253a7d0bf67caaa16f564",
+  "first_match_unchanged": "halfspace_core_acquire_fail",
+  "interpret": {
+    "treatment_stable_includes_scale_kind_stable": true,
+    "core_stable_and_hist": "all pass (c2/c4/c8 stable and c8 hist)",
+    "scale_stable": "7/8; fail is scale|stable|c8h4|B_then_A|reg2",
+    "eight_cue_acquire": "22/24; both fails are acquire|c8|*|reg1 ranking with episodic_completed inside the familiarity ball (wrong stored slot/handle), not cortical fallback",
+    "novel_and_path_toggle": "8/8 rejected and 8/8 matched ON/OFF path toggle; not a causal claim because first-match is acquire fail"
+  },
+  "act_recall_modes_tuple": "early_raw_half_spacing omitted from ACT_RECALL_MODES to keep frozen TM029 RECALL_MODES/manifest; resolve and checkpoint load accept it explicitly",
+  "refuse": [
+    "rewrite lineage_halfspace.decision.lock",
+    "rewrite lineage_halfspace.dev.lock",
+    "runner_edits_after_freeze_push",
+    "tm031_dev_rerun",
+    "install_tm030_W_N_cutoff"
+  ],
+  "note": "Audit addendum. Historical first-match stands. Product remains 0.0.004."
+}

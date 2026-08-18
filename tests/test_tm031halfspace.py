@@ -22,6 +22,7 @@ TM029_DEC = REPO / "docs" / "lineage_indexing.decision.lock"
 RUNNER = REPO / "experiments" / "run_tm031halfspace.py"
 DEV = REPO / "docs" / "lineage_halfspace.dev.lock"
 DEC = REPO / "docs" / "lineage_halfspace.decision.lock"
+ADDENDUM = REPO / "docs" / "lineage_halfspace.decision.addendum.lock"
 MANIFEST = "2abd592a9c29c352038c92349424bd2e524b6b223457fb727bbb0232cb8afc93"
 HISTORICAL_V35_ISO_SHA = "8d1b72fc45aac48f72f38d9ed753e37de81c75df2a0a1b23ee6d880f8b42f8d8"
 HISTORICAL_TM030_DEC_SHA = "88309df4d15bb9fccc3f85e169be3b97b0dd4b2eb53be9b2a1f6d730c11e231f"
@@ -30,6 +31,7 @@ HISTORICAL_TM029_DEC_SHA = "f3fc981d9516e5ecade86ed39fbf95f027ca7dcd8aa4cccd6860
 FROZEN_RUNNER_SHA = "480f7400ada06143acaa3242e75aed315e941f40ebb253a7d0bf67caaa16f564"
 HISTORICAL_DEV_SHA = "56dc67affd8fe5d2bb2263dc617c4d28922bfbac03c40b8bf8f6b7cccad67d9a"
 HISTORICAL_DEC_SHA = "00d5e289068a68967af2c53669a0f4c2d16abc6617c851014261a1358dea07c6"
+HISTORICAL_ADDENDUM_SHA = "5be880f3edf1549e75a6929d549d4a8d8d8d493a789dbed197443f25b76abdd1"
 
 
 def _sha(p: Path) -> str:
@@ -346,3 +348,86 @@ def test_on_off_hash_match_protocol():
         observe_cue(on, world, tag="on", body=list(MID_BODY), symbols=["s_tm031_causal_novel"])
         observe_cue(off, world, tag="off", body=list(MID_BODY), symbols=["s_tm031_causal_novel"])
         assert arr_sha(on._last_key_rho) == arr_sha(off._last_key_rho)
+
+
+def test_write_radius_unchanged():
+    from three_memory.neural_cortex import EPISODE_MATCH_L2
+
+    assert EPISODE_MATCH_L2 == 0.05
+    assert json.loads(PREREG.read_text())["write_match_l2"] == 0.05
+    assert json.loads(V37_PREREG.read_text())["write_match_l2"] == 0.05
+
+
+def test_half_mode_omitted_from_act_recall_modes_tuple():
+    from experiments.run_tm029indexing import RECALL_MODES
+    from experiments.run_tm023cortex import make_cortex
+    from three_memory.neural_cortex import ACT_RECALL_EARLY_RAW_HALF, ACT_RECALL_MODES
+
+    assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
+    assert ACT_RECALL_EARLY_RAW_HALF not in RECALL_MODES
+    assert list(RECALL_MODES) == list(ACT_RECALL_MODES)
+    with tempfile.TemporaryDirectory() as tmp:
+        ag = make_cortex(Path(tmp), device="cpu")
+        ag.genome.act_recall_mode = ACT_RECALL_EARLY_RAW_HALF
+        assert ag._resolve_act_recall_mode() == ACT_RECALL_EARLY_RAW_HALF
+        snap = ag.checkpoint()
+        ag2 = make_cortex(Path(tmp) / "b", device="cpu")
+        ag2.load_checkpoint(snap)
+        assert ag2.genome.act_recall_mode == ACT_RECALL_EARLY_RAW_HALF
+
+
+def test_decision_addendum_does_not_rewrite_historical():
+    add = json.loads(ADDENDUM.read_text())
+    assert _sha(ADDENDUM) == HISTORICAL_ADDENDUM_SHA
+    assert add["rewrite_historical_decision"] is False
+    assert add["historical_decision_sha"] == HISTORICAL_DEC_SHA
+    assert add["historical_dev_lock_sha"] == HISTORICAL_DEV_SHA
+    assert add["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert add["first_match_unchanged"] == "halfspace_core_acquire_fail"
+    assert _sha(DEC) == HISTORICAL_DEC_SHA
+    assert _sha(DEV) == HISTORICAL_DEV_SHA
+    assert _sha(RUNNER) == FROZEN_RUNNER_SHA
+
+
+def test_dev_honest_core_vs_scale_and_acquire_identity():
+    cells = json.loads(DEV.read_text())["cells"]
+    core_stable_hist = [
+        c
+        for c in cells
+        if c.get("kind") in ("stable", "hist") and not str(c["id"]).startswith("scale|")
+    ]
+    assert core_stable_hist
+    assert all(bool(c.get("passed")) for c in core_stable_hist)
+    scale_stable = [c for c in cells if str(c["id"]).startswith("scale|stable")]
+    assert sum(1 for c in scale_stable if not c.get("passed")) == 1
+    acquire_c8 = [c for c in cells if str(c["id"]).startswith("acquire|c8|")]
+    fails = [c for c in acquire_c8 if not c.get("passed")]
+    assert len(acquire_c8) == 8
+    assert len(fails) == 2
+    assert {c["id"] for c in fails} == {"acquire|c8|A_then_B|reg1", "acquire|c8|B_then_A|reg1"}
+    wrong = 0
+    for c in fails:
+        for p in c["probes"]:
+            if p.get("ranking_ok"):
+                continue
+            wrong += 1
+            rm = p["recall_meta"]
+            assert rm["path"] == "episodic_completed"
+            assert rm["familiar"] is True
+            assert float(rm["nearest_dist"]) < float(rm["R"])
+            assert p["want"] != p["winner"]
+    assert wrong == 4
+    geometries = {
+        c["stored_key_rho_sha256"]
+        for c in cells
+        if str(c["id"]).startswith("stable|c8|A_then_B|")
+    }
+    assert len(geometries) == 4
+    novels = [c for c in cells if c.get("kind") == "novel"]
+    assert len(novels) == 8
+    assert all(c.get("passed") and c.get("gate_path_toggle") and c.get("hash_matched") for c in novels)
+    for c in novels:
+        for skip in c["skips"]:
+            assert skip["on"]["path"] == "cortical_fallback"
+            assert skip["on"]["familiar"] is False
+            assert skip["off"]["path"] == "episodic_completed"

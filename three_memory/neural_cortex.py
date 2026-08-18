@@ -90,6 +90,9 @@ ACT_RECALL_EARLY_RAW = "early_raw"
 ACT_RECALL_EARLY_RAW_HALF = "early_raw_half_spacing"
 ACT_RECALL_SEP_NO_FAM = "separated_key_no_familiarity"
 ACT_RECALL_SEP = "separated_key"
+# v37 half-spacing is accepted by _resolve_act_recall_mode / load_checkpoint but is
+# intentionally omitted from ACT_RECALL_MODES. TM029 binds RECALL_MODES = list(ACT_RECALL_MODES)
+# and that runner is frozen; adding a mode would drift its 82-cell manifest.
 ACT_RECALL_MODES = (
     ACT_RECALL_OFF,
     ACT_RECALL_RAW_P1,
