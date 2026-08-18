@@ -228,3 +228,25 @@ def test_dev_lock_credit_action_information_absent_and_no_v41():
         assert len(stored) == 1
         assert all(cl["p1_before"]["hash"] == cl["stored"]["hash"] for cl in cred["clones"])
 
+
+ADD_SHA = "49dfaf9b045597cb4dd1aaebcd22f2bfc74f0f7cb23a780d9b2feac69c5b5ced"
+
+
+def test_audit_addendum_does_not_rewrite_first_match():
+    addp = REPO / "docs" / "lineage_creditinfo.decision.addendum.lock"
+    add = json.loads(addp.read_text())
+    assert _sha(addp) == ADD_SHA
+    assert add["rewrite_historical_decision"] is False
+    assert add["rerun_dev"] is False
+    assert add["frozen_first_match_unchanged"] is True
+    assert add["historical_decision_code"] == "credit_action_information_absent"
+    assert add["interpretation"] == "rho_after_credit_identical_across_actions__no_downstream_recovery"
+    assert add["audit"]["information_theoretic_absence"]["same_hash"] is True
+    assert add["audit"]["information_theoretic_absence"]["max_pairwise_l2"] == 0.0
+    assert add["audit"]["information_theoretic_absence"]["rho_changed_with_action"] is False
+    assert add["audit"]["information_theoretic_absence"]["stored_equals_p1_before"] is True
+    assert add["audit"]["default_action_collapse"]["w0_winner_all_clones"] == "h_810668987"
+    assert add["audit"]["kqv_not_earned"] is True
+    assert add["action_feedback_edited"] is False
+    assert not CANDIDATE_V41.exists()
+
