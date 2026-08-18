@@ -1,0 +1,60 @@
+{
+  "version": "TM.0.56.EPPROV.ISOLATION",
+  "lab": "TM.0.56.EPPROV",
+  "product": "0.0.004",
+  "implementation_authorized": false,
+  "neural_edit_authorized": false,
+  "kqv_edit_authorized": false,
+  "decoder_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "install_oracle_authorized": false,
+  "extend_socp_authorized": false,
+  "episode_match_l2_retune_authorized": false,
+  "force_cue_into_value_authorized": false,
+  "canonical_law_reconsider_authorized": false,
+  "v41_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM056.EPPROV.DEV.",
+    "TWIN": "TM056.EPPROV.TWIN."
+  },
+  "historical_immutable": [
+    "experiments/run_tm046oneshot.py",
+    "experiments/run_tm049actfeed.py",
+    "experiments/run_tm051fbground.py",
+    "experiments/run_tm052sharefeas.py",
+    "experiments/run_tm053cover.py",
+    "experiments/run_tm054provenance.py",
+    "experiments/run_tm055drift.py",
+    "docs/lineage_sharefeas.dev.lock",
+    "docs/lineage_cover.dev.lock",
+    "docs/lineage_provenance.dev.lock",
+    "docs/lineage_drift.dev.lock",
+    "docs/lineage_drift.decision.lock",
+    "docs/lineage_drift.decision.addendum.lock",
+    "docs/lineage_write_time_law.lock",
+    "three_memory/neural_cortex.py",
+    "three_memory/joint_socp.py"
+  ],
+  "runner_may": [
+    "wrap _episode_write, observe, rest_epoch, and _sensory_tick as observers",
+    "stamp write identity at the actual episode write",
+    "compare TM051 handle-scan and live _last_p1 only as comparators"
+  ],
+  "refuse": [
+    "tune_kqv",
+    "install_W_star",
+    "retune_EPISODE_MATCH_L2",
+    "reconsider write-time law",
+    "identify target by episodes[-1]",
+    "identify target by handle lookup",
+    "identify target by live _last_p1",
+    "edit three_memory/neural_cortex.py",
+    "edit experiments/run_tm055drift.py",
+    "rerun TM055 DEV rewrite",
+    "auto_cortex.candidate.v41.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Episode-provenance wall. Product remains 0.0.004. No neural edit. No SOCP."
+}
