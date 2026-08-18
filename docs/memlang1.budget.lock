@@ -1,0 +1,29 @@
+{
+  "version": "MEMLANG-1.BUDGET",
+  "product": "0.0.004",
+  "earned_next": false,
+  "eligible_for_000005": false,
+  "n_families": 4,
+  "max_variants_per_family": 25,
+  "n_train_lives_per_variant": 4,
+  "n_val_lives_per_variant": 4,
+  "max_confirmation_runs": 1,
+  "causal_gates_before_accuracy_aggregation": true,
+  "families": [
+    "slow_target",
+    "hebbian_delta",
+    "lowrank_adapter",
+    "recurrent_consistency"
+  ],
+  "search_directions_mapped": {
+    "slow_target": ["slow/target value projections"],
+    "hebbian_delta": ["neuromodulated Hebbian or delta plasticity"],
+    "lowrank_adapter": ["learned plasticity coefficients", "low-rank plastic adapters"],
+    "recurrent_consistency": ["feedback-consistency learning", "recurrent plasticity variants"]
+  },
+  "stop": ["integrated_stage_a_gate_pass", "budget_exhausted"],
+  "telemetry_root": "runs/memlang1",
+  "candidate_v41_lock": false,
+  "install_W_star": false,
+  "note": "Hard cap. Product remains 0.0.004. Floor 0.05 unchanged."
+}

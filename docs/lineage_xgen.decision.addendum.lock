@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.62.XGEN.DECISION.ADDENDUM",
+  "product": "0.0.004",
+  "earned_next": false,
+  "eligible_for_000005": false,
+  "rewrite_historical_decision": false,
+  "rerun_dev": false,
+  "frozen_first_match_unchanged": true,
+  "historical_decision_code": "only_unrestricted_interpolates",
+  "architectural_conclusion": "none",
+  "transport_branch_closed": true,
+  "interpretation": "post_feedback_representation_lacks_action_invariant_coordinate",
+  "why": "A decoder exists for the combined write-time states, but finite earlier experience does not determine it. The post-feedback representation does not preserve an action-invariant coordinate system across later contexts. Do not install transport, increase examples, fit another decoder, or alter storage. Do not open TM063 as a single diagnostic.",
+  "refuse": [
+    "install_transport",
+    "increase_examples_as_the_fix",
+    "fit_another_decoder",
+    "alter_storage",
+    "open_TM063_as_single_diagnostic",
+    "install_W_star",
+    "auto_cortex.candidate.v41.lock"
+  ],
+  "authorized_next": "MEMLANG-1",
+  "tm062_earned_architecture": false,
+  "tm062_earned_representation_search": true,
+  "install_W_star": false,
+  "candidate_v41_lock": false,
+  "episode_match_l2_retuned": false,
+  "note": "Does not rewrite TM062 DEV or decision. Product remains 0.0.004. Floor 0.05 unchanged."
+}

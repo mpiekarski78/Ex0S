@@ -1,0 +1,18 @@
+{
+  "version": "MEMLANG-1.STAGE_B",
+  "product": "0.0.004",
+  "executable": false,
+  "unlocks_after": "stage_a_integrated_gate",
+  "gates": [
+    "one_shot_facts_enter_opaque_S",
+    "slow_cortex_frozen",
+    "reset_removes_live_state",
+    "memory_passes_while_no_memory_fails",
+    "checkpoint_restoration_works",
+    "wipe_removes_behavior",
+    "donor_S_redirects_behavior",
+    "stored_values_retain_meaning_across_later_development"
+  ],
+  "refuse": ["run_before_stage_a_pass", "install_W_star", "auto_cortex.candidate.v41.lock"],
+  "note": "Locked. Not executable at freeze."
+}
