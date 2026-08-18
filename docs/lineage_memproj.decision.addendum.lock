@@ -1,0 +1,60 @@
+{
+  "version": "TM.0.44.MEMPROJ.DECISION.ADDENDUM",
+  "product": "0.0.004",
+  "earned_next": false,
+  "eligible_for_000005": false,
+  "rewrite_historical_decision": false,
+  "rewrite_historical_dev": false,
+  "rewrite_historical_prereg": false,
+  "rewrite_frozen_runner": false,
+  "rerun_dev": false,
+  "candidate_v41_lock": false,
+  "historical_decision_lock": "docs/lineage_memproj.decision.lock",
+  "historical_dev_lock": "docs/lineage_memproj.dev.lock",
+  "historical_prereg_lock": "docs/lineage_memproj.prereg.lock",
+  "historical_decision_sha": "bf3fa56665dfad02657307879a2491e3d1315ecc84024f52e51b782bf0d12efb",
+  "historical_dev_lock_sha": "e375a4ae9e19f1697dddc8d1055bd34ead6f667c92db575ed3e6512be4a6fc8e",
+  "frozen_runner_sha": "9bbde3eafd7c56ea2a39835405fe78221687a49c01ace0261a41710db7a2cfd0",
+  "frozen_neural_sha": "20d21f91c275e856ea1ec1faec58e5e1e633c270a79c887afa4b5e41397bb5be",
+  "joint_socp_sha": "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895",
+  "historical_git_head": "580588f22b21b0cd457082bc17d4b6a0ed471ed8",
+  "historical_manifest_sha": "c0300666815cbe2b7ad761af3acbf813e9d6b31d7efb372397e5e1017b47bb58",
+  "historical_n_cells": 17,
+  "historical_decision_code": "memory_not_necessary",
+  "frozen_first_match_unchanged": true,
+  "interpretation": "two_cue_cortical_weights_sufficient__donor_not_diagnostic_for_s_ownership",
+  "scientifically_valid_organism_result": true,
+  "architectural_conclusion": "none",
+  "audit": {
+    "freeze_shas_hold": true,
+    "oracle_ceiling_held": true,
+    "n_cues": 2,
+    "n_handles": 2,
+    "none_arm_passed_both_worlds": true,
+    "learned_retrieved_and_failed_second_cue": true,
+    "wipe_before_ok": false,
+    "wipe_after_ok": true,
+    "wipe_meaning": "Opaque reinstatement was active and ranked the wrong second cue. Clearing S restored live cortical scoring, which already solved the association. That independently supports memory_not_necessary.",
+    "donor_protocol_gap": {
+      "preregistered_requirement": "common checkpoint with generic sensory/action basis and no tested cue-to-action mappings, then freeze projection and transplant only opaque rows",
+      "what_ran": "newborn freeze, clone, teach donor, transplant rows into an untrained host",
+      "why_not_diagnostic": "The host motor decoder was still the birth zero map, so a failed redirect cannot be scored as address_not_organism_owned. Projection hashes did match, so it is not donor_basis_mismatch.",
+      "determined_first_match": false
+    },
+    "oracle_meta_path": {
+      "reported": "cortical",
+      "scoring": "actuator_decision_scores under raw_p1; slot and familiar flags show episodic completion",
+      "behavioral_gate_affected": false
+    }
+  },
+  "refuse": [
+    "edit experiments/run_tm044memproj.py after freeze",
+    "rerun TM044 DEV",
+    "auto_cortex.candidate.v41.lock",
+    "edit_joint_socp.py",
+    "treat donor cells as a valid S-ownership failure",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "Audit of the frozen TM044 wall. First-match remains memory_not_necessary. Product remains 0.0.004."
+}

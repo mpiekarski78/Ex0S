@@ -303,3 +303,21 @@ def test_dev_lock_memory_not_necessary_and_no_v41():
     assert cells["donor|A_to_host|w0"]["cell_code"] == "address_not_organism_owned"
     assert cells["donor|B_to_host|w0"]["cell_code"] == "address_not_organism_owned"
     assert cells["wipe|learned_projection|w0"]["cell_code"] == "memory_not_necessary"
+
+
+def test_audit_addendum_does_not_rewrite_first_match():
+    addp = REPO / "docs" / "lineage_memproj.decision.addendum.lock"
+    add = json.loads(addp.read_text())
+    assert _sha(addp) == "3b28a031798024f443df88bbc01e10fa8eca30d36ff701b39e69f049a4bc06d1"
+    assert add["rewrite_historical_decision"] is False
+    assert add["rewrite_historical_dev"] is False
+    assert add["rerun_dev"] is False
+    assert add["frozen_first_match_unchanged"] is True
+    assert add["historical_decision_code"] == "memory_not_necessary"
+    assert add["candidate_v41_lock"] is False
+    assert add["scientifically_valid_organism_result"] is True
+    assert add["audit"]["donor_protocol_gap"]["determined_first_match"] is False
+    assert add["historical_decision_sha"] == "bf3fa56665dfad02657307879a2491e3d1315ecc84024f52e51b782bf0d12efb"
+    assert add["historical_dev_lock_sha"] == "e375a4ae9e19f1697dddc8d1055bd34ead6f667c92db575ed3e6512be4a6fc8e"
+    assert add["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert not CANDIDATE_V41.exists()

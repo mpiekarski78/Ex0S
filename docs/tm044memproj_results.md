@@ -18,3 +18,5 @@ DEV ran once on clean `580588f`. Frozen runner SHA `9bbde3eafd7c56ea2a39835405fe
 - Wipe/checkpoint/birth-restore on the learned arm: fail, consistent with learned associate not holding.
 
 Later ladder codes were not reached as first-match. This is not a v41 candidate review.
+
+Audit addendum [`lineage_memproj.decision.addendum.lock`](lineage_memproj.decision.addendum.lock): first-match unchanged. The donor cells skipped generic common-checkpoint development, so they are not a valid S-ownership failure. Wipe-after-clear ranking recovered via live cortical scores, which independently supports `memory_not_necessary`.
