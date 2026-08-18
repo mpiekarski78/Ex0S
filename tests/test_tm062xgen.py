@@ -213,3 +213,62 @@ def test_runner_reuses_receipts_and_does_not_import_tm061_collect_bundle():
     assert out["ladder"]["shared_map_transfers"] == "shared_map_transfers"
     assert out["floor"] == 0.05
     assert out["candidate_exists"] is False
+
+
+DEV_SHA = "08eff57988216d813c34cd69cba277c9e0f0bb5e33d18071e987510ac2d2452e"
+DEC_SHA = "bb529975eee280fbf0d0ca688b5bace90f1bd41f36499716b1ee965a6f89880b"
+DEV_GIT = "5e2fe6c2196f03de549163326d03f293de2c36da"
+
+
+def test_dev_lock_only_unrestricted_interpolates():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm062xgen import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_xgen.dev.lock"
+    decp = REPO / "docs" / "lineage_xgen.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert sha_file(RUNNER) == "c62188da88a9dee4f3a75f26c438e82cd7d063185b50c6c5f18b58e444ffaf76"
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "only_unrestricted_interpolates"
+    assert dev["install_W_star"] is False
+    assert dev["neural_untouched"] is True
+    assert dev["tm061_narrow_conclusion"] is True
+    assert dec["architectural_conclusion"] == "none"
+    assert dec["tm061_earned_architecture"] is False
+    assert dec["decision"]["code"] == "only_unrestricted_interpolates"
+    assert dec["decision"]["phase_flags"]["only_unrestricted_interpolates"] is True
+    assert dec["decision"]["phase_flags"]["constrained_transport_generalizes"] is False
+    assert dec["decision"]["phase_flags"]["shared_map_transfers"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["decoder|w0"]["prefix_ok"] is True
+    assert cells["decoder|w1"]["later_ok"] is True
+    assert cells["decoder|w0"]["full_oracle_feasible"] is True
+    assert cells["in_sample_linear|w0"]["restored"] is True
+    assert cells["in_sample_linear|w1"]["restored"] is True
+    assert cells["in_sample_linear|w0"]["scored_on"] == "fit_pairs"
+    assert cells["min_norm|w0"]["scored_on"] == "holdout_later_contexts"
+    assert cells["min_norm|w0"]["restored"] is False
+    assert cells["min_norm|w1"]["restored"] is False
+    assert cells["ridge|w0"]["restored"] is False
+    assert cells["identity|w0"]["restored"] is False
+    assert cells["orthogonal|w0"]["restored"] is False
+    assert cells["action_conditioned|w0"]["restored"] is False
+    assert cells["in_sample_linear|w0"]["rank_A"] == 8
+    assert cells["in_sample_linear|w0"]["n_fit"] == 8
+    for cid in expected_cell_ids():
+        if cells[cid].get("kind") != "scored":
+            continue
+        assert cells[cid]["W_installed"] is False
+        assert cells[cid]["discarded"] is True
+        assert cells[cid]["parent_w_act_query_unchanged"] is True
+        assert cells[cid]["future_never_socp_constraints"] is True

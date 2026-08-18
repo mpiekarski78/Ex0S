@@ -1,0 +1,2860 @@
+{
+  "lab": "TM.0.62.XGEN",
+  "n_cells": 20,
+  "n_setup_cells": 2,
+  "n_scored_cells": 18,
+  "cells": [
+    {
+      "kind": "setup",
+      "id": "decoder|w0",
+      "arm": "decoder",
+      "world": 0,
+      "passed": true,
+      "excluded_from_behavioral_first_match": true,
+      "cell_code": "decoder_ok",
+      "ref_ok": true,
+      "n_attempts": 32,
+      "n_observer_provenance": 0,
+      "observer_ok": true,
+      "capture_ok": true,
+      "opaque_enabled": true,
+      "full_oracle_feasible": true,
+      "full_oracle_discarded": true,
+      "parent_w_act_query_unchanged": true,
+      "split_n": 16,
+      "fit_cycles": 2,
+      "pins": {
+        "future_strictly_later": true,
+        "future_never_socp_constraints": true,
+        "action_roles_recur": true,
+        "no_duplicate_heldout_support": true
+      },
+      "episode_slots": 8,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "W_installed": false,
+      "applied": false,
+      "tm061_earned_architecture": false,
+      "prefix_ok": true,
+      "later_ok": true,
+      "prefix_decoder_feasible": true,
+      "later_decoder_feasible": true,
+      "n_fit_pairs": 8,
+      "n_hold_pairs": 8
+    },
+    {
+      "kind": "setup",
+      "id": "decoder|w1",
+      "arm": "decoder",
+      "world": 1,
+      "passed": true,
+      "excluded_from_behavioral_first_match": true,
+      "cell_code": "decoder_ok",
+      "ref_ok": true,
+      "n_attempts": 32,
+      "n_observer_provenance": 0,
+      "observer_ok": true,
+      "capture_ok": true,
+      "opaque_enabled": true,
+      "full_oracle_feasible": true,
+      "full_oracle_discarded": true,
+      "parent_w_act_query_unchanged": true,
+      "split_n": 16,
+      "fit_cycles": 2,
+      "pins": {
+        "future_strictly_later": true,
+        "future_never_socp_constraints": true,
+        "action_roles_recur": true,
+        "no_duplicate_heldout_support": true
+      },
+      "episode_slots": 8,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "W_installed": false,
+      "applied": false,
+      "tm061_earned_architecture": false,
+      "prefix_ok": true,
+      "later_ok": true,
+      "prefix_decoder_feasible": true,
+      "later_decoder_feasible": true,
+      "n_fit_pairs": 8,
+      "n_hold_pairs": 8
+    },
+    {
+      "kind": "scored",
+      "id": "in_sample_linear|w0",
+      "probe": "in_sample_linear",
+      "world": 0,
+      "passed": true,
+      "ok": true,
+      "restored": true,
+      "cell_code": "transport_ok",
+      "scored_on": "fit_pairs",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 8,
+        "n_need": 8,
+        "n_violations": 0,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "6a946b4efab4df3e85c9ce5fa9b882f21eab12d907cdc9fb31d1d4433cce85e2"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_147368829",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "2b36cb4b718cfd5e6cadf66ae57ed2dfa3f59c974b6aaedc9442f3c1792ae658"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "df50334306fdcd8f57ab8e799c614baf0c680317991813ba3334a60ca9cdb6f9"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "b3524770c70937698059327e63a95a5566e9bee7b5a3b4a8fea106016eabdcb5"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "52ad4e7f3660a8f7b5718fff72ddb6c56f0e73d00204f8500c5c67771edc6630"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_147368829",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "9e161ee44eda74c937329b627f11735fb4d57ea38a40b98938af4938d650e7b2"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "1b7f6b23a6a7f0058fedadef05ae86d2aa86bc4210e6a345a9fee0a13ec74b4e"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "2661c118996adbf89fe8f8d1c776d59a4dbebd4a74c6773df0ca1d28ff92291e"
+          }
+        ],
+        "min_margin": 0.010000000274987196,
+        "mean_margin": 0.015206381430666048,
+        "n_ok_over_need": "8/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 8,
+        "n_need": 8,
+        "n_violations": 0,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "7c0a8df93e7a768ed43f3b84dd3c8df7d682c70f80e77ffe547866e88b1e9569"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_147368829",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "5f9f6f6557072600abed8508e8d92a2dc700fea6d4ee468ea61227a9527a16e2"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "0837febb5e2cd55d51c7b6086b0e6ca7e5717a483af9affc79cbe8b567e2fa95"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "0107d7610c6768159e2752bc82c986c86c749a7e0f6b08aac3b21440ddabd082"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "770c2679279d86fa70d2563d5ca9f18f17097501dd3d80c3a8f45c58e7b7e84a"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_147368829",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "fcdbb78d48717c57789472cc57bfa5a9c927437aea77e439d11d8f7add729490"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "b6f4f0f63d5a12310c38bfe05707a218d4d800275f5da244f175229627712ec6"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "093b029c6985feaf071f307e9c0034b3f8649d5fd3ec011f876a8efabe9225e0"
+          }
+        ],
+        "min_margin": 0.010000000086078946,
+        "mean_margin": 0.014900298665770282,
+        "n_ok_over_need": "8/8"
+      },
+      "held_out_error_prefix_to_later": 2.963163114272637e-16,
+      "held_out_error_later_to_prefix": 9.446624743875945e-16,
+      "rank_A": 8,
+      "cond_A": 96.51437778237992,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "in_sample_linear|w1",
+      "probe": "in_sample_linear",
+      "world": 1,
+      "passed": true,
+      "ok": true,
+      "restored": true,
+      "cell_code": "transport_ok",
+      "scored_on": "fit_pairs",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 8,
+        "n_need": 8,
+        "n_violations": 0,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "64574f6238ec33a4702707583c1b97a7cee474b59e46c744c9db69e1debe5efc"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_347377570",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "a7e6b0c15e9a74624db2b0f586d3c11ac58ed214d2de02f8032161ab8520793f"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "90a2ace4b6cde52d8018ada9328455c16908658f0a72469d7442ef2733555d5f"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "36077b4d848720981c4e8b566892d35e34663e3d8e6a164eabcd5117d7e8a727"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "35fe39d4c66801e76c44c339ab89941d50bfc8ca1ad7e42b6ec916ea56625bd7"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_347377570",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "6798acb2cc5253b22ee8d5becd4202331db0f0a3899d1720b6466053362c6877"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "e82ad19d167daf67cf653015de14b18731d75b5a0f6c95797ff32cfb6a79691b"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "ebd1ff078874c683f13e8395ef8cb337a748c9c3348460bad54f616049774aa4"
+          }
+        ],
+        "min_margin": 0.010000000001855733,
+        "mean_margin": 0.018331768304656083,
+        "n_ok_over_need": "8/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 8,
+        "n_need": 8,
+        "n_violations": 0,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "602fd9170b42f761c0f616f5ba49240e3cedf9cad679d4ef14f40a968c9a699f"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_347377570",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "6339c480d0922085b7ad86d26097f7c5ac782d7cdd537253a01b7ddf497d98e1"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "5931133d299e8832e193d499b8fd7ab1d6a0145f7f05c0e45336d2aa84c26bab"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "1ef0a8d506c8d9b20f9ea7bd6a0cf73c2dfb1e0c285114b736cc72c2739fa6fd"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "560ded9ee8d85b846c5206c1b91fb017eed53cf5068092fbeed3f8ed6decfff5"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_347377570",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "3f8be8293cbab187783c4deacc8aef824cc0ba1dd61e3169ef0895b5e48a9683"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "053a3bb53aa3b58d2ac1753d6e1b0595b7a62a1705e9360e6b3e382ba8cc5177"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "69b47f8bc1bbc310067f880dfea13d6981c8dd9c9d1631f961516d5d7c32d082"
+          }
+        ],
+        "min_margin": 0.010000000196590624,
+        "mean_margin": 0.014931742910226356,
+        "n_ok_over_need": "8/8"
+      },
+      "held_out_error_prefix_to_later": 6.964965230359298e-16,
+      "held_out_error_later_to_prefix": 1.5129615154634804e-15,
+      "rank_A": 8,
+      "cond_A": 89.42818693458403,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "identity|w0",
+      "probe": "identity",
+      "world": 0,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 3,
+        "n_need": 8,
+        "n_violations": 5,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "7c87f024cecad792aa4512e1a9181d0152e8bf393923bb48ca1b06ca8669547f"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "7ff3f9a08ebf9bb134aa490b77517eb393b8efa4b14df346d299b37e7b094b88"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "f82ce054f9601b4818f2e5c6ac184773c00c621f2e074b0d41624e28c584c733"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "9114db2c980ea0eea89a17255c0b3c122a89bb8ab5b7a9205c04795a3af93919"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "f6d16e1ac91986473adc83c13c28d91d5e56a9bce8e55891cbb198db3cd43ef9"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "01d4e3a100f361f0bf4b8cc9ed59b6d9ea98c7612541f9288f95597222a1467d"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "4ef4b80c1d1e1987cdcbfaab967f82950d707576f27f3198751f6fa5e0be335e"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "edde93d146aa12fe31ba590ed744cbd39a7f2d893da9b6da79f17ea89e5df5ce"
+          }
+        ],
+        "min_margin": -0.010232350523367939,
+        "mean_margin": 0.010785690020546237,
+        "n_ok_over_need": "3/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 5,
+        "n_need": 8,
+        "n_violations": 3,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "2691d6b2826e1d8b4bdf70686964f06eeaab6fa6c74635ccf2be3506a945dbc4"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_147368829",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "2a4ab87624d74faad4165428b9f73aa1811eb50b7cc535c361b84784f5a38f36"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "94ea01a686f8fdfb2003598e9fa6a93c07d58c90954285a85a30e9ea48e20fa8"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "536e6c9d845428495ee438db0621618da776955b7e32f25eda43abeaaa0e5842"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "f0c8dbe33bc336a6e5bde2f54b40576a04a2751c192ab9bef8658865dbddaf6c"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_147368829",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "28b4ef08afd292d24916e2a2e245b9d55acd9b906ab179cf686221a2c680676d"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "2c37cae3e51d5aacc620e0889532b8201b1960da2a00eb911d875e4ef7de80d3"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "d1bc694507e91d93cd8c5dca69f2d61686c40484ef2e3b3ebe42ffa780c460c6"
+          }
+        ],
+        "min_margin": 0.005394907591135718,
+        "mean_margin": 0.014312016570748457,
+        "n_ok_over_need": "5/8"
+      },
+      "held_out_error_prefix_to_later": 0.49595803085429535,
+      "held_out_error_later_to_prefix": 0.49595803085429535,
+      "rank_A": 8,
+      "cond_A": 96.51437778237992,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "identity|w1",
+      "probe": "identity",
+      "world": 1,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 4,
+        "n_need": 8,
+        "n_violations": 4,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "bf8708b60018238179e2ffdf436f6ddf0f3291080ae3885b48402ec540982a74"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_347377570",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "3d5d9ae20a4c6f2fa9d3b67a4a3744d4ae20c7283a0c527148c374bc898cd9dc"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_347377570",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "fb1c12e91d555489e0d3b77fa4a032f54b8df420780118a072582ccc5a1d18b1"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "9c437e3a74e88fc4441d6d08fc3cbc1f24a25656854214946e338deb20e3f57a"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "55924f7efd5042385c93279145c2b8bd3d3e10a1685b0d5fc799e2b7befafbcd"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_347377570",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "faeeb58735b85ba04ca9190ab2516f56d5b572061b7ab63987b658882cc7d03b"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "1b24f677456d9bd10d36d7ce14a0aba201d3af5a036e56264a956892b205116b"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "d83e20969ae13042a240424c0389719f9374abf856813a3dfb93bc4b3f0c1792"
+          }
+        ],
+        "min_margin": -0.043166590013625564,
+        "mean_margin": 0.005141187710715549,
+        "n_ok_over_need": "4/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "f98a28729aabed8c663b3f78e2b6bee752d56843c9c07f8807328530dbe8191a"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "1dc15e86e975e8d28da8352583ebf9728c7d5de5b2afea6f8bd1a2534d2b5381"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "72ef62ae3dc579db6eb70035c110d837e1c19dae544026859ba02b9da0e8a90c"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "805c54d5bed3586321c220c193a43c7f58b279e6dc123b3a9cb4c8188f45b02a"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "d7f52e44015249dff6601fb78931e32d721f1f1b99c9e495d8f9a0cbd92938ce"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_347377570",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "11c905c4668d8ceaf59f696d7992cb6c01e88bed94d234ed2bef4832f315d013"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "80261edeeee43432db9e78b494d0586559884ff1e4776a18b9ec46de06876d29"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "6f159eb5dc3d021163b46b111897332f0f9f4898738dc4797182c80df23fa853"
+          }
+        ],
+        "min_margin": -0.018707331354086025,
+        "mean_margin": 0.008947986077376839,
+        "n_ok_over_need": "2/8"
+      },
+      "held_out_error_prefix_to_later": 0.4962180249874644,
+      "held_out_error_later_to_prefix": 0.4962180249874644,
+      "rank_A": 8,
+      "cond_A": 89.42818693458403,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "orthogonal|w0",
+      "probe": "orthogonal",
+      "world": 0,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 1,
+        "n_need": 8,
+        "n_violations": 7,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_147368829",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "f5ebd313e5a82e9d1c68141f0007ea7e2ee7dbb83e2602477596dd0f898d9b43"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_147368829",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "93f8239962094c02e285bbae452d1a4868cc6ada6fc8a1b3c70ca1e3639b7457"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_147368829",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "f6fab041aaa7448fd5d7b0b98c9d18fc19e57ed69faf29ec1227c9cfc62aa7f5"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_147368829",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "21f93eb8c315957041b733dc09394297759ab036abb66f87b38359d5f0a635b9"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_147368829",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "f5ecbfb05519dee1e94cafe4920cfe0e7717d44befc3dc518678a45923b8fba7"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_147368829",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "3e4eef29ea2634a043e66de6d1790d79ae2e2864a00137b4b1ccf49a75027905"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_147368829",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "24712c1c1170135accfa3bfc5c0e68f19540b97e77c201549d77a2c622887913"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_147368829",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "bc8ea796c45e3c1c6c97afabda678e80d5dbe7ea6918c41886fe741708d69874"
+          }
+        ],
+        "min_margin": -0.0767142974655841,
+        "mean_margin": -0.015873967118751275,
+        "n_ok_over_need": "1/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 1,
+        "n_need": 8,
+        "n_violations": 7,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "c981f9d1ec890b45fd445cd8bed0ac218342cf096af2ab1de4952d7a84782546"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "52bc8fe22b5e554c7ff2d224b3d3691c5210a36fbcd6997a1a6468dc675c8d18"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "d0fdfc7386b99cf8d391761940059b0b706feee356c2e2db659dd6296b3b3ca5"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "1d1e8a9d1f3a65f50584e9eac8ddcd3f74add4e127644f12b6d65e947ad56d31"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "1c17085f69ae27c4a484deac793b7e822a75e483211e0e0fb67f857502232fe2"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "021073b397ac8d2e166e57ef91a84d5218c40390583f36063d4afe9a6a2bfc37"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "e17ff8c01f91e8e4a4d320c021853ff7a65ab7109e21f284e49ad945413877cc"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "bc569bd6980342daafa6379539b797d6d54235d13e3a0614bb133d6ce468d420"
+          }
+        ],
+        "min_margin": -0.05550508108430058,
+        "mean_margin": -0.018815336425000287,
+        "n_ok_over_need": "1/8"
+      },
+      "held_out_error_prefix_to_later": 0.5131181931027169,
+      "held_out_error_later_to_prefix": 0.5131181931027169,
+      "rank_A": 8,
+      "cond_A": 96.51437778237992,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "orthogonal|w1",
+      "probe": "orthogonal",
+      "world": 1,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "59eea7c45de1a5989c6359b62848f7cd2781b5ea347ed06093652a7554608358"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "d23099dc8773dbb17fcc1f7f367cee58388894f5e4ed7b38d1976e5025e39006"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "683ef3ea029105d825f5b5e15dd0a7d2b6333e1196331c480190d2928c05cf39"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "b064314d783b7d78d1dd88ba8e1b7ef7034a0d550b0b370eae7a229ac44c3d91"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "b32af70a5f5beaf70627ee5b7ff82187741fa463653eb15b9ca0ca7362585e1b"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "439f36fc40fc98af1facfb090c9f67a45866aff6b762b414decdb9b97349ebb6"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "1c3d3a2d7a49bef08d1803664a0a20702bcff93d7e6192b744a936281fb54d81"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "695d53608cc41fd63b309ab1862773c8b5241ec7fae13bfebe9434b4e2283e32"
+          }
+        ],
+        "min_margin": -0.15407561460724356,
+        "mean_margin": -0.049406018803974654,
+        "n_ok_over_need": "2/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 1,
+        "n_need": 8,
+        "n_violations": 7,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "8000d1c55eecda32eefd7275603b245f8ea9b4c4e528f45f9867294eaa263115"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "33c23a85f772a5aa087d112b3a5989ca13a3295dfa7fffd4c8448bc47188c3f8"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "105c81e81108b7d5661d73432a43f0509334280660c5e1d194d9f8dac0e0bc24"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_067756697",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "64110609d3dfdef14b189c8f39c8bd970d3a5ada5cde2227a81c955248a8e187"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "520eff1500ee4e5055e27754bb688ada7c2d390ff6b99452b4c6f79fac00da67"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_067756697",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "7c25d18915172340fbe9cd72cd3e4a693623cd0ad4a8a03d11dcdc466b66eed1"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "c651df1bd3f634c7e170660efc0c63f22540902410fb9b9c02a2ae62c07aef13"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "b161311149e35977b48085f78e3e0c8d4ef48ac88e7b176b4c0698da1dd26576"
+          }
+        ],
+        "min_margin": -0.08566721953903814,
+        "mean_margin": -0.01905955157602384,
+        "n_ok_over_need": "1/8"
+      },
+      "held_out_error_prefix_to_later": 0.5272218976297243,
+      "held_out_error_later_to_prefix": 0.5272218976297242,
+      "rank_A": 8,
+      "cond_A": 89.42818693458403,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "diagonal|w0",
+      "probe": "diagonal",
+      "world": 0,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "a96c7db1b4eef3041eebc8b715dcd8685d41fce6b973162ea5f4b1f7687b5ae6"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "98856cb132b0c352bcd7ce909876794a147255adbbd76671c2bccd7122784c99"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "388cdb288e83d399f892a289e33c9b40a35340b22961a4aff37a5bef64dea2fd"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "3df18e97e1ffbb8ec680588ef0ca405bc706ac35dc6f894d0e531d0d4870db15"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "a15b9af5fc518270d675d1bee388d4234818524d38bf768e7ee4cf4f74e48069"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "03d485b33497108dcc28df98b6a8d966e1b001c8faf44a76c46e79594a83f8b4"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "e58f18412d469e40006964e2aa317ceae0df47f2c3f5416467320e7b4b19587d"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "4e32e7e5f83f8ed0ec70d3c143ad0ee8fb9a080e752555bc09a5f2eb57f5498f"
+          }
+        ],
+        "min_margin": -0.19222435722477918,
+        "mean_margin": -0.05278797045409027,
+        "n_ok_over_need": "2/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 3,
+        "n_need": 8,
+        "n_violations": 5,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "e7a3da811ed2970075698e8f01c9b87730e1580ae19522c3d895a3ae234b0577"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "cc4ee6617354bbc0897cca8f898f3ae9baaf6bcde51db1635e3a01d11d6c864c"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "10d72622f17ecd333a780ddb9bd49aaec02bd321fd1958c71b590026fc5fa655"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "397b4402b20de65a7a570596ee49cb2f3acd745a8d1ef454c6b8809846dbd213"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "796f0aacf077883c5336c2ea544199ab92225fed5f0c57e6c42418bb5d8d1066"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "0115da65fd46c40bd92c4f40290feb437915450735e2990cad4afcac0778a02e"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "269777a23c74dda873452a834e6bdd763e1048388a70cd9d24bf84d805dfa2b3"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "f22a456c57c64ece289bc83ce5fbbccdc242d83ce67a7402717c0ba8fbddc661"
+          }
+        ],
+        "min_margin": -0.01160445003623128,
+        "mean_margin": 0.005162998305590481,
+        "n_ok_over_need": "3/8"
+      },
+      "held_out_error_prefix_to_later": 0.5120524499538006,
+      "held_out_error_later_to_prefix": 1.1739976286656715,
+      "rank_A": 8,
+      "cond_A": 96.51437778237992,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "diagonal|w1",
+      "probe": "diagonal",
+      "world": 1,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_347377570",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "428a0b6e3650e55d4724f5dff21c72cb36e09c906e060283b71e9543ed1a423a"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_347377570",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "4b48703f19b71847fb5bbbabef7c00d908c171c2de9fd1a9520e080aed0c277b"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_067756697",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "fa21a1b30e3667142502e903f97b835180d1beb5232f1b133133430cd4f94111"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_347377570",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "8d8659beaaffd7225be57a17990cf0b6d507ffe23149fcbb0d08450568dcd844"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_347377570",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "2e5051aa39db3910246a8d49c712b491e8502faf8dd2fa23efa4138bab9717cb"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_347377570",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "763a0b798141f5558c2ba81acd328c379cdbfbf9cc164d8dd496287c04cabab3"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_347377570",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "ad87b48059ab8f85dbf591a83ed1c1fe2299fe06880e7e4d113732dbc19b4f74"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_347377570",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "3cafef6a1ec2e8c517b9b9f44cd83616196183909abaea1a3e555caaaf8ce843"
+          }
+        ],
+        "min_margin": -0.09011178940752972,
+        "mean_margin": -0.02941595465094306,
+        "n_ok_over_need": "2/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 3,
+        "n_need": 8,
+        "n_violations": 5,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "53e092a236248a8e323a67c8c6e973544ea9ed93e9d230b07f832c050eb2c426"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "8ed282754ab60fcf3826c29cd17a3f000982a8c75e3448431865b212a5a1c8a3"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "d3f245d2dd6f6766449d863f3066b9716f27082802b7624373a999a4bcf4c752"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "fd88108325bb2bdb5d7c347f325fb542b9afd36ef8692f970326c62e0918f569"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "a3408edaa3c5f5b5a8a31f933043f6e2de6e4a22da45573afa726135e0ff9e56"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "6b3842852472861ede7a8beeacf432166b0ca764fa861932c702cb5db350713a"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "668b5766c0dc6eb03fa4116652761ec577a02bad378715e4351ee8abbc881b09"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "0e97885474428960be18131e03e2ce2610d3c45cb798104e4588fd59061a71a9"
+          }
+        ],
+        "min_margin": -0.013684526290172723,
+        "mean_margin": 0.006599937945719211,
+        "n_ok_over_need": "3/8"
+      },
+      "held_out_error_prefix_to_later": 0.5127659590071895,
+      "held_out_error_later_to_prefix": 0.9754702887345829,
+      "rank_A": 8,
+      "cond_A": 89.42818693458403,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "affine|w0",
+      "probe": "affine",
+      "world": 0,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "d58653802d732e728780bfca54ec217520110bc8c7e3c70beb9f551b8b931081"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "a22b1b762efe7b5aa279f47011c709224c288d733035ebf1e6a9b23cb70d0c31"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "22a882e118b63a1134b562f431aa3f47b43c75ea1073766cafd8c2d91a370a46"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "8279e8192ac5a33732a35458867e9a87d61043186a71b8618069ebf709ff5858"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "d85214cf437d1c855161049e7ad3fb988c2adcfac8bdcf89e8c8679e47dd4bb1"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "f462c3a4f4d128f2bdd81d534bb4d1f6da0afe62603e907b48846a21417144ed"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "a415ab604ea59727d18f44c7505296927dfdd3f1e35cceaddd0e19b96879ee27"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "24288ed49e6d568013f7285593696bb9e01b5f477fe3363b8452d568b1108f58"
+          }
+        ],
+        "min_margin": -0.1338630051796334,
+        "mean_margin": -0.0487101311499177,
+        "n_ok_over_need": "2/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 0,
+        "n_need": 8,
+        "n_violations": 8,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "01513251e22eb51146d21714646a6aa6b4d5c283d303a89caf542f1d9076ecdc"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "ad86115181eaeabf4a508ebd07365283f20912e5bad71f649054528f9e837f86"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "0c0cd7d938536a8a0a5b47b6395611df018bf6ecb048f8bb7e73cbf3b3116bb7"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "849168852fcad44c469c141b3b6c921d20245f478e46d69ae90735e34e89cce0"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "0a9c4907f573d298822d7237515d3b13a3fcb23a65098a6fae8e6a48ddff3692"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "54ef176c37f76d8ae669a97a8e86e06d6a755426e0ac7fde16fc73f34f1a2b87"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "1d05a21f6c379acb4aaf71809915218ffcb55a64666023835a60eac28c64ef51"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "95604427e142bf7fdc46f469a2d1861b0c6ec7cb4c58cac27008c53859ffaded"
+          }
+        ],
+        "min_margin": -0.009164565582854525,
+        "mean_margin": -0.001188972684868784,
+        "n_ok_over_need": "0/8"
+      },
+      "held_out_error_prefix_to_later": 0.4885960023730714,
+      "held_out_error_later_to_prefix": 1.4270361093821238,
+      "rank_A": 8,
+      "cond_A": 96.51437778237992,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "affine|w1",
+      "probe": "affine",
+      "world": 1,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "bdb899c59840defa22ae99a18eaf9ac2be4fdc1f470dd00abd3644a8df946d0c"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "f58f6ebb92fc3063a41741c993b31bc2c8a9f291c2f2b512a2c5a05838ff8b28"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "6c306177c5c610e0881a8088f997642d54d8abaec97ffcdd999e3940553c5187"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_347377570",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "067afae694172b5563f2370d95bcd1fae4d4ba0fa62b0c683d3148da63fa9408"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "459c71cd06b15ad8b9f0ac9eab3217eb8dcef4c4e363a662a92afc9d8216d095"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "a25f399ff4312e521dd78195395753d2534c26d835816ce083008f0c4f8e6249"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "a9bacdc204c803f1287b9269903301be547edff4314f0b970e8f4dfcc35badef"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "6ff68b5c8eee197b2233c6024b7a39286ad6accc22b5cafa6507e67413822a5e"
+          }
+        ],
+        "min_margin": -0.2364563532669109,
+        "mean_margin": -0.048277476258097245,
+        "n_ok_over_need": "2/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 1,
+        "n_need": 8,
+        "n_violations": 7,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "1b30b81e49c73b7ee9a438cfd0618bfe7841adb69b0c0dfc37364b35667160ab"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "3c0cdef49ec5787091ecba515250c5d88d589c594f216cc06354b855423ea1dd"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "ec7f58dff60072c8201849376c3651ad1a684fa43f1d5ab17688dab04bb4be23"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "2c73578f78bfa88d63d1d22d57a79bc8212a05690ab39ed8472ca4a58fcbd938"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "01188be88bb42866578a4291b30776226b008fbe42e26122fa8769e36376ddc8"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "1866a5f99154b805c5496743ea13cfe862255915b96289babfb6965ee9e9a9ae"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "624e28366b12388ad95e8b69ea9aa4d928ecfd0d6e6ab96c35b8454ed4274443"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "39df1ba49d3acc43dbf7061c8ff9363ade381e638cc52f855ad05eb58b47a9fa"
+          }
+        ],
+        "min_margin": -0.012554998261282795,
+        "mean_margin": -0.002739296123906636,
+        "n_ok_over_need": "1/8"
+      },
+      "held_out_error_prefix_to_later": 0.4932815443441016,
+      "held_out_error_later_to_prefix": 1.4069598509621533,
+      "rank_A": 8,
+      "cond_A": 89.42818693458403,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "low_rank|w0",
+      "probe": "low_rank",
+      "world": 0,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 1,
+        "n_need": 8,
+        "n_violations": 7,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "8674cc1c07d963fac2da409f226d16d4b2372011b1ab77dcd65739367ddaa6b7"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "9130b78a8460cbd5faafc0f674459d20f4ebaa1ce2cb060f245471f8812f4867"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "6e2700bc7dda52e5b297cdceaf39e8edbfde6cd84fbe6b8f71e05b4e5c1992cc"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "a8c46c9ba04e7d9c3905a2079a7b82862b104fdc7e89a03f8a10398bf8659f50"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "db206ab8afd3a5b4acdf129a5e6136e0ca13db3024471c8bf973dc2a3ff66340"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "40ef8c0e48fc59aec65331d412fe70ffc7f947bcd409e09681a46139080f2baf"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "4a634aacd6a438aadcf5e40f4e8da039a34e9ea113b9a76cd23f94837e6aafdb"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "a08a1a7a8d444b8634546815098deb3c7b7584bb5861ada5640f2178e7c17fb6"
+          }
+        ],
+        "min_margin": -0.05322861400988869,
+        "mean_margin": -0.02148370345745088,
+        "n_ok_over_need": "1/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "721b969c6537d0ac647e85f3993e627289eef184711ab5e669c9aa62713ae8ef"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "8bb006fb4700d11e15b9c0d8beb17ce6d1f4b1351be8717d55e7e0b0c8aa8f5a"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "420d95387349b5e0783d79aee1c88e4a608088118e83fe3d663e1fbd15ff7d2d"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "cad2f164acb43eca7d0e4b0b39c1fa68746b2ba62e5753aa855b23973e20c367"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "4cbff94f22a8981cdc436685e3f5ff0b924d0161b267cb840a24b4185a4b93aa"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "e29636c0f52b82a44a414cc818fabe55750da8518c658041e6238d945d00c876"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "9fa126f10db0b6d27d99ec50a7c6dce07ea54ed42e56d2d895488fb439007128"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "9917e12c42f597ecbf5f96a9eceb37ed5cab9b64bbe8d04d83bc5b859cabdce0"
+          }
+        ],
+        "min_margin": -0.03196950477758882,
+        "mean_margin": -0.011798082856181223,
+        "n_ok_over_need": "2/8"
+      },
+      "held_out_error_prefix_to_later": 0.49762411132286843,
+      "held_out_error_later_to_prefix": 0.20647985175037686,
+      "rank_A": 8,
+      "cond_A": 96.51437778237992,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "rank_Q": 4,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "low_rank|w1",
+      "probe": "low_rank",
+      "world": 1,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "f212325f6074b1503fb39f0b49f692c9daf5d7f93a1e82993e90521f9ffe23ee"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "b57551928235992174e9509dfca77dfd124f892cc94afa692fc5836fc8a7df06"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "e3b92f6b92492483ef6fc1c11b2d1728f308b85f60f26d57cd6ef506859e8a3d"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "8d5766766d9ca181c12c18eed2518f14e3f18ab773f4866376bd4a7919a4f839"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "b5927e486d1d126ab90cce395c9524d4466da2f92e38f7c80898a3d133d6f611"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "a2cb31aef4230d59a5b49ffcef726227eeedf292a35e15fddfb27e37070c24ed"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "10fafb0c8221291ef438113de54218f5c0669212567d7e8dab130f520046e83d"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "3fdf01876b9a3090a5314532ac59cd153dae0a5b2a3e664d1fb1cfaa1ad1c831"
+          }
+        ],
+        "min_margin": -0.09912489206100347,
+        "mean_margin": -0.028643764344089613,
+        "n_ok_over_need": "2/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "97af90b2ab9ebd5f6534c7405370c56e44553a5af7965461696af211f6aa098e"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "18bb741c93ab9f9553b6c55ca09c0a06a7f4cdadc5e4df61547ba61ddc05c38a"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "6fe0677e353fba0282a078c8d1149f132c2b9dbd1cbf8adacd27d3b5f9c5ad79"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "93c8220d453c247f65ee103bd709c6be0ab9a63611212c9b9a16abbe8279a610"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "fb58629d2db6bdca27f66ab514e00fac859e564690bae0a773a78f026cb6a76e"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "201f31b1d972ab4e21322711efe2950af489c996ef9dcaf8c4ba04b8321e77b8"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "19188ebd3665741a5a553654bdcfa96ed1281be6fbc146538502f6e35b6737cc"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "8006b88f0a10847c731a35a5a0727dbcc56b38ed469ca5d1e890e054d87d22e4"
+          }
+        ],
+        "min_margin": -0.032136035154843444,
+        "mean_margin": -0.0038478792293182174,
+        "n_ok_over_need": "2/8"
+      },
+      "held_out_error_prefix_to_later": 0.48205878290103904,
+      "held_out_error_later_to_prefix": 0.19717233494951786,
+      "rank_A": 8,
+      "cond_A": 89.42818693458403,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "rank_Q": 4,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "ridge|w0",
+      "probe": "ridge",
+      "world": 0,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_147368829",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "9842c3903f4a2a2d29d5857907ee049fcd2625738683d96f4b13d2161c00b255"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "798d6c2aa1e58a009a535fae47c3288b5094d9bb505e238b5dd664a9e8854c5c"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "ba9c0238c65c10e7d420f7a2bfd3f83743b2911c8f2b1ac685e0f537cfbb8264"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "1afd704425f18217dca29a9346660ca8d79635689dd486f2a36b675e11ce5ed0"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "78940baedc8bde3742db48d7ef4ff6898d0ff9999c47c5e6978a3fe4b60713d7"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "d05ddaa6497f570496fc0320efb9aa975da0527564b084464131cb97532390e9"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "7e825b51b06e9f40d102d110ecc14fd29797626d462ca939f7d63bdd7e5b40b6"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "de5b9ee37880948ca89fae274a038b9da14e1390774ef1b1d526d1cb0d2af7a2"
+          }
+        ],
+        "min_margin": -0.17807691317239865,
+        "mean_margin": -0.06895342941772413,
+        "n_ok_over_need": "2/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 0,
+        "n_need": 8,
+        "n_violations": 8,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "ee0dbcf0023ad5d8a610c18156c69d29d6d307bbf6114a37369025da3510e88e"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "4eb9368f62935c1d00bd686b324ed9ebd041c661d1823b50b1103d41f5df6d93"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "6678a5a19cba716ce5ce4018ef6237621f90a3bc64f20062a875375b0e87bf30"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "b47a6cce986c92987d6a460b1305ca8ac71d1c7171f86110d46fd306bcac7628"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "9643d912b7594034390a5aec2ccce751182161488b22e145aae3a90f60ae107a"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "555418b77be6c719fbe3ab3c321801e7124530302bfed884c7b2d0d694b30433"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "6d4e45fd6b089305e827af1c3651235b1dd800fc7d92ed778cce7696aca5a2c6"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "14db7073f8035a9db7b124ce9a1e1c3bc250e472e82ac2a5b833605d32eff648"
+          }
+        ],
+        "min_margin": -0.013398302259353118,
+        "mean_margin": -0.0056037504815193125,
+        "n_ok_over_need": "0/8"
+      },
+      "held_out_error_prefix_to_later": 0.48865890576872356,
+      "held_out_error_later_to_prefix": 1.419252218710577,
+      "rank_A": 8,
+      "cond_A": 96.51437778237992,
+      "effective_dof": 0.9706603240451339,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "ridge|w1",
+      "probe": "ridge",
+      "world": 1,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_347377570",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "3663bef8602967bc48c662cad698f3008e53530dd9e1174b01b9d52a17057a92"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "dd5eece1957f9e3faed5e81ff5db4218f7826885e2e15ba2038540225fb8c16e"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "8566c6ecd6f00ff6beec33ee5241dd06f1e1d69c2d38272390f29d3de00ac7f3"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "559b160c6a10605c06719d0fcd42358671754520f210147959f26c6e8c6b4713"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "0e86081913a781863e9dc41838d240aa9dd25956511a2fc7d83f727022e1c051"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "51b57f969bebcbfa505ee553e1d7d4aec60096878fe4dffa2ee908765fb1e654"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "618799ebbf0f385ca7b76d89e29a246f966e1616b0a9162e0ab8556c1808069b"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "a14a365e910dc2164768e84f11be6f9f1f58a84cb1ba90262e9c5c3f07eef006"
+          }
+        ],
+        "min_margin": -0.22255770971932406,
+        "mean_margin": -0.08090266593294727,
+        "n_ok_over_need": "2/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 0,
+        "n_need": 8,
+        "n_violations": 8,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "8358c2a0802d5cde922d0163489d4e70c4cbcf853cbd5865cc3bf6191096aa14"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "f6f238cffaed488a5f046d42e87454bf2df458aa0681503d7b4a0876239a396f"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "23ac6020bdd2b97d7fae93d2ed97372cef71d833b9a71ead0fb28de4e6d8765a"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "eda73f5fe95dd9a1a7f2178f9cc5a04f1e6f4b8e5caf8e1225d9572443879889"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "24ca1e5ce4ea0715da09f9de7c04e2516c90aa431dc522dea68fe8ae2dd9777c"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "92fca84559c18db5098f767e1676794285537ca36703c6e2cdd7ad4ddb6814c8"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "ee253da9ec2d9e9b377d341fc008c565473f16e1776a40d0b3bf31f9ff00742e"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "57b1f7e221b4d1e74fd84f8a2f9d2bbc8477b8ec1bdbcd87d4b502e01477e2b5"
+          }
+        ],
+        "min_margin": -0.00947727388368929,
+        "mean_margin": -0.004507421864551256,
+        "n_ok_over_need": "0/8"
+      },
+      "held_out_error_prefix_to_later": 0.490186062695284,
+      "held_out_error_later_to_prefix": 1.4191883910513177,
+      "rank_A": 8,
+      "cond_A": 89.42818693458403,
+      "effective_dof": 0.9742340881307617,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "min_norm|w0",
+      "probe": "min_norm",
+      "world": 0,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "d975e96da7c6528e4f193885351e1b1b80a0116bf79221341b31d8ebb49f82cb"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_147368829",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "64f78bb5a0c47976a8d73ea6313eab6f5715918ab685ced8100a21e3e940ccea"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_147368829",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "6ed8746f7b324aa4c4aff791260153df762d1481084f4c6b65e34bf949b1710a"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "f856cfd7733b6787c59b210cb2e092e332700c9a402124c8009b0c48b802db70"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "3e131892bdc7e6c0a519fc1437fc0d3b0582b418f819365157a7b601ab84f12f"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_147368829",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "32e2c4aeb58403c804120879237effb36d96e6fd4e73c85ed89c35b77bf50997"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_147368829",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "f7d751f2b8cdbd1d2a851eb3701a52be7349bdba53a7d11c04c34347d5336dbc"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_147368829",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "2ec43b1cb1d4c141845f542575f7f9c29fd1d67128416d3ab13651644c6e4585"
+          }
+        ],
+        "min_margin": -0.11501059437956965,
+        "mean_margin": -0.027800224437078625,
+        "n_ok_over_need": "2/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "e1fa7d1cfdcd3d7f81cc2af8ce809950fc2548e19449eec168aef292b221248d"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "8e3531c84cf795d63b88148f758a4dfbe2c111805b95a84f1ffc6ca807f4992a"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "b279bdd8d08dff64964101afffdb1e13f9be26af4225ece562fc4ff5d2b715c7"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "5e8ce28c64d7dc4aee158e6e6c6becfb6c8d5ca492ce6e5c07b6812fb9cc8de1"
+          },
+          {
+            "handle": "h_599194055",
+            "winner": "h_599194055",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "1e0d872cdc16e0a81cb9553b658c5d8d4d803396ad68e05391e4bbc500067e2e"
+          },
+          {
+            "handle": "h_147368829",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "b93f4e0cbda4434536981d45b090185fca011d4b9a01edf0110835486b3efe90"
+          },
+          {
+            "handle": "h_585157561",
+            "winner": "h_585157561",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "0f34c48441a51b2d4efacf2b0d6b7aa315f3c99a0c3885914cccce8e72c0078b"
+          },
+          {
+            "handle": "h_017634093",
+            "winner": "h_017634093",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "b73544d206cba5ab4b9b9a03b75dbce7aa55a75b8937c7c7b1855b0736d59b71"
+          }
+        ],
+        "min_margin": -0.008824195854066822,
+        "mean_margin": 0.0029961849210012412,
+        "n_ok_over_need": "2/8"
+      },
+      "held_out_error_prefix_to_later": 0.49120661264766435,
+      "held_out_error_later_to_prefix": 0.45674513076073714,
+      "rank_A": 8,
+      "cond_A": 96.51437778237992,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "min_norm|w1",
+      "probe": "min_norm",
+      "world": 1,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "n_scored": 8,
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "socp_extended": false,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "tm061_earned_architecture": false,
+      "prefix_on_mapped_later": {
+        "n_ok": 2,
+        "n_need": 8,
+        "n_violations": 6,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "586e89da41cc388a672a6d64adcb4d10da25295b569d2499727b341ecc5ac817"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "794539935b766ad0126165abb798f8762c59748537295ba008f24f627dbe871a"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "53b24eb5f0f48dd25e87daae98ff6bf96659c382e7519f71915de70a8fe2ba14"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "23255ea4579d6f9ea8a5b81adc044d785400a83717a5dff95ef69f3abe4e149f"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "c79cbb1099159f6c022d0ded3296cdaf7b2531f9cb92ac9d4b5ed23424911753"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "55938a115fdc46a516f12757fb0fb05e8bf14c76452bfbf4eb106cdf56150963"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "073a13639b5a21d53d026f08f989e30c652f0c28a26afaee24e8fe54a181b56c"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "5c11f4895aeed492daa549b6659a2dea71657afad3e3aceaf402cc541a321368"
+          }
+        ],
+        "min_margin": -0.20536467302754785,
+        "mean_margin": -0.05850624802424272,
+        "n_ok_over_need": "2/8"
+      },
+      "later_on_mapped_prefix": {
+        "n_ok": 1,
+        "n_need": 8,
+        "n_violations": 7,
+        "handles": [
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": true,
+            "violation": false,
+            "p1_hash": "31fae223a04442dd98a9a6e746a17136d4478df51d37166c9f6770a2d7d819a7"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "567e051d59a5a8426b39a58a134e6dcc0188af3147368f5cfe4a4e9c91f8095b"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "95152bfe409149a625475019b1499d0b54c73d465db908e50520df57936be51d"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "474cad2a2a032f02b4a5993a1a472b461d328fa5cc087311752317adc302a9e8"
+          },
+          {
+            "handle": "h_067756697",
+            "winner": "h_067756697",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "b716ce3fb1aac8487a594d9712f9ac8b31e67fd50bfbc019084052b6e61a3540"
+          },
+          {
+            "handle": "h_347377570",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "299b9940685c137a973f491ac5bd9d47252a5520105ca4527d9dd0100bd0febd"
+          },
+          {
+            "handle": "h_408594644",
+            "winner": "h_408594644",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "ab10509593de8283302c5f70acc0f8fe6f798dd1eab397b79333d2854937c7ad"
+          },
+          {
+            "handle": "h_557743423",
+            "winner": "h_557743423",
+            "ok": false,
+            "violation": true,
+            "p1_hash": "be1502d09dc90ab2e071a965b8b4383f250cd3805abe06c6d5c808f5ca46b916"
+          }
+        ],
+        "min_margin": -0.014059608956985251,
+        "mean_margin": 0.001135213307034319,
+        "n_ok_over_need": "1/8"
+      },
+      "held_out_error_prefix_to_later": 0.4946429128612758,
+      "held_out_error_later_to_prefix": 0.4046453082207031,
+      "rank_A": 8,
+      "cond_A": 89.42818693458403,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "action_conditioned|w0",
+      "probe": "action_conditioned",
+      "world": 0,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "per_action_restored": {
+        "h_599194055": false,
+        "h_147368829": false,
+        "h_585157561": false,
+        "h_017634093": true
+      },
+      "per_action_held_out_error": {
+        "h_599194055": 0.3178073799854481,
+        "h_147368829": 0.5453967535865861,
+        "h_585157561": 0.5414907897506662,
+        "h_017634093": 0.5581976266520703
+      },
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "rank_A": 8,
+      "cond_A": 96.51437778237992,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    },
+    {
+      "kind": "scored",
+      "id": "action_conditioned|w1",
+      "probe": "action_conditioned",
+      "world": 1,
+      "passed": false,
+      "ok": false,
+      "restored": false,
+      "cell_code": "transport_fail",
+      "scored_on": "holdout_later_contexts",
+      "per_action_restored": {
+        "h_067756697": true,
+        "h_347377570": true,
+        "h_408594644": false,
+        "h_557743423": false
+      },
+      "per_action_held_out_error": {
+        "h_067756697": 0.3181195699195645,
+        "h_347377570": 0.543533614065523,
+        "h_408594644": 0.5409954018702847,
+        "h_557743423": 0.5626439918369532
+      },
+      "correspondence": "organism_emitted_action_and_occurrence",
+      "runner_action_labels_diagnostic_only": true,
+      "applied": false,
+      "W_installed": false,
+      "discarded": true,
+      "transport_discarded": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "parent_w_act_query_unchanged": true,
+      "rank_A": 8,
+      "cond_A": 89.42818693458403,
+      "effective_dof": 8.0,
+      "n_fit": 8,
+      "n_dim": 64,
+      "future_strictly_later": true,
+      "future_never_socp_constraints": true,
+      "action_roles_recur": true,
+      "no_duplicate_heldout_support": true
+    }
+  ],
+  "decision_code": "only_unrestricted_interpolates",
+  "decision_then": "only_unrestricted_interpolates",
+  "phase_flags": {
+    "n_cells": 20,
+    "n_setup_cells": 2,
+    "n_scored_cells": 18,
+    "candidate_v41_lock": false,
+    "kqv_edited": false,
+    "install_W_star": false,
+    "episode_match_l2_retuned": false,
+    "canonical_law_reconsidered": false,
+    "setup_excluded_from_behavioral_first_match": true,
+    "discard_every_W_star": true,
+    "neural_unchanged": true,
+    "socp_not_installed": true,
+    "tm061_earned_architecture": false,
+    "tm061_narrow_conclusion": true,
+    "only_unrestricted_interpolates": true,
+    "action_conditioned_transport": false,
+    "constrained_transport_generalizes": false,
+    "shared_map_transfers": false
+  },
+  "git_head": "5e2fe6c2196f03de549163326d03f293de2c36da",
+  "frozen_runner_sha": "c62188da88a9dee4f3a75f26c438e82cd7d063185b50c6c5f18b58e444ffaf76",
+  "manifest_sha": "886c5f440ccd583254f1af438c99f68fc7ed392083f720c75f1f17ba66f9af5d",
+  "candidate_v41_lock": false,
+  "install_W_star": false,
+  "discard_every_W_star": true,
+  "episode_match_l2_retuned": false,
+  "canonical_law_reconsidered": false,
+  "clean_tree": true,
+  "clean_tree_status": "clean",
+  "tm061_runner_untouched": true,
+  "neural_untouched": true,
+  "canonical_state_generator": "write_time_last_p1",
+  "tm061_narrow_conclusion": true
+}
