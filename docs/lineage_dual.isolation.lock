@@ -1,0 +1,57 @@
+{
+  "version": "TM.0.57.DUAL.ISOLATION",
+  "lab": "TM.0.57.DUAL",
+  "product": "0.0.004",
+  "implementation_authorized": false,
+  "neural_edit_authorized": false,
+  "kqv_edit_authorized": false,
+  "decoder_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "install_oracle_authorized": false,
+  "extend_socp_authorized": false,
+  "episode_match_l2_retune_authorized": false,
+  "canonical_law_reconsider_authorized": false,
+  "v41_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM057.DUAL.DEV.",
+    "TWIN": "TM057.DUAL.TWIN."
+  },
+  "historical_immutable": [
+    "experiments/run_tm046oneshot.py",
+    "experiments/run_tm051fbground.py",
+    "experiments/run_tm052sharefeas.py",
+    "experiments/run_tm053cover.py",
+    "experiments/run_tm054provenance.py",
+    "experiments/run_tm055drift.py",
+    "experiments/run_tm056epprov.py",
+    "docs/lineage_epprov.dev.lock",
+    "docs/lineage_epprov.decision.lock",
+    "docs/lineage_epprov.decision.addendum.lock",
+    "docs/lineage_write_time_law.lock",
+    "three_memory/neural_cortex.py",
+    "three_memory/joint_socp.py"
+  ],
+  "runner_may": [
+    "wrap _episode_write as an observer and stamp receipts",
+    "copy attempted v_t and resident P1 immediately after each write",
+    "solve diagnostic W_N_star on attempt prefixes and resident store snapshots",
+    "discard every W_star"
+  ],
+  "refuse": [
+    "tune_kqv",
+    "install_W_star",
+    "retune_EPISODE_MATCH_L2",
+    "reconsider write-time law",
+    "identify target by episodes[-1]",
+    "identify target by handle lookup",
+    "identify target by live _last_p1",
+    "edit three_memory/neural_cortex.py",
+    "edit experiments/run_tm056epprov.py",
+    "rerun TM056 DEV rewrite",
+    "auto_cortex.candidate.v41.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Dual-tape drift wall. Product remains 0.0.004. No neural edit. Discard every W_star. Floor 0.05 unchanged."
+}
