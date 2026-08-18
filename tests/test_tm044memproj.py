@@ -262,5 +262,44 @@ def test_memproj_init_checkpoint_without_harness():
     assert "early_raw_half_spacing" in src
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(OPAQUE)
+    assert _sha(OPAQUE) == OPAQUE_SHA
     assert not CANDIDATE_V41.exists()
+
+
+def test_dev_lock_memory_not_necessary_and_no_v41():
+    from three_memory.cortex_lineage import sha_file
+
+    devp = REPO / "docs" / "lineage_memproj.dev.lock"
+    decp = REPO / "docs" / "lineage_memproj.decision.lock"
+    assert _sha(devp) == "e375a4ae9e19f1697dddc8d1055bd34ead6f667c92db575ed3e6512be4a6fc8e"
+    assert _sha(decp) == "bf3fa56665dfad02657307879a2491e3d1315ecc84024f52e51b782bf0d12efb"
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert sha_file(RUNNER) == FROZEN_RUNNER_SHA
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "580588f22b21b0cd457082bc17d4b6a0ed471ed8"
+    assert dev["decision_code"] == "memory_not_necessary"
+    assert dev["n_cells"] == 17
+    assert dev["candidate_v41_lock"] is False
+    assert dev["solver_edited"] is False
+    assert dev["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dec["candidate_v41_lock"] is False
+    assert dec["earned_next"] is False
+    assert dec["decision"]["code"] == "memory_not_necessary"
+    assert dec["decision"]["phase_flags"]["separate_candidate_review_open"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    from experiments.run_tm044memproj import expected_cell_ids
+
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert set(cells) == set(expected_cell_ids())
+    for wi in (0, 1):
+        assert cells[f"associate|symbolic_oracle|w{wi}"]["passed"] is True
+        assert cells[f"associate|no_persistent_memory|w{wi}"]["passed"] is True
+        assert cells[f"associate|learned_projection|w{wi}"]["passed"] is False
+        assert cells[f"associate|birth_projection|w{wi}"]["passed"] is False
+    assert cells["donor|A_to_host|w0"]["cell_code"] == "address_not_organism_owned"
+    assert cells["donor|B_to_host|w0"]["cell_code"] == "address_not_organism_owned"
+    assert cells["wipe|learned_projection|w0"]["cell_code"] == "memory_not_necessary"

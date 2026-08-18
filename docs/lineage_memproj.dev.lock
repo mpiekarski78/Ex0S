@@ -1,0 +1,782 @@
+{
+  "lab": "TM.0.44.MEMPROJ",
+  "n_cells": 17,
+  "cells": [
+    {
+      "kind": "associate",
+      "id": "associate|symbolic_oracle|w0",
+      "arm": "symbolic_oracle",
+      "world": 0,
+      "passed": true,
+      "ranking_ok": true,
+      "n_ok": 2,
+      "birth_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+      },
+      "final_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "73816d45853ba04cb035436099989596e77cb67a19899045869d2bf7dc55ec87"
+      },
+      "kqv_delta": {
+        "W_k": false,
+        "W_q": false,
+        "W_v": false,
+        "W_act_query": true
+      },
+      "frobenius_delta": {
+        "W_k": 0.0,
+        "W_q": 0.0,
+        "W_v": 0.0
+      },
+      "n_opaque": 0,
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "probes": [
+        {
+          "winner": "h_413224694",
+          "want": "h_413224694",
+          "ok": true,
+          "scores": {
+            "h_413224694": 0.6714080882994297,
+            "h_294861762": -0.6714080882994291
+          },
+          "meta": {
+            "path": "cortical",
+            "memproj_arm": "off",
+            "retrieved": false,
+            "reject_reason": null,
+            "scoring_from": "live",
+            "ambiguous": false,
+            "slot": 0,
+            "familiar": true,
+            "scoring_address_hash": "312d573cd818279c4f01fabce5774b733fe6971c03907e884eff24f3d02ce7b1"
+          },
+          "addr_hash": "312d573cd818279c4f01fabce5774b733fe6971c03907e884eff24f3d02ce7b1"
+        },
+        {
+          "winner": "h_294861762",
+          "want": "h_294861762",
+          "ok": true,
+          "scores": {
+            "h_413224694": -0.6714080882994298,
+            "h_294861762": 0.671408088299429
+          },
+          "meta": {
+            "path": "cortical",
+            "memproj_arm": "off",
+            "retrieved": false,
+            "reject_reason": null,
+            "scoring_from": "live",
+            "ambiguous": false,
+            "slot": 1,
+            "familiar": true,
+            "scoring_address_hash": "112b7c3be4b44a7e6f66e3335426f22aecb22bef7390c7c53e83740a35595c0d"
+          },
+          "addr_hash": "112b7c3be4b44a7e6f66e3335426f22aecb22bef7390c7c53e83740a35595c0d"
+        }
+      ],
+      "cell_code": "associate_ok"
+    },
+    {
+      "kind": "associate",
+      "id": "associate|learned_projection|w0",
+      "arm": "learned_projection",
+      "world": 0,
+      "passed": false,
+      "ranking_ok": false,
+      "n_ok": 1,
+      "birth_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+      },
+      "final_hashes": {
+        "W_k": "4aeddae8c27d61ce3c70a1fac73c3c26872068a41895842ba982b8ec9c8993de",
+        "W_q": "97dce6972298194f16b4041225da4c9d0b825d762863f88def8380861f3f556e",
+        "W_v": "5b3ab21d540569982f1d0bfc2a1618da2e6a269b8e3a0dfd938a08677c1d9ef0",
+        "W_act_query": "73816d45853ba04cb035436099989596e77cb67a19899045869d2bf7dc55ec87"
+      },
+      "kqv_delta": {
+        "W_k": true,
+        "W_q": true,
+        "W_v": true,
+        "W_act_query": true
+      },
+      "frobenius_delta": {
+        "W_k": 0.40360860117092434,
+        "W_q": 0.03265812558160963,
+        "W_v": 0.979974000027805
+      },
+      "n_opaque": 2,
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "probes": [
+        {
+          "winner": "h_413224694",
+          "want": "h_413224694",
+          "ok": true,
+          "scores": {
+            "h_413224694": 0.671408086350313,
+            "h_294861762": -0.6714080863503122
+          },
+          "meta": {
+            "path": "opaque_reinstatement",
+            "memproj_arm": "learned_projection",
+            "retrieved": true,
+            "reject_reason": null,
+            "scoring_from": "reinstated_value",
+            "n_rows": 2,
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "655f47a434675317c1a2905c30d51ffc99755709c1eec155f674c9783d255f9b"
+          },
+          "addr_hash": "655f47a434675317c1a2905c30d51ffc99755709c1eec155f674c9783d255f9b"
+        },
+        {
+          "winner": "h_413224694",
+          "want": "h_294861762",
+          "ok": false,
+          "scores": {
+            "h_413224694": 0.6714080874933392,
+            "h_294861762": -0.6714080874933391
+          },
+          "meta": {
+            "path": "opaque_reinstatement",
+            "memproj_arm": "learned_projection",
+            "retrieved": true,
+            "reject_reason": null,
+            "scoring_from": "reinstated_value",
+            "n_rows": 2,
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "042420674e5c35da1e1d2a19eafbd41bb73980fe67fec03aaf65ee4e4d5c0133"
+          },
+          "addr_hash": "042420674e5c35da1e1d2a19eafbd41bb73980fe67fec03aaf65ee4e4d5c0133"
+        }
+      ],
+      "cell_code": "associate_fail"
+    },
+    {
+      "kind": "associate",
+      "id": "associate|birth_projection|w0",
+      "arm": "birth_projection",
+      "world": 0,
+      "passed": false,
+      "ranking_ok": false,
+      "n_ok": 1,
+      "birth_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+      },
+      "final_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "73816d45853ba04cb035436099989596e77cb67a19899045869d2bf7dc55ec87"
+      },
+      "kqv_delta": {
+        "W_k": false,
+        "W_q": false,
+        "W_v": false,
+        "W_act_query": true
+      },
+      "frobenius_delta": {
+        "W_k": 0.0,
+        "W_q": 0.0,
+        "W_v": 0.0
+      },
+      "n_opaque": 2,
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "probes": [
+        {
+          "winner": "h_413224694",
+          "want": "h_413224694",
+          "ok": true,
+          "scores": {
+            "h_413224694": 0.671408086350313,
+            "h_294861762": -0.6714080863503122
+          },
+          "meta": {
+            "path": "opaque_reinstatement",
+            "memproj_arm": "birth_projection",
+            "retrieved": true,
+            "reject_reason": null,
+            "scoring_from": "reinstated_value",
+            "n_rows": 2,
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "655f47a434675317c1a2905c30d51ffc99755709c1eec155f674c9783d255f9b"
+          },
+          "addr_hash": "655f47a434675317c1a2905c30d51ffc99755709c1eec155f674c9783d255f9b"
+        },
+        {
+          "winner": "h_413224694",
+          "want": "h_294861762",
+          "ok": false,
+          "scores": {
+            "h_413224694": 0.6714080867154778,
+            "h_294861762": -0.6714080867154768
+          },
+          "meta": {
+            "path": "opaque_reinstatement",
+            "memproj_arm": "birth_projection",
+            "retrieved": true,
+            "reject_reason": null,
+            "scoring_from": "reinstated_value",
+            "n_rows": 2,
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "b7af7ccb8e082aff575d70d5eb07020fd138dc6104bb8f1bfaa97efd22a03d53"
+          },
+          "addr_hash": "b7af7ccb8e082aff575d70d5eb07020fd138dc6104bb8f1bfaa97efd22a03d53"
+        }
+      ],
+      "cell_code": "associate_fail"
+    },
+    {
+      "kind": "associate",
+      "id": "associate|no_persistent_memory|w0",
+      "arm": "no_persistent_memory",
+      "world": 0,
+      "passed": true,
+      "ranking_ok": true,
+      "n_ok": 2,
+      "birth_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+      },
+      "final_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "73816d45853ba04cb035436099989596e77cb67a19899045869d2bf7dc55ec87"
+      },
+      "kqv_delta": {
+        "W_k": false,
+        "W_q": false,
+        "W_v": false,
+        "W_act_query": true
+      },
+      "frobenius_delta": {
+        "W_k": 0.0,
+        "W_q": 0.0,
+        "W_v": 0.0
+      },
+      "n_opaque": 0,
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "probes": [
+        {
+          "winner": "h_413224694",
+          "want": "h_413224694",
+          "ok": true,
+          "scores": {
+            "h_413224694": 0.6714080882847084,
+            "h_294861762": -0.6714080882847078
+          },
+          "meta": {
+            "path": "cortical",
+            "memproj_arm": "no_persistent_memory",
+            "retrieved": false,
+            "reject_reason": null,
+            "scoring_from": "live",
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "20f5a5deab131599caa00511168dd474fbbd588cb87ec2f6cd39e0cea4ffa338"
+          },
+          "addr_hash": "20f5a5deab131599caa00511168dd474fbbd588cb87ec2f6cd39e0cea4ffa338"
+        },
+        {
+          "winner": "h_294861762",
+          "want": "h_294861762",
+          "ok": true,
+          "scores": {
+            "h_413224694": -0.671408088298151,
+            "h_294861762": 0.6714080882981504
+          },
+          "meta": {
+            "path": "cortical",
+            "memproj_arm": "no_persistent_memory",
+            "retrieved": false,
+            "reject_reason": null,
+            "scoring_from": "live",
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "0e09c30d9c97ae61d50e03f57849db56845c7fb7a54207007c4850731559ec97"
+          },
+          "addr_hash": "0e09c30d9c97ae61d50e03f57849db56845c7fb7a54207007c4850731559ec97"
+        }
+      ],
+      "cell_code": "associate_ok"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|learned_projection|w0",
+      "arm": "learned_projection",
+      "world": 0,
+      "passed": false,
+      "winner": "h_413224694",
+      "want": "h_294861762",
+      "old": "h_413224694",
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "cell_code": "revision_fail"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|birth_projection|w0",
+      "arm": "birth_projection",
+      "world": 0,
+      "passed": false,
+      "winner": "h_413224694",
+      "want": "h_294861762",
+      "old": "h_413224694",
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "cell_code": "revision_fail"
+    },
+    {
+      "kind": "associate",
+      "id": "associate|symbolic_oracle|w1",
+      "arm": "symbolic_oracle",
+      "world": 1,
+      "passed": true,
+      "ranking_ok": true,
+      "n_ok": 2,
+      "birth_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+      },
+      "final_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "139b0207a82a379194bfae9c7526f526f3c62ebf2a45746ce58d937610a5fb68"
+      },
+      "kqv_delta": {
+        "W_k": false,
+        "W_q": false,
+        "W_v": false,
+        "W_act_query": true
+      },
+      "frobenius_delta": {
+        "W_k": 0.0,
+        "W_q": 0.0,
+        "W_v": 0.0
+      },
+      "n_opaque": 0,
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "probes": [
+        {
+          "winner": "h_613064149",
+          "want": "h_613064149",
+          "ok": true,
+          "scores": {
+            "h_613064149": 0.8109985874493572,
+            "h_117973367": -0.8109985874493688
+          },
+          "meta": {
+            "path": "cortical",
+            "memproj_arm": "off",
+            "retrieved": false,
+            "reject_reason": null,
+            "scoring_from": "live",
+            "ambiguous": false,
+            "slot": 0,
+            "familiar": true,
+            "scoring_address_hash": "312d573cd818279c4f01fabce5774b733fe6971c03907e884eff24f3d02ce7b1"
+          },
+          "addr_hash": "312d573cd818279c4f01fabce5774b733fe6971c03907e884eff24f3d02ce7b1"
+        },
+        {
+          "winner": "h_117973367",
+          "want": "h_117973367",
+          "ok": true,
+          "scores": {
+            "h_613064149": -0.8109985874493573,
+            "h_117973367": 0.8109985874493688
+          },
+          "meta": {
+            "path": "cortical",
+            "memproj_arm": "off",
+            "retrieved": false,
+            "reject_reason": null,
+            "scoring_from": "live",
+            "ambiguous": false,
+            "slot": 1,
+            "familiar": true,
+            "scoring_address_hash": "112b7c3be4b44a7e6f66e3335426f22aecb22bef7390c7c53e83740a35595c0d"
+          },
+          "addr_hash": "112b7c3be4b44a7e6f66e3335426f22aecb22bef7390c7c53e83740a35595c0d"
+        }
+      ],
+      "cell_code": "associate_ok"
+    },
+    {
+      "kind": "associate",
+      "id": "associate|learned_projection|w1",
+      "arm": "learned_projection",
+      "world": 1,
+      "passed": false,
+      "ranking_ok": false,
+      "n_ok": 1,
+      "birth_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+      },
+      "final_hashes": {
+        "W_k": "4aeddae8c27d61ce3c70a1fac73c3c26872068a41895842ba982b8ec9c8993de",
+        "W_q": "97dce6972298194f16b4041225da4c9d0b825d762863f88def8380861f3f556e",
+        "W_v": "5b3ab21d540569982f1d0bfc2a1618da2e6a269b8e3a0dfd938a08677c1d9ef0",
+        "W_act_query": "139b0207a82a379194bfae9c7526f526f3c62ebf2a45746ce58d937610a5fb68"
+      },
+      "kqv_delta": {
+        "W_k": true,
+        "W_q": true,
+        "W_v": true,
+        "W_act_query": true
+      },
+      "frobenius_delta": {
+        "W_k": 0.40360860117092434,
+        "W_q": 0.03265812558160963,
+        "W_v": 0.979974000027805
+      },
+      "n_opaque": 2,
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "probes": [
+        {
+          "winner": "h_613064149",
+          "want": "h_613064149",
+          "ok": true,
+          "scores": {
+            "h_613064149": 0.8109985855002405,
+            "h_117973367": -0.8109985855002523
+          },
+          "meta": {
+            "path": "opaque_reinstatement",
+            "memproj_arm": "learned_projection",
+            "retrieved": true,
+            "reject_reason": null,
+            "scoring_from": "reinstated_value",
+            "n_rows": 2,
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "655f47a434675317c1a2905c30d51ffc99755709c1eec155f674c9783d255f9b"
+          },
+          "addr_hash": "655f47a434675317c1a2905c30d51ffc99755709c1eec155f674c9783d255f9b"
+        },
+        {
+          "winner": "h_613064149",
+          "want": "h_117973367",
+          "ok": false,
+          "scores": {
+            "h_613064149": 0.8109985866432671,
+            "h_117973367": -0.8109985866432785
+          },
+          "meta": {
+            "path": "opaque_reinstatement",
+            "memproj_arm": "learned_projection",
+            "retrieved": true,
+            "reject_reason": null,
+            "scoring_from": "reinstated_value",
+            "n_rows": 2,
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "042420674e5c35da1e1d2a19eafbd41bb73980fe67fec03aaf65ee4e4d5c0133"
+          },
+          "addr_hash": "042420674e5c35da1e1d2a19eafbd41bb73980fe67fec03aaf65ee4e4d5c0133"
+        }
+      ],
+      "cell_code": "associate_fail"
+    },
+    {
+      "kind": "associate",
+      "id": "associate|birth_projection|w1",
+      "arm": "birth_projection",
+      "world": 1,
+      "passed": false,
+      "ranking_ok": false,
+      "n_ok": 1,
+      "birth_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+      },
+      "final_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "139b0207a82a379194bfae9c7526f526f3c62ebf2a45746ce58d937610a5fb68"
+      },
+      "kqv_delta": {
+        "W_k": false,
+        "W_q": false,
+        "W_v": false,
+        "W_act_query": true
+      },
+      "frobenius_delta": {
+        "W_k": 0.0,
+        "W_q": 0.0,
+        "W_v": 0.0
+      },
+      "n_opaque": 2,
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "probes": [
+        {
+          "winner": "h_613064149",
+          "want": "h_613064149",
+          "ok": true,
+          "scores": {
+            "h_613064149": 0.8109985855002405,
+            "h_117973367": -0.8109985855002523
+          },
+          "meta": {
+            "path": "opaque_reinstatement",
+            "memproj_arm": "birth_projection",
+            "retrieved": true,
+            "reject_reason": null,
+            "scoring_from": "reinstated_value",
+            "n_rows": 2,
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "655f47a434675317c1a2905c30d51ffc99755709c1eec155f674c9783d255f9b"
+          },
+          "addr_hash": "655f47a434675317c1a2905c30d51ffc99755709c1eec155f674c9783d255f9b"
+        },
+        {
+          "winner": "h_613064149",
+          "want": "h_117973367",
+          "ok": false,
+          "scores": {
+            "h_613064149": 0.8109985858654051,
+            "h_117973367": -0.810998585865417
+          },
+          "meta": {
+            "path": "opaque_reinstatement",
+            "memproj_arm": "birth_projection",
+            "retrieved": true,
+            "reject_reason": null,
+            "scoring_from": "reinstated_value",
+            "n_rows": 2,
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "b7af7ccb8e082aff575d70d5eb07020fd138dc6104bb8f1bfaa97efd22a03d53"
+          },
+          "addr_hash": "b7af7ccb8e082aff575d70d5eb07020fd138dc6104bb8f1bfaa97efd22a03d53"
+        }
+      ],
+      "cell_code": "associate_fail"
+    },
+    {
+      "kind": "associate",
+      "id": "associate|no_persistent_memory|w1",
+      "arm": "no_persistent_memory",
+      "world": 1,
+      "passed": true,
+      "ranking_ok": true,
+      "n_ok": 2,
+      "birth_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+      },
+      "final_hashes": {
+        "W_k": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_q": "e51d2dd8f2d7aacb3800646dab3a9ad3107ccb7ab18bfb9e6e6670288d1828cc",
+        "W_v": "637f10c2cbfd49cfb016f538331bc4fa2df120dd5bb25e50834b41d183cc3434",
+        "W_act_query": "139b0207a82a379194bfae9c7526f526f3c62ebf2a45746ce58d937610a5fb68"
+      },
+      "kqv_delta": {
+        "W_k": false,
+        "W_q": false,
+        "W_v": false,
+        "W_act_query": true
+      },
+      "frobenius_delta": {
+        "W_k": 0.0,
+        "W_q": 0.0,
+        "W_v": 0.0
+      },
+      "n_opaque": 0,
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "probes": [
+        {
+          "winner": "h_613064149",
+          "want": "h_613064149",
+          "ok": true,
+          "scores": {
+            "h_613064149": 0.8109985874346359,
+            "h_117973367": -0.8109985874346476
+          },
+          "meta": {
+            "path": "cortical",
+            "memproj_arm": "no_persistent_memory",
+            "retrieved": false,
+            "reject_reason": null,
+            "scoring_from": "live",
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "20f5a5deab131599caa00511168dd474fbbd588cb87ec2f6cd39e0cea4ffa338"
+          },
+          "addr_hash": "20f5a5deab131599caa00511168dd474fbbd588cb87ec2f6cd39e0cea4ffa338"
+        },
+        {
+          "winner": "h_117973367",
+          "want": "h_117973367",
+          "ok": true,
+          "scores": {
+            "h_613064149": -0.8109985874480784,
+            "h_117973367": 0.8109985874480903
+          },
+          "meta": {
+            "path": "cortical",
+            "memproj_arm": "no_persistent_memory",
+            "retrieved": false,
+            "reject_reason": null,
+            "scoring_from": "live",
+            "ambiguous": false,
+            "slot": null,
+            "familiar": false,
+            "scoring_address_hash": "0e09c30d9c97ae61d50e03f57849db56845c7fb7a54207007c4850731559ec97"
+          },
+          "addr_hash": "0e09c30d9c97ae61d50e03f57849db56845c7fb7a54207007c4850731559ec97"
+        }
+      ],
+      "cell_code": "associate_ok"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|learned_projection|w1",
+      "arm": "learned_projection",
+      "world": 1,
+      "passed": false,
+      "winner": "h_613064149",
+      "want": "h_117973367",
+      "old": "h_613064149",
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "cell_code": "revision_fail"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|birth_projection|w1",
+      "arm": "birth_projection",
+      "world": 1,
+      "passed": false,
+      "winner": "h_613064149",
+      "want": "h_117973367",
+      "old": "h_613064149",
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "cell_code": "revision_fail"
+    },
+    {
+      "kind": "donor",
+      "id": "donor|A_to_host|w0",
+      "passed": false,
+      "n_ok": 0,
+      "n_opaque_host": 2,
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "cell_code": "address_not_organism_owned"
+    },
+    {
+      "kind": "donor",
+      "id": "donor|B_to_host|w0",
+      "passed": false,
+      "n_ok": 0,
+      "n_opaque_host": 2,
+      "ownership_fail": [],
+      "candidate_v41_lock": false,
+      "cell_code": "address_not_organism_owned"
+    },
+    {
+      "kind": "wipe",
+      "id": "wipe|learned_projection|w0",
+      "passed": false,
+      "before_ok": false,
+      "after_ok": true,
+      "cell_code": "memory_not_necessary",
+      "candidate_v41_lock": false
+    },
+    {
+      "kind": "checkpoint",
+      "id": "checkpoint|learned_projection|w0",
+      "passed": false,
+      "cell_code": "checkpoint_fail",
+      "hashes_match": true,
+      "candidate_v41_lock": false
+    },
+    {
+      "kind": "birth_restore",
+      "id": "birth_restore|learned_projection|w0",
+      "passed": false,
+      "trained_ok": false,
+      "birth_ok": false,
+      "restored_ok": false,
+      "trained_hashes": {
+        "W_k": "4aeddae8c27d61ce3c70a1fac73c3c26872068a41895842ba982b8ec9c8993de",
+        "W_q": "97dce6972298194f16b4041225da4c9d0b825d762863f88def8380861f3f556e",
+        "W_v": "5b3ab21d540569982f1d0bfc2a1618da2e6a269b8e3a0dfd938a08677c1d9ef0",
+        "W_act_query": "73816d45853ba04cb035436099989596e77cb67a19899045869d2bf7dc55ec87"
+      },
+      "restored_hashes": {
+        "W_k": "4aeddae8c27d61ce3c70a1fac73c3c26872068a41895842ba982b8ec9c8993de",
+        "W_q": "97dce6972298194f16b4041225da4c9d0b825d762863f88def8380861f3f556e",
+        "W_v": "5b3ab21d540569982f1d0bfc2a1618da2e6a269b8e3a0dfd938a08677c1d9ef0",
+        "W_act_query": "73816d45853ba04cb035436099989596e77cb67a19899045869d2bf7dc55ec87"
+      },
+      "candidate_v41_lock": false,
+      "cell_code": "birth_restore_fail"
+    }
+  ],
+  "decision_code": "memory_not_necessary",
+  "decision_then": "memory_not_necessary",
+  "phase_flags": {
+    "n_cells": 17,
+    "candidate_v41_lock": false,
+    "novelty_familiarity_in_claim": false,
+    "separate_candidate_review_open": false
+  },
+  "git_head": "580588f22b21b0cd457082bc17d4b6a0ed471ed8",
+  "frozen_runner_sha": "9bbde3eafd7c56ea2a39835405fe78221687a49c01ace0261a41710db7a2cfd0",
+  "manifest_sha": "c0300666815cbe2b7ad761af3acbf813e9d6b31d7efb372397e5e1017b47bb58",
+  "domain": "TM044.MEMPROJ.DEV.",
+  "candidate_v41_lock": false,
+  "clean_tree": true,
+  "clean_tree_status": "clean",
+  "neural_edited": true,
+  "solver_edited": false
+}
