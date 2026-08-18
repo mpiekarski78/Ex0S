@@ -246,3 +246,27 @@ def test_dev_lock_attempted_not_resident():
     assert cells["near_action|w0"]["n_append"] == 2
     assert cells["near_action|w0"]["n_residents"] == 2
     assert cells["near_action|w0"]["n_attempted_ne_resident"] == 2
+
+
+DEC_ADD_SHA = "29137a17ced032e7e01486ac5e08636ea3bcd792600c6d757ee1a1892dc42d5d"
+
+
+def test_addendum_observer_lookup_without_rewrite():
+    addp = REPO / "docs" / "lineage_storeint.decision.addendum.lock"
+    assert _sha(addp) == DEC_ADD_SHA
+    assert _sha(REPO / "docs" / "lineage_storeint.dev.lock") == DEV_SHA
+    assert _sha(REPO / "docs" / "lineage_storeint.decision.lock") == DEC_SHA
+    assert _sha(RUNNER) == RUNNER_SHA
+    add = json.loads(addp.read_text())
+    assert add["rewrite_historical_decision"] is False
+    assert add["rerun_dev"] is False
+    assert add["frozen_first_match_unchanged"] is True
+    assert add["historical_decision_code"] == "attempted_not_resident"
+    assert add["interpretation"] == "frozen_observer_lookup_of_ignored_provenance_keyword"
+    assert add["architectural_conclusion"] == "opaque_kv_identity_held_under_organism_provenance"
+    assert add["store_physics"]["zero_cross_action_refresh"] is True
+    assert add["store_physics"]["capacity_evict_then_append"] is True
+    assert add["store_physics"]["checkpoint_byte_identical"] is True
+    assert add["episode_match_l2_not_changed"] is True
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
