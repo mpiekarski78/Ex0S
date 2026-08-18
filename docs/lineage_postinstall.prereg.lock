@@ -1,0 +1,85 @@
+{
+  "version": "TM.0.42.POSTINSTALL.PREREG",
+  "lab": "TM.0.42.POSTINSTALL",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "recall_edit_authorized": false,
+  "threshold_edit_authorized": false,
+  "v40_candidate_authorized": false,
+  "package_question": "After a genuine fallback_joint install, do previously learned mappings hold, can a new mapping and reversal be acquired, and does subsequent fallback stay atomic — on fresh worlds if install occurs, and on TM039 diagnostic geometry as mechanistic evidence?",
+  "authorized_by": [
+    "docs/lineage_causalbattery.r2.decision.lock",
+    "docs/lineage_jointsocp.decision.lock"
+  ],
+  "lineage_stop": "canonical_r2_later_learning_not_exercised",
+  "r2_decision_sha": "bcd40fba96ff96d90958aaf4c03fd4bb8fa2995dccd313600a09e9fc50124f23",
+  "r2_dev_sha": "a13838622a76fb3b7f62a73ef3e58001db0a4bf99cb9ede9c575bd7f7c438ab3",
+  "r2_runner_sha": "a72f0c8f924510df163089396a67036cfd05836aca3220053d2b10b0da6803e3",
+  "tm039_decision_sha": "0275f20ebc9d0ff528b4edbf2767d21c69689b94f6559a25ce00eca9f7d1618d",
+  "tm039_runner_sha": "e40304ee4ece2c834390094c9853d122bb89cb8fb18923aa348e052d146e288d",
+  "canonical_probe_sha": "51e24d272417df5ae689301d9600d49aa86daec6608dfc7ff26f8ad4c2e22aef",
+  "joint_socp_sha": "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895",
+  "frozen_neural_sha": "2eb45d8769402330f5ee39a04afffe110a435a0e64a40b12bc2d874b36f5ed59",
+  "candidate_name": "not_v40_candidate",
+  "treatment_mode": "early_raw_half_spacing",
+  "behavioral_scorer": "actuator_decision_scores",
+  "scored_arm": "fallback_joint",
+  "n_rest_ticks": 4,
+  "hard_budget_passes": 16,
+  "not_an_exact_projector": true,
+  "hashes_are_diagnostic": true,
+  "seed_registry": 404200042,
+  "default_seed_registry_forbidden": 22222,
+  "tm040_seed_registry_forbidden": 404000039,
+  "r2_seed_registry_forbidden": 404200040,
+  "domains": {
+    "DEV": "TM042.POSTINSTALL.DEV.",
+    "TWIN": "TM042.POSTINSTALL.TWIN."
+  },
+  "mechanistic_reconstruct_domain": "TM039.JOINTSOCP.DEV.",
+  "tm039_diagnostic_regs": [2, 3],
+  "tm039_registry_seeds": [2133183397, 520283234],
+  "orders": ["A_then_B", "B_then_A"],
+  "n_worlds": 2,
+  "natural_scales": [
+    {"n_cues": 8, "n_handles": 2, "label": "c8h2"},
+    {"n_cues": 8, "n_handles": 4, "label": "c8h4"}
+  ],
+  "expected_n_cells": 12,
+  "manifest_sha": "a1d2160fc3a13346bf3cfc1995a69a7d9d6e6c662a47536db1d30aa0fb8cbc0c",
+  "margin": {
+    "pass_statistic": "normalized_geometric_margin",
+    "geometric_min": 0.01,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19
+  },
+  "candidate_discussion_requires": [
+    "fallback_naturally_exercised_on_untouched_worlds",
+    "later_learning_succeeds_after_that_installation"
+  ],
+  "decision_ladder": [
+    {"code": "postinstall_not_exercised", "when": "no natural fallback install on fresh worlds"},
+    {"code": "postinstall_natural_later_fail", "when": "natural install occurs but continuity gates fail"},
+    {"code": "postinstall_mech_install_fail", "when": "TM039 diagnostic fallback does not install"},
+    {"code": "postinstall_mech_later_fail", "when": "mechanistic install occurs but continuity gates fail"},
+    {"code": "postinstall_continuity_pass", "when": "natural install plus later-learning and mechanistic continuity all pass; still not an auto candidate lock"}
+  ],
+  "refuse": [
+    "auto_cortex.candidate.v40.lock",
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py",
+    "rewrite TM040 V1 or R2",
+    "treat_mechanistic_as_untouched_generalization",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Post-install continuity wall. Product remains 0.0.004. Freeze runner before DEV.",
+  "frozen_runner_sha": "56dc11791ec0d7bbb9316e9f3a7c8006b1e1a069542176cd1f909d81234b43fb"
+}

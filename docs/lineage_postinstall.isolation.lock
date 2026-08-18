@@ -1,0 +1,43 @@
+{
+  "version": "TM.0.42.POSTINSTALL.ISOLATION",
+  "lab": "TM.0.42.POSTINSTALL",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "recall_edit_authorized": false,
+  "threshold_edit_authorized": false,
+  "v40_candidate_authorized": false,
+  "lineage_stop": "canonical_r2_later_learning_not_exercised",
+  "domains": {
+    "DEV": "TM042.POSTINSTALL.DEV.",
+    "TWIN": "TM042.POSTINSTALL.TWIN."
+  },
+  "mechanistic_reconstruct_domain": "TM039.JOINTSOCP.DEV.",
+  "fresh_natural_domains": true,
+  "historical_immutable": [
+    "docs/lineage_causalbattery.dev.lock",
+    "docs/lineage_causalbattery.decision.lock",
+    "docs/lineage_causalbattery.r2.dev.lock",
+    "docs/lineage_causalbattery.r2.decision.lock",
+    "docs/lineage_jointsocp.dev.lock",
+    "docs/lineage_jointsocp.decision.lock",
+    "three_memory/neural_cortex.py",
+    "three_memory/joint_socp.py"
+  ],
+  "refuse": [
+    "rewrite TM040 V1 or R2 locks",
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py",
+    "invoke_SOCP_unconditionally",
+    "add_live_constraints",
+    "change_fallback_trigger",
+    "modify_half_spacing",
+    "treat_mechanistic_as_untouched_generalization",
+    "auto_cortex.candidate.v40.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Post-install continuity wall. No organism code changes. Product remains 0.0.004."
+}
