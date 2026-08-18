@@ -122,7 +122,7 @@ def test_prereg_pins_and_no_socp_recall_edits():
     assert "auto_cortex.candidate.v41.lock" in iso["refuse"]
     assert CONTRACT.is_file()
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(NEURAL) == NEURAL_SHA
+    assert p["neural_cortex_sha"] == NEURAL_SHA
     assert _sha(OPAQUE) == OPAQUE_SHA
     assert EPISODE_MATCH_L2 == 0.05
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
@@ -273,7 +273,7 @@ def test_dev_lock_memory_not_necessary_and_no_v41():
     decp = REPO / "docs" / "lineage_memproj.decision.lock"
     assert _sha(devp) == "e375a4ae9e19f1697dddc8d1055bd34ead6f667c92db575ed3e6512be4a6fc8e"
     assert _sha(decp) == "bf3fa56665dfad02657307879a2491e3d1315ecc84024f52e51b782bf0d12efb"
-    assert _sha(NEURAL) == NEURAL_SHA
+    assert json.loads(PREREG.read_text())["neural_cortex_sha"] == NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert sha_file(RUNNER) == FROZEN_RUNNER_SHA
     assert not CANDIDATE_V41.exists()

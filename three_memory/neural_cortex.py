@@ -105,6 +105,21 @@ MEMPROJ_BIRTH = "birth_projection"
 MEMPROJ_NONE = "no_persistent_memory"
 MEMPROJ_ARMS = (MEMPROJ_OFF, MEMPROJ_LEARNED, MEMPROJ_BIRTH, MEMPROJ_NONE)
 MEMPROJ_ETA_SCALE = 1.0
+# Canonical telemetry: do not overload a single "path" with memory vs motor.
+MEMORY_PATH_EPISODIC = "episodic_completed"
+MEMORY_PATH_EMPTY = "empty"
+MEMORY_PATH_REJECTED = "rejected"
+MEMORY_PATHS = (MEMORY_PATH_EPISODIC, MEMORY_PATH_EMPTY, MEMORY_PATH_REJECTED)
+MOTOR_PATH_CORTICAL = "cortical_scoring"
+SCORE_SRC_LIVE = "live_rho"
+SCORE_SRC_REINSTATED = "reinstated_value"
+EPISODE_REJECT_REASONS = frozenset(
+    {"exact_nearest_tie", "ambiguous_nearest", "integer_overlap_tie"}
+)
+OPAQUE_EMPTY_REASONS = frozenset({"empty_store", "zero_query", "no_valid_keys"})
+OPAQUE_REJECT_REASONS = frozenset(
+    {"bad_query", "dimensional_mismatch", "nonfinite_record", "exact_distance_tie"}
+)
 # v36: sparse hippocampal index. 12.5% sparsity; unrelated to EPISODE_SLOTS.
 SEP_DIM = 64
 SEP_K = 8
@@ -527,34 +542,62 @@ class NeuralCortex:
         return rec
 
     def event_memory_scores(self) -> tuple[dict[str, float], np.ndarray, dict[str, Any]]:
-        """Organism-owned path: rho → q → opaque retrieve → reinstate v → motor scores."""
+        """Organism-owned path: rho → optional memory reinstatement → motor scores.
+
+        Telemetry splits memory vs motor: memory_path, motor_path, scoring_address_source.
+        scores_before_reinstatement / scores_after_reinstatement are diagnostics.
+        """
         live = self._from_t(self.rho)
         if self._last_p1 is not None:
             live = np.asarray(self._last_p1, dtype=np.float64)
+        live = np.asarray(live, dtype=np.float64).reshape(-1)
         arm = str(getattr(self, "_memproj_arm", MEMPROJ_OFF) or MEMPROJ_OFF)
-        meta: dict[str, Any] = {
-            "path": "cortical",
-            "memproj_arm": arm,
-            "retrieved": False,
-            "reject_reason": None,
-            "scoring_from": "live",
-        }
+        before_scores = {k: float(v) for k, v in self.actuator_scores(live).items()}
+        addr = live
+        memory_path = MEMORY_PATH_EMPTY
+        source = SCORE_SRC_LIVE
+        retrieved = False
+        reject_reason = None
+        n_rows = None
         if arm in (MEMPROJ_LEARNED, MEMPROJ_BIRTH):
-            q = self._from_t(self.W_q) @ np.asarray(live, dtype=np.float64).reshape(-1)
+            q = self._from_t(self.W_q) @ addr
             hit = self.opaque.retrieve(q)
-            meta["reject_reason"] = hit.get("reject_reason")
-            meta["n_rows"] = hit.get("n_rows")
+            reject_reason = hit.get("reject_reason")
+            n_rows = hit.get("n_rows")
             if bool(hit.get("hit")) and hit.get("value") is not None:
-                live = np.asarray(hit["value"], dtype=np.float64)
-                meta["path"] = "opaque_reinstatement"
-                meta["retrieved"] = True
-                meta["scoring_from"] = "reinstated_value"
-        scores, addr, smeta = self.actuator_decision_scores(live)
+                addr = np.asarray(hit["value"], dtype=np.float64).reshape(-1)
+                source = SCORE_SRC_REINSTATED
+                retrieved = True
+                memory_path = MEMORY_PATH_EMPTY
+            elif str(reject_reason or "") in OPAQUE_REJECT_REASONS:
+                memory_path = MEMORY_PATH_REJECTED
+            else:
+                memory_path = MEMORY_PATH_EMPTY
+        scores, score_addr, smeta = self.actuator_decision_scores(addr)
+        if smeta.get("memory_path") == MEMORY_PATH_EPISODIC:
+            memory_path = MEMORY_PATH_EPISODIC
+            source = SCORE_SRC_REINSTATED
+        elif smeta.get("memory_path") == MEMORY_PATH_REJECTED and not retrieved:
+            memory_path = MEMORY_PATH_REJECTED
+            source = SCORE_SRC_LIVE
+        meta: dict[str, Any] = {
+            "memory_path": memory_path,
+            "motor_path": MOTOR_PATH_CORTICAL,
+            "scoring_address_source": source,
+            "memproj_arm": arm,
+            "retrieved": bool(retrieved),
+            "reject_reason": reject_reason,
+            "n_rows": n_rows,
+            "scores_before_reinstatement": before_scores,
+            "scores_after_reinstatement": {k: float(v) for k, v in scores.items()},
+            "scoring_from": source,
+            "path": memory_path,
+        }
         meta.update({k: smeta.get(k) for k in ("ambiguous", "slot", "familiar") if k in smeta})
         meta["scoring_address_hash"] = hashlib.sha256(
-            np.ascontiguousarray(np.asarray(addr, dtype=np.float64)).tobytes()
+            np.ascontiguousarray(np.asarray(score_addr, dtype=np.float64)).tobytes()
         ).hexdigest()
-        return scores, np.asarray(addr, dtype=np.float64), meta
+        return scores, np.asarray(score_addr, dtype=np.float64), meta
 
     def _act_proj_arm_active(self) -> bool:
         arm = str(getattr(self, "_act_proj_arm", ACT_PROJ_OFF) or ACT_PROJ_OFF)
@@ -1641,6 +1684,16 @@ class NeuralCortex:
         scores = self.actuator_scores(score_addr)
         meta["scoring_address_norm"] = float(np.linalg.norm(score_addr))
         meta["act_recall_mode"] = mode
+        if stored is not None:
+            meta["memory_path"] = MEMORY_PATH_EPISODIC
+            meta["scoring_address_source"] = SCORE_SRC_REINSTATED
+        elif str(meta.get("reason") or "") in EPISODE_REJECT_REASONS:
+            meta["memory_path"] = MEMORY_PATH_REJECTED
+            meta["scoring_address_source"] = SCORE_SRC_LIVE
+        else:
+            meta["memory_path"] = MEMORY_PATH_EMPTY
+            meta["scoring_address_source"] = SCORE_SRC_LIVE
+        meta["motor_path"] = MOTOR_PATH_CORTICAL
         return scores, score_addr, meta
 
     def _choose_actuator_from_scores(self, scores: dict[str, float]) -> str | None:
