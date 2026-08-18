@@ -318,3 +318,71 @@ def test_runner_refuses_v41_and_smoke():
     assert out["api_present"] is True
     assert out["transition"]["n_ticks"] == 1
     assert "memproj_arm" not in GenomeConfig().to_dict()
+
+
+DEV_SHA = "5d956e80abef0e41beda251acdd5ae23e1c5eff1c0862fe5f8ae652455d532e0"
+DEC_SHA = "86fca1a366c290ce072efd522b8071fb5771de01e9fbee90e2adda15fda9760d"
+DEV_GIT = "30c69d8df99c2246dba5a597cae2356d5c8126e1"
+
+
+def test_dev_lock_feedback_not_action_separable_and_no_v41():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm049actfeed import expected_cell_ids
+    from three_memory.neural_cortex import EPISODE_MATCH_L2
+
+    devp = REPO / "docs" / "lineage_actfeed.dev.lock"
+    decp = REPO / "docs" / "lineage_actfeed.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert _sha(TM048_RUNNER) == TM048_RUNNER_SHA
+    assert _sha(TM048_DEV) == TM048_DEV_SHA
+    assert _sha(TM048_DEC) == TM048_DEC_SHA
+    assert _sha(TM048_ADD) == TM048_ADD_SHA
+    assert _sha(TM047_RUNNER) == TM047_RUNNER_SHA
+    assert _sha(TM046_RUNNER) == TM046_RUNNER_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert _sha(NEURAL) == NEURAL_SHA_AFTER_EDIT
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "feedback_not_action_separable"
+    assert dev["n_cells"] == 8
+    assert dev["n_setup_cells"] == 2
+    assert dev["n_scored_cells"] == 6
+    assert dev["candidate_v41_lock"] is False
+    assert dev["kqv_edited"] is False
+    assert dec["earned_next"] is False
+    assert dec["eligible_for_000005"] is False
+    assert dec["earned_learned_addressing"] is False
+    assert dec["decision"]["code"] == "feedback_not_action_separable"
+    assert dec["decision"]["phase_flags"]["setup_excluded_from_behavioral_first_match"] is True
+    assert dec["decision"]["phase_flags"]["earned_kqv"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["decoder|w0"]["passed"] is True
+    assert cells["decoder|w1"]["passed"] is True
+    assert cells["decoder|w0"]["n_ok"] == 4
+    assert cells["scalar_only|w0"]["cell_code"] == "scalar_ok"
+    assert cells["scalar_only|w1"]["cell_code"] == "scalar_ok"
+    for wi in (0, 1):
+        sc = cells[f"scalar_only|w{wi}"]["identity"]
+        assert sc["n_unique_rho_feedback"] == 1
+        assert float(sc["max_pairwise_l2"]) == 0.0
+        assert sc["n_ok_credit"] == 1
+        assert sc["n_ok_ceiling"] == 4
+        fb = cells[f"action_feedback|w{wi}"]
+        assert fb["cell_code"] == "feedback_not_action_separable"
+        ident = fb["identity"]
+        assert ident["n_unique_rho_feedback"] == 4
+        assert float(ident["max_pairwise_l2"]) <= float(EPISODE_MATCH_L2)
+        assert ident["distinguishable"] is False
+        assert ident["n_ok_credit"] == 1
+        assert ident["n_ok_ceiling"] == 4
+        assert ident["copied_handle_into_s"] is False
+        assert all(bool(cl["key_from_cue"]) for cl in ident["clones"])
+        nm = cells[f"feedback_no_memory|w{wi}"]
+        assert nm["cell_code"] == "feedback_not_action_separable"
