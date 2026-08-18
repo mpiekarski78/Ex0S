@@ -1,0 +1,5268 @@
+{
+  "lab": "TM.0.46.ONESHOT",
+  "n_cells": 34,
+  "cells": [
+    {
+      "kind": "decoder",
+      "id": "decoder|w0",
+      "arm": "decoder",
+      "world": 0,
+      "passed": true,
+      "n_ok": 4,
+      "n_need": 4,
+      "n_dev_episodes": 8,
+      "handles": [
+        {
+          "handle": "h_182767705",
+          "ok": true,
+          "winner": "h_182767705",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.45947653530854554,
+              "h_901663069": 0.13636373210117778,
+              "h_806684696": -0.8021452272347842,
+              "h_810668987": 0.2705313912062439
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.45947653530854554,
+              "h_901663069": 0.13636373210117778,
+              "h_806684696": -0.8021452272347842,
+              "h_810668987": 0.2705313912062439
+            }
+          }
+        },
+        {
+          "handle": "h_901663069",
+          "ok": true,
+          "winner": "h_901663069",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.45219778106888253,
+              "h_901663069": 0.7362945658120624,
+              "h_806684696": -0.46587165493174937,
+              "h_810668987": 0.10991226690864951
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.45219778106888253,
+              "h_901663069": 0.7362945658120624,
+              "h_806684696": -0.46587165493174937,
+              "h_810668987": 0.10991226690864951
+            }
+          }
+        },
+        {
+          "handle": "h_806684696",
+          "ok": true,
+          "winner": "h_806684696",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.32293011483166123,
+              "h_901663069": -0.5570051443870945,
+              "h_806684696": 0.6247957679148671,
+              "h_810668987": 0.48069941163348684
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.32293011483166123,
+              "h_901663069": -0.5570051443870945,
+              "h_806684696": 0.6247957679148671,
+              "h_810668987": 0.48069941163348684
+            }
+          }
+        },
+        {
+          "handle": "h_810668987",
+          "ok": true,
+          "winner": "h_810668987",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.2930377146642907,
+              "h_901663069": -0.33068980915479174,
+              "h_806684696": -0.41456823573348756,
+              "h_810668987": 0.7199529631732102
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.2930377146642906,
+              "h_901663069": -0.33068980915479174,
+              "h_806684696": -0.4145682357334876,
+              "h_810668987": 0.7199529631732102
+            }
+          }
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "decoder_ok"
+    },
+    {
+      "kind": "decoder",
+      "id": "decoder|w1",
+      "arm": "decoder",
+      "world": 1,
+      "passed": true,
+      "n_ok": 4,
+      "n_need": 4,
+      "n_dev_episodes": 8,
+      "handles": [
+        {
+          "handle": "h_270876880",
+          "ok": true,
+          "winner": "h_270876880",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.4882454525668329,
+              "h_394767965": 0.3386190852907977,
+              "h_335854708": -0.5102219784013009,
+              "h_106039235": -0.1707378772471158
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.4882454525668329,
+              "h_394767965": 0.3386190852907977,
+              "h_335854708": -0.5102219784013009,
+              "h_106039235": -0.1707378772471158
+            }
+          }
+        },
+        {
+          "handle": "h_394767965",
+          "ok": true,
+          "winner": "h_394767965",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.31251900789858905,
+              "h_394767965": 0.796531987289389,
+              "h_335854708": 0.024838166620907487,
+              "h_106039235": -0.4205748285818728
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.31251900789858905,
+              "h_394767965": 0.796531987289389,
+              "h_335854708": 0.024838166620907487,
+              "h_106039235": -0.4205748285818728
+            }
+          }
+        },
+        {
+          "handle": "h_335854708",
+          "ok": true,
+          "winner": "h_335854708",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5895116777430346,
+              "h_394767965": 0.4945350159780982,
+              "h_335854708": 0.6213679578359902,
+              "h_106039235": -0.5964469186942505
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.5895116777430346,
+              "h_394767965": 0.4945350159780982,
+              "h_335854708": 0.6213679578359902,
+              "h_106039235": -0.5964469186942505
+            }
+          }
+        },
+        {
+          "handle": "h_106039235",
+          "ok": true,
+          "winner": "h_106039235",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.3011649755301355,
+              "h_394767965": 0.08486105885829416,
+              "h_335854708": -0.7964740100367135,
+              "h_106039235": 0.5838137809041001
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.3011649755301354,
+              "h_394767965": 0.08486105885829424,
+              "h_335854708": -0.7964740100367136,
+              "h_106039235": 0.5838137809041001
+            }
+          }
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "decoder_ok"
+    },
+    {
+      "kind": "immediate",
+      "id": "immediate|symbolic_oracle|w0",
+      "arm": "symbolic_oracle",
+      "world": 0,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.1399154411434099,
+            "h_901663069": -0.5540928908055551,
+            "h_806684696": 0.24628133241650405,
+            "h_810668987": 0.7580388623318323
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            }
+          },
+          "want": "h_182767705",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.5709399806778471,
+            "h_901663069": 0.18122127440277921,
+            "h_806684696": -0.08982714224607008,
+            "h_810668987": 0.652184092644551
+          },
+          "addr_hash": "b8c8d1be29185c1574778103e1bb7092377a1a77491c354504bbceeb62f8b82f",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 1,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.5804930313251411,
+              "h_901663069": 0.1513405074870679,
+              "h_806684696": -0.050826671873788073,
+              "h_810668987": 0.6588993019603956
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.5709399806778471,
+              "h_901663069": 0.18122127440277921,
+              "h_806684696": -0.08982714224607008,
+              "h_810668987": 0.652184092644551
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": 0.08191782265278669,
+            "h_901663069": -0.44340798065959774,
+            "h_806684696": -0.14179762456588638,
+            "h_810668987": 0.816022317459468
+          },
+          "addr_hash": "38a8da62b15fab7e8e14d773c1f8e1fed68d6e3a1a24793cc6dcc5cb63075a71",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 2,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.07578474821849959,
+              "h_901663069": -0.4711363235767511,
+              "h_806684696": -0.10262270816182073,
+              "h_810668987": 0.8140273296306242
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.08191782265278669,
+              "h_901663069": -0.44340798065959774,
+              "h_806684696": -0.14179762456588638,
+              "h_810668987": 0.816022317459468
+            }
+          },
+          "want": "h_806684696",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.4296870656274603,
+            "h_901663069": -0.16954078119323024,
+            "h_806684696": 0.08200621365252,
+            "h_810668987": 0.7786459818660015
+          },
+          "addr_hash": "091b9460669a2f2b8d3cfa78895c384cf2e4f85dd0c901f66132011f66345738",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 3,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.4345019962092576,
+              "h_901663069": -0.19289704965257434,
+              "h_806684696": 0.11735390202403177,
+              "h_810668987": 0.7730757641488306
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.4296870656274603,
+              "h_901663069": -0.16954078119323024,
+              "h_806684696": 0.08200621365252,
+              "h_810668987": 0.7786459818660015
+            }
+          },
+          "want": "h_810668987",
+          "ok": true
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "immediate_fail"
+    },
+    {
+      "kind": "immediate",
+      "id": "immediate|symbolic_oracle|w1",
+      "arm": "symbolic_oracle",
+      "world": 1,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4409849689215323,
+            "h_394767965": 0.747025326560456,
+            "h_335854708": 0.2626548574128217,
+            "h_106039235": -0.5351971878538537
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            }
+          },
+          "want": "h_270876880",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.39446622894220845,
+            "h_394767965": 0.780486277555087,
+            "h_335854708": 0.15422305531350813,
+            "h_106039235": -0.4805226570138431
+          },
+          "addr_hash": "b8c8d1be29185c1574778103e1bb7092377a1a77491c354504bbceeb62f8b82f",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 1,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4042477721754094,
+              "h_394767965": 0.7793438209565113,
+              "h_335854708": 0.1634532317143461,
+              "h_106039235": -0.4808805983070795
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.39446622894220845,
+              "h_394767965": 0.780486277555087,
+              "h_335854708": 0.15422305531350813,
+              "h_106039235": -0.4805226570138431
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.2541449775582509,
+            "h_394767965": 0.7704494766179478,
+            "h_335854708": 0.057288633751180255,
+            "h_106039235": -0.49479766848032913
+          },
+          "addr_hash": "38a8da62b15fab7e8e14d773c1f8e1fed68d6e3a1a24793cc6dcc5cb63075a71",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 2,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.26626786853309403,
+              "h_394767965": 0.7700655854821687,
+              "h_335854708": 0.07285683899565326,
+              "h_106039235": -0.5011200857759408
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.2541449775582509,
+              "h_394767965": 0.7704494766179478,
+              "h_335854708": 0.057288633751180255,
+              "h_106039235": -0.49479766848032913
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.49094434961093797,
+            "h_394767965": 0.7794163283963307,
+            "h_335854708": 0.1928577287504413,
+            "h_106039235": -0.42996689217245143
+          },
+          "addr_hash": "091b9460669a2f2b8d3cfa78895c384cf2e4f85dd0c901f66132011f66345738",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 3,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5044221255597294,
+              "h_394767965": 0.7756471448158653,
+              "h_335854708": 0.20570866564492243,
+              "h_106039235": -0.4286854617945581
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.49094434961093797,
+              "h_394767965": 0.7794163283963307,
+              "h_335854708": 0.1928577287504413,
+              "h_106039235": -0.42996689217245143
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "immediate_fail"
+    },
+    {
+      "kind": "immediate",
+      "id": "immediate|opaque_projection|w0",
+      "arm": "opaque_projection",
+      "world": 0,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 4,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6828562667199318,
+            "h_901663069": 0.528702545727014,
+            "h_806684696": 0.34692764592057596,
+            "h_810668987": -0.3877883500139036
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6828562667199318,
+              "h_901663069": 0.528702545727014,
+              "h_806684696": 0.34692764592057596,
+              "h_810668987": -0.3877883500139036
+            }
+          },
+          "want": "h_182767705",
+          "ok": false
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6806344600260351,
+            "h_901663069": 0.5282030042120341,
+            "h_806684696": 0.3476364086286424,
+            "h_810668987": -0.3911821824204942
+          },
+          "addr_hash": "afb7fca7d76649e6360cdce611946a8e48d808f0873cf9255f33b5384a12c4f1",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.5804930313251411,
+              "h_901663069": 0.1513405074870679,
+              "h_806684696": -0.050826671873788073,
+              "h_810668987": 0.6588993019603956
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6806344600260351,
+              "h_901663069": 0.5282030042120341,
+              "h_806684696": 0.3476364086286424,
+              "h_810668987": -0.3911821824204942
+            }
+          },
+          "want": "h_901663069",
+          "ok": true
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6817206351862014,
+            "h_901663069": 0.5368923387332987,
+            "h_806684696": 0.33728082472671456,
+            "h_810668987": -0.3889987855724758
+          },
+          "addr_hash": "23dc726f9ea9c24ff590e6f9a079bef9574732310f71d411a549a44490ec6ab7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.07578474821849959,
+              "h_901663069": -0.4711363235767511,
+              "h_806684696": -0.10262270816182073,
+              "h_810668987": 0.8140273296306242
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6817206351862014,
+              "h_901663069": 0.5368923387332987,
+              "h_806684696": 0.33728082472671456,
+              "h_810668987": -0.3889987855724758
+            }
+          },
+          "want": "h_806684696",
+          "ok": false
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6807900836849311,
+            "h_901663069": 0.531898576891731,
+            "h_806684696": 0.3432726844768128,
+            "h_810668987": -0.3907523945074413
+          },
+          "addr_hash": "4f5f524b56b4747bbd110134fdeaeeade84b8a078d05c03628be71bf2207aa40",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.4345019962092576,
+              "h_901663069": -0.19289704965257434,
+              "h_806684696": 0.11735390202403177,
+              "h_810668987": 0.7730757641488306
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6807900836849311,
+              "h_901663069": 0.531898576891731,
+              "h_806684696": 0.3432726844768128,
+              "h_810668987": -0.3907523945074413
+            }
+          },
+          "want": "h_810668987",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "immediate_fail"
+    },
+    {
+      "kind": "immediate",
+      "id": "immediate|opaque_projection|w1",
+      "arm": "opaque_projection",
+      "world": 1,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 4,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6219446009940988,
+            "h_394767965": 0.6121476235984588,
+            "h_335854708": 0.5034016226992871,
+            "h_106039235": -0.5258099769412893
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6219446009940988,
+              "h_394767965": 0.6121476235984588,
+              "h_335854708": 0.5034016226992871,
+              "h_106039235": -0.5258099769412893
+            }
+          },
+          "want": "h_270876880",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.620246341563324,
+            "h_394767965": 0.6119683563958502,
+            "h_335854708": 0.5038684339053335,
+            "h_106039235": -0.5279056689457576
+          },
+          "addr_hash": "afb7fca7d76649e6360cdce611946a8e48d808f0873cf9255f33b5384a12c4f1",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4042477721754094,
+              "h_394767965": 0.7793438209565113,
+              "h_335854708": 0.1634532317143461,
+              "h_106039235": -0.4808805983070795
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.620246341563324,
+              "h_394767965": 0.6119683563958502,
+              "h_335854708": 0.5038684339053335,
+              "h_106039235": -0.5279056689457576
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6212776077324389,
+            "h_394767965": 0.615385010535535,
+            "h_335854708": 0.49952331253596544,
+            "h_106039235": -0.5246597807548081
+          },
+          "addr_hash": "23dc726f9ea9c24ff590e6f9a079bef9574732310f71d411a549a44490ec6ab7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.26626786853309403,
+              "h_394767965": 0.7700655854821687,
+              "h_335854708": 0.07285683899565326,
+              "h_106039235": -0.5011200857759408
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6212776077324389,
+              "h_394767965": 0.615385010535535,
+              "h_335854708": 0.49952331253596544,
+              "h_106039235": -0.5246597807548081
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6199290486676122,
+            "h_394767965": 0.6139172676938929,
+            "h_335854708": 0.5015299403366367,
+            "h_106039235": -0.52712482172723
+          },
+          "addr_hash": "4f5f524b56b4747bbd110134fdeaeeade84b8a078d05c03628be71bf2207aa40",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5044221255597294,
+              "h_394767965": 0.7756471448158653,
+              "h_335854708": 0.20570866564492243,
+              "h_106039235": -0.4286854617945581
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6199290486676122,
+              "h_394767965": 0.6139172676938929,
+              "h_335854708": 0.5015299403366367,
+              "h_106039235": -0.52712482172723
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "immediate_fail"
+    },
+    {
+      "kind": "immediate",
+      "id": "immediate|no_persistent_memory|w0",
+      "arm": "no_persistent_memory",
+      "world": 0,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.1399154411434099,
+            "h_901663069": -0.5540928908055551,
+            "h_806684696": 0.24628133241650405,
+            "h_810668987": 0.7580388623318323
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            }
+          },
+          "want": "h_182767705",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.5804930313251411,
+            "h_901663069": 0.1513405074870679,
+            "h_806684696": -0.050826671873788073,
+            "h_810668987": 0.6588993019603956
+          },
+          "addr_hash": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.5804930313251411,
+              "h_901663069": 0.1513405074870679,
+              "h_806684696": -0.050826671873788073,
+              "h_810668987": 0.6588993019603956
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.5804930313251411,
+              "h_901663069": 0.1513405074870679,
+              "h_806684696": -0.050826671873788073,
+              "h_810668987": 0.6588993019603956
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": 0.07578474821849959,
+            "h_901663069": -0.4711363235767511,
+            "h_806684696": -0.10262270816182073,
+            "h_810668987": 0.8140273296306242
+          },
+          "addr_hash": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.07578474821849959,
+              "h_901663069": -0.4711363235767511,
+              "h_806684696": -0.10262270816182073,
+              "h_810668987": 0.8140273296306242
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.07578474821849959,
+              "h_901663069": -0.4711363235767511,
+              "h_806684696": -0.10262270816182073,
+              "h_810668987": 0.8140273296306242
+            }
+          },
+          "want": "h_806684696",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.4345019962092576,
+            "h_901663069": -0.19289704965257434,
+            "h_806684696": 0.11735390202403177,
+            "h_810668987": 0.7730757641488306
+          },
+          "addr_hash": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.4345019962092576,
+              "h_901663069": -0.19289704965257434,
+              "h_806684696": 0.11735390202403177,
+              "h_810668987": 0.7730757641488306
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.4345019962092576,
+              "h_901663069": -0.19289704965257434,
+              "h_806684696": 0.11735390202403177,
+              "h_810668987": 0.7730757641488306
+            }
+          },
+          "want": "h_810668987",
+          "ok": true
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "immediate_fail"
+    },
+    {
+      "kind": "immediate",
+      "id": "immediate|no_persistent_memory|w1",
+      "arm": "no_persistent_memory",
+      "world": 1,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4409849689215323,
+            "h_394767965": 0.747025326560456,
+            "h_335854708": 0.2626548574128217,
+            "h_106039235": -0.5351971878538537
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            }
+          },
+          "want": "h_270876880",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4042477721754094,
+            "h_394767965": 0.7793438209565113,
+            "h_335854708": 0.1634532317143461,
+            "h_106039235": -0.4808805983070795
+          },
+          "addr_hash": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4042477721754094,
+              "h_394767965": 0.7793438209565113,
+              "h_335854708": 0.1634532317143461,
+              "h_106039235": -0.4808805983070795
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4042477721754094,
+              "h_394767965": 0.7793438209565113,
+              "h_335854708": 0.1634532317143461,
+              "h_106039235": -0.4808805983070795
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.26626786853309403,
+            "h_394767965": 0.7700655854821687,
+            "h_335854708": 0.07285683899565326,
+            "h_106039235": -0.5011200857759408
+          },
+          "addr_hash": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.26626786853309403,
+              "h_394767965": 0.7700655854821687,
+              "h_335854708": 0.07285683899565326,
+              "h_106039235": -0.5011200857759408
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.26626786853309403,
+              "h_394767965": 0.7700655854821687,
+              "h_335854708": 0.07285683899565326,
+              "h_106039235": -0.5011200857759408
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.5044221255597294,
+            "h_394767965": 0.7756471448158653,
+            "h_335854708": 0.20570866564492243,
+            "h_106039235": -0.4286854617945581
+          },
+          "addr_hash": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5044221255597294,
+              "h_394767965": 0.7756471448158653,
+              "h_335854708": 0.20570866564492243,
+              "h_106039235": -0.4286854617945581
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.5044221255597294,
+              "h_394767965": 0.7756471448158653,
+              "h_335854708": 0.20570866564492243,
+              "h_106039235": -0.4286854617945581
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "immediate_fail"
+    },
+    {
+      "kind": "immediate",
+      "id": "immediate|slow_cortex_enabled|w0",
+      "arm": "slow_cortex_enabled",
+      "world": 0,
+      "passed": true,
+      "n_ok": 4,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.006186549441285887,
+        0.023081727265187646,
+        0.025552735646201787,
+        0.014754887586405464
+      ],
+      "w_act_query_frozen": false,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_182767705",
+          "scores": {
+            "h_182767705": 0.7963142040813872,
+            "h_901663069": -0.39330784364378346,
+            "h_806684696": -0.44416996395239383,
+            "h_810668987": 0.14197121629927276
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.7963142040813872,
+              "h_901663069": -0.39330784364378346,
+              "h_806684696": -0.44416996395239383,
+              "h_810668987": 0.14197121629927276
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.7963142040813872,
+              "h_901663069": -0.39330784364378346,
+              "h_806684696": -0.44416996395239383,
+              "h_810668987": 0.14197121629927276
+            }
+          },
+          "want": "h_182767705",
+          "ok": true
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.29144697746552584,
+            "h_901663069": 0.7591406707732812,
+            "h_806684696": -0.5895794318741443,
+            "h_810668987": 0.019395488851206757
+          },
+          "addr_hash": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.29144697746552584,
+              "h_901663069": 0.7591406707732812,
+              "h_806684696": -0.5895794318741443,
+              "h_810668987": 0.019395488851206757
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.29144697746552584,
+              "h_901663069": 0.7591406707732812,
+              "h_806684696": -0.5895794318741443,
+              "h_810668987": 0.019395488851206757
+            }
+          },
+          "want": "h_901663069",
+          "ok": true
+        },
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": 0.35261211374940593,
+            "h_901663069": -0.8250101318765232,
+            "h_806684696": 0.48072544304856735,
+            "h_810668987": 0.15784522082313815
+          },
+          "addr_hash": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.35261211374940593,
+              "h_901663069": -0.8250101318765232,
+              "h_806684696": 0.48072544304856735,
+              "h_810668987": 0.15784522082313815
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.35261211374940593,
+              "h_901663069": -0.8250101318765232,
+              "h_806684696": 0.48072544304856735,
+              "h_810668987": 0.15784522082313815
+            }
+          },
+          "want": "h_806684696",
+          "ok": true
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": 0.05790012721824787,
+            "h_901663069": 0.3008064461933349,
+            "h_806684696": -0.7297573569496811,
+            "h_810668987": 0.47311148889637294
+          },
+          "addr_hash": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.05790012721824787,
+              "h_901663069": 0.3008064461933349,
+              "h_806684696": -0.7297573569496811,
+              "h_810668987": 0.47311148889637294
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.05790012721824787,
+              "h_901663069": 0.3008064461933349,
+              "h_806684696": -0.7297573569496811,
+              "h_810668987": 0.47311148889637294
+            }
+          },
+          "want": "h_810668987",
+          "ok": true
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "immediate_ok"
+    },
+    {
+      "kind": "immediate",
+      "id": "immediate|slow_cortex_enabled|w1",
+      "arm": "slow_cortex_enabled",
+      "world": 1,
+      "passed": false,
+      "n_ok": 2,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.005156264086091051,
+        0.02369986557844097,
+        0.017607871806674818,
+        0.01768576392274128
+      ],
+      "w_act_query_frozen": false,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_270876880",
+          "scores": {
+            "h_270876880": 0.600570356661295,
+            "h_394767965": -0.6188388801193148,
+            "h_335854708": -0.497364977589512,
+            "h_106039235": 0.5457349957630678
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.600570356661295,
+              "h_394767965": -0.6188388801193148,
+              "h_335854708": -0.497364977589512,
+              "h_106039235": 0.5457349957630678
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.600570356661295,
+              "h_394767965": -0.6188388801193148,
+              "h_335854708": -0.497364977589512,
+              "h_106039235": 0.5457349957630678
+            }
+          },
+          "want": "h_270876880",
+          "ok": true
+        },
+        {
+          "winner": "h_106039235",
+          "scores": {
+            "h_270876880": -0.08122489399310641,
+            "h_394767965": 0.15095439400952737,
+            "h_335854708": -0.6151913398453431,
+            "h_106039235": 0.6883158903330364
+          },
+          "addr_hash": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.08122489399310641,
+              "h_394767965": 0.15095439400952737,
+              "h_335854708": -0.6151913398453431,
+              "h_106039235": 0.6883158903330364
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.08122489399310641,
+              "h_394767965": 0.15095439400952737,
+              "h_335854708": -0.6151913398453431,
+              "h_106039235": 0.6883158903330364
+            }
+          },
+          "want": "h_394767965",
+          "ok": false
+        },
+        {
+          "winner": "h_270876880",
+          "scores": {
+            "h_270876880": 0.42482173881779295,
+            "h_394767965": -0.7995649505849687,
+            "h_335854708": -0.09920149018119734,
+            "h_106039235": 0.40087315856605144
+          },
+          "addr_hash": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.42482173881779295,
+              "h_394767965": -0.7995649505849687,
+              "h_335854708": -0.09920149018119734,
+              "h_106039235": 0.40087315856605144
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.42482173881779295,
+              "h_394767965": -0.7995649505849687,
+              "h_335854708": -0.09920149018119734,
+              "h_106039235": 0.40087315856605144
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_106039235",
+          "scores": {
+            "h_270876880": 0.23184747505481623,
+            "h_394767965": -0.402600562357111,
+            "h_335854708": -0.5541468063634086,
+            "h_106039235": 0.7908257778619237
+          },
+          "addr_hash": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.23184747505481623,
+              "h_394767965": -0.402600562357111,
+              "h_335854708": -0.5541468063634086,
+              "h_106039235": 0.7908257778619237
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.23184747505481623,
+              "h_394767965": -0.402600562357111,
+              "h_335854708": -0.5541468063634086,
+              "h_106039235": 0.7908257778619237
+            }
+          },
+          "want": "h_106039235",
+          "ok": true
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "immediate_fail"
+    },
+    {
+      "kind": "delayed",
+      "id": "delayed|symbolic_oracle|w0",
+      "arm": "symbolic_oracle",
+      "world": 0,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.1399154411434099,
+            "h_901663069": -0.5540928908055551,
+            "h_806684696": 0.24628133241650405,
+            "h_810668987": 0.7580388623318323
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.14285243193484812,
+              "h_901663069": -0.6829801965828273,
+              "h_806684696": 0.6703781240574491,
+              "h_810668987": 0.3633703544988429
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            }
+          },
+          "want": "h_182767705",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.1399154411434099,
+            "h_901663069": -0.5540928908055551,
+            "h_806684696": 0.24628133241650405,
+            "h_810668987": 0.7580388623318323
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.2557010383921068,
+              "h_901663069": -0.6051566371324967,
+              "h_806684696": 0.7169586227561155,
+              "h_810668987": 0.3304867584665281
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": 0.08191782265278669,
+            "h_901663069": -0.44340798065959774,
+            "h_806684696": -0.14179762456588638,
+            "h_810668987": 0.816022317459468
+          },
+          "addr_hash": "38a8da62b15fab7e8e14d773c1f8e1fed68d6e3a1a24793cc6dcc5cb63075a71",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 2,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.11081929136105544,
+              "h_901663069": -0.7025839415629654,
+              "h_806684696": 0.6492933976847383,
+              "h_810668987": 0.3799389911446603
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.08191782265278669,
+              "h_901663069": -0.44340798065959774,
+              "h_806684696": -0.14179762456588638,
+              "h_810668987": 0.816022317459468
+            }
+          },
+          "want": "h_806684696",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.1399154411434099,
+            "h_901663069": -0.5540928908055551,
+            "h_806684696": 0.24628133241650405,
+            "h_810668987": 0.7580388623318323
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.2280232926919819,
+              "h_901663069": -0.6286980862822565,
+              "h_806684696": 0.6891693899176432,
+              "h_810668987": 0.36945506730358374
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            }
+          },
+          "want": "h_810668987",
+          "ok": true
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "delayed_fail"
+    },
+    {
+      "kind": "delayed",
+      "id": "delayed|symbolic_oracle|w1",
+      "arm": "symbolic_oracle",
+      "world": 1,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4409849689215323,
+            "h_394767965": 0.747025326560456,
+            "h_335854708": 0.2626548574128217,
+            "h_106039235": -0.5351971878538537
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4657793583259415,
+              "h_394767965": -0.06936255056791685,
+              "h_335854708": 0.8084017731673879,
+              "h_106039235": -0.44783764494493267
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            }
+          },
+          "want": "h_270876880",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4409849689215323,
+            "h_394767965": 0.747025326560456,
+            "h_335854708": 0.2626548574128217,
+            "h_106039235": -0.5351971878538537
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5456739633561252,
+              "h_394767965": 0.17224382129536003,
+              "h_335854708": 0.7845922404349834,
+              "h_106039235": -0.5525259506113608
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.2541449775582509,
+            "h_394767965": 0.7704494766179478,
+            "h_335854708": 0.057288633751180255,
+            "h_106039235": -0.49479766848032913
+          },
+          "addr_hash": "38a8da62b15fab7e8e14d773c1f8e1fed68d6e3a1a24793cc6dcc5cb63075a71",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 2,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.43043997847516663,
+              "h_394767965": -0.06874261640377223,
+              "h_335854708": 0.8113308596323368,
+              "h_106039235": -0.4871151735133954
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.2541449775582509,
+              "h_394767965": 0.7704494766179478,
+              "h_335854708": 0.057288633751180255,
+              "h_106039235": -0.49479766848032913
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4409849689215323,
+            "h_394767965": 0.747025326560456,
+            "h_335854708": 0.2626548574128217,
+            "h_106039235": -0.5351971878538537
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5773945191460856,
+              "h_394767965": 0.09075154769843725,
+              "h_335854708": 0.79154033903694,
+              "h_106039235": -0.45746552025031756
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "delayed_fail"
+    },
+    {
+      "kind": "delayed",
+      "id": "delayed|opaque_projection|w0",
+      "arm": "opaque_projection",
+      "world": 0,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 4,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6828562667199318,
+            "h_901663069": 0.528702545727014,
+            "h_806684696": 0.34692764592057596,
+            "h_810668987": -0.3877883500139036
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.14285243193484812,
+              "h_901663069": -0.6829801965828273,
+              "h_806684696": 0.6703781240574491,
+              "h_810668987": 0.3633703544988429
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6828562667199318,
+              "h_901663069": 0.528702545727014,
+              "h_806684696": 0.34692764592057596,
+              "h_810668987": -0.3877883500139036
+            }
+          },
+          "want": "h_182767705",
+          "ok": false
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6828562667199318,
+            "h_901663069": 0.528702545727014,
+            "h_806684696": 0.34692764592057596,
+            "h_810668987": -0.3877883500139036
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.2557010383921068,
+              "h_901663069": -0.6051566371324967,
+              "h_806684696": 0.7169586227561155,
+              "h_810668987": 0.3304867584665281
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6828562667199318,
+              "h_901663069": 0.528702545727014,
+              "h_806684696": 0.34692764592057596,
+              "h_810668987": -0.3877883500139036
+            }
+          },
+          "want": "h_901663069",
+          "ok": true
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6828562667199318,
+            "h_901663069": 0.528702545727014,
+            "h_806684696": 0.34692764592057596,
+            "h_810668987": -0.3877883500139036
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.11081929136105544,
+              "h_901663069": -0.7025839415629654,
+              "h_806684696": 0.6492933976847383,
+              "h_810668987": 0.3799389911446603
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6828562667199318,
+              "h_901663069": 0.528702545727014,
+              "h_806684696": 0.34692764592057596,
+              "h_810668987": -0.3877883500139036
+            }
+          },
+          "want": "h_806684696",
+          "ok": false
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6828562667199318,
+            "h_901663069": 0.528702545727014,
+            "h_806684696": 0.34692764592057596,
+            "h_810668987": -0.3877883500139036
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.2280232926919819,
+              "h_901663069": -0.6286980862822565,
+              "h_806684696": 0.6891693899176432,
+              "h_810668987": 0.36945506730358374
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6828562667199318,
+              "h_901663069": 0.528702545727014,
+              "h_806684696": 0.34692764592057596,
+              "h_810668987": -0.3877883500139036
+            }
+          },
+          "want": "h_810668987",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "delayed_fail"
+    },
+    {
+      "kind": "delayed",
+      "id": "delayed|opaque_projection|w1",
+      "arm": "opaque_projection",
+      "world": 1,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 4,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6219446009940988,
+            "h_394767965": 0.6121476235984588,
+            "h_335854708": 0.5034016226992871,
+            "h_106039235": -0.5258099769412893
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4657793583259415,
+              "h_394767965": -0.06936255056791685,
+              "h_335854708": 0.8084017731673879,
+              "h_106039235": -0.44783764494493267
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6219446009940988,
+              "h_394767965": 0.6121476235984588,
+              "h_335854708": 0.5034016226992871,
+              "h_106039235": -0.5258099769412893
+            }
+          },
+          "want": "h_270876880",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6219446009940988,
+            "h_394767965": 0.6121476235984588,
+            "h_335854708": 0.5034016226992871,
+            "h_106039235": -0.5258099769412893
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5456739633561252,
+              "h_394767965": 0.17224382129536003,
+              "h_335854708": 0.7845922404349834,
+              "h_106039235": -0.5525259506113608
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6219446009940988,
+              "h_394767965": 0.6121476235984588,
+              "h_335854708": 0.5034016226992871,
+              "h_106039235": -0.5258099769412893
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6219446009940988,
+            "h_394767965": 0.6121476235984588,
+            "h_335854708": 0.5034016226992871,
+            "h_106039235": -0.5258099769412893
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.43043997847516663,
+              "h_394767965": -0.06874261640377223,
+              "h_335854708": 0.8113308596323368,
+              "h_106039235": -0.4871151735133954
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6219446009940988,
+              "h_394767965": 0.6121476235984588,
+              "h_335854708": 0.5034016226992871,
+              "h_106039235": -0.5258099769412893
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6219446009940988,
+            "h_394767965": 0.6121476235984588,
+            "h_335854708": 0.5034016226992871,
+            "h_106039235": -0.5258099769412893
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5773945191460856,
+              "h_394767965": 0.09075154769843725,
+              "h_335854708": 0.79154033903694,
+              "h_106039235": -0.45746552025031756
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6219446009940988,
+              "h_394767965": 0.6121476235984588,
+              "h_335854708": 0.5034016226992871,
+              "h_106039235": -0.5258099769412893
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "delayed_fail"
+    },
+    {
+      "kind": "delayed",
+      "id": "delayed|no_persistent_memory|w0",
+      "arm": "no_persistent_memory",
+      "world": 0,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": -0.14285243193484812,
+            "h_901663069": -0.6829801965828273,
+            "h_806684696": 0.6703781240574491,
+            "h_810668987": 0.3633703544988429
+          },
+          "addr_hash": "e8af7037bd389610a9aacafd59809cd2855a5f2ec3fa9a83f7fcd88b6ee99319",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.14285243193484812,
+              "h_901663069": -0.6829801965828273,
+              "h_806684696": 0.6703781240574491,
+              "h_810668987": 0.3633703544988429
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.14285243193484812,
+              "h_901663069": -0.6829801965828273,
+              "h_806684696": 0.6703781240574491,
+              "h_810668987": 0.3633703544988429
+            }
+          },
+          "want": "h_182767705",
+          "ok": false
+        },
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": -0.2557010383921068,
+            "h_901663069": -0.6051566371324967,
+            "h_806684696": 0.7169586227561155,
+            "h_810668987": 0.3304867584665281
+          },
+          "addr_hash": "8182e6a170d85b4dfc01b148a0a2cca054be6a2bed852aa183d5e1a6ea6760a0",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.2557010383921068,
+              "h_901663069": -0.6051566371324967,
+              "h_806684696": 0.7169586227561155,
+              "h_810668987": 0.3304867584665281
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.2557010383921068,
+              "h_901663069": -0.6051566371324967,
+              "h_806684696": 0.7169586227561155,
+              "h_810668987": 0.3304867584665281
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": -0.11081929136105544,
+            "h_901663069": -0.7025839415629654,
+            "h_806684696": 0.6492933976847383,
+            "h_810668987": 0.3799389911446603
+          },
+          "addr_hash": "5e6517b9d88f93601bdf8d4482f50126402304cfebe9ab5e4482dc606bdc399c",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.11081929136105544,
+              "h_901663069": -0.7025839415629654,
+              "h_806684696": 0.6492933976847383,
+              "h_810668987": 0.3799389911446603
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.11081929136105544,
+              "h_901663069": -0.7025839415629654,
+              "h_806684696": 0.6492933976847383,
+              "h_810668987": 0.3799389911446603
+            }
+          },
+          "want": "h_806684696",
+          "ok": true
+        },
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": -0.2280232926919819,
+            "h_901663069": -0.6286980862822565,
+            "h_806684696": 0.6891693899176432,
+            "h_810668987": 0.3694550673035838
+          },
+          "addr_hash": "5977cbb1e0d6adfc490e38558772298e0497b7aaa2c1d08b71c886dab74b0d88",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.2280232926919819,
+              "h_901663069": -0.6286980862822565,
+              "h_806684696": 0.6891693899176432,
+              "h_810668987": 0.36945506730358374
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.2280232926919819,
+              "h_901663069": -0.6286980862822565,
+              "h_806684696": 0.6891693899176432,
+              "h_810668987": 0.3694550673035838
+            }
+          },
+          "want": "h_810668987",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "delayed_fail"
+    },
+    {
+      "kind": "delayed",
+      "id": "delayed|no_persistent_memory|w1",
+      "arm": "no_persistent_memory",
+      "world": 1,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_335854708",
+          "scores": {
+            "h_270876880": -0.4657793583259415,
+            "h_394767965": -0.06936255056791685,
+            "h_335854708": 0.8084017731673879,
+            "h_106039235": -0.44783764494493267
+          },
+          "addr_hash": "e8af7037bd389610a9aacafd59809cd2855a5f2ec3fa9a83f7fcd88b6ee99319",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4657793583259415,
+              "h_394767965": -0.06936255056791685,
+              "h_335854708": 0.8084017731673879,
+              "h_106039235": -0.44783764494493267
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4657793583259415,
+              "h_394767965": -0.06936255056791685,
+              "h_335854708": 0.8084017731673879,
+              "h_106039235": -0.44783764494493267
+            }
+          },
+          "want": "h_270876880",
+          "ok": false
+        },
+        {
+          "winner": "h_335854708",
+          "scores": {
+            "h_270876880": -0.5456739633561252,
+            "h_394767965": 0.17224382129536003,
+            "h_335854708": 0.7845922404349834,
+            "h_106039235": -0.5525259506113608
+          },
+          "addr_hash": "8182e6a170d85b4dfc01b148a0a2cca054be6a2bed852aa183d5e1a6ea6760a0",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5456739633561252,
+              "h_394767965": 0.17224382129536003,
+              "h_335854708": 0.7845922404349834,
+              "h_106039235": -0.5525259506113608
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.5456739633561252,
+              "h_394767965": 0.17224382129536003,
+              "h_335854708": 0.7845922404349834,
+              "h_106039235": -0.5525259506113608
+            }
+          },
+          "want": "h_394767965",
+          "ok": false
+        },
+        {
+          "winner": "h_335854708",
+          "scores": {
+            "h_270876880": -0.43043997847516663,
+            "h_394767965": -0.06874261640377223,
+            "h_335854708": 0.8113308596323368,
+            "h_106039235": -0.4871151735133954
+          },
+          "addr_hash": "5e6517b9d88f93601bdf8d4482f50126402304cfebe9ab5e4482dc606bdc399c",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.43043997847516663,
+              "h_394767965": -0.06874261640377223,
+              "h_335854708": 0.8113308596323368,
+              "h_106039235": -0.4871151735133954
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.43043997847516663,
+              "h_394767965": -0.06874261640377223,
+              "h_335854708": 0.8113308596323368,
+              "h_106039235": -0.4871151735133954
+            }
+          },
+          "want": "h_335854708",
+          "ok": true
+        },
+        {
+          "winner": "h_335854708",
+          "scores": {
+            "h_270876880": -0.5773945191460855,
+            "h_394767965": 0.09075154769843725,
+            "h_335854708": 0.79154033903694,
+            "h_106039235": -0.45746552025031745
+          },
+          "addr_hash": "5977cbb1e0d6adfc490e38558772298e0497b7aaa2c1d08b71c886dab74b0d88",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5773945191460856,
+              "h_394767965": 0.09075154769843725,
+              "h_335854708": 0.79154033903694,
+              "h_106039235": -0.45746552025031756
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.5773945191460855,
+              "h_394767965": 0.09075154769843725,
+              "h_335854708": 0.79154033903694,
+              "h_106039235": -0.45746552025031745
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "delayed_fail"
+    },
+    {
+      "kind": "delayed",
+      "id": "delayed|slow_cortex_enabled|w0",
+      "arm": "slow_cortex_enabled",
+      "world": 0,
+      "passed": false,
+      "n_ok": 2,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.006186549441285887,
+        0.023081727265187646,
+        0.025552735646201787,
+        0.014754887586405464
+      ],
+      "w_act_query_frozen": false,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_182767705",
+          "scores": {
+            "h_182767705": 0.6775360695131787,
+            "h_901663069": -0.7378474125138245,
+            "h_806684696": 0.13050020773048898,
+            "h_810668987": 0.05176599101724539
+          },
+          "addr_hash": "e8af7037bd389610a9aacafd59809cd2855a5f2ec3fa9a83f7fcd88b6ee99319",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.6775360695131787,
+              "h_901663069": -0.7378474125138245,
+              "h_806684696": 0.13050020773048898,
+              "h_810668987": 0.05176599101724539
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.6775360695131787,
+              "h_901663069": -0.7378474125138245,
+              "h_806684696": 0.13050020773048898,
+              "h_810668987": 0.05176599101724539
+            }
+          },
+          "want": "h_182767705",
+          "ok": true
+        },
+        {
+          "winner": "h_182767705",
+          "scores": {
+            "h_182767705": 0.7555465162593664,
+            "h_901663069": -0.6632210561689823,
+            "h_806684696": -0.016588701176470027,
+            "h_810668987": 0.028708582803034444
+          },
+          "addr_hash": "8182e6a170d85b4dfc01b148a0a2cca054be6a2bed852aa183d5e1a6ea6760a0",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.7555465162593664,
+              "h_901663069": -0.6632210561689823,
+              "h_806684696": -0.016588701176470027,
+              "h_810668987": 0.028708582803034444
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.7555465162593664,
+              "h_901663069": -0.6632210561689823,
+              "h_806684696": -0.016588701176470027,
+              "h_810668987": 0.028708582803034444
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": 0.4247788970414997,
+            "h_901663069": -0.8054834681828468,
+            "h_806684696": 0.44989170246648214,
+            "h_810668987": 0.06636967607720999
+          },
+          "addr_hash": "5e6517b9d88f93601bdf8d4482f50126402304cfebe9ab5e4482dc606bdc399c",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.4247788970414997,
+              "h_901663069": -0.8054834681828468,
+              "h_806684696": 0.44989170246648214,
+              "h_810668987": 0.06636967607720999
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.4247788970414997,
+              "h_901663069": -0.8054834681828468,
+              "h_806684696": 0.44989170246648214,
+              "h_810668987": 0.06636967607720999
+            }
+          },
+          "want": "h_806684696",
+          "ok": true
+        },
+        {
+          "winner": "h_182767705",
+          "scores": {
+            "h_182767705": 0.6315333588197368,
+            "h_901663069": -0.7723257031382591,
+            "h_806684696": 0.08315072371154786,
+            "h_810668987": 0.2428505817854983
+          },
+          "addr_hash": "5977cbb1e0d6adfc490e38558772298e0497b7aaa2c1d08b71c886dab74b0d88",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.6315333588197368,
+              "h_901663069": -0.7723257031382591,
+              "h_806684696": 0.08315072371154786,
+              "h_810668987": 0.24285058178549834
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.6315333588197368,
+              "h_901663069": -0.7723257031382591,
+              "h_806684696": 0.08315072371154786,
+              "h_810668987": 0.2428505817854983
+            }
+          },
+          "want": "h_810668987",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "delayed_fail"
+    },
+    {
+      "kind": "delayed",
+      "id": "delayed|slow_cortex_enabled|w1",
+      "arm": "slow_cortex_enabled",
+      "world": 1,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.005156264086091051,
+        0.02369986557844097,
+        0.017607871806674818,
+        0.01768576392274128
+      ],
+      "w_act_query_frozen": false,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_270876880",
+          "scores": {
+            "h_270876880": 0.613174600007224,
+            "h_394767965": -0.7597490338071404,
+            "h_335854708": -0.14695277270995596,
+            "h_106039235": 0.235614390945853
+          },
+          "addr_hash": "e8af7037bd389610a9aacafd59809cd2855a5f2ec3fa9a83f7fcd88b6ee99319",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.613174600007224,
+              "h_394767965": -0.7597490338071404,
+              "h_335854708": -0.14695277270995596,
+              "h_106039235": 0.235614390945853
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.613174600007224,
+              "h_394767965": -0.7597490338071404,
+              "h_335854708": -0.14695277270995596,
+              "h_106039235": 0.235614390945853
+            }
+          },
+          "want": "h_270876880",
+          "ok": true
+        },
+        {
+          "winner": "h_270876880",
+          "scores": {
+            "h_270876880": 0.5342948281610348,
+            "h_394767965": -0.7776080905658793,
+            "h_335854708": -0.19249591972376037,
+            "h_106039235": 0.3847512215583016
+          },
+          "addr_hash": "8182e6a170d85b4dfc01b148a0a2cca054be6a2bed852aa183d5e1a6ea6760a0",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.5342948281610348,
+              "h_394767965": -0.7776080905658793,
+              "h_335854708": -0.19249591972376037,
+              "h_106039235": 0.3847512215583016
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.5342948281610348,
+              "h_394767965": -0.7776080905658793,
+              "h_335854708": -0.19249591972376037,
+              "h_106039235": 0.3847512215583016
+            }
+          },
+          "want": "h_394767965",
+          "ok": false
+        },
+        {
+          "winner": "h_270876880",
+          "scores": {
+            "h_270876880": 0.45967658557949737,
+            "h_394767965": -0.7906245490916123,
+            "h_335854708": 0.09707970173722454,
+            "h_106039235": 0.12202772835216527
+          },
+          "addr_hash": "5e6517b9d88f93601bdf8d4482f50126402304cfebe9ab5e4482dc606bdc399c",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.45967658557949737,
+              "h_394767965": -0.7906245490916123,
+              "h_335854708": 0.09707970173722454,
+              "h_106039235": 0.12202772835216527
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.45967658557949737,
+              "h_394767965": -0.7906245490916123,
+              "h_335854708": 0.09707970173722454,
+              "h_106039235": 0.12202772835216527
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_270876880",
+          "scores": {
+            "h_270876880": 0.5020085023367142,
+            "h_394767965": -0.776323864983905,
+            "h_335854708": -0.20350013340419995,
+            "h_106039235": 0.4290282021074828
+          },
+          "addr_hash": "5977cbb1e0d6adfc490e38558772298e0497b7aaa2c1d08b71c886dab74b0d88",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.5020085023367141,
+              "h_394767965": -0.7763238649839049,
+              "h_335854708": -0.20350013340419992,
+              "h_106039235": 0.4290282021074828
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.5020085023367142,
+              "h_394767965": -0.776323864983905,
+              "h_335854708": -0.20350013340419995,
+              "h_106039235": 0.4290282021074828
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "delayed_fail"
+    },
+    {
+      "kind": "distractor",
+      "id": "distractor|symbolic_oracle|w0",
+      "arm": "symbolic_oracle",
+      "world": 0,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.1399154411434099,
+            "h_901663069": -0.5540928908055551,
+            "h_806684696": 0.24628133241650405,
+            "h_810668987": 0.7580388623318323
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.14168536556329223,
+              "h_901663069": -0.6837565801703029,
+              "h_806684696": 0.6693687506197035,
+              "h_810668987": 0.3644237286922374
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            }
+          },
+          "want": "h_182767705",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.1399154411434099,
+            "h_901663069": -0.5540928908055551,
+            "h_806684696": 0.24628133241650405,
+            "h_810668987": 0.7580388623318323
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.2541291995616176,
+              "h_901663069": -0.6064901619509225,
+              "h_806684696": 0.7158283908284769,
+              "h_810668987": 0.3320488892193564
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": 0.08191782265278669,
+            "h_901663069": -0.44340798065959774,
+            "h_806684696": -0.14179762456588638,
+            "h_810668987": 0.816022317459468
+          },
+          "addr_hash": "38a8da62b15fab7e8e14d773c1f8e1fed68d6e3a1a24793cc6dcc5cb63075a71",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 2,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.10886256523601626,
+              "h_901663069": -0.7037490746023543,
+              "h_806684696": 0.647709072699656,
+              "h_810668987": 0.3813248075587989
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.08191782265278669,
+              "h_901663069": -0.44340798065959774,
+              "h_806684696": -0.14179762456588638,
+              "h_810668987": 0.816022317459468
+            }
+          },
+          "want": "h_806684696",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.1399154411434099,
+            "h_901663069": -0.5540928908055551,
+            "h_806684696": 0.24628133241650405,
+            "h_810668987": 0.7580388623318323
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.22682634185013412,
+              "h_901663069": -0.6296204886322685,
+              "h_806684696": 0.688134066417287,
+              "h_810668987": 0.37074309893686386
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            }
+          },
+          "want": "h_810668987",
+          "ok": true
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "distractor_fail"
+    },
+    {
+      "kind": "distractor",
+      "id": "distractor|symbolic_oracle|w1",
+      "arm": "symbolic_oracle",
+      "world": 1,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4409849689215323,
+            "h_394767965": 0.747025326560456,
+            "h_335854708": 0.2626548574128217,
+            "h_106039235": -0.5351971878538537
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4646001880196285,
+              "h_394767965": -0.07128476395621838,
+              "h_335854708": 0.8083440426051169,
+              "h_106039235": -0.44724874471045295
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            }
+          },
+          "want": "h_270876880",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4409849689215323,
+            "h_394767965": 0.747025326560456,
+            "h_335854708": 0.2626548574128217,
+            "h_106039235": -0.5351971878538537
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.544913837367003,
+              "h_394767965": 0.17054988189073095,
+              "h_335854708": 0.7850427594128796,
+              "h_106039235": -0.5523325043593729
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.2541449775582509,
+            "h_394767965": 0.7704494766179478,
+            "h_335854708": 0.057288633751180255,
+            "h_106039235": -0.49479766848032913
+          },
+          "addr_hash": "38a8da62b15fab7e8e14d773c1f8e1fed68d6e3a1a24793cc6dcc5cb63075a71",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 2,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.42842548316702267,
+              "h_394767965": -0.07278037659844158,
+              "h_335854708": 0.8111558021300705,
+              "h_106039235": -0.48535270555472376
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.2541449775582509,
+              "h_394767965": 0.7704494766179478,
+              "h_335854708": 0.057288633751180255,
+              "h_106039235": -0.49479766848032913
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4409849689215323,
+            "h_394767965": 0.747025326560456,
+            "h_335854708": 0.2626548574128217,
+            "h_106039235": -0.5351971878538537
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5769759099171298,
+              "h_394767965": 0.08911973434059699,
+              "h_335854708": 0.7917267952744935,
+              "h_106039235": -0.4566687788269786
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "distractor_fail"
+    },
+    {
+      "kind": "distractor",
+      "id": "distractor|opaque_projection|w0",
+      "arm": "opaque_projection",
+      "world": 0,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 4,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6828562667199318,
+            "h_901663069": 0.528702545727014,
+            "h_806684696": 0.34692764592057596,
+            "h_810668987": -0.3877883500139036
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.14168536556329223,
+              "h_901663069": -0.6837565801703029,
+              "h_806684696": 0.6693687506197035,
+              "h_810668987": 0.3644237286922374
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6828562667199318,
+              "h_901663069": 0.528702545727014,
+              "h_806684696": 0.34692764592057596,
+              "h_810668987": -0.3877883500139036
+            }
+          },
+          "want": "h_182767705",
+          "ok": false
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6828562667199318,
+            "h_901663069": 0.528702545727014,
+            "h_806684696": 0.34692764592057596,
+            "h_810668987": -0.3877883500139036
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.2541291995616176,
+              "h_901663069": -0.6064901619509225,
+              "h_806684696": 0.7158283908284769,
+              "h_810668987": 0.3320488892193564
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6828562667199318,
+              "h_901663069": 0.528702545727014,
+              "h_806684696": 0.34692764592057596,
+              "h_810668987": -0.3877883500139036
+            }
+          },
+          "want": "h_901663069",
+          "ok": true
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6828562667199318,
+            "h_901663069": 0.528702545727014,
+            "h_806684696": 0.34692764592057596,
+            "h_810668987": -0.3877883500139036
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.10886256523601626,
+              "h_901663069": -0.7037490746023543,
+              "h_806684696": 0.647709072699656,
+              "h_810668987": 0.3813248075587989
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6828562667199318,
+              "h_901663069": 0.528702545727014,
+              "h_806684696": 0.34692764592057596,
+              "h_810668987": -0.3877883500139036
+            }
+          },
+          "want": "h_806684696",
+          "ok": false
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6828562667199318,
+            "h_901663069": 0.528702545727014,
+            "h_806684696": 0.34692764592057596,
+            "h_810668987": -0.3877883500139036
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.22682634185013412,
+              "h_901663069": -0.6296204886322685,
+              "h_806684696": 0.688134066417287,
+              "h_810668987": 0.37074309893686386
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6828562667199318,
+              "h_901663069": 0.528702545727014,
+              "h_806684696": 0.34692764592057596,
+              "h_810668987": -0.3877883500139036
+            }
+          },
+          "want": "h_810668987",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "distractor_fail"
+    },
+    {
+      "kind": "distractor",
+      "id": "distractor|opaque_projection|w1",
+      "arm": "opaque_projection",
+      "world": 1,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 4,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6219446009940988,
+            "h_394767965": 0.6121476235984588,
+            "h_335854708": 0.5034016226992871,
+            "h_106039235": -0.5258099769412893
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4646001880196285,
+              "h_394767965": -0.07128476395621838,
+              "h_335854708": 0.8083440426051169,
+              "h_106039235": -0.44724874471045295
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6219446009940988,
+              "h_394767965": 0.6121476235984588,
+              "h_335854708": 0.5034016226992871,
+              "h_106039235": -0.5258099769412893
+            }
+          },
+          "want": "h_270876880",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6219446009940988,
+            "h_394767965": 0.6121476235984588,
+            "h_335854708": 0.5034016226992871,
+            "h_106039235": -0.5258099769412893
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.544913837367003,
+              "h_394767965": 0.17054988189073095,
+              "h_335854708": 0.7850427594128796,
+              "h_106039235": -0.5523325043593729
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6219446009940988,
+              "h_394767965": 0.6121476235984588,
+              "h_335854708": 0.5034016226992871,
+              "h_106039235": -0.5258099769412893
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6219446009940988,
+            "h_394767965": 0.6121476235984588,
+            "h_335854708": 0.5034016226992871,
+            "h_106039235": -0.5258099769412893
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.42842548316702267,
+              "h_394767965": -0.07278037659844158,
+              "h_335854708": 0.8111558021300705,
+              "h_106039235": -0.48535270555472376
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6219446009940988,
+              "h_394767965": 0.6121476235984588,
+              "h_335854708": 0.5034016226992871,
+              "h_106039235": -0.5258099769412893
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6219446009940988,
+            "h_394767965": 0.6121476235984588,
+            "h_335854708": 0.5034016226992871,
+            "h_106039235": -0.5258099769412893
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5769759099171298,
+              "h_394767965": 0.08911973434059699,
+              "h_335854708": 0.7917267952744935,
+              "h_106039235": -0.4566687788269786
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6219446009940988,
+              "h_394767965": 0.6121476235984588,
+              "h_335854708": 0.5034016226992871,
+              "h_106039235": -0.5258099769412893
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "distractor_fail"
+    },
+    {
+      "kind": "distractor",
+      "id": "distractor|no_persistent_memory|w0",
+      "arm": "no_persistent_memory",
+      "world": 0,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": -0.14168536556329223,
+            "h_901663069": -0.6837565801703029,
+            "h_806684696": 0.6693687506197035,
+            "h_810668987": 0.3644237286922374
+          },
+          "addr_hash": "a53f8569e949f428de9322155f7cab8c31e6864d506e18a4f31eb4785682b5a7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.14168536556329223,
+              "h_901663069": -0.6837565801703029,
+              "h_806684696": 0.6693687506197035,
+              "h_810668987": 0.3644237286922374
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.14168536556329223,
+              "h_901663069": -0.6837565801703029,
+              "h_806684696": 0.6693687506197035,
+              "h_810668987": 0.3644237286922374
+            }
+          },
+          "want": "h_182767705",
+          "ok": false
+        },
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": -0.2541291995616176,
+            "h_901663069": -0.6064901619509225,
+            "h_806684696": 0.7158283908284769,
+            "h_810668987": 0.3320488892193564
+          },
+          "addr_hash": "c722f8d2822a2d6409b9b1dc922a656970aa2d2a1168ca1feacf6ab9ebb418e4",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.2541291995616176,
+              "h_901663069": -0.6064901619509225,
+              "h_806684696": 0.7158283908284769,
+              "h_810668987": 0.3320488892193564
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.2541291995616176,
+              "h_901663069": -0.6064901619509225,
+              "h_806684696": 0.7158283908284769,
+              "h_810668987": 0.3320488892193564
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": -0.10886256523601626,
+            "h_901663069": -0.7037490746023543,
+            "h_806684696": 0.647709072699656,
+            "h_810668987": 0.3813248075587989
+          },
+          "addr_hash": "752c619b4968fb79372c873b82937b268892cef6b91ed3b2fa24a9030f7ef02d",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.10886256523601626,
+              "h_901663069": -0.7037490746023543,
+              "h_806684696": 0.647709072699656,
+              "h_810668987": 0.3813248075587989
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.10886256523601626,
+              "h_901663069": -0.7037490746023543,
+              "h_806684696": 0.647709072699656,
+              "h_810668987": 0.3813248075587989
+            }
+          },
+          "want": "h_806684696",
+          "ok": true
+        },
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": -0.22682634185013412,
+            "h_901663069": -0.6296204886322685,
+            "h_806684696": 0.688134066417287,
+            "h_810668987": 0.37074309893686386
+          },
+          "addr_hash": "999ac4e7ec3582f682a54e66299976255db1fb360a0d3836b97626c22d533fec",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.22682634185013412,
+              "h_901663069": -0.6296204886322685,
+              "h_806684696": 0.688134066417287,
+              "h_810668987": 0.37074309893686386
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.22682634185013412,
+              "h_901663069": -0.6296204886322685,
+              "h_806684696": 0.688134066417287,
+              "h_810668987": 0.37074309893686386
+            }
+          },
+          "want": "h_810668987",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "distractor_fail"
+    },
+    {
+      "kind": "distractor",
+      "id": "distractor|no_persistent_memory|w1",
+      "arm": "no_persistent_memory",
+      "world": 1,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_335854708",
+          "scores": {
+            "h_270876880": -0.4646001880196285,
+            "h_394767965": -0.07128476395621838,
+            "h_335854708": 0.8083440426051169,
+            "h_106039235": -0.44724874471045295
+          },
+          "addr_hash": "a53f8569e949f428de9322155f7cab8c31e6864d506e18a4f31eb4785682b5a7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4646001880196285,
+              "h_394767965": -0.07128476395621838,
+              "h_335854708": 0.8083440426051169,
+              "h_106039235": -0.44724874471045295
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4646001880196285,
+              "h_394767965": -0.07128476395621838,
+              "h_335854708": 0.8083440426051169,
+              "h_106039235": -0.44724874471045295
+            }
+          },
+          "want": "h_270876880",
+          "ok": false
+        },
+        {
+          "winner": "h_335854708",
+          "scores": {
+            "h_270876880": -0.544913837367003,
+            "h_394767965": 0.17054988189073095,
+            "h_335854708": 0.7850427594128796,
+            "h_106039235": -0.5523325043593729
+          },
+          "addr_hash": "c722f8d2822a2d6409b9b1dc922a656970aa2d2a1168ca1feacf6ab9ebb418e4",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.544913837367003,
+              "h_394767965": 0.17054988189073095,
+              "h_335854708": 0.7850427594128796,
+              "h_106039235": -0.5523325043593729
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.544913837367003,
+              "h_394767965": 0.17054988189073095,
+              "h_335854708": 0.7850427594128796,
+              "h_106039235": -0.5523325043593729
+            }
+          },
+          "want": "h_394767965",
+          "ok": false
+        },
+        {
+          "winner": "h_335854708",
+          "scores": {
+            "h_270876880": -0.42842548316702267,
+            "h_394767965": -0.07278037659844158,
+            "h_335854708": 0.8111558021300705,
+            "h_106039235": -0.48535270555472376
+          },
+          "addr_hash": "752c619b4968fb79372c873b82937b268892cef6b91ed3b2fa24a9030f7ef02d",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.42842548316702267,
+              "h_394767965": -0.07278037659844158,
+              "h_335854708": 0.8111558021300705,
+              "h_106039235": -0.48535270555472376
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.42842548316702267,
+              "h_394767965": -0.07278037659844158,
+              "h_335854708": 0.8111558021300705,
+              "h_106039235": -0.48535270555472376
+            }
+          },
+          "want": "h_335854708",
+          "ok": true
+        },
+        {
+          "winner": "h_335854708",
+          "scores": {
+            "h_270876880": -0.5769759099171298,
+            "h_394767965": 0.08911973434059699,
+            "h_335854708": 0.7917267952744935,
+            "h_106039235": -0.4566687788269786
+          },
+          "addr_hash": "999ac4e7ec3582f682a54e66299976255db1fb360a0d3836b97626c22d533fec",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5769759099171298,
+              "h_394767965": 0.08911973434059699,
+              "h_335854708": 0.7917267952744935,
+              "h_106039235": -0.4566687788269786
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.5769759099171298,
+              "h_394767965": 0.08911973434059699,
+              "h_335854708": 0.7917267952744935,
+              "h_106039235": -0.4566687788269786
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "distractor_fail"
+    },
+    {
+      "kind": "distractor",
+      "id": "distractor|slow_cortex_enabled|w0",
+      "arm": "slow_cortex_enabled",
+      "world": 0,
+      "passed": false,
+      "n_ok": 2,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.006186549441285887,
+        0.023081727265187646,
+        0.025552735646201787,
+        0.014754887586405464
+      ],
+      "w_act_query_frozen": false,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_182767705",
+          "scores": {
+            "h_182767705": 0.6787062637178289,
+            "h_901663069": -0.7370247705598771,
+            "h_806684696": 0.1285989922331656,
+            "h_810668987": 0.05146877352152974
+          },
+          "addr_hash": "a53f8569e949f428de9322155f7cab8c31e6864d506e18a4f31eb4785682b5a7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.6787062637178289,
+              "h_901663069": -0.7370247705598771,
+              "h_806684696": 0.1285989922331656,
+              "h_810668987": 0.05146877352152974
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.6787062637178289,
+              "h_901663069": -0.7370247705598771,
+              "h_806684696": 0.1285989922331656,
+              "h_810668987": 0.05146877352152974
+            }
+          },
+          "want": "h_182767705",
+          "ok": true
+        },
+        {
+          "winner": "h_182767705",
+          "scores": {
+            "h_182767705": 0.7591710964281615,
+            "h_901663069": -0.6584475709407297,
+            "h_806684696": -0.025058984825098864,
+            "h_810668987": 0.02784527365104383
+          },
+          "addr_hash": "c722f8d2822a2d6409b9b1dc922a656970aa2d2a1168ca1feacf6ab9ebb418e4",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.7591710964281615,
+              "h_901663069": -0.6584475709407297,
+              "h_806684696": -0.025058984825098864,
+              "h_810668987": 0.02784527365104383
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.7591710964281615,
+              "h_901663069": -0.6584475709407297,
+              "h_806684696": -0.025058984825098864,
+              "h_810668987": 0.02784527365104383
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": 0.42684511702993466,
+            "h_901663069": -0.8055612173597828,
+            "h_806684696": 0.4477935754760172,
+            "h_810668987": 0.06654916141480023
+          },
+          "addr_hash": "752c619b4968fb79372c873b82937b268892cef6b91ed3b2fa24a9030f7ef02d",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.42684511702993466,
+              "h_901663069": -0.8055612173597828,
+              "h_806684696": 0.4477935754760172,
+              "h_810668987": 0.06654916141480023
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.42684511702993466,
+              "h_901663069": -0.8055612173597828,
+              "h_806684696": 0.4477935754760172,
+              "h_810668987": 0.06654916141480023
+            }
+          },
+          "want": "h_806684696",
+          "ok": true
+        },
+        {
+          "winner": "h_182767705",
+          "scores": {
+            "h_182767705": 0.6336361517579612,
+            "h_901663069": -0.7709599147376536,
+            "h_806684696": 0.08005965097348586,
+            "h_810668987": 0.24203285829399337
+          },
+          "addr_hash": "999ac4e7ec3582f682a54e66299976255db1fb360a0d3836b97626c22d533fec",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.6336361517579612,
+              "h_901663069": -0.7709599147376536,
+              "h_806684696": 0.08005965097348586,
+              "h_810668987": 0.24203285829399337
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.6336361517579612,
+              "h_901663069": -0.7709599147376536,
+              "h_806684696": 0.08005965097348586,
+              "h_810668987": 0.24203285829399337
+            }
+          },
+          "want": "h_810668987",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "distractor_fail"
+    },
+    {
+      "kind": "distractor",
+      "id": "distractor|slow_cortex_enabled|w1",
+      "arm": "slow_cortex_enabled",
+      "world": 1,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 4,
+      "d_w_q": [
+        0.005156264086091051,
+        0.02369986557844097,
+        0.017607871806674818,
+        0.01768576392274128
+      ],
+      "w_act_query_frozen": false,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_270876880",
+          "scores": {
+            "h_270876880": 0.6140373139497539,
+            "h_394767965": -0.7592838432094878,
+            "h_335854708": -0.14812013103566807,
+            "h_106039235": 0.23574997344420956
+          },
+          "addr_hash": "a53f8569e949f428de9322155f7cab8c31e6864d506e18a4f31eb4785682b5a7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.6140373139497539,
+              "h_394767965": -0.7592838432094878,
+              "h_335854708": -0.14812013103566807,
+              "h_106039235": 0.23574997344420956
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.6140373139497539,
+              "h_394767965": -0.7592838432094878,
+              "h_335854708": -0.14812013103566807,
+              "h_106039235": 0.23574997344420956
+            }
+          },
+          "want": "h_270876880",
+          "ok": true
+        },
+        {
+          "winner": "h_270876880",
+          "scores": {
+            "h_270876880": 0.5371723542193736,
+            "h_394767965": -0.7764564078242995,
+            "h_335854708": -0.19587926906073674,
+            "h_106039235": 0.38494173140300647
+          },
+          "addr_hash": "c722f8d2822a2d6409b9b1dc922a656970aa2d2a1168ca1feacf6ab9ebb418e4",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.5371723542193736,
+              "h_394767965": -0.7764564078242995,
+              "h_335854708": -0.19587926906073674,
+              "h_106039235": 0.38494173140300647
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.5371723542193736,
+              "h_394767965": -0.7764564078242995,
+              "h_335854708": -0.19587926906073674,
+              "h_106039235": 0.38494173140300647
+            }
+          },
+          "want": "h_394767965",
+          "ok": false
+        },
+        {
+          "winner": "h_270876880",
+          "scores": {
+            "h_270876880": 0.46148561974232516,
+            "h_394767965": -0.7906419101998888,
+            "h_335854708": 0.09474845691822074,
+            "h_106039235": 0.12304670934729145
+          },
+          "addr_hash": "752c619b4968fb79372c873b82937b268892cef6b91ed3b2fa24a9030f7ef02d",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.46148561974232516,
+              "h_394767965": -0.7906419101998888,
+              "h_335854708": 0.09474845691822074,
+              "h_106039235": 0.12304670934729145
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.46148561974232516,
+              "h_394767965": -0.7906419101998888,
+              "h_335854708": 0.09474845691822074,
+              "h_106039235": 0.12304670934729145
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_270876880",
+          "scores": {
+            "h_270876880": 0.5035180686828297,
+            "h_394767965": -0.7758851823448247,
+            "h_335854708": -0.20493719092520601,
+            "h_106039235": 0.4288673495331057
+          },
+          "addr_hash": "999ac4e7ec3582f682a54e66299976255db1fb360a0d3836b97626c22d533fec",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": 0.5035180686828297,
+              "h_394767965": -0.7758851823448247,
+              "h_335854708": -0.20493719092520601,
+              "h_106039235": 0.4288673495331057
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": 0.5035180686828297,
+              "h_394767965": -0.7758851823448247,
+              "h_335854708": -0.20493719092520601,
+              "h_106039235": 0.4288673495331057
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "distractor_fail"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|symbolic_oracle|w0",
+      "arm": "symbolic_oracle",
+      "world": 0,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 5,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.1399154411434099,
+            "h_901663069": -0.5540928908055551,
+            "h_806684696": 0.24628133241650405,
+            "h_810668987": 0.7580388623318323
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.5709399806778471,
+            "h_901663069": 0.18122127440277921,
+            "h_806684696": -0.08982714224607008,
+            "h_810668987": 0.652184092644551
+          },
+          "addr_hash": "b8c8d1be29185c1574778103e1bb7092377a1a77491c354504bbceeb62f8b82f",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 1,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.5804930313251411,
+              "h_901663069": 0.1513405074870679,
+              "h_806684696": -0.050826671873788073,
+              "h_810668987": 0.6588993019603956
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.5709399806778471,
+              "h_901663069": 0.18122127440277921,
+              "h_806684696": -0.08982714224607008,
+              "h_810668987": 0.652184092644551
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": 0.08191782265278669,
+            "h_901663069": -0.44340798065959774,
+            "h_806684696": -0.14179762456588638,
+            "h_810668987": 0.816022317459468
+          },
+          "addr_hash": "38a8da62b15fab7e8e14d773c1f8e1fed68d6e3a1a24793cc6dcc5cb63075a71",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 2,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.07578474821849959,
+              "h_901663069": -0.4711363235767511,
+              "h_806684696": -0.10262270816182073,
+              "h_810668987": 0.8140273296306242
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.08191782265278669,
+              "h_901663069": -0.44340798065959774,
+              "h_806684696": -0.14179762456588638,
+              "h_810668987": 0.816022317459468
+            }
+          },
+          "want": "h_806684696",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.4296870656274603,
+            "h_901663069": -0.16954078119323024,
+            "h_806684696": 0.08200621365252,
+            "h_810668987": 0.7786459818660015
+          },
+          "addr_hash": "091b9460669a2f2b8d3cfa78895c384cf2e4f85dd0c901f66132011f66345738",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 3,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.4345019962092576,
+              "h_901663069": -0.19289704965257434,
+              "h_806684696": 0.11735390202403177,
+              "h_810668987": 0.7730757641488306
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.4296870656274603,
+              "h_901663069": -0.16954078119323024,
+              "h_806684696": 0.08200621365252,
+              "h_810668987": 0.7786459818660015
+            }
+          },
+          "want": "h_810668987",
+          "ok": true
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "revision_fail"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|symbolic_oracle|w1",
+      "arm": "symbolic_oracle",
+      "world": 1,
+      "passed": false,
+      "n_ok": 2,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 5,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4409849689215323,
+            "h_394767965": 0.747025326560456,
+            "h_335854708": 0.2626548574128217,
+            "h_106039235": -0.5351971878538537
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 0,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.39446622894220845,
+            "h_394767965": 0.780486277555087,
+            "h_335854708": 0.15422305531350813,
+            "h_106039235": -0.4805226570138431
+          },
+          "addr_hash": "b8c8d1be29185c1574778103e1bb7092377a1a77491c354504bbceeb62f8b82f",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 1,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4042477721754094,
+              "h_394767965": 0.7793438209565113,
+              "h_335854708": 0.1634532317143461,
+              "h_106039235": -0.4808805983070795
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.39446622894220845,
+              "h_394767965": 0.780486277555087,
+              "h_335854708": 0.15422305531350813,
+              "h_106039235": -0.4805226570138431
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.2541449775582509,
+            "h_394767965": 0.7704494766179478,
+            "h_335854708": 0.057288633751180255,
+            "h_106039235": -0.49479766848032913
+          },
+          "addr_hash": "38a8da62b15fab7e8e14d773c1f8e1fed68d6e3a1a24793cc6dcc5cb63075a71",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 2,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.26626786853309403,
+              "h_394767965": 0.7700655854821687,
+              "h_335854708": 0.07285683899565326,
+              "h_106039235": -0.5011200857759408
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.2541449775582509,
+              "h_394767965": 0.7704494766179478,
+              "h_335854708": 0.057288633751180255,
+              "h_106039235": -0.49479766848032913
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.49094434961093797,
+            "h_394767965": 0.7794163283963307,
+            "h_335854708": 0.1928577287504413,
+            "h_106039235": -0.42996689217245143
+          },
+          "addr_hash": "091b9460669a2f2b8d3cfa78895c384cf2e4f85dd0c901f66132011f66345738",
+          "telemetry": {
+            "memory_path": "episodic_completed",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": 3,
+            "familiar": true,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5044221255597294,
+              "h_394767965": 0.7756471448158653,
+              "h_335854708": 0.20570866564492243,
+              "h_106039235": -0.4286854617945581
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.49094434961093797,
+              "h_394767965": 0.7794163283963307,
+              "h_335854708": 0.1928577287504413,
+              "h_106039235": -0.42996689217245143
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "revision_fail"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|opaque_projection|w0",
+      "arm": "opaque_projection",
+      "world": 0,
+      "passed": false,
+      "n_ok": 2,
+      "n_need": 4,
+      "n_opaque": 5,
+      "n_episodes": 5,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6828562667199318,
+            "h_901663069": 0.528702545727014,
+            "h_806684696": 0.34692764592057596,
+            "h_810668987": -0.3877883500139036
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6828562667199318,
+              "h_901663069": 0.528702545727014,
+              "h_806684696": 0.34692764592057596,
+              "h_810668987": -0.3877883500139036
+            }
+          },
+          "want": "h_901663069",
+          "ok": true
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6806344600260351,
+            "h_901663069": 0.5282030042120341,
+            "h_806684696": 0.3476364086286424,
+            "h_810668987": -0.3911821824204942
+          },
+          "addr_hash": "afb7fca7d76649e6360cdce611946a8e48d808f0873cf9255f33b5384a12c4f1",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.5804930313251411,
+              "h_901663069": 0.1513405074870679,
+              "h_806684696": -0.050826671873788073,
+              "h_810668987": 0.6588993019603956
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6806344600260351,
+              "h_901663069": 0.5282030042120341,
+              "h_806684696": 0.3476364086286424,
+              "h_810668987": -0.3911821824204942
+            }
+          },
+          "want": "h_901663069",
+          "ok": true
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6817206351862014,
+            "h_901663069": 0.5368923387332987,
+            "h_806684696": 0.33728082472671456,
+            "h_810668987": -0.3889987855724758
+          },
+          "addr_hash": "23dc726f9ea9c24ff590e6f9a079bef9574732310f71d411a549a44490ec6ab7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.07578474821849959,
+              "h_901663069": -0.4711363235767511,
+              "h_806684696": -0.10262270816182073,
+              "h_810668987": 0.8140273296306242
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6817206351862014,
+              "h_901663069": 0.5368923387332987,
+              "h_806684696": 0.33728082472671456,
+              "h_810668987": -0.3889987855724758
+            }
+          },
+          "want": "h_806684696",
+          "ok": false
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.6807900836849311,
+            "h_901663069": 0.531898576891731,
+            "h_806684696": 0.3432726844768128,
+            "h_810668987": -0.3907523945074413
+          },
+          "addr_hash": "4f5f524b56b4747bbd110134fdeaeeade84b8a078d05c03628be71bf2207aa40",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.4345019962092576,
+              "h_901663069": -0.19289704965257434,
+              "h_806684696": 0.11735390202403177,
+              "h_810668987": 0.7730757641488306
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.6807900836849311,
+              "h_901663069": 0.531898576891731,
+              "h_806684696": 0.3432726844768128,
+              "h_810668987": -0.3907523945074413
+            }
+          },
+          "want": "h_810668987",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "revision_fail"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|opaque_projection|w1",
+      "arm": "opaque_projection",
+      "world": 1,
+      "passed": false,
+      "n_ok": 2,
+      "n_need": 4,
+      "n_opaque": 5,
+      "n_episodes": 5,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6219446009940988,
+            "h_394767965": 0.6121476235984588,
+            "h_335854708": 0.5034016226992871,
+            "h_106039235": -0.5258099769412893
+          },
+          "addr_hash": "bbb31e9dcc3e1f7c5ae0c23ef84bf6d4a1b22dc33e9aec6be2a145993786f533",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6219446009940988,
+              "h_394767965": 0.6121476235984588,
+              "h_335854708": 0.5034016226992871,
+              "h_106039235": -0.5258099769412893
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.620246341563324,
+            "h_394767965": 0.6119683563958502,
+            "h_335854708": 0.5038684339053335,
+            "h_106039235": -0.5279056689457576
+          },
+          "addr_hash": "afb7fca7d76649e6360cdce611946a8e48d808f0873cf9255f33b5384a12c4f1",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4042477721754094,
+              "h_394767965": 0.7793438209565113,
+              "h_335854708": 0.1634532317143461,
+              "h_106039235": -0.4808805983070795
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.620246341563324,
+              "h_394767965": 0.6119683563958502,
+              "h_335854708": 0.5038684339053335,
+              "h_106039235": -0.5279056689457576
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6212776077324389,
+            "h_394767965": 0.615385010535535,
+            "h_335854708": 0.49952331253596544,
+            "h_106039235": -0.5246597807548081
+          },
+          "addr_hash": "23dc726f9ea9c24ff590e6f9a079bef9574732310f71d411a549a44490ec6ab7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.26626786853309403,
+              "h_394767965": 0.7700655854821687,
+              "h_335854708": 0.07285683899565326,
+              "h_106039235": -0.5011200857759408
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6212776077324389,
+              "h_394767965": 0.615385010535535,
+              "h_335854708": 0.49952331253596544,
+              "h_106039235": -0.5246597807548081
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.6199290486676122,
+            "h_394767965": 0.6139172676938929,
+            "h_335854708": 0.5015299403366367,
+            "h_106039235": -0.52712482172723
+          },
+          "addr_hash": "4f5f524b56b4747bbd110134fdeaeeade84b8a078d05c03628be71bf2207aa40",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "reinstated_value",
+            "retrieved": true,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5044221255597294,
+              "h_394767965": 0.7756471448158653,
+              "h_335854708": 0.20570866564492243,
+              "h_106039235": -0.4286854617945581
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.6199290486676122,
+              "h_394767965": 0.6139172676938929,
+              "h_335854708": 0.5015299403366367,
+              "h_106039235": -0.52712482172723
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "revision_fail"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|no_persistent_memory|w0",
+      "arm": "no_persistent_memory",
+      "world": 0,
+      "passed": false,
+      "n_ok": 1,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 5,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.1399154411434099,
+            "h_901663069": -0.5540928908055551,
+            "h_806684696": 0.24628133241650405,
+            "h_810668987": 0.7580388623318323
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.1399154411434099,
+              "h_901663069": -0.5540928908055551,
+              "h_806684696": 0.24628133241650405,
+              "h_810668987": 0.7580388623318323
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.5804930313251411,
+            "h_901663069": 0.1513405074870679,
+            "h_806684696": -0.050826671873788073,
+            "h_810668987": 0.6588993019603956
+          },
+          "addr_hash": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.5804930313251411,
+              "h_901663069": 0.1513405074870679,
+              "h_806684696": -0.050826671873788073,
+              "h_810668987": 0.6588993019603956
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.5804930313251411,
+              "h_901663069": 0.1513405074870679,
+              "h_806684696": -0.050826671873788073,
+              "h_810668987": 0.6588993019603956
+            }
+          },
+          "want": "h_901663069",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": 0.07578474821849959,
+            "h_901663069": -0.4711363235767511,
+            "h_806684696": -0.10262270816182073,
+            "h_810668987": 0.8140273296306242
+          },
+          "addr_hash": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": 0.07578474821849959,
+              "h_901663069": -0.4711363235767511,
+              "h_806684696": -0.10262270816182073,
+              "h_810668987": 0.8140273296306242
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": 0.07578474821849959,
+              "h_901663069": -0.4711363235767511,
+              "h_806684696": -0.10262270816182073,
+              "h_810668987": 0.8140273296306242
+            }
+          },
+          "want": "h_806684696",
+          "ok": false
+        },
+        {
+          "winner": "h_810668987",
+          "scores": {
+            "h_182767705": -0.4345019962092576,
+            "h_901663069": -0.19289704965257434,
+            "h_806684696": 0.11735390202403177,
+            "h_810668987": 0.7730757641488306
+          },
+          "addr_hash": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.4345019962092576,
+              "h_901663069": -0.19289704965257434,
+              "h_806684696": 0.11735390202403177,
+              "h_810668987": 0.7730757641488306
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.4345019962092576,
+              "h_901663069": -0.19289704965257434,
+              "h_806684696": 0.11735390202403177,
+              "h_810668987": 0.7730757641488306
+            }
+          },
+          "want": "h_810668987",
+          "ok": true
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "revision_fail"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|no_persistent_memory|w1",
+      "arm": "no_persistent_memory",
+      "world": 1,
+      "passed": false,
+      "n_ok": 2,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 5,
+      "d_w_q": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "w_act_query_frozen": true,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4409849689215323,
+            "h_394767965": 0.747025326560456,
+            "h_335854708": 0.2626548574128217,
+            "h_106039235": -0.5351971878538537
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4409849689215323,
+              "h_394767965": 0.747025326560456,
+              "h_335854708": 0.2626548574128217,
+              "h_106039235": -0.5351971878538537
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4042477721754094,
+            "h_394767965": 0.7793438209565113,
+            "h_335854708": 0.1634532317143461,
+            "h_106039235": -0.4808805983070795
+          },
+          "addr_hash": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4042477721754094,
+              "h_394767965": 0.7793438209565113,
+              "h_335854708": 0.1634532317143461,
+              "h_106039235": -0.4808805983070795
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4042477721754094,
+              "h_394767965": 0.7793438209565113,
+              "h_335854708": 0.1634532317143461,
+              "h_106039235": -0.4808805983070795
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.26626786853309403,
+            "h_394767965": 0.7700655854821687,
+            "h_335854708": 0.07285683899565326,
+            "h_106039235": -0.5011200857759408
+          },
+          "addr_hash": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.26626786853309403,
+              "h_394767965": 0.7700655854821687,
+              "h_335854708": 0.07285683899565326,
+              "h_106039235": -0.5011200857759408
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.26626786853309403,
+              "h_394767965": 0.7700655854821687,
+              "h_335854708": 0.07285683899565326,
+              "h_106039235": -0.5011200857759408
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.5044221255597294,
+            "h_394767965": 0.7756471448158653,
+            "h_335854708": 0.20570866564492243,
+            "h_106039235": -0.4286854617945581
+          },
+          "addr_hash": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5044221255597294,
+              "h_394767965": 0.7756471448158653,
+              "h_335854708": 0.20570866564492243,
+              "h_106039235": -0.4286854617945581
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.5044221255597294,
+              "h_394767965": 0.7756471448158653,
+              "h_335854708": 0.20570866564492243,
+              "h_106039235": -0.4286854617945581
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "revision_fail"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|slow_cortex_enabled|w0",
+      "arm": "slow_cortex_enabled",
+      "world": 0,
+      "passed": false,
+      "n_ok": 3,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 5,
+      "d_w_q": [
+        0.006186549441285887,
+        0.023081727265187646,
+        0.025552735646201787,
+        0.014754887586405464,
+        0.019423346679881718
+      ],
+      "w_act_query_frozen": false,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.010517737481352096,
+            "h_901663069": 0.6061008186270094,
+            "h_806684696": -0.7676947515127618,
+            "h_810668987": 0.12384027764139903
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.010517737481352096,
+              "h_901663069": 0.6061008186270094,
+              "h_806684696": -0.7676947515127618,
+              "h_810668987": 0.12384027764139903
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.010517737481352096,
+              "h_901663069": 0.6061008186270094,
+              "h_806684696": -0.7676947515127618,
+              "h_810668987": 0.12384027764139903
+            }
+          },
+          "want": "h_901663069",
+          "ok": true
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.4975178551558569,
+            "h_901663069": 0.7711496769335828,
+            "h_806684696": -0.40290303853638365,
+            "h_810668987": 0.027018100071277727
+          },
+          "addr_hash": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.4975178551558569,
+              "h_901663069": 0.7711496769335828,
+              "h_806684696": -0.40290303853638365,
+              "h_810668987": 0.027018100071277727
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.4975178551558569,
+              "h_901663069": 0.7711496769335828,
+              "h_806684696": -0.40290303853638365,
+              "h_810668987": 0.027018100071277727
+            }
+          },
+          "want": "h_901663069",
+          "ok": true
+        },
+        {
+          "winner": "h_806684696",
+          "scores": {
+            "h_182767705": -0.461449017534734,
+            "h_901663069": -0.38530750292697474,
+            "h_806684696": 0.7977250914560912,
+            "h_810668987": 0.14825898269282498
+          },
+          "addr_hash": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.461449017534734,
+              "h_901663069": -0.38530750292697474,
+              "h_806684696": 0.7977250914560912,
+              "h_810668987": 0.14825898269282498
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.461449017534734,
+              "h_901663069": -0.38530750292697474,
+              "h_806684696": 0.7977250914560912,
+              "h_810668987": 0.14825898269282498
+            }
+          },
+          "want": "h_806684696",
+          "ok": true
+        },
+        {
+          "winner": "h_901663069",
+          "scores": {
+            "h_182767705": -0.4135987220948447,
+            "h_901663069": 0.549943499812799,
+            "h_806684696": -0.48572501523299405,
+            "h_810668987": 0.3896149709111493
+          },
+          "addr_hash": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_182767705": -0.4135987220948447,
+              "h_901663069": 0.549943499812799,
+              "h_806684696": -0.48572501523299405,
+              "h_810668987": 0.3896149709111493
+            },
+            "scores_after_reinstatement": {
+              "h_182767705": -0.4135987220948447,
+              "h_901663069": 0.549943499812799,
+              "h_806684696": -0.48572501523299405,
+              "h_810668987": 0.3896149709111493
+            }
+          },
+          "want": "h_810668987",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "revision_fail"
+    },
+    {
+      "kind": "revision",
+      "id": "revision|slow_cortex_enabled|w1",
+      "arm": "slow_cortex_enabled",
+      "world": 1,
+      "passed": false,
+      "n_ok": 2,
+      "n_need": 4,
+      "n_opaque": 0,
+      "n_episodes": 5,
+      "d_w_q": [
+        0.005156264086091051,
+        0.02369986557844097,
+        0.017607871806674818,
+        0.01768576392274128,
+        0.014894566545025613
+      ],
+      "w_act_query_frozen": false,
+      "reset_rho_before_recall": true,
+      "probes": [
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.23917704897125752,
+            "h_394767965": 0.7775185139312506,
+            "h_335854708": 0.012091393537972756,
+            "h_106039235": -0.4615400985318894
+          },
+          "addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.23917704897125752,
+              "h_394767965": 0.7775185139312506,
+              "h_335854708": 0.012091393537972756,
+              "h_106039235": -0.4615400985318894
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.23917704897125752,
+              "h_394767965": 0.7775185139312506,
+              "h_335854708": 0.012091393537972756,
+              "h_106039235": -0.4615400985318894
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4876900707480235,
+            "h_394767965": 0.8016355943529645,
+            "h_335854708": 0.006108654034010174,
+            "h_106039235": -0.22802156727464856
+          },
+          "addr_hash": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4876900707480235,
+              "h_394767965": 0.8016355943529645,
+              "h_335854708": 0.006108654034010174,
+              "h_106039235": -0.22802156727464856
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4876900707480235,
+              "h_394767965": 0.8016355943529645,
+              "h_335854708": 0.006108654034010174,
+              "h_106039235": -0.22802156727464856
+            }
+          },
+          "want": "h_394767965",
+          "ok": true
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.5175886456320005,
+            "h_394767965": 0.5933404797620317,
+            "h_335854708": 0.5180402861317304,
+            "h_106039235": -0.630814739355018
+          },
+          "addr_hash": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.5175886456320005,
+              "h_394767965": 0.5933404797620317,
+              "h_335854708": 0.5180402861317304,
+              "h_106039235": -0.630814739355018
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.5175886456320005,
+              "h_394767965": 0.5933404797620317,
+              "h_335854708": 0.5180402861317304,
+              "h_106039235": -0.630814739355018
+            }
+          },
+          "want": "h_335854708",
+          "ok": false
+        },
+        {
+          "winner": "h_394767965",
+          "scores": {
+            "h_270876880": -0.4833970249569676,
+            "h_394767965": 0.7263901677304748,
+            "h_335854708": -0.18489933038826986,
+            "h_106039235": 0.06391460860580978
+          },
+          "addr_hash": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+          "telemetry": {
+            "memory_path": "empty",
+            "motor_path": "cortical_scoring",
+            "scoring_address_source": "live_rho",
+            "retrieved": false,
+            "reject_reason": null,
+            "slot": null,
+            "familiar": false,
+            "scores_before_reinstatement": {
+              "h_270876880": -0.4833970249569676,
+              "h_394767965": 0.7263901677304748,
+              "h_335854708": -0.18489933038826986,
+              "h_106039235": 0.06391460860580978
+            },
+            "scores_after_reinstatement": {
+              "h_270876880": -0.4833970249569676,
+              "h_394767965": 0.7263901677304748,
+              "h_335854708": -0.18489933038826986,
+              "h_106039235": 0.06391460860580978
+            }
+          },
+          "want": "h_106039235",
+          "ok": false
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "revision_fail"
+    }
+  ],
+  "decision_code": "generic_reinstatement_fail",
+  "decision_then": "generic_reinstatement_fail",
+  "phase_flags": {
+    "n_cells": 34,
+    "candidate_v41_lock": false,
+    "kqv_edited": false,
+    "slow_cortex_enabled_is_observational": true,
+    "opaque_projection_is_observational": true,
+    "necessary_cell": null,
+    "separate_candidate_review_open": false,
+    "earned_interface": true,
+    "earned_kqv": false
+  },
+  "git_head": "ee1102d4e36c00adc69220d61d17e3493673d9dc",
+  "frozen_runner_sha": "8dbadd143f0fed629496a70c9d6288e60c65301fadd392cab6e3d77ea0b5d6b0",
+  "manifest_sha": "78d7967022b0d898e463b0421c9a3f6ede5495c2af3d561cb46e8f2ebdc070f7",
+  "domain": "TM046.ONESHOT.DEV.",
+  "candidate_v41_lock": false,
+  "kqv_edited": false,
+  "clean_tree": true,
+  "clean_tree_status": "clean",
+  "solver_edited": false,
+  "tm045_runner_untouched": true,
+  "tm044_runner_untouched": true
+}

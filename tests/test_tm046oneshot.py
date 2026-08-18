@@ -185,3 +185,54 @@ def test_runner_refuses_v41_and_smoke():
     assert out["kqv_edit_authorized"] is False
     assert out["memproj_in_genome"] is False
     assert "memproj_arm" not in GenomeConfig().to_dict()
+
+
+def test_dev_lock_generic_reinstatement_fail_and_no_v41():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm046oneshot import expected_cell_ids
+    from three_memory.neural_cortex import (
+        MEMORY_PATH_EPISODIC,
+        MOTOR_PATH_CORTICAL,
+        SCORE_SRC_REINSTATED,
+    )
+
+    devp = REPO / "docs" / "lineage_oneshot.dev.lock"
+    decp = REPO / "docs" / "lineage_oneshot.decision.lock"
+    assert _sha(devp) == "68088c1728e9c3367c5cd30bd88b7adc8df30502afa7db3d5a1546b13fa6110d"
+    assert _sha(decp) == "da0e4e82cbaca107543029af16cd0bfe5cfc6027b457c2798b5c34134ec24323"
+    assert _sha(TM045_RUNNER) == TM045_RUNNER_SHA
+    assert _sha(TM045_DEV) == TM045_DEV_SHA
+    assert _sha(TM045_DEC) == TM045_DEC_SHA
+    assert _sha(TM044_RUNNER) == TM044_RUNNER_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert sha_file(RUNNER) == json.loads(PREREG.read_text())["frozen_runner_sha"]
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "ee1102d4e36c00adc69220d61d17e3493673d9dc"
+    assert dev["decision_code"] == "generic_reinstatement_fail"
+    assert dev["n_cells"] == 34
+    assert dev["candidate_v41_lock"] is False
+    assert dev["kqv_edited"] is False
+    assert dec["earned_next"] is False
+    assert dec["decision"]["code"] == "generic_reinstatement_fail"
+    assert dec["decision"]["phase_flags"]["earned_interface"] is True
+    assert dec["decision"]["phase_flags"]["earned_kqv"] is False
+    assert dec["decision"]["phase_flags"]["necessary_cell"] is None
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert set(cells) == set(expected_cell_ids())
+    assert cells["decoder|w0"]["passed"] is True
+    assert cells["decoder|w1"]["passed"] is True
+    for wi in (0, 1):
+        oracle = cells[f"immediate|symbolic_oracle|w{wi}"]
+        none = cells[f"immediate|no_persistent_memory|w{wi}"]
+        assert oracle["passed"] is False
+        assert none["passed"] is False
+        assert oracle["w_act_query_frozen"] is True
+        tel = oracle["probes"][0]["telemetry"]
+        assert tel["memory_path"] == MEMORY_PATH_EPISODIC
+        assert tel["motor_path"] == MOTOR_PATH_CORTICAL
+        assert tel["scoring_address_source"] == SCORE_SRC_REINSTATED
