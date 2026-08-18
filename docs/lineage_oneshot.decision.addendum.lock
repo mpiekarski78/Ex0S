@@ -1,0 +1,76 @@
+{
+  "version": "TM.0.46.ONESHOT.DECISION.ADDENDUM",
+  "product": "0.0.004",
+  "earned_next": false,
+  "eligible_for_000005": false,
+  "rewrite_historical_decision": false,
+  "rewrite_historical_dev": false,
+  "rewrite_historical_prereg": false,
+  "rewrite_frozen_runner": false,
+  "rerun_dev": false,
+  "candidate_v41_lock": false,
+  "kqv_edited": false,
+  "historical_decision_lock": "docs/lineage_oneshot.decision.lock",
+  "historical_dev_lock": "docs/lineage_oneshot.dev.lock",
+  "historical_prereg_lock": "docs/lineage_oneshot.prereg.lock",
+  "historical_decision_sha": "da0e4e82cbaca107543029af16cd0bfe5cfc6027b457c2798b5c34134ec24323",
+  "historical_dev_lock_sha": "68088c1728e9c3367c5cd30bd88b7adc8df30502afa7db3d5a1546b13fa6110d",
+  "frozen_runner_sha": "8dbadd143f0fed629496a70c9d6288e60c65301fadd392cab6e3d77ea0b5d6b0",
+  "frozen_neural_sha": "b0785af069c79c62bd3972a0a3f03f53f9bfbb7221accfb76061b6ee52bb0f1c",
+  "joint_socp_sha": "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895",
+  "historical_git_head": "ee1102d4e36c00adc69220d61d17e3493673d9dc",
+  "historical_n_cells": 34,
+  "historical_decision_code": "generic_reinstatement_fail",
+  "frozen_first_match_unchanged": true,
+  "interpretation": "oracle_retrieved_intended_slots__motor_collapsed_to_default_action",
+  "scientifically_valid_organism_result": true,
+  "architectural_conclusion": "none",
+  "audit": {
+    "freeze_shas_hold": true,
+    "decoder_precondition_held": true,
+    "decoder_n_ok": [4, 4],
+    "intended_fact_record": {
+      "question": "Did the oracle retrieve the intended fact record, not merely some episode?",
+      "episode_handle_in_probe_telemetry": false,
+      "available_evidence": "immediate oracle probe i reports slot i, familiar true, memory_path=episodic_completed, four distinct scoring_address hashes",
+      "w0_slots": [0, 1, 2, 3],
+      "w1_slots": [0, 1, 2, 3],
+      "w0_n_unique_addr_hashes": 4,
+      "w1_n_unique_addr_hashes": 4,
+      "inference": "Teach order wrote four episodes; probe i completed slot i with a distinct reinstated address. That is retrieval of the cue-matched record, not one shared episode.",
+      "not_value_collapse_on_oracle": true
+    },
+    "one_of_four": {
+      "meaning": "Winner collapsed to one default action on all four probes. The single hit is the fact whose want equals that default.",
+      "w0_winner_all_probes": "h_810668987",
+      "w1_winner_all_probes": "h_394767965",
+      "w0_n_ok": 1,
+      "w1_n_ok": 1
+    },
+    "p0_exact_replay": {
+      "oracle_w0_before_equals_after": true,
+      "oracle_w0_p0_addr_hash": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+      "matches_no_memory_live_p0_addr": true,
+      "meaning": "For the first cue, reinstatement of slot 0 did not change the scoring address versus live rho. Exact replay of that state still ranked the default action."
+    },
+    "opaque_observational": {
+      "retrieved": true,
+      "winner_all_w0_probes": "h_901663069",
+      "after_scores_nearly_identical_across_cues": true,
+      "determined_first_match": false
+    },
+    "kqv_not_earned": true,
+    "next_wall": "TM.0.47.REINSTATE"
+  },
+  "refuse": [
+    "edit experiments/run_tm046oneshot.py after freeze",
+    "rerun TM046 DEV",
+    "tune_kqv",
+    "train_new_decoder",
+    "auto_cortex.candidate.v41.lock",
+    "edit_joint_socp.py",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "Audit of the frozen TM046 wall. First-match remains generic_reinstatement_fail. Product remains 0.0.004."
+}

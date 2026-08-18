@@ -236,3 +236,25 @@ def test_dev_lock_generic_reinstatement_fail_and_no_v41():
         assert tel["memory_path"] == MEMORY_PATH_EPISODIC
         assert tel["motor_path"] == MOTOR_PATH_CORTICAL
         assert tel["scoring_address_source"] == SCORE_SRC_REINSTATED
+        slots = [int(p["telemetry"]["slot"]) for p in oracle["probes"]]
+        assert slots == [0, 1, 2, 3]
+        addrs = [p["addr_hash"] for p in oracle["probes"]]
+        assert len(set(addrs)) == 4
+        winners = {p["winner"] for p in oracle["probes"]}
+        assert len(winners) == 1
+
+
+def test_audit_addendum_does_not_rewrite_first_match():
+    addp = REPO / "docs" / "lineage_oneshot.decision.addendum.lock"
+    add = json.loads(addp.read_text())
+    assert _sha(addp) == "8afcc27a9919baaf4052323b46b639129961848c4a7a30a6c9bfa920d0b6f337"
+    assert add["rewrite_historical_decision"] is False
+    assert add["rerun_dev"] is False
+    assert add["frozen_first_match_unchanged"] is True
+    assert add["historical_decision_code"] == "generic_reinstatement_fail"
+    assert add["interpretation"] == "oracle_retrieved_intended_slots__motor_collapsed_to_default_action"
+    assert add["audit"]["intended_fact_record"]["w0_slots"] == [0, 1, 2, 3]
+    assert add["audit"]["intended_fact_record"]["not_value_collapse_on_oracle"] is True
+    assert add["audit"]["one_of_four"]["w0_winner_all_probes"] == "h_810668987"
+    assert add["kqv_edited"] is False
+    assert not CANDIDATE_V41.exists()
