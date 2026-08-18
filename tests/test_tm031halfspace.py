@@ -23,6 +23,7 @@ RUNNER = REPO / "experiments" / "run_tm031halfspace.py"
 DEV = REPO / "docs" / "lineage_halfspace.dev.lock"
 DEC = REPO / "docs" / "lineage_halfspace.decision.lock"
 ADDENDUM = REPO / "docs" / "lineage_halfspace.decision.addendum.lock"
+FAILCLASS = REPO / "docs" / "lineage_halfspace.failclass.lock"
 MANIFEST = "2abd592a9c29c352038c92349424bd2e524b6b223457fb727bbb0232cb8afc93"
 HISTORICAL_V35_ISO_SHA = "8d1b72fc45aac48f72f38d9ed753e37de81c75df2a0a1b23ee6d880f8b42f8d8"
 HISTORICAL_TM030_DEC_SHA = "88309df4d15bb9fccc3f85e169be3b97b0dd4b2eb53be9b2a1f6d730c11e231f"
@@ -32,6 +33,7 @@ FROZEN_RUNNER_SHA = "480f7400ada06143acaa3242e75aed315e941f40ebb253a7d0bf67caaa1
 HISTORICAL_DEV_SHA = "56dc67affd8fe5d2bb2263dc617c4d28922bfbac03c40b8bf8f6b7cccad67d9a"
 HISTORICAL_DEC_SHA = "00d5e289068a68967af2c53669a0f4c2d16abc6617c851014261a1358dea07c6"
 HISTORICAL_ADDENDUM_SHA = "5be880f3edf1549e75a6929d549d4a8d8d8d493a789dbed197443f25b76abdd1"
+HISTORICAL_FAILCLASS_SHA = "7f37c8010685d70b6184cd4242689826081694fd0416747c93002650588a061e"
 
 
 def _sha(p: Path) -> str:
@@ -431,3 +433,49 @@ def test_dev_honest_core_vs_scale_and_acquire_identity():
             assert skip["on"]["path"] == "cortical_fallback"
             assert skip["on"]["familiar"] is False
             assert skip["off"]["path"] == "episodic_completed"
+
+
+def test_eight_cue_acquire_fails_are_value_consolidation():
+    from three_memory.neural_cortex import ACT_RECALL_EARLY_RAW_HALF, ACT_RECALL_MODES, EPISODE_MATCH_L2
+
+    assert EPISODE_MATCH_L2 == 0.05
+    assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
+    fc = json.loads(FAILCLASS.read_text())
+    assert _sha(FAILCLASS) == HISTORICAL_FAILCLASS_SHA
+    assert _sha(DEV) == HISTORICAL_DEV_SHA
+    assert _sha(ADDENDUM) == HISTORICAL_ADDENDUM_SHA
+    assert fc["case"] == 3
+    assert fc["class"] == "value_consolidation_failure"
+    assert fc["modify_R"] is False
+    assert fc["act_recall_modes_tuple_untouched"] is True
+    assert fc["dev_rerun"] is False
+    cells = {c["id"]: c for c in json.loads(DEV.read_text())["cells"]}
+    derived = []
+    for cid in ("acquire|c8|A_then_B|reg1", "acquire|c8|B_then_A|reg1"):
+        cell = cells[cid]
+        taught_ns = [int(t["n_episodes"]) for t in cell["taught"]]
+        assert taught_ns == list(range(1, 9))
+        assert int(cell["n_episodes"]) == 8
+        assert int(cell["spacing"]["n_keyed"]) == 8
+        assert int(cell["stored_post_awake"]["n_violations"]) == 3
+        assert cell["awake_budget_exhausted"] is True
+        slots = [p["recall_meta"]["slot"] for p in cell["probes"]]
+        assert len(set(slots)) == 8
+        teach_index = {t["cue"]: i for i, t in enumerate(cell["taught"])}
+        for p in cell["probes"]:
+            if p["ranking_ok"]:
+                continue
+            rm = p["recall_meta"]
+            idx = teach_index[p["cue"]]
+            assert int(rm["slot"]) == idx
+            assert float(rm["nearest_dist"]) < float(rm["second_nearest_dist"])
+            assert float(rm["nearest_dist"]) < float(rm["R"])
+            assert p["want"] != p["winner"]
+            derived.append((cid, p["cue"], idx, int(rm["slot"])))
+    assert len(derived) == 4
+    assert {t[2] for t in derived} == {0, 4}
+    for sid in ("stable|c8|A_then_B|reg1", "stable|c8|B_then_A|reg1"):
+        st = cells[sid]
+        assert st["passed"] is True
+        assert int(st["n_probe_correct"]) == 8
+        assert int(st["stored_post_awake"]["n_violations"]) == 0

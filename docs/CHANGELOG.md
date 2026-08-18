@@ -2,6 +2,7 @@
 
 ## 2026-08-18
 
+- **TM.0.31.HALFSPACE fail classification:** Four 8-cue acquire misses are **value/consolidation** (case 3): unique nearest is the teach-index episode; stored P1 ranks the other actuator. Not a nearer-neighbor miss; not a missing row. Do not modify `R`. [`lineage_halfspace.failclass.lock`](lineage_halfspace.failclass.lock). Product **0.0.004**.
 - **TM.0.31.HALFSPACE audit addendum:** Historical first-match **halfspace_core_acquire_fail** unchanged. Eight-cue acquire fails are wrong-slot retrieval inside the ball, not fallback. `treatment_stable` mixes scale cells (frozen runner); core stable+hist passed. [`lineage_halfspace.decision.addendum.lock`](lineage_halfspace.decision.addendum.lock). Product **0.0.004**.
 - **TM.0.31.HALFSPACE / v37 DEV:** First-match **halfspace_core_acquire_fail** (eight-cue acquire 22/24). Novelty cells rejected and matched gate ON/OFF path toggle was observed, but the operational ladder does not claim causality after an acquire fail. No TM030 numeric cutoff. [`lineage_halfspace.decision.lock`](lineage_halfspace.decision.lock). Product **0.0.004**.
 - **TM.0.31.HALFSPACE / v37 freeze:** Apparatus frozen **before** the neural gate. Early-raw indexing with a geometry-derived half-minimum-spacing familiarity rule; four `seed_registry` replicates; dummy-OOV skips; matched ON/OFF novel clones. Runner SHA `480f7400…`. Neural edit follows this freeze on origin. [`lineage_halfspace.prereg.lock`](lineage_halfspace.prereg.lock). Product **0.0.004**.

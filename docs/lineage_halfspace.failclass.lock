@@ -1,0 +1,116 @@
+{
+  "version": "TM.0.31.HALFSPACE.FAILCLASS",
+  "product": "0.0.004",
+  "source": "existing_DEV_record_only",
+  "historical_dev_lock": "docs/lineage_halfspace.dev.lock",
+  "historical_dev_lock_sha": "56dc67affd8fe5d2bb2263dc617c4d28922bfbac03c40b8bf8f6b7cccad67d9a",
+  "historical_decision_lock": "docs/lineage_halfspace.decision.lock",
+  "historical_decision_sha": "00d5e289068a68967af2c53669a0f4c2d16abc6617c851014261a1358dea07c6",
+  "historical_addendum_lock": "docs/lineage_halfspace.decision.addendum.lock",
+  "historical_addendum_sha": "5be880f3edf1549e75a6929d549d4a8d8d8d493a789dbed197443f25b76abdd1",
+  "frozen_runner_sha": "480f7400ada06143acaa3242e75aed315e941f40ebb253a7d0bf67caaa16f564",
+  "rewrite_historical_decision": false,
+  "rewrite_historical_dev": false,
+  "rewrite_historical_addendum": false,
+  "dev_rerun": false,
+  "modify_R": false,
+  "act_recall_modes_tuple_untouched": true,
+  "first_match_unchanged": "halfspace_core_acquire_fail",
+  "cells": [
+    "acquire|c8|A_then_B|reg1",
+    "acquire|c8|B_then_A|reg1"
+  ],
+  "n_failed_probes": 4,
+  "class": "value_consolidation_failure",
+  "case": 3,
+  "case_label": "expected_episode_retrieved_stored_p1_selects_wrong_actuator",
+  "rejected": {
+    "case_1_identity_metric": "own stored key is unique nearest: live slot equals teach index, d1 < d2, 8/8 probes hit 8 distinct slots",
+    "case_2_episode_lifecycle": "append-only taught n_episodes 1..8, n_keyed=8, no replacement plateau"
+  },
+  "addendum_slot_language": "superseded: unique nearest is the teach-index write, not another cue's row",
+  "probes": [
+    {
+      "cell": "acquire|c8|A_then_B|reg1",
+      "cue": "s_001512048",
+      "teach_index": 0,
+      "slot": 0,
+      "want": "h_520479229",
+      "winner": "h_228867755",
+      "d1": 0.26077754108625056,
+      "d2": 0.6750910568564432,
+      "R": 0.3278423792668522
+    },
+    {
+      "cell": "acquire|c8|A_then_B|reg1",
+      "cue": "s_760573305",
+      "teach_index": 4,
+      "slot": 4,
+      "want": "h_520479229",
+      "winner": "h_228867755",
+      "d1": 0.2487962814270796,
+      "d2": 0.6495546840490221,
+      "R": 0.3278423792668522
+    },
+    {
+      "cell": "acquire|c8|B_then_A|reg1",
+      "cue": "s_335458590",
+      "teach_index": 4,
+      "slot": 4,
+      "want": "h_228867755",
+      "winner": "h_520479229",
+      "d1": 0.2487962814270796,
+      "d2": 0.6495546840490221,
+      "R": 0.3278423792668522
+    },
+    {
+      "cell": "acquire|c8|B_then_A|reg1",
+      "cue": "s_633909721",
+      "teach_index": 0,
+      "slot": 0,
+      "want": "h_228867755",
+      "winner": "h_520479229",
+      "d1": 0.26077754108625056,
+      "d2": 0.6750910568564432,
+      "R": 0.3278423792668522
+    }
+  ],
+  "store_at_acquire": {
+    "n_episodes": 8,
+    "n_keyed": 8,
+    "n_violations": 3,
+    "all_margin_ok": false,
+    "awake_budget_exhausted": true
+  },
+  "matched_stable_same_seed": {
+    "ids": [
+      "stable|c8|A_then_B|reg1",
+      "stable|c8|B_then_A|reg1"
+    ],
+    "passed": true,
+    "n_violations_post_rest": 0,
+    "n_probe_correct": 8
+  },
+  "v38": {
+    "retain_half_spacing_familiarity": true,
+    "do_not_modify_R": true,
+    "address": "stored_p1_actuator_value_under_exhausted_awake_rehearsal",
+    "not_first": [
+      "learned_key_discrimination",
+      "multiple_exemplars_over_early_raw_keys",
+      "radius_grid"
+    ],
+    "note": "Case 1 is not confirmed. A different radius cannot repair a wrong nearest neighbor, and these four probes are not wrong nearest neighbors. REST on the same registry seed already ranks 8/8. Future runners may version the mode registry; do not add early_raw_half_spacing to ACT_RECALL_MODES."
+  },
+  "refuse": [
+    "modify_R",
+    "tm031_dev_rerun",
+    "rewrite lineage_halfspace.decision.lock",
+    "rewrite lineage_halfspace.dev.lock",
+    "rewrite lineage_halfspace.decision.addendum.lock",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "disturb TM029 frozen RECALL_MODES",
+    "install_tm030_W_N_cutoff"
+  ],
+  "note": "Pre-v38 classification from locked TM031 DEV. Product remains 0.0.004."
+}
