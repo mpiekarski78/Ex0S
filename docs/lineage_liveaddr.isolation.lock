@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.41.LIVEADDR.ISOLATION",
+  "lab": "TM.0.41.LIVEADDR",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "v40_candidate_authorized": false,
+  "reconstructs_tm040_acquire_worlds": true,
+  "reconstruct_domain": "TM040.CAUSAL.DEV.",
+  "domains": {
+    "DEV": "TM041.LIVEADDR.DEV.",
+    "TWIN": "TM041.LIVEADDR.TWIN."
+  },
+  "refuse": [
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py",
+    "invoke_SOCP_unconditionally",
+    "add_live_constraints",
+    "change_fallback_trigger",
+    "modify_half_spacing",
+    "rewrite TM040 historical locks",
+    "rewrite TM040 DEV from this lab",
+    "auto_cortex.candidate.v40.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Small live-address wall after TM040 telemetry gap. Reconstructs TM040 acquire worlds. Product remains 0.0.004."
+}

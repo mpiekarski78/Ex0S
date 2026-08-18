@@ -1,0 +1,32 @@
+{
+  "version": "TM.0.40.CAUSALBATTERY.DECISION.ADDENDUM",
+  "product": "0.0.004",
+  "rewrite_historical_decision": false,
+  "historical_decision_lock": "docs/lineage_causalbattery.decision.lock",
+  "historical_decision_sha": "734204f628362f58e4f3b19237dd82398016544655d2c13800f3408854bd1b99",
+  "historical_dev_lock_sha": "b10865b5f6fea382396db736549488c68dcdc5000932907a3612e29b53354ad7",
+  "frozen_runner_sha": "0739de3225e36bf88b66001ae9af2c3232a937d0bc6bc3b64eb34bdf7d2f9c6b",
+  "first_match_unchanged": "jointsocp_fallback_acquire_fail",
+  "corrections": {
+    "later_learning": "not_exercised",
+    "later_learning_not_architectural_failure": true,
+    "n_later_after_socp": 0,
+    "contradict": "jointly_feasible_atomic_apply",
+    "contradict_does_not_validate_infeasible_rejection": true,
+    "infeasible_rejection_covered_by": "tests/test_tm040causal.py::test_solver_reject_laws_leave_no_partial_W"
+  },
+  "locked_telemetry_gap": "TM040 probe_map/p1_probe recorded live winner and gamma only. No recall path, familiarity, d1, R, slot, or scoring-address hashes. Scoring address cannot be classified from the DEV lock.",
+  "next": "TM.0.41.LIVEADDR reconstructs the four failed acquire stems without neural, solver, fallback-trigger, or half-spacing edits.",
+  "refuse": [
+    "rewrite lineage_causalbattery.decision.lock",
+    "rewrite lineage_causalbattery.dev.lock",
+    "invoke_SOCP_unconditionally",
+    "add_live_constraints",
+    "change_fallback_trigger",
+    "modify_half_spacing",
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py",
+    "auto_cortex.candidate.v40.lock"
+  ],
+  "note": "Reporting addendum only. Historical first-match stands. Product remains 0.0.004."
+}
