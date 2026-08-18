@@ -273,3 +273,66 @@ def test_runner_refuses_v41_and_smoke():
     assert out["wrapped_state"] == "tm049_observe_last_p1"
     assert out["floor"] == 0.05
     assert "memproj_arm" not in GenomeConfig().to_dict()
+
+
+DEV_SHA = "87148c7e5fc181d8558e3a80caa23ac282676123b87e1e7ca09f4d196825b571"
+DEC_SHA = "404c5401a4ffb66708f8c541593fc7a5dd153ce2cfaa60b30b80b84a817c5443"
+DEV_GIT = "10ec197da1efa85c2f4884a5076786fc07742f4b"
+
+
+def test_dev_lock_heldout_feedback_decode_fail_and_no_v41():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm051fbground import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_fbground.dev.lock"
+    decp = REPO / "docs" / "lineage_fbground.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert _sha(TM050_RUNNER) == TM050_RUNNER_SHA
+    assert _sha(TM050_DEV) == TM050_DEV_SHA
+    assert _sha(TM050_DEC) == TM050_DEC_SHA
+    assert _sha(TM050_ADD) == TM050_ADD_SHA
+    assert _sha(TM049_RUNNER) == TM049_RUNNER_SHA
+    assert _sha(TM046_RUNNER) == TM046_RUNNER_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert _sha(NEURAL) == NEURAL_SHA_AFTER_EDIT
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "heldout_feedback_decode_fail"
+    assert dev["n_cells"] == 10
+    assert dev["n_setup_cells"] == 2
+    assert dev["n_scored_cells"] == 8
+    assert dev["candidate_v41_lock"] is False
+    assert dev["kqv_edited"] is False
+    assert dev["new_decoder"] is False
+    assert dec["earned_next"] is False
+    assert dec["eligible_for_000005"] is False
+    assert dec["new_decoder"] is False
+    assert dec["decision"]["code"] == "heldout_feedback_decode_fail"
+    assert dec["decision"]["phase_flags"]["episodic_loop_complete"] is False
+    assert dec["decision"]["phase_flags"]["earned_kqv"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["decoder|w0"]["passed"] is True
+    assert cells["decoder|w1"]["passed"] is True
+    assert cells["decoder|w0"]["n_ok"] == 4
+    assert cells["reference_only|w0"]["cell_code"] == "reference_ok"
+    assert cells["reference_only|w1"]["cell_code"] == "reference_ok"
+    assert cells["reference_only|w0"]["wrap"]["n_ok_true"] == 1
+    assert cells["reference_only|w1"]["wrap"]["n_ok_true"] == 1
+    assert cells["feedback_grounded|w0"]["cell_code"] == "heldout_feedback_decode_fail"
+    assert cells["feedback_grounded|w1"]["cell_code"] == "heldout_feedback_decode_fail"
+    assert cells["feedback_grounded|w0"]["wrap"]["n_ok_true"] == 1
+    assert cells["feedback_grounded|w1"]["wrap"]["n_ok_true"] == 1
+    assert cells["feedback_grounded|w0"]["wrap"]["n_unique_p1"] == 4
+    assert cells["feedback_grounded|w1"]["wrap"]["n_unique_p1"] == 4
+    assert cells["shuffled_grounding|w0"]["cell_code"] == "shuffled_ok"
+    assert cells["shuffled_grounding|w1"]["cell_code"] == "shuffled_ok"
+    assert cells["shuffled_grounding|w0"]["wrap"]["n_ok_true"] == 1
+    assert cells["feedback_no_memory|w0"]["cell_code"] == "heldout_feedback_decode_fail"
+    assert cells["feedback_no_memory|w1"]["cell_code"] == "heldout_feedback_decode_fail"

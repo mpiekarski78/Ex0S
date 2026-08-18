@@ -1,0 +1,2254 @@
+{
+  "lab": "TM.0.51.FBGROUND",
+  "n_cells": 10,
+  "n_setup_cells": 2,
+  "n_scored_cells": 8,
+  "cells": [
+    {
+      "kind": "setup",
+      "id": "decoder|w0",
+      "arm": "reference_only",
+      "world": 0,
+      "passed": true,
+      "n_ok": 4,
+      "n_need": 4,
+      "n_dev_episodes": 8,
+      "handles": [
+        {
+          "handle": "h_182767705",
+          "ok": true,
+          "winner": "h_182767705",
+          "p1_hash": "5336bfd9e9700c4d477277baba4cf2a94c1787758a31a2ec38882ad80eb53d9e"
+        },
+        {
+          "handle": "h_901663069",
+          "ok": true,
+          "winner": "h_901663069",
+          "p1_hash": "1da72187cc9d8c95628d2c1292526ee04b39fa7cee619f2ac89da114c5a3ad5b"
+        },
+        {
+          "handle": "h_806684696",
+          "ok": true,
+          "winner": "h_806684696",
+          "p1_hash": "bc7a87d42758de632d4746245786a9dc51a08537e3f13706588948761ddf97b1"
+        },
+        {
+          "handle": "h_810668987",
+          "ok": true,
+          "winner": "h_810668987",
+          "p1_hash": "f5e891699fa23b5467d37a6c11f7cef495c9baf5500e3a374de30e13b19cbe1a"
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "decoder_ok",
+      "excluded_from_behavioral_first_match": true
+    },
+    {
+      "kind": "setup",
+      "id": "decoder|w1",
+      "arm": "reference_only",
+      "world": 1,
+      "passed": true,
+      "n_ok": 4,
+      "n_need": 4,
+      "n_dev_episodes": 8,
+      "handles": [
+        {
+          "handle": "h_270876880",
+          "ok": true,
+          "winner": "h_270876880",
+          "p1_hash": "5336bfd9e9700c4d477277baba4cf2a94c1787758a31a2ec38882ad80eb53d9e"
+        },
+        {
+          "handle": "h_394767965",
+          "ok": true,
+          "winner": "h_394767965",
+          "p1_hash": "1da72187cc9d8c95628d2c1292526ee04b39fa7cee619f2ac89da114c5a3ad5b"
+        },
+        {
+          "handle": "h_335854708",
+          "ok": true,
+          "winner": "h_335854708",
+          "p1_hash": "bc7a87d42758de632d4746245786a9dc51a08537e3f13706588948761ddf97b1"
+        },
+        {
+          "handle": "h_106039235",
+          "ok": true,
+          "winner": "h_106039235",
+          "p1_hash": "f5e891699fa23b5467d37a6c11f7cef495c9baf5500e3a374de30e13b19cbe1a"
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "cell_code": "decoder_ok",
+      "excluded_from_behavioral_first_match": true
+    },
+    {
+      "kind": "scored",
+      "id": "reference_only|w0",
+      "arm": "reference_only",
+      "world": 0,
+      "passed": true,
+      "cell_code": "reference_ok",
+      "wrap": {
+        "cue": "s_hold_0",
+        "n_ok_true": 1,
+        "n_ok_perm": 1,
+        "n_need": 4,
+        "winners": [
+          "h_901663069",
+          "h_901663069",
+          "h_901663069",
+          "h_901663069"
+        ],
+        "handles": [
+          "h_182767705",
+          "h_901663069",
+          "h_806684696",
+          "h_810668987"
+        ],
+        "n_unique_p1": 4,
+        "clones": [
+          {
+            "handle": "h_182767705",
+            "winner": "h_901663069",
+            "credit_ok": false,
+            "p1_hash": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+          },
+          {
+            "handle": "h_901663069",
+            "winner": "h_901663069",
+            "credit_ok": true,
+            "p1_hash": "6095d4147b59706e954c1f83188d24679b1c0b07a69ab6e687a178d1563d0527"
+          },
+          {
+            "handle": "h_806684696",
+            "winner": "h_901663069",
+            "credit_ok": false,
+            "p1_hash": "4533bafecb2c96c543c40acde6ea5d5f1559fb2a7b3703b5ea6455ff5f72f471"
+          },
+          {
+            "handle": "h_810668987",
+            "winner": "h_901663069",
+            "credit_ok": false,
+            "p1_hash": "191ddeaa64b0129170154c45d97cf4271e3d679606745822eed947731d63145a"
+          }
+        ]
+      },
+      "mapping": {
+        "n_facts": 4,
+        "n_ok_credit": 0,
+        "n_ok_stored": 0,
+        "n_ok_reinstatement": 0,
+        "n_ok_canonical": 1,
+        "facts": [
+          {
+            "cue": "s_384021905",
+            "handle": "h_182767705",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_901663069",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": -0.1399154411434099,
+                "h_901663069": -0.5540928908055551,
+                "h_806684696": 0.24628133241650405,
+                "h_810668987": 0.7580388623318323
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.2215085268059957,
+                "h_901663069": 0.4889978291129706,
+                "h_806684696": -0.6263273814189628,
+                "h_810668987": 0.4162364984474059
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9980347568340757,
+              "l2": 0.06269359083549501,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9980347568340757,
+              "l2": 0.06269359083549501,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+            }
+          },
+          {
+            "cue": "s_892434688",
+            "handle": "h_901663069",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": true,
+            "credit_ok": false,
+            "canonical_winner": "h_901663069",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 0,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": -0.5804930313251411,
+                "h_901663069": 0.1513405074870679,
+                "h_806684696": -0.050826671873788073,
+                "h_810668987": 0.6588993019603956
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.2964127779493389,
+                "h_901663069": 0.5084849830462088,
+                "h_806684696": -0.5747275347907362,
+                "h_810668987": 0.41754341251453553
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9967444170031233,
+              "l2": 0.08069179632251117,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80",
+              "hash_b": "02b59c6e5758fd53277aace72a60da60fe125769d241a83b52c9bcf48a6e24ac"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9967444170031232,
+              "l2": 0.08069179632251115,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 0.9999999999999999,
+              "hash_a": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80",
+              "hash_b": "59f1dfdf01079e3f3b31d64250bd8eba99732c819649655703e80dcfc63616b5"
+            }
+          },
+          {
+            "cue": "s_085956651",
+            "handle": "h_806684696",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_901663069",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": 0.07578474821849959,
+                "h_901663069": -0.4711363235767511,
+                "h_806684696": -0.10262270816182073,
+                "h_810668987": 0.8140273296306242
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.2215085268059957,
+                "h_901663069": 0.4889978291129706,
+                "h_806684696": -0.6263273814189628,
+                "h_810668987": 0.4162364984474059
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9947700329600001,
+              "l2": 0.10227381913275907,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "11e0c4de9ab60616833f10d11f19e1147c02915af3ff453441acad5ef3f563a8"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9947700329600001,
+              "l2": 0.10227381913275907,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "11e0c4de9ab60616833f10d11f19e1147c02915af3ff453441acad5ef3f563a8"
+            }
+          },
+          {
+            "cue": "s_229632799",
+            "handle": "h_810668987",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_901663069",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": -0.4345019962092576,
+                "h_901663069": -0.19289704965257434,
+                "h_806684696": 0.11735390202403177,
+                "h_810668987": 0.7730757641488306
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.2215085268059957,
+                "h_901663069": 0.4889978291129706,
+                "h_806684696": -0.6263273814189628,
+                "h_810668987": 0.4162364984474059
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e"
+            }
+          }
+        ],
+        "discard_memory": false
+      },
+      "ordinary": null,
+      "w_act_query_frozen": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "decoder_retrained": false,
+      "new_decoder": false
+    },
+    {
+      "kind": "scored",
+      "id": "reference_only|w1",
+      "arm": "reference_only",
+      "world": 1,
+      "passed": true,
+      "cell_code": "reference_ok",
+      "wrap": {
+        "cue": "s_hold_1",
+        "n_ok_true": 1,
+        "n_ok_perm": 1,
+        "n_need": 4,
+        "winners": [
+          "h_394767965",
+          "h_394767965",
+          "h_394767965",
+          "h_394767965"
+        ],
+        "handles": [
+          "h_270876880",
+          "h_394767965",
+          "h_335854708",
+          "h_106039235"
+        ],
+        "n_unique_p1": 4,
+        "clones": [
+          {
+            "handle": "h_270876880",
+            "winner": "h_394767965",
+            "credit_ok": false,
+            "p1_hash": "af140d625289238598f4ba0f6472abc4af508c43c403107deb2e7f2fa7cd53e6"
+          },
+          {
+            "handle": "h_394767965",
+            "winner": "h_394767965",
+            "credit_ok": true,
+            "p1_hash": "aa98512166964490d88259e56ec91d347163e962c4edf327a22c2351aeda1c89"
+          },
+          {
+            "handle": "h_335854708",
+            "winner": "h_394767965",
+            "credit_ok": false,
+            "p1_hash": "f30d76512ab0c442427ba289be90a96566274e8051f22cd86a9c27474d43f486"
+          },
+          {
+            "handle": "h_106039235",
+            "winner": "h_394767965",
+            "credit_ok": false,
+            "p1_hash": "67d6130bd67b9a40992a3ee335e488d27efd2285a81c0e12103e4c0cccfced29"
+          }
+        ]
+      },
+      "mapping": {
+        "n_facts": 4,
+        "n_ok_credit": 1,
+        "n_ok_stored": 1,
+        "n_ok_reinstatement": 1,
+        "n_ok_canonical": 1,
+        "facts": [
+          {
+            "cue": "s_575328491",
+            "handle": "h_270876880",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_394767965",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.4409849689215323,
+                "h_394767965": 0.747025326560456,
+                "h_335854708": 0.2626548574128217,
+                "h_106039235": -0.5351971878538537
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.2951484414409645,
+                "h_394767965": 0.8049039332098835,
+                "h_335854708": -0.132557368802907,
+                "h_106039235": -0.25581792576033
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9982574405629969,
+              "l2": 0.05903489539252677,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "0f470e00c61de9638f57a6735f6635b1a07065a2831bc2880554b3197ab48060"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9982574405629968,
+              "l2": 0.05903489539252677,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 0.9999999999999999,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "af140d625289238598f4ba0f6472abc4af508c43c403107deb2e7f2fa7cd53e6"
+            }
+          },
+          {
+            "cue": "s_197063493",
+            "handle": "h_394767965",
+            "stored_ok": true,
+            "reinstatement_ok": true,
+            "canonical_ok": true,
+            "credit_ok": true,
+            "canonical_winner": "h_394767965",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 0,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.4042477721754094,
+                "h_394767965": 0.7793438209565113,
+                "h_335854708": 0.1634532317143461,
+                "h_106039235": -0.4808805983070795
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.33352507425307937,
+                "h_394767965": 0.810021911183854,
+                "h_335854708": -0.06712882508844722,
+                "h_106039235": -0.30084652356237335
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9975846279857118,
+              "l2": 0.06950355407154936,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "0f470e00c61de9638f57a6735f6635b1a07065a2831bc2880554b3197ab48060",
+              "hash_b": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9975846279857118,
+              "l2": 0.06950355407154936,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "0f470e00c61de9638f57a6735f6635b1a07065a2831bc2880554b3197ab48060",
+              "hash_b": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976"
+            }
+          },
+          {
+            "cue": "s_177715507",
+            "handle": "h_335854708",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_394767965",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 1,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.26626786853309403,
+                "h_394767965": 0.7700655854821687,
+                "h_335854708": 0.07285683899565326,
+                "h_106039235": -0.5011200857759408
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.30267226884091764,
+                "h_394767965": 0.8060171290899697,
+                "h_335854708": -0.12493911735630785,
+                "h_106039235": -0.25847294133942716
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9954019141836313,
+              "l2": 0.09589667164577292,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976",
+              "hash_b": "610764789b0efee4795b4356d83d8adb1791afaf9d16076c18a509dd24de0a44"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9954019141836313,
+              "l2": 0.09589667164577292,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976",
+              "hash_b": "610764789b0efee4795b4356d83d8adb1791afaf9d16076c18a509dd24de0a44"
+            }
+          },
+          {
+            "cue": "s_507669026",
+            "handle": "h_106039235",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_394767965",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.5044221255597294,
+                "h_394767965": 0.7756471448158653,
+                "h_335854708": 0.20570866564492243,
+                "h_106039235": -0.4286854617945581
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.2951484414409645,
+                "h_394767965": 0.8049039332098835,
+                "h_335854708": -0.132557368802907,
+                "h_106039235": -0.25581792576033
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f"
+            }
+          }
+        ],
+        "discard_memory": false
+      },
+      "ordinary": null,
+      "w_act_query_frozen": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "decoder_retrained": false,
+      "new_decoder": false
+    },
+    {
+      "kind": "scored",
+      "id": "feedback_grounded|w0",
+      "arm": "feedback_grounded",
+      "world": 0,
+      "passed": false,
+      "cell_code": "heldout_feedback_decode_fail",
+      "wrap": {
+        "cue": "s_hold_0",
+        "n_ok_true": 1,
+        "n_ok_perm": 1,
+        "n_need": 4,
+        "winners": [
+          "h_901663069",
+          "h_901663069",
+          "h_901663069",
+          "h_901663069"
+        ],
+        "handles": [
+          "h_182767705",
+          "h_901663069",
+          "h_806684696",
+          "h_810668987"
+        ],
+        "n_unique_p1": 4,
+        "clones": [
+          {
+            "handle": "h_182767705",
+            "winner": "h_901663069",
+            "credit_ok": false,
+            "p1_hash": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+          },
+          {
+            "handle": "h_901663069",
+            "winner": "h_901663069",
+            "credit_ok": true,
+            "p1_hash": "6095d4147b59706e954c1f83188d24679b1c0b07a69ab6e687a178d1563d0527"
+          },
+          {
+            "handle": "h_806684696",
+            "winner": "h_901663069",
+            "credit_ok": false,
+            "p1_hash": "4533bafecb2c96c543c40acde6ea5d5f1559fb2a7b3703b5ea6455ff5f72f471"
+          },
+          {
+            "handle": "h_810668987",
+            "winner": "h_901663069",
+            "credit_ok": false,
+            "p1_hash": "191ddeaa64b0129170154c45d97cf4271e3d679606745822eed947731d63145a"
+          }
+        ]
+      },
+      "mapping": {
+        "n_facts": 4,
+        "n_ok_credit": 1,
+        "n_ok_stored": 1,
+        "n_ok_reinstatement": 1,
+        "n_ok_canonical": 1,
+        "facts": [
+          {
+            "cue": "s_384021905",
+            "handle": "h_182767705",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_901663069",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": -0.3029962651237749,
+                "h_901663069": -0.5597821525115334,
+                "h_806684696": 0.7536312649019583,
+                "h_810668987": 0.2710068363135962
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.44572999155892096,
+                "h_901663069": 0.7524082319621329,
+                "h_806684696": -0.03901878428070525,
+                "h_810668987": -0.5408193076513025
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9980347568340757,
+              "l2": 0.06269359083549501,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9980347568340757,
+              "l2": 0.06269359083549501,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+            }
+          },
+          {
+            "cue": "s_892434688",
+            "handle": "h_901663069",
+            "stored_ok": true,
+            "reinstatement_ok": true,
+            "canonical_ok": true,
+            "credit_ok": true,
+            "canonical_winner": "h_901663069",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 0,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": -0.09991632212239097,
+                "h_901663069": -0.6364505381740395,
+                "h_806684696": 0.3483147686054437,
+                "h_810668987": 0.68903945320309
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": 0.031263994414698126,
+                "h_901663069": 0.5138165612015536,
+                "h_806684696": -0.05626242960277569,
+                "h_810668987": -0.8092839125853449
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9967444170031233,
+              "l2": 0.08069179632251117,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80",
+              "hash_b": "02b59c6e5758fd53277aace72a60da60fe125769d241a83b52c9bcf48a6e24ac"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9967444170031232,
+              "l2": 0.08069179632251115,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 0.9999999999999999,
+              "hash_a": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80",
+              "hash_b": "59f1dfdf01079e3f3b31d64250bd8eba99732c819649655703e80dcfc63616b5"
+            }
+          },
+          {
+            "cue": "s_085956651",
+            "handle": "h_806684696",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_901663069",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": -0.18967456899550036,
+                "h_901663069": -0.5873106005457266,
+                "h_806684696": 0.3842340604523202,
+                "h_810668987": 0.6855062193370735
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.44572999155892096,
+                "h_901663069": 0.7524082319621329,
+                "h_806684696": -0.03901878428070525,
+                "h_810668987": -0.5408193076513025
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9947700329600001,
+              "l2": 0.10227381913275907,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "11e0c4de9ab60616833f10d11f19e1147c02915af3ff453441acad5ef3f563a8"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9947700329600001,
+              "l2": 0.10227381913275907,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "11e0c4de9ab60616833f10d11f19e1147c02915af3ff453441acad5ef3f563a8"
+            }
+          },
+          {
+            "cue": "s_229632799",
+            "handle": "h_810668987",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_901663069",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": -0.5425086085579206,
+                "h_901663069": -0.2138185742277346,
+                "h_806684696": 0.8073861746702291,
+                "h_810668987": -0.031255059908162595
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.44572999155892096,
+                "h_901663069": 0.7524082319621329,
+                "h_806684696": -0.03901878428070525,
+                "h_810668987": -0.5408193076513025
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e"
+            }
+          }
+        ],
+        "discard_memory": false
+      },
+      "ordinary": {
+        "n_ok": 2,
+        "n_need": 4,
+        "handles": [
+          {
+            "handle": "h_901663069",
+            "ok": false,
+            "winner": "h_810668987"
+          },
+          {
+            "handle": "h_806684696",
+            "ok": true,
+            "winner": "h_806684696"
+          },
+          {
+            "handle": "h_810668987",
+            "ok": false,
+            "winner": "h_901663069"
+          },
+          {
+            "handle": "h_182767705",
+            "ok": true,
+            "winner": "h_182767705"
+          }
+        ]
+      },
+      "w_act_query_frozen": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "decoder_retrained": false,
+      "new_decoder": false
+    },
+    {
+      "kind": "scored",
+      "id": "feedback_grounded|w1",
+      "arm": "feedback_grounded",
+      "world": 1,
+      "passed": false,
+      "cell_code": "heldout_feedback_decode_fail",
+      "wrap": {
+        "cue": "s_hold_1",
+        "n_ok_true": 1,
+        "n_ok_perm": 1,
+        "n_need": 4,
+        "winners": [
+          "h_335854708",
+          "h_335854708",
+          "h_335854708",
+          "h_335854708"
+        ],
+        "handles": [
+          "h_270876880",
+          "h_394767965",
+          "h_335854708",
+          "h_106039235"
+        ],
+        "n_unique_p1": 4,
+        "clones": [
+          {
+            "handle": "h_270876880",
+            "winner": "h_335854708",
+            "credit_ok": false,
+            "p1_hash": "af140d625289238598f4ba0f6472abc4af508c43c403107deb2e7f2fa7cd53e6"
+          },
+          {
+            "handle": "h_394767965",
+            "winner": "h_335854708",
+            "credit_ok": false,
+            "p1_hash": "aa98512166964490d88259e56ec91d347163e962c4edf327a22c2351aeda1c89"
+          },
+          {
+            "handle": "h_335854708",
+            "winner": "h_335854708",
+            "credit_ok": true,
+            "p1_hash": "f30d76512ab0c442427ba289be90a96566274e8051f22cd86a9c27474d43f486"
+          },
+          {
+            "handle": "h_106039235",
+            "winner": "h_335854708",
+            "credit_ok": false,
+            "p1_hash": "67d6130bd67b9a40992a3ee335e488d27efd2285a81c0e12103e4c0cccfced29"
+          }
+        ]
+      },
+      "mapping": {
+        "n_facts": 4,
+        "n_ok_credit": 1,
+        "n_ok_stored": 1,
+        "n_ok_reinstatement": 1,
+        "n_ok_canonical": 1,
+        "facts": [
+          {
+            "cue": "s_575328491",
+            "handle": "h_270876880",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_335854708",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.4320538787913575,
+                "h_394767965": -0.38354104170029696,
+                "h_335854708": 0.3367783105907092,
+                "h_106039235": 0.36310616655673766
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.5779794154839564,
+                "h_394767965": -0.22037899884979256,
+                "h_335854708": 0.5776564023246915,
+                "h_106039235": 0.07475888375071313
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9982574405629969,
+              "l2": 0.05903489539252677,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "0f470e00c61de9638f57a6735f6635b1a07065a2831bc2880554b3197ab48060"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9982574405629968,
+              "l2": 0.05903489539252677,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 0.9999999999999999,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "af140d625289238598f4ba0f6472abc4af508c43c403107deb2e7f2fa7cd53e6"
+            }
+          },
+          {
+            "cue": "s_197063493",
+            "handle": "h_394767965",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_335854708",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 0,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.2781555338685282,
+                "h_394767965": -0.4980315740337474,
+                "h_335854708": 0.18987078110324582,
+                "h_106039235": 0.48751216437571593
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.3214254404865889,
+                "h_394767965": -0.44336122030457564,
+                "h_335854708": 0.6447568862168898,
+                "h_106039235": -0.0650630099460391
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9975846279857118,
+              "l2": 0.06950355407154936,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "0f470e00c61de9638f57a6735f6635b1a07065a2831bc2880554b3197ab48060",
+              "hash_b": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9975846279857118,
+              "l2": 0.06950355407154936,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "0f470e00c61de9638f57a6735f6635b1a07065a2831bc2880554b3197ab48060",
+              "hash_b": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976"
+            }
+          },
+          {
+            "cue": "s_177715507",
+            "handle": "h_335854708",
+            "stored_ok": true,
+            "reinstatement_ok": true,
+            "canonical_ok": true,
+            "credit_ok": true,
+            "canonical_winner": "h_335854708",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 1,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.7015650659007405,
+                "h_394767965": -0.020383686070828796,
+                "h_335854708": 0.4536300434279667,
+                "h_106039235": 0.1708903072830944
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.684918305128668,
+                "h_394767965": 0.0949179500375204,
+                "h_335854708": 0.7268040518208471,
+                "h_106039235": -0.276104215331855
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9954019141836313,
+              "l2": 0.09589667164577292,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976",
+              "hash_b": "610764789b0efee4795b4356d83d8adb1791afaf9d16076c18a509dd24de0a44"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9954019141836313,
+              "l2": 0.09589667164577292,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976",
+              "hash_b": "610764789b0efee4795b4356d83d8adb1791afaf9d16076c18a509dd24de0a44"
+            }
+          },
+          {
+            "cue": "s_507669026",
+            "handle": "h_106039235",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_335854708",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.42272104820110706,
+                "h_394767965": -0.4096736149398999,
+                "h_335854708": 0.4609732106291506,
+                "h_106039235": 0.22736012546779108
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.5779794154839564,
+                "h_394767965": -0.22037899884979256,
+                "h_335854708": 0.5776564023246915,
+                "h_106039235": 0.07475888375071313
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f"
+            }
+          }
+        ],
+        "discard_memory": false
+      },
+      "ordinary": {
+        "n_ok": 1,
+        "n_need": 4,
+        "handles": [
+          {
+            "handle": "h_394767965",
+            "ok": false,
+            "winner": "h_106039235"
+          },
+          {
+            "handle": "h_335854708",
+            "ok": false,
+            "winner": "h_106039235"
+          },
+          {
+            "handle": "h_106039235",
+            "ok": true,
+            "winner": "h_106039235"
+          },
+          {
+            "handle": "h_270876880",
+            "ok": false,
+            "winner": "h_106039235"
+          }
+        ]
+      },
+      "w_act_query_frozen": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "decoder_retrained": false,
+      "new_decoder": false
+    },
+    {
+      "kind": "scored",
+      "id": "shuffled_grounding|w0",
+      "arm": "shuffled_grounding",
+      "world": 0,
+      "passed": true,
+      "cell_code": "shuffled_ok",
+      "wrap": {
+        "cue": "s_hold_0",
+        "n_ok_true": 1,
+        "n_ok_perm": 1,
+        "n_need": 4,
+        "winners": [
+          "h_810668987",
+          "h_810668987",
+          "h_810668987",
+          "h_810668987"
+        ],
+        "handles": [
+          "h_182767705",
+          "h_901663069",
+          "h_806684696",
+          "h_810668987"
+        ],
+        "n_unique_p1": 4,
+        "clones": [
+          {
+            "handle": "h_182767705",
+            "winner": "h_810668987",
+            "credit_ok": false,
+            "p1_hash": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+          },
+          {
+            "handle": "h_901663069",
+            "winner": "h_810668987",
+            "credit_ok": false,
+            "p1_hash": "6095d4147b59706e954c1f83188d24679b1c0b07a69ab6e687a178d1563d0527"
+          },
+          {
+            "handle": "h_806684696",
+            "winner": "h_810668987",
+            "credit_ok": false,
+            "p1_hash": "4533bafecb2c96c543c40acde6ea5d5f1559fb2a7b3703b5ea6455ff5f72f471"
+          },
+          {
+            "handle": "h_810668987",
+            "winner": "h_810668987",
+            "credit_ok": true,
+            "p1_hash": "191ddeaa64b0129170154c45d97cf4271e3d679606745822eed947731d63145a"
+          }
+        ]
+      },
+      "mapping": {
+        "n_facts": 4,
+        "n_ok_credit": 1,
+        "n_ok_stored": 1,
+        "n_ok_reinstatement": 1,
+        "n_ok_canonical": 1,
+        "facts": [
+          {
+            "cue": "s_384021905",
+            "handle": "h_182767705",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_810668987",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": 0.31157311143815036,
+                "h_901663069": -0.14920988042138436,
+                "h_806684696": -0.5834823848066718,
+                "h_810668987": 0.638048812084167
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.2896127814000088,
+                "h_901663069": -0.2641953890894036,
+                "h_806684696": 0.01917436152857851,
+                "h_810668987": 0.8234859485382096
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9980347568340757,
+              "l2": 0.06269359083549501,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9980347568340757,
+              "l2": 0.06269359083549501,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+            }
+          },
+          {
+            "cue": "s_892434688",
+            "handle": "h_901663069",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_810668987",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 0,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": 0.5203115586250436,
+                "h_901663069": -0.11877728322660554,
+                "h_806684696": -0.6816687472699343,
+                "h_810668987": 0.42928365368682586
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.5286047737548887,
+                "h_901663069": 0.2660451612682041,
+                "h_806684696": -0.21023922326133512,
+                "h_810668987": 0.6252150452288576
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9967444170031233,
+              "l2": 0.08069179632251117,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80",
+              "hash_b": "02b59c6e5758fd53277aace72a60da60fe125769d241a83b52c9bcf48a6e24ac"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9967444170031232,
+              "l2": 0.08069179632251115,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 0.9999999999999999,
+              "hash_a": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80",
+              "hash_b": "59f1dfdf01079e3f3b31d64250bd8eba99732c819649655703e80dcfc63616b5"
+            }
+          },
+          {
+            "cue": "s_085956651",
+            "handle": "h_806684696",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_810668987",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": 0.4693015045647098,
+                "h_901663069": -0.14805043437643237,
+                "h_806684696": -0.6487452836147694,
+                "h_810668987": 0.5033638074755402
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.2896127814000088,
+                "h_901663069": -0.2641953890894036,
+                "h_806684696": 0.01917436152857851,
+                "h_810668987": 0.8234859485382096
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9947700329600001,
+              "l2": 0.10227381913275907,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "11e0c4de9ab60616833f10d11f19e1147c02915af3ff453441acad5ef3f563a8"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9947700329600001,
+              "l2": 0.10227381913275907,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "11e0c4de9ab60616833f10d11f19e1147c02915af3ff453441acad5ef3f563a8"
+            }
+          },
+          {
+            "cue": "s_229632799",
+            "handle": "h_810668987",
+            "stored_ok": true,
+            "reinstatement_ok": true,
+            "canonical_ok": true,
+            "credit_ok": true,
+            "canonical_winner": "h_810668987",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_182767705": 0.1851972617464598,
+                "h_901663069": -0.3627991073779018,
+                "h_806684696": -0.31228657207156424,
+                "h_810668987": 0.7804979774311273
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.2896127814000088,
+                "h_901663069": -0.2641953890894036,
+                "h_806684696": 0.01917436152857851,
+                "h_810668987": 0.8234859485382096
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e",
+              "hash_b": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e"
+            }
+          }
+        ],
+        "discard_memory": false
+      },
+      "ordinary": null,
+      "w_act_query_frozen": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "decoder_retrained": false,
+      "new_decoder": false
+    },
+    {
+      "kind": "scored",
+      "id": "shuffled_grounding|w1",
+      "arm": "shuffled_grounding",
+      "world": 1,
+      "passed": true,
+      "cell_code": "shuffled_ok",
+      "wrap": {
+        "cue": "s_hold_1",
+        "n_ok_true": 1,
+        "n_ok_perm": 1,
+        "n_need": 4,
+        "winners": [
+          "h_106039235",
+          "h_106039235",
+          "h_106039235",
+          "h_106039235"
+        ],
+        "handles": [
+          "h_270876880",
+          "h_394767965",
+          "h_335854708",
+          "h_106039235"
+        ],
+        "n_unique_p1": 4,
+        "clones": [
+          {
+            "handle": "h_270876880",
+            "winner": "h_106039235",
+            "credit_ok": false,
+            "p1_hash": "af140d625289238598f4ba0f6472abc4af508c43c403107deb2e7f2fa7cd53e6"
+          },
+          {
+            "handle": "h_394767965",
+            "winner": "h_106039235",
+            "credit_ok": false,
+            "p1_hash": "aa98512166964490d88259e56ec91d347163e962c4edf327a22c2351aeda1c89"
+          },
+          {
+            "handle": "h_335854708",
+            "winner": "h_106039235",
+            "credit_ok": false,
+            "p1_hash": "f30d76512ab0c442427ba289be90a96566274e8051f22cd86a9c27474d43f486"
+          },
+          {
+            "handle": "h_106039235",
+            "winner": "h_106039235",
+            "credit_ok": true,
+            "p1_hash": "67d6130bd67b9a40992a3ee335e488d27efd2285a81c0e12103e4c0cccfced29"
+          }
+        ]
+      },
+      "mapping": {
+        "n_facts": 4,
+        "n_ok_credit": 1,
+        "n_ok_stored": 1,
+        "n_ok_reinstatement": 1,
+        "n_ok_canonical": 1,
+        "facts": [
+          {
+            "cue": "s_575328491",
+            "handle": "h_270876880",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_106039235",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": 0.5780974239088488,
+                "h_394767965": -0.41433039339317634,
+                "h_335854708": -0.6791124039735881,
+                "h_106039235": 0.606631197219599
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.4535378340991505,
+                "h_394767965": 0.14631263620615811,
+                "h_335854708": -0.245458815865728,
+                "h_106039235": 0.6183038567926168
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9982574405629969,
+              "l2": 0.05903489539252677,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "0f470e00c61de9638f57a6735f6635b1a07065a2831bc2880554b3197ab48060"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9982574405629968,
+              "l2": 0.05903489539252677,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 0.9999999999999999,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "af140d625289238598f4ba0f6472abc4af508c43c403107deb2e7f2fa7cd53e6"
+            }
+          },
+          {
+            "cue": "s_197063493",
+            "handle": "h_394767965",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_106039235",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 0,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": 0.6446508798019014,
+                "h_394767965": -0.3016522835013269,
+                "h_335854708": -0.7292040267271058,
+                "h_106039235": 0.5013115166966985
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.40697876129867444,
+                "h_394767965": 0.27940418723217103,
+                "h_335854708": -0.35126669950478406,
+                "h_106039235": 0.5819714793212092
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9975846279857118,
+              "l2": 0.06950355407154936,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "0f470e00c61de9638f57a6735f6635b1a07065a2831bc2880554b3197ab48060",
+              "hash_b": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9975846279857118,
+              "l2": 0.06950355407154936,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "0f470e00c61de9638f57a6735f6635b1a07065a2831bc2880554b3197ab48060",
+              "hash_b": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976"
+            }
+          },
+          {
+            "cue": "s_177715507",
+            "handle": "h_335854708",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_106039235",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 1,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": 0.48945821800184325,
+                "h_394767965": -0.7098486982451419,
+                "h_335854708": -0.35163045275729965,
+                "h_106039235": 0.5612324474603887
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.5857669608726672,
+                "h_394767965": -0.025685693464311654,
+                "h_335854708": 0.0899718612259789,
+                "h_106039235": 0.49789983293926376
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9954019141836313,
+              "l2": 0.09589667164577292,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976",
+              "hash_b": "610764789b0efee4795b4356d83d8adb1791afaf9d16076c18a509dd24de0a44"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9954019141836313,
+              "l2": 0.09589667164577292,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976",
+              "hash_b": "610764789b0efee4795b4356d83d8adb1791afaf9d16076c18a509dd24de0a44"
+            }
+          },
+          {
+            "cue": "s_507669026",
+            "handle": "h_106039235",
+            "stored_ok": true,
+            "reinstatement_ok": true,
+            "canonical_ok": true,
+            "credit_ok": true,
+            "canonical_winner": "h_106039235",
+            "telemetry": {
+              "memory_path": "episodic_completed",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "reinstated_value",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": 3,
+              "familiar": true,
+              "scores_before_reinstatement": {
+                "h_270876880": 0.4308665656684803,
+                "h_394767965": -0.35934611281283485,
+                "h_335854708": -0.6849944206089814,
+                "h_106039235": 0.7119248427936025
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.4535378340991505,
+                "h_394767965": 0.14631263620615811,
+                "h_335854708": -0.245458815865728,
+                "h_106039235": 0.6183038567926168
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 1.0,
+              "l2": 0.0,
+              "same_hash": true,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f",
+              "hash_b": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f"
+            }
+          }
+        ],
+        "discard_memory": false
+      },
+      "ordinary": null,
+      "w_act_query_frozen": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "decoder_retrained": false,
+      "new_decoder": false
+    },
+    {
+      "kind": "scored",
+      "id": "feedback_no_memory|w0",
+      "arm": "feedback_no_memory",
+      "world": 0,
+      "passed": false,
+      "cell_code": "heldout_feedback_decode_fail",
+      "wrap": {
+        "cue": "s_hold_0",
+        "n_ok_true": 1,
+        "n_ok_perm": 1,
+        "n_need": 4,
+        "winners": [
+          "h_901663069",
+          "h_901663069",
+          "h_901663069",
+          "h_901663069"
+        ],
+        "handles": [
+          "h_182767705",
+          "h_901663069",
+          "h_806684696",
+          "h_810668987"
+        ],
+        "n_unique_p1": 4,
+        "clones": [
+          {
+            "handle": "h_182767705",
+            "winner": "h_901663069",
+            "credit_ok": false,
+            "p1_hash": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+          },
+          {
+            "handle": "h_901663069",
+            "winner": "h_901663069",
+            "credit_ok": true,
+            "p1_hash": "6095d4147b59706e954c1f83188d24679b1c0b07a69ab6e687a178d1563d0527"
+          },
+          {
+            "handle": "h_806684696",
+            "winner": "h_901663069",
+            "credit_ok": false,
+            "p1_hash": "4533bafecb2c96c543c40acde6ea5d5f1559fb2a7b3703b5ea6455ff5f72f471"
+          },
+          {
+            "handle": "h_810668987",
+            "winner": "h_901663069",
+            "credit_ok": false,
+            "p1_hash": "191ddeaa64b0129170154c45d97cf4271e3d679606745822eed947731d63145a"
+          }
+        ]
+      },
+      "mapping": {
+        "n_facts": 4,
+        "n_ok_credit": 1,
+        "n_ok_stored": 1,
+        "n_ok_reinstatement": 1,
+        "n_ok_canonical": 0,
+        "facts": [
+          {
+            "cue": "s_384021905",
+            "handle": "h_182767705",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_806684696",
+            "telemetry": {
+              "memory_path": "empty",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "live_rho",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": null,
+              "familiar": false,
+              "scores_before_reinstatement": {
+                "h_182767705": -0.3029962651237749,
+                "h_901663069": -0.5597821525115334,
+                "h_806684696": 0.7536312649019583,
+                "h_810668987": 0.2710068363135962
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.3029962651237749,
+                "h_901663069": -0.5597821525115334,
+                "h_806684696": 0.7536312649019583,
+                "h_810668987": 0.2710068363135962
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9475355313181512,
+              "l2": 0.32392736433295927,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+              "hash_b": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9475355313181512,
+              "l2": 0.32392736433295927,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+              "hash_b": "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80"
+            }
+          },
+          {
+            "cue": "s_892434688",
+            "handle": "h_901663069",
+            "stored_ok": true,
+            "reinstatement_ok": true,
+            "canonical_ok": false,
+            "credit_ok": true,
+            "canonical_winner": "h_810668987",
+            "telemetry": {
+              "memory_path": "empty",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "live_rho",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": null,
+              "familiar": false,
+              "scores_before_reinstatement": {
+                "h_182767705": -0.09991632212239097,
+                "h_901663069": -0.6364505381740395,
+                "h_806684696": 0.3483147686054437,
+                "h_810668987": 0.68903945320309
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.09991632212239097,
+                "h_901663069": -0.6364505381740395,
+                "h_806684696": 0.3483147686054437,
+                "h_810668987": 0.68903945320309
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9444673793470756,
+              "l2": 0.3332645215228423,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+              "hash_b": "02b59c6e5758fd53277aace72a60da60fe125769d241a83b52c9bcf48a6e24ac"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9444673793470756,
+              "l2": 0.3332645215228423,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 0.9999999999999999,
+              "hash_a": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+              "hash_b": "59f1dfdf01079e3f3b31d64250bd8eba99732c819649655703e80dcfc63616b5"
+            }
+          },
+          {
+            "cue": "s_085956651",
+            "handle": "h_806684696",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_810668987",
+            "telemetry": {
+              "memory_path": "empty",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "live_rho",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": null,
+              "familiar": false,
+              "scores_before_reinstatement": {
+                "h_182767705": -0.18967456899550036,
+                "h_901663069": -0.5873106005457266,
+                "h_806684696": 0.3842340604523202,
+                "h_810668987": 0.6855062193370735
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.18967456899550036,
+                "h_901663069": -0.5873106005457266,
+                "h_806684696": 0.3842340604523202,
+                "h_810668987": 0.6855062193370735
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9159648882986821,
+              "l2": 0.40996368546815937,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+              "hash_b": "11e0c4de9ab60616833f10d11f19e1147c02915af3ff453441acad5ef3f563a8"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9159648882986821,
+              "l2": 0.40996368546815937,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+              "hash_b": "11e0c4de9ab60616833f10d11f19e1147c02915af3ff453441acad5ef3f563a8"
+            }
+          },
+          {
+            "cue": "s_229632799",
+            "handle": "h_810668987",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_806684696",
+            "telemetry": {
+              "memory_path": "empty",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "live_rho",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": null,
+              "familiar": false,
+              "scores_before_reinstatement": {
+                "h_182767705": -0.5425086085579206,
+                "h_901663069": -0.2138185742277346,
+                "h_806684696": 0.8073861746702291,
+                "h_810668987": -0.031255059908162595
+              },
+              "scores_after_reinstatement": {
+                "h_182767705": -0.5425086085579206,
+                "h_901663069": -0.2138185742277346,
+                "h_806684696": 0.8073861746702291,
+                "h_810668987": -0.031255059908162595
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9487061512358625,
+              "l2": 0.3202931431177929,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+              "hash_b": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9487061512358625,
+              "l2": 0.3202931431177929,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+              "hash_b": "7e2522be6fc329299aabcee9d8988aea6dd96f516b47d14895684236c5d12c5e"
+            }
+          }
+        ],
+        "discard_memory": true
+      },
+      "ordinary": null,
+      "w_act_query_frozen": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "decoder_retrained": false,
+      "new_decoder": false
+    },
+    {
+      "kind": "scored",
+      "id": "feedback_no_memory|w1",
+      "arm": "feedback_no_memory",
+      "world": 1,
+      "passed": false,
+      "cell_code": "heldout_feedback_decode_fail",
+      "wrap": {
+        "cue": "s_hold_1",
+        "n_ok_true": 1,
+        "n_ok_perm": 1,
+        "n_need": 4,
+        "winners": [
+          "h_335854708",
+          "h_335854708",
+          "h_335854708",
+          "h_335854708"
+        ],
+        "handles": [
+          "h_270876880",
+          "h_394767965",
+          "h_335854708",
+          "h_106039235"
+        ],
+        "n_unique_p1": 4,
+        "clones": [
+          {
+            "handle": "h_270876880",
+            "winner": "h_335854708",
+            "credit_ok": false,
+            "p1_hash": "af140d625289238598f4ba0f6472abc4af508c43c403107deb2e7f2fa7cd53e6"
+          },
+          {
+            "handle": "h_394767965",
+            "winner": "h_335854708",
+            "credit_ok": false,
+            "p1_hash": "aa98512166964490d88259e56ec91d347163e962c4edf327a22c2351aeda1c89"
+          },
+          {
+            "handle": "h_335854708",
+            "winner": "h_335854708",
+            "credit_ok": true,
+            "p1_hash": "f30d76512ab0c442427ba289be90a96566274e8051f22cd86a9c27474d43f486"
+          },
+          {
+            "handle": "h_106039235",
+            "winner": "h_335854708",
+            "credit_ok": false,
+            "p1_hash": "67d6130bd67b9a40992a3ee335e488d27efd2285a81c0e12103e4c0cccfced29"
+          }
+        ]
+      },
+      "mapping": {
+        "n_facts": 4,
+        "n_ok_credit": 1,
+        "n_ok_stored": 1,
+        "n_ok_reinstatement": 1,
+        "n_ok_canonical": 1,
+        "facts": [
+          {
+            "cue": "s_575328491",
+            "handle": "h_270876880",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_106039235",
+            "telemetry": {
+              "memory_path": "empty",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "live_rho",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": null,
+              "familiar": false,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.4320538787913575,
+                "h_394767965": -0.38354104170029696,
+                "h_335854708": 0.3367783105907092,
+                "h_106039235": 0.36310616655673766
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.4320538787913575,
+                "h_394767965": -0.38354104170029696,
+                "h_335854708": 0.3367783105907092,
+                "h_106039235": 0.36310616655673766
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9469116310460783,
+              "l2": 0.32584772196202894,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+              "hash_b": "0f470e00c61de9638f57a6735f6635b1a07065a2831bc2880554b3197ab48060"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9469116310460782,
+              "l2": 0.3258477219620289,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 0.9999999999999999,
+              "hash_a": "49305bf204ed68ebd15e6a005c0ce3b6d0f941c04922a6f45254b30f825b4488",
+              "hash_b": "af140d625289238598f4ba0f6472abc4af508c43c403107deb2e7f2fa7cd53e6"
+            }
+          },
+          {
+            "cue": "s_197063493",
+            "handle": "h_394767965",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_106039235",
+            "telemetry": {
+              "memory_path": "empty",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "live_rho",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": null,
+              "familiar": false,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.2781555338685282,
+                "h_394767965": -0.4980315740337474,
+                "h_335854708": 0.18987078110324582,
+                "h_106039235": 0.48751216437571593
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.2781555338685282,
+                "h_394767965": -0.4980315740337474,
+                "h_335854708": 0.18987078110324582,
+                "h_106039235": 0.48751216437571593
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9466547549347372,
+              "l2": 0.326635102416329,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+              "hash_b": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9466547549347372,
+              "l2": 0.326635102416329,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "887a2eb8f4f2647c7d660e22453ad55909a0b6e8d967156619ee427d97d6738a",
+              "hash_b": "7809294125f67a05df2777c767f30e1e6fcd5fac51dfd5618b176a98685f4976"
+            }
+          },
+          {
+            "cue": "s_177715507",
+            "handle": "h_335854708",
+            "stored_ok": true,
+            "reinstatement_ok": true,
+            "canonical_ok": true,
+            "credit_ok": true,
+            "canonical_winner": "h_335854708",
+            "telemetry": {
+              "memory_path": "empty",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "live_rho",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": null,
+              "familiar": false,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.7015650659007405,
+                "h_394767965": -0.020383686070828796,
+                "h_335854708": 0.4536300434279667,
+                "h_106039235": 0.1708903072830944
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.7015650659007405,
+                "h_394767965": -0.020383686070828796,
+                "h_335854708": 0.4536300434279667,
+                "h_106039235": 0.1708903072830944
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9186324358975444,
+              "l2": 0.4034044226392558,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+              "hash_b": "610764789b0efee4795b4356d83d8adb1791afaf9d16076c18a509dd24de0a44"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9186324358975444,
+              "l2": 0.4034044226392558,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "08b8e84bcba95b3cf1f891ead5c4bae91443a81227ed253b63720e3158dd11c7",
+              "hash_b": "610764789b0efee4795b4356d83d8adb1791afaf9d16076c18a509dd24de0a44"
+            }
+          },
+          {
+            "cue": "s_507669026",
+            "handle": "h_106039235",
+            "stored_ok": false,
+            "reinstatement_ok": false,
+            "canonical_ok": false,
+            "credit_ok": false,
+            "canonical_winner": "h_335854708",
+            "telemetry": {
+              "memory_path": "empty",
+              "motor_path": "cortical_scoring",
+              "scoring_address_source": "live_rho",
+              "retrieved": false,
+              "reject_reason": null,
+              "slot": null,
+              "familiar": false,
+              "scores_before_reinstatement": {
+                "h_270876880": -0.42272104820110706,
+                "h_394767965": -0.4096736149398999,
+                "h_335854708": 0.4609732106291506,
+                "h_106039235": 0.22736012546779108
+              },
+              "scores_after_reinstatement": {
+                "h_270876880": -0.42272104820110706,
+                "h_394767965": -0.4096736149398999,
+                "h_335854708": 0.4609732106291506,
+                "h_106039235": 0.22736012546779108
+              }
+            },
+            "rel_addr_to_stored": {
+              "cosine": 0.9484973912853729,
+              "l2": 0.320944259068852,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+              "hash_b": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f"
+            },
+            "rel_addr_to_feedback_p1": {
+              "cosine": 0.9484973912853729,
+              "l2": 0.320944259068852,
+              "same_hash": false,
+              "norm_a": 1.0,
+              "norm_b": 1.0,
+              "hash_a": "e2c9ffc72492e93932a766fc62fbcdd7c1756b15e9840ef29a09fc5627d5122f",
+              "hash_b": "b7f3db9926bd69da51510c2420f253e9a91f308518551d915cf2c7d66b4f8e7f"
+            }
+          }
+        ],
+        "discard_memory": true
+      },
+      "ordinary": null,
+      "w_act_query_frozen": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false,
+      "decoder_retrained": false,
+      "new_decoder": false
+    }
+  ],
+  "decision_code": "heldout_feedback_decode_fail",
+  "decision_then": "heldout_feedback_decode_fail",
+  "phase_flags": {
+    "n_cells": 10,
+    "n_setup_cells": 2,
+    "n_scored_cells": 8,
+    "candidate_v41_lock": false,
+    "kqv_edited": false,
+    "decoder_retrained": false,
+    "earned_kqv": false,
+    "earned_learned_addressing": false,
+    "new_decoder": false,
+    "episodic_loop_complete": false,
+    "separate_candidate_review_open": false,
+    "setup_excluded_from_behavioral_first_match": true
+  },
+  "git_head": "10ec197da1efa85c2f4884a5076786fc07742f4b",
+  "frozen_runner_sha": "f73c8671db2f3bac6f6b4e22eb08687d933559e476d5c2adb2ff4c879c230706",
+  "manifest_sha": "05a18a09dc46ae09665ef4ed196d5abef846d7ca492cf94464edbdf87ccb78b6",
+  "candidate_v41_lock": false,
+  "kqv_edited": false,
+  "decoder_retrained": false,
+  "new_decoder": false,
+  "clean_tree": true,
+  "clean_tree_status": "clean",
+  "solver_edited": false,
+  "tm050_runner_untouched": true,
+  "tm049_runner_untouched": true
+}
