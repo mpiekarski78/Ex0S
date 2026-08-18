@@ -114,7 +114,7 @@ def test_prereg_pins_diagnostic_geometry():
     assert "experiments/run_tm049actfeed.py" in iso["historical_immutable"]
     assert CONTRACT.is_file()
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(NEURAL) == NEURAL_SHA
+    assert p["neural_cortex_sha"] == NEURAL_SHA
     assert EPISODE_MATCH_L2 == 0.05
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
     assert "action_feedback" not in ACT_RECALL_MODES
@@ -128,11 +128,11 @@ def test_prereg_pins_diagnostic_geometry():
     assert frozen == sha_file(RUNNER)
 
 
-def test_no_neural_edit():
-    assert _sha(NEURAL) == NEURAL_SHA
+def test_no_fitted_feedback_matrix():
     src = NEURAL.read_text()
     assert "W_feedback" not in src
     assert "feedback_scale" not in src
+    assert not hasattr(NeuralCortex, "set_feedback_ticks")
 
 
 def test_ids_and_decision_ladder():
@@ -214,7 +214,6 @@ def test_dev_lock_states_separate_never_decode_and_no_v41():
     assert _sha(TM048_RUNNER) == TM048_RUNNER_SHA
     assert _sha(TM046_RUNNER) == TM046_RUNNER_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(NEURAL) == NEURAL_SHA
     assert sha_file(RUNNER) == RUNNER_SHA
     assert not CANDIDATE_V41.exists()
     dev = json.loads(devp.read_text())

@@ -42,6 +42,7 @@ TM050_DEC = REPO / "docs" / "lineage_feedgeom.decision.lock"
 TM050_ADD = REPO / "docs" / "lineage_feedgeom.decision.addendum.lock"
 MANIFEST = "05a18a09dc46ae09665ef4ed196d5abef846d7ca492cf94464edbdf87ccb78b6"
 NEURAL_SHA_AT_FREEZE = "a33f04479716d21624f9f8d0167ceaf4a658fd57a9070b058933f71fa1ae155c"
+NEURAL_SHA_AFTER_EDIT = "2ba95d71f2893cf0c2b3069836b6fbe1ff4840d2d746331e47b9a38650475c63"
 JOINT_SOCP_SHA = "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895"
 TM046_RUNNER_SHA = "8dbadd143f0fed629496a70c9d6288e60c65301fadd392cab6e3d77ea0b5d6b0"
 TM047_RUNNER_SHA = "c5d5a0be88e8704039c8c2e0d8e3fb86de1fc85ec69863129c5f11c26eccc6c4"
@@ -138,7 +139,6 @@ def test_prereg_pins_grounding_wall():
     assert "three_memory/joint_socp.py" in iso["historical_immutable"]
     assert CONTRACT.is_file()
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(NEURAL) == NEURAL_SHA_AT_FREEZE
     assert p["neural_cortex_sha_at_freeze"] == NEURAL_SHA_AT_FREEZE
     assert EPISODE_MATCH_L2 == 0.05
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
@@ -153,13 +153,42 @@ def test_prereg_pins_grounding_wall():
     assert frozen == sha_file(RUNNER)
 
 
-def test_no_premature_neural_edit():
-    assert _sha(NEURAL) == NEURAL_SHA_AT_FREEZE
+def test_authorized_neural_edit_matches_freeze():
+    import numpy as np
+
+    assert _sha(NEURAL) == NEURAL_SHA_AFTER_EDIT
+    assert _sha(NEURAL) != NEURAL_SHA_AT_FREEZE
     sig = inspect.signature(NeuralCortex.clamp_action)
-    assert "credit_token" not in sig.parameters
+    assert "credit_token" in sig.parameters
+    assert sig.parameters["credit_token"].kind is inspect.Parameter.KEYWORD_ONLY
+    assert "credit_token" not in GenomeConfig().to_dict()
+    assert "credit_token" not in ACT_RECALL_MODES
     src = NEURAL.read_text()
     assert "W_feedback" not in src
     assert "feedback_scale" not in src
+    mid = [0.5, 0.4, 0.5, 0.0]
+    ag = NeuralCortex(None, genome=GenomeConfig(), device="cpu")
+    ag.bind_actuators(["h_a", "h_b"])
+    ag.observe(
+        {
+            "interaction_token": "ct_sel",
+            "source_token": "src_t",
+            "ordered_symbols": ["cue"],
+            "observable_state": ["st_idle"],
+            "body_state": list(mid),
+        }
+    )
+    default = ag.clamp_action("ACT", "h_a")
+    assert default["ok"] is True
+    assert default["token"] == "h_a"
+    assert np.allclose(ag._pending["motor_vec"], ag.motor_vocab["h_a"])
+    assert ag._pending["token"] == "h_a"
+    shuffled = ag.clamp_action("ACT", "h_a", credit_token="h_b")
+    assert shuffled["ok"] is True
+    assert shuffled["token"] == "h_a"
+    assert np.allclose(ag._pending["motor_vec"], ag.motor_vocab["h_a"])
+    assert not np.allclose(ag._pending["motor_vec"], ag.motor_vocab["h_b"])
+    assert ag._pending["token"] == "h_b"
 
 
 def test_ids_and_decision_ladder():
@@ -237,7 +266,7 @@ def test_runner_refuses_v41_and_smoke():
     assert out["new_decoder"] is False
     assert out["setup_excluded"] is True
     assert out["candidate_exists"] is False
-    assert out["credit_token_present"] is False
+    assert out["credit_token_present"] is True
     assert out["action_feedback_in_genome"] is False
     assert out["action_feedback_in_recall_modes"] is False
     assert out["permutation"] == "rotate_plus_one"

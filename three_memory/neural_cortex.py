@@ -2096,23 +2096,34 @@ class NeuralCortex:
             "interaction_token": interaction_token,
         }
 
-    def clamp_action(self, op: str, token: str | None) -> dict[str, Any]:
-        """Host clamp after an organism selection tick. Keeps saved eligibility."""
+    def clamp_action(self, op: str, token: str | None, *, credit_token: str | None = None) -> dict[str, Any]:
+        """Host clamp after an organism selection tick. Keeps saved eligibility.
+
+        Executed motor_vec comes from token. Episode / W_act_query labels use
+        credit_token when provided, otherwise token. Default preserves TM049.
+        """
         if self.last_action is None:
             return {"ok": False, "why": "no_selection_tick"}
         if op not in OPS:
             return {"ok": False, "why": "bad_op"}
+        if credit_token is not None and op != "ACT":
+            return {"ok": False, "why": "credit_token_requires_act"}
         motor_vec = None
+        label = token
         if op == "ACT":
             if not token or token not in self.motor_vocab:
                 return {"ok": False, "why": "unknown_handle"}
             motor_vec = self.motor_vocab[token].copy()
+            if credit_token is not None:
+                if credit_token not in self.motor_vocab:
+                    return {"ok": False, "why": "unknown_credit_token"}
+                label = credit_token
         self._pending = self._actor_pending_from_action(
             self.last_action,
             interaction_token=self.prev_interaction,
             clamped=True,
             op=op,
-            token=token,
+            token=label,
             motor_vec=motor_vec,
         )
         return {"ok": True, "op": op, "token": token, "clamped": True}

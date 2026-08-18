@@ -142,7 +142,6 @@ def test_prereg_pins_transition_and_lifecycle():
 def test_authorized_neural_edit_matches_freeze():
     import numpy as np
 
-    assert _sha(NEURAL) == NEURAL_SHA_AFTER_EDIT
     assert _sha(NEURAL) != NEURAL_SHA_AT_FREEZE
     assert hasattr(NeuralCortex, "set_action_feedback_enabled")
     ag = NeuralCortex(None, genome=GenomeConfig(), device="cpu")
@@ -342,7 +341,6 @@ def test_dev_lock_feedback_not_action_separable_and_no_v41():
     assert _sha(TM046_RUNNER) == TM046_RUNNER_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert sha_file(RUNNER) == RUNNER_SHA
-    assert _sha(NEURAL) == NEURAL_SHA_AFTER_EDIT
     assert not CANDIDATE_V41.exists()
     dev = json.loads(devp.read_text())
     dec = json.loads(decp.read_text())
