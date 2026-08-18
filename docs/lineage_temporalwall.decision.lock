@@ -1,0 +1,81 @@
+{
+  "version": "TM.0.34.TEMPORALWALL.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "5e5e01e0c2a94f34854a5976294f5b3061d819277de9852840d64349e00432d6",
+  "decision": {
+    "code": "temporalwall_temporal_interference",
+    "then": "temporalwall_temporal_interference",
+    "phase_flags": {
+      "n_worlds": 8,
+      "n_diagnostic": 2,
+      "n_v37_already_converged": 6,
+      "routes": [
+        "v37_already_converged",
+        "v37_already_converged",
+        "tm032_rescue_holds",
+        "tm032_rescue_holds",
+        "v37_already_converged",
+        "v37_already_converged",
+        "v37_already_converged",
+        "v37_already_converged"
+      ],
+      "n_rebreak": 12,
+      "rebreak_ids": [
+        "acquire_trace|c8|A_then_B|reg0|adaptive_violation",
+        "acquire_trace|c8|B_then_A|reg0|adaptive_violation",
+        "acquire_trace|c8|A_then_B|reg1|v37_awake_cap",
+        "acquire_trace|c8|A_then_B|reg1|adaptive_violation",
+        "acquire_trace|c8|A_then_B|reg1|fixed_extra_replay",
+        "acquire_trace|c8|B_then_A|reg1|v37_awake_cap",
+        "acquire_trace|c8|B_then_A|reg1|adaptive_violation",
+        "acquire_trace|c8|B_then_A|reg1|fixed_extra_replay",
+        "acquire_trace|c8|A_then_B|reg2|adaptive_violation",
+        "acquire_trace|c8|B_then_A|reg2|adaptive_violation",
+        "acquire_trace|c8|A_then_B|reg3|adaptive_violation",
+        "acquire_trace|c8|B_then_A|reg3|adaptive_violation"
+      ],
+      "n_cross_row": 6,
+      "cross_row_ids": [
+        "acquire_trace|c8|A_then_B|reg0|v37_awake_cap",
+        "acquire_trace|c8|A_then_B|reg0|adaptive_violation",
+        "acquire_trace|c8|A_then_B|reg0|fixed_extra_replay",
+        "acquire_trace|c8|B_then_A|reg0|v37_awake_cap",
+        "acquire_trace|c8|B_then_A|reg0|adaptive_violation",
+        "acquire_trace|c8|B_then_A|reg0|fixed_extra_replay"
+      ],
+      "n_margin_without_count": 22,
+      "margin_without_count_ids": [
+        "acquire_trace|c8|A_then_B|reg0|v37_awake_cap",
+        "acquire_trace|c8|A_then_B|reg0|fixed_extra_replay",
+        "acquire_trace|c8|B_then_A|reg0|v37_awake_cap",
+        "acquire_trace|c8|B_then_A|reg0|fixed_extra_replay",
+        "acquire_trace|c8|A_then_B|reg1|v37_awake_cap",
+        "acquire_trace|c8|A_then_B|reg1|adaptive_violation",
+        "acquire_trace|c8|A_then_B|reg1|fixed_extra_replay",
+        "acquire_trace|c8|B_then_A|reg1|v37_awake_cap",
+        "acquire_trace|c8|B_then_A|reg1|adaptive_violation",
+        "acquire_trace|c8|B_then_A|reg1|fixed_extra_replay",
+        "acquire_trace|c8|A_then_B|reg2|v37_awake_cap",
+        "acquire_trace|c8|A_then_B|reg2|adaptive_violation",
+        "acquire_trace|c8|A_then_B|reg2|fixed_extra_replay",
+        "acquire_trace|c8|B_then_A|reg2|v37_awake_cap",
+        "acquire_trace|c8|B_then_A|reg2|adaptive_violation",
+        "acquire_trace|c8|B_then_A|reg2|fixed_extra_replay",
+        "acquire_trace|c8|A_then_B|reg3|v37_awake_cap",
+        "acquire_trace|c8|A_then_B|reg3|adaptive_violation",
+        "acquire_trace|c8|A_then_B|reg3|fixed_extra_replay",
+        "acquire_trace|c8|B_then_A|reg3|v37_awake_cap",
+        "acquire_trace|c8|B_then_A|reg3|adaptive_violation",
+        "acquire_trace|c8|B_then_A|reg3|fixed_extra_replay"
+      ]
+    }
+  },
+  "dev_lock_sha": "084bad8780674a00a75848f9ef0c7443a55aea89f4f989406f0a5607d3666ffe",
+  "git_head": "b781696da7d4998fc17676cefdb05a725540e03b",
+  "frozen_runner_sha": "f097b6e2685d9b4ffe10854ced7ed0418a10f49ded5ef8a6815e873ed137415c",
+  "hard_budget_passes": 16,
+  "fit_44_row_updates": false,
+  "plateau_relaxed": false,
+  "v38_repair": false,
+  "note": "TM034 temporal-placement decision. Product remains 0.0.004."
+}

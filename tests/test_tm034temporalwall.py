@@ -27,6 +27,10 @@ HISTORICAL_TM032_DEC_SHA = "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e
 HISTORICAL_TM032_RUNNER_SHA = "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503"
 CLOSURE_SHA = "a8ea4f6aa14158575cf9ba31a0ee3521e859b33ceaeb693fec282798dfa1abbe"
 FROZEN_RUNNER_SHA = "f097b6e2685d9b4ffe10854ced7ed0418a10f49ded5ef8a6815e873ed137415c"
+HISTORICAL_DEV_SHA = "084bad8780674a00a75848f9ef0c7443a55aea89f4f989406f0a5607d3666ffe"
+HISTORICAL_DEC_SHA = "31943d48ac6170e1d60551c537418f3f09fefa875ad23941e86cea524e99e625"
+DEV = REPO / "docs" / "lineage_temporalwall.dev.lock"
+DEC = REPO / "docs" / "lineage_temporalwall.decision.lock"
 
 
 def _sha(p: Path) -> str:
@@ -137,3 +141,29 @@ def test_smoke():
     assert out["smoke_ok"]
     assert out["n_credits"] == 2
     assert out["hard_budget_passes"] == 16
+
+
+def test_dev_lock_first_match_and_rescue():
+    assert _sha(DEV) == HISTORICAL_DEV_SHA
+    assert _sha(DEC) == HISTORICAL_DEC_SHA
+    dev = json.loads(DEV.read_text())
+    dec = json.loads(DEC.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "b781696da7d4998fc17676cefdb05a725540e03b"
+    assert dev["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dev["decision_code"] == "temporalwall_temporal_interference"
+    assert dev["fit_44_row_updates"] is False
+    assert dev["hard_budget_passes"] == 16
+    assert set(dev["phase_flags"]["routes"]) == {"v37_already_converged", "tm032_rescue_holds"}
+    assert "tm032_rescue_fails" not in dev["phase_flags"]["routes"]
+    dec_ok = [c for c in dev["cells"] if c["id"] == "rescue|c8|A_then_B|reg1|tm032_awake_only"][0]
+    assert dec_ok["fixed"] is True
+    assert int(dec_ok["process"]["n_updates"]) == 44
+    v37 = [c for c in dev["cells"] if c["id"] == "acquire_trace|c8|A_then_B|reg1|v37_awake_cap"][0]
+    assert v37["trace_flags"]["rebreak_after_zero"] is True
+    assert v37["trace_flags"]["zero_after_credits"] == [0, 1, 2, 3, 4, 5, 6]
+    assert v37["trace_flags"]["first_incorrect_credit_by_slot"] == {"0": 7, "4": 7, "6": 7}
+    assert dec["decision"]["code"] == "temporalwall_temporal_interference"
+    assert dec["dev_lock_sha"] == HISTORICAL_DEV_SHA
+    assert dec["v38_repair"] is False
+
