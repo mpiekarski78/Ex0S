@@ -1,0 +1,61 @@
+{
+  "version": "TM.0.38.CONESPLIT.ISOLATION",
+  "lab": "TM.0.38.CONESPLIT",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "neural_edit_before_runner_freeze": false,
+  "v40_freeze_authorized": false,
+  "domains": {
+    "DEV": "TM038.CONESPLIT.DEV.",
+    "TWIN": "TM038.CONESPLIT.TWIN."
+  },
+  "disjoint_from": [
+    "TM037.JOINTPROJ.DEV.",
+    "TM037.JOINTPROJ.TWIN.",
+    "TM036.UPDATEGEOM.DEV.",
+    "TM036.UPDATEGEOM.TWIN.",
+    "TM035.CREDITSPLIT.DEV.",
+    "TM035.CREDITSPLIT.TWIN.",
+    "TM032.RESTSPLIT.DEV.",
+    "TM032.RESTSPLIT.TWIN."
+  ],
+  "pure_helpers_only": [
+    "experiments/run_tm032restsplit.py:clone_plastic",
+    "experiments/run_tm032restsplit.py:stored_rows",
+    "experiments/run_tm032restsplit.py:live_probes",
+    "experiments/run_tm036updategeom.py:geometry_parent",
+    "experiments/run_tm036updategeom.py:closest_feasible_W",
+    "experiments/run_tm036updategeom.py:arm_fixes",
+    "experiments/run_tm037jointproj.py:run_joint_projection",
+    "experiments/run_tm037jointproj.py:pa_project_W",
+    "experiments/run_tm037jointproj.py:supporting_constraints"
+  ],
+  "refuse": [
+    "plateau_relaxation",
+    "hard_budget_gt_16_as_organism_law",
+    "fit_diagnostic_cap_from_tm037_movement",
+    "fit_tm032_44_row_updates_as_constant",
+    "fitted_learning_rate",
+    "fitted_degenerate_epsilon",
+    "nudge_zero_normal_along_x",
+    "claim_open_set_projection_exists_at_u_eq_0",
+    "install_oracle_W_star_in_neural_cortex",
+    "call_v39_set_act_proj_arm_for_soc",
+    "v40_architecture",
+    "auto_cortex.candidate.v39.lock",
+    "auto_cortex.candidate.v40.lock",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "rewrite TM037 historical locks",
+    "rewrite TM036 historical locks",
+    "rewrite TM035 historical locks",
+    "rewrite TM032 historical locks",
+    "tm037_dev_rerun",
+    "TM037_monkey_patch",
+    "runner_edits_after_freeze_push",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "Cone-split wall after TM037 oracle-only. Standalone runner. No neural edit. Product remains 0.0.004."
+}

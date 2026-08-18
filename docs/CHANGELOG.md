@@ -2,6 +2,7 @@
 
 ## 2026-08-18
 
+- **TM.0.38.CONESPLIT freeze:** Same post-write snapshot. Linearized Dykstra to diagnostic convergence vs exact SOC @ 16 vs exact SOC to convergence vs joint \(W^*\). Degenerate \(W^\top d=0\) skips using organism `PROTO_EPS`; no fitted epsilon. No neural edit. v40 not frozen. [`lineage_conesplit.prereg.lock`](lineage_conesplit.prereg.lock). Product **0.0.004**.
 - **TM.0.37.JOINTPROJ DEV:** First-match **jointproj_oracle_only**. Diagnostic `reg1`: v37 leftover 0/4/6; PA/Dykstra leave slot 6 (live 7/8); nearby \(W^*\) restores 8/8. Linearized supporting-halfspace projection is not sufficient. Oracle not installed. No candidate lock. [`lineage_jointproj.decision.lock`](lineage_jointproj.decision.lock). Product **0.0.004**.
 - **v39 joint-projection controller:** After the TM037 freeze on origin, credit path is write then bounded cyclic PA/Dykstra when the instance flag is on. Default remains frozen v37. Oracle \(W^*\) stays runner-only. Dykstra \(I_i\) checkpointed. [`cortex_v39.prereg.lock`](cortex_v39.prereg.lock). Product **0.0.004**.
 - **TM.0.37.JOINTPROJ / v39 freeze:** Bounded cyclic projection onto supporting halfspaces of episodic ranking+margin cones. Ranking is a halfspace in \(W\); geometric \(\gamma\) is a SOC, so PA/Dykstra freeze \(b\) per cycle and stop on the existing nonlinear predicate. Matched arms v37 / PA cyclic / Dykstra / diagnostic \(W^*\). Oracle never installed. No candidate lock. [`lineage_jointproj.prereg.lock`](lineage_jointproj.prereg.lock). Product **0.0.004**.

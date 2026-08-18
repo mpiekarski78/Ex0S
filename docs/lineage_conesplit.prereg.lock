@@ -1,0 +1,148 @@
+{
+  "version": "TM.0.38.CONESPLIT.PREREG",
+  "lab": "TM.0.38.CONESPLIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": false,
+  "neural_edit_before_runner_freeze": false,
+  "implementation_authorized": true,
+  "v40_freeze_authorized": false,
+  "package_question": "On the TM037 post-write snapshot, did linearized Dykstra fail because of supporting-halfspace linearization, because 16 cycles were insufficient, because exact SOC still needs more cycles, or because only a joint SOCP reaches the feasible set?",
+  "authorized_by": [
+    "docs/lineage_jointproj.decision.lock"
+  ],
+  "tm037_decision_sha": "55e29766d53f37ffc72e825547df9db3642e3e6839d4eb85cff32e522d447d4f",
+  "tm037_dev_sha": "a21ff312947f3b503342fbe3df963ed079d7c71d446cb1425087b96317fcbe48",
+  "tm037_runner_sha": "897144551ee418d8d7579b1e78b5871463c6cff3d664f716c4c9f142b69a3380",
+  "tm036_decision_sha": "0a029bf7cd0cffec37707ad5ce65e7c5c161701d279e6aac26fb9d5684b8601a",
+  "tm036_dev_sha": "885c6b7b1d6fad934996d849dd84fd6e4c46fc2644c37257a6f18eb6f8784183",
+  "tm036_runner_sha": "fdcd11d376d22965670f8bb4dcd411720d2d759c953933dd278b64a4e4c6c927",
+  "tm032_decision_sha": "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e112be4c7a4c7",
+  "tm032_dev_sha": "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56514974c9644d",
+  "tm032_runner_sha": "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503",
+  "candidate_name": "not_v40",
+  "n": 64,
+  "eta_act": 0.15,
+  "episode_slots": 8,
+  "write_match_l2": 0.05,
+  "treatment_mode": "early_raw_half_spacing",
+  "n_cues": 8,
+  "n_handles": 2,
+  "hard_budget_passes": 16,
+  "diagnostic_cycle_cap": 256,
+  "diagnostic_cycle_cap_is_not_fitted_from_tm037": true,
+  "fit_44_row_updates": false,
+  "fitted_learning_rate": false,
+  "fitted_degenerate_epsilon": false,
+  "degenerate_zero_normal": "skip_if_u_norm_le_PROTO_EPS",
+  "proto_eps_source": "organism__act_geometric_margin",
+  "open_set_projection_at_origin": false,
+  "nudge_zero_normal_along_x": false,
+  "soc_adds_separate_ranking_halfspaces": false,
+  "tau_positive_nonzero_normal_implies_ranking": true,
+  "act_recall_modes_tuple_untouched": true,
+  "parent": "tm036_write_only_after_credits_0_through_6",
+  "lin16_probe_defines_diagnostic": true,
+  "lin16_probe_is_not_a_scored_arm": true,
+  "probes_on_another_clone": true,
+  "pure_helpers_only": true,
+  "oracle_is_diagnostic_only": true,
+  "oracle_never_installed_in_neural_cortex": true,
+  "call_v39_set_act_proj_arm_for_soc": false,
+  "clip_when": "end_of_pass_not_after_every_constraint",
+  "registry_seeds": [
+    936835019,
+    1584000025,
+    2133183397,
+    520283234
+  ],
+  "registry_seeds_are_replicates_not_a_grid": true,
+  "genome_varies_only": "seed_registry",
+  "default_seed_registry_forbidden": 22222,
+  "domains": {
+    "DEV": "TM038.CONESPLIT.DEV.",
+    "TWIN": "TM038.CONESPLIT.TWIN."
+  },
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 1,
+  "world_index": 0,
+  "n_registry_seeds": 4,
+  "arms": [
+    "lin_dykstra_conv",
+    "soc_16",
+    "soc_conv",
+    "oracle"
+  ],
+  "expected_n_cells": 32,
+  "expected_n_worlds": 8,
+  "manifest_sha": "0278191e6e296ab9d2434e9cd079748aba75ff30e15d78b53585d9f7481d4e87",
+  "fix_gate": {
+    "live_ranking_ok": true,
+    "n_probe_correct": 8,
+    "n_store_violations": 0,
+    "margin_is_recorded_not_a_gate": true
+  },
+  "decision_ladder": [
+    {
+      "code": "conesplit_no_lin16_fail",
+      "when": "every world already fixes under 16-cycle linearized Dykstra"
+    },
+    {
+      "code": "conesplit_linearization_causal",
+      "when": "all diagnostic worlds: exact SOC Dykstra fixes in 16 cycles"
+    },
+    {
+      "code": "conesplit_budget_causal",
+      "when": "all diagnostic worlds: linearized Dykstra eventually fixes and SOC at 16 does not"
+    },
+    {
+      "code": "conesplit_geometry_and_budget",
+      "when": "all diagnostic worlds: only exact SOC to diagnostic convergence fixes"
+    },
+    {
+      "code": "conesplit_joint_socp_only",
+      "when": "all diagnostic worlds: only closest feasible W fixes"
+    },
+    {
+      "code": "conesplit_capacity_wall",
+      "when": "all diagnostic worlds: even the closest feasible W fails stored-row margins"
+    },
+    {
+      "code": "conesplit_mixed_routes",
+      "when": "diagnostic worlds disagree"
+    }
+  ],
+  "v40_gate": "do_not_freeze_v40_in_this_lab_only_name_the_next_law",
+  "refuse": [
+    "open SCORE",
+    "plateau_relaxation",
+    "hard_budget_gt_16_as_organism_law",
+    "fit_diagnostic_cap_from_tm037_movement",
+    "fit_tm032_44_row_updates_as_constant",
+    "fitted_learning_rate",
+    "fitted_degenerate_epsilon",
+    "nudge_zero_normal_along_x",
+    "install_oracle_W_star_in_neural_cortex",
+    "call_v39_set_act_proj_arm_for_soc",
+    "v40_architecture",
+    "auto_cortex.candidate.v39.lock",
+    "auto_cortex.candidate.v40.lock",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "rewrite TM037 historical locks",
+    "rewrite TM036 historical locks",
+    "rewrite TM032 historical locks",
+    "tm037_dev_rerun",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "TM038 cone-split wall. Freeze runner before DEV. Product remains 0.0.004.",
+  "frozen_runner_sha": "b06088386512c8d199a218e6de08c1909cf65895add979f8d71b3d788480f02b"
+}
