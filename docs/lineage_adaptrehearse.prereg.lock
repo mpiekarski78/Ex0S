@@ -1,0 +1,155 @@
+{
+  "version": "TM.0.33.ADAPTREHEARSE.PREREG",
+  "lab": "TM.0.33.ADAPTREHEARSE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": true,
+  "neural_edit_before_runner_freeze": false,
+  "implementation_authorized": true,
+  "package_question": "Does adaptive violation-driven rehearsal with a REST-derived 16-pass budget and REST debit restore eight-cue acquire without a fitted update constant, versus a targeting-matched fixed extra-replay arm?",
+  "authorized_by": [
+    "docs/lineage_restsplit.decision.lock",
+    "docs/cortex_v38.prereg.lock"
+  ],
+  "tm032_decision_sha": "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e112be4c7a4c7",
+  "tm032_dev_sha": "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56514974c9644d",
+  "tm032_runner_sha": "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503",
+  "tm032_n_informative_splits": 2,
+  "tm032_informative_replicate": "reg1",
+  "limitation": "v38 routing evidence is two TM032 splits both reg1; do not overclaim; do not promote 44",
+  "supersedes_unpushed_runner_sha": "30800288a236e44799131b0c7ab2327c4a7dec27aeb4f26efae19f049a4823d8",
+  "v38_prereg_sha": "de924a8df50f0b20c902bf3cd3f689e882a162df0d28fe33e509ac6cb074c510",
+  "v38_isolation_sha": "73543f2f67f6356e2218aa162cdf00db6beeea033a3cb177299efdf9237af866",
+  "v38_amendment_md_sha": "8319a8e416a52cb3aa4b98f7fb2a3dc6ce83cef655f2fc1186205e89ec81c1ec",
+  "candidate_name": "v38",
+  "n": 64,
+  "eta_act": 0.15,
+  "episode_slots": 8,
+  "write_match_l2": 0.05,
+  "treatment_mode": "early_raw_half_spacing",
+  "n_cues": 8,
+  "n_handles": 2,
+  "n_rest_ticks": 4,
+  "hard_budget_passes": 16,
+  "hard_budget_source": "EPISODE_REPLAY_EPOCHS",
+  "fit_44_row_updates": false,
+  "work_metric": "n_awake_updates",
+  "plateau": {
+    "signature": "n_violations_and_sorted_violating_slot_indices",
+    "improvement": "n_violations_decreases_by_at_least_1",
+    "tolerance": 0,
+    "unchanged_passes_to_stop": 1
+  },
+  "debt": {
+    "rest_debit_uses": "rehearsal_pass_debt",
+    "work_compares": "rehearsal_update_debt_and_n_awake_updates",
+    "carry": "across_credits_until_rest",
+    "reset": "after_rest_replay",
+    "checkpoint": [
+      "rehearsal_pass_debt",
+      "rehearsal_update_debt",
+      "act_rehearse_arm"
+    ]
+  },
+  "fixed_extra_replay": {
+    "targeting": "violation_rows",
+    "stop": [
+      "zero_violations",
+      "16_passes"
+    ],
+    "plateau_stop": false,
+    "rest_debit": false
+  },
+  "rest_debit": true,
+  "act_recall_modes_tuple_untouched": true,
+  "registry_seeds": [
+    936835019,
+    1584000025,
+    2133183397,
+    520283234
+  ],
+  "registry_seeds_are_replicates_not_a_grid": true,
+  "genome_varies_only": "seed_registry",
+  "default_seed_registry_forbidden": 22222,
+  "domains": {
+    "DEV": "TM033.ADAPTREHEARSE.DEV.",
+    "TWIN": "TM033.ADAPTREHEARSE.TWIN."
+  },
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 1,
+  "world_index": 0,
+  "n_registry_seeds": 4,
+  "arms": [
+    "v37_awake_cap",
+    "adaptive_violation",
+    "fixed_extra_replay"
+  ],
+  "expected_n_cells": 24,
+  "expected_n_triples": 8,
+  "manifest_sha": "5fa2dac5200a6944b0a31530d57983d7dd61cbe84d69ace45ac361a93079a3ad",
+  "fix_gate": {
+    "live_ranking_ok": true,
+    "n_probe_correct": 8,
+    "n_store_violations": 0,
+    "margin_is_recorded_not_a_gate": true
+  },
+  "decision_ladder": [
+    {
+      "code": "adaptrehearse_no_v37_acquire_fail",
+      "when": "every v37_awake_cap acquire already fixes"
+    },
+    {
+      "code": "adaptrehearse_debt_integrity_fail",
+      "when": "any adaptive cell has pass or update debt remaining after scheduled REST"
+    },
+    {
+      "code": "adaptrehearse_efficient_scheduling",
+      "when": "all diagnostic triples: both extra-replay arms pass and adaptive uses strictly fewer rehearsal updates"
+    },
+    {
+      "code": "adaptrehearse_adaptive_control",
+      "when": "all diagnostic triples: only adaptive passes and targeting is matched violation_rows"
+    },
+    {
+      "code": "adaptrehearse_controller_bundle",
+      "when": "all diagnostic triples: only adaptive passes but targeting is not matched"
+    },
+    {
+      "code": "adaptrehearse_extra_compute_not_scheduler",
+      "when": "all diagnostic triples: fixed_extra fixes and adaptive does not"
+    },
+    {
+      "code": "adaptrehearse_both_pass_compute_tied",
+      "when": "all diagnostic triples: both extra-replay arms pass and adaptive is not strictly cheaper in updates"
+    },
+    {
+      "code": "adaptrehearse_core_acquire_fail",
+      "when": "all diagnostic triples: neither extra-replay arm fixes (includes 16-pass exhaustion)"
+    },
+    {
+      "code": "adaptrehearse_mixed_routes",
+      "when": "diagnostic triples disagree"
+    }
+  ],
+  "refuse": [
+    "open SCORE",
+    "fit_tm032_44_row_updates_as_constant",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "disturb TM029 frozen RECALL_MODES",
+    "rewrite TM032 historical locks",
+    "tm032_dev_rerun",
+    "auto_cortex.candidate.v38.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "TM033 adaptive-rehearsal battery. Product remains 0.0.004. Freeze runner before neural controller.",
+  "frozen_runner_sha": "91d8074d74b3724bd38e69b1d3860ea8ad0ba9835eb615a513cc9fcf620f5a49"
+}

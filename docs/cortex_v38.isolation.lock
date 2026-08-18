@@ -1,0 +1,28 @@
+{
+  "version": "TM.0.23.CORTEX.V38.ISOLATION",
+  "lab": "TM.0.33.ADAPTREHEARSE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "reason": "TM032: additional gated replay updates are sufficient; REST idle and slow mix are not required; full REST works because it includes that replay. v38 is adaptive violation-driven rehearsal. Evidence is two informative TM032 splits (both reg1). Do not fit 44 row-updates.",
+  "tm032_decision_sha": "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e112be4c7a4c7",
+  "tm032_dev_sha": "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56514974c9644d",
+  "tm032_runner_sha": "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503",
+  "tm032_n_informative_splits": 2,
+  "tm032_informative_replicate": "reg1",
+  "if_v38_fails_next": "report_honest_adaptrehearse_fail_no_fitted_update_constant_no_radius_change",
+  "refuse": [
+    "fit_tm032_44_row_updates_as_constant",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "disturb TM029 frozen RECALL_MODES",
+    "rewrite TM032 historical locks",
+    "tm032_dev_rerun",
+    "rewrite TM031 historical locks",
+    "auto_cortex.candidate.v38.lock",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "v38 isolation after TM032. Product remains 0.0.004."
+}

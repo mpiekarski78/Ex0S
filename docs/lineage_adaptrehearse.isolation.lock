@@ -1,0 +1,30 @@
+{
+  "version": "TM.0.33.ADAPTREHEARSE.ISOLATION",
+  "lab": "TM.0.33.ADAPTREHEARSE",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": true,
+  "neural_edit_before_runner_freeze": false,
+  "domains": {
+    "DEV": "TM033.ADAPTREHEARSE.DEV.",
+    "TWIN": "TM033.ADAPTREHEARSE.TWIN."
+  },
+  "disjoint_from": [
+    "TM032.RESTSPLIT.DEV.",
+    "TM032.RESTSPLIT.TWIN.",
+    "TM031.HALFSPACE.DEV.",
+    "TM031.HALFSPACE.TWIN."
+  ],
+  "refuse": [
+    "fit_tm032_44_row_updates_as_constant",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "disturb TM029 frozen RECALL_MODES",
+    "rewrite TM032 historical locks",
+    "tm032_dev_rerun",
+    "TM032_monkey_patch",
+    "runner_edits_after_freeze_push",
+    "auto_cortex.candidate.v38.lock"
+  ],
+  "note": "Adaptive-rehearsal isolation. Standalone runner frozen before neural controller. Product remains 0.0.004."
+}

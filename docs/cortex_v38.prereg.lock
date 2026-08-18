@@ -1,0 +1,72 @@
+{
+  "version": "TM.0.23.CORTEX.V38.PREREG",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "tm032_decision_sha": "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e112be4c7a4c7",
+  "tm032_dev_sha": "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56514974c9644d",
+  "tm032_n_informative_splits": 2,
+  "tm032_informative_replicate": "reg1",
+  "authorized_law": "adaptive_violation_driven_rehearsal",
+  "hard_budget_unit": "EPISODE_REPLAY_EPOCHS_passes",
+  "hard_budget_passes": 16,
+  "fit_44_row_updates": false,
+  "work_metric": "rehearsal_update_calls",
+  "record_passes_and_updates": true,
+  "plateau": {
+    "signature": "n_violations_and_sorted_violating_slot_indices",
+    "violation_predicate": "_episode_rehearsal_violation",
+    "improvement": "n_violations_decreases_by_at_least_1",
+    "tolerance": 0,
+    "unchanged_passes_to_stop": 1
+  },
+  "debt": {
+    "pass_unit": "attempted_gated_rehearsal_passes",
+    "update_unit": "actual_gated_rehearsal_apply_act_query_update_calls",
+    "rest_debit_uses": "passes",
+    "rest_pass_budget": "max(0, 16 - rehearsal_pass_debt)",
+    "carry": "accumulate_across_credits_until_rest",
+    "reset": "after_rest_replay_completes_including_zero_budget_rest",
+    "checkpoint": [
+      "rehearsal_pass_debt",
+      "rehearsal_update_debt",
+      "act_rehearse_arm"
+    ]
+  },
+  "fixed_extra_replay": {
+    "targeting": "violation_rows_same_as_adaptive",
+    "stop": [
+      "zero_violations",
+      "16_passes"
+    ],
+    "plateau_stop": false,
+    "rest_debit": false
+  },
+  "adaptive_violation": {
+    "targeting": "violation_rows",
+    "stop": [
+      "zero_violations",
+      "plateau",
+      "16_passes"
+    ],
+    "rest_debit": true
+  },
+  "rest_debit": true,
+  "write_match_l2": 0.05,
+  "modify_R": false,
+  "act_recall_modes_tuple_untouched": true,
+  "treatment_mode": "early_raw_half_spacing",
+  "neural_edit_before_runner_freeze": false,
+  "refuse": [
+    "fit_tm032_44_row_updates_as_constant",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "rewrite TM032 historical locks",
+    "tm032_dev_rerun",
+    "auto_cortex.candidate.v38.lock",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "v38 adaptive rehearsal after TM032. Neural edit authorized after TM033 freeze on origin/main. Product remains 0.0.004."
+}
