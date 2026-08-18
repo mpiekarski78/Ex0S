@@ -242,3 +242,27 @@ def test_dev_lock_setup_precondition_fail_no_install():
     assert cells["n4|w0"]["W_installed"] is False
     assert cells["n4|w0"]["discarded"] is True
 
+
+ADD_SHA = "45c4279997d1bf1c9c67e769484bdb60da31f2af807455044a12458c210ab20b"
+
+
+def test_addendum_valid_setup_stop_without_rewrite():
+    addp = REPO / "docs" / "lineage_drift.decision.addendum.lock"
+    assert _sha(addp) == ADD_SHA
+    assert _sha(REPO / "docs" / "lineage_drift.dev.lock") == DEV_SHA
+    assert _sha(REPO / "docs" / "lineage_drift.decision.lock") == DEC_SHA
+    assert _sha(RUNNER) == RUNNER_SHA
+    assert _sha(LAW) == LAW_SHA
+    add = json.loads(addp.read_text())
+    assert add["rewrite_historical_decision"] is False
+    assert add["rerun_dev"] is False
+    assert add["frozen_first_match_unchanged"] is True
+    assert add["historical_decision_code"] == "setup_precondition_fail"
+    assert add["interpretation"] == "valid_setup_stop"
+    assert add["canonical_law_reconsidered"] is False
+    assert add["canonical_state_generator"] == "write_time_last_p1"
+    assert add["two_passive_stored_snapshots_forbidden"] is True
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+
+
