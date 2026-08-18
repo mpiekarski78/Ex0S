@@ -209,3 +209,27 @@ def test_dev_lock_replaced_under_write_law():
     assert rest["present"] is True
     assert rest["p1_unchanged"] is True
 
+
+ADD_SHA = "3ba67414bfbd8c054c2b7478479d3f7faa7fdf0ec7f7c8a52651ad4971282f17"
+
+
+def test_addendum_surviving_records_without_rewrite():
+    addp = REPO / "docs" / "lineage_epprov.decision.addendum.lock"
+    assert _sha(addp) == ADD_SHA
+    assert _sha(REPO / "docs" / "lineage_epprov.dev.lock") == DEV_SHA
+    assert _sha(REPO / "docs" / "lineage_epprov.decision.lock") == DEC_SHA
+    assert _sha(RUNNER) == RUNNER_SHA
+    add = json.loads(addp.read_text())
+    assert add["rewrite_historical_decision"] is False
+    assert add["rerun_dev"] is False
+    assert add["frozen_first_match_unchanged"] is True
+    assert add["historical_decision_code"] == "replaced_under_write_law"
+    assert add["interpretation"] == "tm052_selected_surviving_records"
+    assert add["rest_innocent"] is True
+    assert add["live_state_telemetry_innocent"] is True
+    assert add["canonical_law_reconsidered"] is False
+    assert add["episode_match_l2_not_changed"] is True
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+
+
