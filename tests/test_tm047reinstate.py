@@ -146,3 +146,79 @@ def test_runner_refuses_v41_and_smoke():
     assert out["ladder_earned"] == "reinstatement_interface_earned"
     assert out["candidate_exists"] is False
     assert "memproj_arm" not in GenomeConfig().to_dict()
+
+
+DEV_SHA = "5c3c7a8172f90f1265fedb1cb5e9659840f5a528932fbf34045cfc0573e4aa53"
+DEC_SHA = "025419faab0e67fd1342ae8670d752b582ad34180d00467a368941a82cf24ef9"
+DEV_GIT = "acac6de2a932fce4ac3da6f23beb7e590ab3f3ca"
+RUNNER_SHA = "c5d5a0be88e8704039c8c2e0d8e3fb86de1fc85ec69863129c5f11c26eccc6c4"
+
+
+def test_dev_lock_credit_rho_fail_and_no_v41():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm047reinstate import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_reinstate.dev.lock"
+    decp = REPO / "docs" / "lineage_reinstate.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert _sha(TM046_RUNNER) == TM046_RUNNER_SHA
+    assert _sha(TM046_DEV) == TM046_DEV_SHA
+    assert _sha(TM046_DEC) == TM046_DEC_SHA
+    assert _sha(TM046_ADD) == TM046_ADD_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "credit_rho_fail"
+    assert dev["n_cells"] == 6
+    assert dev["candidate_v41_lock"] is False
+    assert dev["kqv_edited"] is False
+    assert dev["decoder_retrained"] is False
+    assert dec["earned_next"] is False
+    assert dec["eligible_for_000005"] is False
+    assert dec["decision"]["code"] == "credit_rho_fail"
+    assert dec["decision"]["phase_flags"]["first_failing_boundary"] == "credit_full_rho"
+    assert dec["decision"]["phase_flags"]["earned_interface"] is False
+    assert dec["decision"]["phase_flags"]["earned_kqv"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert set(cells) == set(expected_cell_ids())
+    assert cells["decoder|w0"]["passed"] is True
+    assert cells["decoder|w1"]["passed"] is True
+    assert cells["decoder|w0"]["n_ok"] == 4
+    assert cells["decoder|w1"]["n_ok"] == 4
+    for wi in (0, 1):
+        oracle = cells[f"split|symbolic_oracle|w{wi}"]
+        none = cells[f"split|no_persistent_memory|w{wi}"]
+        assert oracle["passed"] is False
+        assert none["passed"] is False
+        assert oracle["first_failing_boundary"] == "credit_full_rho"
+        assert none["first_failing_boundary"] == "credit_full_rho"
+        assert oracle["n_ok_by_boundary"] == {
+            "development_reference": 4,
+            "credit_full_rho": 1,
+            "stored_value_direct": 1,
+            "post_reinstatement": 1,
+            "canonical_path": 1,
+        }
+        assert oracle["w_act_query_frozen"] is True
+        slots = [int(f["boundaries"]["canonical_path"]["retrieved_slot"]) for f in oracle["facts"]]
+        assert slots == [0, 1, 2, 3]
+        assert all(bool(f["boundaries"]["canonical_path"]["intended_record"]) for f in oracle["facts"])
+        addrs = [f["boundaries"]["canonical_path"]["addr_hash"] for f in oracle["facts"]]
+        assert len(set(addrs)) == 4
+        stored = [f["boundaries"]["canonical_path"]["stored_p1_hash"] for f in oracle["facts"]]
+        retrieved = [f["boundaries"]["canonical_path"]["retrieved_p1_hash"] for f in oracle["facts"]]
+        assert stored == retrieved
+        for f in oracle["facts"]:
+            rel = f["boundaries"]["post_reinstatement"]["rel_to_stored"]
+            assert rel["same_hash"] is True
+            assert rel["l2"] == 0.0
+        winners = {f["boundaries"]["canonical_path"]["winner"] for f in oracle["facts"]}
+        assert len(winners) == 1
+        assert all(not bool(f["boundaries"]["canonical_path"]["intended_record"]) for f in none["facts"])
