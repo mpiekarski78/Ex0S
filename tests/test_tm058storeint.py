@@ -205,3 +205,44 @@ def test_runner_smoke_and_refuses_dev_before_implementation():
     assert out["slots"] == 8
     assert out["candidate_exists"] is False
     assert "memproj_arm" not in GenomeConfig().to_dict()
+
+
+DEV_SHA = "5f5ea89e0f6fa5981f26eeddcef8fcf8abd4168e60a05465ca769b57d854cf52"
+DEC_SHA = "3501b928d2de16cb181d8003fc79efd9b6b43489e3b38bba8561c872c41a987c"
+DEV_GIT = "0db8bfd24906d6eb10e398d8991a3af01b36a4be"
+
+
+def test_dev_lock_attempted_not_resident():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm058storeint import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_storeint.dev.lock"
+    decp = REPO / "docs" / "lineage_storeint.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert _sha(LAW) == LAW_SHA
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "attempted_not_resident"
+    assert dev["install_W_star"] is False
+    assert dec["architectural_conclusion"] == "none"
+    assert dec["decision"]["code"] == "attempted_not_resident"
+    assert dec["decision"]["phase_flags"]["historical_episode_storage_unchanged"] is True
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["flag|w0"]["passed"] is True
+    assert cells["flag|w1"]["passed"] is True
+    assert cells["near_action|w0"]["n_cross_action_refresh"] == 0
+    assert cells["cue_key|w0"]["n_cross_cue_merge"] == 0
+    assert cells["capacity|w0"]["n_evict"] == 1
+    assert cells["capacity|w0"]["n_residents"] == 8
+    assert cells["checkpoint|w0"]["checkpoint_ok"] is True
+    assert cells["near_action|w0"]["n_append"] == 2
+    assert cells["near_action|w0"]["n_residents"] == 2
+    assert cells["near_action|w0"]["n_attempted_ne_resident"] == 2

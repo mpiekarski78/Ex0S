@@ -1,0 +1,1570 @@
+{
+  "lab": "TM.0.58.STOREINT",
+  "n_cells": 12,
+  "n_setup_cells": 2,
+  "n_scored_cells": 10,
+  "cells": [
+    {
+      "kind": "setup",
+      "id": "flag|w0",
+      "arm": "flag",
+      "world": 0,
+      "passed": true,
+      "excluded_from_behavioral_first_match": true,
+      "cell_code": "flag_ok",
+      "setter_present": true,
+      "write_present": true,
+      "default_off": true,
+      "not_genome": true,
+      "not_act_recall_mode": true,
+      "floor_ok": true,
+      "enabled": true,
+      "checkpoint_ok": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "setup",
+      "id": "flag|w1",
+      "arm": "flag",
+      "world": 1,
+      "passed": true,
+      "excluded_from_behavioral_first_match": true,
+      "cell_code": "flag_ok",
+      "setter_present": true,
+      "write_present": true,
+      "default_off": true,
+      "not_genome": true,
+      "not_act_recall_mode": true,
+      "floor_ok": true,
+      "enabled": true,
+      "checkpoint_ok": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "near_action|w0",
+      "probe": "near_action",
+      "world": 0,
+      "passed": false,
+      "cell_code": "probe_fail",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_attempted_ne_resident": 2,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 2,
+      "n_residents": 2,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "handle": "h_784884607",
+          "provenance_id": "na0_0",
+          "attempted_v_hash": "72d6d55984b8cf3b206f363a3ecdd0d3681f117f7a4ab23e738191c726c44476",
+          "attempted_k_hash": "1fd08fd8d392671a606856c215b5cf589e5bf2b21f92f77317d727ecfc855ea6",
+          "n_before": 0,
+          "n_after": 1,
+          "added": [
+            "1"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "1fd08fd8d392671a606856c215b5cf589e5bf2b21f92f77317d727ecfc855ea6",
+              "value_hash": "72d6d55984b8cf3b206f363a3ecdd0d3681f117f7a4ab23e738191c726c44476"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_063335713",
+          "provenance_id": "na1_0",
+          "attempted_v_hash": "c03c085572f91d6f52162b7aa62c7d810c5c3b3532af4a4a3a4f465b62274df3",
+          "attempted_k_hash": "145c19fbc1a94f8aabadbb906e7de49a1be626fb8f151e12b88c3a484af40c33",
+          "n_before": 1,
+          "n_after": 2,
+          "added": [
+            "2"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "1fd08fd8d392671a606856c215b5cf589e5bf2b21f92f77317d727ecfc855ea6",
+              "value_hash": "72d6d55984b8cf3b206f363a3ecdd0d3681f117f7a4ab23e738191c726c44476"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "145c19fbc1a94f8aabadbb906e7de49a1be626fb8f151e12b88c3a484af40c33",
+              "value_hash": "c03c085572f91d6f52162b7aa62c7d810c5c3b3532af4a4a3a4f465b62274df3"
+            }
+          ]
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "near_action|w1",
+      "probe": "near_action",
+      "world": 1,
+      "passed": false,
+      "cell_code": "probe_fail",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_attempted_ne_resident": 2,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 2,
+      "n_residents": 2,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "handle": "h_701021255",
+          "provenance_id": "na0_1",
+          "attempted_v_hash": "b41e94786f6dfa6b4666e561ce44b38df3e724b8629f44242a10b1b502d5cf66",
+          "attempted_k_hash": "a9126e1c7023899440fe88e6b57ca3d04df561b10fbcbe548b062c3d41e3ea95",
+          "n_before": 0,
+          "n_after": 1,
+          "added": [
+            "1"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "a9126e1c7023899440fe88e6b57ca3d04df561b10fbcbe548b062c3d41e3ea95",
+              "value_hash": "b41e94786f6dfa6b4666e561ce44b38df3e724b8629f44242a10b1b502d5cf66"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_345087151",
+          "provenance_id": "na1_1",
+          "attempted_v_hash": "c1e6e5f92c59bab036a979f2756bc1844a74db7f918082d05b00c2735e0e8d50",
+          "attempted_k_hash": "a6a5b332f794016d193bd6698ef65f7018180f69f57298d98737b313cff6e777",
+          "n_before": 1,
+          "n_after": 2,
+          "added": [
+            "2"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "a9126e1c7023899440fe88e6b57ca3d04df561b10fbcbe548b062c3d41e3ea95",
+              "value_hash": "b41e94786f6dfa6b4666e561ce44b38df3e724b8629f44242a10b1b502d5cf66"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "a6a5b332f794016d193bd6698ef65f7018180f69f57298d98737b313cff6e777",
+              "value_hash": "c1e6e5f92c59bab036a979f2756bc1844a74db7f918082d05b00c2735e0e8d50"
+            }
+          ]
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "cue_key|w0",
+      "probe": "cue_key",
+      "world": 0,
+      "passed": false,
+      "cell_code": "probe_fail",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_attempted_ne_resident": 2,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 2,
+      "n_residents": 2,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "handle": "h_784884607",
+          "provenance_id": "ck0_0",
+          "attempted_v_hash": "297b50b773a7b990a683f2b25e8751f3dec383d77876ae6d361be9bb502e2b8e",
+          "attempted_k_hash": "7cfc2e2713f13738c5e18e521f95ae015fa6078fdfb487faeaf416d014c7272c",
+          "n_before": 0,
+          "n_after": 1,
+          "added": [
+            "1"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "7cfc2e2713f13738c5e18e521f95ae015fa6078fdfb487faeaf416d014c7272c",
+              "value_hash": "297b50b773a7b990a683f2b25e8751f3dec383d77876ae6d361be9bb502e2b8e"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_784884607",
+          "provenance_id": "ck1_0",
+          "attempted_v_hash": "297b50b773a7b990a683f2b25e8751f3dec383d77876ae6d361be9bb502e2b8e",
+          "attempted_k_hash": "27ba53515fc03b9a1b3c8a624bec874506bc44e521a1e340bfa52c7eb627df1d",
+          "n_before": 1,
+          "n_after": 2,
+          "added": [
+            "2"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "7cfc2e2713f13738c5e18e521f95ae015fa6078fdfb487faeaf416d014c7272c",
+              "value_hash": "297b50b773a7b990a683f2b25e8751f3dec383d77876ae6d361be9bb502e2b8e"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "27ba53515fc03b9a1b3c8a624bec874506bc44e521a1e340bfa52c7eb627df1d",
+              "value_hash": "297b50b773a7b990a683f2b25e8751f3dec383d77876ae6d361be9bb502e2b8e"
+            }
+          ]
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "cue_key|w1",
+      "probe": "cue_key",
+      "world": 1,
+      "passed": false,
+      "cell_code": "probe_fail",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_attempted_ne_resident": 2,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 2,
+      "n_residents": 2,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "handle": "h_701021255",
+          "provenance_id": "ck0_1",
+          "attempted_v_hash": "3bdd12c49410ad167a8931a2ab7205d8f958a387692077e66edf200010ce6d61",
+          "attempted_k_hash": "665d05f07265ab87c62b03a8968e080830855ba54ec9d1d820a8d0ed8aa0e2d8",
+          "n_before": 0,
+          "n_after": 1,
+          "added": [
+            "1"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "665d05f07265ab87c62b03a8968e080830855ba54ec9d1d820a8d0ed8aa0e2d8",
+              "value_hash": "3bdd12c49410ad167a8931a2ab7205d8f958a387692077e66edf200010ce6d61"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_701021255",
+          "provenance_id": "ck1_1",
+          "attempted_v_hash": "3bdd12c49410ad167a8931a2ab7205d8f958a387692077e66edf200010ce6d61",
+          "attempted_k_hash": "856654731de723258d0bdea051bf616968468027dac9e6fb92c4ac8e5bdcc10b",
+          "n_before": 1,
+          "n_after": 2,
+          "added": [
+            "2"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "665d05f07265ab87c62b03a8968e080830855ba54ec9d1d820a8d0ed8aa0e2d8",
+              "value_hash": "3bdd12c49410ad167a8931a2ab7205d8f958a387692077e66edf200010ce6d61"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "856654731de723258d0bdea051bf616968468027dac9e6fb92c4ac8e5bdcc10b",
+              "value_hash": "3bdd12c49410ad167a8931a2ab7205d8f958a387692077e66edf200010ce6d61"
+            }
+          ]
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "repeat|w0",
+      "probe": "repeat",
+      "world": 0,
+      "passed": false,
+      "cell_code": "probe_fail",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_attempted_ne_resident": 2,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 2,
+      "n_residents": 2,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "handle": "h_784884607",
+          "provenance_id": "rp0_0",
+          "attempted_v_hash": "8da888d65be0f107dfc937598c50f05dab6ee5423a1dec5dd69429f0dac6b1c5",
+          "attempted_k_hash": "83a5bd41b46cbde0eed07d05dc261a328825bd287c525fc63d3511b82abdee2c",
+          "n_before": 0,
+          "n_after": 1,
+          "added": [
+            "1"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "83a5bd41b46cbde0eed07d05dc261a328825bd287c525fc63d3511b82abdee2c",
+              "value_hash": "8da888d65be0f107dfc937598c50f05dab6ee5423a1dec5dd69429f0dac6b1c5"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_784884607",
+          "provenance_id": "rp1_0",
+          "attempted_v_hash": "8da888d65be0f107dfc937598c50f05dab6ee5423a1dec5dd69429f0dac6b1c5",
+          "attempted_k_hash": "83a5bd41b46cbde0eed07d05dc261a328825bd287c525fc63d3511b82abdee2c",
+          "n_before": 1,
+          "n_after": 2,
+          "added": [
+            "2"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "83a5bd41b46cbde0eed07d05dc261a328825bd287c525fc63d3511b82abdee2c",
+              "value_hash": "8da888d65be0f107dfc937598c50f05dab6ee5423a1dec5dd69429f0dac6b1c5"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "83a5bd41b46cbde0eed07d05dc261a328825bd287c525fc63d3511b82abdee2c",
+              "value_hash": "8da888d65be0f107dfc937598c50f05dab6ee5423a1dec5dd69429f0dac6b1c5"
+            }
+          ]
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "repeat|w1",
+      "probe": "repeat",
+      "world": 1,
+      "passed": false,
+      "cell_code": "probe_fail",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_attempted_ne_resident": 2,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 2,
+      "n_residents": 2,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "handle": "h_701021255",
+          "provenance_id": "rp0_1",
+          "attempted_v_hash": "c7079c3deeec8f07b2abf7f465b5cd32bd139976d5c633ac3c4a08b271e499ec",
+          "attempted_k_hash": "552500966b95427ce699e5bfa4a21c440d9c01f1c3dac902de0e625532bf6fa7",
+          "n_before": 0,
+          "n_after": 1,
+          "added": [
+            "1"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "552500966b95427ce699e5bfa4a21c440d9c01f1c3dac902de0e625532bf6fa7",
+              "value_hash": "c7079c3deeec8f07b2abf7f465b5cd32bd139976d5c633ac3c4a08b271e499ec"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_701021255",
+          "provenance_id": "rp1_1",
+          "attempted_v_hash": "c7079c3deeec8f07b2abf7f465b5cd32bd139976d5c633ac3c4a08b271e499ec",
+          "attempted_k_hash": "552500966b95427ce699e5bfa4a21c440d9c01f1c3dac902de0e625532bf6fa7",
+          "n_before": 1,
+          "n_after": 2,
+          "added": [
+            "2"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "552500966b95427ce699e5bfa4a21c440d9c01f1c3dac902de0e625532bf6fa7",
+              "value_hash": "c7079c3deeec8f07b2abf7f465b5cd32bd139976d5c633ac3c4a08b271e499ec"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "552500966b95427ce699e5bfa4a21c440d9c01f1c3dac902de0e625532bf6fa7",
+              "value_hash": "c7079c3deeec8f07b2abf7f465b5cd32bd139976d5c633ac3c4a08b271e499ec"
+            }
+          ]
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "capacity|w0",
+      "probe": "capacity",
+      "world": 0,
+      "passed": false,
+      "cell_code": "probe_fail",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_attempted_ne_resident": 8,
+      "n_unreported_loss": 0,
+      "n_evict": 1,
+      "n_append": 8,
+      "n_residents": 8,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "handle": "h_784884607",
+          "provenance_id": "cap0_0",
+          "attempted_v_hash": "653325705d0dad147896eb7180cb7d26d49f2971409b7881a09c80cd8c1818c0",
+          "attempted_k_hash": "25a222993b60285e00f13d898cb6b2e7bdff8d779bfeb161741f3463f225e2b2",
+          "n_before": 0,
+          "n_after": 1,
+          "added": [
+            "1"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "25a222993b60285e00f13d898cb6b2e7bdff8d779bfeb161741f3463f225e2b2",
+              "value_hash": "653325705d0dad147896eb7180cb7d26d49f2971409b7881a09c80cd8c1818c0"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_063335713",
+          "provenance_id": "cap1_0",
+          "attempted_v_hash": "5032767e81011cf50bf2489e0c5be7255e544a828c725706e5910a94a5f5aa6f",
+          "attempted_k_hash": "e94d3c47f68ce49523c479ca8614db47548056ef783408c55b6071d851841134",
+          "n_before": 1,
+          "n_after": 2,
+          "added": [
+            "2"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "25a222993b60285e00f13d898cb6b2e7bdff8d779bfeb161741f3463f225e2b2",
+              "value_hash": "653325705d0dad147896eb7180cb7d26d49f2971409b7881a09c80cd8c1818c0"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "e94d3c47f68ce49523c479ca8614db47548056ef783408c55b6071d851841134",
+              "value_hash": "5032767e81011cf50bf2489e0c5be7255e544a828c725706e5910a94a5f5aa6f"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_882429785",
+          "provenance_id": "cap2_0",
+          "attempted_v_hash": "04e100cb2f738b8f14da6cd30db913b75e6bec449cdf87312c0b391ea9b1e82a",
+          "attempted_k_hash": "077d4013b52427202ccecc38e33fee9608ce9ed487275173e8af3b82b76139d1",
+          "n_before": 2,
+          "n_after": 3,
+          "added": [
+            "3"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "25a222993b60285e00f13d898cb6b2e7bdff8d779bfeb161741f3463f225e2b2",
+              "value_hash": "653325705d0dad147896eb7180cb7d26d49f2971409b7881a09c80cd8c1818c0"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "e94d3c47f68ce49523c479ca8614db47548056ef783408c55b6071d851841134",
+              "value_hash": "5032767e81011cf50bf2489e0c5be7255e544a828c725706e5910a94a5f5aa6f"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "077d4013b52427202ccecc38e33fee9608ce9ed487275173e8af3b82b76139d1",
+              "value_hash": "04e100cb2f738b8f14da6cd30db913b75e6bec449cdf87312c0b391ea9b1e82a"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_853468083",
+          "provenance_id": "cap3_0",
+          "attempted_v_hash": "a77b03f5666a0e68c70bbfd7924564166777ba67244f16300e5226af4eccefe3",
+          "attempted_k_hash": "2f501a6f4f61533b378e3ea78a734ebc5782fd297ba6d92e56b472024b09db7a",
+          "n_before": 3,
+          "n_after": 4,
+          "added": [
+            "4"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "25a222993b60285e00f13d898cb6b2e7bdff8d779bfeb161741f3463f225e2b2",
+              "value_hash": "653325705d0dad147896eb7180cb7d26d49f2971409b7881a09c80cd8c1818c0"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "e94d3c47f68ce49523c479ca8614db47548056ef783408c55b6071d851841134",
+              "value_hash": "5032767e81011cf50bf2489e0c5be7255e544a828c725706e5910a94a5f5aa6f"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "077d4013b52427202ccecc38e33fee9608ce9ed487275173e8af3b82b76139d1",
+              "value_hash": "04e100cb2f738b8f14da6cd30db913b75e6bec449cdf87312c0b391ea9b1e82a"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "2f501a6f4f61533b378e3ea78a734ebc5782fd297ba6d92e56b472024b09db7a",
+              "value_hash": "a77b03f5666a0e68c70bbfd7924564166777ba67244f16300e5226af4eccefe3"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_784884607",
+          "provenance_id": "cap4_0",
+          "attempted_v_hash": "997087a053a535a7210fe94b181d4793ed0faa83e84b50236067d7a5b395ed3a",
+          "attempted_k_hash": "93648137b9511a3decbb9e359518c74766e8b20c869391f7c9dae5bba2a6e7fe",
+          "n_before": 4,
+          "n_after": 5,
+          "added": [
+            "5"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "25a222993b60285e00f13d898cb6b2e7bdff8d779bfeb161741f3463f225e2b2",
+              "value_hash": "653325705d0dad147896eb7180cb7d26d49f2971409b7881a09c80cd8c1818c0"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "e94d3c47f68ce49523c479ca8614db47548056ef783408c55b6071d851841134",
+              "value_hash": "5032767e81011cf50bf2489e0c5be7255e544a828c725706e5910a94a5f5aa6f"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "077d4013b52427202ccecc38e33fee9608ce9ed487275173e8af3b82b76139d1",
+              "value_hash": "04e100cb2f738b8f14da6cd30db913b75e6bec449cdf87312c0b391ea9b1e82a"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "2f501a6f4f61533b378e3ea78a734ebc5782fd297ba6d92e56b472024b09db7a",
+              "value_hash": "a77b03f5666a0e68c70bbfd7924564166777ba67244f16300e5226af4eccefe3"
+            },
+            {
+              "provenance_id": "5",
+              "when": 5,
+              "key_hash": "93648137b9511a3decbb9e359518c74766e8b20c869391f7c9dae5bba2a6e7fe",
+              "value_hash": "997087a053a535a7210fe94b181d4793ed0faa83e84b50236067d7a5b395ed3a"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_063335713",
+          "provenance_id": "cap5_0",
+          "attempted_v_hash": "479240d765a8a1c3bfaf47cc1b9184b1d69f298373f8ecdc65ed094505c3d579",
+          "attempted_k_hash": "25ba9c072c9108d7cb78425872ee113a29a35da46c0056f0faa7ba50ed653edf",
+          "n_before": 5,
+          "n_after": 6,
+          "added": [
+            "6"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "25a222993b60285e00f13d898cb6b2e7bdff8d779bfeb161741f3463f225e2b2",
+              "value_hash": "653325705d0dad147896eb7180cb7d26d49f2971409b7881a09c80cd8c1818c0"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "e94d3c47f68ce49523c479ca8614db47548056ef783408c55b6071d851841134",
+              "value_hash": "5032767e81011cf50bf2489e0c5be7255e544a828c725706e5910a94a5f5aa6f"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "077d4013b52427202ccecc38e33fee9608ce9ed487275173e8af3b82b76139d1",
+              "value_hash": "04e100cb2f738b8f14da6cd30db913b75e6bec449cdf87312c0b391ea9b1e82a"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "2f501a6f4f61533b378e3ea78a734ebc5782fd297ba6d92e56b472024b09db7a",
+              "value_hash": "a77b03f5666a0e68c70bbfd7924564166777ba67244f16300e5226af4eccefe3"
+            },
+            {
+              "provenance_id": "5",
+              "when": 5,
+              "key_hash": "93648137b9511a3decbb9e359518c74766e8b20c869391f7c9dae5bba2a6e7fe",
+              "value_hash": "997087a053a535a7210fe94b181d4793ed0faa83e84b50236067d7a5b395ed3a"
+            },
+            {
+              "provenance_id": "6",
+              "when": 6,
+              "key_hash": "25ba9c072c9108d7cb78425872ee113a29a35da46c0056f0faa7ba50ed653edf",
+              "value_hash": "479240d765a8a1c3bfaf47cc1b9184b1d69f298373f8ecdc65ed094505c3d579"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_882429785",
+          "provenance_id": "cap6_0",
+          "attempted_v_hash": "60658df6939f04abeb8cd0a0b2b2ac8d5e54392c3b0e64d079987ee015b77c11",
+          "attempted_k_hash": "0890e61f42c6166b2768e56ac70d70c2952b240fe00d1145ad6e2876688f80dc",
+          "n_before": 6,
+          "n_after": 7,
+          "added": [
+            "7"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "25a222993b60285e00f13d898cb6b2e7bdff8d779bfeb161741f3463f225e2b2",
+              "value_hash": "653325705d0dad147896eb7180cb7d26d49f2971409b7881a09c80cd8c1818c0"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "e94d3c47f68ce49523c479ca8614db47548056ef783408c55b6071d851841134",
+              "value_hash": "5032767e81011cf50bf2489e0c5be7255e544a828c725706e5910a94a5f5aa6f"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "077d4013b52427202ccecc38e33fee9608ce9ed487275173e8af3b82b76139d1",
+              "value_hash": "04e100cb2f738b8f14da6cd30db913b75e6bec449cdf87312c0b391ea9b1e82a"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "2f501a6f4f61533b378e3ea78a734ebc5782fd297ba6d92e56b472024b09db7a",
+              "value_hash": "a77b03f5666a0e68c70bbfd7924564166777ba67244f16300e5226af4eccefe3"
+            },
+            {
+              "provenance_id": "5",
+              "when": 5,
+              "key_hash": "93648137b9511a3decbb9e359518c74766e8b20c869391f7c9dae5bba2a6e7fe",
+              "value_hash": "997087a053a535a7210fe94b181d4793ed0faa83e84b50236067d7a5b395ed3a"
+            },
+            {
+              "provenance_id": "6",
+              "when": 6,
+              "key_hash": "25ba9c072c9108d7cb78425872ee113a29a35da46c0056f0faa7ba50ed653edf",
+              "value_hash": "479240d765a8a1c3bfaf47cc1b9184b1d69f298373f8ecdc65ed094505c3d579"
+            },
+            {
+              "provenance_id": "7",
+              "when": 7,
+              "key_hash": "0890e61f42c6166b2768e56ac70d70c2952b240fe00d1145ad6e2876688f80dc",
+              "value_hash": "60658df6939f04abeb8cd0a0b2b2ac8d5e54392c3b0e64d079987ee015b77c11"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_853468083",
+          "provenance_id": "cap7_0",
+          "attempted_v_hash": "a3eb24ee64ee25971021bea7fa244f3cca60a53b2c0ff0e5fb1a048f9d858f49",
+          "attempted_k_hash": "0321099e3c850a43a1eeb5945e23892b19e1bbaf9e0b21a22cb61abf231fc379",
+          "n_before": 7,
+          "n_after": 8,
+          "added": [
+            "8"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "25a222993b60285e00f13d898cb6b2e7bdff8d779bfeb161741f3463f225e2b2",
+              "value_hash": "653325705d0dad147896eb7180cb7d26d49f2971409b7881a09c80cd8c1818c0"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "e94d3c47f68ce49523c479ca8614db47548056ef783408c55b6071d851841134",
+              "value_hash": "5032767e81011cf50bf2489e0c5be7255e544a828c725706e5910a94a5f5aa6f"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "077d4013b52427202ccecc38e33fee9608ce9ed487275173e8af3b82b76139d1",
+              "value_hash": "04e100cb2f738b8f14da6cd30db913b75e6bec449cdf87312c0b391ea9b1e82a"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "2f501a6f4f61533b378e3ea78a734ebc5782fd297ba6d92e56b472024b09db7a",
+              "value_hash": "a77b03f5666a0e68c70bbfd7924564166777ba67244f16300e5226af4eccefe3"
+            },
+            {
+              "provenance_id": "5",
+              "when": 5,
+              "key_hash": "93648137b9511a3decbb9e359518c74766e8b20c869391f7c9dae5bba2a6e7fe",
+              "value_hash": "997087a053a535a7210fe94b181d4793ed0faa83e84b50236067d7a5b395ed3a"
+            },
+            {
+              "provenance_id": "6",
+              "when": 6,
+              "key_hash": "25ba9c072c9108d7cb78425872ee113a29a35da46c0056f0faa7ba50ed653edf",
+              "value_hash": "479240d765a8a1c3bfaf47cc1b9184b1d69f298373f8ecdc65ed094505c3d579"
+            },
+            {
+              "provenance_id": "7",
+              "when": 7,
+              "key_hash": "0890e61f42c6166b2768e56ac70d70c2952b240fe00d1145ad6e2876688f80dc",
+              "value_hash": "60658df6939f04abeb8cd0a0b2b2ac8d5e54392c3b0e64d079987ee015b77c11"
+            },
+            {
+              "provenance_id": "8",
+              "when": 8,
+              "key_hash": "0321099e3c850a43a1eeb5945e23892b19e1bbaf9e0b21a22cb61abf231fc379",
+              "value_hash": "a3eb24ee64ee25971021bea7fa244f3cca60a53b2c0ff0e5fb1a048f9d858f49"
+            }
+          ]
+        },
+        {
+          "outcome": "evict",
+          "handle": "h_784884607",
+          "provenance_id": "cap8_0",
+          "attempted_v_hash": "cfee87aec4e7b4cbe8e1789d4a82ea4bb61267b191389ea3ec298369b78cce6d",
+          "attempted_k_hash": "9914192d5c41b1cf697cc15274d5661dab923a31804f6b4dab9c36c064c7ee74",
+          "n_before": 8,
+          "n_after": 8,
+          "added": [
+            "9"
+          ],
+          "removed": [
+            "1"
+          ],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "e94d3c47f68ce49523c479ca8614db47548056ef783408c55b6071d851841134",
+              "value_hash": "5032767e81011cf50bf2489e0c5be7255e544a828c725706e5910a94a5f5aa6f"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "077d4013b52427202ccecc38e33fee9608ce9ed487275173e8af3b82b76139d1",
+              "value_hash": "04e100cb2f738b8f14da6cd30db913b75e6bec449cdf87312c0b391ea9b1e82a"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "2f501a6f4f61533b378e3ea78a734ebc5782fd297ba6d92e56b472024b09db7a",
+              "value_hash": "a77b03f5666a0e68c70bbfd7924564166777ba67244f16300e5226af4eccefe3"
+            },
+            {
+              "provenance_id": "5",
+              "when": 5,
+              "key_hash": "93648137b9511a3decbb9e359518c74766e8b20c869391f7c9dae5bba2a6e7fe",
+              "value_hash": "997087a053a535a7210fe94b181d4793ed0faa83e84b50236067d7a5b395ed3a"
+            },
+            {
+              "provenance_id": "6",
+              "when": 6,
+              "key_hash": "25ba9c072c9108d7cb78425872ee113a29a35da46c0056f0faa7ba50ed653edf",
+              "value_hash": "479240d765a8a1c3bfaf47cc1b9184b1d69f298373f8ecdc65ed094505c3d579"
+            },
+            {
+              "provenance_id": "7",
+              "when": 7,
+              "key_hash": "0890e61f42c6166b2768e56ac70d70c2952b240fe00d1145ad6e2876688f80dc",
+              "value_hash": "60658df6939f04abeb8cd0a0b2b2ac8d5e54392c3b0e64d079987ee015b77c11"
+            },
+            {
+              "provenance_id": "8",
+              "when": 8,
+              "key_hash": "0321099e3c850a43a1eeb5945e23892b19e1bbaf9e0b21a22cb61abf231fc379",
+              "value_hash": "a3eb24ee64ee25971021bea7fa244f3cca60a53b2c0ff0e5fb1a048f9d858f49"
+            },
+            {
+              "provenance_id": "9",
+              "when": 9,
+              "key_hash": "9914192d5c41b1cf697cc15274d5661dab923a31804f6b4dab9c36c064c7ee74",
+              "value_hash": "cfee87aec4e7b4cbe8e1789d4a82ea4bb61267b191389ea3ec298369b78cce6d"
+            }
+          ]
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "capacity|w1",
+      "probe": "capacity",
+      "world": 1,
+      "passed": false,
+      "cell_code": "probe_fail",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_attempted_ne_resident": 8,
+      "n_unreported_loss": 0,
+      "n_evict": 1,
+      "n_append": 8,
+      "n_residents": 8,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "handle": "h_701021255",
+          "provenance_id": "cap0_1",
+          "attempted_v_hash": "85feb1808b03bdd88766f13b722a48013779c8de6a7b3ca88d8bb71fbb57f4bb",
+          "attempted_k_hash": "037b76e71011cd48b5cfa30de0f6897a3a7cb9e88375641ca4369e1f6b436784",
+          "n_before": 0,
+          "n_after": 1,
+          "added": [
+            "1"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "037b76e71011cd48b5cfa30de0f6897a3a7cb9e88375641ca4369e1f6b436784",
+              "value_hash": "85feb1808b03bdd88766f13b722a48013779c8de6a7b3ca88d8bb71fbb57f4bb"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_345087151",
+          "provenance_id": "cap1_1",
+          "attempted_v_hash": "b0dd033f9bb1fae25cdba1c63136efa9d3eb8746249cbd280296df1066ebda63",
+          "attempted_k_hash": "8dcaf890188e6f7a908dc41849247d683b7e64e8d04e354f562da23978d70e36",
+          "n_before": 1,
+          "n_after": 2,
+          "added": [
+            "2"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "037b76e71011cd48b5cfa30de0f6897a3a7cb9e88375641ca4369e1f6b436784",
+              "value_hash": "85feb1808b03bdd88766f13b722a48013779c8de6a7b3ca88d8bb71fbb57f4bb"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "8dcaf890188e6f7a908dc41849247d683b7e64e8d04e354f562da23978d70e36",
+              "value_hash": "b0dd033f9bb1fae25cdba1c63136efa9d3eb8746249cbd280296df1066ebda63"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_403340788",
+          "provenance_id": "cap2_1",
+          "attempted_v_hash": "1bcaf72a3c4919e3e8bfea42bdd024a42727b2b8e893aad4c802b9bd11cf8b2e",
+          "attempted_k_hash": "40f936732a7bd6ccb956a29aadd6a7c81176751046ed78ded03df7c41c0c7b89",
+          "n_before": 2,
+          "n_after": 3,
+          "added": [
+            "3"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "037b76e71011cd48b5cfa30de0f6897a3a7cb9e88375641ca4369e1f6b436784",
+              "value_hash": "85feb1808b03bdd88766f13b722a48013779c8de6a7b3ca88d8bb71fbb57f4bb"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "8dcaf890188e6f7a908dc41849247d683b7e64e8d04e354f562da23978d70e36",
+              "value_hash": "b0dd033f9bb1fae25cdba1c63136efa9d3eb8746249cbd280296df1066ebda63"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "40f936732a7bd6ccb956a29aadd6a7c81176751046ed78ded03df7c41c0c7b89",
+              "value_hash": "1bcaf72a3c4919e3e8bfea42bdd024a42727b2b8e893aad4c802b9bd11cf8b2e"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_792668874",
+          "provenance_id": "cap3_1",
+          "attempted_v_hash": "4f0038b42f9da63d2e0770254638a4119906b4b9164472694ce459d2d76cda84",
+          "attempted_k_hash": "1c27045251acb8183c18632285739f3b03e60b89a6f5eeb9a710e890d9093323",
+          "n_before": 3,
+          "n_after": 4,
+          "added": [
+            "4"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "037b76e71011cd48b5cfa30de0f6897a3a7cb9e88375641ca4369e1f6b436784",
+              "value_hash": "85feb1808b03bdd88766f13b722a48013779c8de6a7b3ca88d8bb71fbb57f4bb"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "8dcaf890188e6f7a908dc41849247d683b7e64e8d04e354f562da23978d70e36",
+              "value_hash": "b0dd033f9bb1fae25cdba1c63136efa9d3eb8746249cbd280296df1066ebda63"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "40f936732a7bd6ccb956a29aadd6a7c81176751046ed78ded03df7c41c0c7b89",
+              "value_hash": "1bcaf72a3c4919e3e8bfea42bdd024a42727b2b8e893aad4c802b9bd11cf8b2e"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "1c27045251acb8183c18632285739f3b03e60b89a6f5eeb9a710e890d9093323",
+              "value_hash": "4f0038b42f9da63d2e0770254638a4119906b4b9164472694ce459d2d76cda84"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_701021255",
+          "provenance_id": "cap4_1",
+          "attempted_v_hash": "94736b0fe7dd307541b2f71b7a1c30b9809f2bd3938c4f3dd979c78b22fc120a",
+          "attempted_k_hash": "e80926b8ff2ef20796ae6d5601d945246e5adf439fffa4793cdd7e8a250d465e",
+          "n_before": 4,
+          "n_after": 5,
+          "added": [
+            "5"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "037b76e71011cd48b5cfa30de0f6897a3a7cb9e88375641ca4369e1f6b436784",
+              "value_hash": "85feb1808b03bdd88766f13b722a48013779c8de6a7b3ca88d8bb71fbb57f4bb"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "8dcaf890188e6f7a908dc41849247d683b7e64e8d04e354f562da23978d70e36",
+              "value_hash": "b0dd033f9bb1fae25cdba1c63136efa9d3eb8746249cbd280296df1066ebda63"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "40f936732a7bd6ccb956a29aadd6a7c81176751046ed78ded03df7c41c0c7b89",
+              "value_hash": "1bcaf72a3c4919e3e8bfea42bdd024a42727b2b8e893aad4c802b9bd11cf8b2e"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "1c27045251acb8183c18632285739f3b03e60b89a6f5eeb9a710e890d9093323",
+              "value_hash": "4f0038b42f9da63d2e0770254638a4119906b4b9164472694ce459d2d76cda84"
+            },
+            {
+              "provenance_id": "5",
+              "when": 5,
+              "key_hash": "e80926b8ff2ef20796ae6d5601d945246e5adf439fffa4793cdd7e8a250d465e",
+              "value_hash": "94736b0fe7dd307541b2f71b7a1c30b9809f2bd3938c4f3dd979c78b22fc120a"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_345087151",
+          "provenance_id": "cap5_1",
+          "attempted_v_hash": "f45f08aede71aa20cc10b59dc63501b6b90eb7080240bb3703c0aa794b102ed4",
+          "attempted_k_hash": "b43929c56036823f69d67016a47a66e44d16b2520764850d304947b3d921f0d1",
+          "n_before": 5,
+          "n_after": 6,
+          "added": [
+            "6"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "037b76e71011cd48b5cfa30de0f6897a3a7cb9e88375641ca4369e1f6b436784",
+              "value_hash": "85feb1808b03bdd88766f13b722a48013779c8de6a7b3ca88d8bb71fbb57f4bb"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "8dcaf890188e6f7a908dc41849247d683b7e64e8d04e354f562da23978d70e36",
+              "value_hash": "b0dd033f9bb1fae25cdba1c63136efa9d3eb8746249cbd280296df1066ebda63"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "40f936732a7bd6ccb956a29aadd6a7c81176751046ed78ded03df7c41c0c7b89",
+              "value_hash": "1bcaf72a3c4919e3e8bfea42bdd024a42727b2b8e893aad4c802b9bd11cf8b2e"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "1c27045251acb8183c18632285739f3b03e60b89a6f5eeb9a710e890d9093323",
+              "value_hash": "4f0038b42f9da63d2e0770254638a4119906b4b9164472694ce459d2d76cda84"
+            },
+            {
+              "provenance_id": "5",
+              "when": 5,
+              "key_hash": "e80926b8ff2ef20796ae6d5601d945246e5adf439fffa4793cdd7e8a250d465e",
+              "value_hash": "94736b0fe7dd307541b2f71b7a1c30b9809f2bd3938c4f3dd979c78b22fc120a"
+            },
+            {
+              "provenance_id": "6",
+              "when": 6,
+              "key_hash": "b43929c56036823f69d67016a47a66e44d16b2520764850d304947b3d921f0d1",
+              "value_hash": "f45f08aede71aa20cc10b59dc63501b6b90eb7080240bb3703c0aa794b102ed4"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_403340788",
+          "provenance_id": "cap6_1",
+          "attempted_v_hash": "2d0dd3ffbab44a90ee6159b75537a40201a5381ecc2cbf12f747c55dcd1c8358",
+          "attempted_k_hash": "1e6df20c3d64cb238567c51b8db716347b4a82cf55d7706287e783956fb9ca88",
+          "n_before": 6,
+          "n_after": 7,
+          "added": [
+            "7"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "037b76e71011cd48b5cfa30de0f6897a3a7cb9e88375641ca4369e1f6b436784",
+              "value_hash": "85feb1808b03bdd88766f13b722a48013779c8de6a7b3ca88d8bb71fbb57f4bb"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "8dcaf890188e6f7a908dc41849247d683b7e64e8d04e354f562da23978d70e36",
+              "value_hash": "b0dd033f9bb1fae25cdba1c63136efa9d3eb8746249cbd280296df1066ebda63"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "40f936732a7bd6ccb956a29aadd6a7c81176751046ed78ded03df7c41c0c7b89",
+              "value_hash": "1bcaf72a3c4919e3e8bfea42bdd024a42727b2b8e893aad4c802b9bd11cf8b2e"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "1c27045251acb8183c18632285739f3b03e60b89a6f5eeb9a710e890d9093323",
+              "value_hash": "4f0038b42f9da63d2e0770254638a4119906b4b9164472694ce459d2d76cda84"
+            },
+            {
+              "provenance_id": "5",
+              "when": 5,
+              "key_hash": "e80926b8ff2ef20796ae6d5601d945246e5adf439fffa4793cdd7e8a250d465e",
+              "value_hash": "94736b0fe7dd307541b2f71b7a1c30b9809f2bd3938c4f3dd979c78b22fc120a"
+            },
+            {
+              "provenance_id": "6",
+              "when": 6,
+              "key_hash": "b43929c56036823f69d67016a47a66e44d16b2520764850d304947b3d921f0d1",
+              "value_hash": "f45f08aede71aa20cc10b59dc63501b6b90eb7080240bb3703c0aa794b102ed4"
+            },
+            {
+              "provenance_id": "7",
+              "when": 7,
+              "key_hash": "1e6df20c3d64cb238567c51b8db716347b4a82cf55d7706287e783956fb9ca88",
+              "value_hash": "2d0dd3ffbab44a90ee6159b75537a40201a5381ecc2cbf12f747c55dcd1c8358"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_792668874",
+          "provenance_id": "cap7_1",
+          "attempted_v_hash": "29df780fd3e179244f9e1b6074614f436af48975a402d1430905ed5184571533",
+          "attempted_k_hash": "2fb167b2bfebc4862bac373f8a89bbb31ab14c46aa28aa32f9c31ea5d4ec0be4",
+          "n_before": 7,
+          "n_after": 8,
+          "added": [
+            "8"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "037b76e71011cd48b5cfa30de0f6897a3a7cb9e88375641ca4369e1f6b436784",
+              "value_hash": "85feb1808b03bdd88766f13b722a48013779c8de6a7b3ca88d8bb71fbb57f4bb"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "8dcaf890188e6f7a908dc41849247d683b7e64e8d04e354f562da23978d70e36",
+              "value_hash": "b0dd033f9bb1fae25cdba1c63136efa9d3eb8746249cbd280296df1066ebda63"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "40f936732a7bd6ccb956a29aadd6a7c81176751046ed78ded03df7c41c0c7b89",
+              "value_hash": "1bcaf72a3c4919e3e8bfea42bdd024a42727b2b8e893aad4c802b9bd11cf8b2e"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "1c27045251acb8183c18632285739f3b03e60b89a6f5eeb9a710e890d9093323",
+              "value_hash": "4f0038b42f9da63d2e0770254638a4119906b4b9164472694ce459d2d76cda84"
+            },
+            {
+              "provenance_id": "5",
+              "when": 5,
+              "key_hash": "e80926b8ff2ef20796ae6d5601d945246e5adf439fffa4793cdd7e8a250d465e",
+              "value_hash": "94736b0fe7dd307541b2f71b7a1c30b9809f2bd3938c4f3dd979c78b22fc120a"
+            },
+            {
+              "provenance_id": "6",
+              "when": 6,
+              "key_hash": "b43929c56036823f69d67016a47a66e44d16b2520764850d304947b3d921f0d1",
+              "value_hash": "f45f08aede71aa20cc10b59dc63501b6b90eb7080240bb3703c0aa794b102ed4"
+            },
+            {
+              "provenance_id": "7",
+              "when": 7,
+              "key_hash": "1e6df20c3d64cb238567c51b8db716347b4a82cf55d7706287e783956fb9ca88",
+              "value_hash": "2d0dd3ffbab44a90ee6159b75537a40201a5381ecc2cbf12f747c55dcd1c8358"
+            },
+            {
+              "provenance_id": "8",
+              "when": 8,
+              "key_hash": "2fb167b2bfebc4862bac373f8a89bbb31ab14c46aa28aa32f9c31ea5d4ec0be4",
+              "value_hash": "29df780fd3e179244f9e1b6074614f436af48975a402d1430905ed5184571533"
+            }
+          ]
+        },
+        {
+          "outcome": "evict",
+          "handle": "h_701021255",
+          "provenance_id": "cap8_1",
+          "attempted_v_hash": "b89fe1e39f593f364d30008e8630de650c271c4b35bc0583d04a49892420fca5",
+          "attempted_k_hash": "956f087d53457c3d5567ab58605b8e6450bfd8c6e9db3def13f9d4e4a6ef1eb0",
+          "n_before": 8,
+          "n_after": 8,
+          "added": [
+            "9"
+          ],
+          "removed": [
+            "1"
+          ],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "8dcaf890188e6f7a908dc41849247d683b7e64e8d04e354f562da23978d70e36",
+              "value_hash": "b0dd033f9bb1fae25cdba1c63136efa9d3eb8746249cbd280296df1066ebda63"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "40f936732a7bd6ccb956a29aadd6a7c81176751046ed78ded03df7c41c0c7b89",
+              "value_hash": "1bcaf72a3c4919e3e8bfea42bdd024a42727b2b8e893aad4c802b9bd11cf8b2e"
+            },
+            {
+              "provenance_id": "4",
+              "when": 4,
+              "key_hash": "1c27045251acb8183c18632285739f3b03e60b89a6f5eeb9a710e890d9093323",
+              "value_hash": "4f0038b42f9da63d2e0770254638a4119906b4b9164472694ce459d2d76cda84"
+            },
+            {
+              "provenance_id": "5",
+              "when": 5,
+              "key_hash": "e80926b8ff2ef20796ae6d5601d945246e5adf439fffa4793cdd7e8a250d465e",
+              "value_hash": "94736b0fe7dd307541b2f71b7a1c30b9809f2bd3938c4f3dd979c78b22fc120a"
+            },
+            {
+              "provenance_id": "6",
+              "when": 6,
+              "key_hash": "b43929c56036823f69d67016a47a66e44d16b2520764850d304947b3d921f0d1",
+              "value_hash": "f45f08aede71aa20cc10b59dc63501b6b90eb7080240bb3703c0aa794b102ed4"
+            },
+            {
+              "provenance_id": "7",
+              "when": 7,
+              "key_hash": "1e6df20c3d64cb238567c51b8db716347b4a82cf55d7706287e783956fb9ca88",
+              "value_hash": "2d0dd3ffbab44a90ee6159b75537a40201a5381ecc2cbf12f747c55dcd1c8358"
+            },
+            {
+              "provenance_id": "8",
+              "when": 8,
+              "key_hash": "2fb167b2bfebc4862bac373f8a89bbb31ab14c46aa28aa32f9c31ea5d4ec0be4",
+              "value_hash": "29df780fd3e179244f9e1b6074614f436af48975a402d1430905ed5184571533"
+            },
+            {
+              "provenance_id": "9",
+              "when": 9,
+              "key_hash": "956f087d53457c3d5567ab58605b8e6450bfd8c6e9db3def13f9d4e4a6ef1eb0",
+              "value_hash": "b89fe1e39f593f364d30008e8630de650c271c4b35bc0583d04a49892420fca5"
+            }
+          ]
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "checkpoint|w0",
+      "probe": "checkpoint",
+      "world": 0,
+      "passed": false,
+      "cell_code": "probe_fail",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_attempted_ne_resident": 3,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 3,
+      "n_residents": 3,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "handle": "h_784884607",
+          "provenance_id": "cp0_0",
+          "attempted_v_hash": "326043064b79dd674b416eac48245c274a732b65f2b5b44e35c9ed70c4a0b01c",
+          "attempted_k_hash": "0cf4f2752fa6ea08ae653e941934e5e2d879d4c678ece5f196fcc23a74203d3a",
+          "n_before": 0,
+          "n_after": 1,
+          "added": [
+            "1"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "0cf4f2752fa6ea08ae653e941934e5e2d879d4c678ece5f196fcc23a74203d3a",
+              "value_hash": "326043064b79dd674b416eac48245c274a732b65f2b5b44e35c9ed70c4a0b01c"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_063335713",
+          "provenance_id": "cp1_0",
+          "attempted_v_hash": "f766e8f556b8fab9deba3c7645d3ca84776a655e3e43f079da022f1b6b7d7d79",
+          "attempted_k_hash": "99e63d21cfd5459c2f0e2922941c00c07a4b2f4be9458224e12772f86aecd8f4",
+          "n_before": 1,
+          "n_after": 2,
+          "added": [
+            "2"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "0cf4f2752fa6ea08ae653e941934e5e2d879d4c678ece5f196fcc23a74203d3a",
+              "value_hash": "326043064b79dd674b416eac48245c274a732b65f2b5b44e35c9ed70c4a0b01c"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "99e63d21cfd5459c2f0e2922941c00c07a4b2f4be9458224e12772f86aecd8f4",
+              "value_hash": "f766e8f556b8fab9deba3c7645d3ca84776a655e3e43f079da022f1b6b7d7d79"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_882429785",
+          "provenance_id": "cp2_0",
+          "attempted_v_hash": "2f71cb65ca6702b7c7a49c7fc2ba16e5fcb6dcd804c0f6aae1ee245547231dd7",
+          "attempted_k_hash": "76c8e53b4c1c933d936437f380ee822a2f6fdbfefe2a6a9863e1066337b22cbd",
+          "n_before": 2,
+          "n_after": 3,
+          "added": [
+            "3"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "0cf4f2752fa6ea08ae653e941934e5e2d879d4c678ece5f196fcc23a74203d3a",
+              "value_hash": "326043064b79dd674b416eac48245c274a732b65f2b5b44e35c9ed70c4a0b01c"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "99e63d21cfd5459c2f0e2922941c00c07a4b2f4be9458224e12772f86aecd8f4",
+              "value_hash": "f766e8f556b8fab9deba3c7645d3ca84776a655e3e43f079da022f1b6b7d7d79"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "76c8e53b4c1c933d936437f380ee822a2f6fdbfefe2a6a9863e1066337b22cbd",
+              "value_hash": "2f71cb65ca6702b7c7a49c7fc2ba16e5fcb6dcd804c0f6aae1ee245547231dd7"
+            }
+          ]
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "checkpoint|w1",
+      "probe": "checkpoint",
+      "world": 1,
+      "passed": false,
+      "cell_code": "probe_fail",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_attempted_ne_resident": 3,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 3,
+      "n_residents": 3,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "handle": "h_701021255",
+          "provenance_id": "cp0_1",
+          "attempted_v_hash": "11d266291a5fc0a66bc1cc82c94bbb15571260ffeb23892cbf316d6a38018229",
+          "attempted_k_hash": "7138d22501ae251dbd1277f090acfef0dc7ace14d6619095940363708a1de9b5",
+          "n_before": 0,
+          "n_after": 1,
+          "added": [
+            "1"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "7138d22501ae251dbd1277f090acfef0dc7ace14d6619095940363708a1de9b5",
+              "value_hash": "11d266291a5fc0a66bc1cc82c94bbb15571260ffeb23892cbf316d6a38018229"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_345087151",
+          "provenance_id": "cp1_1",
+          "attempted_v_hash": "07b6b4975762850915043eb5adf71762f99e106b2d0d899c06a82ae7eb6fb501",
+          "attempted_k_hash": "b96a34199283934d2adf5e607adbc9ce1187c5e94839f549ea6bd033ce14e99c",
+          "n_before": 1,
+          "n_after": 2,
+          "added": [
+            "2"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "7138d22501ae251dbd1277f090acfef0dc7ace14d6619095940363708a1de9b5",
+              "value_hash": "11d266291a5fc0a66bc1cc82c94bbb15571260ffeb23892cbf316d6a38018229"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "b96a34199283934d2adf5e607adbc9ce1187c5e94839f549ea6bd033ce14e99c",
+              "value_hash": "07b6b4975762850915043eb5adf71762f99e106b2d0d899c06a82ae7eb6fb501"
+            }
+          ]
+        },
+        {
+          "outcome": "append",
+          "handle": "h_403340788",
+          "provenance_id": "cp2_1",
+          "attempted_v_hash": "0b6babe73882ab6fe7bd9fb4c7d44b60ce2e9beb9c94de1614b89502a024e590",
+          "attempted_k_hash": "0ccb1e4b5b4f128d609fbcca891349c4d7535a8d60320b55f4940f51de52371f",
+          "n_before": 2,
+          "n_after": 3,
+          "added": [
+            "3"
+          ],
+          "removed": [],
+          "changed": [],
+          "residents_after": [
+            {
+              "provenance_id": "1",
+              "when": 1,
+              "key_hash": "7138d22501ae251dbd1277f090acfef0dc7ace14d6619095940363708a1de9b5",
+              "value_hash": "11d266291a5fc0a66bc1cc82c94bbb15571260ffeb23892cbf316d6a38018229"
+            },
+            {
+              "provenance_id": "2",
+              "when": 2,
+              "key_hash": "b96a34199283934d2adf5e607adbc9ce1187c5e94839f549ea6bd033ce14e99c",
+              "value_hash": "07b6b4975762850915043eb5adf71762f99e106b2d0d899c06a82ae7eb6fb501"
+            },
+            {
+              "provenance_id": "3",
+              "when": 3,
+              "key_hash": "0ccb1e4b5b4f128d609fbcca891349c4d7535a8d60320b55f4940f51de52371f",
+              "value_hash": "0b6babe73882ab6fe7bd9fb4c7d44b60ce2e9beb9c94de1614b89502a024e590"
+            }
+          ]
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    }
+  ],
+  "decision_code": "attempted_not_resident",
+  "decision_then": "attempted_not_resident",
+  "phase_flags": {
+    "n_cells": 12,
+    "n_setup_cells": 2,
+    "n_scored_cells": 10,
+    "candidate_v41_lock": false,
+    "kqv_edited": false,
+    "install_W_star": false,
+    "episode_match_l2_retuned": false,
+    "canonical_law_reconsidered": false,
+    "setup_excluded_from_behavioral_first_match": true,
+    "opaque_store_law_compatible": false,
+    "historical_episode_storage_unchanged": true
+  },
+  "git_head": "0db8bfd24906d6eb10e398d8991a3af01b36a4be",
+  "frozen_runner_sha": "2f7e497c216fe4a2fcdd5bbff73ed7f2fb7bd3f43c23a00630b4055ac278bb2d",
+  "manifest_sha": "0a77945d8d675a3cd8ae5f2bc12b3dff30d9311bf3d946eb2e62410a07a1eac2",
+  "candidate_v41_lock": false,
+  "install_W_star": false,
+  "episode_match_l2_retuned": false,
+  "canonical_law_reconsidered": false,
+  "clean_tree": true,
+  "clean_tree_status": "clean",
+  "tm057_runner_untouched": true,
+  "canonical_state_generator": "write_time_last_p1"
+}
