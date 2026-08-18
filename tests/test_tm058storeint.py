@@ -248,10 +248,10 @@ def test_dev_lock_attempted_not_resident():
     assert cells["near_action|w0"]["n_attempted_ne_resident"] == 2
 
 
-DEC_ADD_SHA = "29137a17ced032e7e01486ac5e08636ea3bcd792600c6d757ee1a1892dc42d5d"
+DEC_ADD_SHA = "549545f6bf7130cd3790146e5cf1f013de557543440efe93670af8e9003fd93a"
 
 
-def test_addendum_observer_lookup_without_rewrite():
+def test_addendum_invalidated_measurement_without_rewrite():
     addp = REPO / "docs" / "lineage_storeint.decision.addendum.lock"
     assert _sha(addp) == DEC_ADD_SHA
     assert _sha(REPO / "docs" / "lineage_storeint.dev.lock") == DEV_SHA
@@ -262,11 +262,14 @@ def test_addendum_observer_lookup_without_rewrite():
     assert add["rerun_dev"] is False
     assert add["frozen_first_match_unchanged"] is True
     assert add["historical_decision_code"] == "attempted_not_resident"
-    assert add["interpretation"] == "frozen_observer_lookup_of_ignored_provenance_keyword"
-    assert add["architectural_conclusion"] == "opaque_kv_identity_held_under_organism_provenance"
+    assert add["interpretation"] == "invalidated_measurement__observer_used_runner_provenance"
+    assert add["architectural_conclusion"] == "none"
+    assert add["scientifically_valid_organism_result"] is False
     assert add["store_physics"]["zero_cross_action_refresh"] is True
     assert add["store_physics"]["capacity_evict_then_append"] is True
     assert add["store_physics"]["checkpoint_byte_identical"] is True
+    assert add["audit"]["measurement_invalidated"] is True
+    assert add["audit"]["observer_assumed_runner_identity_becomes_organism_identity"] is True
     assert add["episode_match_l2_not_changed"] is True
     assert EPISODE_MATCH_L2 == 0.05
     assert not CANDIDATE_V41.exists()

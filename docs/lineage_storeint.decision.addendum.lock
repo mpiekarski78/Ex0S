@@ -24,9 +24,9 @@
   "historical_n_cells": 12,
   "historical_decision_code": "attempted_not_resident",
   "frozen_first_match_unchanged": true,
-  "interpretation": "frozen_observer_lookup_of_ignored_provenance_keyword",
-  "scientifically_valid_organism_result": true,
-  "architectural_conclusion": "opaque_kv_identity_held_under_organism_provenance",
+  "interpretation": "invalidated_measurement__observer_used_runner_provenance",
+  "scientifically_valid_organism_result": false,
+  "architectural_conclusion": "none",
   "store_physics": {
     "zero_cross_action_refresh": true,
     "zero_cross_cue_merge": true,
@@ -40,9 +40,12 @@
   "floor": 0.05,
   "fifo_is_not_intelligent_forgetting": true,
   "audit": {
+    "implementation_followed_stronger_law": true,
     "frozen_runner_looks_up_write_opaque_kv_keyword": true,
     "stored_provenance_id_is_organism_counter": true,
-    "keyword_is_ignored_per_law_addendum": true
+    "keyword_is_ignored_per_law_addendum": true,
+    "observer_assumed_runner_identity_becomes_organism_identity": true,
+    "measurement_invalidated": true
   },
   "refuse": [
     "edit experiments/run_tm058storeint.py after freeze",
@@ -54,5 +57,5 @@
     "earned_next",
     "0.0.005"
   ],
-  "note": "Audit of the frozen TM058 wall. First-match remains attempted_not_resident. The store kept distinct events as distinct records. The observer looked up the ignored provenance keyword. Product remains 0.0.004."
+  "note": "Audit of the frozen TM058 wall. First-match remains attempted_not_resident. The implementation followed the stronger law. The observer violated it by assuming runner-supplied identity would become organism identity. That measurement is invalidated. Architectural conclusion remains none. Product remains 0.0.004."
 }
