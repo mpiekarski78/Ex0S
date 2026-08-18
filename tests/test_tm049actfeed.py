@@ -386,3 +386,23 @@ def test_dev_lock_feedback_not_action_separable_and_no_v41():
         assert all(bool(cl["key_from_cue"]) for cl in ident["clones"])
         nm = cells[f"feedback_no_memory|w{wi}"]
         assert nm["cell_code"] == "feedback_not_action_separable"
+
+
+ADD_SHA = "98ed0efd761a7fdd3def78e74599a6c7d1178796419a0fb511ed4062a800bbc6"
+
+
+def test_audit_addendum_does_not_rewrite_first_match():
+    addp = REPO / "docs" / "lineage_actfeed.decision.addendum.lock"
+    add = json.loads(addp.read_text())
+    assert _sha(addp) == ADD_SHA
+    assert add["rewrite_historical_decision"] is False
+    assert add["rerun_dev"] is False
+    assert add["frozen_first_match_unchanged"] is True
+    assert add["historical_decision_code"] == "feedback_not_action_separable"
+    assert add["interpretation"] == "action_information_present_but_weak_and_behaviorally_unreadable"
+    assert add["audit"]["action_information_present"]["w0_n_unique_rho_feedback"] == 4
+    assert add["audit"]["geometrically_weak"]["floor"] == 0.05
+    assert add["audit"]["behaviorally_unreadable"]["n_ok_credit"] == [1, 1]
+    assert add["tick_count_fitted"] is False
+    assert add["audit"]["next_wall"] == "TM.0.50.FEEDGEOM"
+    assert not CANDIDATE_V41.exists()
