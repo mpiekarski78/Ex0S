@@ -1,0 +1,33 @@
+{
+  "version": "TM.0.45.MEMNEC.ISOLATION",
+  "lab": "TM.0.45.MEMNEC",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "kqv_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "v41_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM045.MEMNEC.DEV.",
+    "TWIN": "TM045.MEMNEC.TWIN."
+  },
+  "historical_immutable": [
+    "experiments/run_tm044memproj.py",
+    "docs/lineage_memproj.dev.lock",
+    "docs/lineage_memproj.decision.lock",
+    "docs/lineage_memproj.decision.addendum.lock",
+    "docs/lineage_memproj.prereg.lock",
+    "three_memory/joint_socp.py"
+  ],
+  "refuse": [
+    "tune_kqv",
+    "rerun TM044 DEV",
+    "edit experiments/run_tm044memproj.py",
+    "auto_cortex.candidate.v41.lock",
+    "edit_joint_socp.py",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Find where persistent memory is required. Do not repair K/Q/V on this wall. Product remains 0.0.004."
+}

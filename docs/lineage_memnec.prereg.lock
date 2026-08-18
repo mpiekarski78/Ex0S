@@ -1,0 +1,92 @@
+{
+  "version": "TM.0.45.MEMNEC.PREREG",
+  "lab": "TM.0.45.MEMNEC",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": false,
+  "kqv_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "recall_edit_authorized": false,
+  "v41_candidate_authorized": false,
+  "package_question": "After resetting rho before recall, at which frozen scale and condition (2/4/8 cues; immediate, delayed, distractor, revision) does the current n=64 cortex require persistent information: symbolic oracle succeeds and no_persistent_memory fails?",
+  "authorized_by": [
+    "docs/lineage_memproj.decision.lock",
+    "docs/lineage_memproj.decision.addendum.lock",
+    "docs/neural_memory_boundary.lock"
+  ],
+  "tm044_decision_code": "memory_not_necessary",
+  "tm044_decision_sha": "bf3fa56665dfad02657307879a2491e3d1315ecc84024f52e51b782bf0d12efb",
+  "tm044_dev_sha": "e375a4ae9e19f1697dddc8d1055bd34ead6f667c92db575ed3e6512be4a6fc8e",
+  "tm044_runner_sha": "9bbde3eafd7c56ea2a39835405fe78221687a49c01ace0261a41710db7a2cfd0",
+  "tm044_addendum_sha": "3b28a031798024f443df88bbc01e10fa8eca30d36ff701b39e69f049a4bc06d1",
+  "joint_socp_sha": "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895",
+  "neural_cortex_sha": "b0785af069c79c62bd3972a0a3f03f53f9bfbb7221accfb76061b6ee52bb0f1c",
+  "n": 64,
+  "n_handles": 2,
+  "n_cues_grid": [
+    2,
+    4,
+    8
+  ],
+  "n_worlds": 2,
+  "n_delay_ticks": 4,
+  "seed_registry": 404500045,
+  "default_seed_registry_forbidden": 22222,
+  "forbidden_seeds": [
+    22222,
+    404000039,
+    404200040,
+    404200042,
+    404300043,
+    404400044
+  ],
+  "domains": {
+    "DEV": "TM045.MEMNEC.DEV.",
+    "TWIN": "TM045.MEMNEC.TWIN."
+  },
+  "arms": [
+    "symbolic_oracle",
+    "learned_projection",
+    "no_persistent_memory"
+  ],
+  "conditions": [
+    "immediate",
+    "delayed",
+    "distractor",
+    "revision"
+  ],
+  "reset_rho_before_recall": true,
+  "record_scores_before_after_reinstatement": true,
+  "learned_arm_is_observational": true,
+  "expected_n_cells": 72,
+  "manifest_sha": "b5a181b72f11c5d7bf37768449ae510982519604ab940e3a098a9e80a69c517a",
+  "decision_ladder": [
+    {
+      "code": "setup_precondition_fail",
+      "when": "oracle fails 2-cue immediate"
+    },
+    {
+      "code": "memory_necessary_at",
+      "when": "first frozen cell where oracle succeeds and no_persistent_memory fails"
+    },
+    {
+      "code": "memory_never_necessary",
+      "when": "no-memory never fails a cell the oracle passes"
+    }
+  ],
+  "refuse": [
+    "tune_kqv",
+    "rerun TM044 DEV",
+    "edit experiments/run_tm044memproj.py",
+    "auto_cortex.candidate.v41.lock",
+    "edit_joint_socp.py",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Memory-necessity wall on the current implementation. Product remains 0.0.004. Freeze runner before DEV.",
+  "frozen_runner_sha": "10717d65aa7d851a5fe4c880413a3d0b0fc23695dfba38083de6fa3466566212"
+}
