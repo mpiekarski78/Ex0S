@@ -49,6 +49,8 @@ TM052_DEC_SHA = "b27ba8f614f41b13b5bdba1eea4468345e8183489318c49960b4c45ef096de5
 TM052_PREREG_SHA = "56be32c0bfd711498555aac950e16a4ef70fed51dea1c43c1d759976fe9bb812"
 TM052_ADD_SHA = "4d388b024e5d9836c8296cf384cfb974557366576c98ed06491b546d4aa6cf43"
 RUNNER_SHA = "62e2fe15a3e0565d9041c36cfb16b7fae24d98c8211dec9358a0437770dd2bb4"
+ADDENDUM = REPO / "docs" / "lineage_cover.decision.addendum.lock"
+ADD_SHA = "ee78a1be25ed1db0b5217120be2cfab959c7cded398f7074014035ee3fe7916c"
 LADDER = [
     "setup_precondition_fail",
     "coverage_infeasible",
@@ -285,4 +287,29 @@ def test_dev_lock_coverage_generalizes_but_contexts_collapsed():
     n1 = cells["n1|s0|w0"]
     assert n1["hold"]["n_ok"] == 16
     assert n1["train"]["n_ok"] == 4
+
+
+def test_addendum_invalidated_measurement_without_rewrite():
+    assert _sha(ADDENDUM) == ADD_SHA
+    assert _sha(REPO / "docs" / "lineage_cover.dev.lock") == DEV_SHA
+    assert _sha(REPO / "docs" / "lineage_cover.decision.lock") == DEC_SHA
+    assert _sha(RUNNER) == RUNNER_SHA
+    add = json.loads(ADDENDUM.read_text())
+    assert add["rewrite_historical_decision"] is False
+    assert add["rerun_dev"] is False
+    assert add["frozen_first_match_unchanged"] is True
+    assert add["historical_decision_code"] == "coverage_generalizes"
+    assert add["interpretation"] == "invalidated_measurement__duplicate_state_support"
+    assert add["architectural_conclusion"] == "none"
+    assert add["value_need_not_carry_cue_context"] is True
+    assert add["action_invariant_value_is_not_a_defect"] is True
+    assert add["episode_match_l2_retuned"] is False
+    assert add["floor"] == 0.05
+    assert add["audit"]["did_not_reproduce_tm052_states"] is True
+    assert add["audit"]["do_not_force_context_into_value"] is True
+    assert add["audit"]["next_wall"] == "TM.0.54.PROV"
+    assert EPISODE_MATCH_L2 == 0.05
+    assert add["historical_dev_lock_sha"] == DEV_SHA
+    assert add["historical_decision_sha"] == DEC_SHA
+    assert add["frozen_runner_sha"] == RUNNER_SHA
 
