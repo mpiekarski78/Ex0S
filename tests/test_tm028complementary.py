@@ -12,9 +12,13 @@ REPO = Path(__file__).resolve().parents[1]
 PREREG = REPO / "docs" / "lineage_complementary.prereg.lock"
 DEV = REPO / "docs" / "lineage_complementary.dev.lock"
 DEC = REPO / "docs" / "lineage_complementary.decision.lock"
+V35_ISO = REPO / "docs" / "cortex_v35.isolation.lock"
+V35_CLOSURE = REPO / "docs" / "cortex_v35.closure.lock"
+LINEAGE_CLOSURE = REPO / "docs" / "lineage_complementary.v35.closure.lock"
 MANIFEST = "4c59793a32573143a57b22a10a16728f1be3323b6c2d9b4d11b9b558e42f894c"
 HISTORICAL_DEV_SHA = "7aeb60f284aedd492a252db62be22a28882761244b1df94badbebfaaf5a823d0"
 HISTORICAL_DEC_SHA = "0f879cd2e4f5913f1850d7f9d63e92388fb21f3267e3351f5a74bbb1b6feffaa"
+HISTORICAL_V35_ISO_SHA = "8d1b72fc45aac48f72f38d9ed753e37de81c75df2a0a1b23ee6d880f8b42f8d8"
 FROZEN_RUNNER_SHA = "e36339cf7f7fcf59e520e4ed9fae65a380e6cc53b56ab0adbfeceb2b7b2569cd"
 
 
@@ -29,11 +33,25 @@ def test_prereg_manifest():
 def test_historical_boundary_immutable():
     assert _sha(DEV) == HISTORICAL_DEV_SHA
     assert _sha(DEC) == HISTORICAL_DEC_SHA
+    assert _sha(V35_ISO) == HISTORICAL_V35_ISO_SHA
     dev = json.loads(DEV.read_text())
     dec = json.loads(DEC.read_text())
     assert dev["frozen_runner_sha"] == FROZEN_RUNNER_SHA
     assert dec["frozen_runner_sha"] == FROZEN_RUNNER_SHA
     assert dec["dev_lock_sha"] == HISTORICAL_DEV_SHA
+
+
+def test_v35_closure_does_not_mutate_isolation():
+    assert V35_CLOSURE.exists()
+    assert LINEAGE_CLOSURE.exists()
+    c = json.loads(V35_CLOSURE.read_text())
+    lc = json.loads(LINEAGE_CLOSURE.read_text())
+    assert c["rewrite_historical_dev"] is False
+    assert lc["rewrite_historical_dev"] is False
+    assert c["closed_at_git"].startswith("42ce89f")
+    assert c["historical_isolation_sha"] == HISTORICAL_V35_ISO_SHA
+    assert lc["historical_isolation_sha"] == HISTORICAL_V35_ISO_SHA
+    assert _sha(V35_ISO) == c["historical_isolation_sha"]
 
 
 def _sha(p: Path) -> str:

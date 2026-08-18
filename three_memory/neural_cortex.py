@@ -80,6 +80,68 @@ EPISODE_SLOTS = 8
 EPISODE_MATCH_L2 = 0.05
 EPISODE_REPLAY_EPOCHS = 16
 ACT_MARGIN_FLOOR = 0.01
+# v36: sparse hippocampal index. 12.5% sparsity; unrelated to EPISODE_SLOTS.
+SEP_DIM = 64
+SEP_K = 8
+KEY_MATCH_MIN_OVERLAP = 5
+ACT_RECALL_OFF = "off"
+ACT_RECALL_RAW_P1 = "raw_p1"
+ACT_RECALL_EARLY_RAW = "early_raw"
+ACT_RECALL_SEP_NO_FAM = "separated_key_no_familiarity"
+ACT_RECALL_SEP = "separated_key"
+ACT_RECALL_MODES = (
+    ACT_RECALL_OFF,
+    ACT_RECALL_RAW_P1,
+    ACT_RECALL_EARLY_RAW,
+    ACT_RECALL_SEP_NO_FAM,
+    ACT_RECALL_SEP,
+)
+HADAMARD_SIGN_XOR = 0b101011
+HADAMARD_SIGN_MUL = 37
+HADAMARD_SIGN_ADD = 11
+
+
+def sylvester_hadamard(n: int) -> np.ndarray:
+    if n < 1 or (n & (n - 1)) != 0:
+        raise ValueError("hadamard size must be a power of 2")
+    h = np.array([[1.0]], dtype=np.float64)
+    while h.shape[0] < n:
+        h = np.block([[h, h], [h, -h]])
+    return h
+
+
+def hadamard_sign_perm(n: int = SEP_DIM) -> tuple[np.ndarray, np.ndarray]:
+    signs = np.ones(n, dtype=np.float64)
+    perm = np.empty(n, dtype=np.int64)
+    bits = int(math.log2(n))
+    for i in range(n):
+        signs[i] = 1.0 if bin((HADAMARD_SIGN_MUL * i + HADAMARD_SIGN_ADD) & 0xFFFFFFFF).count("1") % 2 == 0 else -1.0
+        rev = 0
+        x = i
+        for _ in range(bits):
+            rev = (rev << 1) | (x & 1)
+            x >>= 1
+        perm[i] = rev ^ HADAMARD_SIGN_XOR
+    return signs, perm
+
+
+def build_separator_matrix(n: int = SEP_DIM) -> np.ndarray:
+    h = sylvester_hadamard(n)
+    signs, perm = hadamard_sign_perm(n)
+    w = (signs[:, None] * h)[:, perm] / math.sqrt(float(n))
+    return np.ascontiguousarray(w.astype(np.float64))
+
+
+SEPARATOR_MATRIX = build_separator_matrix(SEP_DIM)
+SEPARATOR_MATRIX_SHA = hashlib.sha256(SEPARATOR_MATRIX.tobytes()).hexdigest()
+
+
+def k_wta_binary(activations: np.ndarray, k: int = SEP_K) -> np.ndarray:
+    a = np.asarray(activations, dtype=np.float64).reshape(-1)
+    order = np.lexsort((np.arange(a.size, dtype=np.int64), -a))
+    key = np.zeros(a.size, dtype=np.float64)
+    key[order[: int(k)]] = 1.0
+    return key
 
 
 @dataclass
@@ -112,6 +174,8 @@ class GenomeConfig:
     actuator_proto_h_max: int = ACTUATOR_PROTO_H_MAX
     # v35: hippocampal-style episodic P1 reinstatement at ACT scoring only (default off = v34).
     episodic_act_recall: bool = False
+    # v36: recall routing. Default off = v34. Legacy episodic_act_recall=True maps to raw_p1.
+    act_recall_mode: str = ACT_RECALL_OFF
 
     @property
     def d_x(self) -> int:
@@ -143,6 +207,8 @@ class GenomeConfig:
             "act_score_mode": str(self.act_score_mode),
             "actuator_proto_h_max": int(self.actuator_proto_h_max),
             "episodic_act_recall": bool(self.episodic_act_recall),
+            "act_recall_mode": str(self.act_recall_mode),
+            "separator_matrix_sha": SEPARATOR_MATRIX_SHA,
             "body_setpoint": BODY_SETPOINT.tolist(),
             "ops": list(OPS),
             "op_cost": dict(OP_COST),
@@ -276,6 +342,10 @@ class NeuralCortex:
         self.sensory_trajectory: list[np.ndarray] = []
         # v32: event-end P1 + eight-slot episode store. Empty at birth.
         self._last_p1: np.ndarray | None = None
+        self._last_key_rho: np.ndarray | None = None
+        self._last_event_key: np.ndarray | None = None
+        self._separator = SEPARATOR_MATRIX.copy()
+        self._separator_sha = SEPARATOR_MATRIX_SHA
         self._episodes: list[dict[str, Any]] = []
         self._episode_clock = 0
         self._episode_n_inserts = 0
@@ -445,7 +515,15 @@ class NeuralCortex:
             return 0.0
         return float(np.dot(d, x) / dn)
 
-    def _episode_write(self, p1: np.ndarray, handle: str, adv: float) -> None:
+    def _episode_write(
+        self,
+        p1: np.ndarray,
+        handle: str,
+        adv: float,
+        *,
+        event_key: np.ndarray | None = None,
+        key_rho: np.ndarray | None = None,
+    ) -> None:
         x = self._unit_or_zero(p1)
         if float(np.linalg.norm(x)) <= PROTO_EPS or abs(float(adv)) <= ELIG_EPS:
             return
@@ -464,6 +542,8 @@ class NeuralCortex:
             "age": int(self._episode_clock),
             "version": 1,
             "valid": True,
+            "key": None if event_key is None else np.asarray(event_key, dtype=np.float64).copy(),
+            "key_rho": None if key_rho is None else np.asarray(key_rho, dtype=np.float64).copy(),
         }
         if match_i is None:
             if len(self._episodes) < EPISODE_SLOTS:
@@ -488,6 +568,10 @@ class NeuralCortex:
             return
         old["age"] = int(self._episode_clock)
         old["adv"] = float(adv)
+        if event_key is not None:
+            old["key"] = np.asarray(event_key, dtype=np.float64).copy()
+        if key_rho is not None:
+            old["key_rho"] = np.asarray(key_rho, dtype=np.float64).copy()
 
     def _apply_act_query_update(
         self,
@@ -641,10 +725,13 @@ class NeuralCortex:
         handle: str,
         adv: float,
         eta_a: float,
+        *,
+        event_key: np.ndarray | None = None,
+        key_rho: np.ndarray | None = None,
     ) -> dict[str, Any] | None:
         if float(np.max(np.abs(p1))) <= ELIG_EPS or self._resting:
             return None
-        self._episode_write(p1, handle, adv)
+        self._episode_write(p1, handle, adv, event_key=event_key, key_rho=key_rho)
         if self._act_ranking_error(p1, handle, adv):
             self._apply_act_query_update(p1, handle, adv, eta_a, mix_slow=False)
         burst = self._run_awake_rehearsal_burst(skip_p1=p1, skip_handle=handle)
@@ -712,8 +799,33 @@ class NeuralCortex:
             out[h] = float(np.dot(q, v) / (qn * (np.linalg.norm(v) + 1e-12)))
         return out
 
+    def _resolve_act_recall_mode(self) -> str:
+        mode = str(getattr(self.genome, "act_recall_mode", ACT_RECALL_OFF) or ACT_RECALL_OFF)
+        if mode not in ACT_RECALL_MODES:
+            mode = ACT_RECALL_OFF
+        if mode == ACT_RECALL_OFF and bool(getattr(self.genome, "episodic_act_recall", False)):
+            return ACT_RECALL_RAW_P1
+        return mode
+
     def _episodic_act_recall_enabled(self) -> bool:
-        return bool(getattr(self.genome, "episodic_act_recall", False))
+        return self._resolve_act_recall_mode() == ACT_RECALL_RAW_P1
+
+    def _clear_event_key(self) -> None:
+        self._last_key_rho = None
+        self._last_event_key = None
+
+    def _separate_event_key(self, key_rho: np.ndarray) -> np.ndarray:
+        x = self._unit_or_zero(key_rho)
+        act = self._separator @ x
+        return k_wta_binary(act, SEP_K)
+
+    def _copy_or_none(self, arr: Any) -> np.ndarray | None:
+        if arr is None:
+            return None
+        return np.asarray(arr, dtype=np.float64).copy()
+
+    def _key_overlap(self, a: np.ndarray, b: np.ndarray) -> int:
+        return int(np.dot(np.asarray(a, dtype=np.float64).reshape(-1), np.asarray(b, dtype=np.float64).reshape(-1)))
 
     def _nearest_episode_for_recall(self, live_p1: np.ndarray) -> tuple[np.ndarray | None, dict[str, Any]]:
         meta: dict[str, Any] = {
@@ -723,6 +835,9 @@ class NeuralCortex:
             "nearest_dist": None,
             "second_nearest_dist": None,
             "reason": None,
+            "familiar": False,
+            "overlap": None,
+            "act_recall_mode": self._resolve_act_recall_mode(),
         }
         if not self._episodic_act_recall_enabled():
             return None, meta
@@ -754,23 +869,179 @@ class NeuralCortex:
         _d, slot_i, ep = nearest[0]
         meta["slot"] = int(slot_i)
         meta["path"] = "episodic_completed"
+        meta["familiar"] = True
+        return np.asarray(ep["p1"], dtype=np.float64).copy(), meta
+
+    def _nearest_episode_by_key_rho(self, key_rho: np.ndarray) -> tuple[np.ndarray | None, dict[str, Any]]:
+        meta: dict[str, Any] = {
+            "path": "cortical_fallback",
+            "ambiguous": False,
+            "slot": None,
+            "nearest_dist": None,
+            "second_nearest_dist": None,
+            "reason": None,
+            "familiar": False,
+            "overlap": None,
+            "act_recall_mode": ACT_RECALL_EARLY_RAW,
+        }
+        x = self._unit_or_zero(key_rho)
+        if float(np.linalg.norm(x)) <= PROTO_EPS:
+            meta["reason"] = "empty_key_rho"
+            return None, meta
+        candidates: list[tuple[float, int, dict[str, Any]]] = []
+        for i, ep in enumerate(self._episodes):
+            if not ep.get("valid"):
+                continue
+            stored = ep.get("key_rho")
+            if stored is None:
+                continue
+            d = float(np.linalg.norm(np.asarray(stored, dtype=np.float64) - x))
+            candidates.append((d, int(i), ep))
+        if not candidates:
+            meta["reason"] = "missing_legacy_key_rho" if any(ep.get("valid") for ep in self._episodes) else "no_valid_episodes"
+            return None, meta
+        candidates.sort(key=lambda t: t[0])
+        min_d = float(candidates[0][0])
+        nearest = [c for c in candidates if abs(c[0] - min_d) <= ELIG_EPS]
+        meta["nearest_dist"] = float(min_d)
+        meta["second_nearest_dist"] = float(candidates[1][0]) if len(candidates) > 1 else None
+        if len(nearest) > 1:
+            meta["ambiguous"] = True
+            meta["reason"] = "ambiguous_nearest"
+            return None, meta
+        _d, slot_i, ep = nearest[0]
+        meta["slot"] = int(slot_i)
+        meta["path"] = "episodic_completed"
+        meta["familiar"] = True
+        return np.asarray(ep["p1"], dtype=np.float64).copy(), meta
+
+    def _nearest_episode_by_sparse_key(
+        self,
+        query_key: np.ndarray,
+        *,
+        require_familiarity: bool,
+    ) -> tuple[np.ndarray | None, dict[str, Any]]:
+        meta: dict[str, Any] = {
+            "path": "cortical_fallback",
+            "ambiguous": False,
+            "slot": None,
+            "nearest_dist": None,
+            "second_nearest_dist": None,
+            "reason": None,
+            "familiar": False,
+            "overlap": None,
+            "act_recall_mode": ACT_RECALL_SEP if require_familiarity else ACT_RECALL_SEP_NO_FAM,
+        }
+        q = np.asarray(query_key, dtype=np.float64).reshape(-1)
+        if q.size != SEP_DIM or float(np.sum(q)) <= 0.0:
+            meta["reason"] = "empty_event_key"
+            return None, meta
+        candidates: list[tuple[int, int, dict[str, Any]]] = []
+        missing = False
+        for i, ep in enumerate(self._episodes):
+            if not ep.get("valid"):
+                continue
+            stored = ep.get("key")
+            if stored is None:
+                missing = True
+                continue
+            ov = self._key_overlap(q, stored)
+            candidates.append((int(ov), int(i), ep))
+        if not candidates:
+            meta["reason"] = "missing_legacy_keys" if missing else "no_valid_episodes"
+            return None, meta
+        best = max(int(c[0]) for c in candidates)
+        winners = [c for c in candidates if int(c[0]) == best]
+        meta["overlap"] = int(best)
+        seconds = sorted((int(c[0]) for c in candidates), reverse=True)
+        meta["second_nearest_dist"] = float(seconds[1]) if len(seconds) > 1 else None
+        meta["nearest_dist"] = float(best)
+        if len(winners) > 1:
+            meta["ambiguous"] = True
+            meta["reason"] = "integer_overlap_tie"
+            return None, meta
+        if require_familiarity and best < KEY_MATCH_MIN_OVERLAP:
+            meta["reason"] = "novel_or_weak_key"
+            meta["familiar"] = False
+            return None, meta
+        _ov, slot_i, ep = winners[0]
+        meta["slot"] = int(slot_i)
+        meta["path"] = "episodic_completed"
+        meta["familiar"] = True
         return np.asarray(ep["p1"], dtype=np.float64).copy(), meta
 
     def _pattern_complete_p1(self, stored_p1: np.ndarray) -> np.ndarray:
         return self._unit_or_zero(stored_p1)
 
-    def actuator_decision_scores(self, live_p1: Any) -> tuple[dict[str, float], np.ndarray, dict[str, Any]]:
-        """Canonical ACT motor path: optional episodic nearest-neighbor completion then query scoring."""
+    def actuator_decision_scores(
+        self,
+        live_p1: Any,
+        *,
+        key_rho: np.ndarray | None = None,
+        event_key: np.ndarray | None = None,
+    ) -> tuple[dict[str, float], np.ndarray, dict[str, Any]]:
+        """Canonical ACT motor path: optional episodic completion then query scoring."""
         live = self._rho_np(live_p1)
-        stored, meta = self._nearest_episode_for_recall(live)
+        mode = self._resolve_act_recall_mode()
+        stored: np.ndarray | None = None
+        if mode == ACT_RECALL_OFF:
+            meta = {
+                "path": "cortical",
+                "ambiguous": False,
+                "slot": None,
+                "nearest_dist": None,
+                "second_nearest_dist": None,
+                "reason": None,
+                "familiar": False,
+                "overlap": None,
+                "act_recall_mode": mode,
+            }
+        elif mode == ACT_RECALL_RAW_P1:
+            stored, meta = self._nearest_episode_for_recall(live)
+        elif mode == ACT_RECALL_EARLY_RAW:
+            src = key_rho if key_rho is not None else self._last_key_rho
+            if src is None:
+                meta = {
+                    "path": "cortical_fallback",
+                    "ambiguous": False,
+                    "slot": None,
+                    "nearest_dist": None,
+                    "second_nearest_dist": None,
+                    "reason": "missing_live_key_rho",
+                    "familiar": False,
+                    "overlap": None,
+                    "act_recall_mode": mode,
+                }
+            else:
+                stored, meta = self._nearest_episode_by_key_rho(src)
+        else:
+            qk = event_key if event_key is not None else self._last_event_key
+            if qk is None:
+                src = key_rho if key_rho is not None else self._last_key_rho
+                qk = None if src is None else self._separate_event_key(src)
+            if qk is None:
+                meta = {
+                    "path": "cortical_fallback",
+                    "ambiguous": False,
+                    "slot": None,
+                    "nearest_dist": None,
+                    "second_nearest_dist": None,
+                    "reason": "missing_live_event_key",
+                    "familiar": False,
+                    "overlap": None,
+                    "act_recall_mode": mode,
+                }
+            else:
+                stored, meta = self._nearest_episode_by_sparse_key(
+                    qk, require_familiarity=mode == ACT_RECALL_SEP
+                )
         if stored is not None:
             score_addr = self._pattern_complete_p1(stored)
         else:
             score_addr = self._unit_or_zero(live)
-            if self._episodic_act_recall_enabled() and meta.get("path") == "cortical":
-                meta["path"] = "cortical_fallback"
         scores = self.actuator_scores(score_addr)
         meta["scoring_address_norm"] = float(np.linalg.norm(score_addr))
+        meta["act_recall_mode"] = mode
         return scores, score_addr, meta
 
     def _choose_actuator_from_scores(self, scores: dict[str, float]) -> str | None:
@@ -1107,6 +1378,8 @@ class NeuralCortex:
             "rho_op": rho.copy(),
             "rho_motor": rho.copy(),
             "rho_p1": None if self._last_p1 is None else np.asarray(self._last_p1, dtype=np.float64).copy(),
+            "event_key": self._copy_or_none(self._last_event_key),
+            "key_rho": self._copy_or_none(self._last_key_rho),
             "s_hat": np.asarray(action["s_hat"], dtype=np.float64).copy(),
             "body": np.asarray(action.get("body", self.last_body), dtype=np.float64).copy(),
             "cost": float(self._op_cost.get(chosen_op, action.get("cost") or 0.0)),
@@ -1210,14 +1483,30 @@ class NeuralCortex:
                     )
             else:
                 p1_raw = p.get("rho_p1")
+                ek = p.get("event_key")
+                kr = p.get("key_rho")
                 if p1_raw is not None:
                     p1 = np.asarray(p1_raw, dtype=np.float64)
-                    burst = self._credit_act_p1_episode(p1, str(p["token"]), float(adv), eta_a)
+                    burst = self._credit_act_p1_episode(
+                        p1,
+                        str(p["token"]),
+                        float(adv),
+                        eta_a,
+                        event_key=None if ek is None else np.asarray(ek, dtype=np.float64),
+                        key_rho=None if kr is None else np.asarray(kr, dtype=np.float64),
+                    )
                     if burst is not None:
                         rehearsal_burst = burst
                 elif elig_motor:
                     p1 = np.asarray(p.get("rho_motor", p["rho_elig"]), dtype=np.float64)
-                    burst = self._credit_act_p1_episode(p1, str(p["token"]), float(adv), eta_a)
+                    burst = self._credit_act_p1_episode(
+                        p1,
+                        str(p["token"]),
+                        float(adv),
+                        eta_a,
+                        event_key=None if ek is None else np.asarray(ek, dtype=np.float64),
+                        key_rho=None if kr is None else np.asarray(kr, dtype=np.float64),
+                    )
                     if burst is not None:
                         rehearsal_burst = burst
         elif (
@@ -1303,11 +1592,15 @@ class NeuralCortex:
 
         self.last_trajectory = []
         self.sensory_trajectory = []
+        self._clear_event_key()
         # sensory microticks
         start_inj = self.v_start + self._source_vec(src)
         self._sensory_tick(start_inj, body, same_ix, record_sensory=True)
         for u in ordered:
             self._sensory_tick(self._vocab_vec(u), body, same_ix, record_sensory=True)
+        if not self._resting:
+            self._last_key_rho = self._unit_or_zero(self._from_t(self.rho))
+            self._last_event_key = self._separate_event_key(self._last_key_rho)
         self._sensory_tick(self.v_end, body, same_ix, record_sensory=True)
         if not self._resting:
             self._last_p1 = self._unit_or_zero(self._from_t(self.rho))
@@ -1384,6 +1677,7 @@ class NeuralCortex:
         self._pred_pending = None
         self._pending_retrieve = None
         self.last_trajectory = []
+        self._clear_event_key()
 
     def rest_epoch(self, n_ticks: int, *, body: np.ndarray | None = None) -> dict[str, Any]:
         """Host rest opportunity. Cortical RETRIEVE plus v32 P1 episode replay. Host does not pick S rows."""
@@ -1517,6 +1811,8 @@ class NeuralCortex:
                         "rho_op",
                         "rho_motor",
                         "rho_p1",
+                        "event_key",
+                        "key_rho",
                         "s_hat",
                         "body",
                         "motor_vec",
@@ -1530,6 +1826,12 @@ class NeuralCortex:
                 "rho_p1": None
                 if self._pending.get("rho_p1") is None
                 else np.asarray(self._pending["rho_p1"]).tolist(),
+                "event_key": None
+                if self._pending.get("event_key") is None
+                else np.asarray(self._pending["event_key"]).tolist(),
+                "key_rho": None
+                if self._pending.get("key_rho") is None
+                else np.asarray(self._pending["key_rho"]).tolist(),
                 "s_hat": np.asarray(self._pending["s_hat"]).tolist(),
                 "body": np.asarray(self._pending["body"]).tolist(),
                 "motor_vec": None
@@ -1548,6 +1850,9 @@ class NeuralCortex:
             "proto_fast": {k: v.tolist() for k, v in self._proto_fast.items()},
             "proto_slow": {k: v.tolist() for k, v in self._proto_slow.items()},
             "last_p1": None if self._last_p1 is None else self._last_p1.tolist(),
+            "last_key_rho": None if self._last_key_rho is None else self._last_key_rho.tolist(),
+            "last_event_key": None if self._last_event_key is None else self._last_event_key.tolist(),
+            "separator_matrix_sha": str(self._separator_sha),
             "episodes": [
                 {
                     "p1": np.asarray(e["p1"]).tolist(),
@@ -1556,6 +1861,8 @@ class NeuralCortex:
                     "age": int(e["age"]),
                     "version": int(e["version"]),
                     "valid": bool(e["valid"]),
+                    "key": None if e.get("key") is None else np.asarray(e["key"]).tolist(),
+                    "key_rho": None if e.get("key_rho") is None else np.asarray(e["key_rho"]).tolist(),
                 }
                 for e in self._episodes
             ],
@@ -1646,6 +1953,12 @@ class NeuralCortex:
             self._proto_slow[k] = z.copy()
         lp1 = snap.get("last_p1")
         self._last_p1 = None if lp1 is None else np.asarray(lp1, dtype=np.float64)
+        lkr = snap.get("last_key_rho")
+        self._last_key_rho = None if lkr is None else np.asarray(lkr, dtype=np.float64)
+        lek = snap.get("last_event_key")
+        self._last_event_key = None if lek is None else np.asarray(lek, dtype=np.float64)
+        self._separator = SEPARATOR_MATRIX.copy()
+        self._separator_sha = str(snap.get("separator_matrix_sha") or SEPARATOR_MATRIX_SHA)
         self._episodes = []
         for raw in snap.get("episodes") or []:
             self._episodes.append(
@@ -1656,6 +1969,8 @@ class NeuralCortex:
                     "age": int(raw.get("age") or 0),
                     "version": int(raw.get("version") or 1),
                     "valid": bool(raw.get("valid", True)),
+                    "key": None if raw.get("key") is None else np.asarray(raw["key"], dtype=np.float64),
+                    "key_rho": None if raw.get("key_rho") is None else np.asarray(raw["key_rho"], dtype=np.float64),
                 }
             )
         self._episode_clock = int(snap.get("episode_clock") or 0)
@@ -1670,6 +1985,9 @@ class NeuralCortex:
             self.genome.actuator_proto_h_max = int(gsnap["actuator_proto_h_max"])
         if "episodic_act_recall" in gsnap:
             self.genome.episodic_act_recall = bool(gsnap["episodic_act_recall"])
+        if "act_recall_mode" in gsnap:
+            mode = str(gsnap["act_recall_mode"])
+            self.genome.act_recall_mode = mode if mode in ACT_RECALL_MODES else ACT_RECALL_OFF
         self.sources = {
             k: np.asarray(v, dtype=np.float64) for k, v in (snap.get("sources") or {}).items()
         }
@@ -1687,6 +2005,12 @@ class NeuralCortex:
                 "rho_p1": None
                 if pend.get("rho_p1") is None
                 else np.asarray(pend["rho_p1"], dtype=np.float64),
+                "event_key": None
+                if pend.get("event_key") is None
+                else np.asarray(pend["event_key"], dtype=np.float64),
+                "key_rho": None
+                if pend.get("key_rho") is None
+                else np.asarray(pend["key_rho"], dtype=np.float64),
                 "s_hat": np.asarray(pend["s_hat"], dtype=np.float64),
                 "body": np.asarray(pend["body"], dtype=np.float64),
                 "cost": float(pend["cost"]),

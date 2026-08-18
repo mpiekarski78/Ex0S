@@ -1,0 +1,28 @@
+{
+  "version": "TM.0.23.CORTEX.V35.CLOSURE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "closed_at_git": "42ce89f38acc2f5d0f4e51d1f6389888ffc8a9e8",
+  "rewrite_historical_dev": false,
+  "historical_isolation": "docs/cortex_v35.isolation.lock",
+  "historical_isolation_sha": "8d1b72fc45aac48f72f38d9ed753e37de81c75df2a0a1b23ee6d880f8b42f8d8",
+  "historical_prereg": "docs/cortex_v35.prereg.lock",
+  "historical_prereg_sha": "0b70e681c11f3532941ae44b3d7b370ef8ae1bbc3dad25980ba58ca13a69065a",
+  "historical_dev_lock": "docs/lineage_complementary.dev.lock",
+  "historical_dev_lock_sha": "7aeb60f284aedd492a252db62be22a28882761244b1df94badbebfaaf5a823d0",
+  "historical_decision_lock": "docs/lineage_complementary.decision.lock",
+  "historical_decision_sha": "0f879cd2e4f5913f1850d7f9d63e92388fb21f3267e3351f5a74bbb1b6feffaa",
+  "decision_code": "complementary_core_acquire_fail",
+  "v35_lesson": "nearest_event_end_p1_is_not_a_reliable_retrieval_key",
+  "if_v35_fails_next_satisfied_by": "authorize_v36_in_new_isolation_without_mutating_v35_isolation",
+  "refuse": [
+    "edit docs/cortex_v35.isolation.lock",
+    "rewrite lineage_complementary.dev.lock",
+    "rewrite lineage_complementary.decision.lock",
+    "repair_or_rerun_v35_dev",
+    "recall_radius_tuning"
+  ],
+  "note": "v35 closed at 42ce89f. Historical isolation remains byte-identical. Product remains 0.0.004."
+}

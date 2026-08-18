@@ -1,0 +1,28 @@
+{
+  "version": "TM.0.23.CORTEX.V36.ISOLATION",
+  "lab": "TM.0.29.INDEXING",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "reason": "TM028 complementary_core_acquire_fail at 42ce89f. Nearest event-end P1 is not a reliable retrieval key. Next: hippocampal indexing / pattern separation at recall only.",
+  "v35_closure": "docs/cortex_v35.closure.lock",
+  "v35_isolation_unedited": "docs/cortex_v35.isolation.lock",
+  "v35_isolation_sha": "8d1b72fc45aac48f72f38d9ed753e37de81c75df2a0a1b23ee6d880f8b42f8d8",
+  "tm028_decision_sha": "0f879cd2e4f5913f1850d7f9d63e92388fb21f3267e3351f5a74bbb1b6feffaa",
+  "if_v36_fails_next": "report_honest_indexing_fail_no_threshold_grid",
+  "refuse": [
+    "edit docs/cortex_v35.isolation.lock",
+    "rewrite TM028 historical locks",
+    "change _episode_write P1-L2 match statistic",
+    "cue_name_routing",
+    "direct_handle_return",
+    "recall_radius_grid",
+    "learned_separator",
+    "TM028_monkey_patch",
+    "auto_cortex.candidate.v36.lock",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "v36 isolation after v35 closure. Product remains 0.0.004."
+}

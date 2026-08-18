@@ -1,0 +1,160 @@
+{
+  "version": "TM.0.29.INDEXING.PREREG",
+  "lab": "TM.0.29.INDEXING",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": true,
+  "implementation_authorized": true,
+  "package_question": "Does v36 action-owned sparse hippocampal indexing restore stable mappings while 5-arm matched clones isolate earlier capture, pattern separation, and familiarity?",
+  "authorized_by": [
+    "docs/lineage_complementary.v35.closure.lock",
+    "docs/cortex_v36.prereg.lock"
+  ],
+  "v35_closure_sha": "031ac83c74c11ca51ce1eb68e1c836dd6da5d6c13789701e198d88a20c400d17",
+  "v36_prereg_sha": "9f8756ee55fc1bae1cd7a0b27b7dd1ade8fb7122c524f814dadae77b68c3a5d6",
+  "candidate_name": "v36",
+  "n": 64,
+  "eta_act": 0.15,
+  "episode_slots": 8,
+  "write_match_l2": 0.05,
+  "key_match_min_overlap": 5,
+  "sep_k": 8,
+  "sep_sparsity": 0.125,
+  "separator_matrix_sha": "afaef71091d7350d84843646a80b4ea82e332edeeb4a64fb4ebfded0da3cb1ac",
+  "treatment_mode": "separated_key",
+  "recall_modes": [
+    "off",
+    "raw_p1",
+    "early_raw",
+    "separated_key_no_familiarity",
+    "separated_key"
+  ],
+  "domains": {
+    "DEV": "TM029.INDEXING.DEV.",
+    "TWIN": "TM029.INDEXING.TWIN.",
+    "SCORE": "TM029.INDEXING.SCORE."
+  },
+  "capacity": [
+    {
+      "n_cues": 2,
+      "n_handles": 2,
+      "required": true
+    },
+    {
+      "n_cues": 4,
+      "n_handles": 2,
+      "required": true
+    },
+    {
+      "n_cues": 8,
+      "n_handles": 2,
+      "required": true
+    }
+  ],
+  "scaling": [
+    {
+      "n_cues": 8,
+      "n_handles": 4,
+      "balanced": true,
+      "purpose": "multi_actuator",
+      "required": true
+    }
+  ],
+  "integrity_gates": [
+    "neg",
+    "perm",
+    "ckpt",
+    "noteach",
+    "hold"
+  ],
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 2,
+  "expected_n_cells": 82,
+  "manifest_sha": "4ac2fd49c9a27e40ad13c9ed52b9d862900b2ff07e8ea7d0d94df8ca98797bca",
+  "extra_cells": [
+    "hist",
+    "novel",
+    "ablation"
+  ],
+  "margin": {
+    "pass_statistic": "normalized_geometric_margin",
+    "geometric_min": 0.01,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19
+  },
+  "n_rest_ticks": 4,
+  "novelty_success": {
+    "path": "cortical_fallback",
+    "familiar": false,
+    "hold_not_required": true
+  },
+  "controls_are_observations": true,
+  "decision_ladder": [
+    {
+      "code": "indexing_core_acquire_fail",
+      "when": "treatment acquire fails"
+    },
+    {
+      "code": "indexing_core_stability_fail",
+      "when": "treatment stable or twin fails"
+    },
+    {
+      "code": "indexing_reversal_fail",
+      "when": "treatment eco fails"
+    },
+    {
+      "code": "indexing_specificity_fail",
+      "when": "treatment spec fails"
+    },
+    {
+      "code": "indexing_integrity_fail",
+      "when": "treatment integrity fails"
+    },
+    {
+      "code": "indexing_episodic_overgeneralization",
+      "when": "treatment novel does not reject episodic path"
+    },
+    {
+      "code": "indexing_multiactuator_acquire_fail",
+      "when": "scale acquire fails"
+    },
+    {
+      "code": "indexing_multiactuator_stability_fail",
+      "when": "scale stable fails"
+    },
+    {
+      "code": "indexing_battery_pass",
+      "when": "treatment operational pass and sparse vs early_raw and familiarity vs no-familiarity"
+    },
+    {
+      "code": "indexing_operational_pass__separation_not_causal",
+      "when": "treatment passes but early_raw also passes taught contrast"
+    },
+    {
+      "code": "sparse_pattern_separation_supported",
+      "when": "treatment passes, early_raw fails contrast, familiarity not isolated"
+    },
+    {
+      "code": "familiarity_gate_causal",
+      "when": "recorded flag; full claim requires indexing_battery_pass"
+    }
+  ],
+  "frozen_runner_sha": "6752fa9a54c8a578e29b5300d4ade138e83fa1c5901d434ff3e560e38d61aacd",
+  "refuse": [
+    "open SCORE",
+    "auto_cortex.candidate.v36.lock",
+    "earned_next",
+    "0.0.005",
+    "TM028_monkey_patch",
+    "runner_edits_after_freeze_push",
+    "familiarity_or_sep_k_grid_after_dev"
+  ],
+  "note": "TM029 indexing battery. Product remains 0.0.004."
+}
