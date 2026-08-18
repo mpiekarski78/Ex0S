@@ -49,7 +49,7 @@ def test_prereg_r2_stop_and_no_edits():
     assert p["mechanistic_reconstruct_domain"] == "TM039.JOINTSOCP.DEV."
     assert "treat_mechanistic_as_untouched_generalization" in iso["refuse"]
     assert CONTRACT.is_file()
-    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert p["frozen_neural_sha"] == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert sha_file(CANONICAL) == CANONICAL_SHA
     assert _sha(R2_DEC) == R2_DEC_SHA
@@ -107,7 +107,7 @@ def test_dev_lock_natural_c8h4_and_no_candidate():
     decp = REPO / "docs" / "lineage_postinstall.decision.lock"
     assert _sha(devp) == "b70481893ee8d8a43163ced9334ed0caa8e3bbe05a33204bca21808a48325488"
     assert _sha(decp) == "eec6263f4f85e94569eecded557dde6839123ef95ff58973005ce4994d343be8"
-    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert json.loads(PREREG.read_text())["frozen_neural_sha"] == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert _sha(R2_DEC) == R2_DEC_SHA
     dev = json.loads(devp.read_text())

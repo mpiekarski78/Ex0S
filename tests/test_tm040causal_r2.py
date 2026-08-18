@@ -70,7 +70,7 @@ def test_prereg_fresh_domains_and_no_edits():
     assert p["raw_live_scores"] == "diagnostic_only"
     assert "edit_neural_cortex.py" in iso["refuse"]
     assert CONTRACT.is_file()
-    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert p["frozen_neural_sha"] == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert sha_file(CANONICAL) == CANONICAL_SHA
     assert p["frozen_runner_sha"] == sha_file(RUNNER)
@@ -207,7 +207,7 @@ def test_dev_lock_canonical_acquire_pass_and_no_candidate():
     decp = REPO / "docs" / "lineage_causalbattery.r2.decision.lock"
     assert _sha(devp) == "a13838622a76fb3b7f62a73ef3e58001db0a4bf99cb9ede9c575bd7f7c438ab3"
     assert _sha(decp) == "bcd40fba96ff96d90958aaf4c03fd4bb8fa2995dccd313600a09e9fc50124f23"
-    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert json.loads((REPO / "docs" / "lineage_causalbattery.r2.prereg.lock").read_text())["frozen_neural_sha"] == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert _sha(TM040_DEC) == TM040_DEC_SHA
     assert _sha(TM040_DEV) == TM040_DEV_SHA

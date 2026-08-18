@@ -1,0 +1,60 @@
+{
+  "version": "TM.0.44.NEURAL.MEMORY.BOUNDARY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "authorized_by": [
+    "docs/cortex.candidate.v40.close.lock",
+    "docs/cortex.candidate.v40.lock"
+  ],
+  "ownership": {
+    "cortex": {
+      "may_own": ["learned_projections", "attention", "write_read_decisions", "action_policy"],
+      "must_not_own": ["fixture_answers", "task_specific_routes"]
+    },
+    "S": {
+      "may_own": ["opaque_vectors", "timestamps", "provenance", "generic_retrieval_operations"],
+      "must_not_own": ["relations", "cue_meanings", "answer_handles", "paths", "task_types"]
+    },
+    "rho": {
+      "may_own": ["transient_recurrent_activity"],
+      "must_not_own": ["persistent_facts"]
+    },
+    "runner": {
+      "may_own": ["events", "behavioral_scoring"],
+      "must_not_own": ["retrieval_addresses", "nearest_neighbor_calls", "reinstatement", "internal_corrective_actions"]
+    },
+    "SOCP": {
+      "may_own": ["current_weights", "internally_credited_constraints"],
+      "must_not_own": ["symbols", "expected_outputs", "future_probes"]
+    }
+  },
+  "opaque_s_schema": ["key", "value", "when", "provenance_id"],
+  "audit_only_excluded_from_retrieval": ["when", "provenance_id"],
+  "retired_leaks": [
+    "episode_store_handles_as_answers",
+    "programmer_key_rho_or_SEPARATOR_MATRIX_as_retrieval_address",
+    "CortexRecord.interaction_token_and_tags_as_semantics",
+    "kappa_routing"
+  ],
+  "tm044_does_not_use_kappa": true,
+  "novelty_familiarity_in_tm044_claim": false,
+  "refuse": [
+    "runner_computed_q",
+    "runner_nearest_neighbor",
+    "runner_reinstatement",
+    "store_handle_in_S",
+    "concatenate_handle_into_value",
+    "cue_ids_in_retrieval",
+    "expected_handles_in_retrieval",
+    "logical_slots_in_retrieval",
+    "zero_shot_alias_transfer",
+    "fitted_distance_threshold",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "edit_joint_socp.py",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "Neural-memory ownership law for TM044. Product remains 0.0.004."
+}

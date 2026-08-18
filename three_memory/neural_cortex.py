@@ -17,6 +17,7 @@ import torch
 from torch import Tensor
 
 from three_memory.cortex_memory import CortexMemory, CortexRecord
+from three_memory.opaque_memory import OpaqueMemory
 
 OPS = ("RETRIEVE", "WRITE", "EMIT", "ACT", "STOP", "HOLD")
 # v5: no birth-planted motor dictionary; actuators bind via bind_actuators([...])
@@ -97,6 +98,13 @@ ACT_SOCP_OFF = "off"
 ACT_SOCP_FALLBACK = "fallback_joint"
 ACT_SOCP_ALWAYS = "always_joint"
 ACT_SOCP_ARMS = (ACT_SOCP_OFF, ACT_SOCP_FALLBACK, ACT_SOCP_ALWAYS)
+# TM044: learned memory projection. Not a GenomeConfig field. Not an ACT recall mode.
+MEMPROJ_OFF = "off"
+MEMPROJ_LEARNED = "learned_projection"
+MEMPROJ_BIRTH = "birth_projection"
+MEMPROJ_NONE = "no_persistent_memory"
+MEMPROJ_ARMS = (MEMPROJ_OFF, MEMPROJ_LEARNED, MEMPROJ_BIRTH, MEMPROJ_NONE)
+MEMPROJ_ETA_SCALE = 1.0
 # v36: sparse hippocampal index. 12.5% sparsity; unrelated to EPISODE_SLOTS.
 SEP_DIM = 64
 SEP_K = 8
@@ -318,6 +326,12 @@ class NeuralCortex:
 
         self.v_start = self._np_vec()
         self.v_end = self._np_vec()
+        # After existing birth draws so TM044 does not shift v_start/v_end or earlier tensors.
+        self.W_k = self._randn(g.n, g.n, g.n)
+        # Shared birth basis: a query can select a key written in the same Gaussian map.
+        # Learning may specialize W_q. Independent W_q would make birth retrieval a coin-flip.
+        self.W_q = self.W_k.detach().clone()
+        self.W_v = self._randn(g.n, g.n, g.n)
 
         self._plastic_names = [
             "W_rec",
@@ -336,6 +350,9 @@ class NeuralCortex:
         self._birth_v_start = self.v_start.copy()
         self._birth_v_end = self.v_end.copy()
         self._birth_b_op = self.b_op.detach().clone()
+        self._birth_W_k = self.W_k.detach().clone()
+        self._birth_W_q = self.W_q.detach().clone()
+        self._birth_W_v = self.W_v.detach().clone()
 
         self.rho = torch.zeros(g.n, dtype=self.dtype, device=self.device)
         self.retrieval_buffer = torch.zeros(
@@ -380,6 +397,10 @@ class NeuralCortex:
         self._act_proj_arm = ACT_PROJ_OFF
         self._act_proj_corrections: dict[str, np.ndarray] = {}
         self._act_socp_arm = ACT_SOCP_OFF
+        self._memproj_arm = MEMPROJ_OFF
+        self._memproj_frozen = False
+        self._memproj_rho_obs: np.ndarray | None = None
+        self.opaque = OpaqueMemory()
 
     def set_act_rehearse_arm(self, arm: str) -> None:
         if arm not in ACT_REHEARSE_ARMS:
@@ -396,6 +417,144 @@ class NeuralCortex:
         if arm not in ACT_SOCP_ARMS:
             raise ValueError(arm)
         self._act_socp_arm = str(arm)
+
+    def set_memproj_arm(self, arm: str) -> None:
+        if arm not in MEMPROJ_ARMS:
+            raise ValueError(arm)
+        self._memproj_arm = str(arm)
+        if arm == MEMPROJ_BIRTH:
+            self._memproj_frozen = True
+        elif arm == MEMPROJ_LEARNED:
+            self._memproj_frozen = False
+
+    def freeze_memproj_projection(self, frozen: bool = True) -> None:
+        self._memproj_frozen = bool(frozen)
+
+    def restore_birth_memproj(self) -> None:
+        self.W_k = self._birth_W_k.detach().clone()
+        self.W_q = self._birth_W_q.detach().clone()
+        self.W_v = self._birth_W_v.detach().clone()
+
+    def memproj_hashes(self) -> dict[str, str]:
+        from three_memory.joint_socp import weight_hash
+
+        return {
+            "W_k": weight_hash(self._from_t(self.W_k)),
+            "W_q": weight_hash(self._from_t(self.W_q)),
+            "W_v": weight_hash(self._from_t(self.W_v)),
+            "W_act_query": weight_hash(self._from_t(self.W_act_query)),
+        }
+
+    def memproj_deltas(self) -> dict[str, float]:
+        def fro(a: Tensor, b: Tensor) -> float:
+            return float(torch.linalg.norm((a - b).reshape(-1)).item())
+
+        return {
+            "W_k": fro(self.W_k, self._birth_W_k),
+            "W_q": fro(self.W_q, self._birth_W_q),
+            "W_v": fro(self.W_v, self._birth_W_v),
+        }
+
+    def opaque_snapshot(self) -> list[dict[str, Any]]:
+        return self.opaque.snapshot()
+
+    def replace_opaque_rows(self, rows: list[dict[str, Any]]) -> None:
+        self.opaque.restore(rows)
+
+    def _memproj_active(self) -> bool:
+        return str(getattr(self, "_memproj_arm", MEMPROJ_OFF) or MEMPROJ_OFF) in (
+            MEMPROJ_LEARNED,
+            MEMPROJ_BIRTH,
+            MEMPROJ_NONE,
+        )
+
+    def _memproj_unit(self, x: np.ndarray) -> np.ndarray:
+        v = np.asarray(x, dtype=np.float64).reshape(-1)
+        nrm = float(np.linalg.norm(v))
+        if nrm <= PROTO_EPS:
+            return v
+        return v / nrm
+
+    def _memproj_write_after_credit(
+        self,
+        rho_post: np.ndarray,
+        *,
+        rho_obs: np.ndarray | None = None,
+    ) -> dict[str, Any] | None:
+        arm = str(getattr(self, "_memproj_arm", MEMPROJ_OFF) or MEMPROJ_OFF)
+        if arm not in (MEMPROJ_LEARNED, MEMPROJ_BIRTH, MEMPROJ_NONE):
+            return None
+        if rho_obs is None:
+            rho_obs = self._memproj_rho_obs
+        if rho_obs is None:
+            rho_obs = self._from_t(self.rho)
+        rho_obs = np.asarray(rho_obs, dtype=np.float64).reshape(-1)
+        rho_post = np.asarray(rho_post, dtype=np.float64).reshape(-1)
+        wk = self._from_t(self.W_k)
+        wq = self._from_t(self.W_q)
+        wv = self._from_t(self.W_v)
+        k = wk @ rho_obs
+        v = wv @ rho_post
+        rec: dict[str, Any] = {
+            "wrote": False,
+            "arm": arm,
+            "k_hash": None,
+            "v_hash": None,
+        }
+        if arm != MEMPROJ_NONE:
+            from three_memory.joint_socp import weight_hash
+
+            row = self.opaque.write(k, v, provenance_id=f"p{int(self._t)}_{len(self.opaque.rows())}")
+            rec["wrote"] = True
+            rec["k_hash"] = weight_hash(np.asarray(row.key))
+            rec["v_hash"] = weight_hash(np.asarray(row.value))
+            rec["when"] = int(row.when)
+        if arm == MEMPROJ_LEARNED and not bool(self._memproj_frozen):
+            eta = float(self.genome.eta_act) * float(MEMPROJ_ETA_SCALE)
+            k_tgt = self._memproj_unit(rho_obs)
+            v_tgt = self._memproj_unit(rho_post)
+            q = wq @ rho_obs
+            self.W_k = self._to_t(wk + eta * np.outer(k_tgt - k, rho_obs))
+            self.W_q = self._to_t(wq + eta * np.outer(k - q, rho_obs))
+            self.W_v = self._to_t(wv + eta * np.outer(v_tgt - v, rho_post))
+            c = float(self.genome.clip)
+            self.W_k = torch.clamp(self.W_k, -c, c)
+            self.W_q = torch.clamp(self.W_q, -c, c)
+            self.W_v = torch.clamp(self.W_v, -c, c)
+            rec["updated"] = True
+        else:
+            rec["updated"] = False
+        return rec
+
+    def event_memory_scores(self) -> tuple[dict[str, float], np.ndarray, dict[str, Any]]:
+        """Organism-owned path: rho → q → opaque retrieve → reinstate v → motor scores."""
+        live = self._from_t(self.rho)
+        if self._last_p1 is not None:
+            live = np.asarray(self._last_p1, dtype=np.float64)
+        arm = str(getattr(self, "_memproj_arm", MEMPROJ_OFF) or MEMPROJ_OFF)
+        meta: dict[str, Any] = {
+            "path": "cortical",
+            "memproj_arm": arm,
+            "retrieved": False,
+            "reject_reason": None,
+            "scoring_from": "live",
+        }
+        if arm in (MEMPROJ_LEARNED, MEMPROJ_BIRTH):
+            q = self._from_t(self.W_q) @ np.asarray(live, dtype=np.float64).reshape(-1)
+            hit = self.opaque.retrieve(q)
+            meta["reject_reason"] = hit.get("reject_reason")
+            meta["n_rows"] = hit.get("n_rows")
+            if bool(hit.get("hit")) and hit.get("value") is not None:
+                live = np.asarray(hit["value"], dtype=np.float64)
+                meta["path"] = "opaque_reinstatement"
+                meta["retrieved"] = True
+                meta["scoring_from"] = "reinstated_value"
+        scores, addr, smeta = self.actuator_decision_scores(live)
+        meta.update({k: smeta.get(k) for k in ("ambiguous", "slot", "familiar") if k in smeta})
+        meta["scoring_address_hash"] = hashlib.sha256(
+            np.ascontiguousarray(np.asarray(addr, dtype=np.float64)).tobytes()
+        ).hexdigest()
+        return scores, np.asarray(addr, dtype=np.float64), meta
 
     def _act_proj_arm_active(self) -> bool:
         arm = str(getattr(self, "_act_proj_arm", ACT_PROJ_OFF) or ACT_PROJ_OFF)
@@ -1965,6 +2124,14 @@ class NeuralCortex:
         out: dict[str, Any] = {"adv": adv, "pred_err": pred_err}
         if rehearsal_burst is not None:
             out["rehearsal_burst"] = rehearsal_burst
+        if p["op"] == "ACT":
+            rho_obs = p.get("rho_p1")
+            mp = self._memproj_write_after_credit(
+                self._from_t(self.rho),
+                rho_obs=None if rho_obs is None else np.asarray(rho_obs, dtype=np.float64),
+            )
+            if mp is not None:
+                out["memproj_write"] = mp
         return out
 
     def _clip_and_consolidate(self, names: set[str] | None = None, *, mix_slow: bool = True) -> None:
@@ -2044,6 +2211,7 @@ class NeuralCortex:
         self._sensory_tick(self.v_end, body, same_ix, record_sensory=True)
         if not self._resting:
             self._last_p1 = self._unit_or_zero(self._from_t(self.rho))
+            self._memproj_rho_obs = np.asarray(self._last_p1, dtype=np.float64).copy()
         self._sensory_tick(s_t, body, same_ix, record_sensory=True)
 
         for k in list(self._symbol_fam):
@@ -2318,6 +2486,15 @@ class NeuralCortex:
             "act_rehearse_arm": str(self._act_rehearse_arm),
             "act_proj_arm": str(getattr(self, "_act_proj_arm", ACT_PROJ_OFF) or ACT_PROJ_OFF),
             "act_socp_arm": str(getattr(self, "_act_socp_arm", ACT_SOCP_OFF) or ACT_SOCP_OFF),
+            "memproj_arm": str(getattr(self, "_memproj_arm", MEMPROJ_OFF) or MEMPROJ_OFF),
+            "memproj_frozen": bool(getattr(self, "_memproj_frozen", False)),
+            "W_k": tsave(self.W_k),
+            "W_q": tsave(self.W_q),
+            "W_v": tsave(self.W_v),
+            "birth_W_k": tsave(self._birth_W_k),
+            "birth_W_q": tsave(self._birth_W_q),
+            "birth_W_v": tsave(self._birth_W_v),
+            "opaque": self.opaque.snapshot(),
             "act_proj_corrections": {
                 str(k): np.asarray(v, dtype=np.float64).tolist()
                 for k, v in (getattr(self, "_act_proj_corrections", None) or {}).items()
@@ -2438,6 +2615,20 @@ class NeuralCortex:
         self._act_proj_arm = proj if proj in ACT_PROJ_ARMS else ACT_PROJ_OFF
         socp_arm = str(snap.get("act_socp_arm") or ACT_SOCP_OFF)
         self._act_socp_arm = socp_arm if socp_arm in ACT_SOCP_ARMS else ACT_SOCP_OFF
+        mp = str(snap.get("memproj_arm") or MEMPROJ_OFF)
+        self._memproj_arm = mp if mp in MEMPROJ_ARMS else MEMPROJ_OFF
+        self._memproj_frozen = bool(snap.get("memproj_frozen", False))
+        if "W_k" in snap:
+            self.W_k = tload(snap["W_k"])
+            self.W_q = tload(snap["W_q"])
+            self.W_v = tload(snap["W_v"])
+        if "birth_W_k" in snap:
+            self._birth_W_k = tload(snap["birth_W_k"])
+            self._birth_W_q = tload(snap["birth_W_q"])
+            self._birth_W_v = tload(snap["birth_W_v"])
+        self.opaque = OpaqueMemory()
+        if snap.get("opaque"):
+            self.opaque.restore(list(snap.get("opaque") or []))
         corr = snap.get("act_proj_corrections") or {}
         loaded: dict[str, np.ndarray] = {}
         for k, v in corr.items():

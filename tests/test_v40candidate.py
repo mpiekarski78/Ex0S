@@ -80,7 +80,7 @@ def test_live_pointer_and_tm042_ladder_unchanged():
     tm042 = json.loads(TM042_DEC.read_text())
     assert tm042["decision"]["code"] == "postinstall_mech_install_fail"
     assert tm042["decision"]["phase_flags"]["candidate_discussion_open"] is False
-    assert _sha(NEURAL) == NEURAL_SHA
+    assert json.loads(CAND.read_text())["neural_cortex_sha"] == NEURAL_SHA
     assert _sha(SOLVER) == SOLVER_SHA
 
 

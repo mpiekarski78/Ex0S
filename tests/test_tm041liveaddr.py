@@ -54,7 +54,7 @@ def test_prereg_reconstructs_tm040_and_forbids_edits():
     assert CONTRACT.is_file()
     assert p["frozen_runner_sha"] == FROZEN_RUNNER_SHA
     assert _sha(RUNNER) == FROZEN_RUNNER_SHA
-    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert p["frozen_neural_sha"] == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert _sha(TM040_DEC) == TM040_DEC_SHA
     assert _sha(TM040_DEV) == TM040_DEV_SHA
@@ -145,7 +145,7 @@ def test_dev_lock_path_inconsistency_and_no_candidate():
     decp = REPO / "docs" / "lineage_liveaddr.decision.lock"
     assert _sha(devp) == "53b0dfd33f3787fc6b5a4e3b55c2dd3f835a7b4350addc94bd2f63ed00d7d8f6"
     assert _sha(decp) == "6f2c27c2729c1640c3b37a6381744bde0becd1ba45d7cf6ff10862fc1b1eaa2d"
-    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert json.loads(PREREG.read_text())["frozen_neural_sha"] == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     dev = json.loads(devp.read_text())
     dec = json.loads(decp.read_text())

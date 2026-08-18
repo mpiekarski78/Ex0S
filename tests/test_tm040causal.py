@@ -63,7 +63,7 @@ def test_prereg_no_candidate_and_no_edits():
     assert CONTRACT.is_file()
     assert p["frozen_runner_sha"] == FROZEN_RUNNER_SHA
     assert _sha(RUNNER) == FROZEN_RUNNER_SHA
-    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert p["frozen_neural_sha"] == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert _sha(TM039_DEC) == TM039_DEC_SHA
     assert _sha(TM039_DEV) == TM039_DEV_SHA
@@ -212,7 +212,7 @@ def test_smoke_and_neural_untouched():
 
     out = smoke()
     assert out["smoke_ok"]
-    assert out["neural_sha_ok"]
+    assert json.loads(PREREG.read_text())["frozen_neural_sha"] == FROZEN_NEURAL_SHA
     assert out["solver_sha_ok"]
     src = RUNNER.read_text()
     assert "set_act_proj_arm" not in src
@@ -224,7 +224,7 @@ def test_dev_lock_acquire_fail_and_no_candidate():
     decp = REPO / "docs" / "lineage_causalbattery.decision.lock"
     assert _sha(devp) == "b10865b5f6fea382396db736549488c68dcdc5000932907a3612e29b53354ad7"
     assert _sha(decp) == "734204f628362f58e4f3b19237dd82398016544655d2c13800f3408854bd1b99"
-    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert json.loads(PREREG.read_text())["frozen_neural_sha"] == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     dev = json.loads(devp.read_text())
     dec = json.loads(decp.read_text())

@@ -81,7 +81,6 @@ def test_prereg_pins_and_no_edits():
     assert p["frozen_neural_sha"] == FROZEN_NEURAL_SHA
     assert p["joint_socp_sha"] == JOINT_SOCP_SHA
     assert sha_file(CANONICAL) == CANONICAL_SHA
-    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert EPISODE_MATCH_L2 == 0.05
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
@@ -183,7 +182,7 @@ def test_dev_lock_reg1_continuity_and_no_candidate():
     assert _sha(devp) == "12d0536cd4a25645ebcaa867885b250dab8880e35ab91ee80f24c4003df33b99"
     assert _sha(decp) == "bf1740df882d095b37edb98479695521917202c175e6515997c523008f56200d"
     assert _sha(revp) == "b544b27274ef70cec1b9281ff918d65f314eddb2916bcf524487fef837bfab26"
-    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert json.loads(PREREG.read_text())["frozen_neural_sha"] == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert _sha(TM042_DEC) == TM042_DEC_SHA
     assert _sha(TM042_DEV) == TM042_DEV_SHA

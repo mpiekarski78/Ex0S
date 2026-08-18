@@ -1,0 +1,33 @@
+{
+  "version": "TM.0.44.MEMPROJ.ISOLATION",
+  "lab": "TM.0.44.MEMPROJ",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": true,
+  "solver_edit_authorized": false,
+  "recall_edit_authorized": false,
+  "v41_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM044.MEMPROJ.DEV.",
+    "TWIN": "TM044.MEMPROJ.TWIN."
+  },
+  "historical_immutable": [
+    "docs/cortex.candidate.v40.lock",
+    "docs/cortex.candidate.v40.close.lock",
+    "docs/lineage_postinstall.decision.lock",
+    "docs/lineage_jointsocp.decision.lock",
+    "three_memory/joint_socp.py"
+  ],
+  "refuse": [
+    "edit_joint_socp.py",
+    "new ACT_RECALL_MODES",
+    "runner_nearest_neighbor",
+    "naive_host_donor_swap",
+    "zero_shot_alias_transfer",
+    "auto_cortex.candidate.v41.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Four-arm memory-projection wall. Product remains 0.0.004."
+}

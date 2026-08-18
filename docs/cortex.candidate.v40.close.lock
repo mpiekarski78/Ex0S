@@ -1,0 +1,37 @@
+{
+  "version": "TM.0.23.CORTEX.CANDIDATE.V40.CLOSE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "rewrite_historical_locks": false,
+  "rewrite_v40_candidate": false,
+  "candidate_lock": "docs/cortex.candidate.v40.lock",
+  "candidate_lock_sha": "dc8c13d1607034781864f1dcfd969ad146bf267fd78fb0ba588a88fe2a0e0319",
+  "review_lock": "docs/lineage_v40.candidate_review.lock",
+  "review_lock_sha": "b931aa6c6332048b68e97b8444466855ab6c91d3d7f38632caef257efb7818cf",
+  "claim_unchanged": "Frozen v37 local learning with atomic joint-SOCP fallback can restore jointly feasible actuator mappings and preserve subsequent learning in the tested 8-cue/4-handle regime.",
+  "socp_frozen_as": {
+    "kind": "generic_slow_consolidation",
+    "activation": "internal leftover after v37 via _episode_rehearsal_violation",
+    "atomic_fail_closed": true,
+    "limited_to": "learned cortical W_act_query",
+    "never_given": ["task_metadata", "expected_answers", "cue_names", "future_probes"]
+  },
+  "default_arm": "off",
+  "live_pointer_unchanged": "docs/cortex.candidate.lock remains TM.0.23.CORTEX.CANDIDATE.V30",
+  "stop_tuning": true,
+  "next_wall": "TM.0.44.MEMPROJ",
+  "refuse": [
+    "further eight-slot ACT-recall lineage",
+    "expand v40 8x4 claim",
+    "new ACT_RECALL_MODES",
+    "edit joint_socp.py",
+    "reuse early_raw_half_spacing as a novelty organ",
+    "auto live cortex.candidate.lock cutover",
+    "earned_next",
+    "0.0.005",
+    "rewrite cortex.candidate.v40.lock"
+  ],
+  "note": "v40 is closed as bounded consolidation machinery. Product remains 0.0.004. Next is learned neural memory projection, not more ACT capacity."
+}
