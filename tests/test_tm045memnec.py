@@ -213,6 +213,58 @@ def test_runner_refuses_v41_and_smoke():
     assert float(ag.rho.abs().sum()) == 0.0
 
 
+def test_dev_lock_memory_never_necessary_and_no_v41():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm045memnec import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_memnec.dev.lock"
+    decp = REPO / "docs" / "lineage_memnec.decision.lock"
+    assert _sha(devp) == "7d45c171d2c2fdf690dcbea83b7f8dc622df6e08927d1931ef3a9e03c825dcb6"
+    assert _sha(decp) == "e5905c04bc0f2ed0f28a3a937167360d32e9402408ed7837a74d9f57130c16f1"
+    assert _sha(TM044_RUNNER) == TM044_RUNNER_SHA
+    assert _sha(TM044_DEV) == TM044_DEV_SHA
+    assert _sha(TM044_DEC) == TM044_DEC_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert sha_file(RUNNER) == json.loads(PREREG.read_text())["frozen_runner_sha"]
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "0cb92cca236e3a066e067c6f3d548c41e081ac7a"
+    assert dev["decision_code"] == "memory_never_necessary"
+    assert dev["n_cells"] == 72
+    assert dev["candidate_v41_lock"] is False
+    assert dev["kqv_edited"] is False
+    assert dev["solver_edited"] is False
+    assert dev["tm044_runner_untouched"] is True
+    assert dev["learned_arm_is_observational"] is True
+    assert dec["candidate_v41_lock"] is False
+    assert dec["kqv_edited"] is False
+    assert dec["earned_next"] is False
+    assert dec["decision"]["code"] == "memory_never_necessary"
+    assert dec["decision"]["phase_flags"]["necessary_cell"] is None
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert set(cells) == set(expected_cell_ids())
+    for wi in (0, 1):
+        assert cells[f"immediate|c2|symbolic_oracle|w{wi}"]["passed"] is True
+        assert cells[f"immediate|c2|no_persistent_memory|w{wi}"]["passed"] is True
+        assert cells[f"immediate|c4|symbolic_oracle|w{wi}"]["passed"] is True
+        assert cells[f"immediate|c4|no_persistent_memory|w{wi}"]["passed"] is True
+    for c in cells.values():
+        if c["arm"] == "symbolic_oracle" and bool(c["passed"]):
+            none = cells[c["id"].replace("symbolic_oracle", "no_persistent_memory")]
+            assert bool(none["passed"]) is True
+    tel = cells["immediate|c2|symbolic_oracle|w0"]["probes"][0]["telemetry"]
+    assert tel["memory_path"] == MEMORY_PATH_EPISODIC
+    assert tel["motor_path"] == MOTOR_PATH_CORTICAL
+    assert tel["scoring_address_source"] == SCORE_SRC_REINSTATED
+    none_tel = cells["immediate|c2|no_persistent_memory|w0"]["probes"][0]["telemetry"]
+    assert none_tel["memory_path"] == MEMORY_PATH_EMPTY
+    assert none_tel["scoring_address_source"] == SCORE_SRC_LIVE
+
+
 def test_canonical_telemetry_fields_are_split():
     assert MEMORY_PATH_EPISODIC == "episodic_completed"
     assert MEMORY_PATH_EMPTY == "empty"
