@@ -1,0 +1,70 @@
+{
+  "version": "TM.0.58.OPAQUE_STORE_LAW",
+  "product": "0.0.004",
+  "earned_next": false,
+  "eligible_for_000005": false,
+  "implementation_in_this_freeze": false,
+  "implementation_earned": true,
+  "canonical_state_generator": "write_time_last_p1",
+  "v_t_is_episode_write_argument": true,
+  "value_is_not_record_identity": true,
+  "authorized_by": [
+    "docs/lineage_dual.decision.lock",
+    "docs/lineage_dual.decision.addendum.lock"
+  ],
+  "tm057_decision_code": "storage_integrity_failure",
+  "tm057_interpretation": "architectural_falsification__value_cannot_define_record_identity",
+  "why": "TM057 showed P1-neighbour replacement crossing action identity and in-place refresh collapsing distinct cues. A value payload cannot also define record identity. Structured episode/ACT P1-L2 replacement remains for the historical lineage. The new opaque K/V path needs a separate storage law.",
+  "historical_episode_storage": {
+    "path": "_episode_write",
+    "identity": "P1_L2",
+    "episode_match_l2": 0.05,
+    "episode_match_l2_retune_authorized": false,
+    "unchanged_when_flag_off": true
+  },
+  "flag": {
+    "name": "opaque_store_enabled",
+    "attr": "_opaque_store_enabled",
+    "setter": "set_opaque_store_enabled",
+    "checkpoint_key": "opaque_store_enabled",
+    "default": false,
+    "survives_checkpoint": true,
+    "genome_field": false,
+    "act_recall_mode": false,
+    "memproj_arm": false
+  },
+  "write_method": "write_opaque_kv",
+  "resident_source": "opaque.rows",
+  "record": ["provenance_id", "key", "value", "when"],
+  "law": {
+    "every_accepted_event_is_a_distinct_record": true,
+    "value_distance_is_diagnostic_only": true,
+    "no_value_or_p1_refresh": true,
+    "no_value_or_p1_dedup": true,
+    "no_value_or_p1_replace": true,
+    "different_cues_identical_values_coexist": true,
+    "different_actions_nearby_values_coexist": true,
+    "identical_key_value_repeated_is_a_new_event": true,
+    "capacity_slots": 8,
+    "capacity_replacement": "explicit_generic_eviction_then_append",
+    "non_evicted_records_byte_identical": true,
+    "revision_appends_a_new_event": true,
+    "supersession_is_later_retrieval_or_consolidation": true
+  },
+  "episode_match_l2": 0.05,
+  "episode_match_l2_retune_authorized": false,
+  "kqv_edit_authorized": false,
+  "install_W_star": false,
+  "candidate_v41_lock": false,
+  "refuse": [
+    "retune_EPISODE_MATCH_L2",
+    "use value or P1 similarity as opaque-store identity",
+    "refresh, dedup, or replace opaque records by value",
+    "change historical _episode_write when opaque_store_enabled is false",
+    "put the flag in GenomeConfig or ACT_RECALL_MODES",
+    "resume drift or grounding before TM058 storage integrity holds",
+    "install_W_star",
+    "auto_cortex.candidate.v41.lock"
+  ],
+  "note": "Frozen law. Do not implement in this freeze. Product remains 0.0.004. Floor 0.05 unchanged."
+}

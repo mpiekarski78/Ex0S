@@ -228,3 +228,26 @@ def test_dev_lock_storage_integrity_failure():
     assert cells["attempts|n4|w0"]["discarded"] is True
     assert cells["residents|n4|w0"]["discarded"] is True
     assert all(cells[i]["cell_code"] == "n_prefix_only" for i in expected_cell_ids() if i.startswith(("attempts|", "residents|")))
+
+
+ADD_SHA = "501594d36c0ca4fb9e4a163d8be0d624c4d30613ddb89f0de89dba1a63a350e7"
+
+
+def test_addendum_architectural_falsification_without_rewrite():
+    addp = REPO / "docs" / "lineage_dual.decision.addendum.lock"
+    assert _sha(addp) == ADD_SHA
+    assert _sha(REPO / "docs" / "lineage_dual.dev.lock") == DEV_SHA
+    assert _sha(REPO / "docs" / "lineage_dual.decision.lock") == DEC_SHA
+    assert _sha(RUNNER) == RUNNER_SHA
+    add = json.loads(addp.read_text())
+    assert add["rewrite_historical_decision"] is False
+    assert add["rerun_dev"] is False
+    assert add["frozen_first_match_unchanged"] is True
+    assert add["historical_decision_code"] == "storage_integrity_failure"
+    assert add["interpretation"] == "architectural_falsification__value_cannot_define_record_identity"
+    assert add["architectural_conclusion"] == "earned_separate_opaque_store_law"
+    assert add["p1_replacement_law_compatible_with_opaque_kv"] is False
+    assert add["tm057_curves_cannot_decide_consolidation"] is True
+    assert add["episode_match_l2_not_changed"] is True
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
