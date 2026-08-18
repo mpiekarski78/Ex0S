@@ -194,3 +194,51 @@ def test_runner_refuses_wraps_and_smoke():
     assert out["candidate_exists"] is False
     assert "memproj_arm" not in GenomeConfig().to_dict()
     assert not hasattr(NeuralCortex, "set_feedback_ticks")
+
+
+DEV_SHA = "177395281c25171628132c38eeda1056321d5a1cf9887600e73514f5558e7f8c"
+DEC_SHA = "9040428ebadb8cc0e692eca3825dc74d4f52539ba4207ec19f9748eacca69caf"
+DEV_GIT = "1a933f439f5f2e72bbbfaec50c781c253cfb683f"
+
+
+def test_dev_lock_setup_precondition_fail_no_install():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm055drift import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_drift.dev.lock"
+    decp = REPO / "docs" / "lineage_drift.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert _sha(TM054_RUNNER) == TM054_RUNNER_SHA
+    assert _sha(TM054_DEV) == TM054_DEV_SHA
+    assert _sha(TM054_ADD) == TM054_ADD_SHA
+    assert _sha(LAW) == LAW_SHA
+    assert _sha(TM053_RUNNER) == TM053_RUNNER_SHA
+    assert _sha(TM052_DEV) == TM052_DEV_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "setup_precondition_fail"
+    assert dev["install_W_star"] is False
+    assert dev["discard_every_W_star"] is True
+    assert dev["episode_match_l2_retuned"] is False
+    assert dev["canonical_state_generator"] == "write_time_last_p1"
+    assert dec["architectural_conclusion"] == "none"
+    assert dec["decision"]["code"] == "setup_precondition_fail"
+    assert dec["decision"]["phase_flags"]["generic_consolidation_plausible"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["decoder|w0"]["pin_match"] is False
+    assert cells["decoder|w0"]["w0_match"] is True
+    assert cells["decoder|w0"]["ref_ok"] is True
+    assert cells["decoder|w1"]["pin_match"] is False
+    assert cells["decoder|w1"]["w0_match"] is True
+    assert cells["n4|w0"]["applied"] is False
+    assert cells["n4|w0"]["W_installed"] is False
+    assert cells["n4|w0"]["discarded"] is True
+
