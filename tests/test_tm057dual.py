@@ -173,3 +173,58 @@ def test_runner_receipts_and_smoke():
     assert out["candidate_exists"] is False
     assert "memproj_arm" not in GenomeConfig().to_dict()
     assert not hasattr(NeuralCortex, "set_feedback_ticks")
+
+
+DEV_SHA = "2f7649e1e7214fe93c8a34fb174d7c4c8e87a1da6cd78d57f6b963b1b7f650e0"
+DEC_SHA = "be06acd8116a356fce06239d89522d0cb7b850ebc97c4b66feb9d6d78fd9ac88"
+DEV_GIT = "2eca88e590489dd1f0cfb2cf3326fd882f868eca"
+
+
+def test_dev_lock_storage_integrity_failure():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm057dual import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_dual.dev.lock"
+    decp = REPO / "docs" / "lineage_dual.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert _sha(TM056_RUNNER) == TM056_RUNNER_SHA
+    assert _sha(TM056_DEV) == TM056_DEV_SHA
+    assert _sha(TM056_DEC) == TM056_DEC_SHA
+    assert _sha(TM056_ADD) == TM056_ADD_SHA
+    assert _sha(LAW) == LAW_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "storage_integrity_failure"
+    assert dev["install_W_star"] is False
+    assert dev["discard_every_W_star"] is True
+    assert dev["canonical_law_reconsidered"] is False
+    assert dec["architectural_conclusion"] == "none"
+    assert dec["decision"]["code"] == "storage_integrity_failure"
+    assert dec["decision"]["phase_flags"]["p1_replacement_law_compatible_with_opaque_kv"] is False
+    assert dec["decision"]["phase_flags"]["generic_consolidation_plausible"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["decoder|w0"]["ref_ok"] is True
+    assert cells["decoder|w1"]["ref_ok"] is True
+    assert cells["decoder|w0"]["integrity_ok"] is False
+    assert cells["decoder|w1"]["integrity_ok"] is True
+    assert cells["decoder|w0"]["cue_addressing_ok"] is False
+    assert cells["decoder|w1"]["cue_addressing_ok"] is False
+    assert cells["decoder|w0"]["counts"]["n_refresh_diff_action"] == 1
+    assert cells["decoder|w0"]["counts"]["n_refresh_diff_cue_same_action"] == 3
+    crossed = [r for r in cells["decoder|w0"]["receipts"] if r.get("replace_crosses_action")]
+    assert len(crossed) == 1
+    assert crossed[0]["outcome"] == "replace"
+    assert crossed[0]["same_action"] is False
+    assert cells["attempts|n4|w0"]["applied"] is False
+    assert cells["attempts|n4|w0"]["W_installed"] is False
+    assert cells["attempts|n4|w0"]["discarded"] is True
+    assert cells["residents|n4|w0"]["discarded"] is True
+    assert all(cells[i]["cell_code"] == "n_prefix_only" for i in expected_cell_ids() if i.startswith(("attempts|", "residents|")))
