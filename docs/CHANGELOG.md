@@ -2,6 +2,7 @@
 
 ## 2026-08-18
 
+- **TM.0.39.JOINTSOCP / v40 freeze:** Numerical joint min-change SOCP (CVXPY 1.7.3 + Clarabel 0.11.1). Fallback after v37 vs always-joint. Atomic apply or full reject. Not an exact projector. Acquire does not earn a candidate lock. [`lineage_jointsocp.prereg.lock`](lineage_jointsocp.prereg.lock). Product **0.0.004**.
 - **TM.0.38.CONESPLIT DEV:** First-match **conesplit_mixed_routes**. Exact SOC never wins at 16. TM037’s `reg1` remains joint-SOCP-only at 256 cycles; `reg0` is extra linearized cycles; `reg2` needs exact SOC to convergence. No v40 freeze. [`lineage_conesplit.decision.lock`](lineage_conesplit.decision.lock). Product **0.0.004**.
 - **TM.0.38.CONESPLIT freeze:** Same post-write snapshot. Linearized Dykstra to diagnostic convergence vs exact SOC @ 16 vs exact SOC to convergence vs joint \(W^*\). Degenerate \(W^\top d=0\) skips using organism `PROTO_EPS`; no fitted epsilon. No neural edit. v40 not frozen. [`lineage_conesplit.prereg.lock`](lineage_conesplit.prereg.lock). Product **0.0.004**.
 - **TM.0.37.JOINTPROJ DEV:** First-match **jointproj_oracle_only**. Diagnostic `reg1`: v37 leftover 0/4/6; PA/Dykstra leave slot 6 (live 7/8); nearby \(W^*\) restores 8/8. Linearized supporting-halfspace projection is not sufficient. Oracle not installed. No candidate lock. [`lineage_jointproj.decision.lock`](lineage_jointproj.decision.lock). Product **0.0.004**.

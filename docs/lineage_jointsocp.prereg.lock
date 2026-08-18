@@ -1,0 +1,136 @@
+{
+  "version": "TM.0.39.JOINTSOCP.PREREG",
+  "lab": "TM.0.39.JOINTSOCP",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": true,
+  "neural_edit_before_runner_freeze": false,
+  "implementation_authorized": true,
+  "v40_candidate_authorized": false,
+  "package_question": "After frozen v37 learning, does numerical joint min-change SOCP restore eight-cue acquire when invoked only on remaining violations, does always-joint change the installed W, or does the solver reject?",
+  "authorized_by": [
+    "docs/lineage_conesplit.decision.lock",
+    "docs/cortex_v40.prereg.lock"
+  ],
+  "tm038_decision_sha": "d06177fb93809ca90a9012dfdbd5d7af39ba0dc782db617786366612777e3426",
+  "tm038_dev_sha": "871be97be4fa888aec802a877847ea4e9831a09ce738cb9b82ddc8d3b02a972d",
+  "tm038_runner_sha": "b06088386512c8d199a218e6de08c1909cf65895add979f8d71b3d788480f02b",
+  "tm036_decision_sha": "0a029bf7cd0cffec37707ad5ce65e7c5c161701d279e6aac26fb9d5684b8601a",
+  "tm036_dev_sha": "885c6b7b1d6fad934996d849dd84fd6e4c46fc2644c37257a6f18eb6f8784183",
+  "tm036_runner_sha": "fdcd11d376d22965670f8bb4dcd411720d2d759c953933dd278b64a4e4c6c927",
+  "tm032_decision_sha": "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e112be4c7a4c7",
+  "tm032_dev_sha": "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56514974c9644d",
+  "tm032_runner_sha": "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503",
+  "v40_prereg_sha": "c60a5a55980c633453df47eac18126df81fdc9153c6a6a0dd7186f563ab6e3ac",
+  "v40_isolation_sha": "6003436fd6a0a6e5cd9de10863f363b767d4ec4c13f7addefffa16e9d16c74d7",
+  "v40_amendment_md_sha": "e4310c701006d7feda5b63d896a864f4f1b10e80c104d51d2af3448d2ea01fbf",
+  "joint_socp_sha": "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895",
+  "candidate_name": "not_v40_candidate",
+  "n": 64,
+  "eta_act": 0.15,
+  "episode_slots": 8,
+  "write_match_l2": 0.05,
+  "treatment_mode": "early_raw_half_spacing",
+  "n_cues": 8,
+  "n_handles": 2,
+  "hard_budget_passes": 16,
+  "not_an_exact_projector": true,
+  "solver": "CLARABEL",
+  "cvxpy_version": "1.7.3",
+  "clarabel_version": "0.11.1",
+  "max_iter": 200,
+  "max_threads": 1,
+  "direct_solve_method": "qdldl",
+  "tol_gap_abs": 1e-08,
+  "fitted_solver_tolerance": false,
+  "partial_install": false,
+  "nudge": false,
+  "atomic_apply": true,
+  "act_recall_modes_tuple_untouched": true,
+  "parent": "tm036_write_only_after_credits_0_through_6",
+  "probes_on_another_clone": true,
+  "pure_helpers_only": true,
+  "oracle_never_installed_in_neural_cortex": true,
+  "call_v39_set_act_proj_arm_for_socp": false,
+  "registry_seeds": [
+    936835019,
+    1584000025,
+    2133183397,
+    520283234
+  ],
+  "registry_seeds_are_replicates_not_a_grid": true,
+  "genome_varies_only": "seed_registry",
+  "default_seed_registry_forbidden": 22222,
+  "domains": {
+    "DEV": "TM039.JOINTSOCP.DEV.",
+    "TWIN": "TM039.JOINTSOCP.TWIN."
+  },
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 1,
+  "world_index": 0,
+  "n_registry_seeds": 4,
+  "arms": [
+    "v37",
+    "fallback_joint",
+    "always_joint"
+  ],
+  "expected_n_cells": 24,
+  "expected_n_worlds": 8,
+  "manifest_sha": "86ea21ead0395860ca7284ec27546b7d438847eab7354d6c827679fd5a2daf5c",
+  "fix_gate": {
+    "live_ranking_ok": true,
+    "n_probe_correct": 8,
+    "n_store_violations": 0,
+    "margin_is_recorded_not_a_gate": true
+  },
+  "decision_ladder": [
+    {
+      "code": "jointsocp_no_v37_fail",
+      "when": "every world already fixes under native v37"
+    },
+    {
+      "code": "jointsocp_fallback_sufficient",
+      "when": "all diagnostic worlds: v37-then-SOCP-if-violations fixes"
+    },
+    {
+      "code": "jointsocp_fallback_blocks",
+      "when": "all diagnostic worlds: only always-joint SOCP from post-write W fixes"
+    },
+    {
+      "code": "jointsocp_solver_fail",
+      "when": "all diagnostic worlds: both joint arms fail or reject"
+    },
+    {
+      "code": "jointsocp_mixed_routes",
+      "when": "diagnostic worlds disagree"
+    }
+  ],
+  "v40_gate": "do_not_write_cortex.candidate.v40.lock_until_complete_causal_battery",
+  "refuse": [
+    "open SCORE",
+    "auto_cortex.candidate.v40.lock",
+    "auto_cortex.candidate.v39.lock",
+    "disguise_solver_as_local_plasticity",
+    "partial_install_or_nudge",
+    "claim_exact_projector",
+    "fitted_solver_tolerance",
+    "install_tm036_closest_feasible_W_as_organism_law",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "rewrite TM038 historical locks",
+    "rewrite TM037 historical locks",
+    "rewrite TM036 historical locks",
+    "tm038_dev_rerun",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "TM039 joint SOCP battery. Product remains 0.0.004. Freeze runner and solver module before neural wiring.",
+  "frozen_runner_sha": "e40304ee4ece2c834390094c9853d122bb89cb8fb18923aa348e052d146e288d"
+}

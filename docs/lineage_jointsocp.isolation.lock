@@ -1,0 +1,54 @@
+{
+  "version": "TM.0.39.JOINTSOCP.ISOLATION",
+  "lab": "TM.0.39.JOINTSOCP",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": true,
+  "neural_edit_before_runner_freeze": false,
+  "v40_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM039.JOINTSOCP.DEV.",
+    "TWIN": "TM039.JOINTSOCP.TWIN."
+  },
+  "disjoint_from": [
+    "TM038.CONESPLIT.DEV.",
+    "TM038.CONESPLIT.TWIN.",
+    "TM037.JOINTPROJ.DEV.",
+    "TM037.JOINTPROJ.TWIN.",
+    "TM036.UPDATEGEOM.DEV.",
+    "TM036.UPDATEGEOM.TWIN.",
+    "TM032.RESTSPLIT.DEV.",
+    "TM032.RESTSPLIT.TWIN."
+  ],
+  "pure_helpers_only": [
+    "experiments/run_tm032restsplit.py:clone_plastic",
+    "experiments/run_tm032restsplit.py:stored_rows",
+    "experiments/run_tm032restsplit.py:live_probes",
+    "experiments/run_tm032restsplit.py:eta_act",
+    "experiments/run_tm036updategeom.py:geometry_parent",
+    "experiments/run_tm036updategeom.py:apply_native",
+    "experiments/run_tm036updategeom.py:arm_fixes",
+    "three_memory/joint_socp.py:solve_min_change_socp"
+  ],
+  "refuse": [
+    "disguise_solver_as_local_plasticity",
+    "partial_install_or_nudge",
+    "claim_exact_projector",
+    "fitted_solver_tolerance",
+    "install_tm036_closest_feasible_W_as_organism_law",
+    "auto_cortex.candidate.v40.lock",
+    "auto_cortex.candidate.v39.lock",
+    "call_v39_set_act_proj_arm_for_socp",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "rewrite TM038 historical locks",
+    "rewrite TM037 historical locks",
+    "rewrite TM036 historical locks",
+    "tm038_dev_rerun",
+    "TM038_monkey_patch",
+    "runner_edits_after_freeze_push",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "Joint SOCP consolidation after TM038 mixed cyclic routes. Solver module frozen with runner. Neural wiring after freeze on origin. Product remains 0.0.004."
+}
