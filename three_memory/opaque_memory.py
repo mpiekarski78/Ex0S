@@ -96,6 +96,9 @@ def retrieve_by_query(query: np.ndarray, rows: list[OpaqueRow]) -> dict[str, Any
     return out
 
 
+OPAQUE_KV_SLOTS = 8
+
+
 class OpaqueMemory:
     def __init__(self) -> None:
         self._rows: list[OpaqueRow] = []
@@ -103,6 +106,40 @@ class OpaqueMemory:
 
     def clear(self) -> None:
         self._rows = []
+
+    def append_immutable(
+        self,
+        key: np.ndarray,
+        value: np.ndarray,
+        *,
+        provenance_id: str,
+        when: int,
+    ) -> dict[str, Any]:
+        """Append a distinct event. Capacity 8. Evict oldest when, then insertion index.
+
+        FIFO is a deterministic lifecycle, not intelligent forgetting.
+        Caller must copy and validate key/value before this mutation.
+        """
+        k = np.asarray(key, dtype=DTYPE).reshape(-1).copy()
+        v = np.asarray(value, dtype=DTYPE).reshape(-1).copy()
+        row = OpaqueRow(key=k, value=v, when=int(when), provenance_id=str(provenance_id))
+        before = list(self._rows)
+        evicted = None
+        if len(before) >= OPAQUE_KV_SLOTS:
+            victim_i = min(range(len(before)), key=lambda i: (int(before[i].when), i))
+            evicted = str(before[victim_i].provenance_id)
+            after = before[:victim_i] + before[victim_i + 1 :] + [row]
+            outcome = "evict_append"
+        else:
+            after = before + [row]
+            outcome = "append"
+        self._rows = after
+        self._clock = max(int(self._clock), int(when))
+        return {
+            "outcome": outcome,
+            "provenance_id": str(provenance_id),
+            "evicted_provenance_id": evicted,
+        }
 
     def write(self, key: np.ndarray, value: np.ndarray, *, provenance_id: str) -> OpaqueRow:
         self._clock += 1

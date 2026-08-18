@@ -46,6 +46,7 @@ V40_SHA = "dc8c13d1607034781864f1dcfd969ad146bf267fd78fb0ba588a88fe2a0e0319"
 JOINT_SOCP_SHA = "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895"
 NEURAL_SHA = "20d21f91c275e856ea1ec1faec58e5e1e633c270a79c887afa4b5e41397bb5be"
 OPAQUE_SHA = "3f938950f3bb9e7ec96a659538a01e430e2459bd6b1477f417fe43c51a3c85a5"
+OPAQUE_NOW_SHA = "30d3adc68286a45756924dc2109a9347ee733bbe7f4817554aa3b5d4969223aa"
 LIVE_SHA = "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c"
 FROZEN_RUNNER_SHA = "9bbde3eafd7c56ea2a39835405fe78221687a49c01ace0261a41710db7a2cfd0"
 MANIFEST = "c0300666815cbe2b7ad761af3acbf813e9d6b31d7efb372397e5e1017b47bb58"
@@ -123,7 +124,7 @@ def test_prereg_pins_and_no_socp_recall_edits():
     assert CONTRACT.is_file()
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert p["neural_cortex_sha"] == NEURAL_SHA
-    assert _sha(OPAQUE) == OPAQUE_SHA
+    assert _sha(OPAQUE) == OPAQUE_NOW_SHA
     assert EPISODE_MATCH_L2 == 0.05
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
     assert not CANDIDATE_V41.exists()
@@ -262,7 +263,7 @@ def test_memproj_init_checkpoint_without_harness():
     assert "early_raw_half_spacing" in src
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(OPAQUE) == OPAQUE_SHA
+    assert _sha(OPAQUE) == OPAQUE_NOW_SHA
     assert not CANDIDATE_V41.exists()
 
 

@@ -38,8 +38,8 @@ TM057_DEV = REPO / "docs" / "lineage_dual.dev.lock"
 TM057_DEC = REPO / "docs" / "lineage_dual.decision.lock"
 TM057_ADD = REPO / "docs" / "lineage_dual.decision.addendum.lock"
 MANIFEST = "0a77945d8d675a3cd8ae5f2bc12b3dff30d9311bf3d946eb2e62410a07a1eac2"
-NEURAL_SHA = "2ba95d71f2893cf0c2b3069836b6fbe1ff4840d2d746331e47b9a38650475c63"
-OPAQUE_SHA = "3f938950f3bb9e7ec96a659538a01e430e2459bd6b1477f417fe43c51a3c85a5"
+NEURAL_SHA = "c1ce6f311d2f6958f74e0d55e195d5e1af9130143e06bce149c415396279439b"
+OPAQUE_SHA = "30d3adc68286a45756924dc2109a9347ee733bbe7f4817554aa3b5d4969223aa"
 JOINT_SOCP_SHA = "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895"
 TM057_RUNNER_SHA = "1f1ee4b8d4d2da7893622d8692a91b3912ed7130f9a868dffe02fc19d5cd8f61"
 TM057_DEV_SHA = "2f7649e1e7214fe93c8a34fb174d7c4c8e87a1da6cd78d57f6b963b1b7f650e0"
@@ -137,8 +137,8 @@ def test_prereg_pins_storage_identity():
     assert law["flag"]["act_recall_mode"] is False
     assert "opaque_store_enabled" not in GenomeConfig().to_dict()
     assert "opaque_store_enabled" not in ACT_RECALL_MODES
-    assert not hasattr(NeuralCortex, "set_opaque_store_enabled")
-    assert not hasattr(NeuralCortex, "write_opaque_kv")
+    assert hasattr(NeuralCortex, "set_opaque_store_enabled")
+    assert hasattr(NeuralCortex, "write_opaque_kv")
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
     assert not CANDIDATE_V41.exists()
     assert p["manifest_sha"] == MANIFEST
@@ -148,7 +148,10 @@ def test_prereg_pins_storage_identity():
     assert frozen == sha_file(RUNNER)
 
 
-def test_no_neural_edit():
+def test_runner_and_law_frozen_after_implementation():
+    assert _sha(RUNNER) == RUNNER_SHA
+    assert _sha(LAW) == LAW_SHA
+    assert _sha(LAW_ADD) == LAW_ADD_SHA
     assert _sha(NEURAL) == NEURAL_SHA
     assert _sha(OPAQUE) == OPAQUE_SHA
 
@@ -175,7 +178,7 @@ def test_ids_and_decision_ladder():
 
 
 def test_runner_smoke_and_refuses_dev_before_implementation():
-    from experiments.run_tm058storeint import implementation_present, refuse_runner_leaks, run_dev, smoke
+    from experiments.run_tm058storeint import implementation_present, refuse_runner_leaks, smoke
 
     src = RUNNER.read_text()
     assert "write_opaque_kv" in src
@@ -190,11 +193,11 @@ def test_runner_smoke_and_refuses_dev_before_implementation():
             names.append(node.func.attr)
     assert "solve_ceiling" not in names
     assert "_run_joint_socp_consolidation" not in names
-    assert implementation_present() is False
+    assert implementation_present() is True
     out = smoke()
     assert out["smoke_ok"]
     assert out["n_cells"] == 12
-    assert out["implementation_present"] is False
+    assert out["implementation_present"] is True
     assert out["ladder"]["setup"] == "setup_precondition_fail"
     assert out["ladder"]["cross_action_refresh"] == "cross_action_refresh"
     assert out["ladder"]["storage_integrity_holds"] == "storage_integrity_holds"
@@ -202,8 +205,3 @@ def test_runner_smoke_and_refuses_dev_before_implementation():
     assert out["slots"] == 8
     assert out["candidate_exists"] is False
     assert "memproj_arm" not in GenomeConfig().to_dict()
-    try:
-        run_dev()
-        raise AssertionError("DEV must refuse before implementation")
-    except RuntimeError as exc:
-        assert "before opaque-store implementation" in str(exc)

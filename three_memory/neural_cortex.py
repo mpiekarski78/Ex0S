@@ -417,6 +417,9 @@ class NeuralCortex:
         self._memproj_rho_obs: np.ndarray | None = None
         # TM049: instance flag, not a GenomeConfig field, not an ACT_RECALL_MODE.
         self._action_feedback_enabled = False
+        # TM058: experimental opaque K/V store. Default off. Not a genome field or ACT_RECALL_MODE.
+        self._opaque_store_enabled = False
+        self._opaque_kv_seq = 0
         self.opaque = OpaqueMemory()
 
     def set_act_rehearse_arm(self, arm: str) -> None:
@@ -449,6 +452,51 @@ class NeuralCortex:
 
     def set_action_feedback_enabled(self, enabled: bool) -> None:
         self._action_feedback_enabled = bool(enabled)
+
+    def set_opaque_store_enabled(self, enabled: bool) -> None:
+        self._opaque_store_enabled = bool(enabled)
+
+    def write_opaque_kv(
+        self,
+        key: np.ndarray,
+        value: np.ndarray,
+        *,
+        handle: str,
+        provenance_id: str,
+    ) -> dict[str, Any]:
+        """Flag-on opaque K/V write. Does not call _episode_write.
+
+        provenance_id= is accepted for the frozen TM058 signature and is not stored.
+        Stored provenance_id comes from the checkpointed organism counter.
+        handle is diagnostic only.
+        """
+        _ = (handle, provenance_id)
+        n_before = len(self.opaque.rows())
+        reject: dict[str, Any] = {
+            "outcome": "reject",
+            "reason": "invalid_arrays",
+            "provenance_id": None,
+            "evicted_provenance_id": None,
+            "n_before": int(n_before),
+            "n_after": int(n_before),
+        }
+        if not bool(getattr(self, "_opaque_store_enabled", False)):
+            reject["reason"] = "flag_off"
+            return reject
+        try:
+            k = np.asarray(key, dtype=np.float64).reshape(-1).copy()
+            v = np.asarray(value, dtype=np.float64).reshape(-1).copy()
+        except (TypeError, ValueError):
+            return reject
+        if k.size == 0 or v.size == 0 or (not np.isfinite(k).all()) or (not np.isfinite(v).all()):
+            return reject
+        self._opaque_kv_seq = int(getattr(self, "_opaque_kv_seq", 0)) + 1
+        pid = str(self._opaque_kv_seq)
+        rec = self.opaque.append_immutable(k, v, provenance_id=pid, when=int(self._opaque_kv_seq))
+        rec["reason"] = None
+        rec["n_before"] = int(n_before)
+        rec["n_after"] = len(self.opaque.rows())
+        return rec
 
     def _legal_feedback_motor_vec(self, mv: Any) -> np.ndarray | None:
         if mv is None:
@@ -2640,6 +2688,8 @@ class NeuralCortex:
             "memproj_arm": str(getattr(self, "_memproj_arm", MEMPROJ_OFF) or MEMPROJ_OFF),
             "memproj_frozen": bool(getattr(self, "_memproj_frozen", False)),
             "action_feedback_enabled": bool(getattr(self, "_action_feedback_enabled", False)),
+            "opaque_store_enabled": bool(getattr(self, "_opaque_store_enabled", False)),
+            "opaque_kv_seq": int(getattr(self, "_opaque_kv_seq", 0)),
             "W_k": tsave(self.W_k),
             "W_q": tsave(self.W_q),
             "W_v": tsave(self.W_v),
@@ -2771,6 +2821,8 @@ class NeuralCortex:
         self._memproj_arm = mp if mp in MEMPROJ_ARMS else MEMPROJ_OFF
         self._memproj_frozen = bool(snap.get("memproj_frozen", False))
         self._action_feedback_enabled = bool(snap.get("action_feedback_enabled", False))
+        self._opaque_store_enabled = bool(snap.get("opaque_store_enabled", False))
+        self._opaque_kv_seq = int(snap.get("opaque_kv_seq") or 0)
         if "W_k" in snap:
             self.W_k = tload(snap["W_k"])
             self.W_q = tload(snap["W_q"])

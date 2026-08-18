@@ -39,6 +39,7 @@ TM052_PREREG = REPO / "docs" / "lineage_sharefeas.prereg.lock"
 TM052_ADD = REPO / "docs" / "lineage_sharefeas.decision.addendum.lock"
 MANIFEST = "8fac9a60057217b97327f731b8e959a88a428ba19ccd11fcf12238ec0aecdb29"
 NEURAL_SHA = "2ba95d71f2893cf0c2b3069836b6fbe1ff4840d2d746331e47b9a38650475c63"
+NEURAL_NOW_SHA = "c1ce6f311d2f6958f74e0d55e195d5e1af9130143e06bce149c415396279439b"
 JOINT_SOCP_SHA = "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895"
 TM046_RUNNER_SHA = "8dbadd143f0fed629496a70c9d6288e60c65301fadd392cab6e3d77ea0b5d6b0"
 TM049_RUNNER_SHA = "3def01d5502b28a5ffafeab58b07ee481d5748e5c765b1cbbf52d1c1ed6f275d"
@@ -130,7 +131,7 @@ def test_prereg_pins_coverage_curve():
     assert "three_memory/joint_socp.py" in iso["historical_immutable"]
     assert CONTRACT.is_file()
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(NEURAL) == NEURAL_SHA
+    assert _sha(NEURAL) == NEURAL_NOW_SHA
     assert EPISODE_MATCH_L2 == 0.05
     assert ACT_MARGIN_FLOOR == 0.01
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
@@ -146,7 +147,7 @@ def test_prereg_pins_coverage_curve():
 
 
 def test_no_neural_or_solver_edit():
-    assert _sha(NEURAL) == NEURAL_SHA
+    assert _sha(NEURAL) == NEURAL_NOW_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     src = NEURAL.read_text()
     assert "W_feedback" not in src
@@ -248,7 +249,7 @@ def test_dev_lock_coverage_generalizes_but_contexts_collapsed():
     assert _sha(TM052_DEV) == TM052_DEV_SHA
     assert _sha(TM052_ADD) == TM052_ADD_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
-    assert _sha(NEURAL) == NEURAL_SHA
+    assert _sha(NEURAL) == NEURAL_NOW_SHA
     assert sha_file(RUNNER) == RUNNER_SHA
     assert not CANDIDATE_V41.exists()
     dev = json.loads(devp.read_text())
