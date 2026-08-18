@@ -1,0 +1,127 @@
+{
+  "version": "TM.0.40.CAUSALBATTERY.PREREG",
+  "lab": "TM.0.40.CAUSALBATTERY",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "v40_candidate_authorized": false,
+  "package_question": "On untouched worlds, does fallback_joint pass acquisition, stability, history, perturbation, novelty, reversal, specificity, 8x4 and later-learning after an installed SOCP, or is the solver never exercised so the result is compatibility rather than a candidate?",
+  "authorized_by": [
+    "docs/lineage_jointsocp.decision.lock",
+    "docs/cortex_v40.prereg.lock"
+  ],
+  "tm039_first_match": "jointsocp_fallback_sufficient",
+  "tm039_decision_sha": "0275f20ebc9d0ff528b4edbf2767d21c69689b94f6559a25ce00eca9f7d1618d",
+  "tm039_dev_sha": "c2f5dae06f591c6e09a651122a4f893d2e4ccac45d42c5bf7965ba8b9891b21d",
+  "tm039_runner_sha": "e40304ee4ece2c834390094c9853d122bb89cb8fb18923aa348e052d146e288d",
+  "tm039_prereg_sha": "22561dd52c2a2d614dcf38fad55c24028577f7c4891a0306d0a923b8def6ee36",
+  "v40_prereg_sha": "c60a5a55980c633453df47eac18126df81fdc9153c6a6a0dd7186f563ab6e3ac",
+  "joint_socp_sha": "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895",
+  "frozen_neural_sha": "2eb45d8769402330f5ee39a04afffe110a435a0e64a40b12bc2d874b36f5ed59",
+  "candidate_name": "not_v40_candidate",
+  "treatment_mode": "early_raw_half_spacing",
+  "n_cues": 8,
+  "n_handles": 2,
+  "hard_budget_passes": 16,
+  "n_rest_ticks": 4,
+  "not_an_exact_projector": true,
+  "hashes_are_diagnostic": true,
+  "semantic_tolerances_authoritative": true,
+  "later_learning_from_reset_checkpoint": false,
+  "partial_install": false,
+  "nudge": false,
+  "scored_arm": "fallback_joint",
+  "observational_arm": "always_joint",
+  "control_arm": "v37",
+  "seed_registry": 404000039,
+  "default_seed_registry_forbidden": 22222,
+  "domains": {
+    "DEV": "TM040.CAUSAL.DEV.",
+    "TWIN": "TM040.CAUSAL.TWIN."
+  },
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 2,
+  "arms": [
+    "v37",
+    "fallback_joint",
+    "always_joint"
+  ],
+  "expected_n_cells": 102,
+  "manifest_sha": "7f422a2d81d2258c764334db8a802c06c5f28b13b58fa819b50a160438493f33",
+  "margin": {
+    "pass_statistic": "normalized_geometric_margin",
+    "geometric_min": 0.01,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19
+  },
+  "decision_ladder": [
+    {
+      "code": "jointsocp_fallback_acquire_fail",
+      "when": "fallback_joint acquisition fails"
+    },
+    {
+      "code": "jointsocp_fallback_stability_fail",
+      "when": "fallback_joint stability or perturbation fails"
+    },
+    {
+      "code": "jointsocp_fallback_history_fail",
+      "when": "fallback_joint history fails"
+    },
+    {
+      "code": "jointsocp_fallback_novelty_fail",
+      "when": "fallback_joint novelty fails"
+    },
+    {
+      "code": "jointsocp_fallback_reversal_fail",
+      "when": "fallback_joint ecological reversal fails"
+    },
+    {
+      "code": "jointsocp_fallback_specificity_fail",
+      "when": "fallback_joint specificity fails"
+    },
+    {
+      "code": "jointsocp_fallback_scale_fail",
+      "when": "fallback_joint 8x4 fails"
+    },
+    {
+      "code": "jointsocp_fallback_contradict_fail",
+      "when": "infeasible/reject mutates W"
+    },
+    {
+      "code": "jointsocp_fallback_later_learning_fail",
+      "when": "fallback_joint later-learning probes fail"
+    },
+    {
+      "code": "jointsocp_generalization_not_exercised",
+      "when": "fallback_joint never activates on untouched cells"
+    },
+    {
+      "code": "jointsocp_later_learning_not_exercised",
+      "when": "no later-learning probe after an installed SOCP"
+    },
+    {
+      "code": "jointsocp_fallback_battery_pass",
+      "when": "fallback_joint passes and solver plus later-learning-after-SOCP were exercised; still not an auto candidate lock"
+    }
+  ],
+  "refuse": [
+    "auto_cortex.candidate.v40.lock",
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py",
+    "treat_compatibility_as_causal_efficacy",
+    "rewrite TM039 historical locks",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "TM040 untouched causal battery. Product remains 0.0.004. Freeze runner before DEV. No neural or solver edits.",
+  "frozen_runner_sha": "0739de3225e36bf88b66001ae9af2c3232a937d0bc6bc3b64eb34bdf7d2f9c6b"
+}

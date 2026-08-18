@@ -1,0 +1,49 @@
+{
+  "version": "TM.0.40.CAUSALBATTERY.ISOLATION",
+  "lab": "TM.0.40.CAUSALBATTERY",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "v40_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM040.CAUSAL.DEV.",
+    "TWIN": "TM040.CAUSAL.TWIN."
+  },
+  "disjoint_from": [
+    "TM039.JOINTSOCP.DEV.",
+    "TM039.JOINTSOCP.TWIN.",
+    "TM038.CONESPLIT.DEV.",
+    "TM038.CONESPLIT.TWIN.",
+    "TM036.UPDATEGEOM.DEV.",
+    "TM036.UPDATEGEOM.TWIN.",
+    "TM032.RESTSPLIT.DEV.",
+    "TM032.RESTSPLIT.TWIN.",
+    "TM027.GATEDREHEARSAL.DEV.",
+    "TM027.GATEDREHEARSAL.TWIN."
+  ],
+  "scored_arm": "fallback_joint",
+  "observational_arm": "always_joint",
+  "control_arm": "v37",
+  "hashes_are_diagnostic": true,
+  "semantic_tolerances_authoritative": true,
+  "refuse": [
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py",
+    "auto_cortex.candidate.v40.lock",
+    "treat_compatibility_as_causal_efficacy",
+    "candidate_pass_when_solver_never_activated",
+    "later_learning_from_reset_checkpoint",
+    "partial_install_or_nudge",
+    "claim_exact_projector",
+    "fitted_solver_tolerance",
+    "disguise_solver_as_local_plasticity",
+    "rewrite TM039 historical locks",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Untouched full causal battery after TM039. No solver or neural edits. Product remains 0.0.004."
+}
