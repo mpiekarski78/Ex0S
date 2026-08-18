@@ -45,7 +45,9 @@ TM057_RUNNER_SHA = "1f1ee4b8d4d2da7893622d8692a91b3912ed7130f9a868dffe02fc19d5cd
 TM057_DEV_SHA = "2f7649e1e7214fe93c8a34fb174d7c4c8e87a1da6cd78d57f6b963b1b7f650e0"
 TM057_DEC_SHA = "be06acd8116a356fce06239d89522d0cb7b850ebc97c4b66feb9d6d78fd9ac88"
 TM057_ADD_SHA = "501594d36c0ca4fb9e4a163d8be0d624c4d30613ddb89f0de89dba1a63a350e7"
+LAW_ADD = REPO / "docs" / "lineage_opaque_store_law.addendum.lock"
 LAW_SHA = "86893cc7614b1e270fb004028dfde82dc5e06054bc6f5d6ca2aaa6ba82c4260d"
+LAW_ADD_SHA = "18f349737ab6827fc371b1c80aa67b174c7ffb54a90b71051e3bf24db242ed54"
 WRITE_TIME_SHA = "73f96668385282fc29a0bcf0c28e17c484ac1e51a473aa183f4b6fa148c9d068"
 RUNNER_SHA = "2f7e497c216fe4a2fcdd5bbff73ed7f2fb7bd3f43c23a00630b4055ac278bb2d"
 LADDER = [
@@ -111,6 +113,21 @@ def test_prereg_pins_storage_identity():
     assert _sha(OPAQUE) == OPAQUE_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert _sha(LAW) == LAW_SHA
+    assert _sha(LAW_ADD) == LAW_ADD_SHA
+    add = json.loads(LAW_ADD.read_text())
+    assert add["rewrite_historical_law"] is False
+    assert add["rewrite_frozen_runner"] is False
+    assert add["capacity_slots"] == 8
+    assert add["eviction"]["victim"] == "oldest_resident_by_organism_owned_when"
+    assert add["eviction"]["tie_break"] == "insertion_or_provenance_sequence"
+    assert add["eviction"]["evict_plus_append_atomic"] is True
+    assert add["provenance_id"]["never_runner_metadata"] is True
+    assert add["provenance_id"]["write_opaque_kv_keyword_ignored"] is True
+    assert add["flag_on_must_not_call_episode_write"] is True
+    assert add["missing_checkpoint_fields_fail_closed_to_flag_false"] is True
+    assert add["fifo_is_not_intelligent_forgetting"] is True
+    assert add["floor"] == 0.05
+    assert add["historical_law_sha"] == LAW_SHA
     assert law["implementation_in_this_freeze"] is False
     assert law["implementation_earned"] is True
     assert law["value_is_not_record_identity"] is True

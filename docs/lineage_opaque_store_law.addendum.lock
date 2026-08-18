@@ -1,0 +1,48 @@
+{
+  "version": "TM.0.58.OPAQUE_STORE_LAW.ADDENDUM",
+  "product": "0.0.004",
+  "earned_next": false,
+  "eligible_for_000005": false,
+  "rewrite_historical_law": false,
+  "rewrite_historical_prereg": false,
+  "rewrite_frozen_runner": false,
+  "implementation_in_this_freeze": false,
+  "historical_law_lock": "docs/lineage_opaque_store_law.lock",
+  "historical_law_sha": "86893cc7614b1e270fb004028dfde82dc5e06054bc6f5d6ca2aaa6ba82c4260d",
+  "historical_prereg_lock": "docs/lineage_storeint.prereg.lock",
+  "historical_prereg_sha": "35408fd1ba05f415fe8259627ee581e3c366d4eeecb7ef266097fb3199fa7a6b",
+  "frozen_runner_sha": "2f7e497c216fe4a2fcdd5bbff73ed7f2fb7bd3f43c23a00630b4055ac278bb2d",
+  "historical_git_head": "10fe13cfec9d4780849cf3fe7e9565b2d26a6198",
+  "episode_match_l2_not_changed": true,
+  "floor": 0.05,
+  "fifo_is_not_intelligent_forgetting": true,
+  "capacity_slots": 8,
+  "eviction": {
+    "victim": "oldest_resident_by_organism_owned_when",
+    "tie_break": "insertion_or_provenance_sequence",
+    "validate_and_copy_key_value_before_eviction": true,
+    "evict_plus_append_atomic": true,
+    "invalid_write_leaves_store_unchanged": true
+  },
+  "provenance_id": {
+    "source": "checkpointed_monotonic_organism_counter",
+    "never_runner_metadata": true,
+    "write_opaque_kv_keyword_ignored": true
+  },
+  "arrays_copied_so_later_mutation_cannot_alter_residents": true,
+  "receipt_outcomes": ["append", "evict_append", "reject"],
+  "receipt_reports_affected_provenance_ids": true,
+  "flag_off_path_byte_for_byte_historical": true,
+  "flag_on_must_not_call_episode_write": true,
+  "missing_checkpoint_fields_fail_closed_to_flag_false": true,
+  "refuse": [
+    "edit experiments/run_tm058storeint.py after freeze",
+    "retune_EPISODE_MATCH_L2",
+    "change historical _episode_write when flag off",
+    "treat FIFO as intelligent forgetting",
+    "use runner metadata as provenance_id",
+    "install_W_star",
+    "auto_cortex.candidate.v41.lock"
+  ],
+  "note": "Immutable freeze addendum. FIFO is only a deterministic capacity lifecycle for TM058. Product remains 0.0.004. Floor 0.05 unchanged."
+}
