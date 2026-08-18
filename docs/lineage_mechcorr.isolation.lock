@@ -1,0 +1,48 @@
+{
+  "version": "TM.0.43.MECHCORR.ISOLATION",
+  "lab": "TM.0.43.MECHCORR",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "recall_edit_authorized": false,
+  "threshold_edit_authorized": false,
+  "v40_candidate_authorized": false,
+  "lineage_stop": "canonical_r2_later_learning_not_exercised",
+  "domains": {
+    "DEV": "TM043.MECHCORR.DEV.",
+    "TWIN": "TM043.MECHCORR.TWIN."
+  },
+  "mechanistic_reconstruct_domain": "TM039.JOINTSOCP.DEV.",
+  "rerun_natural_cells": false,
+  "historical_immutable": [
+    "docs/lineage_postinstall.dev.lock",
+    "docs/lineage_postinstall.decision.lock",
+    "docs/lineage_postinstall.prereg.lock",
+    "docs/lineage_causalbattery.dev.lock",
+    "docs/lineage_causalbattery.decision.lock",
+    "docs/lineage_causalbattery.r2.dev.lock",
+    "docs/lineage_causalbattery.r2.decision.lock",
+    "docs/lineage_jointsocp.dev.lock",
+    "docs/lineage_jointsocp.decision.lock",
+    "experiments/run_tm042postinstall.py",
+    "three_memory/neural_cortex.py",
+    "three_memory/joint_socp.py"
+  ],
+  "refuse": [
+    "rewrite TM042 12-cell wall or first-match",
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py",
+    "invoke_SOCP_unconditionally",
+    "add_live_constraints",
+    "change_fallback_trigger",
+    "modify_half_spacing",
+    "rerun TM042 natural cells",
+    "treat_mechanistic_as_untouched_generalization",
+    "auto_cortex.candidate.v40.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Tiny mechanistic correction of the TM039 reg1 pair. No organism code changes. Product remains 0.0.004."
+}

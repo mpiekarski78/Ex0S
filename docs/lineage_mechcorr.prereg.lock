@@ -1,0 +1,119 @@
+{
+  "version": "TM.0.43.MECHCORR.PREREG",
+  "lab": "TM.0.43.MECHCORR",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "recall_edit_authorized": false,
+  "threshold_edit_authorized": false,
+  "v40_candidate_authorized": false,
+  "package_question": "On the exact TM039 reg1 diagnostic pair, after leftover v37 then atomic fallback install, do the identical TM042 post-install continuity gates hold?",
+  "authorized_by": [
+    "docs/lineage_postinstall.decision.addendum.lock",
+    "docs/lineage_postinstall.decision.lock",
+    "docs/lineage_jointsocp.decision.lock"
+  ],
+  "lineage_stop": "canonical_r2_later_learning_not_exercised",
+  "tm042_decision_sha": "eec6263f4f85e94569eecded557dde6839123ef95ff58973005ce4994d343be8",
+  "tm042_dev_sha": "b70481893ee8d8a43163ced9334ed0caa8e3bbe05a33204bca21808a48325488",
+  "tm042_runner_sha": "56dc11791ec0d7bbb9316e9f3a7c8006b1e1a069542176cd1f909d81234b43fb",
+  "tm042_manifest_sha": "a1d2160fc3a13346bf3cfc1995a69a7d9d6e6c662a47536db1d30aa0fb8cbc0c",
+  "tm042_addendum_sha": "46d1b5d51e985bab51568adf23333ac6e9b26dde9993b554f426b94f7738c024",
+  "tm039_decision_sha": "0275f20ebc9d0ff528b4edbf2767d21c69689b94f6559a25ce00eca9f7d1618d",
+  "tm039_dev_sha": "c2f5dae06f591c6e09a651122a4f893d2e4ccac45d42c5bf7965ba8b9891b21d",
+  "tm039_runner_sha": "e40304ee4ece2c834390094c9853d122bb89cb8fb18923aa348e052d146e288d",
+  "canonical_probe_sha": "51e24d272417df5ae689301d9600d49aa86daec6608dfc7ff26f8ad4c2e22aef",
+  "joint_socp_sha": "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895",
+  "frozen_neural_sha": "2eb45d8769402330f5ee39a04afffe110a435a0e64a40b12bc2d874b36f5ed59",
+  "candidate_name": "not_v40_candidate",
+  "treatment_mode": "early_raw_half_spacing",
+  "behavioral_scorer": "actuator_decision_scores",
+  "scored_arm": "fallback_joint",
+  "n_rest_ticks": 4,
+  "hard_budget_passes": 16,
+  "not_an_exact_projector": true,
+  "hashes_are_diagnostic": true,
+  "rerun_natural_cells": false,
+  "seed_registry": 404300043,
+  "default_seed_registry_forbidden": 22222,
+  "tm040_seed_registry_forbidden": 404000039,
+  "r2_seed_registry_forbidden": 404200040,
+  "tm042_seed_registry_forbidden": 404200042,
+  "domains": {
+    "DEV": "TM043.MECHCORR.DEV.",
+    "TWIN": "TM043.MECHCORR.TWIN."
+  },
+  "mechanistic_reconstruct_domain": "TM039.JOINTSOCP.DEV.",
+  "tm039_diagnostic_reg": 1,
+  "tm039_registry_seed": 1584000025,
+  "orders": ["A_then_B", "B_then_A"],
+  "n_cues": 8,
+  "n_handles": 2,
+  "world_index": 0,
+  "expected_n_cells": 2,
+  "pinned_tm039_ids": [
+    "acquire|c8|A_then_B|reg1|fallback_joint",
+    "acquire|c8|B_then_A|reg1|fallback_joint"
+  ],
+  "pinned_cells": {
+    "A_then_B": {
+      "tm039_id_fallback": "acquire|c8|A_then_B|reg1|fallback_joint",
+      "tm039_id_v37": "acquire|c8|A_then_B|reg1|v37",
+      "parent_identity_sha": "1316c29548404ef9718984d5207f00e6ccc5135a68ee8301f5d5e263eadb8819",
+      "v37_w_hash": "3432dda28205ecab2505c5ea0dafbc6961e905c2bf00e0f0b4221b6d3d83b17a",
+      "installed_w_hash": "659fb46b5e0b717c7b82f42f67572bb8ea01f338a4751adad14bda9cc571bce2",
+      "violations_after_v37": 3
+    },
+    "B_then_A": {
+      "tm039_id_fallback": "acquire|c8|B_then_A|reg1|fallback_joint",
+      "tm039_id_v37": "acquire|c8|B_then_A|reg1|v37",
+      "parent_identity_sha": "2e41e7bcd2f11f3feefe35d148353975620621530f31ecef379b7100133e86bd",
+      "v37_w_hash": "9203f133b4512ac7d9a1968d0bed440d68bea22bb4f373dad5cadb2e3e407e1f",
+      "installed_w_hash": "130da4626f573345e2447d83bbc13bb3b4c5686cfcc58f61ed83277cb12bfa8c",
+      "violations_after_v37": 3
+    }
+  },
+  "setup_preconditions": [
+    "violations_after_v37 > 0",
+    "fallback_invoked = true",
+    "solver_installed = true"
+  ],
+  "setup_precondition_fail_is_not_organism_failure": true,
+  "manifest_sha": "12d2939dbb651701a76f391e2cd94168115d2953f8246cde50c22027563abe71",
+  "margin": {
+    "pass_statistic": "normalized_geometric_margin",
+    "geometric_min": 0.01,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19
+  },
+  "decision_ladder": [
+    {"code": "setup_precondition_fail", "when": "reg1 reconstruct lacks leftover, fallback invoke, or atomic install"},
+    {"code": "mechcorr_later_fail", "when": "preconditions hold but identical post-install gates fail"},
+    {"code": "mechcorr_continuity_pass", "when": "both cells install and pass identical TM042 continue gates; still not an auto candidate lock"}
+  ],
+  "on_pass": {
+    "candidate_discussion_open_on_frozen_tm042_ladder": false,
+    "separate_candidate_review_open": true,
+    "auto_candidate_lock": false,
+    "philosophical_boundary": "whether pinned global SOCP consolidation is accepted as part of the Ex0S organism"
+  },
+  "refuse": [
+    "auto_cortex.candidate.v40.lock",
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py",
+    "rewrite TM042 12-cell wall",
+    "override postinstall_mech_install_fail",
+    "rerun TM042 natural cells",
+    "flip candidate_discussion_open on frozen TM042 ladder",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Tiny mechanistic correction wall. Product remains 0.0.004. Freeze runner before DEV.",
+  "frozen_runner_sha": "739c0457c4c2f12b41f34dbf6c8f246c497512e9d402f5e3e2924f87a390e775"
+}

@@ -1,0 +1,97 @@
+{
+  "version": "TM.0.42.POSTINSTALL.DECISION.ADDENDUM",
+  "product": "0.0.004",
+  "rewrite_historical_decision": false,
+  "rewrite_historical_dev": false,
+  "rewrite_historical_prereg": false,
+  "historical_decision_lock": "docs/lineage_postinstall.decision.lock",
+  "historical_dev_lock": "docs/lineage_postinstall.dev.lock",
+  "historical_prereg_lock": "docs/lineage_postinstall.prereg.lock",
+  "historical_decision_sha": "eec6263f4f85e94569eecded557dde6839123ef95ff58973005ce4994d343be8",
+  "historical_dev_lock_sha": "b70481893ee8d8a43163ced9334ed0caa8e3bbe05a33204bca21808a48325488",
+  "frozen_runner_sha": "56dc11791ec0d7bbb9316e9f3a7c8006b1e1a069542176cd1f909d81234b43fb",
+  "historical_git_head": "ccabfa4e0a79fa2cecac8c93632b7147dd8e0200",
+  "historical_manifest_sha": "a1d2160fc3a13346bf3cfc1995a69a7d9d6e6c662a47536db1d30aa0fb8cbc0c",
+  "historical_n_cells": 12,
+  "historical_decision_code": "postinstall_mech_install_fail",
+  "frozen_first_match_unchanged": true,
+  "interpretation": "targeting_mistake__preregistered_tm039_regs_2_3_not_diagnostic_reg1",
+  "scientifically_valid_organism_failure": false,
+  "architectural_conclusion": "none",
+  "targeting_mistake": {
+    "preregistered_regs": [2, 3],
+    "preregistered_seeds": [2133183397, 520283234],
+    "why_invalid_as_organism_fail": "TM039 routes for those registry seeds were already v37-converged, so leftover after native credit was 0 and fallback never invoked. The cells did not satisfy the installation precondition.",
+    "diagnostic_pair": "TM039 reg1 both orders",
+    "diagnostic_reg": 1,
+    "diagnostic_seed": 1584000025,
+    "diagnostic_tm039_ids": [
+      "acquire|c8|A_then_B|reg1|fallback_joint",
+      "acquire|c8|B_then_A|reg1|fallback_joint"
+    ],
+    "diagnostic_route": "fallback_sufficient"
+  },
+  "preserved_natural_c8h4": {
+    "n_cells": 4,
+    "n_installed": 4,
+    "n_continuity_pass": 4,
+    "solver_status": "optimal",
+    "atomic": true,
+    "cells": [
+      {
+        "id": "natural|c8h4|A_then_B|w0",
+        "pre_install_w_hash": "9255ceb33ed45b97b21f4881de40b862007bc49afe3da86bd3966106926ff310",
+        "installed_w_hash": "b70b654f914e25344b13491059ffb5d80f16f9eaaea0ec49d290833861b197aa",
+        "post_credit_w_hash": "1508d1131482f67856ae49eb40f3266a0c3d32062644dcebf4bc6df4f1880bba"
+      },
+      {
+        "id": "natural|c8h4|B_then_A|w0",
+        "pre_install_w_hash": "de00654de8fc4ccba7b5b47cfa9e39e2f89563a70ee46f2c6674641c92c5ddeb",
+        "installed_w_hash": "b1d14fe1d58b08834cc40c1eed8ebb35a8822dc81daab7cc094c10db3035250e",
+        "post_credit_w_hash": "1569578181b1c1cb6451450f58959d91905834423f0fa55e5f3e1dbcef28bb82"
+      },
+      {
+        "id": "natural|c8h4|A_then_B|w1",
+        "pre_install_w_hash": "abd4aa207639ab5b82eca8e829ca222a65776564357c9cfce25f501eb5657d13",
+        "installed_w_hash": "efbfbd1467499e0c08b3f58dd6ec6c822e87f2b7f608175f83ab198a7f3856fc",
+        "post_credit_w_hash": "8e5db3f2d2c12fb8cacb8c39e28b762af18f884570fe809593eedb7652bb218c"
+      },
+      {
+        "id": "natural|c8h4|B_then_A|w1",
+        "pre_install_w_hash": "ad9f7c1a218ec534a66d71cd53291bb1b512abb802279d779b0a34701f65d40a",
+        "installed_w_hash": "b904535739324446de2f5a425a620d8e06cec9fae2d3ff3663c49f6856c317ff",
+        "post_credit_w_hash": "69287539630c8de5e10e1ed87c66243252940f75c3127037e8e3bc30d18b0428"
+      }
+    ],
+    "gates_held": [
+      "retain",
+      "new_mapping",
+      "reversal",
+      "subsequent_fallback_atomic",
+      "novelty_unfamiliar",
+      "familiarity_unchanged",
+      "solver_handles_never_in_act"
+    ]
+  },
+  "scientific_pair_already_satisfied_by_natural_c8h4": {
+    "untouched_fallback_activation": true,
+    "successful_later_learning": true
+  },
+  "candidate_discussion_open_on_frozen_ladder": false,
+  "why_candidate_discussion_remains_closed": "Procedurally candidate_discussion_open=false remains correct on the frozen TM042 ladder until the mechanistic requirement is repaired by TM043 or explicitly retired by a later immutable addendum. This addendum does not retire that requirement and does not flip the frozen flag.",
+  "next": "TM.0.43.MECHCORR frozen two-cell reconstruct of the exact TM039 reg1 pair; identical post-install gates; no natural rerun; no auto candidate lock.",
+  "refuse": [
+    "rewrite lineage_postinstall.decision.lock",
+    "rewrite lineage_postinstall.dev.lock",
+    "rewrite lineage_postinstall.prereg.lock",
+    "override frozen first-match postinstall_mech_install_fail",
+    "rerun TM042 natural cells",
+    "flip candidate_discussion_open on frozen TM042 ladder",
+    "auto_cortex.candidate.v40.lock",
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py",
+    "modify_half_spacing",
+    "change_fallback_trigger"
+  ],
+  "note": "Historical 12-cell wall and first-match stay on file. The mechanistic miss is a targeting mistake, not an organism failure. Natural 8x4 evidence is preserved. Product remains 0.0.004."
+}
