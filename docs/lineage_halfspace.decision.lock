@@ -1,0 +1,32 @@
+{
+  "version": "TM.0.31.HALFSPACE.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "2abd592a9c29c352038c92349424bd2e524b6b223457fb727bbb0232cb8afc93",
+  "decision": {
+    "code": "halfspace_core_acquire_fail",
+    "then": "halfspace_core_acquire_fail",
+    "phase_flags": {
+      "treatment_acquire_2": true,
+      "treatment_acquire_4": true,
+      "treatment_acquire_8": false,
+      "treatment_stable": false,
+      "treatment_eco": true,
+      "treatment_spec": true,
+      "treatment_integrity": true,
+      "treatment_scale_acquire": false,
+      "treatment_scale_stable": false,
+      "novel_pass": true,
+      "gate_path_toggle": true,
+      "off_stable_pass": false,
+      "early_raw_stable_pass": true,
+      "separated_key_stable_pass": false,
+      "half_spacing_gate_causal": false
+    }
+  },
+  "dev_lock_sha": "56dc67affd8fe5d2bb2263dc617c4d28922bfbac03c40b8bf8f6b7cccad67d9a",
+  "git_head": "468428b59ff6ce2005d6723a28ee1f550139934a",
+  "frozen_runner_sha": "480f7400ada06143acaa3242e75aed315e941f40ebb253a7d0bf67caaa16f564",
+  "claim": "geometry_derived_conservative_familiarity_rule",
+  "not_a_tm030_cutoff": true,
+  "note": "TM031 half-spacing decision. Product remains 0.0.004."
+}

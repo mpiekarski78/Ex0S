@@ -87,6 +87,7 @@ KEY_MATCH_MIN_OVERLAP = 5
 ACT_RECALL_OFF = "off"
 ACT_RECALL_RAW_P1 = "raw_p1"
 ACT_RECALL_EARLY_RAW = "early_raw"
+ACT_RECALL_EARLY_RAW_HALF = "early_raw_half_spacing"
 ACT_RECALL_SEP_NO_FAM = "separated_key_no_familiarity"
 ACT_RECALL_SEP = "separated_key"
 ACT_RECALL_MODES = (
@@ -801,7 +802,7 @@ class NeuralCortex:
 
     def _resolve_act_recall_mode(self) -> str:
         mode = str(getattr(self.genome, "act_recall_mode", ACT_RECALL_OFF) or ACT_RECALL_OFF)
-        if mode not in ACT_RECALL_MODES:
+        if mode not in ACT_RECALL_MODES and mode != ACT_RECALL_EARLY_RAW_HALF:
             mode = ACT_RECALL_OFF
         if mode == ACT_RECALL_OFF and bool(getattr(self.genome, "episodic_act_recall", False)):
             return ACT_RECALL_RAW_P1
@@ -872,7 +873,41 @@ class NeuralCortex:
         meta["familiar"] = True
         return np.asarray(ep["p1"], dtype=np.float64).copy(), meta
 
-    def _nearest_episode_by_key_rho(self, key_rho: np.ndarray) -> tuple[np.ndarray | None, dict[str, Any]]:
+    def _key_rho_spacing(self) -> dict[str, Any]:
+        keyed: list[tuple[int, np.ndarray]] = []
+        for i, ep in enumerate(self._episodes):
+            if not ep.get("valid"):
+                continue
+            stored = ep.get("key_rho")
+            if stored is None:
+                continue
+            keyed.append((int(i), np.asarray(stored, dtype=np.float64).reshape(-1)))
+        out: dict[str, Any] = {"n_keyed": len(keyed), "B": None, "R": None, "min_pair_slots": None}
+        if len(keyed) < 2:
+            return out
+        best: float | None = None
+        pair: list[int] | None = None
+        for a in range(len(keyed)):
+            for b in range(a + 1, len(keyed)):
+                d = float(np.linalg.norm(keyed[a][1] - keyed[b][1]))
+                if best is None or d < best:
+                    best = d
+                    pair = [int(keyed[a][0]), int(keyed[b][0])]
+        out["B"] = best
+        out["min_pair_slots"] = pair
+        if best is None or best == 0.0:
+            out["R"] = 0.0
+        else:
+            out["R"] = 0.5 * float(best)
+        return out
+
+    def _nearest_episode_by_key_rho(
+        self,
+        key_rho: np.ndarray,
+        *,
+        require_familiarity: bool = False,
+    ) -> tuple[np.ndarray | None, dict[str, Any]]:
+        spacing = self._key_rho_spacing()
         meta: dict[str, Any] = {
             "path": "cortical_fallback",
             "ambiguous": False,
@@ -882,33 +917,56 @@ class NeuralCortex:
             "reason": None,
             "familiar": False,
             "overlap": None,
-            "act_recall_mode": ACT_RECALL_EARLY_RAW,
+            "act_recall_mode": ACT_RECALL_EARLY_RAW_HALF if require_familiarity else ACT_RECALL_EARLY_RAW,
+            "R": spacing.get("R"),
+            "B": spacing.get("B"),
+            "n_keyed": spacing.get("n_keyed"),
+            "min_pair_slots": spacing.get("min_pair_slots"),
         }
         x = self._unit_or_zero(key_rho)
         if float(np.linalg.norm(x)) <= PROTO_EPS:
             meta["reason"] = "empty_key_rho"
             return None, meta
         candidates: list[tuple[float, int, dict[str, Any]]] = []
+        missing = False
         for i, ep in enumerate(self._episodes):
             if not ep.get("valid"):
                 continue
             stored = ep.get("key_rho")
             if stored is None:
+                missing = True
                 continue
             d = float(np.linalg.norm(np.asarray(stored, dtype=np.float64) - x))
             candidates.append((d, int(i), ep))
         if not candidates:
-            meta["reason"] = "missing_legacy_key_rho" if any(ep.get("valid") for ep in self._episodes) else "no_valid_episodes"
+            meta["reason"] = "missing_legacy_key_rho" if missing else "no_valid_episodes"
             return None, meta
         candidates.sort(key=lambda t: t[0])
         min_d = float(candidates[0][0])
-        nearest = [c for c in candidates if abs(c[0] - min_d) <= ELIG_EPS]
         meta["nearest_dist"] = float(min_d)
         meta["second_nearest_dist"] = float(candidates[1][0]) if len(candidates) > 1 else None
+        if require_familiarity:
+            n_keyed = int(spacing.get("n_keyed") or 0)
+            r = spacing.get("R")
+            if n_keyed < 2:
+                meta["reason"] = "n_keyed_lt_2"
+                return None, meta
+            if r is None or r == 0.0:
+                meta["reason"] = "R_eq_0"
+                return None, meta
+            nearest = [c for c in candidates if c[0] == min_d]
+        else:
+            nearest = [c for c in candidates if abs(c[0] - min_d) <= ELIG_EPS]
         if len(nearest) > 1:
             meta["ambiguous"] = True
-            meta["reason"] = "ambiguous_nearest"
+            meta["reason"] = "exact_nearest_tie" if require_familiarity else "ambiguous_nearest"
             return None, meta
+        if require_familiarity:
+            r = float(spacing["R"])
+            if not (min_d <= r):
+                meta["reason"] = "beyond_half_spacing"
+                meta["familiar"] = False
+                return None, meta
         _d, slot_i, ep = nearest[0]
         meta["slot"] = int(slot_i)
         meta["path"] = "episodic_completed"
@@ -1014,6 +1072,26 @@ class NeuralCortex:
                 }
             else:
                 stored, meta = self._nearest_episode_by_key_rho(src)
+        elif mode == ACT_RECALL_EARLY_RAW_HALF:
+            src = key_rho if key_rho is not None else self._last_key_rho
+            if src is None:
+                meta = {
+                    "path": "cortical_fallback",
+                    "ambiguous": False,
+                    "slot": None,
+                    "nearest_dist": None,
+                    "second_nearest_dist": None,
+                    "reason": "missing_live_key_rho",
+                    "familiar": False,
+                    "overlap": None,
+                    "act_recall_mode": mode,
+                    "R": None,
+                    "B": None,
+                    "n_keyed": None,
+                    "min_pair_slots": None,
+                }
+            else:
+                stored, meta = self._nearest_episode_by_key_rho(src, require_familiarity=True)
         else:
             qk = event_key if event_key is not None else self._last_event_key
             if qk is None:
@@ -1987,7 +2065,10 @@ class NeuralCortex:
             self.genome.episodic_act_recall = bool(gsnap["episodic_act_recall"])
         if "act_recall_mode" in gsnap:
             mode = str(gsnap["act_recall_mode"])
-            self.genome.act_recall_mode = mode if mode in ACT_RECALL_MODES else ACT_RECALL_OFF
+            if mode in ACT_RECALL_MODES or mode == ACT_RECALL_EARLY_RAW_HALF:
+                self.genome.act_recall_mode = mode
+            else:
+                self.genome.act_recall_mode = ACT_RECALL_OFF
         self.sources = {
             k: np.asarray(v, dtype=np.float64) for k, v in (snap.get("sources") or {}).items()
         }
