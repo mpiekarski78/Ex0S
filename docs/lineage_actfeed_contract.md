@@ -2,52 +2,76 @@
 
 **Lab:** TM.0.49.ACTFEED · **Not a v41 candidate.** Product **0.0.004**.
 
-TM048 first-match `credit_action_information_absent` stays frozen. Post-credit ρ is identical across credited actions, so no downstream projection can recover which action was credited. This wall freezes a **generic action-feedback / efference-copy channel** before the neural edit.
+TM048 first-match `credit_action_information_absent` stays frozen. This wall freezes one exact action-feedback transition and its lifecycle **before** the neural edit.
 
-## Critical law
+## Cells
 
-Use two temporally distinct cortical states:
-
-\[
-k = W_k\,\rho_{\mathrm{cue}},\qquad
-\rho_{\mathrm{feedback}} = F(\rho_{\mathrm{cue}}, x_{\mathrm{action}}, r),\qquad
-v = W_v\,\rho_{\mathrm{feedback}}
-\]
-
-The key comes from the **pre-feedback cue state**. The value comes from the **post-feedback action state**. Otherwise the stored key may describe the action-feedback event and fail to match the cue at recall.
-
-\(x_{\mathrm{action}}\) enters through **one** generic action-observation channel:
-
-- self-generated action → efference copy (pending `motor_vec`)
-- teacher-provided correct action → demonstrated-action feedback (same pending `motor_vec` after clamp)
-- scalar reward gates credit/write; it does not identify the action
-
-The runner may present the demonstrated action as environmental experience (existing `clamp_action`). It must **not** construct \(\rho\), \(k\), or \(v\), and must **not** copy the handle into S.
-
-## Flag
-
-`action_feedback_enabled` defaults **off**, survives checkpoints, and is **not** an `ACT_RECALL_MODE` and **not** a `GenomeConfig` field. Slow `W_act_query` stays frozen. Symbolic addressing is the diagnostic oracle. SOCP off. \(W_k,W_q,W_v\) unchanged.
-
-## Matched arms
+- **Setup (excluded from behavioral first-match):** `decoder|w0`, `decoder|w1`
+- **Scored:** three arms × two worlds = **6** cells
 
 | Arm | Meaning |
 | --- | --- |
-| `scalar_only` | frozen TM048 behavior (flag off) |
-| `action_feedback` | new generic feedback channel |
-| `feedback_no_memory` | feedback occurs; persistent write is discarded |
+| `scalar_only` | flag off; must reproduce TM048 collapse |
+| `action_feedback` | flag on; generic `_sensory_tick` channel |
+| `feedback_no_memory` | flag on; persistent write discarded after credit |
 
-## Required, in order
+## Exact transition (frozen)
 
-1. Different actions produce distinguishable feedback ρ.
-2. Feedback ρ ranks all four actions correctly.
-3. Stored opaque/episode values preserve that ranking.
-4. Exact reinstatement preserves it.
-5. Canonical episodic behavior passes.
-6. `scalar_only` reproduces the default collapse.
-7. `feedback_no_memory` fails after reset.
+Reuse the named existing cortex transition **`_sensory_tick`**, the same operation that injects cue symbols while building development-reference states.
 
-If this passes, the organism has a complete episodic loop: cue → experienced action/outcome → cortical trace → S → reinstatement → action. Learned opaque addressing is **not** earned on this wall.
+\[
+x = \texttt{\_x\_tick}(\texttt{motor\_vec},\,\mathrm{body},\,\texttt{same\_ix})
+\]
+\[
+\tilde\rho = \tanh\bigl((W_{\mathrm{rec}}\odot M)\rho + W_{\mathrm{in}}x + b + W_{\mathrm{body}}\,\mathrm{body}\bigr)
+\]
+\[
+\rho \leftarrow \tilde\rho \quad (\texttt{record\_sensory=True}:\ \mathrm{no}\ \texttt{motor\_persist\_p}\ \mathrm{mix})
+\]
+
+Pinned:
+
+| Item | Value |
+| --- | --- |
+| Named op | `_sensory_tick` |
+| Recurrent ticks | **1** |
+| Activation | `tanh` |
+| `record_sensory` | `True` (no persist mix) |
+| `motor_vec` entry | as `_sensory_tick`'s `injected` argument |
+| Projection | existing `_x_tick` → `W_in` only |
+| `motor_vec` space | unit `d_sym`, same as `_vocab_vec` (already from `bind_actuators`) |
+| Value P1 | existing `_unit_or_zero(ρ)` after the tick sequence, same as `_last_p1` |
+| New matrix | **forbidden** |
+| Feedback hyperparameter | **forbidden** |
+
+Insertion on the **credit/outcome** `observe()`, when the flag is on and a pending `motor_vec` is legal:
+
+1. `_sensory_tick(start)`
+2. one `_sensory_tick(_vocab_vec(u))` per cue symbol
+3. **one** `_sensory_tick(pending.motor_vec, body, same_ix, record_sensory=True)`
+4. `_sensory_tick(v_end)` then `_last_p1 = unit(ρ)` ← \(\rho_{\mathrm{feedback}}\)
+5. `_sensory_tick(s_t)`
+
+Storage: \(k=W_k\rho_{\mathrm{cue}}\) from the **consumed prior-cue** `pending.key_rho`, not from this observe's post-feedback key. \(v=W_v\rho_{\mathrm{feedback}}\) from that `_last_p1`.
+
+Flag off: no extra tick (TM048).
+
+## Lifecycle (frozen)
+
+- Cue state (`pending.key_rho` / `pending.rho_p1`) is captured on the cue `observe()` and **consumed once** at credit.
+- Pending `motor_vec` is **consumed once** and cleared after the action tick.
+- Credit without a pending action (`pending is None` or `motor_vec` missing/nonfinite/wrong dim) **fails closed**: no action tick, no episode write.
+- Duplicate credit cannot reuse stale feedback (cleared `motor_vec` and consumed cue key).
+- Teacher clamp uses public `clamp_action` only. The runner never writes `_pending`, `_last_p1`, `_last_key_rho`, episodes, or S.
+- Checkpoint boundaries are whole public steps only: after cue `observe()`, after `clamp_action`, after credit `observe()`. The action tick and write are atomic inside one `observe()`. The flag and pending (including `motor_vec`, `key_rho`) survive checkpoints.
+- Zero/negative advantage may still produce feedback ρ; it **cannot** write the rewarded episode (`adv > ELIG_EPS` required to write).
+
+## Ladder (behavioral first-match; setup excluded)
+
+`setup_precondition_fail` → `feedback_not_action_separable` → `feedback_rho_fail` → `value_projection_fail` → `reinstatement_fail` → `canonical_fail` → `scalar_control_changed` → `memory_not_necessary` → `action_feedback_pass`
+
+Learned opaque addressing is **not** earned on this wall.
 
 ## Refuse
 
-K/Q/V tuning, new decoder, TM048 rerun, v41 lock, product-earn, runner-manufactured ρ/k/v, copying the handle into S.
+K/Q/V tuning, new decoder, new fitted matrix, feedback-specific hyperparameter, `ACT_RECALL_MODE` / `GenomeConfig` flag, TM048 rerun, v41, product-earn, runner-manufactured ρ/k/v, copying the handle into S.

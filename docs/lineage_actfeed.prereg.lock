@@ -12,7 +12,7 @@
   "solver_edit_authorized": false,
   "action_feedback_edit_authorized": true,
   "v41_candidate_authorized": false,
-  "package_question": "If a generic action-observation channel injects x_action into cortex after the cue, using k=W_k rho_cue and v=W_v rho_feedback, does one-shot credit become distinguishable and reinstatable while scalar_only still collapses and feedback_no_memory fails after reset?",
+  "package_question": "If one existing _sensory_tick injects pending motor_vec through W_in after cue symbols, with k from consumed cue pending.key_rho and v from post-feedback _last_p1, do the six scored cells pass while scalar_only still collapses and feedback_no_memory fails after reset?",
   "authorized_by": [
     "docs/lineage_creditinfo.decision.lock",
     "docs/lineage_creditinfo.decision.addendum.lock"
@@ -32,6 +32,10 @@
   "n_facts": 4,
   "n_worlds": 2,
   "n_credit_clones": 4,
+  "n_setup_cells": 2,
+  "n_scored_cells": 6,
+  "expected_n_cells": 8,
+  "setup_excluded_from_behavioral_first_match": true,
   "reconstruction_seed_registry": 404600046,
   "reconstruction_domain": "TM046.ONESHOT.DEV.",
   "seed_registry": 404900049,
@@ -52,26 +56,52 @@
   "symbolic_oracle_diagnostic": true,
   "key_from_pre_feedback_cue": true,
   "value_from_post_feedback_rho": true,
-  "expected_n_cells": 8,
-  "manifest_sha": "8a03660cbf666d039faee958300a6016150bff09cf4e6f853b6cf07f9cfab344",
+  "teacher_clamp_public_api": "clamp_action",
+  "transition": {
+    "named_op": "_sensory_tick",
+    "n_ticks": 1,
+    "activation": "tanh",
+    "record_sensory": true,
+    "motor_persist_mix": false,
+    "injected": "pending.motor_vec",
+    "projection": "_x_tick_then_W_in",
+    "new_matrix": false,
+    "feedback_hyperparameter": false,
+    "value_p1": "_unit_or_zero"
+  },
+  "lifecycle": {
+    "cue_state_consumed_once": true,
+    "motor_vec_consumed_once": true,
+    "credit_without_pending_fails_closed": true,
+    "no_stale_feedback_reuse": true,
+    "runner_writes_private_state": false,
+    "checkpoint_boundaries": ["after_cue_observe", "after_clamp_action", "after_credit_observe"],
+    "action_tick_and_write_atomic_in_observe": true,
+    "nonpositive_adv_may_update_rho": true,
+    "nonpositive_adv_cannot_write_episode": true
+  },
+  "manifest_sha": "08bcc7153ac5548bed92061c6e1eef45bf90701d5e8ccf782dba15c4dc1f6608",
   "decision_ladder": [
-    {"code": "setup_precondition_fail", "when": "reconstructed decoder cannot express every action"},
-    {"code": "scalar_control_fail", "when": "scalar_only does not reproduce the TM048 default collapse"},
-    {"code": "feedback_rho_absent", "when": "different actions do not produce distinguishable feedback rho"},
-    {"code": "feedback_not_decodable", "when": "feedback rho differs but the generic motor decoder cannot rank all four actions"},
-    {"code": "stored_value_loss", "when": "feedback rho is 4/4 but stored values are not"},
+    {"code": "setup_precondition_fail", "when": "setup decoder cells fail; excluded from later behavioral first-match"},
+    {"code": "feedback_not_action_separable", "when": "different actions do not produce distinguishable feedback rho"},
+    {"code": "feedback_rho_fail", "when": "feedback rho differs but the generic motor decoder cannot rank all four actions"},
+    {"code": "value_projection_fail", "when": "feedback rho is 4/4 but stored values are not"},
     {"code": "reinstatement_fail", "when": "stored values decode but exact reinstatement does not"},
-    {"code": "canonical_only_fail", "when": "reinstatement passes but canonical episodic behavior does not"},
-    {"code": "no_memory_control_fail", "when": "feedback_no_memory still passes after persistent write is discarded"},
-    {"code": "action_feedback_pass", "when": "distinguishable decodable feedback rho, stored/reinstated/canonical 4/4, scalar_only collapses, no-memory fails after reset"}
+    {"code": "canonical_fail", "when": "reinstatement passes but canonical episodic behavior does not"},
+    {"code": "scalar_control_changed", "when": "scalar_only no longer reproduces the TM048 default collapse"},
+    {"code": "memory_not_necessary", "when": "feedback_no_memory still passes after persistent write is discarded"},
+    {"code": "action_feedback_pass", "when": "six scored cells match: separable decodable feedback, stored/reinstated/canonical 4/4, scalar collapse, no-memory fails after reset"}
   ],
   "refuse": [
     "tune_kqv",
     "train_new_decoder",
+    "new_fitted_matrix",
+    "feedback_specific_hyperparameter",
     "add_action_feedback_to_ACT_RECALL_MODES",
     "add_action_feedback_to_GenomeConfig",
     "copy_handle_into_S",
     "runner_constructs_rho_k_v",
+    "runner_writes_private_state",
     "rerun TM048 DEV",
     "edit experiments/run_tm048creditinfo.py",
     "auto_cortex.candidate.v41.lock",
@@ -81,6 +111,6 @@
     "learned_opaque_addressing_on_this_wall",
     "runner_edits_after_freeze_push"
   ],
-  "note": "Freeze action-feedback protocol before the neural edit. Product remains 0.0.004. Learned addressing is not earned on this wall.",
-  "frozen_runner_sha": "c1ecc3de2cabf43830bd33a585202bedbda203ac1e77a86d8e88ca4f71a47f1d"
+  "note": "Exact _sensory_tick transition and lifecycle frozen before the neural edit. Product remains 0.0.004. Learned addressing is not earned on this wall.",
+  "frozen_runner_sha": "3def01d5502b28a5ffafeab58b07ee481d5748e5c765b1cbbf52d1c1ed6f275d"
 }
