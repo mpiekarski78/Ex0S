@@ -160,3 +160,52 @@ def test_runner_refuses_selectors_and_smoke():
     assert out["candidate_exists"] is False
     assert "memproj_arm" not in GenomeConfig().to_dict()
     assert not hasattr(NeuralCortex, "set_feedback_ticks")
+
+
+DEV_SHA = "793429c7eada8b768433c467266548168c003bbd3f9819ceb634c06944355ad4"
+DEC_SHA = "179b6f15986b4d99eeed81790771c371c6ce656ddc3d89376dd3a672a60c00be"
+DEV_GIT = "7d62fe0d7c632b25340706904f5d99004ce15b55"
+
+
+def test_dev_lock_replaced_under_write_law():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm056epprov import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_epprov.dev.lock"
+    decp = REPO / "docs" / "lineage_epprov.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert _sha(TM055_RUNNER) == TM055_RUNNER_SHA
+    assert _sha(TM055_DEV) == TM055_DEV_SHA
+    assert _sha(TM055_ADD) == TM055_ADD_SHA
+    assert _sha(LAW) == LAW_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "replaced_under_write_law"
+    assert dev["install_W_star"] is False
+    assert dev["socp_scored"] is False
+    assert dev["canonical_law_reconsidered"] is False
+    assert dec["architectural_conclusion"] == "none"
+    assert dec["decision"]["code"] == "replaced_under_write_law"
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["decoder|w0"]["w0_match"] is True
+    assert cells["decoder|w1"]["w0_match"] is True
+    assert cells["decoder|w0"]["n_rest_writes"] == 0
+    assert cells["provenance|w0"]["scan_matches_pins"] is True
+    assert cells["provenance|w1"]["scan_matches_pins"] is True
+    assert cells["provenance|w0"]["target_is_write_provenance"] is True
+    assert cells["provenance|w0"]["target_is_handle_lookup"] is False
+    assert cells["provenance|w0"]["target_is_live_last_p1"] is False
+    assert cells["provenance|w0"]["event_cause"][-1] == "in_place_refresh"
+    assert cells["provenance|w0"]["event_arg_p1"][-1] != cells["provenance|w0"]["event_stored_p1"][-1]
+    rest = next(iter(cells["provenance|w0"]["after_rest"].values()))
+    assert rest["present"] is True
+    assert rest["p1_unchanged"] is True
+
