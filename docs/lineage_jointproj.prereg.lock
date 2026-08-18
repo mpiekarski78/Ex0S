@@ -1,0 +1,150 @@
+{
+  "version": "TM.0.37.JOINTPROJ.PREREG",
+  "lab": "TM.0.37.JOINTPROJ",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": true,
+  "neural_edit_before_runner_freeze": false,
+  "implementation_authorized": true,
+  "v38_repair_authorized": false,
+  "v39_freeze_authorized": true,
+  "package_question": "On the TM036 post-write_only checkpoint, does bounded cyclic Passive-Aggressive projection onto supporting halfspaces of the episodic ranking+margin cones restore eight-cue acquire, does Dykstra correction become necessary, or is only the diagnostic W* feasible?",
+  "authorized_by": [
+    "docs/lineage_updategeom.decision.lock",
+    "docs/cortex_v39.prereg.lock"
+  ],
+  "tm036_decision_sha": "0a029bf7cd0cffec37707ad5ce65e7c5c161701d279e6aac26fb9d5684b8601a",
+  "tm036_dev_sha": "885c6b7b1d6fad934996d849dd84fd6e4c46fc2644c37257a6f18eb6f8784183",
+  "tm036_runner_sha": "fdcd11d376d22965670f8bb4dcd411720d2d759c953933dd278b64a4e4c6c927",
+  "tm035_decision_sha": "5d7353ab9831229b59dd31ef626727dfb309a0f2fb9a0ddda1a656fbdd9be342",
+  "tm035_dev_sha": "1b052c569d1276d78395ae5236c03994b4cf2ee84219080fb35cba54f0d2cda6",
+  "tm035_runner_sha": "52a5f32cf690fd3efde3e594fcb59f62970d78bf35d2939933d25d42be4c8ca2",
+  "tm032_decision_sha": "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e112be4c7a4c7",
+  "tm032_dev_sha": "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56514974c9644d",
+  "tm032_runner_sha": "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503",
+  "v39_prereg_sha": "54d67b69c94ce73f766d53333abf13e8fc8513b8147a46a37bea1701c7c491c8",
+  "v39_isolation_sha": "558a20172b1316433e2ddaf0c6eb7cdc89f97cec7326c6d97babb088f3ec6020",
+  "v39_amendment_md_sha": "da712d13eb02d0268da8615b676dcf0e4b851107561afec602a69c9e4ed543c5",
+  "candidate_name": "v39",
+  "n": 64,
+  "eta_act": 0.15,
+  "episode_slots": 8,
+  "write_match_l2": 0.05,
+  "treatment_mode": "early_raw_half_spacing",
+  "n_cues": 8,
+  "n_handles": 2,
+  "hard_budget_passes": 16,
+  "hard_budget_source": "EPISODE_REPLAY_EPOCHS",
+  "fit_44_row_updates": false,
+  "fitted_learning_rate": false,
+  "plateau_relaxed": false,
+  "act_recall_modes_tuple_untouched": true,
+  "convexity": {
+    "ranking": "halfspace_in_W_act_query",
+    "geometric_gamma": "second_order_cone_scale_invariant",
+    "pa_projects": "supporting_halfspace_b_frozen_at_cycle_start",
+    "stop_on": "existing_nonlinear_violation_predicate"
+  },
+  "parent": "tm036_write_only_after_credits_0_through_6",
+  "exclude_newly_written_slot_from_protected": true,
+  "probes_on_another_clone": true,
+  "pure_helpers_only": true,
+  "oracle_is_diagnostic_only": true,
+  "oracle_never_installed_in_neural_cortex": true,
+  "episode_handles_in_act_routing": false,
+  "cycle_all_valid_episode_rival_pairs": true,
+  "clip_when": "end_of_pass_not_after_every_constraint",
+  "registry_seeds": [
+    936835019,
+    1584000025,
+    2133183397,
+    520283234
+  ],
+  "registry_seeds_are_replicates_not_a_grid": true,
+  "genome_varies_only": "seed_registry",
+  "default_seed_registry_forbidden": 22222,
+  "domains": {
+    "DEV": "TM037.JOINTPROJ.DEV.",
+    "TWIN": "TM037.JOINTPROJ.TWIN."
+  },
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 1,
+  "world_index": 0,
+  "n_registry_seeds": 4,
+  "arms": [
+    "v37",
+    "pa_cyclic",
+    "dykstra",
+    "oracle"
+  ],
+  "expected_n_cells": 32,
+  "expected_n_worlds": 8,
+  "manifest_sha": "f1baa82f81d6e3cf326d25b059c0d07d828863213c7497db716677a398c42dd4",
+  "fix_gate": {
+    "live_ranking_ok": true,
+    "n_probe_correct": 8,
+    "n_store_violations": 0,
+    "margin_is_recorded_not_a_gate": true
+  },
+  "decision_ladder": [
+    {
+      "code": "jointproj_no_v37_fail",
+      "when": "every world already fixes under native one-shot plus v37 sequential burst"
+    },
+    {
+      "code": "jointproj_pa_sufficient",
+      "when": "all diagnostic worlds: cyclic Passive-Aggressive projection without Dykstra corrections fixes"
+    },
+    {
+      "code": "jointproj_dykstra_required",
+      "when": "all diagnostic worlds: Dykstra-corrected projection fixes and PA cyclic does not"
+    },
+    {
+      "code": "jointproj_oracle_only",
+      "when": "all diagnostic worlds: only closest feasible W fixes stored-row margins and live 8/8"
+    },
+    {
+      "code": "jointproj_capacity_wall",
+      "when": "all diagnostic worlds: even the closest feasible W fails stored-row margins"
+    },
+    {
+      "code": "jointproj_mixed_routes",
+      "when": "diagnostic worlds disagree"
+    }
+  ],
+  "v39_gate": "do_not_write_cortex.candidate.v39.lock_from_this_lab_candidate_decision_is_separate",
+  "refuse": [
+    "open SCORE",
+    "plateau_relaxation",
+    "hard_budget_gt_16",
+    "fit_tm032_44_row_updates_as_constant",
+    "fitted_learning_rate",
+    "v38_repair",
+    "GEM_projection_as_v39",
+    "install_oracle_W_star_in_neural_cortex",
+    "claim_geometric_gamma_is_a_halfspace",
+    "episode_handles_in_ACT_routing",
+    "auto_cortex.candidate.v38.lock",
+    "auto_cortex.candidate.v39.lock",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "rewrite TM036 historical locks",
+    "rewrite TM035 historical locks",
+    "rewrite TM034 historical locks",
+    "rewrite TM033 historical locks",
+    "rewrite TM032 historical locks",
+    "rewrite TM031 historical locks",
+    "tm036_dev_rerun",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "TM037 joint-projection battery. Product remains 0.0.004. Freeze runner before neural controller.",
+  "frozen_runner_sha": "897144551ee418d8d7579b1e78b5871463c6cff3d664f716c4c9f142b69a3380"
+}
