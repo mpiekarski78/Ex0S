@@ -1,0 +1,21 @@
+{
+  "version": "TM.0.61.CODRIFT.DECISION.ADDENDUM",
+  "product": "0.0.004",
+  "earned_next": false,
+  "eligible_for_000005": false,
+  "rewrite_historical_decision": false,
+  "rerun_dev": false,
+  "frozen_first_match_unchanged": true,
+  "historical_decision_code": "transport_restores_decoding",
+  "architectural_conclusion": "none",
+  "tm061_earned_architecture": false,
+  "narrow_conclusion": true,
+  "interpretation": "in_sample_linear_map_exists_underdetermined_not_a_generic_transport_law",
+  "why": "A general 64x64 linear map fitted on 16 paired states is severely underdetermined. Perfect 16/16 reconstruction can be interpolation. Orthogonal failure only showed that the in-sample map includes scaling or shearing. Held-out transport generalization is required before claiming a learnable alignment law.",
+  "linear_restored_in_sample": true,
+  "orthogonal_restored_in_sample": false,
+  "install_W_star": false,
+  "candidate_v41_lock": false,
+  "episode_match_l2_retuned": false,
+  "note": "Does not rewrite TM061 DEV or decision. Product remains 0.0.004. Floor 0.05 unchanged."
+}
