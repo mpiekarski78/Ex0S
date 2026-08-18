@@ -1,0 +1,322 @@
+{
+  "version": "TM.0.41.LIVEADDR.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "b3f13740a0839f9750b279bedcb367add69d92c93388cc010a35b175666f970e",
+  "decision": {
+    "code": "liveaddr_canonical_path_inconsistency",
+    "then": "liveaddr_canonical_path_inconsistency",
+    "phase_flags": {
+      "n_cells": 12,
+      "n_fallback_failed_cues": 4,
+      "failed_classes": [
+        "canonical_path_inconsistency",
+        "canonical_path_inconsistency",
+        "canonical_path_inconsistency",
+        "canonical_path_inconsistency"
+      ],
+      "unique_failed_classes": [
+        "canonical_path_inconsistency"
+      ],
+      "n_stems_retrieval_identical_fallback_vs_always": 4,
+      "n_stems_always_joint_W_flip_same_retrieval": 4,
+      "n_stems_v37_fallback_w_equal": 4,
+      "always_joint_retrieval_unchanged": true,
+      "later_learning": "not_exercised",
+      "contradict": "jointly_feasible_atomic_apply",
+      "candidate_v40_lock": false,
+      "compares": [
+        {
+          "retrieval_identical": true,
+          "w_hash_equal": false,
+          "cues": [
+            {
+              "cue": "s_289959354",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_172669503",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_294555646",
+              "retrieval_identical": true,
+              "fallback_live_ok": false,
+              "always_live_ok": true,
+              "fallback_class": "canonical_path_inconsistency",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_597098478",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_054456597",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_860811151",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_175171720",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_821196604",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            }
+          ],
+          "stem": "acquire|c8|A_then_B|w0"
+        },
+        {
+          "retrieval_identical": true,
+          "w_hash_equal": false,
+          "cues": [
+            {
+              "cue": "s_289959354",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_172669503",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_294555646",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_597098478",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_054456597",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_860811151",
+              "retrieval_identical": true,
+              "fallback_live_ok": false,
+              "always_live_ok": true,
+              "fallback_class": "canonical_path_inconsistency",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_175171720",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_821196604",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            }
+          ],
+          "stem": "acquire|c8|B_then_A|w0"
+        },
+        {
+          "retrieval_identical": true,
+          "w_hash_equal": false,
+          "cues": [
+            {
+              "cue": "s_482660578",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_067726776",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_971284285",
+              "retrieval_identical": true,
+              "fallback_live_ok": false,
+              "always_live_ok": true,
+              "fallback_class": "canonical_path_inconsistency",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_662040847",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_969476025",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_140414922",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_168999853",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_276395796",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            }
+          ],
+          "stem": "acquire|c8|A_then_B|w1"
+        },
+        {
+          "retrieval_identical": true,
+          "w_hash_equal": false,
+          "cues": [
+            {
+              "cue": "s_482660578",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_067726776",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_971284285",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_662040847",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_969476025",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_140414922",
+              "retrieval_identical": true,
+              "fallback_live_ok": false,
+              "always_live_ok": true,
+              "fallback_class": "canonical_path_inconsistency",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_168999853",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            },
+            {
+              "cue": "s_276395796",
+              "retrieval_identical": true,
+              "fallback_live_ok": true,
+              "always_live_ok": true,
+              "fallback_class": "live_ok",
+              "always_class": "live_ok"
+            }
+          ],
+          "stem": "acquire|c8|B_then_A|w1"
+        }
+      ],
+      "always_joint_read": "same_retrieval_W_covers_live_address"
+    }
+  },
+  "dev_lock_sha": "53b0dfd33f3787fc6b5a4e3b55c2dd3f835a7b4350addc94bd2f63ed00d7d8f6",
+  "git_head": "129fdd863b1c3948978273a85e4885f204990f91",
+  "frozen_runner_sha": "63dd0aac8c769d1d19df3330936734d1376accbd48d69bcd1b520861dd13ab9a",
+  "candidate_v40_lock": false,
+  "later_learning": "not_exercised",
+  "note": "TM041 live-address classification. Product remains 0.0.004. No cortex.candidate.v40.lock."
+}

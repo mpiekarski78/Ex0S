@@ -138,3 +138,49 @@ def test_smoke():
     assert out["smoke_ok"]
     src = RUNNER.read_text()
     assert "set_act_proj_arm" not in src
+
+
+def test_dev_lock_path_inconsistency_and_no_candidate():
+    devp = REPO / "docs" / "lineage_liveaddr.dev.lock"
+    decp = REPO / "docs" / "lineage_liveaddr.decision.lock"
+    assert _sha(devp) == "53b0dfd33f3787fc6b5a4e3b55c2dd3f835a7b4350addc94bd2f63ed00d7d8f6"
+    assert _sha(decp) == "6f2c27c2729c1640c3b37a6381744bde0becd1ba45d7cf6ff10862fc1b1eaa2d"
+    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()
+    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "129fdd863b1c3948978273a85e4885f204990f91"
+    assert dev["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dev["decision_code"] == "liveaddr_canonical_path_inconsistency"
+    assert dev["candidate_v40_lock"] is False
+    assert dec["candidate_v40_lock"] is False
+    assert dec["later_learning"] == "not_exercised"
+    flags = dev["phase_flags"]
+    assert flags["unique_failed_classes"] == ["canonical_path_inconsistency"]
+    assert flags["always_joint_read"] == "same_retrieval_W_covers_live_address"
+    assert flags["always_joint_retrieval_unchanged"] is True
+    assert int(flags["n_stems_v37_fallback_w_equal"]) == 4
+    assert flags["later_learning"] == "not_exercised"
+    assert flags["contradict"] == "jointly_feasible_atomic_apply"
+    fb = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|w0|fallback_joint"][0]
+    aj = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|w0|always_joint"][0]
+    v37 = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|w0|v37"][0]
+    assert int(fb["n_store_violations"]) == 0
+    assert int(fb["n_probe_correct_tm040"]) == 7
+    assert int(aj["n_probe_correct_tm040"]) == 8
+    assert v37["w_hash"] == fb["w_hash"]
+    assert aj["w_hash"] != fb["w_hash"]
+    fail = [r for r in fb["cues"] if r["cue"] == "s_294555646"][0]
+    assert fail["canonical"]["path"] == "episodic_completed"
+    assert fail["canonical"]["familiar"] is True
+    assert int(fail["canonical"]["slot"]) == 2
+    assert fail["addr_equals_stored_p1"] is True
+    assert fail["addr_equals_live_p1"] is False
+    assert fail["canonical"]["ranking_ok"] is True
+    assert fail["live_tm040"]["ranking_ok"] is False
+    assert fail["counterfactual_stored"]["ranking_ok"] is True
+    assert fail["counterfactual_live"]["ranking_ok"] is True
+    assert fail["fail_class"] == "canonical_path_inconsistency"
+    assert fail["live_tm040"]["winner"] == "h_679764572"
