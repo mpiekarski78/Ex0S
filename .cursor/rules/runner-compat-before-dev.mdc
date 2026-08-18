@@ -1,0 +1,14 @@
+---
+description: Pre-DEV law addenda must pass a runner-compatibility test before DEV.
+alwaysApply: true
+---
+
+# Runner compatibility before DEV
+
+If a law addendum lands before DEV, run a runner-compatibility test against every still-unexecuted frozen runner it touches.
+
+If the addendum invalidates an assumption in that runner, supersede and re-freeze the runner before DEV. Do not execute the stale observer.
+
+TM058 failed this way: the addendum ignored `write_opaque_kv(provenance_id=)` and assigned organism identity from a checkpointed counter. The frozen runner still looked up the keyword. First-match `attempted_not_resident` is an invalidated measurement. Architectural conclusion remains none. Do not rerun or edit TM058.
+
+Opaque writes: call `write_opaque_kv`, read `provenance_id` from the return receipt, locate the resident with that receipt identity, and compare key/value hashes. Never predict, provide, or reconstruct organism ids such as `"1"` or `"2"`.

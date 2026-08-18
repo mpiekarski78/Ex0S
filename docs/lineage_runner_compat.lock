@@ -1,0 +1,38 @@
+{
+  "version": "TM.0.59.RUNNER_COMPAT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "eligible_for_000005": false,
+  "rewrite_historical_tm058": false,
+  "rerun_tm058_dev": false,
+  "install_W_star": false,
+  "candidate_v41_lock": false,
+  "episode_match_l2_retuned": false,
+  "why": "TM058 first-match attempted_not_resident is an invalidated measurement. A pre-DEV law addendum required organism-assigned provenance and ignored the write_opaque_kv keyword. The already-frozen observer still treated the keyword as identity. The addendum and observer contract had already diverged. That DEV was avoidable.",
+  "rule": {
+    "pre_dev_law_addendum_requires_runner_compat_test": true,
+    "if_addendum_invalidates_unexecuted_frozen_runner": "supersede_and_refreeze_runner_before_dev"
+  },
+  "tm058_historical_first_match": "attempted_not_resident",
+  "tm058_interpretation": "invalidated_measurement__observer_used_runner_provenance",
+  "tm058_architectural_conclusion": "none",
+  "receipt_identity": {
+    "write_opaque_kv_return_is_the_receipt": true,
+    "locate_resident_by_receipt_provenance_id": true,
+    "runner_must_not_predict_organism_ids": true,
+    "runner_must_not_use_write_opaque_kv_keyword_as_identity": true
+  },
+  "floor": 0.05,
+  "refuse": [
+    "edit experiments/run_tm058storeint.py after freeze",
+    "rerun TM058 DEV",
+    "DEV after a law addendum without a runner-compat test",
+    "predict or reconstruct organism provenance_id",
+    "retune_EPISODE_MATCH_L2",
+    "install_W_star",
+    "auto_cortex.candidate.v41.lock",
+    "earned_next",
+    "0.0.005"
+  ],
+  "note": "Process freeze. Any pre-DEV law addendum must receive a runner-compatibility test. Product remains 0.0.004. Floor 0.05 unchanged."
+}
