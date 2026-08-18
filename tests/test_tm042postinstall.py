@@ -100,3 +100,48 @@ def test_refuse_raw_and_smoke():
     src = RUNNER.read_text()
     assert "set_act_proj_arm" not in src
     assert ".actuator_scores(" not in src
+
+
+def test_dev_lock_natural_c8h4_and_no_candidate():
+    devp = REPO / "docs" / "lineage_postinstall.dev.lock"
+    decp = REPO / "docs" / "lineage_postinstall.decision.lock"
+    assert _sha(devp) == "b70481893ee8d8a43163ced9334ed0caa8e3bbe05a33204bca21808a48325488"
+    assert _sha(decp) == "eec6263f4f85e94569eecded557dde6839123ef95ff58973005ce4994d343be8"
+    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()
+    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert _sha(R2_DEC) == R2_DEC_SHA
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "ccabfa4e0a79fa2cecac8c93632b7147dd8e0200"
+    assert dev["decision_code"] == "postinstall_mech_install_fail"
+    assert dev["lineage_stop"] == "canonical_r2_later_learning_not_exercised"
+    assert dev["candidate_v40_lock"] is False
+    assert dec["candidate_v40_lock"] is False
+    flags = dev["phase_flags"]
+    assert int(flags["n_natural_installed"]) == 4
+    assert flags["natural_continuity_ok"] is True
+    assert int(flags["n_mechanistic_installed"]) == 0
+    assert flags["candidate_discussion_open"] is False
+    c8h2 = [c for c in dev["cells"] if c["id"].startswith("natural|c8h2|") and c["arm"] == "fallback_joint"]
+    c8h4 = [c for c in dev["cells"] if c["id"].startswith("natural|c8h4|")]
+    assert all(c["cell_code"] == "postinstall_not_exercised" for c in c8h2)
+    assert len(c8h4) == 4
+    for c in c8h4:
+        assert c["installed"] is True
+        assert c["passed"] is True
+        assert c["retain_ok"] is True
+        assert c["new_mapping_ok"] is True
+        assert c["reversal_ok"] is True
+        assert c["subsequent_fallback_atomic"] is True
+        assert c["novelty_unfamiliar"] is True
+        assert c["solver_handles_never_in_act"] is True
+        h = c["handoff"]
+        assert h["pre_install_w_hash"]
+        assert h["installed_w_hash"]
+        assert h["solver"]["status"] == "optimal"
+        assert h["solver"]["applied"] is True
+        assert h["post_credit_w_hash"]
+    mech = [c for c in dev["cells"] if c["kind"] == "mechanistic"]
+    assert all(c["process"]["violations_after_v37"] == 0 for c in mech)

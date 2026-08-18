@@ -1,0 +1,28 @@
+{
+  "version": "TM.0.42.POSTINSTALL.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "a1d2160fc3a13346bf3cfc1995a69a7d9d6e6c662a47536db1d30aa0fb8cbc0c",
+  "lineage_stop": "canonical_r2_later_learning_not_exercised",
+  "decision": {
+    "code": "postinstall_mech_install_fail",
+    "then": "postinstall_mech_install_fail",
+    "phase_flags": {
+      "n_cells": 12,
+      "n_natural": 8,
+      "n_mechanistic": 4,
+      "n_natural_installed": 4,
+      "n_mechanistic_installed": 0,
+      "natural_continuity_ok": true,
+      "mechanistic_continuity_ok": false,
+      "lineage_stop": "canonical_r2_later_learning_not_exercised",
+      "candidate_v40_lock": false,
+      "candidate_discussion_open": false,
+      "mechanistic_is_not_untouched_generalization": true
+    }
+  },
+  "dev_lock_sha": "b70481893ee8d8a43163ced9334ed0caa8e3bbe05a33204bca21808a48325488",
+  "git_head": "ccabfa4e0a79fa2cecac8c93632b7147dd8e0200",
+  "frozen_runner_sha": "56dc11791ec0d7bbb9316e9f3a7c8006b1e1a069542176cd1f909d81234b43fb",
+  "candidate_v40_lock": false,
+  "note": "Post-install continuity. R2 remains the lineage stop. Product remains 0.0.004."
+}

@@ -2,6 +2,7 @@
 
 ## 2026-08-18
 
+- **TM.0.42.POSTINSTALL DEV:** First-match **postinstall_mech_install_fail**. Fresh 8×4 fallback installs 4/4 and post-install continuity passes; 8×2 is not_exercised. Mechanistic cells targeted TM039 v37-already regs, so SOCP was not invoked. R2 remains the lineage stop. No candidate lock. [`lineage_postinstall.decision.lock`](lineage_postinstall.decision.lock). Product **0.0.004**.
 - **TM.0.42.POSTINSTALL freeze:** Post-install continuity wall after R2. Natural fallback handoff on fresh worlds, or `postinstall_not_exercised`. Mechanistic TM039 diagnostic install is labeled not-untouched. No neural or SOCP edits. R2 remains the lineage stop. [`lineage_postinstall.prereg.lock`](lineage_postinstall.prereg.lock). Product **0.0.004**.
 - **TM.0.40.CAUSALBATTERY.R2 DEV:** First-match **canonical_r2_later_learning_not_exercised**. Canonical motor probe: fallback eight-cue acquire 8/8 (v37 also 8/8). Later-learning after installed SOCP not exercised. No candidate lock. TM040 historical first-match stays on file as an invalidated measurement. [`lineage_causalbattery.r2.decision.lock`](lineage_causalbattery.r2.decision.lock). Product **0.0.004**.
 - **TM.0.40.CAUSALBATTERY.R2 freeze:** Harness-boundary repair. TM040 historical first-match stays on file; scientifically it is an invalidated raw-P1 measurement, not an organism acquire failure. Canonical `actuator_decision_scores` probe on fresh domains. No neural, SOCP, recall, or threshold edits. [`lineage_causalbattery.r2.prereg.lock`](lineage_causalbattery.r2.prereg.lock). Product **0.0.004**.
