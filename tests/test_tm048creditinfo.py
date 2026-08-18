@@ -160,3 +160,71 @@ def test_runner_refuses_v41_and_smoke():
     assert out["candidate_exists"] is False
     assert out["action_feedback_edit_authorized"] is False
     assert "memproj_arm" not in GenomeConfig().to_dict()
+
+
+DEV_SHA = "8a182169c7e3d62de7f6bab6578c3990cc456d01f08ca5ed29283aa32c6b3044"
+DEC_SHA = "574b4599a9cbb7f2a0727fdac04198a17945796b9fba865ff31aedd7cb23bc13"
+DEV_GIT = "cc6bf089e325bf503c0f440b5fefe6675fadd4b2"
+
+
+def test_dev_lock_credit_action_information_absent_and_no_v41():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm048creditinfo import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_creditinfo.dev.lock"
+    decp = REPO / "docs" / "lineage_creditinfo.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert _sha(TM046_RUNNER) == TM046_RUNNER_SHA
+    assert _sha(TM047_RUNNER) == TM047_RUNNER_SHA
+    assert _sha(TM047_DEV) == TM047_DEV_SHA
+    assert _sha(TM047_DEC) == TM047_DEC_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "credit_action_information_absent"
+    assert dev["n_cells"] == 4
+    assert dev["candidate_v41_lock"] is False
+    assert dev["kqv_edited"] is False
+    assert dev["action_feedback_edited"] is False
+    assert dec["earned_next"] is False
+    assert dec["eligible_for_000005"] is False
+    assert dec["decision"]["code"] == "credit_action_information_absent"
+    assert dec["decision"]["phase_flags"]["earned_action_feedback"] is True
+    assert dec["decision"]["phase_flags"]["earned_kqv"] is False
+    assert dec["decision"]["phase_flags"]["rho_changed_with_action"] is False
+    assert dec["decision"]["phase_flags"]["n_unique_rho_after"] == 1
+    assert dec["action_feedback_edited"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert set(cells) == set(expected_cell_ids())
+    assert cells["decoder|w0"]["passed"] is True
+    assert cells["decoder|w1"]["passed"] is True
+    for wi in (0, 1):
+        cred = cells[f"credit|w{wi}"]
+        assert cred["cell_code"] == "credit_action_information_absent"
+        assert cred["n_unique_rho_before"] == 1
+        assert cred["n_unique_rho_after"] == 1
+        assert cred["n_unique_p1_after"] == 1
+        assert cred["n_unique_projected"] == 1
+        assert cred["n_unique_stored"] == 1
+        assert cred["max_pairwise_l2_rho_after"] == 0.0
+        assert cred["rho_changed_with_action"] is False
+        assert cred["identical_body"] is True
+        assert cred["copied_action_into_s"] is False
+        assert cred["n_ok_ceiling"] == 4
+        assert cred["n_ok_credit"] == 1
+        assert cred["w_act_query_frozen"] is True
+        hashes = {cl["rho_after"]["hash"] for cl in cred["clones"]}
+        assert len(hashes) == 1
+        winners = {cl["credit_score"]["winner"] for cl in cred["clones"]}
+        assert len(winners) == 1
+        stored = {cl["stored"]["hash"] for cl in cred["clones"]}
+        assert len(stored) == 1
+        assert all(cl["p1_before"]["hash"] == cl["stored"]["hash"] for cl in cred["clones"])
+
