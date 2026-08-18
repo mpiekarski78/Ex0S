@@ -1,0 +1,35 @@
+{
+  "version": "TM.0.34.TEMPORALWALL.ISOLATION",
+  "lab": "TM.0.34.TEMPORALWALL",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "v38_repair_authorized": false,
+  "domains": {
+    "DEV": "TM034.TEMPORALWALL.DEV.",
+    "TWIN": "TM034.TEMPORALWALL.TWIN."
+  },
+  "disjoint_from": [
+    "TM033.ADAPTREHEARSE.DEV.",
+    "TM033.ADAPTREHEARSE.TWIN.",
+    "TM032.RESTSPLIT.DEV.",
+    "TM032.RESTSPLIT.TWIN."
+  ],
+  "refuse": [
+    "plateau_relaxation",
+    "hard_budget_gt_16",
+    "fit_tm032_44_row_updates_as_constant",
+    "v38_repair",
+    "auto_cortex.candidate.v38.lock",
+    "auto_cortex.candidate.v39.lock",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "rewrite TM033 historical locks",
+    "rewrite TM032 historical locks",
+    "tm033_dev_rerun",
+    "tm032_dev_rerun",
+    "TM032_monkey_patch",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Temporal-placement wall after v38 close. Standalone runner. No neural edit. Product remains 0.0.004."
+}
