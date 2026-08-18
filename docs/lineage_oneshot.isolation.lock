@@ -1,0 +1,37 @@
+{
+  "version": "TM.0.46.ONESHOT.ISOLATION",
+  "lab": "TM.0.46.ONESHOT",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "kqv_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "v41_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM046.ONESHOT.DEV.",
+    "TWIN": "TM046.ONESHOT.TWIN."
+  },
+  "historical_immutable": [
+    "experiments/run_tm045memnec.py",
+    "docs/lineage_memnec.dev.lock",
+    "docs/lineage_memnec.decision.lock",
+    "docs/lineage_memnec.prereg.lock",
+    "experiments/run_tm044memproj.py",
+    "docs/lineage_memproj.dev.lock",
+    "docs/lineage_memproj.decision.lock",
+    "three_memory/joint_socp.py"
+  ],
+  "refuse": [
+    "tune_kqv",
+    "increase_cue_count_grid",
+    "rerun TM045 DEV",
+    "edit experiments/run_tm045memnec.py",
+    "edit experiments/run_tm044memproj.py",
+    "auto_cortex.candidate.v41.lock",
+    "edit_joint_socp.py",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Isolate memory timescales: one-shot facts with frozen slow cortex. Do not repair K/Q/V on this wall. Product remains 0.0.004."
+}
