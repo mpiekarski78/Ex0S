@@ -25,6 +25,10 @@ HISTORICAL_TM032_DEV_SHA = "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56
 HISTORICAL_TM032_DEC_SHA = "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e112be4c7a4c7"
 HISTORICAL_TM032_RUNNER_SHA = "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503"
 FROZEN_RUNNER_SHA = "52a5f32cf690fd3efde3e594fcb59f62970d78bf35d2939933d25d42be4c8ca2"
+HISTORICAL_DEV_SHA = "1b052c569d1276d78395ae5236c03994b4cf2ee84219080fb35cba54f0d2cda6"
+HISTORICAL_DEC_SHA = "5d7353ab9831229b59dd31ef626727dfb309a0f2fb9a0ddda1a656fbdd9be342"
+DEV = REPO / "docs" / "lineage_creditsplit.dev.lock"
+DEC = REPO / "docs" / "lineage_creditsplit.decision.lock"
 
 
 def _sha(p: Path) -> str:
@@ -145,3 +149,41 @@ def test_smoke():
     assert out["clone_matched"] is True
     assert out["probes_on_another_clone"] is True
     assert out["hard_budget_passes"] == 16
+
+
+def test_dev_lock_first_match_and_gate():
+    assert _sha(DEV) == HISTORICAL_DEV_SHA
+    assert _sha(DEC) == HISTORICAL_DEC_SHA
+    dev = json.loads(DEV.read_text())
+    dec = json.loads(DEC.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "7e2b509d5bbafc621b032781fab83c5c3d1ffd79"
+    assert dev["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dev["decision_code"] == "creditsplit_mixed_oneshot_and_burst"
+    assert dev["fit_44_row_updates"] is False
+    assert dev["hard_budget_passes"] == 16
+    assert dev["v39_freeze"] is False
+    assert dev["phase_flags"]["v39_gate_open"] is False
+    assert dev["phase_flags"]["n_diagnostic"] == 2
+    assert set(dev["phase_flags"]["diagnostic_routes"]) == {"mixed_oneshot_and_burst"}
+    write = [c for c in dev["cells"] if c["id"] == "split|c8|A_then_B|reg1|write_only"][0]
+    shot = [c for c in dev["cells"] if c["id"] == "split|c8|A_then_B|reg1|oneshot_only"][0]
+    burst = [c for c in dev["cells"] if c["id"] == "split|c8|A_then_B|reg1|burst_only"][0]
+    complete = [c for c in dev["cells"] if c["id"] == "split|c8|A_then_B|reg1|complete"][0]
+    assert write["previously_correct_broke"] is False
+    assert write["parent_store_zero"] is True
+    assert shot["previously_correct_broke"] is True
+    assert shot["broke_slots"] == [0, 2, 4, 6]
+    assert burst["previously_correct_broke"] is True
+    assert burst["broke_slots"] == [0, 4, 6]
+    assert int(burst["n_awake_updates"]) == 117
+    assert complete["previously_correct_broke"] is True
+    assert complete["broke_slots"] == [0, 4, 6]
+    assert int(complete["n_awake_updates"]) == 122
+    assert complete["complete_uses_native_credit_act_p1_episode"] is True
+    assert all(c["probes_on_another_clone"] for c in (write, shot, burst, complete))
+    assert all(c["clone_matched_parent"] for c in (write, shot, burst, complete))
+    assert dec["decision"]["code"] == "creditsplit_mixed_oneshot_and_burst"
+    assert dec["dev_lock_sha"] == HISTORICAL_DEV_SHA
+    assert dec["v39_gate_open"] is False
+    assert dec["v39_freeze"] is False

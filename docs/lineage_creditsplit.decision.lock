@@ -1,0 +1,39 @@
+{
+  "version": "TM.0.35.CREDITSPLIT.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "249430e64d794562b93fa11f91e79916b9ee44f063df3d3717c9c48767e60e09",
+  "decision": {
+    "code": "creditsplit_mixed_oneshot_and_burst",
+    "then": "creditsplit_mixed_oneshot_and_burst",
+    "phase_flags": {
+      "n_worlds": 8,
+      "n_diagnostic": 2,
+      "n_no_rebreak": 6,
+      "routes": [
+        "no_rebreak",
+        "no_rebreak",
+        "mixed_oneshot_and_burst",
+        "mixed_oneshot_and_burst",
+        "no_rebreak",
+        "no_rebreak",
+        "no_rebreak",
+        "no_rebreak"
+      ],
+      "diagnostic_routes": [
+        "mixed_oneshot_and_burst",
+        "mixed_oneshot_and_burst"
+      ],
+      "v39_gate_open": false
+    }
+  },
+  "dev_lock_sha": "1b052c569d1276d78395ae5236c03994b4cf2ee84219080fb35cba54f0d2cda6",
+  "git_head": "7e2b509d5bbafc621b032781fab83c5c3d1ffd79",
+  "frozen_runner_sha": "52a5f32cf690fd3efde3e594fcb59f62970d78bf35d2939933d25d42be4c8ca2",
+  "hard_budget_passes": 16,
+  "fit_44_row_updates": false,
+  "plateau_relaxed": false,
+  "v38_repair": false,
+  "v39_freeze": false,
+  "v39_gate_open": false,
+  "note": "TM035 credit-7 component-split decision. Product remains 0.0.004."
+}
