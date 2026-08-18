@@ -1,0 +1,125 @@
+{
+  "version": "TM.0.32.RESTSPLIT.PREREG",
+  "lab": "TM.0.32.RESTSPLIT",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": false,
+  "implementation_authorized": true,
+  "package_question": "Which REST component repairs post-awake stored-P1 actuator nonconvergence on fresh eight-cue v37 checkpoints: additional awake rehearsal, slow mix, REST replay without mix, or only full REST?",
+  "authorized_by": [
+    "docs/lineage_halfspace.failclass.lock",
+    "docs/lineage_halfspace.decision.lock"
+  ],
+  "tm031_failclass_sha": "7f37c8010685d70b6184cd4242689826081694fd0416747c93002650588a061e",
+  "tm031_decision_sha": "00d5e289068a68967af2c53669a0f4c2d16abc6617c851014261a1358dea07c6",
+  "tm031_dev_sha": "56dc67affd8fe5d2bb2263dc617c4d28922bfbac03c40b8bf8f6b7cccad67d9a",
+  "tm031_runner_sha": "480f7400ada06143acaa3242e75aed315e941f40ebb253a7d0bf67caaa16f564",
+  "candidate_name": "not_v38",
+  "n": 64,
+  "eta_act": 0.15,
+  "episode_slots": 8,
+  "write_match_l2": 0.05,
+  "treatment_mode": "early_raw_half_spacing",
+  "n_cues": 8,
+  "n_handles": 2,
+  "n_rest_ticks": 4,
+  "replay_pass_budget": 16,
+  "claim": "matched_checkpoint_rest_component_split",
+  "not_a_key_or_radius_experiment": true,
+  "act_recall_modes_tuple_untouched": true,
+  "registry_seeds": [
+    936835019,
+    1584000025,
+    2133183397,
+    520283234
+  ],
+  "registry_seeds_are_replicates_not_a_grid": true,
+  "genome_varies_only": "seed_registry",
+  "default_seed_registry_forbidden": 22222,
+  "domains": {
+    "DEV": "TM032.RESTSPLIT.DEV.",
+    "TWIN": "TM032.RESTSPLIT.TWIN."
+  },
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 1,
+  "world_index": 0,
+  "n_registry_seeds": 4,
+  "arms": [
+    "none",
+    "awake_only",
+    "replay_no_mix",
+    "mix_only",
+    "full_rest"
+  ],
+  "expected_n_cells": 40,
+  "expected_n_splits": 8,
+  "manifest_sha": "69f9c8e11855c54454bb3e99128761099341ad3d17bcbc9def3a82b75a286bd7",
+  "fix_gate": {
+    "n_store_violations": 0,
+    "live_ranking_ok": true,
+    "n_probe_correct": 8,
+    "margin_is_recorded_not_a_gate": true
+  },
+  "awake_only_compute_match": "stop_when_cumulative_gated_updates_ge_sibling_full_rest_n_replay_else_replay_pass_budget_early_stop_zero_violations",
+  "decision_ladder": [
+    {
+      "code": "restsplit_no_value_fail_on_fresh_domains",
+      "when": "every split none-arm already fixes"
+    },
+    {
+      "code": "restsplit_awake_rehearsal_sufficient",
+      "when": "all diagnostic splits: awake_only fixes"
+    },
+    {
+      "code": "restsplit_slow_mix_sufficient",
+      "when": "all diagnostic splits: mix_only fixes and awake_only does not"
+    },
+    {
+      "code": "restsplit_replay_no_mix_sufficient",
+      "when": "all diagnostic splits: replay_no_mix fixes and awake_only and mix_only do not"
+    },
+    {
+      "code": "restsplit_full_rest_only",
+      "when": "all diagnostic splits: full_rest fixes and compute-matched arms do not"
+    },
+    {
+      "code": "restsplit_compute_matched_wall",
+      "when": "all diagnostic splits: nothing including full_rest fixes"
+    },
+    {
+      "code": "restsplit_mixed_routes",
+      "when": "diagnostic splits disagree"
+    }
+  ],
+  "v38_route": {
+    "restsplit_awake_rehearsal_sufficient": "adaptive_violation_driven_rehearsal",
+    "restsplit_slow_mix_sufficient": "on_demand_consolidation",
+    "restsplit_replay_no_mix_sufficient": "rest_replay_without_slow_mix",
+    "restsplit_full_rest_only": "credit_triggered_micro_rest",
+    "restsplit_compute_matched_wall": "optimization_capacity_wall"
+  },
+  "refuse": [
+    "open SCORE",
+    "modify_R",
+    "change_key_capture_or_write_match",
+    "hadamard_or_kwta_on_treatment_path",
+    "episode_lifecycle_change",
+    "familiarity_rule_change",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "disturb TM029 frozen RECALL_MODES",
+    "rewrite TM031 historical locks",
+    "tm031_dev_rerun",
+    "auto_cortex.candidate.v38.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "TM032 REST-component split. Product remains 0.0.004. Freeze runner before DEV. No neural edit.",
+  "frozen_runner_sha": "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503"
+}

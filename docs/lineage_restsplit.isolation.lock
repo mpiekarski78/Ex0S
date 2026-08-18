@@ -1,0 +1,41 @@
+{
+  "version": "TM.0.32.RESTSPLIT.ISOLATION",
+  "lab": "TM.0.32.RESTSPLIT",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "domains": {
+    "DEV": "TM032.RESTSPLIT.DEV.",
+    "TWIN": "TM032.RESTSPLIT.TWIN."
+  },
+  "disjoint_from": [
+    "TM031.HALFSPACE.DEV.",
+    "TM031.HALFSPACE.TWIN.",
+    "TM030.KEYGEOM.DEV.",
+    "TM030.KEYGEOM.TWIN.",
+    "TM029.INDEXING.DEV.",
+    "TM029.INDEXING.TWIN."
+  ],
+  "authorized_by": [
+    "docs/lineage_halfspace.failclass.lock",
+    "docs/lineage_halfspace.decision.lock"
+  ],
+  "purpose": "Matched post-awake checkpoint split isolating which REST component repairs TM031 case-3 stored-value nonconvergence. Not v38. Not a key/radius/separator/lifecycle/familiarity experiment.",
+  "refuse": [
+    "modify_R",
+    "change_key_capture_or_write_match",
+    "hadamard_or_kwta_on_treatment_path",
+    "episode_lifecycle_change",
+    "familiarity_rule_change",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "disturb TM029 frozen RECALL_MODES",
+    "rewrite TM031 historical locks",
+    "tm031_dev_rerun",
+    "TM031_monkey_patch",
+    "auto_cortex.candidate.v38.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "REST-split diagnostic on frozen v37. Product remains 0.0.004."
+}
