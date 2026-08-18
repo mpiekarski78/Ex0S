@@ -231,3 +231,60 @@ def test_runner_reuses_receipts_and_does_not_import_tm060_collect_bundle():
     assert out["floor"] == 0.05
     assert out["slots"] == 8
     assert out["candidate_exists"] is False
+
+
+DEV_SHA = "79a799768c4300938c63f75d99ccc2c9bf295865240f2ad9496b8f26ccb011d1"
+DEC_SHA = "5ecd0a650666d3d31df281c7e37f87daa3fc72feb55c590f3f35fd9c7607e1af"
+DEV_GIT = "502e7010516b5f3dbb422343f8fbe53c0fface8e"
+
+
+def test_dev_lock_transport_restores_decoding():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm061codrift import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_codrift.dev.lock"
+    decp = REPO / "docs" / "lineage_codrift.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert sha_file(RUNNER) == "c746ddaa7d9e270922b8386eb6c4e90932f6c2bdcf2d2cb1b41d241fa572e99f"
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "transport_restores_decoding"
+    assert dev["install_W_star"] is False
+    assert dev["neural_untouched"] is True
+    assert dec["architectural_conclusion"] == "none"
+    assert dec["tm060_earned_architecture"] is False
+    assert dec["decision"]["code"] == "transport_restores_decoding"
+    assert dec["decision"]["phase_flags"]["transport_restores_decoding"] is True
+    assert dec["decision"]["phase_flags"]["later_values_unreadable"] is False
+    assert dec["decision"]["phase_flags"]["nonlinear_manifold_reorganization"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["decoder|w0"]["passed"] is True
+    assert cells["decoder|w1"]["passed"] is True
+    assert cells["decoder|w0"]["full_oracle_feasible"] is True
+    assert cells["decoder|w1"]["full_oracle_feasible"] is True
+    assert cells["prefix_on_prefix|w0"]["ok"] is True
+    assert cells["prefix_on_prefix|w1"]["ok"] is True
+    assert cells["prefix_on_later|w0"]["ok"] is False
+    assert cells["prefix_on_later|w1"]["ok"] is False
+    assert cells["later_on_later|w0"]["ok"] is True
+    assert cells["later_on_later|w1"]["ok"] is True
+    assert cells["linear_transport|w0"]["restored"] is True
+    assert cells["linear_transport|w1"]["restored"] is True
+    assert cells["orthogonal_transport|w0"]["restored"] is False
+    assert cells["orthogonal_transport|w1"]["restored"] is False
+    for cid in expected_cell_ids():
+        if cells[cid].get("kind") != "scored":
+            continue
+        assert cells[cid]["W_installed"] is False
+        assert cells[cid]["discarded"] is True
+        assert cells[cid]["parent_w_act_query_unchanged"] is True
+        assert cells[cid]["future_never_socp_constraints"] is True
