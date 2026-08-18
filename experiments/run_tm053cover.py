@@ -289,11 +289,10 @@ def collect_bundle(*, si: int, wi: int, seed: int, tmp: str) -> dict[str, Any]:
     hold_cues = {
         h: [f"s_cov_{si}_{wi}_ho_{i}_{k}" for k in range(n_hold)] for i, h in enumerate(handles)
     }
-    used = [c for cues in list(train_cues.values()) + list(hold_cues.values()) for c in cues]
-    used.extend(ref["ref_cues"])
-    if set(used) & test_cues:
+    cov = [c for cues in list(train_cues.values()) + list(hold_cues.values()) for c in cues]
+    if set(cov) & test_cues or set(ref["ref_cues"]) & test_cues:
         raise RuntimeError("coverage cues collided with test facts")
-    if set(used) & set(ref["ref_cues"]):
+    if set(cov) & set(ref["ref_cues"]):
         raise RuntimeError("coverage cues collided with reference cues")
     train_rows = collect_wraps(ref, train_cues, tag=f"cv_tr_s{si}_w{wi}")
     hold_rows = collect_wraps(ref, hold_cues, tag=f"cv_ho_s{si}_w{wi}")
