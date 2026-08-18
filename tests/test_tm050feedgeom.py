@@ -191,3 +191,66 @@ def test_runner_refuses_v41_and_smoke():
     assert out["floor"] == 0.05
     assert out["transition"]["ticks_grid"] == [0, 1, 2, 4, 8, 16]
     assert "memproj_arm" not in GenomeConfig().to_dict()
+
+
+DEV_SHA = "ede465c08e9f5af4da7b17343e30ce111d1d81230c015d3686bb76d4b14ef228"
+DEC_SHA = "3acd39eee4f3d10e295178067fd3abce86daa7cb11f09752234039c1e8a927bc"
+DEV_GIT = "72a9a4ae9d3bc7a343d87dc59064f0ab8a87012e"
+
+
+def test_dev_lock_states_separate_never_decode_and_no_v41():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm050feedgeom import expected_cell_ids
+    from three_memory.neural_cortex import EPISODE_MATCH_L2
+
+    devp = REPO / "docs" / "lineage_feedgeom.dev.lock"
+    decp = REPO / "docs" / "lineage_feedgeom.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert _sha(TM049_RUNNER) == TM049_RUNNER_SHA
+    assert _sha(TM049_DEV) == TM049_DEV_SHA
+    assert _sha(TM049_DEC) == TM049_DEC_SHA
+    assert _sha(TM049_ADD) == TM049_ADD_SHA
+    assert _sha(TM048_RUNNER) == TM048_RUNNER_SHA
+    assert _sha(TM046_RUNNER) == TM046_RUNNER_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "states_separate_never_decode"
+    assert dev["n_cells"] == 6
+    assert dev["n_setup_cells"] == 2
+    assert dev["n_scored_cells"] == 4
+    assert dev["candidate_v41_lock"] is False
+    assert dev["kqv_edited"] is False
+    assert dev["tick_count_fitted"] is False
+    assert dev["neural_edited"] is False
+    assert dec["earned_next"] is False
+    assert dec["eligible_for_000005"] is False
+    assert dec["tick_count_fitted"] is False
+    assert dec["decision"]["code"] == "states_separate_never_decode"
+    assert dec["decision"]["phase_flags"]["collapse_before_recurrence"] is False
+    assert dec["decision"]["phase_flags"]["input_separates_tanh_compresses"] is False
+    assert dec["decision"]["phase_flags"]["later_ticks_decode"] is False
+    assert dec["decision"]["phase_flags"]["neutral_passes_cue_fails"] is False
+    assert dec["decision"]["phase_flags"]["states_separate_never_decode"] is True
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["decoder|w0"]["passed"] is True
+    assert cells["decoder|w1"]["passed"] is True
+    t1 = cells["cue|w0"]["ticks"]["1"]
+    assert t1["stages"]["motor_vec"]["separable"] is True
+    assert t1["stages"]["x_tick"]["separable"] is True
+    assert t1["stages"]["w_in_x"]["separable"] is True
+    assert t1["stages"]["rho_t"]["separable"] is True
+    assert float(t1["stages"]["rho_t"]["max_l2"]) > float(EPISODE_MATCH_L2)
+    assert t1["n_ok_decode"] == 1
+    assert cells["cue|w0"]["ticks"]["16"]["n_ok_decode"] == 1
+    assert cells["neutral|w0"]["cell_code"] == "neutral_no_decode"
+    assert cells["neutral|w1"]["cell_code"] == "neutral_no_decode"
+    assert cells["cue|w0"]["ticks"]["1"]["handles"][0]["tanh_saturation"]["frac_abs_tanh_gt_sat"] == 0.0
