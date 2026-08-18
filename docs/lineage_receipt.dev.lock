@@ -1,0 +1,467 @@
+{
+  "lab": "TM.0.59.RECEIPT",
+  "n_cells": 8,
+  "n_setup_cells": 2,
+  "n_scored_cells": 6,
+  "cells": [
+    {
+      "kind": "setup",
+      "id": "flag|w0",
+      "arm": "flag",
+      "world": 0,
+      "passed": true,
+      "excluded_from_behavioral_first_match": true,
+      "cell_code": "flag_ok",
+      "setter_present": true,
+      "write_present": true,
+      "default_off": true,
+      "not_genome": true,
+      "not_act_recall_mode": true,
+      "floor_ok": true,
+      "enabled": true,
+      "checkpoint_ok": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "setup",
+      "id": "flag|w1",
+      "arm": "flag",
+      "world": 1,
+      "passed": true,
+      "excluded_from_behavioral_first_match": true,
+      "cell_code": "flag_ok",
+      "setter_present": true,
+      "write_present": true,
+      "default_off": true,
+      "not_genome": true,
+      "not_act_recall_mode": true,
+      "floor_ok": true,
+      "enabled": true,
+      "checkpoint_ok": true,
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "write|w0",
+      "probe": "write",
+      "world": 0,
+      "passed": true,
+      "cell_code": "probe_ok",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_observer_provenance": 0,
+      "n_resident_missing": 0,
+      "n_attempted_hash_mismatch": 0,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 4,
+      "n_residents": 4,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "provenance_id": "1",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 0,
+          "n_after": 1
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "2",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 1,
+          "n_after": 2
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "3",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 2,
+          "n_after": 3
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "4",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 3,
+          "n_after": 4
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "write|w1",
+      "probe": "write",
+      "world": 1,
+      "passed": true,
+      "cell_code": "probe_ok",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_observer_provenance": 0,
+      "n_resident_missing": 0,
+      "n_attempted_hash_mismatch": 0,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 4,
+      "n_residents": 4,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "provenance_id": "1",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 0,
+          "n_after": 1
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "2",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 1,
+          "n_after": 2
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "3",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 2,
+          "n_after": 3
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "4",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 3,
+          "n_after": 4
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "capacity|w0",
+      "probe": "capacity",
+      "world": 0,
+      "passed": true,
+      "cell_code": "probe_ok",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_observer_provenance": 0,
+      "n_resident_missing": 0,
+      "n_attempted_hash_mismatch": 0,
+      "n_unreported_loss": 0,
+      "n_evict": 1,
+      "n_append": 8,
+      "n_residents": 8,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "provenance_id": "1",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 0,
+          "n_after": 1
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "2",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 1,
+          "n_after": 2
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "3",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 2,
+          "n_after": 3
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "4",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 3,
+          "n_after": 4
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "5",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 4,
+          "n_after": 5
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "6",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 5,
+          "n_after": 6
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "7",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 6,
+          "n_after": 7
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "8",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 7,
+          "n_after": 8
+        },
+        {
+          "outcome": "evict_append",
+          "provenance_id": "9",
+          "evicted_provenance_id": "1",
+          "reason": null,
+          "n_before": 8,
+          "n_after": 8
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "capacity|w1",
+      "probe": "capacity",
+      "world": 1,
+      "passed": true,
+      "cell_code": "probe_ok",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_observer_provenance": 0,
+      "n_resident_missing": 0,
+      "n_attempted_hash_mismatch": 0,
+      "n_unreported_loss": 0,
+      "n_evict": 1,
+      "n_append": 8,
+      "n_residents": 8,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "provenance_id": "1",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 0,
+          "n_after": 1
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "2",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 1,
+          "n_after": 2
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "3",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 2,
+          "n_after": 3
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "4",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 3,
+          "n_after": 4
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "5",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 4,
+          "n_after": 5
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "6",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 5,
+          "n_after": 6
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "7",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 6,
+          "n_after": 7
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "8",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 7,
+          "n_after": 8
+        },
+        {
+          "outcome": "evict_append",
+          "provenance_id": "9",
+          "evicted_provenance_id": "1",
+          "reason": null,
+          "n_before": 8,
+          "n_after": 8
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "checkpoint|w0",
+      "probe": "checkpoint",
+      "world": 0,
+      "passed": true,
+      "cell_code": "probe_ok",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_observer_provenance": 0,
+      "n_resident_missing": 0,
+      "n_attempted_hash_mismatch": 0,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 3,
+      "n_residents": 3,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "provenance_id": "1",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 0,
+          "n_after": 1
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "2",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 1,
+          "n_after": 2
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "3",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 2,
+          "n_after": 3
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    },
+    {
+      "kind": "scored",
+      "id": "checkpoint|w1",
+      "probe": "checkpoint",
+      "world": 1,
+      "passed": true,
+      "cell_code": "probe_ok",
+      "not_exercised": false,
+      "n_cross_action_refresh": 0,
+      "n_cross_cue_merge": 0,
+      "n_observer_provenance": 0,
+      "n_resident_missing": 0,
+      "n_attempted_hash_mismatch": 0,
+      "n_unreported_loss": 0,
+      "n_evict": 0,
+      "n_append": 3,
+      "n_residents": 3,
+      "checkpoint_ok": true,
+      "receipts": [
+        {
+          "outcome": "append",
+          "provenance_id": "1",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 0,
+          "n_after": 1
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "2",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 1,
+          "n_after": 2
+        },
+        {
+          "outcome": "append",
+          "provenance_id": "3",
+          "evicted_provenance_id": null,
+          "reason": null,
+          "n_before": 2,
+          "n_after": 3
+        }
+      ],
+      "candidate_v41_lock": false,
+      "kqv_edited": false
+    }
+  ],
+  "decision_code": "opaque_storage_integrity_holds",
+  "decision_then": "opaque_storage_integrity_holds",
+  "phase_flags": {
+    "n_cells": 8,
+    "n_setup_cells": 2,
+    "n_scored_cells": 6,
+    "candidate_v41_lock": false,
+    "kqv_edited": false,
+    "install_W_star": false,
+    "episode_match_l2_retuned": false,
+    "canonical_law_reconsidered": false,
+    "setup_excluded_from_behavioral_first_match": true,
+    "opaque_store_law_compatible": true,
+    "historical_episode_storage_unchanged": true,
+    "neural_unchanged": true
+  },
+  "git_head": "fecec6fc838b6478b7a84225af3f1471e4ad568a",
+  "frozen_runner_sha": "8aad0201e391deb5c01d7aca7f50d561a20b3af6d12106a77351b15b3e06229f",
+  "manifest_sha": "8aa8a5ba1a2f28865e4310c34a6c3455d27a299f6b524be43c23db5fa159bfe4",
+  "candidate_v41_lock": false,
+  "install_W_star": false,
+  "episode_match_l2_retuned": false,
+  "canonical_law_reconsidered": false,
+  "clean_tree": true,
+  "clean_tree_status": "clean",
+  "tm058_runner_untouched": true,
+  "canonical_state_generator": "write_time_last_p1"
+}

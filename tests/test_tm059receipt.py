@@ -192,3 +192,54 @@ def test_runner_follows_receipts_and_tm058_does_not():
     assert EPISODE_SLOTS == 8
     assert hasattr(NeuralCortex, "write_opaque_kv")
     assert not CANDIDATE_V41.exists()
+
+
+DEV_SHA = "0eac010b6ca5dffc5f475de32cc14c01b24514695fcc2e85746242e4a703e41e"
+DEC_SHA = "d11ed78e963770ac871b864263e529ffbab1251c014b5743763edef8b66062fc"
+DEV_GIT = "fecec6fc838b6478b7a84225af3f1471e4ad568a"
+
+
+def test_dev_lock_opaque_storage_integrity_holds():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm059receipt import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_receipt.dev.lock"
+    decp = REPO / "docs" / "lineage_receipt.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert sha_file(RUNNER) == "8aad0201e391deb5c01d7aca7f50d561a20b3af6d12106a77351b15b3e06229f"
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert _sha(OPAQUE) == OPAQUE_SHA
+    assert _sha(TM058_RUNNER) == TM058_RUNNER_SHA
+    assert _sha(TM058_DEV) == TM058_DEV_SHA
+    assert EPISODE_MATCH_L2 == 0.05
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "opaque_storage_integrity_holds"
+    assert dev["install_W_star"] is False
+    assert dec["architectural_conclusion"] == "earned_opaque_storage_integrity"
+    assert dec["drift_work_may_resume"] is True
+    assert dec["earned_next"] is False
+    assert dec["decision"]["code"] == "opaque_storage_integrity_holds"
+    assert dec["decision"]["phase_flags"]["neural_unchanged"] is True
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["flag|w0"]["passed"] is True
+    assert cells["flag|w1"]["passed"] is True
+    assert cells["write|w0"]["n_cross_action_refresh"] == 0
+    assert cells["write|w0"]["n_cross_cue_merge"] == 0
+    assert cells["write|w0"]["n_observer_provenance"] == 0
+    assert cells["write|w0"]["n_resident_missing"] == 0
+    assert cells["write|w0"]["n_attempted_hash_mismatch"] == 0
+    assert cells["write|w0"]["n_append"] == 4
+    assert cells["write|w0"]["n_residents"] == 4
+    assert cells["capacity|w0"]["n_evict"] == 1
+    assert cells["capacity|w0"]["n_residents"] == 8
+    assert cells["checkpoint|w0"]["checkpoint_ok"] is True
+    add = json.loads(TM058_ADD.read_text())
+    assert add["interpretation"] == "invalidated_measurement__observer_used_runner_provenance"
+    assert add["architectural_conclusion"] == "none"
