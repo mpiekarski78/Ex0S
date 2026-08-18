@@ -1,0 +1,57 @@
+{
+  "version": "TM.0.51.FBGROUND.ISOLATION",
+  "lab": "TM.0.51.FBGROUND",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": true,
+  "kqv_edit_authorized": false,
+  "decoder_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "action_feedback_edit_authorized": false,
+  "tick_count_fit_authorized": false,
+  "v41_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM051.FBGROUND.DEV.",
+    "TWIN": "TM051.FBGROUND.TWIN."
+  },
+  "historical_immutable": [
+    "experiments/run_tm046oneshot.py",
+    "experiments/run_tm047reinstate.py",
+    "experiments/run_tm048creditinfo.py",
+    "experiments/run_tm049actfeed.py",
+    "experiments/run_tm050feedgeom.py",
+    "docs/lineage_actfeed.dev.lock",
+    "docs/lineage_actfeed.decision.lock",
+    "docs/lineage_feedgeom.dev.lock",
+    "docs/lineage_feedgeom.decision.lock",
+    "docs/lineage_feedgeom.prereg.lock",
+    "three_memory/joint_socp.py"
+  ],
+  "neural_edit_scope": [
+    "optional credit_token on public clamp_action",
+    "motor_vec from executed token",
+    "credit and W_act_query label from credit_token or token",
+    "no new matrix or hyperparameter"
+  ],
+  "refuse": [
+    "tune_kqv",
+    "train_new_decoder",
+    "new_fitted_matrix",
+    "fit_tick_count",
+    "scale_motor_vec",
+    "retune_EPISODE_MATCH_L2",
+    "rerun TM049 DEV",
+    "rerun TM050 DEV",
+    "edit experiments/run_tm049actfeed.py",
+    "edit experiments/run_tm050feedgeom.py",
+    "copy_handle_into_S",
+    "runner_constructs_rho_k_v",
+    "auto_cortex.candidate.v41.lock",
+    "edit_joint_socp.py",
+    "earned_next",
+    "0.0.005",
+    "learned_opaque_addressing_on_this_wall",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Developmental grounding of existing W_act_query on wrapped TM049 states. Product remains 0.0.004."
+}
