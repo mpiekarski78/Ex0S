@@ -1,0 +1,72 @@
+{
+  "version": "TM.PROBE.BOUNDARY.AUDIT",
+  "product": "0.0.004",
+  "question": "Which behavioral batteries gated on actuator_scores(live_p1) after the organism motor path became actuator_decision_scores?",
+  "organism_motor_act_branch": "three_memory/neural_cortex.py _motor_loop ACT uses actuator_decision_scores(last_p1)",
+  "store_predicate_uses_actuator_scores_on_stored_p1": true,
+  "labs": [
+    {
+      "lab": "TM.0.25.TWOSCALE",
+      "probe": "p1_probe actuator_scores(live_p1)",
+      "leak": false,
+      "why": "Pre-complementary-recall. Motor scored raw P1. Probe matched motor."
+    },
+    {
+      "lab": "TM.0.26.COMPETITIVE",
+      "probe": "p1_probe actuator_scores(live_p1)",
+      "leak": false,
+      "why": "Pre-complementary-recall. Motor scored raw P1. Probe matched motor."
+    },
+    {
+      "lab": "TM.0.27.GATEDREHEARSAL",
+      "probe": "p1_probe / probe_map / perturb_p1",
+      "leak": false,
+      "why": "v34. Motor scored raw P1. Probe matched motor. Later labs must not import these helpers as ACT gates."
+    },
+    {
+      "lab": "TM.0.28.COMPLEMENTARY",
+      "probe": "motor_probe + perturb_motor via actuator_decision_scores; patched TM027 helpers",
+      "leak": false,
+      "why": "First organism episodic ACT completion. Probes matched motor."
+    },
+    {
+      "lab": "TM.0.29.INDEXING",
+      "probe": "probe_map_motor / actuator_decision_scores",
+      "leak": false
+    },
+    {
+      "lab": "TM.0.31.HALFSPACE",
+      "probe": "motor_probe / perturb_motor / actuator_decision_scores",
+      "leak": false
+    },
+    {
+      "lab": "TM.0.32.RESTSPLIT through TM.0.39.JOINTSOCP",
+      "probe": "live_probes from run_tm032restsplit.py uses actuator_decision_scores",
+      "leak": false
+    },
+    {
+      "lab": "TM.0.40.CAUSALBATTERY",
+      "probe": "imported TM027 p1_probe/probe_map/perturb_p1",
+      "leak": true,
+      "kinds": ["acquire", "stable", "hist", "novel", "eco", "spec", "scale", "later"],
+      "interpretation": "invalidated_measurement__canonical_path_mismatch",
+      "addendum": "docs/lineage_causalbattery.measurement.addendum.lock"
+    },
+    {
+      "lab": "TM.0.41.LIVEADDR",
+      "probe": "diagnostic reconstruct; canonical vs raw both recorded; not a scored battery",
+      "leak": false,
+      "why": "Wall classified the TM040 leak. Not a replacement score."
+    }
+  ],
+  "earlier_decision_addenda_required": false,
+  "tm040_measurement_addendum_required": true,
+  "raw_live_scores_remain": "explicitly_labeled_diagnostics_never_behavioral_gates",
+  "refuse": [
+    "rewrite historical DEV/decision locks",
+    "rescore TM025-TM039 from this audit",
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py"
+  ],
+  "note": "Audit only. Product remains 0.0.004."
+}

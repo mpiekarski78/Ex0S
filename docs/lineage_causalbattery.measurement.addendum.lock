@@ -1,0 +1,43 @@
+{
+  "version": "TM.0.40.CAUSALBATTERY.MEASUREMENT.ADDENDUM",
+  "product": "0.0.004",
+  "rewrite_historical_decision": false,
+  "rewrite_historical_dev": false,
+  "historical_decision_lock": "docs/lineage_causalbattery.decision.lock",
+  "historical_dev_lock": "docs/lineage_causalbattery.dev.lock",
+  "historical_decision_sha": "734204f628362f58e4f3b19237dd82398016544655d2c13800f3408854bd1b99",
+  "historical_dev_lock_sha": "b10865b5f6fea382396db736549488c68dcdc5000932907a3612e29b53354ad7",
+  "frozen_runner_sha": "0739de3225e36bf88b66001ae9af2c3232a937d0bc6bc3b64eb34bdf7d2f9c6b",
+  "historical_decision_code": "jointsocp_fallback_acquire_fail",
+  "interpretation": "invalidated_measurement__canonical_path_mismatch",
+  "architectural_conclusion": "none",
+  "scientifically_valid_organism_acquire_failure": false,
+  "acquire_gate_measured": "ablated_raw_p1_actuator_scores",
+  "organism_motor_path": "actuator_decision_scores",
+  "always_joint_behavioral_acquire_fix": "invalidated__fixed_incorrectly_measured_raw_address",
+  "tm041_reconstruct": "diagnostic_evidence_not_a_replacement_score",
+  "tm041_decision_sha": "6f2c27c2729c1640c3b37a6381744bde0becd1ba45d7cf6ff10862fc1b1eaa2d",
+  "reporting_addendum_sha": "47de79c310e7ac6232cd69ca50d183430ecb98ba16f261f1120ac29963eba5e2",
+  "tm040_behavioral_probes_all_used_raw_p1": {
+    "helpers": ["p1_probe", "probe_map", "perturb_p1"],
+    "imported_from": "experiments/run_tm027gatedrehearsal.py",
+    "kinds": ["acquire", "stable", "hist", "novel", "eco", "spec", "scale", "later"],
+    "eco_spec_gamma_also_on_live_p1": true,
+    "contradict": "solver_cell_not_a_live_ranking_probe"
+  },
+  "next": "TM.0.40.CAUSALBATTERY.R2 frozen canonical probe on fresh domains before execution.",
+  "refuse": [
+    "rewrite lineage_causalbattery.decision.lock",
+    "rewrite lineage_causalbattery.dev.lock",
+    "rewrite lineage_causalbattery.decision.addendum.lock",
+    "treat_tm041_as_rescored_tm040",
+    "invoke_SOCP_unconditionally",
+    "add_live_constraints",
+    "change_fallback_trigger",
+    "modify_half_spacing",
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py",
+    "auto_cortex.candidate.v40.lock"
+  ],
+  "note": "Historical first-match stays on file. It is not a valid organism acquire failure. Product remains 0.0.004."
+}

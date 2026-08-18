@@ -1,0 +1,41 @@
+{
+  "version": "TM.0.40.CAUSALBATTERY.R2.ISOLATION",
+  "lab": "TM.0.40.CAUSALBATTERY.R2",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "recall_edit_authorized": false,
+  "threshold_edit_authorized": false,
+  "v40_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM040.CAUSAL.R2.DEV.",
+    "TWIN": "TM040.CAUSAL.R2.TWIN."
+  },
+  "fresh_domains": true,
+  "historical_immutable": [
+    "docs/lineage_causalbattery.dev.lock",
+    "docs/lineage_causalbattery.decision.lock",
+    "experiments/run_tm040causal.py"
+  ],
+  "authorized_by": [
+    "docs/lineage_causalbattery.measurement.addendum.lock",
+    "docs/lineage_probe_boundary.audit.lock",
+    "docs/lineage_liveaddr.decision.lock"
+  ],
+  "refuse": [
+    "rewrite TM040 historical DEV/decision",
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py",
+    "invoke_SOCP_unconditionally",
+    "add_live_constraints",
+    "change_fallback_trigger",
+    "modify_half_spacing",
+    "treat_raw_live_scores_as_behavioral_gate",
+    "auto_cortex.candidate.v40.lock",
+    "earned_next",
+    "0.0.005",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Harness-boundary R2 on fresh domains. Product remains 0.0.004."
+}
