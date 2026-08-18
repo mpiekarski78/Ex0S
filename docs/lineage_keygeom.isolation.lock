@@ -1,0 +1,29 @@
+{
+  "version": "TM.0.30.KEYGEOM.ISOLATION",
+  "lab": "TM.0.30.KEYGEOM",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "domains": {
+    "DEV": "TM030.KEYGEOM.DEV.",
+    "TWIN": "TM030.KEYGEOM.TWIN."
+  },
+  "disjoint_from": [
+    "TM029.INDEXING.DEV.",
+    "TM029.INDEXING.TWIN.",
+    "TM028.COMPLEMENTARY.DEV.",
+    "TM028.COMPLEMENTARY.TWIN.",
+    "TM027.GATEDREHEARSAL.DEV."
+  ],
+  "refuse": [
+    "TM028_monkey_patch",
+    "TM029_monkey_patch",
+    "rewrite TM029 historical locks",
+    "edit docs/cortex_v35.isolation.lock",
+    "auto_cortex.candidate.v37.lock",
+    "familiarity_or_sep_k_grid_after_dev",
+    "v37_architecture",
+    "threshold_change"
+  ],
+  "note": "Key-geometry diagnostic isolation. Standalone runner. Product remains 0.0.004."
+}

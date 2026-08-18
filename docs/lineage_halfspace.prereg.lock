@@ -1,0 +1,177 @@
+{
+  "version": "TM.0.31.HALFSPACE.PREREG",
+  "lab": "TM.0.31.HALFSPACE",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": true,
+  "neural_edit_before_runner_freeze": false,
+  "implementation_authorized": true,
+  "package_question": "Does early-raw episodic indexing plus a geometry-derived half-minimum-spacing familiarity gate restore taught mappings and reject novelty across independent registry-seed geometries?",
+  "authorized_by": [
+    "docs/lineage_keygeom.closure.lock",
+    "docs/cortex_v37.prereg.lock"
+  ],
+  "tm030_closure_sha": "174fa901a4f7f61c2b890323df1ce66ab7450cf454a82c3e2a7d03a399605209",
+  "tm030_decision_sha": "88309df4d15bb9fccc3f85e169be3b97b0dd4b2eb53be9b2a1f6d730c11e231f",
+  "v37_prereg_sha": "93bd414180aba4d65f2f925e6c4b38d6cdd32158d7529c033f47b0e9f37da0b7",
+  "candidate_name": "v37",
+  "n": 64,
+  "eta_act": 0.15,
+  "episode_slots": 8,
+  "write_match_l2": 0.05,
+  "treatment_mode": "early_raw_half_spacing",
+  "recall_modes": [
+    "off",
+    "early_raw",
+    "early_raw_half_spacing",
+    "separated_key"
+  ],
+  "separated_key_control_label": "matched_retrieval_path_control__not_v36_train_reproduction",
+  "failed_v36_control": "historical_TM029",
+  "claim": "geometry_derived_conservative_familiarity_rule",
+  "not_a_novelty_theorem": true,
+  "novelty_success": {
+    "path": "cortical_fallback",
+    "familiar": false,
+    "hold_not_required": true
+  },
+  "boundary_equality": "d1_le_R_ieee_no_epsilon",
+  "exact_nearest_tie": "cortical_fallback",
+  "registry_seeds": [
+    936835019,
+    1584000025,
+    2133183397,
+    520283234
+  ],
+  "registry_seeds_are_replicates_not_a_grid": true,
+  "genome_varies_only": "seed_registry",
+  "default_seed_registry_forbidden": 22222,
+  "oov_skips": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "dummy_oov_tokens": [
+    "s_tm031_oov_dummy_0",
+    "s_tm031_oov_dummy_1",
+    "s_tm031_oov_dummy_2",
+    "s_tm031_oov_dummy_3"
+  ],
+  "domains": {
+    "DEV": "TM031.HALFSPACE.DEV.",
+    "TWIN": "TM031.HALFSPACE.TWIN."
+  },
+  "capacity": [
+    {
+      "n_cues": 2,
+      "n_handles": 2,
+      "required": true
+    },
+    {
+      "n_cues": 4,
+      "n_handles": 2,
+      "required": true
+    },
+    {
+      "n_cues": 8,
+      "n_handles": 2,
+      "required": true
+    }
+  ],
+  "scaling": [
+    {
+      "n_cues": 8,
+      "n_handles": 4,
+      "balanced": true,
+      "purpose": "multi_actuator",
+      "required": true
+    }
+  ],
+  "integrity_gates": [
+    "neg",
+    "perm",
+    "ckpt",
+    "noteach",
+    "hold"
+  ],
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 1,
+  "world_index": 0,
+  "n_registry_seeds": 4,
+  "expected_n_cells": 148,
+  "manifest_sha": "2abd592a9c29c352038c92349424bd2e524b6b223457fb727bbb0232cb8afc93",
+  "margin": {
+    "pass_statistic": "normalized_geometric_margin",
+    "geometric_min": 0.01,
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20,
+    "perturb_stable_min": 19
+  },
+  "n_rest_ticks": 4,
+  "controls_are_observations": true,
+  "decision_ladder": [
+    {
+      "code": "halfspace_core_acquire_fail",
+      "when": "treatment acquire fails"
+    },
+    {
+      "code": "halfspace_core_stability_fail",
+      "when": "treatment stable or hist fails"
+    },
+    {
+      "code": "halfspace_reversal_fail",
+      "when": "treatment eco fails"
+    },
+    {
+      "code": "halfspace_specificity_fail",
+      "when": "treatment spec fails"
+    },
+    {
+      "code": "halfspace_integrity_fail",
+      "when": "treatment integrity fails"
+    },
+    {
+      "code": "halfspace_episodic_overgeneralization",
+      "when": "treatment novel does not reject episodic path"
+    },
+    {
+      "code": "halfspace_multiactuator_acquire_fail",
+      "when": "scale acquire fails"
+    },
+    {
+      "code": "halfspace_multiactuator_stability_fail",
+      "when": "scale stable fails"
+    },
+    {
+      "code": "halfspace_battery_pass",
+      "when": "treatment operational pass and matched gate ON/OFF path toggle"
+    },
+    {
+      "code": "halfspace_operational_pass__gate_not_causal",
+      "when": "treatment passes but matched novel path does not toggle"
+    }
+  ],
+  "refuse": [
+    "open SCORE",
+    "auto_cortex.candidate.v37.lock",
+    "earned_next",
+    "0.0.005",
+    "TM028_monkey_patch",
+    "TM029_monkey_patch",
+    "TM030_monkey_patch",
+    "runner_edits_after_freeze_push",
+    "install_tm030_W_N_cutoff",
+    "learned_separator_as_first_jump",
+    "hadamard_or_kwta_on_treatment_path",
+    "change_any_GenomeConfig_field_other_than_seed_registry"
+  ],
+  "note": "TM031 half-spacing battery. Product remains 0.0.004. Freeze runner before neural gate.",
+  "frozen_runner_sha": "480f7400ada06143acaa3242e75aed315e941f40ebb253a7d0bf67caaa16f564"
+}

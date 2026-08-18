@@ -1,0 +1,119 @@
+{
+  "version": "TM.0.30.KEYGEOM.CLOSURE",
+  "lab": "TM.0.30.KEYGEOM",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "rewrite_historical_dev": false,
+  "rewrite_historical_decision": false,
+  "threshold_installed_in_decision_lock": false,
+  "v37_architecture_in_this_pass": false,
+  "dev_rerun": false,
+  "historical_dev_lock": "docs/lineage_keygeom.dev.lock",
+  "historical_dev_lock_sha": "610f79246af390c1cf02b3ae862da80f72c6ed9e0ab43a94ef02433ea7086a9b",
+  "historical_decision_lock": "docs/lineage_keygeom.decision.lock",
+  "historical_decision_sha": "88309df4d15bb9fccc3f85e169be3b97b0dd4b2eb53be9b2a1f6d730c11e231f",
+  "historical_prereg": "docs/lineage_keygeom.prereg.lock",
+  "historical_prereg_sha": "601b7271f1ac756ef55c448ecd19a8d7047eacd66ca57a5097f812206a9b5cde",
+  "frozen_runner_sha": "52b019c8a5c982635f8b6fbc49446ff0528521583b6813bd6065f9c30314ea6d",
+  "tm029_decision_sha": "f3fc981d9516e5ecade86ed39fbf95f027ca7dcd8aa4cccd68601a5ec78083b0",
+  "v35_isolation_sha": "8d1b72fc45aac48f72f38d9ed753e37de81c75df2a0a1b23ee6d880f8b42f8d8",
+  "outcome_vector_unchanged": {
+    "key_rho_history_drift": "not_observed",
+    "key_rho_perturbation_drift": "not_observed",
+    "separator_added_collisions": "observed",
+    "novel_overlap_false_familiarity": "observed",
+    "geometry_wall_complete": true
+  },
+  "post_dev_comparison": {
+    "source": "docs/lineage_keygeom.dev.lock",
+    "not_a_decision_amendment": true,
+    "definitions": {
+      "W": "max raw nearest-stored key_rho L2 among taught-cue hist probes and perturbation trials",
+      "N": "min raw nearest-stored key_rho L2 among novel probes",
+      "B": "min pairwise L2 among stored taught key_rho vectors"
+    },
+    "W": 0.29447431705755306,
+    "N": 0.602682893541876,
+    "B": 0.6875220547289181,
+    "W_lt_N": true,
+    "W_overlaps_N": false,
+    "W_approaches_B": false,
+    "W_over_B": 0.4283125392590654,
+    "N_minus_W": 0.3082085764843229,
+    "novels_with_raw_best_le_W": 0,
+    "n_novel_probes": 64,
+    "W_hist_max": 0.2500477579385026,
+    "W_pert_max": 0.29447431705755306,
+    "by_family": {
+      "c8": {
+        "W": 0.29447431705755306,
+        "N": 0.602682893541876,
+        "B": 0.6875220547289181,
+        "W_lt_N": true
+      },
+      "c8h4": {
+        "W": 0.28847358545889756,
+        "N": 0.602682893541876,
+        "B": 0.6875220547289181,
+        "W_lt_N": true
+      }
+    },
+    "n_degeneracy": {
+      "unique_novel_raw_best_values": 1,
+      "reason": "each novel probe is a fresh checkpoint clone; the first post-checkpoint OOV spelling draws the same rng_registry embedding regardless of token string. N is one unused-token distance, not 64 independent novel geometries."
+    },
+    "stored_geometry_replicates": {
+      "unique_between_cue_l2_lists": 1,
+      "unique_baseline_live_key_rho": 8,
+      "n_baseline_probes": 64,
+      "reason": "vocab vectors are allocated by first-sight rng_registry order, not spelling, so world/scale cells share the same 8 stored keys; A_then_B vs B_then_A only reverses physical slots."
+    },
+    "route": "W_lt_N__raw_space_contains_familiarity_gap",
+    "route_then": "v37 early raw indexing with a preregistered raw-distance familiarity rule on fresh domains; not learned separation as the first jump"
+  },
+  "separator_added_collisions_denominator": {
+    "n_separator_added_when_raw_stable": 18,
+    "n_perturbation_trials": 1280,
+    "rate_over_all_trials": 0.0140625,
+    "split": {
+      "c8": {
+        "n_separator_added_when_raw_stable": 10,
+        "n_perturbation_trials": 640,
+        "n_sparse_ties": 71,
+        "n_sparse_scorable": 569
+      },
+      "c8h4": {
+        "n_separator_added_when_raw_stable": 8,
+        "n_perturbation_trials": 640,
+        "n_sparse_ties": 71,
+        "n_sparse_scorable": 569
+      }
+    },
+    "scorable_sparse_denom": 1138,
+    "note": "18/1280 all trials; 18/1138 excluding integer-overlap ties. Occasional separator brittleness, not broad identity collapse. Raw identity drift 0/1280."
+  },
+  "failed_v36_control": "fixed_hadamard_k_wta_sparse_separator",
+  "leading_v37_hypothesis": [
+    "early_key_rho",
+    "raw_nearest_episode",
+    "preregistered_raw_distance_familiarity_rejection",
+    "stored_p1",
+    "existing_cortical_act_scoring"
+  ],
+  "authorized_next": "separately_frozen_v37_raw_distance_familiarity_battery_fresh_domains",
+  "refuse": [
+    "rewrite lineage_keygeom.dev.lock",
+    "rewrite lineage_keygeom.decision.lock",
+    "install_raw_familiarity_threshold_in_tm030",
+    "v37_architecture_in_tm030_pass",
+    "learned_separator_as_first_jump",
+    "familiarity_or_sep_k_grid_after_dev",
+    "auto_cortex.candidate.v37.lock",
+    "v35_dev_rerun",
+    "tm030_dev_rerun"
+  ],
+  "note": "TM030 closed. Decision lock remains descriptive. W/N/B is a post-DEV comparison from the existing lock, not a retroactive threshold. Product remains 0.0.004."
+}

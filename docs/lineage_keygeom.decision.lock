@@ -1,0 +1,44 @@
+{
+  "version": "TM.0.30.KEYGEOM.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "dd8a22c5c8f9196919fc58968426bc044bb8ddf55fe187a96ecf125f32d9dffc",
+  "outcome_vector": {
+    "key_rho_history_drift": "not_observed",
+    "key_rho_perturbation_drift": "not_observed",
+    "separator_added_collisions": "observed",
+    "novel_overlap_false_familiarity": "observed",
+    "geometry_wall_complete": true
+  },
+  "outcome_definitions": {
+    "key_rho_history_drift": "any hist probe where unambiguous raw retrieval slot != expected_baseline_raw_slot for same cue",
+    "key_rho_perturbation_drift": "any perturb trial where unambiguous raw retrieval slot != expected_baseline_raw_slot",
+    "separator_added_collisions": "any probe where unambiguous sparse slot != unambiguous raw slot while raw matches baseline, OR sparse identity drifts on hist/pert when raw identity is stable",
+    "novel_overlap_false_familiarity": "any novel probe with best sparse overlap >= key_match_min_overlap, no integer tie, and sparse path would be episodic_completed",
+    "geometry_wall_complete": "all 8 checkpoint cells executed with side_effect_free verified"
+  },
+  "observations": {
+    "hist_raw_drift_any": false,
+    "pert_raw_drift_any": false,
+    "separator_collision_any": true,
+    "novel_false_familiarity_any": true,
+    "n_cells": 8
+  },
+  "distributions_summary": {
+    "raw_hist_identity_drift_rate": 0.0,
+    "sparse_hist_identity_drift_rate": 0.0,
+    "raw_pert_identity_drift_rate": 0.0,
+    "sparse_pert_identity_drift_rate": 0.015817223198594025,
+    "novel_false_familiarity_rate": 1.0,
+    "raw_tie_rate": 0.0,
+    "sparse_tie_rate": 0.10085227272727272,
+    "baseline_raw_sparse_slot_mismatch_count": 0,
+    "baseline_raw_sparse_slot_mismatch_denom": 64,
+    "separator_added_on_hist_when_raw_stable": 0,
+    "separator_added_on_pert_when_raw_stable": 18
+  },
+  "dev_lock_sha": "610f79246af390c1cf02b3ae862da80f72c6ed9e0ab43a94ef02433ea7086a9b",
+  "git_head": "da860ab83355b362ad5bf95caf9bf00d514732f8",
+  "frozen_runner_sha": "52b019c8a5c982635f8b6fbc49446ff0528521583b6813bd6065f9c30314ea6d",
+  "separator_matrix_sha": "afaef71091d7350d84843646a80b4ea82e332edeeb4a64fb4ebfded0da3cb1ac",
+  "note": "TM030 key-geometry diagnostic. Descriptive outcome vector only. Product remains 0.0.004."
+}

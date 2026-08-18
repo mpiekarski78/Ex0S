@@ -1,0 +1,89 @@
+{
+  "version": "TM.0.30.KEYGEOM.PREREG",
+  "lab": "TM.0.30.KEYGEOM",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "capability_claim": false,
+  "neural_edit_authorized": false,
+  "implementation_authorized": true,
+  "package_question": "Does frozen key geometry (raw key_rho vs sparse separator) explain TM029 hist/pert identity drift and novel false-familiarity before v37?",
+  "authorized_by": [
+    "docs/lineage_indexing.decision.lock",
+    "docs/cortex_v36.prereg.lock"
+  ],
+  "tm029_decision_sha": "f3fc981d9516e5ecade86ed39fbf95f027ca7dcd8aa4cccd68601a5ec78083b0",
+  "v36_prereg_sha": "9f8756ee55fc1bae1cd7a0b27b7dd1ade8fb7122c524f814dadae77b68c3a5d6",
+  "train_recall_mode": "separated_key",
+  "n": 64,
+  "eta_act": 0.15,
+  "episode_slots": 8,
+  "write_match_l2": 0.05,
+  "key_match_min_overlap": 5,
+  "sep_k": 8,
+  "sep_sparsity": 0.125,
+  "separator_matrix_sha": "afaef71091d7350d84843646a80b4ea82e332edeeb4a64fb4ebfded0da3cb1ac",
+  "domains": {
+    "DEV": "TM030.KEYGEOM.DEV.",
+    "TWIN": "TM030.KEYGEOM.TWIN."
+  },
+  "checkpoints": [
+    {
+      "id_prefix": "c8",
+      "n_cues": 8,
+      "n_handles": 2,
+      "required": true
+    },
+    {
+      "id_prefix": "scale|c8h4",
+      "n_cues": 8,
+      "n_handles": 4,
+      "required": true
+    }
+  ],
+  "orders": [
+    "A_then_B",
+    "B_then_A"
+  ],
+  "n_worlds": 2,
+  "expected_n_cells": 8,
+  "manifest_sha": "dd8a22c5c8f9196919fc58968426bc044bb8ddf55fe187a96ecf125f32d9dffc",
+  "margin": {
+    "rho_perturb_sigma": 0.01,
+    "perturb_n": 20
+  },
+  "n_rest_ticks": 4,
+  "pinned_probe_suffixes": {
+    "hist": "hist",
+    "novel": "novel"
+  },
+  "outcome_definitions": {
+    "key_rho_history_drift": "any hist probe where unambiguous raw retrieval slot != expected_baseline_raw_slot for same cue",
+    "key_rho_perturbation_drift": "any perturb trial where unambiguous raw retrieval slot != expected_baseline_raw_slot",
+    "separator_added_collisions": "any probe where unambiguous sparse slot != unambiguous raw slot while raw matches baseline, OR sparse identity drifts on hist/pert when raw identity is stable",
+    "novel_overlap_false_familiarity": "any novel probe with best sparse overlap >= key_match_min_overlap, no integer tie, and sparse path would be episodic_completed",
+    "geometry_wall_complete": "all 8 checkpoint cells executed with side_effect_free verified"
+  },
+  "decision_vector": [
+    "key_rho_history_drift",
+    "key_rho_perturbation_drift",
+    "separator_added_collisions",
+    "novel_overlap_false_familiarity",
+    "geometry_wall_complete"
+  ],
+  "refuse": [
+    "open SCORE",
+    "auto_cortex.candidate.v37.lock",
+    "earned_next",
+    "0.0.005",
+    "TM028_monkey_patch",
+    "TM029_monkey_patch",
+    "runner_edits_after_freeze_push",
+    "familiarity_or_sep_k_grid_after_dev",
+    "v37_architecture",
+    "threshold_change"
+  ],
+  "note": "TM030 key-geometry diagnostic. Product remains 0.0.004. No v37 architecture or threshold change in this pass.",
+  "frozen_runner_sha": "52b019c8a5c982635f8b6fbc49446ff0528521583b6813bd6065f9c30314ea6d"
+}
