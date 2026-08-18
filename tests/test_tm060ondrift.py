@@ -61,6 +61,7 @@ COMPAT_SHA = "a475d3f2bbea6e35832d46b467468cd989eba2df40c2e1a7372ca018ff451f14"
 LADDER = [
     "setup_precondition_fail",
     "observer_used_runner_provenance",
+    "full_oracle_infeasible",
     "prefix_infeasible",
     "representation_drift",
     "capacity_eviction_limits_consolidation",
@@ -112,6 +113,11 @@ def test_prereg_pins_receipt_identity_drift():
     assert p["attempted_vt_is_offline_diagnostic_ceiling"] is True
     assert p["residents_are_receipt_identified"] is True
     assert p["held_out_are_later_write_time_values"] is True
+    assert p["future_values_strictly_later_never_socp_constraints"] is True
+    assert p["action_roles_recur_across_chronological_split"] is True
+    assert p["attempted_and_heldout_not_duplicate_support"] is True
+    assert p["full_oracle_feasibility_ceiling"] is True
+    assert p["parent_w_act_query_unchanged_after_discarded_w_star"] is True
     assert p["w_star_chronological_prefix_only"] is True
     assert p["ordinary_reference_constraints_retained"] is True
     assert p["discard_every_W_star"] is True
@@ -144,7 +150,35 @@ def test_prereg_pins_receipt_identity_drift():
     assert frozen == sha_file(RUNNER)
 
 
-def test_ids_and_decision_ladder():
+def test_split_pins_reject_future_in_constraints_and_duplicates():
+    import numpy as np
+    from experiments.run_tm060ondrift import assert_split_pins
+
+    handles = ["a", "b"]
+    a = np.array([1.0, 0.0])
+    b = np.array([0.0, 1.0])
+    later_a = np.array([0.5, 0.5])
+    later_b = np.array([-0.5, 0.5])
+    train = [{"handle": "a", "p1": a}, {"handle": "b", "p1": b}]
+    future = [{"handle": "a", "p1": later_a}, {"handle": "b", "p1": later_b}]
+    refs = [("a", a.copy() + 3.0), ("b", b.copy() + 3.0)]
+    cons = refs + [("a", a), ("b", b)]
+    pins = assert_split_pins(train_rows=train, future_rows=future, ref_pairs=refs, handles=handles, cons=cons)
+    assert pins["future_never_socp_constraints"] is True
+    assert pins["action_roles_recur"] is True
+    assert pins["no_duplicate_heldout_support"] is True
+    leaked = cons + [("a", later_a)]
+    try:
+        assert_split_pins(train_rows=train, future_rows=future, ref_pairs=refs, handles=handles, cons=leaked)
+        raise AssertionError("future constraint leak")
+    except RuntimeError as exc:
+        assert "never enter SOCP" in str(exc)
+    dup = [{"handle": "a", "p1": a.copy()}, {"handle": "b", "p1": later_b}]
+    try:
+        assert_split_pins(train_rows=train, future_rows=dup, ref_pairs=refs, handles=handles, cons=cons)
+        raise AssertionError("duplicate support")
+    except RuntimeError as exc:
+        assert "duplicate support" in str(exc)
     from experiments.run_tm060ondrift import BEHAVIORAL_LADDER, _decision, expected_cell_ids, synthetic_grid
 
     ids = expected_cell_ids()
@@ -171,6 +205,9 @@ def test_runner_follows_receipts_and_discards_w_star():
     from experiments.run_tm060ondrift import refuse_runner_leaks, smoke
 
     src = RUNNER.read_text()
+    assert "assert_split_pins" in src
+    assert "full_oracle_feasible" in src
+    assert "parent_hash_unchanged" in src
     assert "write_opaque_kv" in src
     assert "locate_by_receipt" in src
     assert "later_write_time_values" in src
@@ -192,6 +229,8 @@ def test_runner_follows_receipts_and_discards_w_star():
     assert out["n_cells"] == 18
     assert out["receipt_contract"] == []
     assert out["ladder"]["setup"] == "setup_precondition_fail"
+    assert out["ladder"]["observer_used_runner_provenance"] == "observer_used_runner_provenance"
+    assert out["ladder"]["full_oracle_infeasible"] == "full_oracle_infeasible"
     assert out["ladder"]["representation_drift"] == "representation_drift"
     assert out["ladder"]["capacity_eviction_limits_consolidation"] == "capacity_eviction_limits_consolidation"
     assert out["ladder"]["generic_grounding_consolidation_earned"] == "generic_grounding_consolidation_earned"

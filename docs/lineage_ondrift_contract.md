@@ -19,11 +19,13 @@ Train diagnostic \(W_N^*\) on a chronological prefix plus ordinary reference-act
 1. prefix of all attempted write-time \(v_t\);
 2. currently resident receipt-identified values after that prefix.
 
+Future write-time values are a strict later suffix and are never SOCP constraints. The same action roles recur on both sides of the split. Attempted and held-out states are not duplicate support. A discarded full-oracle \(W^*\) on all attempted values plus ordinary references exists so prefix failure is not joint infeasibility. Parent `W_act_query` hashes stay unchanged after every discarded \(W^*\).
+
 Test both on later write-time values. Discard every \(W^*\).
 
 ## Ladder (setup excluded)
 
-`setup_precondition_fail` → `observer_used_runner_provenance` → `prefix_infeasible` → `representation_drift` → `capacity_eviction_limits_consolidation` → `generic_grounding_consolidation_earned`
+`setup_precondition_fail` → `observer_used_runner_provenance` → `full_oracle_infeasible` → `prefix_infeasible` → `representation_drift` → `capacity_eviction_limits_consolidation` → `generic_grounding_consolidation_earned`
 
 | Result | Interpretation |
 | --- | --- |

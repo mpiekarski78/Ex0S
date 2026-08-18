@@ -33,6 +33,11 @@
   "attempted_vt_is_offline_diagnostic_ceiling": true,
   "residents_are_receipt_identified": true,
   "held_out_are_later_write_time_values": true,
+  "future_values_strictly_later_never_socp_constraints": true,
+  "action_roles_recur_across_chronological_split": true,
+  "attempted_and_heldout_not_duplicate_support": true,
+  "full_oracle_feasibility_ceiling": true,
+  "parent_w_act_query_unchanged_after_discarded_w_star": true,
   "w_star_chronological_prefix_only": true,
   "ordinary_reference_constraints_retained": true,
   "discard_every_W_star": true,
@@ -102,6 +107,7 @@
   "decision_ladder": [
     {"code": "setup_precondition_fail", "when": "ordinary reference-action decoder is not 4/4, the opaque flag is missing, or write-time values were not receipt-captured"},
     {"code": "observer_used_runner_provenance", "when": "identity came from the write_opaque_kv keyword or a reconstructed organism id rather than the write receipt"},
+    {"code": "full_oracle_infeasible", "when": "all attempted write-time values plus ordinary references are jointly infeasible, so a prefix failure would not be a transfer result"},
     {"code": "prefix_infeasible", "when": "the first action-balanced attempt cycle plus ordinary references is jointly infeasible"},
     {"code": "representation_drift", "when": "attempt prefixes do not decode later write-time v_t"},
     {"code": "capacity_eviction_limits_consolidation", "when": "attempts generalize to later write-time values but currently resident receipt-identified values do not"},
@@ -127,5 +133,5 @@
     "DEV before runner-compat against the law addendum"
   ],
   "note": "Corrected online drift wall using receipt identity. No neural change. No SOCP installation. Product remains 0.0.004. Floor 0.05 unchanged.",
-  "frozen_runner_sha": "bad73e5d02f901e137c1414358fe813bc1385aa7e42d68f36c66f9c3a806f870"
+  "frozen_runner_sha": "c783babf8cb1e63bda402ee7c1f22461718be6ef2007a6177f7b735805b38a42"
 }

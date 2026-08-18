@@ -83,6 +83,7 @@ N_GRID = (4, 8, 16, 24)
 LADDER = (
     "setup_precondition_fail",
     "observer_used_runner_provenance",
+    "full_oracle_infeasible",
     "prefix_infeasible",
     "representation_drift",
     "capacity_eviction_limits_consolidation",
@@ -239,6 +240,51 @@ def pairs_of(rows: list[dict[str, Any]]) -> list[tuple[str, np.ndarray]]:
     return [(str(r["handle"]), np.asarray(r["p1"], dtype=np.float64).copy()) for r in rows]
 
 
+def _pair_hashes(pairs: list[tuple[str, np.ndarray]]) -> set[str]:
+    return {f"{h}|{hvec(x)}" for h, x in pairs}
+
+
+def assert_split_pins(
+    *,
+    train_rows: list[dict[str, Any]],
+    future_rows: list[dict[str, Any]],
+    ref_pairs: list[tuple[str, np.ndarray]],
+    handles: list[str],
+    cons: list[tuple[str, np.ndarray]],
+) -> dict[str, bool]:
+    train_pairs = pairs_of(train_rows)
+    future_pairs = pairs_of(future_rows)
+    train_h = {h for h, _x in train_pairs}
+    future_h = {h for h, _x in future_pairs}
+    need = {str(h) for h in handles}
+    if not future_pairs:
+        raise RuntimeError("held-out write-time values must be a non-empty later suffix")
+    if train_h != need or future_h != need:
+        raise RuntimeError("same action roles must recur on both sides of the chronological split")
+    train_hashes = {hvec(x) for _h, x in train_pairs}
+    future_hashes = {hvec(x) for _h, x in future_pairs}
+    ref_hashes = {hvec(x) for _h, x in ref_pairs}
+    cons_hashes = _pair_hashes(cons)
+    future_cons = _pair_hashes(future_pairs)
+    if train_hashes & future_hashes:
+        raise RuntimeError("attempted and held-out states must not be duplicate support")
+    if future_hashes & ref_hashes:
+        raise RuntimeError("held-out write-time values must not duplicate reference constraints")
+    if cons_hashes & future_cons:
+        raise RuntimeError("future values must never enter SOCP constraints")
+    return {
+        "future_strictly_later": True,
+        "future_never_socp_constraints": True,
+        "action_roles_recur": True,
+        "no_duplicate_heldout_support": True,
+    }
+
+
+def parent_hash_unchanged(ag: NeuralCortex, parent_h: str) -> None:
+    if w_act_hash(ag) != parent_h:
+        raise RuntimeError("parent W_act_query hash moved after discarded W_star")
+
+
 def opaque_live(
     *,
     tmp: str,
@@ -351,6 +397,11 @@ def collect_bundle(*, wi: int, tmp: str) -> dict[str, Any]:
     n_need = int(p["n_online_repeats"]) * int(n_handles)
     observer_ok = int(receipts.n_observer_provenance) == 0
     capture_ok = len(receipts.attempts) == n_need and len(receipts.stores) == n_need
+    oracle_cons = list(ref_pairs) + pairs_of(receipts.attempts)
+    oracle_rec, oracle_W = solve_ceiling(W0, oracle_cons, vocab)
+    parent_hash_unchanged(ag, w0_hash)
+    del oracle_W
+    full_oracle_feasible = bool(oracle_rec.get("feasible"))
     decoder = {
         "kind": "setup",
         "id": f"decoder|w{wi}",
@@ -368,6 +419,10 @@ def collect_bundle(*, wi: int, tmp: str) -> dict[str, Any]:
         "observer_ok": bool(observer_ok),
         "capture_ok": bool(capture_ok),
         "opaque_enabled": bool(online["opaque_enabled"]),
+        "full_oracle_feasible": bool(full_oracle_feasible),
+        "full_oracle_status": oracle_rec.get("status"),
+        "full_oracle_discarded": True,
+        "parent_w_act_query_unchanged": True,
         "episode_slots": int(EPISODE_SLOTS),
         "candidate_v41_lock": False,
         "kqv_edited": False,
@@ -406,15 +461,20 @@ def eval_arm(bundle: dict[str, Any], *, arm: str, n: int) -> dict[str, Any]:
     else:
         raise RuntimeError(arm)
     cons = list(bundle["ref_pairs"]) + pairs_of(train_rows)
+    pins = assert_split_pins(
+        train_rows=train_rows,
+        future_rows=future_rows,
+        ref_pairs=list(bundle["ref_pairs"]),
+        handles=list(bundle["handles"]),
+        cons=cons,
+    )
     rec, W_star = solve_ceiling(bundle["W0"], cons, bundle["vocab"])
-    if w_act_hash(bundle["ag"]) != parent_h:
-        raise RuntimeError("W_act_query installed or moved")
+    parent_hash_unchanged(bundle["ag"], parent_h)
     W_use = bundle["W0"] if W_star is None else W_star
     train_sc = score_eval(W_use, pairs_of(train_rows), bundle["vocab"])
     future_sc = score_eval(W_use, pairs_of(future_rows), bundle["vocab"])
     ref_sc = score_eval(W_use, list(bundle["ref_pairs"]), bundle["vocab"])
-    if w_act_hash(bundle["ag"]) != parent_h:
-        raise RuntimeError("W_act_query moved after W_star scoring")
+    parent_hash_unchanged(bundle["ag"], parent_h)
     del W_star
     feasible = bool(rec.get("feasible"))
     train_ok = bool(train_sc["n_ok"] == train_sc["n_need"])
@@ -455,6 +515,11 @@ def eval_arm(bundle: dict[str, Any], *, arm: str, n: int) -> dict[str, Any]:
         "future_ok": bool(future_ok),
         "ref_ok": bool(ref_ok),
         "held_out": "later_write_time_values",
+        "future_strictly_later": True,
+        "future_never_socp_constraints": bool(pins["future_never_socp_constraints"]),
+        "action_roles_recur": bool(pins["action_roles_recur"]),
+        "no_duplicate_heldout_support": bool(pins["no_duplicate_heldout_support"]),
+        "parent_w_act_query_unchanged": True,
         "candidate_v41_lock": False,
         "kqv_edited": False,
         "socp_extended": False,
@@ -469,6 +534,7 @@ def synthetic_grid(*, decoder_ok: bool = True, code: str = "generic_grounding_co
     n_grid = [int(x) for x in p["n_grid"]]
     cells: list[dict[str, Any]] = []
     observer_ok = code not in ("observer_used_runner_provenance", "setup_precondition_fail")
+    oracle_ok = observer_ok and code not in ("full_oracle_infeasible",)
     for wi in (0, 1):
         cells.append(
             {
@@ -478,11 +544,17 @@ def synthetic_grid(*, decoder_ok: bool = True, code: str = "generic_grounding_co
                 "passed": bool(decoder_ok) and code != "setup_precondition_fail",
                 "observer_ok": bool(observer_ok),
                 "n_observer_provenance": 0 if observer_ok else 1,
+                "full_oracle_feasible": bool(oracle_ok) and code != "setup_precondition_fail",
             }
         )
     att_future = code in ("generic_grounding_consolidation_earned", "capacity_eviction_limits_consolidation")
     res_future = code == "generic_grounding_consolidation_earned"
-    prefix_ok = code not in ("prefix_infeasible", "setup_precondition_fail", "observer_used_runner_provenance")
+    prefix_ok = code not in (
+        "prefix_infeasible",
+        "setup_precondition_fail",
+        "observer_used_runner_provenance",
+        "full_oracle_infeasible",
+    )
     for arm in ARMS:
         for n in n_grid:
             for wi in (0, 1):
@@ -543,6 +615,8 @@ def _decision(cells: list[dict[str, Any]]) -> tuple[str, str, dict[str, Any]]:
         return "observer_used_runner_provenance", "observer_used_runner_provenance", flags
     if any(int(by[f"decoder|w{wi}"].get("n_observer_provenance") or 0) > 0 for wi in (0, 1)):
         return "observer_used_runner_provenance", "observer_used_runner_provenance", flags
+    if any(not bool(by[f"decoder|w{wi}"].get("full_oracle_feasible")) for wi in (0, 1)):
+        return "full_oracle_infeasible", "full_oracle_infeasible", flags
     if any(not bool(by[f"attempts|n4|w{wi}"].get("feasible")) for wi in (0, 1)):
         return "prefix_infeasible", "prefix_infeasible", flags
 
