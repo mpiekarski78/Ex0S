@@ -224,7 +224,6 @@ def test_dev_lock_acquire_fail_and_no_candidate():
     decp = REPO / "docs" / "lineage_causalbattery.decision.lock"
     assert _sha(devp) == "b10865b5f6fea382396db736549488c68dcdc5000932907a3612e29b53354ad7"
     assert _sha(decp) == "734204f628362f58e4f3b19237dd82398016544655d2c13800f3408854bd1b99"
-    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()
     assert _sha(NEURAL) == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     dev = json.loads(devp.read_text())

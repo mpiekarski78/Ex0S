@@ -1,0 +1,95 @@
+{
+  "version": "TM.0.23.CORTEX.V40.CANDIDATE.REVIEW",
+  "product": "0.0.004",
+  "earned_next": false,
+  "ex0s": null,
+  "eligible_for_000005": false,
+  "rewrite_historical_locks": false,
+  "further_dev_run": false,
+  "opens_from": "docs/lineage_mechcorr.candidate_review.lock",
+  "question": "Is pinned global SOCP consolidation accepted as part of the Ex0S organism?",
+  "answer": "yes_as_computational_slow_consolidation_organ",
+  "verdict": "accept",
+  "creates_candidate_lock": "docs/cortex.candidate.v40.lock",
+  "does_not_update_live_pointer": "docs/cortex.candidate.lock remains TM.0.23.CORTEX.CANDIDATE.V30 until a separate product-earn or cutover decision",
+  "candidate_discussion_open_on_frozen_tm042_ladder": false,
+  "philosophical_boundary": {
+    "accepted_as": "inherited slow-consolidation organ, comparable in role to an optimizer, not emergent synaptic plasticity",
+    "requires": "Ex0S is a computational organism rather than a biologically local simulation",
+    "if_later_requires_biologically_local_updates_only": "stop_this_lineage_do_not_disguise_solver_as_plasticity"
+  },
+  "checklist": {
+    "solver_inputs_internal_only": true,
+    "no_cue_names_runner_metadata_expected_answers_or_future_info": true,
+    "activated_by_organism_owned_condition": true,
+    "solver_mode_survives_checkpoint_save_load": true,
+    "not_restored_only_by_experiment_harness": true,
+    "pinned_dependency_failure_fail_closed_state_unchanged": true,
+    "init_reproducible_without_undocumented_test_only_setter": true,
+    "claim_bounded_to_tested_episode_capacity_and_actuator_geometry": true
+  },
+  "checklist_notes": {
+    "solver_inputs": "solve_min_change_socp uses only W0 and constraint vectors d, x. _socp_constraints builds those from W_act_query, valid episode P1s with adv>0, and bound motor_vocab handle vectors. Constraint diagnostic key is unused by the solver. Episodes do not store cue names.",
+    "activation": "fallback_joint invokes SOCP only after native v37 credit when _count_store_violations()>0. Authoritative leftover predicate is _episode_rehearsal_violation. REST replay stays v37-gated.",
+    "checkpoint": "checkpoint() stores act_socp_arm; load_checkpoint() restores it. Frozen TM039 test already round-trips fallback_joint on a fresh NeuralCortex without calling the setter again. Missing snapshot key fails closed to off.",
+    "init": "Public instance flag NeuralCortex.set_act_socp_arm, documented in the v40 architecture amendment as not GenomeConfig. Default birth remains off (frozen v37). Candidate recipe is make_cortex then set_act_socp_arm('fallback_joint'). Not a hidden test hook.",
+    "fail_closed": "assert_pinned_solver raises before W mutation. Non-optimal, zero-normal, negative slack, nonfinite, or organism_violation_after_clip reject and restore W0. No partial install.",
+    "bound": "Evidence is eight-slot episodes, 8-cue/4-handle natural worlds and 8-cue/2-handle TM039 stems. Not unrestricted capacity."
+  },
+  "evidence": {
+    "canonical_r2": {
+      "lock": "docs/lineage_causalbattery.r2.decision.lock",
+      "sha": "bcd40fba96ff96d90958aaf4c03fd4bb8fa2995dccd313600a09e9fc50124f23",
+      "code": "canonical_r2_later_learning_not_exercised",
+      "removes_false_acquire_failure": true,
+      "fallback_hist": true,
+      "fallback_novel": true,
+      "fallback_scale": true,
+      "untouched_socp_installed": 4
+    },
+    "natural_handoff": {
+      "lock": "docs/lineage_postinstall.decision.lock",
+      "sha": "eec6263f4f85e94569eecded557dde6839123ef95ff58973005ce4994d343be8",
+      "addendum": "docs/lineage_postinstall.decision.addendum.lock",
+      "addendum_sha": "46d1b5d51e985bab51568adf23333ac6e9b26dde9993b554f426b94f7738c024",
+      "frozen_first_match": "postinstall_mech_install_fail",
+      "natural_c8h4_installed_and_continued": "4/4"
+    },
+    "mechanistic_stems": {
+      "lock": "docs/lineage_mechcorr.decision.lock",
+      "sha": "bf1740df882d095b37edb98479695521917202c175e6515997c523008f56200d",
+      "code": "mechcorr_continuity_pass",
+      "tm039_reg1_both_orders": true
+    }
+  },
+  "v40_prereg_candidate_lock_requires": [
+    "reversal",
+    "perturbation",
+    "history",
+    "novelty",
+    "scale_8x4",
+    "later_learning_on_untouched_worlds"
+  ],
+  "v40_prereg_requirements_met_by": {
+    "reversal": "TM042 natural 8x4 and TM043 reg1 continue gates",
+    "perturbation": "canonical_act_probe perturbation_ok on those cells",
+    "history": "R2 fallback_hist",
+    "novelty": "R2 fallback_novel and TM042/TM043 novelty_unfamiliar",
+    "scale_8x4": "R2 scale and TM042 natural 8x4 4/4",
+    "later_learning_on_untouched_worlds": "TM042 natural 8x4 post-install continuity 4/4"
+  },
+  "refuse": [
+    "earned_next",
+    "0.0.005",
+    "rewrite TM042 12-cell wall",
+    "flip candidate_discussion_open on frozen TM042 ladder",
+    "update live cortex.candidate.lock in this review",
+    "claim biologically local learning",
+    "claim unrestricted lifelong capacity",
+    "claim general intelligence",
+    "disguise_solver_as_local_plasticity",
+    "edit_neural_cortex.py",
+    "edit_joint_socp.py"
+  ],
+  "note": "Separate candidate review of combined immutable evidence. Product remains 0.0.004."
+}

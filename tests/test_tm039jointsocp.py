@@ -283,7 +283,6 @@ def test_socp_reject_does_not_partial_install():
 def test_dev_lock_fallback_sufficient_and_no_candidate():
     assert _sha(DEV) == HISTORICAL_DEV_SHA
     assert _sha(DEC) == HISTORICAL_DEC_SHA
-    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()
     assert not (REPO / "docs" / "cortex.candidate.v39.lock").exists()
     dev = json.loads(DEV.read_text())
     dec = json.loads(DEC.read_text())

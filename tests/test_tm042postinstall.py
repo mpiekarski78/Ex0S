@@ -107,7 +107,6 @@ def test_dev_lock_natural_c8h4_and_no_candidate():
     decp = REPO / "docs" / "lineage_postinstall.decision.lock"
     assert _sha(devp) == "b70481893ee8d8a43163ced9334ed0caa8e3bbe05a33204bca21808a48325488"
     assert _sha(decp) == "eec6263f4f85e94569eecded557dde6839123ef95ff58973005ce4994d343be8"
-    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()
     assert _sha(NEURAL) == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert _sha(R2_DEC) == R2_DEC_SHA

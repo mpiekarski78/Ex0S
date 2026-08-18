@@ -145,7 +145,6 @@ def test_dev_lock_path_inconsistency_and_no_candidate():
     decp = REPO / "docs" / "lineage_liveaddr.decision.lock"
     assert _sha(devp) == "53b0dfd33f3787fc6b5a4e3b55c2dd3f835a7b4350addc94bd2f63ed00d7d8f6"
     assert _sha(decp) == "6f2c27c2729c1640c3b37a6381744bde0becd1ba45d7cf6ff10862fc1b1eaa2d"
-    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()
     assert _sha(NEURAL) == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     dev = json.loads(devp.read_text())

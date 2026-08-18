@@ -236,4 +236,3 @@ def test_dev_lock_mixed_routes_and_no_v40():
     assert dec["decision"]["code"] == "conesplit_mixed_routes"
     assert dec["dev_lock_sha"] == HISTORICAL_DEV_SHA
     assert dec["v40_freeze"] is False
-    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()

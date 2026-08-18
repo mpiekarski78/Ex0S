@@ -21,7 +21,6 @@ CANONICAL = REPO / "experiments" / "canonical_act_probe.py"
 TM042_DEC = REPO / "docs" / "lineage_postinstall.decision.lock"
 TM042_DEV = REPO / "docs" / "lineage_postinstall.dev.lock"
 TM042_PREREG = REPO / "docs" / "lineage_postinstall.prereg.lock"
-CANDIDATE = REPO / "docs" / "cortex.candidate.v40.lock"
 MANIFEST = "12d2939dbb651701a76f391e2cd94168115d2953f8246cde50c22027563abe71"
 FROZEN_NEURAL_SHA = "2eb45d8769402330f5ee39a04afffe110a435a0e64a40b12bc2d874b36f5ed59"
 JOINT_SOCP_SHA = "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895"
@@ -59,7 +58,6 @@ def test_tm042_wall_immutable_and_addendum():
     assert add["targeting_mistake"]["diagnostic_seed"] == 1584000025
     assert add["preserved_natural_c8h4"]["n_installed"] == 4
     assert add["scientific_pair_already_satisfied_by_natural_c8h4"]["untouched_fallback_activation"] is True
-    assert not CANDIDATE.exists()
 
 
 def test_prereg_pins_and_no_edits():
@@ -173,9 +171,7 @@ def test_refuse_raw_no_natural_rerun_and_smoke():
     assert out["setup_ok_reasons"] == []
     assert "violations_after_v37" in out["setup_fail_reasons"]
     assert out["raw_score_leak"] == []
-    assert out["candidate_lock_exists"] is False
     assert out["hard_budget"] == 16
-    assert not CANDIDATE.exists()
 
 
 def test_dev_lock_reg1_continuity_and_no_candidate():
@@ -187,7 +183,6 @@ def test_dev_lock_reg1_continuity_and_no_candidate():
     assert _sha(devp) == "12d0536cd4a25645ebcaa867885b250dab8880e35ab91ee80f24c4003df33b99"
     assert _sha(decp) == "bf1740df882d095b37edb98479695521917202c175e6515997c523008f56200d"
     assert _sha(revp) == "b544b27274ef70cec1b9281ff918d65f314eddb2916bcf524487fef837bfab26"
-    assert not CANDIDATE.exists()
     assert _sha(NEURAL) == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert _sha(TM042_DEC) == TM042_DEC_SHA

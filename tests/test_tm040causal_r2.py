@@ -207,7 +207,6 @@ def test_dev_lock_canonical_acquire_pass_and_no_candidate():
     decp = REPO / "docs" / "lineage_causalbattery.r2.decision.lock"
     assert _sha(devp) == "a13838622a76fb3b7f62a73ef3e58001db0a4bf99cb9ede9c575bd7f7c438ab3"
     assert _sha(decp) == "bcd40fba96ff96d90958aaf4c03fd4bb8fa2995dccd313600a09e9fc50124f23"
-    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()
     assert _sha(NEURAL) == FROZEN_NEURAL_SHA
     assert _sha(SOLVER) == JOINT_SOCP_SHA
     assert _sha(TM040_DEC) == TM040_DEC_SHA
