@@ -80,6 +80,12 @@ EPISODE_SLOTS = 8
 EPISODE_MATCH_L2 = 0.05
 EPISODE_REPLAY_EPOCHS = 16
 ACT_MARGIN_FLOOR = 0.01
+# v38: instance-level rehearsal controller. Not a GenomeConfig field (TM031 to_dict).
+ACT_REHEARSE_V37 = "v37_awake_cap"
+ACT_REHEARSE_ADAPTIVE = "adaptive_violation"
+ACT_REHEARSE_FIXED = "fixed_extra_replay"
+ACT_REHEARSE_ARMS = (ACT_REHEARSE_V37, ACT_REHEARSE_ADAPTIVE, ACT_REHEARSE_FIXED)
+ACT_REHEARSE_TARGETING = "violation_rows"
 # v36: sparse hippocampal index. 12.5% sparsity; unrelated to EPISODE_SLOTS.
 SEP_DIM = 64
 SEP_K = 8
@@ -356,6 +362,20 @@ class NeuralCortex:
         self._episode_n_replaced = 0
         self._n_rest_replay = 0
         self._n_rest_strengthen = 0
+        self._act_rehearse_arm = ACT_REHEARSE_V37
+        self._rehearse_targeting = ACT_REHEARSE_TARGETING
+        self._rehearsal_pass_debt = 0
+        self._rehearsal_update_debt = 0
+
+    def set_act_rehearse_arm(self, arm: str) -> None:
+        if arm not in ACT_REHEARSE_ARMS:
+            raise ValueError(arm)
+        self._act_rehearse_arm = str(arm)
+        self._rehearse_targeting = ACT_REHEARSE_TARGETING
+
+    def _zero_rehearsal_debt(self) -> None:
+        self._rehearsal_pass_debt = 0
+        self._rehearsal_update_debt = 0
 
     # --- init helpers ---
 
@@ -635,8 +655,13 @@ class NeuralCortex:
         return win == str(handle) or win is None
 
     def _count_store_violations(self) -> int:
-        n = 0
-        for ep in self._episodes:
+        n, _slots = self._violation_signature()
+        return n
+
+    def _violation_signature(self) -> tuple[int, tuple[int, ...]]:
+        """Plateau signature: (n_violations, sorted violating slot indices)."""
+        slots: list[int] = []
+        for i, ep in enumerate(self._episodes):
             if not ep.get("valid"):
                 continue
             if self._episode_rehearsal_violation(
@@ -644,8 +669,8 @@ class NeuralCortex:
                 str(ep["handle"]),
                 float(ep["adv"]),
             ):
-                n += 1
-        return n
+                slots.append(int(i))
+        return len(slots), tuple(slots)
 
     def store_rehearsal_checkpoint(self) -> dict[str, int | bool]:
         n_violations = self._count_store_violations()
@@ -696,6 +721,29 @@ class NeuralCortex:
         skip_p1: np.ndarray | None = None,
         skip_handle: str | None = None,
     ) -> dict[str, Any]:
+        arm = str(getattr(self, "_act_rehearse_arm", ACT_REHEARSE_V37) or ACT_REHEARSE_V37)
+        if arm == ACT_REHEARSE_ADAPTIVE:
+            return self._run_controller_rehearsal_burst(
+                skip_p1=skip_p1,
+                skip_handle=skip_handle,
+                plateau_stop=True,
+                accrue_debt=True,
+            )
+        if arm == ACT_REHEARSE_FIXED:
+            return self._run_controller_rehearsal_burst(
+                skip_p1=skip_p1,
+                skip_handle=skip_handle,
+                plateau_stop=False,
+                accrue_debt=False,
+            )
+        return self._run_v37_awake_rehearsal_burst(skip_p1=skip_p1, skip_handle=skip_handle)
+
+    def _run_v37_awake_rehearsal_burst(
+        self,
+        *,
+        skip_p1: np.ndarray | None = None,
+        skip_handle: str | None = None,
+    ) -> dict[str, Any]:
         eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
         passes: list[dict[str, int]] = []
         first_converged: int | None = None
@@ -718,8 +766,71 @@ class NeuralCortex:
             budget_exhausted = True
         return {
             "passes": passes,
+            "n_passes": len(passes),
             "first_converged_pass": first_converged,
             "budget_exhausted": bool(budget_exhausted),
+            "plateau_stopped": False,
+            "total_updates": int(total_updates),
+        }
+
+    def _run_controller_rehearsal_burst(
+        self,
+        *,
+        skip_p1: np.ndarray | None = None,
+        skip_handle: str | None = None,
+        plateau_stop: bool,
+        accrue_debt: bool,
+    ) -> dict[str, Any]:
+        eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
+        n_before, slots_before = self._violation_signature()
+        if n_before == 0:
+            return {
+                "passes": [],
+                "n_passes": 0,
+                "first_converged_pass": 0,
+                "budget_exhausted": False,
+                "plateau_stopped": False,
+                "total_updates": 0,
+            }
+        passes: list[dict[str, Any]] = []
+        first_converged: int | None = None
+        total_updates = 0
+        budget_exhausted = False
+        plateau_stopped = False
+        for pass_index in range(1, EPISODE_REPLAY_EPOCHS + 1):
+            ps = self._gated_rehearsal_pass(
+                eta_a,
+                pass_index=pass_index,
+                skip_p1=skip_p1,
+                skip_handle=skip_handle,
+            )
+            n_after, slots_after = self._violation_signature()
+            if accrue_debt:
+                self._rehearsal_pass_debt += 1
+                self._rehearsal_update_debt += int(ps["n_updates"])
+            row = dict(ps)
+            row["violating_slots_before"] = list(slots_before)
+            row["violating_slots_after"] = list(slots_after)
+            row["n_violations_before"] = int(n_before)
+            row["n_violations_after"] = int(n_after)
+            passes.append(row)
+            total_updates += int(ps["n_updates"])
+            if n_after == 0:
+                first_converged = pass_index
+                break
+            improved = (int(n_before) - int(n_after)) >= 1
+            if plateau_stop and not improved:
+                plateau_stopped = True
+                break
+            n_before, slots_before = n_after, slots_after
+        else:
+            budget_exhausted = True
+        return {
+            "passes": passes,
+            "n_passes": len(passes),
+            "first_converged_pass": first_converged,
+            "budget_exhausted": bool(budget_exhausted),
+            "plateau_stopped": bool(plateau_stopped),
             "total_updates": int(total_updates),
         }
 
@@ -748,11 +859,18 @@ class NeuralCortex:
 
     def _replay_episodes(self) -> dict[str, Any]:
         eta_a = float(self.genome.eta_act) * self._age_scale("eta_act_scale", 1.0)
+        arm = str(getattr(self, "_act_rehearse_arm", ACT_REHEARSE_V37) or ACT_REHEARSE_V37)
+        pass_debt_before = int(self._rehearsal_pass_debt)
+        update_debt_before = int(self._rehearsal_update_debt)
+        if arm == ACT_REHEARSE_ADAPTIVE:
+            pass_budget = max(0, int(EPISODE_REPLAY_EPOCHS) - pass_debt_before)
+        else:
+            pass_budget = int(EPISODE_REPLAY_EPOCHS)
         epochs: list[dict[str, int]] = []
         first_converged: int | None = None
         total_updates = 0
         budget_exhausted = False
-        for epoch_index in range(1, EPISODE_REPLAY_EPOCHS + 1):
+        for epoch_index in range(1, pass_budget + 1):
             ps = self._gated_rehearsal_pass(eta_a, pass_index=epoch_index)
             row = dict(ps)
             row["epoch_index"] = int(epoch_index)
@@ -763,16 +881,23 @@ class NeuralCortex:
                     first_converged = epoch_index
                 break
         else:
-            budget_exhausted = True
+            budget_exhausted = bool(pass_budget > 0)
         violations_pre_mix = self._count_store_violations()
         self._clip_and_consolidate({"W_act_query"}, mix_slow=True)
         violations_post_mix = self._count_store_violations()
         self._n_rest_replay += total_updates
         self._n_rest_strengthen = 0
+        if arm == ACT_REHEARSE_ADAPTIVE:
+            # REST can repay at most 16 passes. Excess remains so leftover_debt
+            # blocks lifecycle compute-conservation claims. No freeze edit.
+            excess_pass = max(0, pass_debt_before - int(EPISODE_REPLAY_EPOCHS))
+            self._rehearsal_pass_debt = int(excess_pass)
+            self._rehearsal_update_debt = 0 if excess_pass == 0 else int(update_debt_before)
         return {
             "epochs": epochs,
             "first_converged_epoch": first_converged,
             "budget_exhausted": bool(budget_exhausted),
+            "pass_budget": int(pass_budget),
             "total_updates": int(total_updates),
             "violations_pre_mix": int(violations_pre_mix),
             "violations_post_mix": int(violations_post_mix),
@@ -1853,6 +1978,7 @@ class NeuralCortex:
         self._episode_n_replaced = 0
         self._n_rest_replay = 0
         self._n_rest_strengthen = 0
+        self._zero_rehearsal_debt()
         z = np.zeros(self.genome.n, dtype=np.float64)
         for h in list(self._proto_fast):
             self._proto_fast[h] = z.copy()
@@ -1952,6 +2078,9 @@ class NeuralCortex:
             "episode_n_replaced": int(self._episode_n_replaced),
             "n_rest_replay": int(self._n_rest_replay),
             "n_rest_strengthen": int(self._n_rest_strengthen),
+            "rehearsal_pass_debt": int(self._rehearsal_pass_debt),
+            "rehearsal_update_debt": int(self._rehearsal_update_debt),
+            "act_rehearse_arm": str(self._act_rehearse_arm),
             "sources": {k: v.tolist() for k, v in self.sources.items()},
             "v_start": self.v_start.tolist(),
             "v_end": self.v_end.tolist(),
@@ -2059,6 +2188,11 @@ class NeuralCortex:
         self._episode_n_replaced = int(snap.get("episode_n_replaced") or 0)
         self._n_rest_replay = int(snap.get("n_rest_replay") or 0)
         self._n_rest_strengthen = int(snap.get("n_rest_strengthen") or 0)
+        self._rehearsal_pass_debt = int(snap.get("rehearsal_pass_debt") or 0)
+        self._rehearsal_update_debt = int(snap.get("rehearsal_update_debt") or 0)
+        arm = str(snap.get("act_rehearse_arm") or ACT_REHEARSE_V37)
+        self._act_rehearse_arm = arm if arm in ACT_REHEARSE_ARMS else ACT_REHEARSE_V37
+        self._rehearse_targeting = ACT_REHEARSE_TARGETING
         gsnap = snap.get("genome") or {}
         if "act_score_mode" in gsnap:
             self.genome.act_score_mode = str(gsnap["act_score_mode"])

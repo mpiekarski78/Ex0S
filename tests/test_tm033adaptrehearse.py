@@ -1,14 +1,26 @@
-"""TM033 adaptive-rehearsal freeze tests. Neural controller not required except skip."""
+"""TM033 adaptive-rehearsal freeze tests. Neural controller required after freeze push."""
 
 from __future__ import annotations
 
 import hashlib
+import inspect
 import json
 from pathlib import Path
 
+from three_memory.neural_cortex import (
+    ACT_RECALL_EARLY_RAW_HALF,
+    ACT_RECALL_MODES,
+    ACT_REHEARSE_ADAPTIVE,
+    ACT_REHEARSE_FIXED,
+    ACT_REHEARSE_V37,
+    EPISODE_MATCH_L2,
+    EPISODE_REPLAY_EPOCHS,
+    GenomeConfig,
+    NeuralCortex,
+)
+
 REPO = Path(__file__).resolve().parents[1]
 PREREG = REPO / "docs" / "lineage_adaptrehearse.prereg.lock"
-ISO = REPO / "docs" / "lineage_adaptrehearse.isolation.lock"
 CONTRACT = REPO / "docs" / "lineage_adaptrehearse_contract.md"
 RUNNER = REPO / "experiments" / "run_tm033adaptrehearse.py"
 V38_PREREG = REPO / "docs" / "cortex_v38.prereg.lock"
@@ -23,10 +35,54 @@ HISTORICAL_TM032_RUNNER_SHA = "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb77
 V38_ISO_SHA = "73543f2f67f6356e2218aa162cdf00db6beeea033a3cb177299efdf9237af866"
 V38_PREREG_SHA = "de924a8df50f0b20c902bf3cd3f689e882a162df0d28fe33e509ac6cb074c510"
 FROZEN_RUNNER_SHA = "91d8074d74b3724bd38e69b1d3860ea8ad0ba9835eb615a513cc9fcf620f5a49"
+GENOME_TO_DICT_KEYS = {
+    "n",
+    "d_sym",
+    "k_s",
+    "d_body",
+    "d_x",
+    "p_connect",
+    "t_max",
+    "tau",
+    "cos_thresh",
+    "eta_pred",
+    "eta_act",
+    "beta",
+    "clip",
+    "seed_birth",
+    "seed_registry",
+    "seed_source",
+    "seed_action",
+    "seed_permute",
+    "seed_motor",
+    "dtype",
+    "motor_persist_p",
+    "act_score_mode",
+    "actuator_proto_h_max",
+    "episodic_act_recall",
+    "act_recall_mode",
+    "separator_matrix_sha",
+    "body_setpoint",
+    "ops",
+    "op_cost",
+}
 
 
 def _sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def _stuck_pass(n_viol: int, n_updates: int):
+    def pass_fn(eta_a, *, pass_index, skip_p1=None, skip_handle=None):
+        return {
+            "pass_index": pass_index,
+            "violations_before": n_viol,
+            "violations_after": n_viol,
+            "n_updates": n_updates,
+            "n_opportunities": n_viol,
+        }
+
+    return pass_fn
 
 
 def test_prereg_budget_plateau_debt_and_limitation():
@@ -71,12 +127,13 @@ def test_tm032_locks_unedited():
 
 
 def test_half_mode_and_write_radius_untouched():
-    from three_memory.neural_cortex import ACT_RECALL_EARLY_RAW_HALF, ACT_RECALL_MODES, EPISODE_MATCH_L2, EPISODE_REPLAY_EPOCHS
-
     assert EPISODE_MATCH_L2 == 0.05
     assert EPISODE_REPLAY_EPOCHS == 16
     assert ACT_RECALL_EARLY_RAW_HALF not in ACT_RECALL_MODES
-    assert not hasattr(__import__("three_memory.neural_cortex", fromlist=["NeuralCortex"]).NeuralCortex, "set_act_rehearse_arm")
+    assert hasattr(NeuralCortex, "set_act_rehearse_arm")
+    g = GenomeConfig().to_dict()
+    assert set(g) == GENOME_TO_DICT_KEYS
+    assert "act_rehearse_arm" not in g
 
 
 def test_expected_ids_and_routes():
@@ -137,4 +194,171 @@ def test_smoke_v37_arm():
     assert out["smoke_ok"]
     assert out["arm"] == "v37_awake_cap"
     assert out["hard_budget_passes"] == 16
-    assert out["neural_ready"] is False
+    assert out["neural_ready"] is True
+
+
+def test_credit_one_shot_is_not_debt():
+    src = inspect.getsource(NeuralCortex._credit_act_p1_episode)
+    assert src.index("_apply_act_query_update") < src.index("_run_awake_rehearsal_burst")
+    assert "_rehearsal_pass_debt" not in src
+    assert "_rehearsal_update_debt" not in src
+
+
+def test_adaptive_plateau_is_one_unchanged_pass():
+    ag = NeuralCortex()
+    ag.set_act_rehearse_arm(ACT_REHEARSE_ADAPTIVE)
+    ag._violation_signature = lambda: (3, (0, 1, 2))
+    ag._gated_rehearsal_pass = _stuck_pass(3, 4)
+    burst = ag._run_awake_rehearsal_burst()
+    assert burst["n_passes"] == 1
+    assert burst["plateau_stopped"] is True
+    assert burst["budget_exhausted"] is False
+    assert burst["total_updates"] == 4
+    assert ag._rehearsal_pass_debt == 1
+    assert ag._rehearsal_update_debt == 4
+    assert ag._rehearse_targeting == "violation_rows"
+
+
+def test_fixed_extra_no_plateau_no_debt():
+    ag = NeuralCortex()
+    ag.set_act_rehearse_arm(ACT_REHEARSE_FIXED)
+    ag._violation_signature = lambda: (3, (0, 1, 2))
+    ag._gated_rehearsal_pass = _stuck_pass(3, 2)
+    burst = ag._run_awake_rehearsal_burst()
+    assert burst["n_passes"] == 16
+    assert burst["plateau_stopped"] is False
+    assert burst["budget_exhausted"] is True
+    assert burst["total_updates"] == 32
+    assert ag._rehearsal_pass_debt == 0
+    assert ag._rehearsal_update_debt == 0
+
+
+def test_debt_survives_credits_and_debits_rest():
+    ag = NeuralCortex()
+    ag.set_act_rehearse_arm(ACT_REHEARSE_ADAPTIVE)
+    ag._violation_signature = lambda: (2, (0, 1))
+    ag._gated_rehearsal_pass = _stuck_pass(2, 5)
+    ag._run_awake_rehearsal_burst()
+    ag._run_awake_rehearsal_burst()
+    assert ag._rehearsal_pass_debt == 2
+    assert ag._rehearsal_update_debt == 10
+    rest = ag._replay_episodes()
+    assert rest["pass_budget"] == 14
+    assert len(rest["epochs"]) == 14
+    assert ag._rehearsal_pass_debt == 0
+    assert ag._rehearsal_update_debt == 0
+
+
+def test_zero_budget_rest_resets_debt():
+    ag = NeuralCortex()
+    ag.set_act_rehearse_arm(ACT_REHEARSE_ADAPTIVE)
+    ag._rehearsal_pass_debt = 16
+    ag._rehearsal_update_debt = 44
+    rest = ag._replay_episodes()
+    assert rest["pass_budget"] == 0
+    assert rest["epochs"] == []
+    assert rest["budget_exhausted"] is False
+    assert ag._rehearsal_pass_debt == 0
+    assert ag._rehearsal_update_debt == 0
+
+
+def test_fixed_rest_does_not_debit_or_reset():
+    ag = NeuralCortex()
+    ag.set_act_rehearse_arm(ACT_REHEARSE_FIXED)
+    ag._rehearsal_pass_debt = 7
+    ag._rehearsal_update_debt = 9
+    rest = ag._replay_episodes()
+    assert rest["pass_budget"] == 16
+    assert ag._rehearsal_pass_debt == 7
+    assert ag._rehearsal_update_debt == 9
+
+
+def test_v37_burst_does_not_accrue_debt():
+    ag = NeuralCortex()
+    ag.set_act_rehearse_arm(ACT_REHEARSE_V37)
+    burst = ag._run_awake_rehearsal_burst()
+    assert burst["n_passes"] == 1
+    assert burst["total_updates"] == 0
+    assert burst["plateau_stopped"] is False
+    assert ag._rehearsal_pass_debt == 0
+    assert ag._rehearsal_update_debt == 0
+
+
+def test_default_instance_does_not_activate_controller():
+    ag = NeuralCortex()
+    assert ag._act_rehearse_arm == ACT_REHEARSE_V37
+    ag._violation_signature = lambda: (3, (0, 1, 2))
+    ag._gated_rehearsal_pass = _stuck_pass(3, 2)
+    burst = ag._run_awake_rehearsal_burst()
+    assert burst["n_passes"] == 16
+    assert burst["plateau_stopped"] is False
+    assert burst["budget_exhausted"] is True
+    assert ag._rehearsal_pass_debt == 0
+    assert ag._rehearsal_update_debt == 0
+    rest = ag._replay_episodes()
+    assert rest["pass_budget"] == 16
+
+
+def test_explicit_v37_matches_default_and_does_not_plateau():
+    default = NeuralCortex()
+    explicit = NeuralCortex()
+    explicit.set_act_rehearse_arm(ACT_REHEARSE_V37)
+    default._violation_signature = lambda: (2, (0, 1))
+    explicit._violation_signature = lambda: (2, (0, 1))
+    default._gated_rehearsal_pass = _stuck_pass(2, 1)
+    explicit._gated_rehearsal_pass = _stuck_pass(2, 1)
+    b0 = default._run_awake_rehearsal_burst()
+    b1 = explicit._run_awake_rehearsal_burst()
+    assert b0["n_passes"] == b1["n_passes"] == 16
+    assert b0["total_updates"] == b1["total_updates"] == 16
+    assert b0["plateau_stopped"] is False
+    assert b1["plateau_stopped"] is False
+    assert default._rehearsal_pass_debt == explicit._rehearsal_pass_debt == 0
+
+
+def test_excess_pass_debt_remains_after_rest():
+    ag = NeuralCortex()
+    ag.set_act_rehearse_arm(ACT_REHEARSE_ADAPTIVE)
+    ag._rehearsal_pass_debt = 20
+    ag._rehearsal_update_debt = 50
+    rest = ag._replay_episodes()
+    assert rest["pass_budget"] == 0
+    assert ag._rehearsal_pass_debt == 4
+    assert ag._rehearsal_update_debt == 50
+    leftover = {
+        "id": "acquire|c8|A_then_B|reg1|adaptive_violation",
+        "arm": "adaptive_violation",
+        "rehearsal_pass_debt_after_rest": ag._rehearsal_pass_debt,
+        "rehearsal_update_debt_after_rest": ag._rehearsal_update_debt,
+        "awake_budget_exhausted": False,
+    }
+    from experiments.run_tm033adaptrehearse import _decision
+
+    code, _then, flags = _decision(["efficient_scheduling"] * 8, [leftover])
+    assert code == "adaptrehearse_debt_integrity_fail"
+    assert flags["n_debt_remaining_after_rest"] == 1
+
+
+def test_checkpoint_serializes_debt_and_arm():
+    ag = NeuralCortex()
+    ag.set_act_rehearse_arm(ACT_REHEARSE_ADAPTIVE)
+    ag._rehearsal_pass_debt = 3
+    ag._rehearsal_update_debt = 11
+    snap = ag.checkpoint()
+    assert snap["rehearsal_pass_debt"] == 3
+    assert snap["rehearsal_update_debt"] == 11
+    assert snap["act_rehearse_arm"] == ACT_REHEARSE_ADAPTIVE
+    twin = NeuralCortex()
+    twin.load_checkpoint(snap)
+    assert twin._rehearsal_pass_debt == 3
+    assert twin._rehearsal_update_debt == 11
+    assert twin._act_rehearse_arm == ACT_REHEARSE_ADAPTIVE
+    missing = dict(snap)
+    del missing["rehearsal_pass_debt"]
+    del missing["rehearsal_update_debt"]
+    del missing["act_rehearse_arm"]
+    bare = NeuralCortex()
+    bare.load_checkpoint(missing)
+    assert bare._rehearsal_pass_debt == 0
+    assert bare._rehearsal_update_debt == 0
+    assert bare._act_rehearse_arm == ACT_REHEARSE_V37
