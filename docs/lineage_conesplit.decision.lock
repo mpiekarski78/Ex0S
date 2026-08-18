@@ -1,0 +1,46 @@
+{
+  "version": "TM.0.38.CONESPLIT.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "0278191e6e296ab9d2434e9cd079748aba75ff30e15d78b53585d9f7481d4e87",
+  "decision": {
+    "code": "conesplit_mixed_routes",
+    "then": "conesplit_mixed_routes",
+    "phase_flags": {
+      "n_worlds": 8,
+      "n_diagnostic": 6,
+      "n_lin16_already": 2,
+      "routes": [
+        "budget_causal",
+        "budget_causal",
+        "joint_socp_only",
+        "joint_socp_only",
+        "geometry_and_budget",
+        "geometry_and_budget",
+        "lin16_already_converged",
+        "lin16_already_converged"
+      ],
+      "diagnostic_routes": [
+        "budget_causal",
+        "budget_causal",
+        "joint_socp_only",
+        "joint_socp_only",
+        "geometry_and_budget",
+        "geometry_and_budget"
+      ],
+      "v40_freeze": false,
+      "candidate_lock": false
+    }
+  },
+  "dev_lock_sha": "871be97be4fa888aec802a877847ea4e9831a09ce738cb9b82ddc8d3b02a972d",
+  "git_head": "4800ffc3431bd84fbb389813ae19d4201eafe78b",
+  "frozen_runner_sha": "b06088386512c8d199a218e6de08c1909cf65895add979f8d71b3d788480f02b",
+  "hard_budget_passes": 16,
+  "diagnostic_cycle_cap": 256,
+  "fit_44_row_updates": false,
+  "fitted_learning_rate": false,
+  "fitted_degenerate_epsilon": false,
+  "v40_freeze": false,
+  "oracle_installed_in_organism": false,
+  "candidate_lock": false,
+  "note": "TM038 cone-split decision. Product remains 0.0.004. v40 is not frozen here."
+}

@@ -42,6 +42,10 @@ HISTORICAL_TM032_DEV_SHA = "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56
 HISTORICAL_TM032_DEC_SHA = "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e112be4c7a4c7"
 HISTORICAL_TM032_RUNNER_SHA = "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503"
 FROZEN_RUNNER_SHA = "b06088386512c8d199a218e6de08c1909cf65895add979f8d71b3d788480f02b"
+HISTORICAL_DEV_SHA = "871be97be4fa888aec802a877847ea4e9831a09ce738cb9b82ddc8d3b02a972d"
+HISTORICAL_DEC_SHA = "d06177fb93809ca90a9012dfdbd5d7af39ba0dc782db617786366612777e3426"
+DEV = REPO / "docs" / "lineage_conesplit.dev.lock"
+DEC = REPO / "docs" / "lineage_conesplit.decision.lock"
 
 
 def _sha(p: Path) -> str:
@@ -191,3 +195,45 @@ def test_smoke():
     assert out["diagnostic_cycle_cap"] == 256
     assert out["soc_separate_ranking"] is False
     assert out["soc_fitted_eps"] is False
+
+
+def test_dev_lock_mixed_routes_and_no_v40():
+    assert _sha(DEV) == HISTORICAL_DEV_SHA
+    assert _sha(DEC) == HISTORICAL_DEC_SHA
+    dev = json.loads(DEV.read_text())
+    dec = json.loads(DEC.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "4800ffc3431bd84fbb389813ae19d4201eafe78b"
+    assert dev["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dev["decision_code"] == "conesplit_mixed_routes"
+    assert dev["diagnostic_cycle_cap"] == 256
+    assert dev["v40_freeze"] is False
+    assert dev["candidate_lock"] is False
+    assert dev["fitted_degenerate_epsilon"] is False
+    assert dev["phase_flags"]["n_diagnostic"] == 6
+    assert set(dev["phase_flags"]["diagnostic_routes"]) == {
+        "budget_causal",
+        "joint_socp_only",
+        "geometry_and_budget",
+    }
+    r0 = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg0|lin_dykstra_conv"][0]
+    r1l = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg1|lin_dykstra_conv"][0]
+    r1s = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg1|soc_conv"][0]
+    r1o = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg1|oracle"][0]
+    r2s = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg2|soc_conv"][0]
+    r2l = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg2|lin_dykstra_conv"][0]
+    soc16 = [c for c in dev["cells"] if c["arm"] == "soc_16" and c["lin16_probe_fixed"] is False]
+    assert r0["fixed"] is True
+    assert int(r0["process"]["n_passes"]) == 42
+    assert r1l["fixed"] is False
+    assert r1s["fixed"] is False
+    assert int(r1l["process"]["n_passes"]) == 256
+    assert r1o["fixed"] is True
+    assert r1o["process"]["status"] == "feasible"
+    assert r2s["fixed"] is True
+    assert r2l["fixed"] is False
+    assert all(c["fixed"] is False for c in soc16)
+    assert dec["decision"]["code"] == "conesplit_mixed_routes"
+    assert dec["dev_lock_sha"] == HISTORICAL_DEV_SHA
+    assert dec["v40_freeze"] is False
+    assert not (REPO / "docs" / "cortex.candidate.v40.lock").exists()
