@@ -227,3 +227,62 @@ def test_runner_refuses_v41_and_smoke():
     assert out["candidate_exists"] is False
     assert out["n_grid"] == [1, 2, 4, 8, 16, 32]
     assert "memproj_arm" not in GenomeConfig().to_dict()
+
+
+DEV_SHA = "de2b615eb2b386b10d4f9aac5346d7b0e44301e34455806b4b27f339daa7e374"
+DEC_SHA = "d54dd1be3989d12fc22dc86f31a1b5cf8aa0675bbf200ef2d91a3a32a811565c"
+DEV_GIT = "721fc8a7cbd5be8b96012bfbe602b4cbaa63d511"
+
+
+def test_dev_lock_coverage_generalizes_but_contexts_collapsed():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm053cover import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_cover.dev.lock"
+    decp = REPO / "docs" / "lineage_cover.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert _sha(TM052_RUNNER) == TM052_RUNNER_SHA
+    assert _sha(TM052_DEV) == TM052_DEV_SHA
+    assert _sha(TM052_ADD) == TM052_ADD_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "coverage_generalizes"
+    assert dev["n_cells"] == 42
+    assert dev["install_W_star"] is False
+    assert dev["n_fitted_as_organism_constant"] is False
+    assert dev["new_decoder"] is False
+    assert dec["earned_next"] is False
+    assert dec["install_W_star"] is False
+    assert dec["n_fitted_as_organism_constant"] is False
+    assert dec["decision"]["code"] == "coverage_generalizes"
+    assert dec["decision"]["phase_flags"]["generic_consolidation_plausible"] is True
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    for si in range(3):
+        for wi in range(2):
+            assert cells[f"decoder|s{si}|w{wi}"]["n_ok"] == 4
+            top = cells[f"n32|s{si}|w{wi}"]
+            assert top["feasible"] is True
+            assert top["applied"] is False
+            assert top["W_installed"] is False
+            assert top["held_out_in_constraints"] is False
+            assert top["n_is_organism_constant"] is False
+            assert top["hold"]["n_ok"] == 16
+            assert top["reference"]["n_ok"] == 4
+            train_h = {h["p1_hash"] for h in top["train"]["handles"]}
+            hold_h = {h["p1_hash"] for h in top["hold"]["handles"]}
+            assert len(train_h) == 4
+            assert train_h == hold_h
+            assert top["geometry_train"]["within_l2_mean"] == 0.0
+    n1 = cells["n1|s0|w0"]
+    assert n1["hold"]["n_ok"] == 16
+    assert n1["train"]["n_ok"] == 4
+
