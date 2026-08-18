@@ -209,3 +209,70 @@ def test_runner_refuses_v41_and_smoke():
     assert out["candidate_exists"] is False
     assert out["tau"] == 0.01
     assert "memproj_arm" not in GenomeConfig().to_dict()
+
+
+DEV_SHA = "e80ec58901ab456202a6715c74807c1a9b93a34baa546703494b9d90eb55b64a"
+DEC_SHA = "b27ba8f614f41b13b5bdba1eea4468345e8183489318c49960b4c45ef096de5d"
+DEV_GIT = "f9f267ae6a54889a3fadae25004476dc2f495b0e"
+
+
+def test_dev_lock_shared_W_star_satisfies_and_no_install():
+    from three_memory.cortex_lineage import sha_file
+    from experiments.run_tm052sharefeas import expected_cell_ids
+
+    devp = REPO / "docs" / "lineage_sharefeas.dev.lock"
+    decp = REPO / "docs" / "lineage_sharefeas.decision.lock"
+    assert _sha(devp) == DEV_SHA
+    assert _sha(decp) == DEC_SHA
+    assert _sha(TM051_RUNNER) == TM051_RUNNER_SHA
+    assert _sha(TM051_DEV) == TM051_DEV_SHA
+    assert _sha(TM051_DEC) == TM051_DEC_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert _sha(NEURAL) == NEURAL_SHA
+    assert sha_file(RUNNER) == RUNNER_SHA
+    assert not CANDIDATE_V41.exists()
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == DEV_GIT
+    assert dev["decision_code"] == "shared_W_star_satisfies"
+    assert dev["n_cells"] == 8
+    assert dev["n_setup_cells"] == 2
+    assert dev["n_scored_cells"] == 6
+    assert dev["install_W_star"] is False
+    assert dev["new_decoder"] is False
+    assert dev["candidate_v41_lock"] is False
+    assert dev["neural_untouched"] is True
+    assert dec["earned_next"] is False
+    assert dec["eligible_for_000005"] is False
+    assert dec["install_W_star"] is False
+    assert dec["new_decoder"] is False
+    assert dec["decision"]["code"] == "shared_W_star_satisfies"
+    assert dec["decision"]["phase_flags"]["investigate_generic_consolidation"] is True
+    assert dec["decision"]["phase_flags"]["earned_second_decoder"] is False
+    assert dec["dev_lock_sha"] == _sha(devp)
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert list(cells) == expected_cell_ids()
+    assert cells["decoder|w0"]["n_ok"] == 4
+    assert cells["decoder|w1"]["n_ok"] == 4
+    assert cells["wrapped_train|w0"]["cell_code"] == "train_feasible"
+    assert cells["wrapped_train|w1"]["cell_code"] == "train_feasible"
+    assert cells["train_ref|w0"]["cell_code"] == "train_ref_feasible"
+    assert cells["full_oracle|w0"]["cell_code"] == "full_feasible"
+    assert cells["full_oracle|w1"]["cell_code"] == "full_feasible"
+    assert cells["full_oracle|w0"]["predicate"]["n_ok"] == 12
+    assert cells["full_oracle|w1"]["predicate"]["n_ok"] == 12
+    assert cells["full_oracle|w0"]["applied"] is False
+    assert cells["full_oracle|w0"]["W_installed"] is False
+    assert cells["wrapped_train|w0"]["tm051_train_decode"]["n_ok"] == 1
+    assert cells["wrapped_train|w1"]["tm051_train_decode"]["n_ok"] == 4
+    assert cells["wrapped_train|w0"]["hold_on_Wstar_train"]["n_ok"] == 1
+    assert cells["wrapped_train|w1"]["hold_on_Wstar_train"]["n_ok"] == 1
+    hold0 = [h["p1_hash"] for h in cells["full_oracle|w0"]["predicate"]["handles"][-4:]]
+    assert hold0 == [
+        "843d1549a3f6a6190adeabf1883acf1d51ad64813b4803a85f737438122acb80",
+        "6095d4147b59706e954c1f83188d24679b1c0b07a69ab6e687a178d1563d0527",
+        "4533bafecb2c96c543c40acde6ea5d5f1559fb2a7b3703b5ea6455ff5f72f471",
+        "191ddeaa64b0129170154c45d97cf4271e3d679606745822eed947731d63145a",
+    ]
+
