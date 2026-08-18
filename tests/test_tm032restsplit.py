@@ -11,6 +11,8 @@ PREREG = REPO / "docs" / "lineage_restsplit.prereg.lock"
 ISO = REPO / "docs" / "lineage_restsplit.isolation.lock"
 CONTRACT = REPO / "docs" / "lineage_restsplit_contract.md"
 RUNNER = REPO / "experiments" / "run_tm032restsplit.py"
+DEV = REPO / "docs" / "lineage_restsplit.dev.lock"
+DEC = REPO / "docs" / "lineage_restsplit.decision.lock"
 TM031_RUNNER = REPO / "experiments" / "run_tm031halfspace.py"
 TM031_FAILCLASS = REPO / "docs" / "lineage_halfspace.failclass.lock"
 TM031_DEC = REPO / "docs" / "lineage_halfspace.decision.lock"
@@ -23,6 +25,8 @@ HISTORICAL_TM031_DEV_SHA = "56dc67affd8fe5d2bb2263dc617c4d28922bfbac03c40b8bf8f6
 HISTORICAL_TM031_ADDENDUM_SHA = "5be880f3edf1549e75a6929d549d4a8d8d8d493a789dbed197443f25b76abdd1"
 HISTORICAL_TM031_RUNNER_SHA = "480f7400ada06143acaa3242e75aed315e941f40ebb253a7d0bf67caaa16f564"
 FROZEN_RUNNER_SHA = "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503"
+HISTORICAL_DEV_SHA = "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56514974c9644d"
+HISTORICAL_DEC_SHA = "43a2e8e05ce7912420a2f76570b05ef92ea4ff338416ae9cc65e112be4c7a4c7"
 
 
 def _sha(p: Path) -> str:
@@ -121,3 +125,40 @@ def test_smoke():
     assert out["parent_unchanged"]
     assert out["n_arms"] == 5
     assert out["treatment_mode"] == "early_raw_half_spacing"
+
+
+def test_dev_decision_all_arms_remain_visible():
+    assert _sha(RUNNER) == FROZEN_RUNNER_SHA
+    assert _sha(DEV) == HISTORICAL_DEV_SHA
+    assert _sha(DEC) == HISTORICAL_DEC_SHA
+    dec = json.loads(DEC.read_text())
+    assert dec["decision"]["code"] == "restsplit_awake_rehearsal_sufficient"
+    assert dec["decision"]["v38_route"] == "adaptive_violation_driven_rehearsal"
+    assert dec["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dec["dev_lock_sha"] == HISTORICAL_DEV_SHA
+    assert dec["modify_R"] is False
+    assert dec["act_recall_modes_tuple_untouched"] is True
+    assert dec["not_v38"] is True
+    flags = dec["decision"]["phase_flags"]
+    assert flags["n_splits"] == 8
+    assert flags["n_diagnostic"] == 2
+    assert flags["n_baseline_converged"] == 6
+    cells = json.loads(DEV.read_text())["cells"]
+    assert len(cells) == 40
+    by_split = {}
+    for c in cells:
+        by_split.setdefault((c["order"], c["reg"]), {})[c["arm"]] = c
+    assert len(by_split) == 8
+    for arms in by_split.values():
+        assert set(arms) == {"none", "awake_only", "replay_no_mix", "mix_only", "full_rest"}
+        assert arms["none"]["parent_unchanged"] is True
+    diag = [arms for arms in by_split.values() if not arms["none"]["fixed"]]
+    assert len(diag) == 2
+    for arms in diag:
+        assert arms["none"]["n_store_violations"] == 3
+        assert arms["none"]["n_probe_correct"] == 6
+        assert arms["awake_only"]["fixed"] is True
+        assert arms["replay_no_mix"]["fixed"] is True
+        assert arms["full_rest"]["fixed"] is True
+        assert arms["mix_only"]["fixed"] is False
+        assert arms["awake_only"]["split_route"] == "awake_rehearsal_sufficient"

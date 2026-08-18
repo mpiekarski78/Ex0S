@@ -1,0 +1,39 @@
+{
+  "version": "TM.0.32.RESTSPLIT.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "69f9c8e11855c54454bb3e99128761099341ad3d17bcbc9def3a82b75a286bd7",
+  "decision": {
+    "code": "restsplit_awake_rehearsal_sufficient",
+    "then": "restsplit_awake_rehearsal_sufficient",
+    "phase_flags": {
+      "n_splits": 8,
+      "n_diagnostic": 2,
+      "n_baseline_converged": 6,
+      "routes": [
+        "baseline_already_converged",
+        "baseline_already_converged",
+        "awake_rehearsal_sufficient",
+        "awake_rehearsal_sufficient",
+        "baseline_already_converged",
+        "baseline_already_converged",
+        "baseline_already_converged",
+        "baseline_already_converged"
+      ]
+    },
+    "v38_route": "adaptive_violation_driven_rehearsal"
+  },
+  "dev_lock_sha": "7c6a8833f8fbf0f0669825395b5142a082f05de0e5aa9c44df56514974c9644d",
+  "git_head": "b122cacff06a03f314975071a26f6eeb8aa759be",
+  "frozen_runner_sha": "bd591d293ba8f4023d5ca89d9f812f58b3afeac662301bb772bad03d99f09503",
+  "not_v38": true,
+  "modify_R": false,
+  "act_recall_modes_tuple_untouched": true,
+  "note": "TM032 REST-split decision. Product remains 0.0.004.",
+  "v38_map": {
+    "restsplit_awake_rehearsal_sufficient": "adaptive_violation_driven_rehearsal",
+    "restsplit_slow_mix_sufficient": "on_demand_consolidation",
+    "restsplit_replay_no_mix_sufficient": "rest_replay_without_slow_mix",
+    "restsplit_full_rest_only": "credit_triggered_micro_rest",
+    "restsplit_compute_matched_wall": "optimization_capacity_wall"
+  }
+}
