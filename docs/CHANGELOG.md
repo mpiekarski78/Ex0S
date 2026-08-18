@@ -2,6 +2,7 @@
 
 ## 2026-08-18
 
+- **TM.0.36.UPDATEGEOM freeze:** Post-write_only interference matrix plus native / Jacobi / protect-every-update / closest-W oracle on fresh domains. No neural edit. v39 not frozen; DEV names the next law. [`lineage_updategeom.prereg.lock`](lineage_updategeom.prereg.lock). Product **0.0.004**.
 - **TM.0.35.CREDITSPLIT DEV:** First-match **creditsplit_mixed_oneshot_and_burst**. Two diagnostic worlds (both `reg1`); write never rebreaks protected rows; one-shot and the v37 burst each independently do. v39 one-shot-only safe scaling is not opened. [`lineage_creditsplit.decision.lock`](lineage_creditsplit.decision.lock). Product **0.0.004**.
 - **TM.0.35.CREDITSPLIT freeze:** Credit-7 write / one-shot / burst / complete split on fresh domains. Identical pre-credit-7 clones; previously correct rows exclude the new slot; complete is native `_credit_act_p1_episode`; probes on another clone; pure TM032 helpers. No neural edit. v39 gated on oneshot-causal DEV. [`lineage_creditsplit.prereg.lock`](lineage_creditsplit.prereg.lock). Product **0.0.004**.
 - **TM.0.34.TEMPORALWALL DEV:** First-match **temporalwall_temporal_interference**. Exact TM032 `awake_only` still fixes the diagnostic post-awake snapshots (44 updates). v37/fixed sit at zero violations for credits 0–6; the last credit reintroduces slots 0/4/6. Not a v38 repair. [`lineage_temporalwall.decision.lock`](lineage_temporalwall.decision.lock). Product **0.0.004**.

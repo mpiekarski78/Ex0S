@@ -1,0 +1,62 @@
+{
+  "version": "TM.0.36.UPDATEGEOM.ISOLATION",
+  "lab": "TM.0.36.UPDATEGEOM",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": false,
+  "v38_repair_authorized": false,
+  "v39_freeze_authorized": false,
+  "domains": {
+    "DEV": "TM036.UPDATEGEOM.DEV.",
+    "TWIN": "TM036.UPDATEGEOM.TWIN."
+  },
+  "disjoint_from": [
+    "TM035.CREDITSPLIT.DEV.",
+    "TM035.CREDITSPLIT.TWIN.",
+    "TM034.TEMPORALWALL.DEV.",
+    "TM034.TEMPORALWALL.TWIN.",
+    "TM033.ADAPTREHEARSE.DEV.",
+    "TM033.ADAPTREHEARSE.TWIN.",
+    "TM032.RESTSPLIT.DEV.",
+    "TM032.RESTSPLIT.TWIN."
+  ],
+  "pure_helpers_only": [
+    "experiments/run_tm032restsplit.py:clone_plastic",
+    "experiments/run_tm032restsplit.py:stored_rows",
+    "experiments/run_tm032restsplit.py:live_probes",
+    "experiments/run_tm032restsplit.py:eta_act",
+    "experiments/run_tm035creditsplit.py:bind_component",
+    "experiments/run_tm035creditsplit.py:_fresh",
+    "experiments/run_tm035creditsplit.py:_teach_prefix",
+    "experiments/run_tm035creditsplit.py:clone_identity",
+    "experiments/run_tm035creditsplit.py:identities_match",
+    "experiments/run_tm035creditsplit.py:newest_slot",
+    "experiments/run_tm035creditsplit.py:protected_slots",
+    "experiments/run_tm035creditsplit.py:broke_protected"
+  ],
+  "refuse": [
+    "plateau_relaxation",
+    "hard_budget_gt_16",
+    "fit_tm032_44_row_updates_as_constant",
+    "v38_repair",
+    "GEM_projection_as_v39",
+    "one_shot_only_v39",
+    "auto_cortex.candidate.v38.lock",
+    "auto_cortex.candidate.v39.lock",
+    "modify_R",
+    "add early_raw_half_spacing to ACT_RECALL_MODES",
+    "rewrite TM035 historical locks",
+    "rewrite TM034 historical locks",
+    "rewrite TM033 historical locks",
+    "rewrite TM032 historical locks",
+    "rewrite TM031 historical locks",
+    "tm035_dev_rerun",
+    "tm034_dev_rerun",
+    "tm033_dev_rerun",
+    "tm032_dev_rerun",
+    "TM032_monkey_patch",
+    "TM035_monkey_patch",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Update-geometry wall after TM035 mixed one-shot and burst causality. Standalone runner. No neural edit. Product remains 0.0.004."
+}
