@@ -1,0 +1,58 @@
+{
+  "version": "TM.0.49.ACTFEED.ISOLATION",
+  "lab": "TM.0.49.ACTFEED",
+  "product": "0.0.004",
+  "implementation_authorized": true,
+  "neural_edit_authorized": true,
+  "kqv_edit_authorized": false,
+  "decoder_edit_authorized": false,
+  "solver_edit_authorized": false,
+  "action_feedback_edit_authorized": true,
+  "v41_candidate_authorized": false,
+  "domains": {
+    "DEV": "TM049.ACTFEED.DEV.",
+    "TWIN": "TM049.ACTFEED.TWIN."
+  },
+  "historical_immutable": [
+    "experiments/run_tm046oneshot.py",
+    "docs/lineage_oneshot.dev.lock",
+    "docs/lineage_oneshot.decision.lock",
+    "docs/lineage_oneshot.prereg.lock",
+    "docs/lineage_oneshot.decision.addendum.lock",
+    "experiments/run_tm047reinstate.py",
+    "docs/lineage_reinstate.dev.lock",
+    "docs/lineage_reinstate.decision.lock",
+    "docs/lineage_reinstate.prereg.lock",
+    "experiments/run_tm048creditinfo.py",
+    "docs/lineage_creditinfo.dev.lock",
+    "docs/lineage_creditinfo.decision.lock",
+    "docs/lineage_creditinfo.prereg.lock",
+    "docs/lineage_creditinfo.decision.addendum.lock",
+    "three_memory/joint_socp.py"
+  ],
+  "neural_edit_scope": [
+    "generic action-observation channel for pending motor_vec",
+    "key from pre-feedback cue state",
+    "value from post-feedback rho",
+    "checkpointed action_feedback_enabled flag default off"
+  ],
+  "refuse": [
+    "tune_kqv",
+    "train_new_decoder",
+    "add_action_feedback_to_ACT_RECALL_MODES",
+    "add_action_feedback_to_GenomeConfig",
+    "copy_handle_into_S",
+    "runner_constructs_rho_k_v",
+    "rerun TM048 DEV",
+    "edit experiments/run_tm048creditinfo.py",
+    "edit experiments/run_tm047reinstate.py",
+    "edit experiments/run_tm046oneshot.py",
+    "auto_cortex.candidate.v41.lock",
+    "edit_joint_socp.py",
+    "earned_next",
+    "0.0.005",
+    "learned_opaque_addressing_on_this_wall",
+    "runner_edits_after_freeze_push"
+  ],
+  "note": "Freeze action-feedback before the neural edit. After freeze, only the generic action-observation channel may be added. Product remains 0.0.004."
+}
