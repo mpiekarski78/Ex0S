@@ -176,3 +176,64 @@ def test_refuse_raw_no_natural_rerun_and_smoke():
     assert out["candidate_lock_exists"] is False
     assert out["hard_budget"] == 16
     assert not CANDIDATE.exists()
+
+
+def test_dev_lock_reg1_continuity_and_no_candidate():
+    from three_memory.cortex_lineage import sha_file
+
+    devp = REPO / "docs" / "lineage_mechcorr.dev.lock"
+    decp = REPO / "docs" / "lineage_mechcorr.decision.lock"
+    revp = REPO / "docs" / "lineage_mechcorr.candidate_review.lock"
+    assert _sha(devp) == "12d0536cd4a25645ebcaa867885b250dab8880e35ab91ee80f24c4003df33b99"
+    assert _sha(decp) == "bf1740df882d095b37edb98479695521917202c175e6515997c523008f56200d"
+    assert _sha(revp) == "b544b27274ef70cec1b9281ff918d65f314eddb2916bcf524487fef837bfab26"
+    assert not CANDIDATE.exists()
+    assert _sha(NEURAL) == FROZEN_NEURAL_SHA
+    assert _sha(SOLVER) == JOINT_SOCP_SHA
+    assert _sha(TM042_DEC) == TM042_DEC_SHA
+    assert _sha(TM042_DEV) == TM042_DEV_SHA
+    assert sha_file(RUNNER) == "739c0457c4c2f12b41f34dbf6c8f246c497512e9d402f5e3e2924f87a390e775"
+    p = json.loads(PREREG.read_text())
+    dev = json.loads(devp.read_text())
+    dec = json.loads(decp.read_text())
+    rev = json.loads(revp.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "ff6d31246c8022601c32a06c6bf1f6f097bdf6fc"
+    assert dev["decision_code"] == "mechcorr_continuity_pass"
+    assert dev["natural_rerun"] is False
+    assert dev["candidate_v40_lock"] is False
+    assert dec["candidate_v40_lock"] is False
+    assert dec["candidate_discussion_open_on_frozen_tm042_ladder"] is False
+    assert dec["separate_candidate_review_open"] is True
+    assert rev["not_a_candidate_lock"] is True
+    assert rev["candidate_v40_lock"] is False
+    flags = dev["phase_flags"]
+    assert int(flags["n_setup_ok"]) == 2
+    assert int(flags["n_installed"]) == 2
+    assert int(flags["n_continuity_ok"]) == 2
+    assert flags["separate_candidate_review_open"] is True
+    assert flags["candidate_discussion_open_on_frozen_tm042_ladder"] is False
+    cells = {c["id"]: c for c in dev["cells"]}
+    assert set(cells) == {"mechcorr|tm039|reg1|A_then_B", "mechcorr|tm039|reg1|B_then_A"}
+    for _cid, cell in cells.items():
+        pin = p["pinned_cells"][cell["order"]]
+        proc = cell["process"]
+        assert int(proc["violations_after_v37"]) > 0
+        assert proc["fallback_invoked"] is True
+        assert proc["solver_installed"] is True
+        assert cell["setup_precondition_ok"] is True
+        assert cell["organism_failure"] is False
+        assert cell["cell_code"] == "mechcorr_ok"
+        assert proc["parent_identity_sha"] == pin["parent_identity_sha"]
+        assert proc["v37_w_hash"] == pin["v37_w_hash"]
+        assert proc["installed_w_hash"] == pin["installed_w_hash"]
+        assert proc["socp"]["status"] == "optimal"
+        assert proc["socp"]["applied"] is True
+        assert cell["retain_ok"] is True
+        assert cell["new_mapping_ok"] is True
+        assert cell["reversal_ok"] is True
+        assert cell["subsequent_fallback_atomic"] is True
+        assert cell["novelty_unfamiliar"] is True
+        assert cell["familiarity_unchanged"] is True
+        assert cell["solver_handles_never_in_act"] is True
+        assert cell["handoff"]["post_credit_w_hash"]
