@@ -1,0 +1,40 @@
+{
+  "version": "TM.0.37.JOINTPROJ.DECISION",
+  "product": "0.0.004",
+  "manifest_sha": "f1baa82f81d6e3cf326d25b059c0d07d828863213c7497db716677a398c42dd4",
+  "decision": {
+    "code": "jointproj_oracle_only",
+    "then": "jointproj_oracle_only",
+    "phase_flags": {
+      "n_worlds": 8,
+      "n_diagnostic": 2,
+      "n_v37_already": 6,
+      "routes": [
+        "v37_already_converged",
+        "v37_already_converged",
+        "oracle_only",
+        "oracle_only",
+        "v37_already_converged",
+        "v37_already_converged",
+        "v37_already_converged",
+        "v37_already_converged"
+      ],
+      "diagnostic_routes": [
+        "oracle_only",
+        "oracle_only"
+      ],
+      "candidate_v39_lock": false
+    }
+  },
+  "dev_lock_sha": "a21ff312947f3b503342fbe3df963ed079d7c71d446cb1425087b96317fcbe48",
+  "git_head": "6f4e052a768db8dae2c271b94f02097927e2ca06",
+  "frozen_runner_sha": "897144551ee418d8d7579b1e78b5871463c6cff3d664f716c4c9f142b69a3380",
+  "hard_budget_passes": 16,
+  "fit_44_row_updates": false,
+  "fitted_learning_rate": false,
+  "plateau_relaxed": false,
+  "v38_repair": false,
+  "oracle_installed_in_organism": false,
+  "candidate_v39_lock": false,
+  "note": "TM037 joint-projection decision. Product remains 0.0.004. No cortex.candidate.v39.lock."
+}

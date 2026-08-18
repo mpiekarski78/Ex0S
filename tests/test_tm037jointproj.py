@@ -49,6 +49,10 @@ V39_ISO_SHA = "558a20172b1316433e2ddaf0c6eb7cdc89f97cec7326c6d97babb088f3ec6020"
 V39_PREREG_SHA = "54d67b69c94ce73f766d53333abf13e8fc8513b8147a46a37bea1701c7c491c8"
 V39_AMD_SHA = "da712d13eb02d0268da8615b676dcf0e4b851107561afec602a69c9e4ed543c5"
 FROZEN_RUNNER_SHA = "897144551ee418d8d7579b1e78b5871463c6cff3d664f716c4c9f142b69a3380"
+HISTORICAL_DEV_SHA = "a21ff312947f3b503342fbe3df963ed079d7c71d446cb1425087b96317fcbe48"
+HISTORICAL_DEC_SHA = "55e29766d53f37ffc72e825547df9db3642e3e6839d4eb85cff32e522d447d4f"
+DEV = REPO / "docs" / "lineage_jointproj.dev.lock"
+DEC = REPO / "docs" / "lineage_jointproj.decision.lock"
 GENOME_TO_DICT_KEYS = {
     "n",
     "d_sym",
@@ -258,4 +262,44 @@ def test_v39_default_off_rejects_oracle_and_checkpoints():
     body = inspect.getsource(credit)
     assert body.index("_act_proj_arm_active") < body.index("_apply_act_query_update")
     assert body.index("_apply_act_query_update") < body.index("_run_awake_rehearsal_burst")
+
+
+def test_dev_lock_first_match_and_no_candidate():
+    assert _sha(DEV) == HISTORICAL_DEV_SHA
+    assert _sha(DEC) == HISTORICAL_DEC_SHA
+    dev = json.loads(DEV.read_text())
+    dec = json.loads(DEC.read_text())
+    assert dev["clean_tree"] is True
+    assert dev["git_head"] == "6f4e052a768db8dae2c271b94f02097927e2ca06"
+    assert dev["frozen_runner_sha"] == FROZEN_RUNNER_SHA
+    assert dev["decision_code"] == "jointproj_oracle_only"
+    assert dev["fit_44_row_updates"] is False
+    assert dev["fitted_learning_rate"] is False
+    assert dev["hard_budget_passes"] == 16
+    assert dev["candidate_v39_lock"] is False
+    assert dev["oracle_installed_in_organism"] is False
+    assert dev["phase_flags"]["n_diagnostic"] == 2
+    assert set(dev["phase_flags"]["diagnostic_routes"]) == {"oracle_only"}
+    native = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg1|v37"][0]
+    pa = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg1|pa_cyclic"][0]
+    dyk = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg1|dykstra"][0]
+    oracle = [c for c in dev["cells"] if c["id"] == "acquire|c8|A_then_B|reg1|oracle"][0]
+    assert native["fixed"] is False
+    assert native["broke_slots"] == [0, 4, 6]
+    assert int(native["process"]["n_awake_updates"]) == 122
+    assert pa["fixed"] is False
+    assert pa["broke_slots"] == [6]
+    assert int(pa["n_probe_correct"]) == 7
+    assert pa["process"]["fitted_learning_rate"] is False
+    assert pa["process"]["corrections"] is False
+    assert dyk["fixed"] is False
+    assert dyk["broke_slots"] == [6]
+    assert dyk["process"]["corrections"] is True
+    assert oracle["fixed"] is True
+    assert oracle["process"]["status"] == "feasible"
+    assert float(oracle["process"]["gamma_star"]) > 0.01
+    assert dec["decision"]["code"] == "jointproj_oracle_only"
+    assert dec["dev_lock_sha"] == HISTORICAL_DEV_SHA
+    assert dec["candidate_v39_lock"] is False
+    assert not (REPO / "docs" / "cortex.candidate.v39.lock").exists()
 
