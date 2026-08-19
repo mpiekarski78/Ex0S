@@ -48,7 +48,7 @@ def variants_for(family: str, *, max_n: int = 25) -> list[dict[str, Any]]:
         i = 0
         for max_k in (4, 8):
             for spawn in (0.2, 0.5):
-                for mix in (0.5, 0.85, 1.0):
+                for mix in (0.5, 0.75, 0.9):
                     for eta in (0.05, 0.15):
                         if i >= 25:
                             break
@@ -78,7 +78,7 @@ def variants_for(family: str, *, max_n: int = 25) -> list[dict[str, Any]]:
                     "name": f"finv_{i:02d}",
                     "eta": 0.1,
                     "sep": 0.15,
-                    "mix": 1.0,
+                    "mix": 0.9,
                     "max_k": 6,
                     "spawn": 0.35,
                     "seed": 5000 + i,
@@ -87,7 +87,7 @@ def variants_for(family: str, *, max_n: int = 25) -> list[dict[str, Any]]:
             i += 1
     elif family == "dual_timescale":
         i = 0
-        for mix in (0.3, 0.7, 1.0):
+        for mix in (0.3, 0.7, 0.9):
             for sl in (0.005, 0.02, 0.08):
                 for eta in (0.03, 0.1, 0.2):
                     if i >= 25:
@@ -147,7 +147,7 @@ def variants_for(family: str, *, max_n: int = 25) -> list[dict[str, Any]]:
             if i >= 25:
                 break
         while i < 25:
-            out.append({"family": family, "name": f"lat_k4_{i:02d}", "eta": 0.1, "k": 4, "mix": 1.0, "seed": 9000 + i})
+            out.append({"family": family, "name": f"lat_k4_{i:02d}", "eta": 0.1, "k": 4, "mix": 0.9, "seed": 9000 + i})
             i += 1
     elif family == "slow_feature":
         i = 0

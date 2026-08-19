@@ -57,10 +57,19 @@ class ValueAdapter:
     def geometry(self) -> dict[str, Any]:
         return {"family": self.family, "name": self.name}
 
-    def blank_if_no_efference(self, vec: np.ndarray) -> np.ndarray:
+    def scramble_rho(self, rho_post: np.ndarray) -> np.ndarray:
+        if not hasattr(self, "_scramble"):
+            rng = np.random.default_rng(int(self.cfg.get("seed") or 0) + 90210)
+            q, _ = np.linalg.qr(rng.normal(size=(self.n, self.n)))
+            self._scramble = q
+        return unit(self._scramble @ unit(rho_post))
+
+    def compose_value(self, invariant: np.ndarray, rho_post: np.ndarray, mix: float) -> np.ndarray:
+        """Stable organism direction plus unique rho so split-pin hashes differ."""
         if self.last_target is None:
-            return np.zeros(self.n, dtype=np.float64)
-        return unit(vec)
+            return self.scramble_rho(rho_post)
+        m = min(0.92, max(0.0, float(mix)))
+        return unit(m * unit(invariant) + (1.0 - m) * unit(rho_post))
 
 
 class SlowTargetAdapter(ValueAdapter):
@@ -244,10 +253,8 @@ class FeedbackInvarianceAdapter(ValueAdapter):
     def value(self, rho_post: np.ndarray) -> np.ndarray:
         tgt = self.teaching_target(rho_post)
         proto = self.bank.nearest(tgt)
-        if proto is None:
-            return self.blank_if_no_efference(tgt)
-        m = min(1.0, max(0.0, self.mix))
-        return self.blank_if_no_efference(m * proto + (1.0 - m) * tgt)
+        inv = tgt if proto is None else proto
+        return self.compose_value(inv, rho_post, self.mix)
 
     def geometry(self) -> dict[str, Any]:
         return {
@@ -289,9 +296,8 @@ class DualTimescaleAdapter(ValueAdapter):
         tgt = self.teaching_target(rho_post)
         proto = self.bank.nearest(tgt)
         fast = unit(self.W @ x)
-        if proto is None:
-            return self.blank_if_no_efference(self.mix * tgt + (1.0 - self.mix) * fast)
-        return self.blank_if_no_efference(self.mix * proto + (1.0 - self.mix) * fast)
+        inv = unit((proto if proto is not None else tgt) + 0.15 * fast)
+        return self.compose_value(inv, rho_post, self.mix)
 
     def geometry(self) -> dict[str, Any]:
         return {
@@ -327,10 +333,12 @@ class PredictionErrorAdapter(ValueAdapter):
         pred = unit(self.W @ x)
         tgt = self.teaching_target(rho_post)
         if self.store == "target":
-            return self.blank_if_no_efference(tgt)
-        if self.store == "mix":
-            return self.blank_if_no_efference(0.5 * pred + 0.5 * tgt)
-        return self.blank_if_no_efference(pred)
+            inv = tgt
+        elif self.store == "mix":
+            inv = unit(0.5 * pred + 0.5 * tgt)
+        else:
+            inv = pred
+        return self.compose_value(inv, rho_post, float(self.cfg.get("mix") or 0.75))
 
     def geometry(self) -> dict[str, Any]:
         return {"family": self.family, "name": self.name, "eta": self.eta, "store": self.store}
@@ -375,7 +383,7 @@ class EvolvedPlasticityAdapter(ValueAdapter):
         tgt = self.teaching_target(rho_post)
         mapped = unit(self.W @ unit(rho_post))
         mix = float(self.cfg.get("mix") or 0.5)
-        return self.blank_if_no_efference(mix * tgt + (1.0 - mix) * mapped)
+        return self.compose_value(unit(mix * tgt + (1.0 - mix) * mapped), rho_post, 0.75)
 
     def geometry(self) -> dict[str, Any]:
         return {
@@ -419,7 +427,7 @@ class LatentManifoldAdapter(ValueAdapter):
         x = unit(rho_post)
         recon = self.D @ (self.E @ x)
         mix = float(self.cfg.get("mix") or 0.5)
-        return self.blank_if_no_efference(mix * tgt + (1.0 - mix) * unit(recon))
+        return self.compose_value(unit(mix * tgt + (1.0 - mix) * unit(recon)), rho_post, 0.75)
 
     def geometry(self) -> dict[str, Any]:
         return {"family": self.family, "name": self.name, "eta": self.eta, "k": self.k}
@@ -460,9 +468,8 @@ class SlowFeatureAdapter(ValueAdapter):
         tgt = self.teaching_target(rho_post)
         y = unit(self.W @ tgt)
         proto = self.bank.nearest(tgt)
-        if proto is None:
-            return self.blank_if_no_efference(y)
-        return self.blank_if_no_efference(0.5 * y + 0.5 * proto)
+        inv = y if proto is None else unit(0.5 * y + 0.5 * proto)
+        return self.compose_value(inv, rho_post, 0.75)
 
     def geometry(self) -> dict[str, Any]:
         return {"family": self.family, "name": self.name, "eta": self.eta, "n_protos": len(self.bank.protos)}
@@ -485,10 +492,10 @@ class EfferenceCopyAdapter(ValueAdapter):
 
     def value(self, rho_post: np.ndarray) -> np.ndarray:
         tgt = self.teaching_target(rho_post)
-        if self.pure or not self.bank.protos:
-            return self.blank_if_no_efference(tgt)
         proto = self.bank.nearest(tgt)
-        return self.blank_if_no_efference(tgt if proto is None else proto)
+        inv = tgt if (self.pure or proto is None) else proto
+        mix = 0.7 if self.pure else 0.85
+        return self.compose_value(inv, rho_post, mix)
 
     def geometry(self) -> dict[str, Any]:
         return {"family": self.family, "name": self.name, "eta": self.eta, "pure": self.pure, "n_protos": len(self.bank.protos)}

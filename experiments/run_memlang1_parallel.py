@@ -54,21 +54,59 @@ def _already(cfg: dict[str, Any], ident: dict[str, str], world_seed: dict[str, A
 
 def _eval_one(cfg: dict[str, Any]) -> dict[str, Any]:
     t0 = time.time()
-    out = eval_stage_a(cfg)
-    rec = v2_record(cfg=cfg, out=out, elapsed_s=time.time() - t0)
-    cells = {c["id"]: c for c in out["cells"]}
-    rec["geometry"] = cells.get("decoder|w0", {}).get("adapter_geometry")
-    rec["hardware"] = {"cpu": True, "gpu": False, "workers_note": "process_pool"}
-    path = write_telemetry(rec)
-    return {
-        "run_id": rec["run_id"],
-        "family": cfg.get("family"),
-        "name": cfg.get("name"),
-        "decision": out["decision_code"],
-        "elapsed_s": rec["elapsed_s"],
-        "path": str(path),
-        "pass": out["decision_code"] == "stage_a_integrated_pass",
-    }
+    try:
+        out = eval_stage_a(cfg)
+        rec = v2_record(cfg=cfg, out=out, elapsed_s=time.time() - t0)
+        cells = {c["id"]: c for c in out["cells"]}
+        rec["geometry"] = cells.get("decoder|w0", {}).get("adapter_geometry")
+        rec["hardware"] = {"cpu": True, "gpu": False, "workers_note": "process_pool"}
+        path = write_telemetry(rec)
+        return {
+            "run_id": rec["run_id"],
+            "family": cfg.get("family"),
+            "name": cfg.get("name"),
+            "decision": out["decision_code"],
+            "elapsed_s": rec["elapsed_s"],
+            "path": str(path),
+            "pass": out["decision_code"] == "stage_a_integrated_pass",
+        }
+    except Exception as exc:
+        ident = current_identity()
+        rec = {
+            "run_id": str(__import__("uuid").uuid4()),
+            "program": "MEMLANG-1",
+            "stage": "A",
+            "telemetry_schema": ident["telemetry_schema"],
+            "parent_candidate": None,
+            "family": cfg.get("family"),
+            "config": cfg,
+            "implementation_sha": ident["implementation_sha"],
+            "runner_schema_sha": ident["runner_schema_sha"],
+            "code_sha": ident["stage_a_sha"],
+            "neural_sha": ident["neural_sha"],
+            "genome_checkpoint": {"error": True},
+            "world_seed": _world_seed(),
+            "decision_code": "runner_error",
+            "n_cells": 0,
+            "status": "incomplete",
+            "hardware": {"cpu": True},
+            "elapsed_s": time.time() - t0,
+            "error": f"{type(exc).__name__}: {exc}",
+            "lineage_release": False,
+            "install_W_star": False,
+            "candidate_v41_lock": False,
+        }
+        path = write_telemetry(rec)
+        return {
+            "run_id": rec["run_id"],
+            "family": cfg.get("family"),
+            "name": cfg.get("name"),
+            "decision": "runner_error",
+            "elapsed_s": rec["elapsed_s"],
+            "path": str(path),
+            "pass": False,
+            "error": rec["error"],
+        }
 
 
 def run_cfgs(cfgs: list[dict[str, Any]], *, workers: int, tag: str) -> dict[str, Any]:
