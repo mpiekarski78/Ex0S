@@ -1,0 +1,117 @@
+{
+  "version": "EX0S-DEV1.ARCHITECTURE.LOCK",
+  "product": "0.0.004",
+  "program": "EX0S-DEV1",
+  "type": "architecture_program_lock",
+  "note": "This is an architecture/program lock, not a stage preregistration. Each stage gets its own preregistration immediately before execution.",
+
+  "memlang1_closure": {
+    "status": "search_budget_ended",
+    "result": "no_stage_a_integrated_pass",
+    "dominant_failure": "later_context_drift",
+    "interpretation": "completed_search_budget_not_falsification_of_representation_learning",
+    "v2_complete_runs": 5877,
+    "branch": "research/memlang1-5h",
+    "branch_status": "frozen_not_merged",
+    "hard_stop_utc": "2026-08-19T04:51:23Z",
+    "note": "MEMLANG-1 exhausted the adapter search within the five-hour budget. Invertible recolorings of rho support in-time interpolation and fail chronological transfer. This closes the adapter route; it does not close representation learning as a direction."
+  },
+
+  "rejected_assumption": "An immutable external record store plus a frozen cortical decoder is not sufficient as the organism's complete memory system.",
+
+  "authorized_lineage": "EX0S-DEV1",
+  "authorized_branch": "research/exos_dev1",
+
+  "state_division": {
+    "G_genome": {
+      "owner": "lineage",
+      "lifetime": "inherited",
+      "may_contain": ["module topology", "birth-init law", "motor/sensory organization", "local plasticity rules", "developmental timing driven by age/internal signals only", "replay policy"],
+      "must_not_contain": ["vocabulary", "fixture facts", "expected answers", "task-specific symbol meanings"]
+    },
+    "W_slow_cortex": {
+      "owner": "organism",
+      "lifetime": "learned_during_life",
+      "may_contain": ["concepts", "skills", "action policy", "reusable relational and language structure"],
+      "must_not_contain": ["exact autobiographical records supplied by runner"]
+    },
+    "H_fast_memory": {
+      "owner": "organism",
+      "lifetime": "fast_changing_during_life",
+      "may_contain": ["episodes", "one-shot facts", "temporal/source evidence", "organism-generated indices"],
+      "must_not_contain": ["programmer keys", "logical slots", "answer handles", "task types"]
+    },
+    "rho_working_state": {
+      "owner": "organism",
+      "lifetime": "transient",
+      "may_contain": ["current context", "active inference", "retrieved content"],
+      "must_not_contain": ["persistent facts"]
+    },
+    "S_log_provenance": {
+      "owner": "audit_boundary",
+      "lifetime": "immutable",
+      "may_contain": ["raw experienced events", "timestamps", "organism-owned receipts"],
+      "must_not_contain": ["retrieval addresses", "corrective actions", "direct behavioral routing"],
+      "note": "S_log is not the hippocampus. H is. S_log is append-only and has no outgoing behavioral connection to any other component."
+    }
+  },
+
+  "refuse": [
+    "no_auto_stamp",
+    "no_v41_before_stage_d_confirmation_and_review",
+    "no_W_star",
+    "no_TM063_diagnostic",
+    "no_rewrite_historical",
+    "no_planted_semantics",
+    "no_gradient_updates_during_life",
+    "no_operand_field_unless_organism_learned",
+    "no_stage_prereg_deferred_past_execution"
+  ],
+
+  "frozen_anchors": {
+    "product": "0.0.004",
+    "live_pointer": "docs/cortex.candidate.lock v30",
+    "tm062_decision_code": "only_unrestricted_interpolates",
+    "tm062_architectural_conclusion": "none",
+    "memlang1_5h_branch_frozen": true,
+    "memlang1_5h_not_merged": true
+  },
+
+  "historical_shas": {
+    "neural_cortex_py": "555bba37cc79b407f8d2205b6ce9440f2a7b204fb7eff2cc55a8ff5e883a7f01",
+    "memlang1_search_manifest_lock": "4c89a92f52c2a730dab49c79b935ec5754712a41549229a3a84873d2a9599ced",
+    "lineage_xgen_decision_lock": "bb529975eee280fbf0d0ca688b5bace90f1bd41f36499716b1ee965a6f89880b",
+    "memlang1_stage_a_runner": "8b1ac5852552469b2ae63c747934518ad9779cb0f0fd7f62e80d0acc5080b87e",
+    "memlang1_prereg_lock": "d7ef6a842c6145f4e33b851adc8f2975fddc2b3de670baadfa292ff3f056a34c",
+    "memlang1_isolation_lock": "8b1a037a515d371285d804575d4540b1ff4ae89bcf64e934c434b6544aae0812",
+    "cortex_candidate_lock": "4992ad0206916c17d7723fcbf22d9f8e1ad7e90d55497d80ee791d16c559856c",
+    "git_head_main_at_lock": "3ce98f68831152871827168aae0e361b4ac3f843"
+  },
+
+  "immutable_history": [
+    "experiments/run_tm046oneshot.py",
+    "experiments/run_tm051fbground.py",
+    "experiments/run_tm052sharefeas.py",
+    "experiments/run_tm057dual.py",
+    "experiments/run_tm058storeint.py",
+    "experiments/run_tm059receipt.py",
+    "experiments/run_tm060ondrift.py",
+    "experiments/run_tm061codrift.py",
+    "experiments/run_tm062xgen.py",
+    "docs/lineage_xgen.dev.lock",
+    "docs/lineage_xgen.decision.lock",
+    "docs/lineage_xgen.decision.addendum.lock",
+    "docs/lineage_xgen.prereg.lock",
+    "docs/memlang1.prereg.lock",
+    "docs/memlang1.isolation.lock",
+    "docs/memlang1.search.manifest.lock",
+    "runs/memlang1/_provenance/hard_stop_12point.json",
+    "runs/memlang1/_provenance/wave0_replay_3828d39.json"
+  ],
+
+  "stages_defined": ["A", "B", "C", "D", "E"],
+  "stages_executable_now": [],
+  "stages_unlock_sequentially": true,
+  "candidate_policy": "no_v41_before_stage_d_confirmed_and_reviewed",
+  "product_policy": "no_000005_auto_increment"
+}
