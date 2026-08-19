@@ -1,0 +1,89 @@
+{
+  "version": "EX0S-DEV1.REDIRECT.LOCK",
+  "program": "EX0S-DEV1",
+  "written_after": ["stage_a_search", "factorial_M0_M2_C0_C2"],
+  "note": "This record is immutable once written. It records the causal interpretation of the factorial results and specifies the redirect direction.",
+
+  "factorial_results": {
+    "M0": {
+      "architecture": "monolith_frozen",
+      "n": 64,
+      "score": 0.0,
+      "causal_valid": true,
+      "not_executable": false,
+      "note": "NeuralCortex n=64 is the only executable monolith arm"
+    },
+    "M1": {
+      "architecture": "monolith_frozen",
+      "n": 256,
+      "score": 0.0,
+      "causal_valid": false,
+      "not_executable": true,
+      "not_executable_reason": "NeuralCortex cannot be instantiated at n=256 without source edits",
+      "status": "not_executable_under_frozen_control"
+    },
+    "M2": {
+      "architecture": "monolith_frozen",
+      "n": 1024,
+      "score": 0.0,
+      "causal_valid": false,
+      "not_executable": true,
+      "not_executable_reason": "NeuralCortex cannot be instantiated at n=1024 without source edits",
+      "status": "not_executable_under_frozen_control"
+    },
+    "C0": {
+      "architecture": "modular_cls",
+      "n": 64,
+      "score": 0.033,
+      "causal_valid": false,
+      "total_mutable_neural_scalars": 117299,
+      "checkpoint_bytes": 1097191
+    },
+    "C1": {
+      "architecture": "modular_cls",
+      "n": 256,
+      "score": 0.014,
+      "causal_valid": false,
+      "total_mutable_neural_scalars": 1814723,
+      "checkpoint_bytes": 11100308
+    },
+    "C2": {
+      "architecture": "modular_cls",
+      "n": 1024,
+      "score": 0.0,
+      "causal_valid": false,
+      "total_mutable_neural_scalars": 28787459,
+      "checkpoint_bytes": 133451647
+    }
+  },
+
+  "pattern": "all_arms_fail_stage_a",
+  "causal_interpretation": "All sizes and plasticity families fail at grounding. This is not a memory failure — the sensorimotor feedback and local plasticity interface is the bottleneck. Increasing capacity does not help when the learning signal itself is near-zero.",
+
+  "redirect": "redesign_sensorimotor_reward_interface_and_local_plasticity",
+  "redirect_details": {
+    "primary_fix": "Strengthen the neuromodulatory reward prediction error signal. Current sigmoid-gated output produces near-zero modulation (~0.5 with random init). Required: a clearly signed RPE (reward - baseline) that produces non-negligible updates.",
+    "secondary_fix": "Apply local plasticity per-step (not per-episode-end) so weight updates track the reward signal in the correct temporal window.",
+    "tertiary": "Consider more expressive sensory encoder (learnable projection with initialization that produces non-degenerate activations) rather than random fixed-init encoder."
+  },
+
+  "what_this_is_not": [
+    "A failure of representation learning in principle",
+    "A failure of memory architecture",
+    "A failure of H or S_log design",
+    "Evidence that scale solves the problem"
+  ],
+
+  "m1_m2_monolith_status": "marked not_executable_under_frozen_control; NeuralCortex source must not be edited to allow larger n",
+
+  "stage_b_unlock_status": "locked — Stage A must pass untouched confirmation first",
+
+  "next_research_loop": {
+    "target": "Stage A re-search after sensorimotor interface redesign",
+    "preregistration_required": true,
+    "worlds_to_use": "fresh, previously untouched world seeds — not dev1_stage_a_world_001-008",
+    "note": "Failed Stage A worlds (001-008 and conf_001-004) are permanently consumed and must not be reused as training data."
+  },
+
+  "timestamp_utc": "2026-08-19T12:30:00Z"
+}

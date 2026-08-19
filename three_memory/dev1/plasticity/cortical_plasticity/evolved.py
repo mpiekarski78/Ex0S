@@ -29,6 +29,7 @@ class EvolvedLocalRule(nn.Module):
 
     def __init__(self, n_pre: int, n_post: int, coeffs: PlasticityCoefficients):
         super().__init__()
+        self.lr = coeffs.learning_rate
         self.base_lr = coeffs.learning_rate
         # Combination weights over [Hebb, BCM, pred_error] terms
         self.mix = nn.Parameter(torch.tensor([1.0, 0.3, 0.5]))

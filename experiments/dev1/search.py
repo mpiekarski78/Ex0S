@@ -77,13 +77,8 @@ class Candidate:
         return sum(self.validation_scores) / len(self.validation_scores)
 
     def complexity(self) -> float:
-        """Lower = simpler. Used as tiebreaker."""
-        params = sum(
-            p.numel()
-            for m in [self.genome.plasticity_family]
-            for _ in [None]
-        )
-        return 0.0   # simplified; full version counts genome parameters
+        """Lower = simpler. Used as tiebreaker (by plasticity family name length as proxy)."""
+        return float(len(self.genome.plasticity_family))
 
     def rank_key(self) -> tuple:
         return (self.causal_valid, self.reliability(), -self.complexity())

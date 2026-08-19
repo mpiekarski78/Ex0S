@@ -201,8 +201,7 @@ class ModularOrganism:
         )
         self._last_mod = mod
 
-        # Update eligibility trace
-        self.eligibility.update(self.rho.relational_repr, self.rho.action_repr)
+        # Eligibility update deferred to act() so action_repr is populated
 
         # Write to H if past onset age and H not disabled
         onset = self.genome.schedule.replay_onset_age_frac
@@ -227,6 +226,9 @@ class ModularOrganism:
         action_state, motor_logits = self.action_ctx(self.rho.relational_repr, self.rho.action_repr)
         self.rho.action_repr = action_state
 
+        # Update eligibility trace here (after action state is populated)
+        self.eligibility.update(self.rho.relational_repr, self.rho.action_repr)
+
         channel, scores, confidence = self.action_ctx.competition(motor_logits)
 
         self.slog.append(EventKind.ACT, step=self.step, payload={
@@ -239,12 +241,44 @@ class ModularOrganism:
             confidence=confidence,
         )
 
+    def _apply_local_plasticity(self) -> None:
+        """
+        Apply the within-life local plasticity rule to the action cortex W_motor.
+        This is the ONLY weight update during an evaluated life.
+        Uses no_grad() — this is not backpropagation.
+
+        Allowed signals: eligibility trace, reward gate.
+        The reward gate is the organism's scalar neuromodulatory estimate
+        of how much to reinforce recent coactivation.
+        Positive reward_gate (>0.5) potentiates; negative (<0.5) depresses.
+        """
+        if not hasattr(self, "_last_mod"):
+            return
+        mod = self._last_mod
+        rule = self.plasticity_rule
+        elig = self.eligibility.trace   # shape (n_rel, n_action)
+
+        with torch.no_grad():
+            elig_signal = elig.mean(dim=0)   # (n_action,)
+            # Signed modulation: reward_gate centered around 0.5
+            # Positive reward → gate > 0.5 → potentiation
+            # Negative reward / baseline exceeded → gate < 0.5 → depression
+            gate = (mod["reward_gate"] - 0.5) * 2.0   # range [-1, 1]
+            lr = getattr(rule, "lr", self.genome.plasticity.learning_rate)
+            # ΔW_motor: (n_channels, n_action) via broadcast
+            dW = lr * gate * elig_signal.unsqueeze(0)
+            dW = dW.clamp(-0.1, 0.1)
+            self.action_ctx.W_motor.weight.data.add_(dW)
+
     def rest(self, n_ticks: int = 1) -> dict:
         """
-        Internal rest period: organism runs replay/consolidation.
+        Internal rest period: organism applies local plasticity and replay.
         No gradient updates. Slow cortex disabled if consolidation_disabled=True.
         Returns rest telemetry.
         """
+        # Apply local plasticity rule to action weights (within-life, no gradient)
+        self._apply_local_plasticity()
+
         replayed = 0
         if not self.consolidation_disabled and self.hippocampus._store:
             onset_frac = self.genome.schedule.consolidation_onset_age_frac

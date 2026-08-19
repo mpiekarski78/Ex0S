@@ -33,6 +33,7 @@ class MetaLearnedPlasticity(nn.Module):
 
     def __init__(self, n_pre: int, n_post: int, coeffs: PlasticityCoefficients):
         super().__init__()
+        self.lr = coeffs.learning_rate
         self.base_lr = coeffs.learning_rate
         self.alpha = nn.Parameter(torch.zeros(n_pre, n_post))
         self.pe_timescale = nn.Parameter(torch.tensor(0.9))
