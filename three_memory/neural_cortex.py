@@ -421,6 +421,7 @@ class NeuralCortex:
         self._opaque_store_enabled = False
         self._opaque_kv_seq = 0
         self.opaque = OpaqueMemory()
+        self._memlang_value_adapter = None
 
     def set_act_rehearse_arm(self, arm: str) -> None:
         if arm not in ACT_REHEARSE_ARMS:
@@ -452,6 +453,10 @@ class NeuralCortex:
 
     def set_action_feedback_enabled(self, enabled: bool) -> None:
         self._action_feedback_enabled = bool(enabled)
+
+    def form_write_value(self, rho_post: np.ndarray) -> np.ndarray:
+        """Identity-default write-time value: unit(rho_post-feedback). No K/Q/V change."""
+        return self._unit_or_zero(np.asarray(rho_post, dtype=np.float64))
 
     def set_opaque_store_enabled(self, enabled: bool) -> None:
         self._opaque_store_enabled = bool(enabled)

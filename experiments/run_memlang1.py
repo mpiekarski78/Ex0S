@@ -1,8 +1,7 @@
 """MEMLANG-1 orchestrator.
 
 Telemetry under runs/memlang1. Not a lineage release.
-Stage A only at freeze. Never write cortex.candidate.v41.lock.
-Do not open TM063. Product 0.0.004.
+Never write cortex.candidate.v41.lock. Do not open TM063. Product 0.0.004.
 """
 
 from __future__ import annotations
@@ -17,6 +16,7 @@ from typing import Any
 
 from experiments.run_memlang1_stage_a import eval_stage_a, smoke
 from three_memory.cortex_lineage import sha_file
+from three_memory.memlang.telemetry import current_identity, skippable
 from three_memory.memlang.variants import variants_for
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -54,50 +54,82 @@ def write_telemetry(rec: dict[str, Any]) -> Path:
     return path
 
 
-def search(*, max_families: int | None = None) -> dict[str, Any]:
+def _world_seed(p: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "seed_registry": int(p["seed_registry"]),
+        "domains": dict(p["domains"]),
+        "n_worlds": int(p["n_worlds"]),
+    }
+
+
+def v2_record(*, cfg: dict[str, Any], out: dict[str, Any], elapsed_s: float, parent: str | None = None) -> dict[str, Any]:
+    ident = current_identity()
+    p = json.loads(PREREG.read_text(encoding="utf-8"))
+    return {
+        "run_id": str(uuid.uuid4()),
+        "program": "MEMLANG-1",
+        "stage": "A",
+        "telemetry_schema": ident["telemetry_schema"],
+        "parent_candidate": parent,
+        "family": cfg.get("family"),
+        "config": cfg,
+        "implementation_sha": ident["implementation_sha"],
+        "runner_schema_sha": ident["runner_schema_sha"],
+        "code_sha": ident["stage_a_sha"],
+        "neural_sha": ident["neural_sha"],
+        "genome_checkpoint": out.get("genome_checkpoint") or {},
+        "world_seed": out.get("world_seed") or _world_seed(p),
+        "decision_code": out["decision_code"],
+        "n_cells": int(out.get("n_cells") or 0),
+        "status": "complete" if out.get("status") == "complete" and out.get("decision_code") else "incomplete",
+        "hardware": {"cpu": True},
+        "elapsed_s": float(elapsed_s),
+        "causal_gates": out.get("phase_flags"),
+        "first_failing_boundary": out["decision_code"],
+        "lineage_release": False,
+        "install_W_star": False,
+        "candidate_v41_lock": False,
+        "geometry": None,
+    }
+
+
+def search(*, max_families: int | None = None, families: list[str] | None = None) -> dict[str, Any]:
     p = json.loads(PREREG.read_text(encoding="utf-8"))
     frozen = str(p.get("frozen_runner_sha") or "")
     if frozen and frozen != "PLACEHOLDER" and sha_file(STAGE_A) != frozen:
         raise RuntimeError("MEMLANG-1 Stage A runner SHA drifted")
     refuse_locked_stages(stage="A")
     budget = load_budget()
-    families = list(budget["families"])
+    fams = list(families or budget["families"])
     if max_families is not None:
-        families = families[: int(max_families)]
+        fams = fams[: int(max_families)]
     cap = int(budget["max_variants_per_family"])
-    n_train = int(budget["n_train_lives_per_variant"])
-    n_val = int(budget["n_val_lives_per_variant"])
+    ident = current_identity()
+    world_seed = _world_seed(p)
     attempts = 0
+    skipped = 0
     selected = None
     history: list[dict[str, Any]] = []
-    for family in families:
+    for family in fams:
         for cfg in variants_for(family, max_n=cap):
+            already = False
+            for path in TELEMETRY.glob("*.json"):
+                rec0 = json.loads(path.read_text(encoding="utf-8"))
+                if skippable(rec0, cfg=cfg, ident=ident, world_seed=world_seed):
+                    already = True
+                    break
+            if already:
+                skipped += 1
+                continue
             attempts += 1
-            run_id = str(uuid.uuid4())
             t0 = time.time()
             out = eval_stage_a(cfg)
-            rec = {
-                "run_id": run_id,
-                "program": "MEMLANG-1",
-                "stage": "A",
-                "family": family,
-                "config": cfg,
-                "code_sha": sha_file(STAGE_A),
-                "neural_sha": hashlib.sha256(NEURAL.read_bytes()).hexdigest(),
-                "decision_code": out["decision_code"],
-                "n_train_lives": n_train,
-                "n_val_lives": n_val,
-                "elapsed_s": time.time() - t0,
-                "install_W_star": False,
-                "candidate_v41_lock": False,
-                "lineage_release": False,
-                "geometry": None,
-            }
+            rec = v2_record(cfg=cfg, out=out, elapsed_s=time.time() - t0)
             cells = {c["id"]: c for c in out["cells"]}
             rec["geometry"] = cells.get("decoder|w0", {}).get("adapter_geometry")
             write_telemetry(rec)
-            history.append({"run_id": run_id, "family": family, "name": cfg.get("name"), "decision": out["decision_code"]})
-            if out["decision_code"] == "stage_a_integrated_gate":
+            history.append({"run_id": rec["run_id"], "family": family, "name": cfg.get("name"), "decision": out["decision_code"]})
+            if out["decision_code"] == "stage_a_integrated_pass":
                 selected = rec
                 break
         if selected is not None:
@@ -105,7 +137,8 @@ def search(*, max_families: int | None = None) -> dict[str, Any]:
     return {
         "program": "MEMLANG-1",
         "attempts": attempts,
-        "budget_families": len(families),
+        "skipped_content_addressed": skipped,
+        "budget_families": len(fams),
         "max_variants_per_family": cap,
         "selected": selected,
         "history": history,
@@ -113,6 +146,7 @@ def search(*, max_families: int | None = None) -> dict[str, Any]:
         "install_W_star": False,
         "candidate_v41_lock": False,
         "frozen_runner_sha": frozen,
+        "identity": ident,
     }
 
 
@@ -127,20 +161,10 @@ def main() -> None:
         print(json.dumps(smoke(), indent=2))
         return
     if args.identity:
+        t0 = time.time()
         out = eval_stage_a({"family": "identity", "name": "identity"})
-        rec = {
-            "run_id": str(uuid.uuid4()),
-            "program": "MEMLANG-1",
-            "stage": "A",
-            "family": "identity",
-            "config": {"family": "identity", "name": "identity"},
-            "code_sha": sha_file(STAGE_A),
-            "decision_code": out["decision_code"],
-            "lineage_release": False,
-            "identity_is_telemetry": True,
-            "install_W_star": False,
-            "candidate_v41_lock": False,
-        }
+        rec = v2_record(cfg={"family": "identity", "name": "identity"}, out=out, elapsed_s=time.time() - t0)
+        rec["identity_is_telemetry"] = True
         write_telemetry(rec)
         out["lineage_release"] = False
         out["identity_is_telemetry"] = True

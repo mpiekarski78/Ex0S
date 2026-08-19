@@ -48,7 +48,7 @@
   "tm051_runner_sha": "f73c8671db2f3bac6f6b4e22eb08687d933559e476d5c2adb2ff4c879c230706",
   "tm046_runner_sha": "8dbadd143f0fed629496a70c9d6288e60c65301fadd392cab6e3d77ea0b5d6b0",
   "joint_socp_sha": "ed651a51f8de6cc6ec1d8285c43846c99b47b751ddfea59d3c26db1d63fcc895",
-  "neural_cortex_sha": "c1ce6f311d2f6958f74e0d55e195d5e1af9130143e06bce149c415396279439b",
+  "neural_cortex_sha": "555bba37cc79b407f8d2205b6ce9440f2a7b204fb7eff2cc55a8ff5e883a7f01",
   "opaque_memory_sha": "30d3adc68286a45756924dc2109a9347ee733bbe7f4817554aa3b5d4969223aa",
   "n": 64,
   "n_handles": 4,
@@ -89,14 +89,20 @@
   "manifest_sha": "bc09aab32f71e4a32b10436cfe91ab5d31dee8e185a5206fe3d59479dc741f11",
   "stage_a_ladder": [
     {"code": "setup_precondition_fail", "when": "ordinary reference-action decoder is not 4/4 or capture failed"},
-    {"code": "runner_constructed_value", "when": "the runner built the stored value or copied a handle into S"},
+    {"code": "runner_constructed_value", "when": "the runner built the stored value"},
+    {"code": "handle_copied_into_S", "when": "an answer handle was copied into S"},
     {"code": "observer_used_runner_provenance", "when": "identity came from the write keyword rather than the receipt"},
     {"code": "ordinary_cortex_broken", "when": "ordinary cortical behavior is not intact"},
     {"code": "offline_reconstruction", "when": "values were regenerated from a later checkpoint"},
+    {"code": "checkpoint_restore_fail", "when": "checkpoint restoration did not preserve the mechanism"},
+    {"code": "feedback_off_fail", "when": "representations acquired the demonstrated action without motor feedback"},
+    {"code": "permuted_feedback_fail", "when": "learned representation followed the fixture expected answer rather than observed motor"},
+    {"code": "reward_gate_fail", "when": "zero or negative advantage produced a rewarded persistent write"},
     {"code": "action_collapse", "when": "later-time values of different actions are not separable"},
-    {"code": "fresh_world_fail", "when": "a fresh world or renamed-symbol life fails while the training world passed"},
+    {"code": "cue_overfit", "when": "prefix transfer held but renamed cues failed"},
+    {"code": "fresh_world_fail", "when": "a fresh world fails while the training world passed"},
     {"code": "later_context_drift", "when": "early experience does not decode later write-time values of the same action"},
-    {"code": "stage_a_integrated_gate", "when": "same-action later values decode, actions stay separable, ordinary cortex holds, values are online, fresh and renamed lives pass"}
+    {"code": "stage_a_integrated_pass", "when": "same-action later values decode, actions stay separable, ordinary cortex holds, values are online, pins and renamed lives pass"}
   ],
   "refuse": [
     "neural_cortex.py edit in this freeze",
@@ -115,5 +121,5 @@
     "run Stage B/C/D/E before unlock"
   ],
   "note": "MEMLANG-1 Stage A freeze. TM062 closed transport. Product remains 0.0.004. Floor 0.05 unchanged.",
-  "frozen_runner_sha": "0a56f672801d09a7e432eaa26647dc1ac8adfb1156be0beea1dcf9da9b13350f"
+  "frozen_runner_sha": "d4c06dc30e2244ddd73841e6fea8c59e206037702fb689795ba608487a064134"
 }

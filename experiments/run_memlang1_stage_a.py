@@ -51,13 +51,19 @@ N_SCORED_CELLS = 8
 LADDER = (
     "setup_precondition_fail",
     "runner_constructed_value",
+    "handle_copied_into_S",
     "observer_used_runner_provenance",
     "ordinary_cortex_broken",
     "offline_reconstruction",
+    "checkpoint_restore_fail",
+    "feedback_off_fail",
+    "permuted_feedback_fail",
+    "reward_gate_fail",
     "action_collapse",
+    "cue_overfit",
     "fresh_world_fail",
     "later_context_drift",
-    "stage_a_integrated_gate",
+    "stage_a_integrated_pass",
 )
 BEHAVIORAL_LADDER = LADDER[1:]
 
@@ -143,12 +149,15 @@ def collect_bundle(
     cue_prefix: str,
     domain_key: str,
     adapter=None,
+    n_online_repeats: int | None = None,
+    permute_feedback: bool = False,
+    feedback_off: bool = False,
 ) -> dict[str, Any]:
     p = load_prereg()
     n = int(p["n"])
     if adapter is None:
         adapter = make_adapter(str(adapter_cfg.get("family") or "identity"), n, adapter_cfg)
-    receipts = MemlangReceipts(adapter)
+    receipts = MemlangReceipts(adapter, permute_feedback=bool(permute_feedback), feedback_off=bool(feedback_off))
     ref = historical_live(
         tmp=tmp,
         tag=f"ml_ref_{cue_prefix}_w{wi}",
@@ -167,7 +176,7 @@ def collect_bundle(
         wi=int(wi),
         seed=int(p["seed_registry"]),
         domain=str(p["domains"][domain_key]),
-        n_repeats=int(p["n_online_repeats"]),
+        n_repeats=int(p["n_online_repeats"] if n_online_repeats is None else n_online_repeats),
         cue_fn=lambda rep, i, _h: f"s_{cue_prefix}_{wi}_{rep}_{i}",
         tag_prefix=f"ml_on_{cue_prefix}_w{wi}",
         receipts=receipts,
@@ -177,11 +186,19 @@ def collect_bundle(
     freeze_plasticity(ag)
     ag.set_memproj_arm(MEMPROJ_NONE)
     w0_hash = w_act_hash(ag)
+    snap = ag.checkpoint()
+    ag2 = load_common({"snap": snap, "genome": online["genome"], "world": online["world"]})
+    try:
+        restore_ok = w_act_hash(ag2) == w0_hash
+        _ = ag2.form_write_value(np.ones(int(p["n"]), dtype=np.float64))
+    except Exception:
+        restore_ok = False
+    del ag2
     W0 = np.asarray(ag._from_t(ag.W_act_query), dtype=np.float64).copy()
     vocab = vocab_of(ag)
     ref_pairs = [(h, np.asarray(ref["last_p1"][h], dtype=np.float64).copy()) for h in handles]
-    n_need = int(p["n_online_repeats"]) * int(p["n_handles"])
-    split_n = int(p["split_n"])
+    n_need = int(p["n_online_repeats"] if n_online_repeats is None else n_online_repeats) * int(p["n_handles"])
+    split_n = min(int(p["split_n"]), max(1, n_need // 2))
     observer_ok = int(receipts.n_observer_provenance) == 0 and int(receipts.n_handle_copied_into_s) == 0
     capture_ok = len(receipts.attempts) == n_need
     prefix_rows = list(receipts.attempts[:split_n])
@@ -207,6 +224,13 @@ def collect_bundle(
         "capture_ok": bool(capture_ok),
         "n_observer_provenance": int(receipts.n_observer_provenance),
         "n_handle_copied_into_s": int(receipts.n_handle_copied_into_s),
+        "n_rewarded_persistent_writes": int(receipts.n_rewarded_persistent_writes),
+        "n_nonpositive_persistent_writes": int(receipts.n_nonpositive_persistent_writes),
+        "reward_gate_ok": int(receipts.n_nonpositive_persistent_writes) == 0,
+        "feedback_off_ok": True,
+        "permuted_feedback_ok": True,
+        "checkpoint_restore_ok": bool(restore_ok),
+        "cue_overfit": False,
         "full_oracle_feasible": bool(oracle_rec.get("feasible")),
         "W_installed": False,
         "adapter_geometry": adapter.geometry(),
@@ -278,7 +302,7 @@ def score_world(bundle: dict[str, Any], rename_rows: list[dict[str, Any]]) -> li
     return cells
 
 
-def synthetic_grid(*, decoder_ok: bool = True, code: str = "stage_a_integrated_gate") -> list[dict[str, Any]]:
+def synthetic_grid(*, decoder_ok: bool = True, code: str = "stage_a_integrated_pass") -> list[dict[str, Any]]:
     cells: list[dict[str, Any]] = []
     observer_ok = code not in ("observer_used_runner_provenance", "setup_precondition_fail", "runner_constructed_value")
     prefix_ok = code not in (
@@ -286,12 +310,16 @@ def synthetic_grid(*, decoder_ok: bool = True, code: str = "stage_a_integrated_g
         "ordinary_cortex_broken",
         "observer_used_runner_provenance",
         "runner_constructed_value",
+        "handle_copied_into_S",
     )
     later_sep = prefix_ok and code not in ("action_collapse",)
-    later_xfer = later_sep and code not in ("later_context_drift", "fresh_world_fail")
-    renamed = later_xfer and code == "stage_a_integrated_gate"
+    later_xfer = later_sep and code not in ("later_context_drift", "fresh_world_fail", "cue_overfit")
+    renamed = later_xfer and code == "stage_a_integrated_pass"
     if code == "fresh_world_fail":
         later_xfer_w = {0: True, 1: False}
+    elif code == "cue_overfit":
+        later_xfer_w = {0: True, 1: True}
+        renamed = False
     else:
         later_xfer_w = {0: later_xfer, 1: later_xfer}
     for wi in (0, 1):
@@ -300,11 +328,16 @@ def synthetic_grid(*, decoder_ok: bool = True, code: str = "stage_a_integrated_g
                 "id": f"decoder|w{wi}",
                 "kind": "setup",
                 "passed": bool(decoder_ok) and code != "setup_precondition_fail",
-                "observer_ok": bool(observer_ok) and code != "runner_constructed_value",
+                "observer_ok": bool(observer_ok) and code not in ("runner_constructed_value", "handle_copied_into_S"),
                 "n_observer_provenance": 0 if observer_ok else 1,
-                "n_handle_copied_into_s": 1 if code == "runner_constructed_value" else 0,
+                "n_handle_copied_into_s": 1 if code == "handle_copied_into_S" else 0,
+                "constructed_value": code == "runner_constructed_value",
                 "ref_ok": bool(prefix_ok),
                 "offline_reconstruction": code == "offline_reconstruction",
+                "checkpoint_restore_ok": code != "checkpoint_restore_fail",
+                "feedback_off_ok": code != "feedback_off_fail",
+                "permuted_feedback_ok": code != "permuted_feedback_fail",
+                "reward_gate_ok": code != "reward_gate_fail",
             }
         )
     for probe, default in (
@@ -330,7 +363,7 @@ def _decision(cells: list[dict[str, Any]]) -> tuple[str, str, dict[str, Any]]:
         "candidate_v41_lock": False,
         "kqv_edited": False,
         "tm063_opened": False,
-        "stage_a_integrated_gate": False,
+        "stage_a_integrated_pass": False,
         "later_context_drift": False,
         "action_collapse": False,
     }
@@ -346,8 +379,10 @@ def _decision(cells: list[dict[str, Any]]) -> tuple[str, str, dict[str, Any]]:
     for wi in (0, 1):
         if not bool(by[f"decoder|w{wi}"].get("passed")):
             return _finish("setup_precondition_fail")
-    if any(int(by[f"decoder|w{wi}"].get("n_handle_copied_into_s") or 0) > 0 for wi in (0, 1)):
+    if any(bool(by[f"decoder|w{wi}"].get("constructed_value")) for wi in (0, 1)):
         return _finish("runner_constructed_value")
+    if any(int(by[f"decoder|w{wi}"].get("n_handle_copied_into_s") or 0) > 0 for wi in (0, 1)):
+        return _finish("handle_copied_into_S")
     if any(not bool(by[f"decoder|w{wi}"].get("observer_ok", True)) for wi in (0, 1)):
         return _finish("observer_used_runner_provenance")
     if any(int(by[f"decoder|w{wi}"].get("n_observer_provenance") or 0) > 0 for wi in (0, 1)):
@@ -356,17 +391,27 @@ def _decision(cells: list[dict[str, Any]]) -> tuple[str, str, dict[str, Any]]:
         return _finish("ordinary_cortex_broken")
     if any(bool(by[f"decoder|w{wi}"].get("offline_reconstruction")) for wi in (0, 1)):
         return _finish("offline_reconstruction")
+    if any(not bool(by[f"decoder|w{wi}"].get("checkpoint_restore_ok", True)) for wi in (0, 1)):
+        return _finish("checkpoint_restore_fail")
+    if any(not bool(by[f"decoder|w{wi}"].get("feedback_off_ok", True)) for wi in (0, 1)):
+        return _finish("feedback_off_fail")
+    if any(not bool(by[f"decoder|w{wi}"].get("permuted_feedback_ok", True)) for wi in (0, 1)):
+        return _finish("permuted_feedback_fail")
+    if any(not bool(by[f"decoder|w{wi}"].get("reward_gate_ok", True)) for wi in (0, 1)):
+        return _finish("reward_gate_fail")
     if not both("prefix_on_prefix"):
         return _finish("ordinary_cortex_broken")
     if not both("later_on_later"):
         return _finish("action_collapse")
     if bool(by["prefix_on_later|w0"].get("ok")) != bool(by["prefix_on_later|w1"].get("ok")):
         return _finish("fresh_world_fail")
+    if both("prefix_on_later") and not both("renamed_cues"):
+        return _finish("cue_overfit")
     if not both("prefix_on_later"):
         return _finish("later_context_drift")
     if not both("renamed_cues"):
         return _finish("fresh_world_fail")
-    return _finish("stage_a_integrated_gate")
+    return _finish("stage_a_integrated_pass")
 
 
 def eval_stage_a(adapter_cfg: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -381,6 +426,7 @@ def eval_stage_a(adapter_cfg: dict[str, Any] | None = None) -> dict[str, Any]:
     cfg = dict(adapter_cfg or {"family": "identity", "name": "identity"})
     ids = expected_cell_ids()
     cells: list[dict[str, Any]] = []
+    hashes: list[str] = []
     tmp = tempfile.TemporaryDirectory(prefix="ml_a_")
     try:
         bundles = []
@@ -398,8 +444,37 @@ def eval_stage_a(adapter_cfg: dict[str, Any] | None = None) -> dict[str, Any]:
             )
             rename_rows_by_w[int(wi)] = list(rb["prefix_rows"]) + list(rb["later_rows"])
             del rb
+        pin_off = collect_bundle(
+            wi=0,
+            tmp=tmp.name,
+            adapter_cfg=cfg,
+            cue_prefix="pinoff",
+            domain_key="DEV",
+            n_online_repeats=2,
+            feedback_off=True,
+        )
+        feedback_off_ok = (len(pin_off["prefix_rows"]) + len(pin_off["later_rows"])) == 0
+        del pin_off
+        pin_perm = collect_bundle(
+            wi=0,
+            tmp=tmp.name,
+            adapter_cfg=cfg,
+            cue_prefix="pinperm",
+            domain_key="DEV",
+            n_online_repeats=2,
+            permute_feedback=True,
+        )
+        adp = pin_perm["adapter"]
+        permuted_ok = adp.last_motor is None or int(np.asarray(adp.last_motor).size) != int(p["n"])
+        if adp.last_motor is not None and str(cfg.get("family") or "identity") != "identity":
+            permuted_ok = bool(permuted_ok and adp.last_target is not None and int(np.asarray(adp.last_target).size) == int(p["n"]))
+        del pin_perm
         scored: dict[str, dict[str, Any]] = {}
+        hashes = []
         for b in bundles:
+            b["decoder"]["feedback_off_ok"] = bool(feedback_off_ok)
+            b["decoder"]["permuted_feedback_ok"] = bool(permuted_ok)
+            hashes.append(str(b["w0_hash"]))
             for cell in score_world(b, rename_rows_by_w[int(b["wi"])]):
                 scored[cell["id"]] = cell
             cells.append(b["decoder"])
@@ -423,8 +498,16 @@ def eval_stage_a(adapter_cfg: dict[str, Any] | None = None) -> dict[str, Any]:
         "phase_flags": flags,
         "install_W_star": False,
         "candidate_v41_lock": False,
-        "neural_untouched": True,
+        "neural_untouched": False,
+        "identity_default_hook": True,
         "kqv_edited": False,
+        "genome_checkpoint": {"w0_hash": list(hashes)},
+        "world_seed": {
+            "seed_registry": int(p["seed_registry"]),
+            "domains": dict(p["domains"]),
+            "n_worlds": int(p["n_worlds"]),
+        },
+        "status": "complete",
     }
 
 

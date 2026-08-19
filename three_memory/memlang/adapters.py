@@ -1,4 +1,4 @@
-"""MEMLANG-1 value adapters. Runtime bind only. Do not edit neural_cortex.py."""
+"""MEMLANG-1 value adapters. Runtime bind only. No runner motor pad."""
 
 from __future__ import annotations
 
@@ -25,12 +25,23 @@ class ValueAdapter:
         self.n = int(n)
         self.cfg = dict(cfg or {})
         self.last_motor: np.ndarray | None = None
+        self.last_target: np.ndarray | None = None
 
-    def observe_motor(self, motor: np.ndarray | None, adv: float) -> None:
+    def observe_motor(self, motor: np.ndarray | None, adv: float, *, efference: np.ndarray | None = None) -> None:
         _ = adv
-        if motor is None:
+        if motor is not None:
+            self.last_motor = np.asarray(motor, dtype=np.float64).reshape(-1).copy()
+        if efference is None:
             return
-        self.last_motor = unit(motor)
+        e = np.asarray(efference, dtype=np.float64).reshape(-1)
+        if e.size != self.n:
+            return
+        self.last_target = unit(e)
+
+    def teaching_target(self, rho_post: np.ndarray) -> np.ndarray:
+        if self.last_target is not None and int(self.last_target.size) == self.n:
+            return np.asarray(self.last_target, dtype=np.float64)
+        return unit(rho_post)
 
     def update(self, rho_post: np.ndarray, adv: float) -> None:
         _ = (rho_post, adv)
@@ -56,8 +67,7 @@ class SlowTargetAdapter(ValueAdapter):
         x = unit(rho_post)
         mix = self.eta * (1.0 if abs(float(adv)) > PROTO_EPS else 0.25)
         self.T = (1.0 - mix) * self.T + mix * np.outer(x, x)
-        c = 2.0
-        np.clip(self.T, -c, c, out=self.T)
+        np.clip(self.T, -2.0, 2.0, out=self.T)
 
     def value(self, rho_post: np.ndarray) -> np.ndarray:
         return unit(self.T @ unit(rho_post))
@@ -78,7 +88,7 @@ class HebbianDeltaAdapter(ValueAdapter):
 
     def update(self, rho_post: np.ndarray, adv: float) -> None:
         x = unit(rho_post)
-        tgt = self.last_motor if self.last_motor is not None else x
+        tgt = self.teaching_target(rho_post)
         gated = float(adv) if abs(float(adv)) > PROTO_EPS else 0.0
         self.W = self.W + self.eta * gated * np.outer(tgt, x)
         np.clip(self.W, -2.0, 2.0, out=self.W)
@@ -106,7 +116,7 @@ class LowRankAdapter(ValueAdapter):
 
     def update(self, rho_post: np.ndarray, adv: float) -> None:
         x = unit(rho_post)
-        tgt = self.last_motor if self.last_motor is not None else x
+        tgt = self.teaching_target(rho_post)
         gated = float(adv) if abs(float(adv)) > PROTO_EPS else 0.0
         err = tgt - (self.U @ (self.V @ x))
         self.U = self.U + self.eta * gated * np.outer(err, self.V @ x)
