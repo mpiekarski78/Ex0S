@@ -1,0 +1,46 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R1_2.DEV.DECISION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R1.2",
+  "type": "immutable_dev_decision_record",
+  "status": "closed_for_scored_result",
+  "implementation_commit": "098f4c5",
+  "implementation_sha": "098f4c580067494c6857ce5996e443347aa358cb",
+  "prereg_commit": "052b1bf",
+  "run_id": "stage_a_r1_2_attempt_001",
+  "ledger_hashes": {
+    "run_started_json": "5d03239de9f1a30e0d157b80c0404935717166a74ac2f2602b43b6531297750c",
+    "candidate_records_jsonl": "56ffce4d4c488b782b42f11aa9c26a595dd5d98369672d94c9e60b132a7478d0",
+    "run_completed_json": "a89b3a5d4fb7ddf4a36b66c29cb4e2ebb90a9e715ef9cb7c515e74dbea43318a",
+    "search_summary_json": "b4daf7a906d1cb369684a3326b5c494d4d68d39abe3882f550694a82e8f92a62"
+  },
+  "actual_budget_accounting": {
+    "families_executed": 3,
+    "optimizer_arms_executed": 2,
+    "reward_based_meta_gradient_updates_per_family": 4,
+    "evolutionary_generations_per_family": 4,
+    "evolutionary_population_size": 4,
+    "cheap_train_lives_per_meta_update": 2,
+    "cheap_train_lives_per_evolutionary_child": 2,
+    "meta_training_lives_per_family": 8,
+    "evolutionary_training_lives_per_family": 32,
+    "validation_lives_per_candidate": 4,
+    "confirmation_lives_consumed": 0
+  },
+  "invalid_candidate_handling": {
+    "zero_invalid_candidates": true,
+    "invalid_candidate_count_per_candidate": 0
+  },
+  "candidate_level_outcomes": {
+    "all_candidate_codes": [
+      "credit_not_causal"
+    ],
+    "aggregate_outcome": "local_rule_optimization_fail"
+  },
+  "stage_b_status": "locked",
+  "interpretation": "no_causal_grounding_within_frozen_r1_2_budget",
+  "architectural_conclusion": "none",
+  "scientific_scope_note": "No causally valid grounding rule was found within four meta updates or four evolutionary generations on the frozen R1.2 search surface. This does not establish that the three plasticity families fundamentally cannot work.",
+  "written_utc": "2026-08-19T12:18:00Z"
+}
