@@ -262,7 +262,7 @@ class ModularOrganism:
             confidence=confidence,
         )
 
-    def _apply_local_plasticity(self) -> None:
+    def _apply_local_plasticity(self) -> torch.Tensor | None:
         """
         Apply the within-life local plasticity rule to the action cortex W_motor.
         This is the ONLY weight update during an evaluated life.
@@ -273,7 +273,7 @@ class ModularOrganism:
         and the organism's chosen motor channel.
         """
         if not hasattr(self, "_last_mod") or not hasattr(self, "_last_action_channel"):
-            return
+            return None
         mod = self._last_mod
         rule = self.plasticity_rule
         elig = self.eligibility.trace   # shape (n_rel, n_action)
@@ -311,15 +311,55 @@ class ModularOrganism:
                 dW = dW * float(self._r2_plasticity_mask_gain)
             self.action_ctx.W_motor.weight.data.add_(dW)
             self._last_actor_delta = dW.detach().clone()
+        return dW
 
-    def rest(self, n_ticks: int = 1) -> dict:
+    def apply_outcome_credit(self) -> dict:
+        """
+        Apply eligible local plasticity immediately after outcome delivery.
+
+        Stage A R2.1 credit lifecycle: observe → act → consequence → credit.
+        Eligibility must be finite and nonzero before this call; reset must occur
+        only after credit has been applied for the triggering interaction.
+        """
+        elig = self.eligibility.trace
+        elig_norm = float(elig.norm().item())
+        w_before = self.action_ctx.W_motor.weight.data.clone()
+        dW = self._apply_local_plasticity()
+        if dW is None:
+            dW = torch.zeros_like(w_before)
+        update_norm = float(dW.norm().item())
+        mod = getattr(self, "_last_mod", {})
+        reward_signal = 0.0
+        if "reward_baseline_error" in mod:
+            val = mod["reward_baseline_error"]
+            reward_signal = float(val.item() if hasattr(val, "item") else val)
+        elif "td_error" in mod:
+            val = mod["td_error"]
+            reward_signal = float(val.item() if hasattr(val, "item") else val)
+        elif "reward_gate" in mod:
+            val = mod["reward_gate"]
+            reward_signal = float(val.item() if hasattr(val, "item") else val)
+        chosen = getattr(self, "_last_action_channel", 0)
+        channel_update = float(dW[chosen].norm().item()) if dW.numel() else 0.0
+        signed_projection = reward_signal * channel_update
+        self._last_outcome_credit = {
+            "eligibility_norm_before_credit": elig_norm,
+            "rewarded_update_norm": update_norm,
+            "signed_reward_projection": signed_projection,
+        }
+        return dict(self._last_outcome_credit)
+
+    def rest(self, n_ticks: int = 1, apply_plasticity: bool = True) -> dict:
         """
         Internal rest period: organism applies local plasticity and replay.
         No gradient updates. Slow cortex disabled if consolidation_disabled=True.
         Returns rest telemetry.
+
+        When immediate outcome credit is applied via apply_outcome_credit(),
+        callers should pass apply_plasticity=False to avoid duplicate credit.
         """
-        # Apply local plasticity rule to action weights (within-life, no gradient)
-        self._apply_local_plasticity()
+        if apply_plasticity:
+            self._apply_local_plasticity()
 
         replayed = 0
         if not self.consolidation_disabled and self.hippocampus._store:
