@@ -28,8 +28,8 @@
   },
   "interpretation": "those four implementations failed; representation learning is not falsified",
   "telemetry_schema": "MEMLANG-1.TELEMETRY.v2",
-  "implementation_sha": "2929df4a40c10b1a92fb078e8c4fae121b13a477c05cde9dd4bd54ffc8abae9a",
-  "runner_schema_sha": "9ce2df4f1ac57d4ca99f85843d4755916daa68f2f7b5ea2991bff679e724dabd",
+  "implementation_sha": "1ea7581a9e2fa27da3b732d6d33c872fe1ff5596f424a8f5e7682df67a02b2b6",
+  "runner_schema_sha": "1ca98f08ecad884320a386ddb182aa5272b68517c1a1c0dae79ee489950bf76e",
   "stage_a_sha": "8b1ac5852552469b2ae63c747934518ad9779cb0f0fd7f62e80d0acc5080b87e",
   "neural_sha": "555bba37cc79b407f8d2205b6ce9440f2a7b204fb7eff2cc55a8ff5e883a7f01",
   "wave1_families": [
@@ -56,6 +56,11 @@
   "wave5_families": [
     "motor_cluster",
     "whitening"
+  ],
+  "wave6_families": [
+    "tanh_rho",
+    "delay_mix",
+    "whiten_nudge"
   ],
   "budget_lock_families_unchanged": [
     "slow_target",

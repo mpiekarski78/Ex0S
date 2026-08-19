@@ -829,6 +829,134 @@ class StickySepAdapter(SepClusterAdapter):
         self.family = "sticky_sep"
 
 
+
+class TanhRhoAdapter(ValueAdapter):
+    family = "tanh_rho"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "tanh_rho")
+        self.scale = float(self.cfg.get("scale") or 1.0)
+
+    def value(self, rho_post: np.ndarray) -> np.ndarray:
+        if self.last_target is None:
+            return self.scramble_rho(rho_post)
+        return unit(np.tanh(self.scale * unit(rho_post)))
+
+    def geometry(self) -> dict[str, Any]:
+        return {"family": self.family, "name": self.name, "scale": self.scale}
+
+
+class DelayMixAdapter(ValueAdapter):
+    family = "delay_mix"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "delay_mix")
+        self.mix = float(self.cfg.get("mix") or 0.3)
+        self.prev: np.ndarray | None = None
+
+    def update(self, rho_post: np.ndarray, adv: float) -> None:
+        x = unit(rho_post)
+        if _gated(adv) > PROTO_EPS:
+            self.prev = x.copy() if self.prev is None else unit((1.0 - self.mix) * self.prev + self.mix * x)
+
+    def value(self, rho_post: np.ndarray) -> np.ndarray:
+        if self.last_target is None:
+            return self.scramble_rho(rho_post)
+        x = unit(rho_post)
+        if self.prev is None:
+            return x
+        return self.compose_value(self.prev, rho_post, self.mix)
+
+    def geometry(self) -> dict[str, Any]:
+        return {"family": self.family, "name": self.name, "mix": self.mix}
+
+
+class WhitenNudgeAdapter(WhiteningAdapter):
+    """ZCA of rho plus a small motor-cluster mean."""
+
+    family = "whiten_nudge"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "whiten_nudge")
+        self.nudge = float(self.cfg.get("nudge") or 0.2)
+        self.motor = MotorClusterAdapter(n, {**self.cfg, "mix": self.nudge, "eta": 0.25, "spawn": 0.5})
+
+    def observe_motor(self, motor: np.ndarray | None, adv: float, *, efference: np.ndarray | None = None) -> None:
+        super().observe_motor(motor, adv, efference=efference)
+        self.motor.observe_motor(motor, adv, efference=efference)
+
+    def update(self, rho_post: np.ndarray, adv: float) -> None:
+        super().update(rho_post, adv)
+        self.motor.update(rho_post, adv)
+
+    def value(self, rho_post: np.ndarray) -> np.ndarray:
+        z = super().value(rho_post)
+        if self.last_target is None:
+            return z
+        nudged = self.motor.value(rho_post)
+        return unit((1.0 - self.nudge) * z + self.nudge * nudged)
+
+    def geometry(self) -> dict[str, Any]:
+        g = super().geometry()
+        g.update({"nudge": self.nudge, "n_motor_protos": (self.motor.geometry() or {}).get("n_protos")})
+        return g
+
+
+class MutantAdapter(ValueAdapter):
+    """Random legal combination: tanh, optional ZCA, optional delay, optional tiny motor mix."""
+
+    family = "mutant"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "mutant")
+        self.scale = float(self.cfg.get("scale") or 1.0)
+        self.zca = bool(self.cfg.get("zca", False))
+        self.delay = float(self.cfg.get("delay") or 0.0)
+        self.nudge = float(self.cfg.get("nudge") or 0.0)
+        self.eta = float(self.cfg.get("eta") or 0.05)
+        self.eps = 1e-3
+        self.cov = np.eye(self.n, dtype=np.float64)
+        self.prev: np.ndarray | None = None
+        self.motor = MotorClusterAdapter(n, {"mix": max(0.05, self.nudge), "eta": 0.25, "spawn": 0.5, "seed": int(self.cfg.get("seed") or 0)})
+
+    def observe_motor(self, motor: np.ndarray | None, adv: float, *, efference: np.ndarray | None = None) -> None:
+        super().observe_motor(motor, adv, efference=efference)
+        if self.nudge > 0:
+            self.motor.observe_motor(motor, adv, efference=efference)
+
+    def update(self, rho_post: np.ndarray, adv: float) -> None:
+        x = unit(rho_post)
+        gated = _gated(adv)
+        if gated > PROTO_EPS:
+            if self.zca:
+                self.cov = (1.0 - self.eta * gated) * self.cov + (self.eta * gated) * np.outer(x, x)
+            if self.delay > 0:
+                self.prev = x.copy() if self.prev is None else unit((1.0 - self.delay) * self.prev + self.delay * x)
+            if self.nudge > 0:
+                self.motor.update(rho_post, adv)
+
+    def value(self, rho_post: np.ndarray) -> np.ndarray:
+        if self.last_target is None:
+            return self.scramble_rho(rho_post)
+        x = unit(np.tanh(self.scale * unit(rho_post)))
+        if self.zca:
+            w, v = np.linalg.eigh(0.5 * (self.cov + self.cov.T) + self.eps * np.eye(self.n))
+            w = np.clip(w, self.eps, None)
+            x = unit(((v * (w ** -0.5)) @ v.T) @ x)
+        if self.delay > 0 and self.prev is not None:
+            x = unit((1.0 - self.delay) * x + self.delay * self.prev)
+        if self.nudge > 0:
+            x = unit((1.0 - self.nudge) * x + self.nudge * self.motor.value(rho_post))
+        return x
+
+    def geometry(self) -> dict[str, Any]:
+        return {"family": self.family, "name": self.name, "scale": self.scale, "zca": self.zca, "delay": self.delay, "nudge": self.nudge}
+
+
 FAMILIES = {
     "slow_target": SlowTargetAdapter,
     "hebbian_delta": HebbianDeltaAdapter,
@@ -849,6 +977,10 @@ FAMILIES = {
     "sticky_sep": StickySepAdapter,
     "motor_cluster": MotorClusterAdapter,
     "whitening": WhiteningAdapter,
+    "tanh_rho": TanhRhoAdapter,
+    "delay_mix": DelayMixAdapter,
+    "whiten_nudge": WhitenNudgeAdapter,
+    "mutant": MutantAdapter,
 }
 
 

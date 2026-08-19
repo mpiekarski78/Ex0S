@@ -39,6 +39,9 @@ NEW_FAMILIES = [
     "sticky_sep",
     "motor_cluster",
     "whitening",
+    "tanh_rho",
+    "delay_mix",
+    "whiten_nudge",
 ]
 
 

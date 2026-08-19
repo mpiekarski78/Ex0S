@@ -286,6 +286,41 @@ def variants_for(family: str, *, max_n: int = 25) -> list[dict[str, Any]]:
             for eta in etas:
                 out.append({"family": family, "name": f"zca_{i:02d}", "eta": float(eta), "eps": float(eps), "seed": 19000 + i})
                 i += 1
+    elif family == "tanh_rho":
+        i = 0
+        for scale in (0.25, 0.5, 1.0, 2.0, 4.0):
+            for seed in range(5):
+                out.append({"family": family, "name": f"tanh_{i:02d}", "scale": float(scale), "seed": 20000 + i})
+                i += 1
+    elif family == "delay_mix":
+        i = 0
+        for mix in (0.1, 0.2, 0.35, 0.5, 0.7):
+            for eta in etas:
+                out.append({"family": family, "name": f"dly_{i:02d}", "mix": float(mix), "eta": float(eta), "seed": 21000 + i})
+                i += 1
+    elif family == "whiten_nudge":
+        i = 0
+        for nudge in (0.05, 0.1, 0.2, 0.3, 0.4):
+            for eta in etas:
+                out.append({"family": family, "name": f"wn_{i:02d}", "eta": float(eta), "eps": 1e-3, "nudge": float(nudge), "seed": 22000 + i})
+                i += 1
+    elif family == "mutant":
+        i = 0
+        rng = __import__("random").Random(7)
+        while i < 25:
+            out.append(
+                {
+                    "family": family,
+                    "name": f"mut_{i:02d}",
+                    "scale": float(rng.choice([0.5, 1.0, 2.0])),
+                    "zca": bool(rng.choice([False, True])),
+                    "delay": float(rng.choice([0.0, 0.15, 0.3])),
+                    "nudge": float(rng.choice([0.0, 0.1, 0.2])),
+                    "eta": float(rng.choice([0.02, 0.05, 0.1])),
+                    "seed": 23000 + i,
+                }
+            )
+            i += 1
     else:
         raise RuntimeError(family)
     return out[: int(max_n)]

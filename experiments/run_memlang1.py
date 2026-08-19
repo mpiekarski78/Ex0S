@@ -86,6 +86,17 @@ def v2_record(*, cfg: dict[str, Any], out: dict[str, Any], elapsed_s: float, par
         "elapsed_s": float(elapsed_s),
         "causal_gates": out.get("phase_flags"),
         "first_failing_boundary": out["decision_code"],
+        "probe_scores": {
+            c["id"]: {
+                "ok": c.get("ok"),
+                "passed": c.get("passed"),
+                "n_ok": (c.get("train") or {}).get("n_ok"),
+                "n_need": (c.get("train") or {}).get("n_need"),
+                "min_margin": (c.get("train") or {}).get("min_margin"),
+            }
+            for c in (out.get("cells") or [])
+            if c.get("kind") == "scored" or str(c.get("id") or "").startswith("prefix_") or str(c.get("id") or "").startswith("later_") or str(c.get("id") or "").startswith("renamed_")
+        },
         "lineage_release": False,
         "install_W_star": False,
         "candidate_v41_lock": False,
