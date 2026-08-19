@@ -1,0 +1,185 @@
+{
+  "_schema": "exos_dev1.stage_a_r2.prereg.v1",
+  "_immutable": true,
+  "written_utc": "2026-08-19T13:55:00Z",
+
+  "lineage": {
+    "r1_2_dev_decision": "docs/exos_dev1.stage_a_r1_2.dev_decision.lock",
+    "r2_contract": "docs/exos_dev1.stage_a_r2.contract.lock",
+    "r2_isolation": "docs/exos_dev1.stage_a_r2.isolation.lock"
+  },
+
+  "implementation": {
+    "commit_sha": "cbf0fd0cb0b57649a7f4145bc2b43b34a3fa7b8e",
+    "runner_sha256_prefix": "89d4ff7583c14252",
+    "runner_file": "experiments/dev1/search_r2.py",
+    "scaffold_file": "experiments/dev1/scaffold_r2.py",
+    "organism_file": "three_memory/dev1/organism.py",
+    "test_files": [
+      "tests/dev1/test_stage_a_r2.py",
+      "tests/dev1/test_r2_motor_permutation.py",
+      "tests/dev1/test_r2_sensitivity_tracks.py"
+    ],
+    "full_suite_result": "63_passed_0_failed",
+    "behavioral_wiring": {
+      "motor_logit_bias": "_r2_motor_channel_bias added to motor_logits in organism.act()",
+      "plasticity_mask": "_r2_plasticity_channel_mask applied to dW in organism._apply_local_plasticity()",
+      "plasticity_gain": "_r2_plasticity_mask_gain applied as scalar to dW after mask"
+    }
+  },
+
+  "excluded_seed_benchmarks": {
+    "throughput_run_id": "r2_excluded_throughput_20260819",
+    "throughput_config": {"meta_updates": 4, "evo_generations": 4, "population_size": 4},
+    "throughput_wall_seconds": 448.8,
+    "throughput_candidate_count": 9,
+    "throughput_outcome": "scaffold_optimization_fail",
+    "throughput_finiteness": "all_numeric_values_finite",
+    "throughput_ledger": "run_started + run_completed present, run_failed absent",
+
+    "stress_run_id": "r2_excluded_stress_20260819",
+    "stress_config": {"meta_updates": 8, "evo_generations": 8, "population_size": 8},
+    "stress_wall_seconds": 1398.8,
+    "stress_candidate_count": 9,
+    "stress_outcome": "scaffold_optimization_fail",
+    "stress_finiteness": "all_numeric_values_finite",
+    "stress_ledger": "run_started + run_completed present, run_failed absent",
+    "stress_invalid_cascades": 0,
+
+    "cost_model": {
+      "approx_seconds_per_eval": 0.57,
+      "basis": "stress run 1398.8s / (9 candidates × 272 training evals)",
+      "note": "topology_track_population_is_motif_space_so_population_16_is_saturated_at_3_motifs"
+    }
+  },
+
+  "budget": {
+    "choice": "24_updates_24_generations_population_12",
+    "rationale": "32/32/16 extrapolates to ~4200s scored search plus validation overhead; 24/24/12 is ~2600s with comfortable headroom for rotating-validation beam promotion and confirmation",
+    "meta_gradient_outer_updates": 24,
+    "evolution_generations": 24,
+    "evolution_population_size": 12,
+    "beam_size": 3,
+    "training_world_count": 6,
+    "training_cheap_seeds": 2,
+    "training_validation_seeds": 4,
+    "validation_seed_count": 4,
+    "confirmation_seed_count": 4,
+    "estimated_wall_seconds": 2600,
+    "early_termination_allowed_only_for": [
+      "numerical_or_systemic_failure",
+      "preregistered_convergence_plateau"
+    ],
+    "absence_of_early_causal_candidate_is_not_a_stop_rule": true
+  },
+
+  "seed_partitions": {
+    "note": "All seeds are fresh; excluded-seed benchmark seeds are explicitly excluded",
+    "excluded_seeds": [
+      "r2_excluded_throughput_20260819_world_001",
+      "r2_excluded_throughput_20260819_world_002",
+      "r2_excluded_throughput_20260819_world_003",
+      "r2_excluded_throughput_20260819_world_004",
+      "r2_excluded_throughput_20260819_world_005",
+      "r2_excluded_throughput_20260819_world_006",
+      "r2_excluded_throughput_20260819_conf_001",
+      "r2_excluded_throughput_20260819_conf_002",
+      "r2_excluded_throughput_20260819_conf_003",
+      "r2_excluded_throughput_20260819_conf_004",
+      "r2_excluded_stress_20260819_world_001",
+      "r2_excluded_stress_20260819_world_002",
+      "r2_excluded_stress_20260819_world_003",
+      "r2_excluded_stress_20260819_world_004",
+      "r2_excluded_stress_20260819_world_005",
+      "r2_excluded_stress_20260819_world_006",
+      "r2_excluded_stress_20260819_conf_001",
+      "r2_excluded_stress_20260819_conf_002",
+      "r2_excluded_stress_20260819_conf_003",
+      "r2_excluded_stress_20260819_conf_004",
+      "stage_a_r2_preflight"
+    ],
+    "training_world_seeds": [
+      "exos_dev1_r2_scored_world_001",
+      "exos_dev1_r2_scored_world_002",
+      "exos_dev1_r2_scored_world_003",
+      "exos_dev1_r2_scored_world_004",
+      "exos_dev1_r2_scored_world_005",
+      "exos_dev1_r2_scored_world_006"
+    ],
+    "confirmation_seeds": [
+      "exos_dev1_r2_conf_001",
+      "exos_dev1_r2_conf_002",
+      "exos_dev1_r2_conf_003",
+      "exos_dev1_r2_conf_004"
+    ]
+  },
+
+  "optimizer_arms": {
+    "continuous_tracks": ["meta_gradient_continuous", "evolution_continuous"],
+    "topology_tracks": ["evolution_topology"],
+    "credit_families": [
+      "reward_baseline_three_factor",
+      "action_contingent_actor_critic",
+      "consequence_prediction_credit"
+    ],
+    "family_selection_rule": "search_all_three_families_independently"
+  },
+
+  "scaffold_surface": {
+    "continuous_scaffold_class": "ContinuousScaffoldPhenotype",
+    "continuous_parameters": [
+      "sensory_init_scale", "relational_init_scale", "action_init_scale",
+      "sensory_recurrent_radius", "relational_recurrent_radius", "action_recurrent_radius",
+      "sensory_density", "relational_density", "action_density",
+      "ei_balance", "motor_basis_scale",
+      "homeostatic_target_norm", "normalization_strength", "plasticity_mask_gain"
+    ],
+    "topology_scaffold_class": "TopologyScaffoldPhenotype",
+    "topology_motifs": ["dense", "block", "banded"],
+    "scaffold_sensitivity_preflight": "mandatory_pass_before_optimization"
+  },
+
+  "training_policy": "stochastic_during_training_hard_during_validation_and_confirmation",
+  "h_disabled": true,
+  "consolidation_disabled": true,
+
+  "decision_ladder": [
+    "scaffold_sensitivity_fail",
+    "scaffold_numerical_fail",
+    "outer_optimization_not_exercised",
+    "scaffold_optimization_fail",
+    "sensorimotor_overfit",
+    "credit_not_causal",
+    "stage_a_confirmation_fail",
+    "stage_a_confirmation_pass"
+  ],
+
+  "stage_b_unlock_rule": {
+    "only_terminal_unlock_code": "stage_a_confirmation_pass",
+    "stage_b_remains_locked": true
+  },
+
+  "promotion_rule": {
+    "top_beam_size": 3,
+    "promotion_by": "total_fitness_on_rotating_validation_seeds",
+    "causal_validity_not_required_for_promotion": true,
+    "confirmation_only_for_causal_valid_candidates": true
+  },
+
+  "mandatory_gates_before_execution": [
+    "stress_run_complete_finite_no_cascade",
+    "behavioral_wiring_committed_and_pushed",
+    "motor_permutation_equivariance_passes",
+    "track_specific_sensitivity_passes_across_excluded_seeds",
+    "full_test_suite_63_passed"
+  ],
+  "all_gates_passed": true,
+
+  "forbidden": [
+    "changing_seed_partitions_after_this_lock",
+    "early_termination_on_credit_not_causal",
+    "feeding_telemetry_back_into_organism",
+    "changing_credit_families_or_fitness_formula",
+    "touching_r1_or_r1_1_or_r1_2_historical_records"
+  ]
+}
