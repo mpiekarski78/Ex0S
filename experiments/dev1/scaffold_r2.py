@@ -76,6 +76,8 @@ def apply_scaffold_to_organism(
             _apply_block_mask(org.action_ctx.W_motor.weight)
         elif topology.motif == "banded":
             _apply_banded_mask(org.action_ctx.W_motor.weight)
+        org._r2_motor_channel_bias = _motor_channel_bias(org.genome.n_motor_channels, continuous.motor_basis_scale, topology.motif, org.device)
+        org._r2_plasticity_channel_mask = _plasticity_channel_mask(org.action_ctx.W_motor.weight, topology.motif)
     org._r2_homeostatic_target_norm = continuous.homeostatic_target_norm
     org._r2_normalization_strength = continuous.normalization_strength
     org._r2_plasticity_mask_gain = continuous.plasticity_mask_gain
@@ -181,13 +183,17 @@ def _collect_probe_metrics(org: ModularOrganism, world: InteractionWorld) -> dic
     org.observe(OrganismObservation(sensory_vector=event.sensory_vector, reward=0.0))
     normalize_r2_state(org)
     action = org.act(policy_mode="hard")
+    reward = world.reward_for_action(event, action.motor_channel)
+    org.observe(OrganismObservation(sensory_vector=event.sensory_vector, reward=reward))
+    normalize_r2_state(org)
+    action_after_reward = org.act(policy_mode="hard")
     org.rest()
     return {
         "recurrent_norm": float(org.rho.relational_repr.norm().item()),
         "sensory_sep": float(org.rho.sensory_repr.norm().item()),
-        "motor_sep": float(np.std(action.motor_scores)),
+        "motor_sep": float(np.std(action_after_reward.motor_scores)),
         "actor_delta_norm": float(getattr(org, "_last_actor_delta", torch.zeros(1)).norm().item()),
-        "action_confidence": float(action.confidence),
+        "action_confidence": float(action_after_reward.confidence),
         "homeostatic_norm": float(org.rho.action_repr.norm().item()),
     }
 
@@ -252,6 +258,23 @@ def _apply_block_mask(weight: torch.Tensor) -> None:
 
 def _apply_banded_mask(weight: torch.Tensor) -> None:
     weight.mul_(_banded_mask(weight))
+
+
+def _motor_channel_bias(n_channels: int, scale: float, motif: str, device: torch.device) -> torch.Tensor:
+    base = torch.linspace(-1.0, 1.0, steps=n_channels, device=device)
+    if motif == "block":
+        base = torch.cat([torch.ones(n_channels // 2, device=device), -torch.ones(n_channels - n_channels // 2, device=device)])
+    elif motif == "banded":
+        base = torch.sin(torch.linspace(0.0, 3.14159, steps=n_channels, device=device))
+    return base * (0.05 * scale)
+
+
+def _plasticity_channel_mask(weight: torch.Tensor, motif: str) -> torch.Tensor:
+    if motif == "dense":
+        return torch.ones_like(weight)
+    if motif == "block":
+        return _block_mask(weight)
+    return _banded_mask(weight)
 
 
 def _phenotype_delta(a: ContinuousScaffoldPhenotype, b: ContinuousScaffoldPhenotype) -> float:

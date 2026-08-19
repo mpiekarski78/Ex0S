@@ -235,6 +235,8 @@ class ModularOrganism:
         No gradient update to W, H, or ρ.
         """
         action_state, motor_logits = self.action_ctx(self.rho.relational_repr, self.rho.action_repr)
+        if hasattr(self, "_r2_motor_channel_bias"):
+            motor_logits = motor_logits + self._r2_motor_channel_bias
         self.rho.action_repr = action_state
 
         # Update eligibility trace here (after action state is populated)
@@ -303,6 +305,10 @@ class ModularOrganism:
                 )
             else:
                 raise ValueError(f"Unknown local plasticity family: {rule.name()}")
+            if hasattr(self, "_r2_plasticity_channel_mask"):
+                dW = dW * self._r2_plasticity_channel_mask
+            if hasattr(self, "_r2_plasticity_mask_gain"):
+                dW = dW * float(self._r2_plasticity_mask_gain)
             self.action_ctx.W_motor.weight.data.add_(dW)
             self._last_actor_delta = dW.detach().clone()
 
