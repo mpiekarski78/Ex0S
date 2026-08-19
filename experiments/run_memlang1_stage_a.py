@@ -453,7 +453,12 @@ def eval_stage_a(adapter_cfg: dict[str, Any] | None = None) -> dict[str, Any]:
             n_online_repeats=2,
             feedback_off=True,
         )
-        feedback_off_ok = (len(pin_off["prefix_rows"]) + len(pin_off["later_rows"])) == 0
+        pin_rows = list(pin_off["prefix_rows"]) + list(pin_off["later_rows"])
+        if not pin_rows:
+            feedback_off_ok = True
+        else:
+            sc_off = score_eval(pin_off["W0"], pairs_of(pin_rows), pin_off["vocab"])
+            feedback_off_ok = int(sc_off.get("n_ok") or 0) < int(sc_off.get("n_need") or 1)
         del pin_off
         pin_perm = collect_bundle(
             wi=0,
