@@ -1,0 +1,183 @@
+{
+  "_schema": "exos_dev1.stage_a_r2_1.prereg.v1",
+  "_immutable": true,
+  "written_utc": "2026-08-19T17:25:00Z",
+
+  "lineage": {
+    "r2_audit_addendum": "docs/exos_dev1.stage_a_r2.audit.addendum.lock",
+    "r2_1_contract": "docs/exos_dev1.stage_a_r2_1.contract.lock",
+    "r2_1_isolation": "docs/exos_dev1.stage_a_r2_1.isolation.lock"
+  },
+
+  "provenance": {
+    "r2_1_contract_and_isolation_lock_commit": "88a5fa6",
+    "r2_1_initial_implementation_commit": "9abcb78",
+    "contract_and_isolation_predate_implementation": true,
+    "gate_repair_commit": "58225d3",
+    "note": "Contract/isolation locks at 88a5fa6 predated implementation at 9abcb78. Credit-consumed lifecycle and behavioral micro-grounding gates landed at 58225d3 before this preregistration freeze."
+  },
+
+  "implementation": {
+    "commit_sha": "58225d3",
+    "runner_file": "experiments/dev1/search_r2_1.py",
+    "credit_lifecycle_file": "experiments/dev1/credit_lifecycle_r2_1.py",
+    "organism_file": "three_memory/dev1/organism.py",
+    "test_files": [
+      "tests/dev1/test_stage_a_r2_1.py"
+    ],
+    "full_suite_result": "74_passed_0_failed",
+    "credit_lifecycle_gates": {
+      "runner_owns_plasticity_skip": false,
+      "apply_outcome_credit_marks_consumed": true,
+      "rest_skips_duplicate_plasticity_when_consumed": true,
+      "second_credit_refused": true,
+      "reset_before_credit_refused": true,
+      "checkpoint_invalidates_pending_credit": true,
+      "behavioral_micro_grounding": true
+    }
+  },
+
+  "excluded_seed_benchmarks": {
+    "rehearsal_run_id": "r2_1_excluded_throughput_20260819",
+    "rehearsal_config": {"meta_updates": 4, "evo_generations": 4, "population_size": 4},
+    "rehearsal_wall_seconds": 1483.7,
+    "rehearsal_candidate_count": 9,
+    "rehearsal_outcome": "scaffold_optimization_fail",
+    "rehearsal_credit_lifecycle_preflight": "credit_lifecycle_preflight_pass",
+    "rehearsal_finiteness": "all_numeric_values_finite",
+    "rehearsal_ledger": "run_started + run_completed present, run_failed absent",
+    "rehearsal_ledger_lines": 24,
+    "rehearsal_family_hashes_distinct": true,
+    "rehearsal_rewarded_update_positive": true,
+    "rehearsal_no_early_empty_beam": true,
+    "cost_model": {
+      "approx_seconds_per_eval": 5.89,
+      "basis": "rehearsal 1483.7s / 252 approximate eval-equivalents",
+      "note": "R2.1 credit lifecycle adds per-step apply_outcome_credit overhead versus R2; 24/24/12 retained because rehearsal remains within feasible wall-clock band"
+    }
+  },
+
+  "budget": {
+    "choice": "24_updates_24_generations_population_12",
+    "rationale": "Rehearsal 4/4/4 completed in 1483.7s with finite ledgers and distinct family dispatch; 24/24/12 extrapolates within acceptable scored-search wall clock without reward-density changes",
+    "meta_gradient_outer_updates": 24,
+    "evolution_generations": 24,
+    "evolution_population_size": 12,
+    "beam_size": 3,
+    "training_world_count": 6,
+    "training_cheap_seeds": 2,
+    "training_validation_seeds": 4,
+    "validation_seed_count": 4,
+    "confirmation_seed_count": 4,
+    "estimated_wall_seconds": 8600,
+    "early_termination_allowed_only_for": [
+      "numerical_or_systemic_failure",
+      "preregistered_convergence_plateau"
+    ],
+    "absence_of_early_causal_candidate_is_not_a_stop_rule": true
+  },
+
+  "seed_partitions": {
+    "note": "Fresh R2.1 partitions only; R2 scored and excluded rehearsal seeds forbidden",
+    "excluded_seeds": [
+      "r2_1_excluded_throughput_20260819_world_001",
+      "r2_1_excluded_throughput_20260819_world_002",
+      "r2_1_excluded_throughput_20260819_world_003",
+      "r2_1_excluded_throughput_20260819_world_004",
+      "r2_1_excluded_throughput_20260819_world_005",
+      "r2_1_excluded_throughput_20260819_world_006",
+      "r2_1_excluded_throughput_20260819_conf_001",
+      "r2_1_excluded_throughput_20260819_conf_002",
+      "r2_1_excluded_throughput_20260819_conf_003",
+      "r2_1_excluded_throughput_20260819_conf_004",
+      "r2_1_excluded_throughput_preflight",
+      "exos_dev1_r2_scored_world_001",
+      "exos_dev1_r2_scored_world_002",
+      "exos_dev1_r2_scored_world_003",
+      "exos_dev1_r2_scored_world_004",
+      "exos_dev1_r2_scored_world_005",
+      "exos_dev1_r2_scored_world_006",
+      "exos_dev1_r2_conf_001",
+      "exos_dev1_r2_conf_002",
+      "exos_dev1_r2_conf_003",
+      "exos_dev1_r2_conf_004",
+      "stage_a_r2_preflight"
+    ],
+    "training_world_seeds": [
+      "exos_dev1_r2_1_scored_world_001",
+      "exos_dev1_r2_1_scored_world_002",
+      "exos_dev1_r2_1_scored_world_003",
+      "exos_dev1_r2_1_scored_world_004",
+      "exos_dev1_r2_1_scored_world_005",
+      "exos_dev1_r2_1_scored_world_006"
+    ],
+    "confirmation_seeds": [
+      "exos_dev1_r2_1_conf_001",
+      "exos_dev1_r2_1_conf_002",
+      "exos_dev1_r2_1_conf_003",
+      "exos_dev1_r2_1_conf_004"
+    ]
+  },
+
+  "optimizer_arms": {
+    "continuous_tracks": ["meta_gradient_continuous", "evolution_continuous"],
+    "topology_tracks": ["evolution_topology"],
+    "credit_families": [
+      "reward_baseline_three_factor",
+      "action_contingent_actor_critic",
+      "consequence_prediction_credit"
+    ],
+    "family_selection_rule": "search_all_three_families_independently"
+  },
+
+  "scaffold_surface": {
+    "inherited_from_R2_unchanged": true,
+    "continuous_scaffold_class": "ContinuousScaffoldPhenotype",
+    "topology_scaffold_class": "TopologyScaffoldPhenotype",
+    "scaffold_sensitivity_preflight": "mandatory_pass_before_optimization"
+  },
+
+  "training_policy": "stochastic_during_training_hard_during_validation_and_confirmation",
+  "h_disabled": true,
+  "consolidation_disabled": true,
+
+  "fitness": {
+    "learning_components": ["R", "A", "M", "T"],
+    "P_role": "feasibility_diagnostic_only_not_learning_evidence",
+    "formula_unchanged_from_R1_2": true
+  },
+
+  "decision_ladder": [
+    "credit_lifecycle_preflight_fail",
+    "scaffold_sensitivity_fail",
+    "scaffold_numerical_fail",
+    "outer_optimization_not_exercised",
+    "scaffold_optimization_fail",
+    "sensorimotor_overfit",
+    "credit_not_causal",
+    "stage_a_confirmation_fail",
+    "stage_a_confirmation_pass"
+  ],
+
+  "stage_b_unlock_rule": {
+    "only_terminal_unlock_code": "stage_a_confirmation_pass",
+    "stage_b_remains_locked": true
+  },
+
+  "mandatory_gates_before_execution": [
+    "credit_consumed_lifecycle_tests_pass",
+    "behavioral_micro_grounding_pass",
+    "excluded_seed_4_4_4_rehearsal_finite_complete_ledgers",
+    "full_test_suite_74_passed"
+  ],
+  "all_gates_passed": true,
+
+  "forbidden": [
+    "changing_seed_partitions_after_this_lock",
+    "early_termination_on_credit_not_causal",
+    "reward_density_redesign_before_scored_result",
+    "rerun_or_patch_frozen_R2_scored_run",
+    "reuse_R2_scored_seed_partition",
+    "feeding_telemetry_back_into_organism"
+  ]
+}
