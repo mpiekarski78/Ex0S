@@ -1,0 +1,49 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R2_1.CLOSURE.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R2.1",
+  "type": "stage_closure_lock",
+  "status": "closed",
+  "written_utc": "2026-08-20T01:20:00Z",
+
+  "pins": {
+    "isolation_lock": "docs/exos_dev1.stage_a_r2_1.isolation.lock",
+    "isolation_commit": "88a5fa6",
+    "dev_decision_lock": "docs/exos_dev1.stage_a_r2_1.dev_decision.lock",
+    "dev_decision_commit": "pending_at_write",
+    "contract_lock": "docs/exos_dev1.stage_a_r2_1.contract.lock",
+    "contract_commit": "88a5fa6"
+  },
+
+  "historical_isolation_lock_unmodified": true,
+  "note": "The isolation lock at 88a5fa6 is not edited. This closure record supersedes only execution authorization.",
+
+  "forbidden_after_closure": [
+    "further_R2_1_scored_execution",
+    "rerun_attempt_003_partition",
+    "patch_frozen_R2_1_runner_for_new_scored_attempt",
+    "include_attempt_001_or_002_in_decision"
+  ],
+
+  "authorizes": {
+    "reference_birth_program": {
+      "contract": "docs/exos_dev1.stage_a_reference_birth.contract.lock",
+      "isolation": "docs/exos_dev1.stage_a_reference_birth.isolation.lock",
+      "explicit_override": "Authorizes Reference Birth as Stage A continuation despite implement_R3 refusal in historical R2.1 isolation lock"
+    },
+    "r2_1_control_reconstruction": {
+      "optional": true,
+      "non_blocking": true,
+      "control_lock_only_after_exact_scaffold_hash": true
+    }
+  },
+
+  "best_arm_historical_control": {
+    "family": "reward_baseline_three_factor",
+    "optimizer_arm": "evolution_continuous",
+    "scaffold_hash": "4ee5a698cdd07850eb4daf36446c466a6e9bbb07c4e9eee6da994dd968f72fb8",
+    "control_lock_status": "pending_reconstruction",
+    "numerical_record_in_dev_decision": true
+  }
+}

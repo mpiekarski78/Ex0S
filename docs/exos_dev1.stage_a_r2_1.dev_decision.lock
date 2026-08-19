@@ -1,0 +1,116 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R2_1.DEV.DECISION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R2.1",
+  "type": "immutable_dev_decision_record",
+  "status": "closed_for_scored_result",
+  "written_utc": "2026-08-20T01:20:00Z",
+
+  "implementation_commit": "58225d3",
+  "implementation_sha": "58225d345b63c7dd3bf6cf67ab62f1fbb39f987d",
+  "contract_commit": "88a5fa6",
+  "contract_sha": "88a5fa6",
+  "isolation_commit": "88a5fa6",
+  "isolation_sha": "88a5fa6",
+  "prereg_commit": "6d6bc2a",
+  "prereg_file": "docs/exos_dev1.stage_a_r2_1b.prereg.lock",
+  "executing_head_commit": "6d6bc2a",
+  "executing_head_sha": "6d6bc2a61f76d0dd5e34243194e08e4b3205799f",
+  "code_clean_at_execution": true,
+
+  "run_id": "exos_dev1_r2_1b_scored_20260819",
+  "attempt": "003",
+  "run_directory": "runs/exos_dev1/stage_a_r2_1/exos_dev1_r2_1b_scored_20260819",
+
+  "ledger_hashes": {
+    "run_started_json": "a78b439ebaf02ef8c7348d5a4319128e373d0a760ed532a909cff811dd5c7555",
+    "run_completed_json": "72d50b1cf19ecd7c27d70cff8bb65491e64d19f6f885d7a8e7845ab40cc06b82",
+    "search_summary_json": "63543dbc63d796b54fcd54270eb2c9251732b82aa2e611e7a20368dde34e997b",
+    "candidate_life_records_jsonl": "b1a53c98aedf9226b863081fc5e4834d3a0f725814af94dd3485c68e4bc63ca2",
+    "credit_lifecycle_preflight_json": "14c933b7fd3cfe04f2e36338cf5be42d6690fb55afb7e7202c827bfe269b18cb",
+    "supervisor_stdout_stderr_log": "582a310e89f9799c537ee57a47f5f202fa62c4abd45a5cac182c3a12dee0e59b",
+    "supervisor_exit_code_txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "supervisor_heartbeat_json": "740844f0e4f9345242a896cc0a0fe4f38ebf3e01ccc3451d90d0690509ed86bd"
+  },
+
+  "excluded_attempts": {
+    "attempt_001": {
+      "run_id": "exos_dev1_r2_1_scored_20260819",
+      "outcome_class": "infrastructure_interrupted",
+      "record_file": "runs/exos_dev1/stage_a_r2_1/exos_dev1_r2_1_scored_20260819_attempt_001_interrupted.json",
+      "record_sha256": "415c0227aa28bd776f0eb486b38e9eaa5b28e340447f502fe36250945e3be718",
+      "excluded_from_decision": true
+    },
+    "attempt_002": {
+      "outcome_class": "credit_lifecycle_preflight_fail",
+      "record_file": "runs/exos_dev1/stage_a_r2_1/exos_dev1_r2_1b_scored_attempt_002_preflight_fail.json",
+      "record_sha256": "7b28cfb3b1c35c8e6f23f0dc068fd7b816c8a95da63d1a21ed589fcd372e13de",
+      "excluded_from_decision": true
+    }
+  },
+
+  "budget_completion": {
+    "meta_gradient_outer_updates": 24,
+    "evolution_generations": 24,
+    "evolution_population_size": 12,
+    "families_executed": 3,
+    "optimizer_arms_per_family": 3,
+    "candidates_total": 9,
+    "budget_fully_consumed": true,
+    "early_termination": false,
+    "wall_seconds_actual": 8997.06,
+    "device": "cpu"
+  },
+
+  "run_integrity": {
+    "run_failed_json_absent": true,
+    "confirmation_consumed": false,
+    "confirmation_seeds_registered": [
+      "exos_dev1_r2_1b_conf_001",
+      "exos_dev1_r2_1b_conf_002",
+      "exos_dev1_r2_1b_conf_003",
+      "exos_dev1_r2_1b_conf_004"
+    ],
+    "confirmation_executed": false
+  },
+
+  "aggregate_outcome": "scaffold_optimization_fail",
+  "interpretation": "partial_learning_without_causal_generalization",
+  "first_failing_causal_predicate_all_candidates": "grounding_fail",
+  "architectural_conclusion": "none",
+  "stage_b_status": "locked",
+
+  "best_arm": {
+    "family": "reward_baseline_three_factor",
+    "optimizer_arm": "evolution_continuous",
+    "training_accuracy_first": 0.029296875,
+    "training_accuracy_last": 0.142578125,
+    "validation_accuracy_mean": 0.071044921875,
+    "validation_accuracies_per_seed": [0.095703125, 0.0654296875, 0.07421875, 0.048828125],
+    "scaffold_hash": "4ee5a698cdd07850eb4daf36446c466a6e9bbb07c4e9eee6da994dd968f72fb8",
+    "plasticity_implementation_hash": "96c9a3aa66c35f550dadd17ac3dcecec89f2807894461c2c6885b6787cdd37c8",
+    "phenotype_hash": "701c0a8d4f52a7d54bd5287e9b24f56a9f2d72c25e6a2333b0dc6148835f9ec6",
+    "learning_fitness_last": -0.45912958774970325
+  },
+
+  "candidate_outcomes": [
+    {"family": "reward_baseline_three_factor", "optimizer_arm": "meta_gradient_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_accuracy_first": 0.029296875, "training_accuracy_last": 0.029296875},
+    {"family": "reward_baseline_three_factor", "optimizer_arm": "evolution_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_accuracy_first": 0.029296875, "training_accuracy_last": 0.142578125},
+    {"family": "reward_baseline_three_factor", "optimizer_arm": "evolution_topology", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_accuracy_first": 0.0302734375, "training_accuracy_last": 0.0302734375},
+    {"family": "action_contingent_actor_critic", "optimizer_arm": "meta_gradient_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_accuracy_first": 0.029296875, "training_accuracy_last": 0.029296875},
+    {"family": "action_contingent_actor_critic", "optimizer_arm": "evolution_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_accuracy_first": 0.029296875, "training_accuracy_last": 0.029296875},
+    {"family": "action_contingent_actor_critic", "optimizer_arm": "evolution_topology", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_accuracy_first": 0.0302734375, "training_accuracy_last": 0.0302734375},
+    {"family": "consequence_prediction_credit", "optimizer_arm": "meta_gradient_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_accuracy_first": 0.029296875, "training_accuracy_last": 0.029296875},
+    {"family": "consequence_prediction_credit", "optimizer_arm": "evolution_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_accuracy_first": 0.029296875, "training_accuracy_last": 0.029296875},
+    {"family": "consequence_prediction_credit", "optimizer_arm": "evolution_topology", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_accuracy_first": 0.0302734375, "training_accuracy_last": 0.0302734375}
+  ],
+
+  "lineage": {
+    "r2_status": "invalidated_experiment__credit_lifecycle_and_family_dispatch",
+    "r2_1_status": "valid_experiment",
+    "r2_audit_addendum": "docs/exos_dev1.stage_a_r2.audit.addendum.lock"
+  },
+
+  "scientific_scope_note": "R2.1 established weak learning above chance on one arm (training 0.029296875 to 0.142578125; validation mean 0.071044921875) with repaired credit lifecycle and family dispatch. It did not establish causal grounding (9/9 grounding_fail). This result does not falsify developmental scaffolds as a class and does not revive invalidated R2 scaffold claims."
+}
