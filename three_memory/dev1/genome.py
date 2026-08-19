@@ -52,6 +52,13 @@ class PlasticityCoefficients:
     prediction_error_scale: float = 1.0
     novelty_scale: float = 0.5
     hebbian_lr: float = 1e-3
+    baseline_decay: float = 0.9
+    gamma: float = 0.95
+    actor_credit_scale: float = 1.0
+    critic_scale: float = 1.0
+    consequence_scale: float = 1.0
+    reward_gate_center: float = 0.5
+    action_update_floor: float = 1e-6
 
 
 @dataclass
@@ -115,7 +122,7 @@ class DevGenome:
 
     # Plasticity
     plasticity: PlasticityCoefficients = field(default_factory=PlasticityCoefficients)
-    plasticity_family: str = "three_factor"   # searched over in Stage A
+    plasticity_family: str = "reward_baseline_three_factor"
 
     # Fast memory
     hippocampus: HippocampalSpec = field(default_factory=HippocampalSpec)
@@ -136,6 +143,38 @@ class DevGenome:
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
+
+    def credit_parameter_dict(self) -> dict[str, float]:
+        """
+        Shared inherited credit surface for all Stage A R1 outer optimizers.
+
+        This intentionally excludes:
+        - optimizer identity
+        - credit-family identity
+        - any world/task metadata
+        """
+        p = self.plasticity
+        return {
+            "learning_rate": p.learning_rate,
+            "eligibility_decay": p.eligibility_decay,
+            "reward_gate_scale": p.reward_gate_scale,
+            "prediction_error_scale": p.prediction_error_scale,
+            "novelty_scale": p.novelty_scale,
+            "hebbian_lr": p.hebbian_lr,
+            "baseline_decay": p.baseline_decay,
+            "gamma": p.gamma,
+            "actor_credit_scale": p.actor_credit_scale,
+            "critic_scale": p.critic_scale,
+            "consequence_scale": p.consequence_scale,
+            "reward_gate_center": p.reward_gate_center,
+            "action_update_floor": p.action_update_floor,
+        }
+
+    def set_credit_parameter_dict(self, params: dict[str, float]) -> None:
+        """Update only the shared inherited credit surface in-place."""
+        for k, v in params.items():
+            if hasattr(self.plasticity, k):
+                setattr(self.plasticity, k, float(v))
 
     def genome_hash(self) -> str:
         canonical = json.dumps(self.to_dict(), sort_keys=True, ensure_ascii=True)

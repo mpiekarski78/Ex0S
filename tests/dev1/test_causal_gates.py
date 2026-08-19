@@ -39,6 +39,7 @@ from three_memory.dev1.interfaces import (
     OrganismObservation,
 )
 from experiments.dev1.worlds import InteractionWorld, WorldConfig
+from experiments.dev1.preflight import run_credit_preflight
 
 
 def _world(seed: str = "test_world_v1") -> InteractionWorld:
@@ -220,3 +221,28 @@ class TestActionResultContract:
         field_names = {f.name for f in dataclasses.fields(ActionResult)}
         assert field_names == {"motor_channel", "motor_scores", "confidence"}, \
             f"ActionResult fields changed: {field_names}"
+
+
+class TestStageAR1Preflight:
+    """Stage A R1 preflight must cheaply validate credit apparatus and H absence."""
+
+    def test_preflight_runs_for_all_r1_families(self):
+        families = [
+            "reward_baseline_three_factor",
+            "action_contingent_actor_critic",
+            "consequence_prediction_credit",
+        ]
+        for family in families:
+            genome = DevGenome.default()
+            result = run_credit_preflight(genome, family)
+            assert result.decision_code in {"preflight_pass", "credit_preflight_fail"}
+            assert "H_write_counter_zero" in result.checks
+            assert "rewarded_delta_w_actor" in result.metrics
+
+    def test_h_absence_proved_in_preflight(self):
+        genome = DevGenome.default()
+        result = run_credit_preflight(genome, "reward_baseline_three_factor")
+        assert result.checks["H_begins_empty"]
+        assert result.checks["H_write_counter_zero"]
+        assert result.checks["H_read_counter_zero"]
+        assert result.checks["H_state_hash_unchanged"]

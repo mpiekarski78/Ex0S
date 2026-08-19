@@ -1,13 +1,14 @@
 """
 EX0S-DEV1 neuromodulatory system.
 
-Computes reward/prediction-error gating signals and eligibility traces
+Computes reward / prediction-error / consequence-error gating signals and eligibility traces
 used by the cortical plasticity rules.
 
 Allowed signals produced here:
 - Scalar reward/advantage (gate only, never an answer identifier)
-- Prediction error (temporal-difference or direct)
+- Prediction error (reward-baseline and TD-style)
 - Novelty / surprise estimate
+- Consequence prediction error
 - Conflict / ambiguity signal
 - Replay gate (consolidation trigger)
 
@@ -40,9 +41,13 @@ class NeuromodController(nn.Module):
         self.consolidation_gate = nn.Linear(genome.neuromod_dim, 1, bias=True)
         self.to(device)
         self.device = device
+        self.baseline_decay = genome.plasticity.baseline_decay
+        self.gamma = genome.plasticity.gamma
 
         self._baseline = torch.zeros(1, device=device)
         self._last_pred = torch.zeros(1, device=device)
+        self._last_sensory = None
+        self._last_value = torch.zeros(1, device=device)
 
     def forward(
         self,
@@ -56,7 +61,17 @@ class NeuromodController(nn.Module):
 
         reward_t = torch.tensor([reward], device=self.device, dtype=torch.float32)
         pred_error = (reward_t - self._baseline).detach()
-        self._baseline = 0.9 * self._baseline + 0.1 * reward_t
+        self._baseline = self.baseline_decay * self._baseline + (1.0 - self.baseline_decay) * reward_t
+
+        state_value = h.mean(dim=-1)
+        td_error = reward_t + self.gamma * state_value.detach() - self._last_value
+        self._last_value = state_value.detach()
+
+        if self._last_sensory is None:
+            consequence_error = torch.zeros(1, device=self.device)
+        else:
+            consequence_error = torch.norm(sensory - self._last_sensory).reshape(1)
+        self._last_sensory = sensory.detach().clone()
 
         reward_gate = torch.sigmoid(self.reward_gate(h)).squeeze()
         novelty = torch.sigmoid(self.novelty_gate(h)).squeeze()
@@ -65,20 +80,31 @@ class NeuromodController(nn.Module):
         return {
             "reward_gate": reward_gate,
             "prediction_error": pred_error.squeeze(),
+            "td_error": td_error.squeeze(),
+            "reward_baseline_error": pred_error.squeeze(),
             "novelty": novelty,
+            "consequence_error": consequence_error.squeeze(),
             "consolidation_trigger": consolidation_trigger,
             "h_hidden": h.squeeze(),
+            "state_value": state_value.squeeze(),
         }
 
     def state_dict_serialisable(self) -> dict:
         sd = {k: v.cpu() for k, v in self.state_dict().items()}
         sd["_baseline"] = self._baseline.cpu()
         sd["_last_pred"] = self._last_pred.cpu()
+        sd["_last_value"] = self._last_value.cpu()
+        if self._last_sensory is not None:
+            sd["_last_sensory"] = self._last_sensory.cpu()
         return sd
 
     def load_state_dict_serialisable(self, d: dict) -> None:
         self._baseline = d.pop("_baseline").to(self.device)
         self._last_pred = d.pop("_last_pred").to(self.device)
+        self._last_value = d.pop("_last_value").to(self.device)
+        self._last_sensory = d.pop("_last_sensory", None)
+        if self._last_sensory is not None:
+            self._last_sensory = self._last_sensory.to(self.device)
         super().load_state_dict(d)
 
 

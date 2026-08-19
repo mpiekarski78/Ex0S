@@ -23,6 +23,7 @@ The retrieval path uses the same EC encoder — not an external query.
 
 from __future__ import annotations
 
+import hashlib
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -112,6 +113,10 @@ class FastHippocampus(nn.Module):
         self._store: list[tuple[torch.Tensor, torch.Tensor]] = []
         self._evictions: int = 0
         self._writes_this_episode: int = 0
+        self._write_attempts_total: int = 0
+        self._read_attempts_total: int = 0
+        self._successful_writes_total: int = 0
+        self._successful_reads_total: int = 0
 
         self.to(device)
 
@@ -122,6 +127,7 @@ class FastHippocampus(nn.Module):
         Organism-owned write. Key derived from relational cortex state only.
         Returns True if write occurred, False if H is disabled.
         """
+        self._write_attempts_total += 1
         if self.h_disabled:
             return False
 
@@ -138,6 +144,7 @@ class FastHippocampus(nn.Module):
 
         self._store.append((key.detach().clone(), content.detach().clone()))
         self._writes_this_episode += 1
+        self._successful_writes_total += 1
         return True
 
     def _evict(self) -> None:
@@ -158,6 +165,7 @@ class FastHippocampus(nn.Module):
         Returns a zero vector if H is disabled or store is empty.
         Action cortex — NOT H — makes the motor decision.
         """
+        self._read_attempts_total += 1
         out_dim = self.ca1.readout.out_features
         null = torch.zeros(out_dim, device=self.device)
         if self.h_disabled or not self._store:
@@ -181,6 +189,7 @@ class FastHippocampus(nn.Module):
                 best_content = content
 
         reinstated = self.ca1(completed)
+        self._successful_reads_total += 1
         return reinstated
 
     # ── Revision (append, never erase) ─────────────────────────────────────────
@@ -216,7 +225,20 @@ class FastHippocampus(nn.Module):
             "capacity_max": self.spec.capacity,
             "evictions_total": self._evictions,
             "writes_this_episode": self._writes_this_episode,
+            "write_attempts_total": self._write_attempts_total,
+            "read_attempts_total": self._read_attempts_total,
+            "successful_writes_total": self._successful_writes_total,
+            "successful_reads_total": self._successful_reads_total,
         }
+
+    def state_hash(self) -> str:
+        """Hash of H state for proving H absence in Stage A."""
+        h = hashlib.sha256()
+        h.update(self.W_hebb.detach().cpu().numpy().tobytes())
+        for key, content in self._store:
+            h.update(key.detach().cpu().numpy().tobytes())
+            h.update(content.detach().cpu().numpy().tobytes())
+        return h.hexdigest()
 
     # ── Checkpointing ──────────────────────────────────────────────────────────
 

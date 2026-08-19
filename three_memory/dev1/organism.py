@@ -64,21 +64,21 @@ from three_memory.dev1.working_state import WorkingState
 from three_memory.dev1.neuromod import NeuromodController, EligibilityTrace
 from three_memory.dev1.provenance import ProvenanceLog, EventKind
 
-from three_memory.dev1.plasticity.cortical_plasticity.three_factor import ThreeFactorPlasticity
-from three_memory.dev1.plasticity.cortical_plasticity.meta_learned import MetaLearnedPlasticity
-from three_memory.dev1.plasticity.cortical_plasticity.evolved import EvolvedLocalRule
+from three_memory.dev1.plasticity.cortical_plasticity.three_factor import RewardBaselineThreeFactor
+from three_memory.dev1.plasticity.cortical_plasticity.meta_learned import ActionContingentActorCritic
+from three_memory.dev1.plasticity.cortical_plasticity.evolved import ConsequencePredictionCredit
 from three_memory.dev1.plasticity.consolidation.replay import ReplayConsolidation
 from three_memory.dev1.plasticity.consolidation.online_slow import OnlineSlowConsolidation
 from three_memory.dev1.plasticity.consolidation.hybrid import HybridConsolidation
 
 
 def _build_cortical_plasticity(family: str, genome: DevGenome, n_pre: int, n_post: int):
-    if family == "three_factor":
-        return ThreeFactorPlasticity(genome.plasticity)
-    elif family == "meta_learned":
-        return MetaLearnedPlasticity(n_pre, n_post, genome.plasticity)
-    elif family == "evolved":
-        return EvolvedLocalRule(n_pre, n_post, genome.plasticity)
+    if family == "reward_baseline_three_factor":
+        return RewardBaselineThreeFactor(genome.plasticity)
+    elif family == "action_contingent_actor_critic":
+        return ActionContingentActorCritic(n_pre, n_post, genome.plasticity)
+    elif family == "consequence_prediction_credit":
+        return ConsequencePredictionCredit(n_pre, n_post, genome.plasticity)
     else:
         raise ValueError(f"Unknown plasticity_family: {family!r}")
 
@@ -183,7 +183,10 @@ class ModularOrganism:
         # Forward pass
         self.rho.sensory_repr = self.sensory_ctx(sensory_v, self.rho.sensory_repr)
 
-        retrieved = self.hippocampus.read(self.rho.relational_repr)
+        if self.hippocampus.h_disabled:
+            retrieved = torch.zeros(self.genome.relational_ctx.n_units, device=self.device)
+        else:
+            retrieved = self.hippocampus.read(self.rho.relational_repr)
         self.rho.relational_repr = self.relational_ctx(
             self.rho.sensory_repr, retrieved, self.rho.relational_repr
         )
@@ -206,7 +209,11 @@ class ModularOrganism:
         # Write to H if past onset age and H not disabled
         onset = self.genome.schedule.replay_onset_age_frac
         novelty_val = float(mod["novelty"].item())
-        if (self.age_frac >= onset and novelty_val > self.genome.schedule.memory_write_threshold):
+        if (
+            not self.hippocampus.h_disabled
+            and self.age_frac >= onset
+            and novelty_val > self.genome.schedule.memory_write_threshold
+        ):
             self.hippocampus.write(self.rho.relational_repr, self.rho.sensory_repr)
             self._surprises.append(float(mod["prediction_error"].abs().item()))
             self.slog.append(EventKind.WRITE_H, step=self.step, payload={"novelty": novelty_val})
@@ -230,6 +237,7 @@ class ModularOrganism:
         self.eligibility.update(self.rho.relational_repr, self.rho.action_repr)
 
         channel, scores, confidence = self.action_ctx.competition(motor_logits)
+        self._last_action_channel = channel
 
         self.slog.append(EventKind.ACT, step=self.step, payload={
             "motor_channel": channel,
@@ -247,28 +255,45 @@ class ModularOrganism:
         This is the ONLY weight update during an evaluated life.
         Uses no_grad() — this is not backpropagation.
 
-        Allowed signals: eligibility trace, reward gate.
-        The reward gate is the organism's scalar neuromodulatory estimate
-        of how much to reinforce recent coactivation.
-        Positive reward_gate (>0.5) potentiates; negative (<0.5) depresses.
+        Allowed signals depend on family but are always local:
+        eligibility trace, scalar reward-derived modulation, consequence error,
+        and the organism's chosen motor channel.
         """
-        if not hasattr(self, "_last_mod"):
+        if not hasattr(self, "_last_mod") or not hasattr(self, "_last_action_channel"):
             return
         mod = self._last_mod
         rule = self.plasticity_rule
         elig = self.eligibility.trace   # shape (n_rel, n_action)
+        chosen_channel = self._last_action_channel
+        n_channels = self.genome.n_motor_channels
 
         with torch.no_grad():
-            elig_signal = elig.mean(dim=0)   # (n_action,)
-            # Signed modulation: reward_gate centered around 0.5
-            # Positive reward → gate > 0.5 → potentiation
-            # Negative reward / baseline exceeded → gate < 0.5 → depression
-            gate = (mod["reward_gate"] - 0.5) * 2.0   # range [-1, 1]
-            lr = getattr(rule, "lr", self.genome.plasticity.learning_rate)
-            # ΔW_motor: (n_channels, n_action) via broadcast
-            dW = lr * gate * elig_signal.unsqueeze(0)
-            dW = dW.clamp(-0.1, 0.1)
+            if rule.name() == "reward_baseline_three_factor":
+                dW = rule.actor_delta(
+                    eligibility=elig,
+                    reward_baseline_error=mod["reward_baseline_error"],
+                    chosen_channel=chosen_channel,
+                    n_channels=n_channels,
+                )
+            elif rule.name() == "action_contingent_actor_critic":
+                dW = rule.actor_delta(
+                    eligibility=elig,
+                    td_error=mod["td_error"],
+                    chosen_channel=chosen_channel,
+                    n_channels=n_channels,
+                )
+            elif rule.name() == "consequence_prediction_credit":
+                dW = rule.actor_delta(
+                    eligibility=elig,
+                    reward_gate=mod["reward_gate"],
+                    consequence_error=mod["consequence_error"],
+                    chosen_channel=chosen_channel,
+                    n_channels=n_channels,
+                )
+            else:
+                raise ValueError(f"Unknown local plasticity family: {rule.name()}")
             self.action_ctx.W_motor.weight.data.add_(dW)
+            self._last_actor_delta = dW.detach().clone()
 
     def rest(self, n_ticks: int = 1) -> dict:
         """
@@ -375,9 +400,15 @@ class ModularOrganism:
                 "relational": self.rho.relational_repr.detach().cpu().numpy(),
                 "action": self.rho.action_repr.detach().cpu().numpy(),
             },
-            eligibility_state={"trace_norm": float(self.eligibility.trace.norm().item())},
+            eligibility_state={
+                "trace_norm": float(self.eligibility.trace.norm().item()),
+                "last_actor_delta_norm": float(getattr(self, "_last_actor_delta", torch.zeros(1)).norm().item()),
+            },
             replay_events=[],
-            plasticity_events=[],
+            plasticity_events=[{
+                "family": self.plasticity_rule.name(),
+                "last_action_channel": getattr(self, "_last_action_channel", None),
+            }],
             hippocampus_capacity_used=cap["capacity_used"],
             hippocampus_capacity_max=cap["capacity_max"],
             evictions_this_episode=cap["evictions_total"],

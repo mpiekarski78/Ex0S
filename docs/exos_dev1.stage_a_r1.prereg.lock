@@ -1,0 +1,145 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R1.PREREG.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R1",
+  "written_before_first_scored_execution": true,
+  "status": "frozen_for_scored_search",
+  "question": "Can a newborn cortex learn four opaque motor roles across renamed symbols and unseen contexts when its inherited local credit rule is genuinely optimized across training lives?",
+  "lineage_stop_inherited": "stage_a_search_not_exercised",
+  "identity": {
+    "implementation_sha": "17b9ae0d9506a556330be6b3a6a8d65e2d2e72bbd63f54b72172a8a33b3c1946",
+    "runner_schema_sha": "6b8736018007dfe1289d84a22d0975d8ae463aaad2ee3c97a7600baed5474a04",
+    "default_genome_hash": "f2fab895dabfd860e5674704bf527ccb5115bf03716df03b1977e7d8f2866b1f",
+    "backend": "cpu",
+    "numeric_mode": "float32"
+  },
+  "shared_genome_surface": {
+    "optimizer_metadata_in_genome": false,
+    "credit_family_identity_in_genome": false,
+    "credit_parameter_names": [
+      "learning_rate",
+      "eligibility_decay",
+      "reward_gate_scale",
+      "prediction_error_scale",
+      "novelty_scale",
+      "hebbian_lr",
+      "baseline_decay",
+      "gamma",
+      "actor_credit_scale",
+      "critic_scale",
+      "consequence_scale",
+      "reward_gate_center",
+      "action_update_floor"
+    ],
+    "default_credit_surface": {
+      "learning_rate": 0.0003,
+      "eligibility_decay": 0.9,
+      "reward_gate_scale": 1.0,
+      "prediction_error_scale": 1.0,
+      "novelty_scale": 0.5,
+      "hebbian_lr": 0.001,
+      "baseline_decay": 0.9,
+      "gamma": 0.95,
+      "actor_credit_scale": 1.0,
+      "critic_scale": 1.0,
+      "consequence_scale": 1.0,
+      "reward_gate_center": 0.5,
+      "action_update_floor": 1e-06
+    }
+  },
+  "credit_rule_families": [
+    "reward_baseline_three_factor",
+    "action_contingent_actor_critic",
+    "consequence_prediction_credit"
+  ],
+  "optimizer_arms": [
+    "meta_gradient",
+    "evolutionary"
+  ],
+  "meta_gradient_boundary": {
+    "aggregate_behavioral_fitness_on_training_worlds_only": true,
+    "gradients_through_completed_training_lives_only": true,
+    "update_target": "inherited_G_only_after_life_end",
+    "discarded_after_life": [
+      "W",
+      "H",
+      "rho",
+      "eligibility_state"
+    ],
+    "validation_and_confirmation_updates": "none",
+    "soft_action_surrogate": false,
+    "train_eval_mismatch_test_required": false,
+    "hard_action_evaluation": "canonical"
+  },
+  "intervention_config": {
+    "h_write_disabled": true,
+    "h_read_disabled": true,
+    "stage_b_participation": false,
+    "factorial_replay": false
+  },
+  "preflight": {
+    "required": true,
+    "decision_code_on_fail": "credit_preflight_fail",
+    "min_nontrivial_delta_W_actor": 1e-08,
+    "checks": [
+      "sensory_states_differ_across_cues",
+      "motor_efference_states_differ_across_four_channels",
+      "positive_and_negative_outcomes_produce_distinguishable_correctly_directed_action_credit_modulation",
+      "eligibility_nonzero_when_outcome_arrives",
+      "rewarded_interaction_causes_finite_nontrivial_delta_W_actor",
+      "reward_off_causes_no_persistent_reward_gated_actor_update",
+      "permuted_feedback_follows_observed_motor_not_fixture_answer",
+      "activity_and_weights_remain_finite_and_noncollapsed",
+      "H_begins_empty",
+      "H_write_counter_zero",
+      "H_read_counter_zero",
+      "H_state_hash_unchanged"
+    ]
+  },
+  "search_budget": {
+    "cheap_train_lives": 2,
+    "rotating_validation_lives": 4,
+    "beam_size": 3,
+    "preregistered_validation_threshold": 0.65,
+    "stop_when": [
+      "frozen_budget_exhausted",
+      "single_confirmation_result_recorded"
+    ]
+  },
+  "world_seeds": {
+    "cheap_train": [
+      "stage_a_r1_world_001",
+      "stage_a_r1_world_002"
+    ],
+    "rotating_validation": [
+      "stage_a_r1_world_003",
+      "stage_a_r1_world_004",
+      "stage_a_r1_world_005",
+      "stage_a_r1_world_006"
+    ],
+    "confirmation": [
+      "stage_a_r1_conf_001",
+      "stage_a_r1_conf_002",
+      "stage_a_r1_conf_003",
+      "stage_a_r1_conf_004"
+    ]
+  },
+  "decision_ladder": [
+    "credit_preflight_fail",
+    "outer_optimization_not_exercised",
+    "local_rule_optimization_fail",
+    "sensorimotor_overfit",
+    "credit_not_causal",
+    "stage_a_confirmation_fail",
+    "stage_a_confirmation_pass"
+  ],
+  "promotion_flags": [
+    "validation_pass"
+  ],
+  "throughput_benchmark": {
+    "scored": false,
+    "record_path": "runs/exos_dev1/stage_a_r1/throughput_benchmark.json"
+  },
+  "written_utc": "2026-08-19T11:08:00Z"
+}

@@ -1,7 +1,8 @@
 """
-Three-factor neuromodulated plasticity (Axis 1, candidate A).
+Reward-baseline three-factor credit rule (Stage A R1 family 1).
 
-ΔW = η · e(pre, post) · M(reward, prediction_error)
+delta_t = r_t - r_hat_t
+DeltaW_actor = eta * delta_t * e_t
 
 Where:
 - e(pre, post) = eligibility trace (pre-synaptic × post-synaptic coactivation)
@@ -16,12 +17,14 @@ import torch
 from three_memory.dev1.genome import PlasticityCoefficients
 
 
-class ThreeFactorPlasticity:
+class RewardBaselineThreeFactor:
     """
-    Three-factor synaptic plasticity rule.
+    Reward-baseline three-factor actor credit.
 
-    Applied to one weight matrix at a time by organism.py during rest().
-    Operates on eligibility traces accumulated during the life.
+    This family never sees the correct answer identity. It only uses:
+    - local eligibility
+    - scalar reward-baseline error
+    - the organism's chosen motor channel
     """
 
     def __init__(self, coeffs: PlasticityCoefficients):
@@ -29,20 +32,19 @@ class ThreeFactorPlasticity:
         self.reward_scale = coeffs.reward_gate_scale
         self.pe_scale = coeffs.prediction_error_scale
 
-    def update(
+    def actor_delta(
         self,
-        W: torch.Tensor,
         eligibility: torch.Tensor,
-        reward_gate: torch.Tensor,
-        prediction_error: torch.Tensor,
+        reward_baseline_error: torch.Tensor,
+        chosen_channel: int,
+        n_channels: int,
     ) -> torch.Tensor:
-        """
-        Compute weight delta.
-        Returns ΔW (same shape as W).
-        """
-        M = self.reward_scale * reward_gate + self.pe_scale * prediction_error
-        dW = self.lr * M * eligibility
-        return W + dW.clamp(-0.1, 0.1)
+        """Return a chosen-action-only actor update matrix."""
+        signal = self.reward_scale * reward_baseline_error
+        elig_signal = eligibility.mean(dim=0)
+        dW = torch.zeros(n_channels, elig_signal.numel(), device=eligibility.device)
+        dW[chosen_channel] = self.lr * signal * elig_signal
+        return dW.clamp(-0.1, 0.1)
 
     def name(self) -> str:
-        return "three_factor"
+        return "reward_baseline_three_factor"

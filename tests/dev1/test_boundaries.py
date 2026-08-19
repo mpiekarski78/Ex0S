@@ -34,6 +34,9 @@ from three_memory.dev1.organism import ModularOrganism
 from three_memory.dev1.interfaces import OrganismObservation, OrganismTelemetry
 from three_memory.dev1.provenance import ProvenanceLog, EventKind
 from three_memory.dev1.hippocampus import FastHippocampus
+from experiments.dev1.preflight import run_credit_preflight
+from experiments.dev1.optimizers.meta_gradient import MetaGradientOptimizer
+from experiments.dev1.optimizers.evolutionary import EvolutionaryOptimizer
 
 
 # ── Static boundary tests ──────────────────────────────────────────────────────
@@ -199,6 +202,44 @@ class TestDynamicBoundaries:
         org2.restore_from_checkpoint(cp)
         action_after = org2.act()
         assert action_before.motor_channel == action_after.motor_channel
+
+    def test_outer_optimizers_only_touch_genome_between_lives(self):
+        """Outer optimizers may update only inherited genome params between lives."""
+        genome = DevGenome.default()
+        genome_before = genome.to_dict()
+        org = ModularOrganism.birth(genome, h_disabled=True)
+        obs = OrganismObservation(sensory_vector=np.ones(64), reward=1.0)
+        org.observe(obs)
+        org.act()
+        cp = org.full_checkpoint()
+
+        mg = MetaGradientOptimizer()
+        genome_after_mg = mg.update_after_training_lives(genome, [0.2, 0.7])
+        assert genome_after_mg.credit_parameter_dict() != genome.credit_parameter_dict()
+        # Within-life state from completed life must remain unchanged / discarded
+        assert org.full_checkpoint().counters["step"] == cp.counters["step"]
+
+        evo = EvolutionaryOptimizer()
+        pop = evo.spawn_population(genome)
+        child = evo.select(pop, [0.1, 0.3, 0.2, 0.0])
+        assert child.credit_parameter_dict() != genome.credit_parameter_dict()
+
+    def test_h_disabled_bypasses_h_path_entirely(self):
+        """Stage A R1 requires zero H read/write counters, not just a disabled flag."""
+        genome = DevGenome.default()
+        org = ModularOrganism.birth(genome, h_disabled=True, consolidation_disabled=True)
+        h_hash_before = org.hippocampus.state_hash()
+        for _ in range(8):
+            org.observe(OrganismObservation(sensory_vector=np.random.randn(64), reward=1.0))
+            org.act()
+            org.rest()
+        h_hash_after = org.hippocampus.state_hash()
+        cap = org.hippocampus.capacity_telemetry()
+        assert cap["write_attempts_total"] == 0
+        assert cap["read_attempts_total"] == 0
+        assert cap["successful_writes_total"] == 0
+        assert cap["successful_reads_total"] == 0
+        assert h_hash_before == h_hash_after
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────

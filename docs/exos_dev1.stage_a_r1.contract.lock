@@ -1,0 +1,109 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R1.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R1",
+  "type": "stage_contract_lock",
+  "status": "authorized_for_implementation",
+  "lineage_stop_inherited": "stage_a_search_not_exercised",
+  "question": "Can a newborn cortex learn four opaque motor roles across renamed symbols and unseen contexts when its inherited local credit rule is genuinely optimized across training lives?",
+  "current_branch": "research/exos_dev1",
+  "product": "0.0.004",
+  "candidate_policy": "no_v41_before_stage_d_confirmation_and_review",
+  "product_policy": "no_product_change_before_explicit_earn_decision",
+  "authorized_scope": [
+    "sensorimotor_credit_preflight",
+    "three_credit_rule_families",
+    "meta_gradient_outer_optimizer",
+    "evolutionary_outer_optimizer",
+    "rotating_validation",
+    "one_untouched_confirmation_tranche"
+  ],
+  "forbidden_scope": [
+    "H_writes",
+    "H_reads",
+    "Stage_B_execution_or_machinery_participation",
+    "repeated_factorial",
+    "candidate_or_product_changes",
+    "expected_actions_in_weight_updates",
+    "runner_generated_neural_targets",
+    "v41_or_live_pointer_changes",
+    "random_init_only_sweep_presented_as_optimization"
+  ],
+  "credit_rule_families": [
+    {
+      "id": "reward_baseline_three_factor",
+      "definition": "delta_t = r_t - r_hat_t ; actor plasticity uses eligibility times scalar reward-baseline credit",
+      "answer_identity_allowed_in_update": false
+    },
+    {
+      "id": "action_contingent_actor_critic",
+      "definition": "delta_t = r_t + gamma * V(s_t_plus_1) - V(s_t) with eligibility attached to the organism's actual motor choice",
+      "answer_identity_allowed_in_update": false
+    },
+    {
+      "id": "consequence_prediction_credit",
+      "definition": "plasticity combines sensory-consequence prediction error with scalar reward gating",
+      "answer_identity_allowed_in_update": false
+    }
+  ],
+  "outer_optimizers": {
+    "arms": [
+      "meta_gradient",
+      "evolutionary"
+    ],
+    "shared_genome_surface": true,
+    "optimizer_metadata_in_genome": false,
+    "credit_family_identity_in_genome": false,
+    "meta_gradient_boundary": {
+      "allowed_outer_objective": "aggregate_behavioral_fitness_on_training_worlds",
+      "allowed_gradient_path": "through_completed_training_life_trajectory_only",
+      "applied_update_target": "inherited_G_only_after_life_ends",
+      "discard_after_life": [
+        "W",
+        "H",
+        "rho",
+        "eligibility_state"
+      ],
+      "validation_and_confirmation_updates": "none",
+      "hard_action_evaluation": "canonical",
+      "soft_action_surrogate_if_any": "must_be_declared_and_train_eval_mismatch_tested"
+    },
+    "evolutionary_boundary": {
+      "selection_signal": "aggregate_behavioral_fitness_on_training_worlds",
+      "mutation_target": "inherited_G_only_between_lives",
+      "validation_and_confirmation_updates": "none"
+    }
+  },
+  "decision_ladder": [
+    "credit_preflight_fail",
+    "outer_optimization_not_exercised",
+    "local_rule_optimization_fail",
+    "sensorimotor_overfit",
+    "credit_not_causal",
+    "stage_a_confirmation_fail",
+    "stage_a_confirmation_pass"
+  ],
+  "promotion_flags": [
+    "validation_pass"
+  ],
+  "closure_rule": {
+    "r1_execution_closes_when": [
+      "frozen_budget_exhausted",
+      "single_confirmation_result_recorded"
+    ],
+    "only_stage_a_unlock_code": "stage_a_confirmation_pass"
+  },
+  "selection_rule": {
+    "causal_validity": "hard_gate",
+    "primary_ranker": "validation_reliability",
+    "final_tiebreaker": "complexity"
+  },
+  "confirmation_rule": {
+    "single_untouched_tranche": true,
+    "failed_confirmation_consumes_worlds": true,
+    "resumed_discovery_may_not_reuse_confirmation_cells": true,
+    "future_candidates_need_fresh_confirmation_worlds": true
+  },
+  "written_utc": "2026-08-19T10:55:00Z"
+}

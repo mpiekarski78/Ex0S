@@ -1,59 +1,46 @@
 """
-Evolution-selected local plasticity rules and developmental schedules
-(Axis 1, candidate C).
+Consequence-prediction credit rule (Stage A R1 family 3).
 
-Parameters are optimized by evolutionary search across generations (Stage E)
-or by meta-gradient as a separate comparison arm. During an evaluated life,
-all parameters are FROZEN and updates are purely local.
-
-Evolutionary path required for biological-evolution claims (Stage E).
-Meta-gradient path is a comparison arm only.
+Plasticity combines sensory-consequence prediction error with scalar reward
+gating. Self-supervised consequence prediction may remain active without
+reward, but persistent actor credit must still be reward-gated.
 """
 
 from __future__ import annotations
 
 import torch
-import torch.nn as nn
-
 from three_memory.dev1.genome import PlasticityCoefficients
 
 
-class EvolvedLocalRule(nn.Module):
+class ConsequencePredictionCredit:
     """
-    Evolved local plasticity rule with learnable combination of Hebb, BCM,
-    and prediction-error terms. All coefficients are inherited (from G).
+    Consequence-prediction gated actor credit.
 
-    During an organism's life, all parameters are frozen; only activity
-    variables change.
+    Uses the local consequence prediction error together with scalar reward
+    gating and eligibility on the organism's chosen motor output.
     """
 
     def __init__(self, n_pre: int, n_post: int, coeffs: PlasticityCoefficients):
-        super().__init__()
         self.lr = coeffs.learning_rate
-        self.base_lr = coeffs.learning_rate
-        # Combination weights over [Hebb, BCM, pred_error] terms
-        self.mix = nn.Parameter(torch.tensor([1.0, 0.3, 0.5]))
-        self.bcm_threshold = nn.Parameter(torch.zeros(n_post))
-        self.pe_decay = nn.Parameter(torch.tensor(coeffs.eligibility_decay))
+        self.reward_scale = coeffs.reward_gate_scale
+        self.consequence_scale = coeffs.consequence_scale
+        self.reward_gate_center = coeffs.reward_gate_center
 
-    def update(
+    def actor_delta(
         self,
-        W: torch.Tensor,
-        pre: torch.Tensor,
-        post: torch.Tensor,
+        eligibility: torch.Tensor,
         reward_gate: torch.Tensor,
-        prediction_error: torch.Tensor,
-        pe_integral: torch.Tensor,
+        consequence_error: torch.Tensor,
+        chosen_channel: int,
+        n_channels: int,
     ) -> torch.Tensor:
-        """Local weight update using frozen evolved parameters."""
-        mix = torch.softmax(self.mix, dim=0)
-        hebb = torch.outer(pre, post)
-        bcm_mod = (post - self.bcm_threshold) * post.detach()
-        bcm = torch.outer(pre, bcm_mod)
-        pe_term = prediction_error * torch.outer(pre, post)
-        dW = self.base_lr * (mix[0] * hebb + mix[1] * bcm + mix[2] * pe_term)
-        dW = reward_gate * dW
-        return W + dW.clamp(-0.1, 0.1)
+        """Return actor update gated by reward and consequence mismatch."""
+        elig_signal = eligibility.mean(dim=0)
+        gate = (reward_gate - self.reward_gate_center) * 2.0
+        signal = self.reward_scale * gate * self.consequence_scale * consequence_error
+        dW = torch.zeros(n_channels, elig_signal.numel(), device=eligibility.device)
+        dW[chosen_channel] = self.lr * signal * elig_signal
+        return dW.clamp(-0.1, 0.1)
 
     def name(self) -> str:
-        return "evolved"
+        return "consequence_prediction_credit"

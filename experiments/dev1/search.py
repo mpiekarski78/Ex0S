@@ -1,49 +1,26 @@
 """
-EX0S-DEV1 staged conditional search.
+Stage A R1 genuine optimization search.
 
-Discovery loop
-──────────────
-propose variant
-  → run batched newborn lives (with H write/read disabled during Stage A)
-  → causal audit (full decision ladder)
-  → discovery pass? → promote to extended rotating validation
-                    → search continues (not a stop)
-  → retain top 2-3 causally valid candidates (beam)
-  → test bounded interaction matrix
-  → budget expires OR preregistered N candidates validate
-  → select by: causal validity, cross-world reliability, complexity
-  → freeze exact candidate
-  → run ONE untouched confirmation tranche
-  → confirmation fails? → record immutable failure; worlds permanently consumed;
-                         discovery may reopen, but not using those cells as training data
-  → confirmation passes? → stage confirmed; unlock next stage prereg
+This runner executes a real between-life search over inherited credit
+parameters with:
+- mandatory sensorimotor-credit preflight
+- both outer optimizers on the same genome surface
+- two-life cheap training screen
+- rotating validation on held-out worlds
+- beam retention of the best 3 causally valid candidates
+- one untouched confirmation tranche
 
-Search axes (staged conditional, not Cartesian):
-1. Cortical plasticity:  three_factor → meta_learned → evolved
-2. Fast memory:          competitive_hebbian → factorized
-3. Consolidation:        replay → online_slow → hybrid
-4. Capacity:             small → medium → large
+During every evaluated life:
+- H write/read remains disabled
+- no gradient update is applied to W, H, rho, or eligibility state
 
-Beam: retain top BEAM_SIZE causally valid candidates after each axis.
-Interaction matrix: bounded cross-product of top beam after axes 1-3.
-
-Planned design: a research optimizer should be active from Stage A
-(not locked until Stage D), updating only inherited G between lives
-while validation and confirmation lives never contribute gradients.
-
-Current implementation status:
-- axis instantiation search is implemented
-- outer-loop meta-learning / evolutionary optimization is NOT yet implemented
-- therefore failures in `meta_learned` and `evolved` here are not
-  evidence against those families as optimized methods
+Outer updates may modify only inherited G between completed training lives.
+Validation and confirmation worlds are never used for outer updates.
 """
 
 from __future__ import annotations
 
-import copy
-import hashlib
 import json
-import os
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -55,27 +32,39 @@ from three_memory.dev1.genome import DevGenome
 from three_memory.dev1.organism import ModularOrganism
 from three_memory.dev1.interfaces import OrganismObservation
 from experiments.dev1.worlds import InteractionWorld, WorldConfig
-from experiments.dev1.probes import run_causal_decision_ladder, ProbeResult
+from experiments.dev1.probes import run_causal_decision_ladder
+from experiments.dev1.preflight import run_credit_preflight
+from experiments.dev1.optimizers.meta_gradient import MetaGradientOptimizer
+from experiments.dev1.optimizers.evolutionary import EvolutionaryOptimizer
 
 
 BEAM_SIZE = 3   # retain top BEAM_SIZE causally valid candidates per axis
-
-AXIS_1_PLASTICITY = ["three_factor", "meta_learned", "evolved"]
-AXIS_2_FAST_MEMORY = ["competitive_hebbian", "factorized"]
-AXIS_3_CONSOLIDATION = ["replay", "online_slow", "hybrid"]
-AXIS_4_CAPACITY = [64, 256, 1024]
+R1_CREDIT_FAMILIES = [
+    "reward_baseline_three_factor",
+    "action_contingent_actor_critic",
+    "consequence_prediction_credit",
+]
+R1_OPTIMIZER_ARMS = [
+    "meta_gradient",
+    "evolutionary",
+]
 
 
 @dataclass
 class Candidate:
     genome: DevGenome
-    discovery_score: float = 0.0
-    causal_valid: bool = False
+    credit_family: str = ""
+    optimizer_arm: str = ""
+    preflight_passed: bool = False
+    validation_pass: bool = False
+    decision_code: str = "outer_optimization_not_exercised"
+    training_scores: list[float] = field(default_factory=list)
     validation_scores: list[float] = field(default_factory=list)
+    causal_valid: bool = False
     confirmed: bool = False
     confirmation_failed: bool = False
     consumed_world_seeds: list[str] = field(default_factory=list)
-    axis_tag: str = ""
+    optimizer_telemetry: dict[str, Any] = field(default_factory=dict)
 
     def reliability(self) -> float:
         if not self.validation_scores:
@@ -83,8 +72,8 @@ class Candidate:
         return sum(self.validation_scores) / len(self.validation_scores)
 
     def complexity(self) -> float:
-        """Lower = simpler. Used as tiebreaker (by plasticity family name length as proxy)."""
-        return float(len(self.genome.plasticity_family))
+        """Lower is simpler; used only as final tie-breaker."""
+        return float(len(self.credit_family))
 
     def rank_key(self) -> tuple:
         return (self.causal_valid, self.reliability(), -self.complexity())
@@ -134,71 +123,97 @@ def _run_newborn_life(
     return {"score": score, "causal_valid": causal_valid, "causal_results": causal_results}
 
 
-def search_axis(
-    axis_name: str,
-    variants: list[str],
-    base_genome: DevGenome,
-    genome_field: str,
-    world_seeds: list[str],
-    budget_per_variant: int = 4,
+def _make_optimizer(arm: str):
+    if arm == "meta_gradient":
+        return MetaGradientOptimizer()
+    if arm == "evolutionary":
+        return EvolutionaryOptimizer()
+    raise ValueError(f"unknown optimizer arm: {arm}")
+
+
+def _cheap_train_and_validate(
+    genome: DevGenome,
+    optimizer_arm: str,
+    cheap_train_seeds: list[str],
+    rotating_validation_seeds: list[str],
     h_disabled: bool = True,
-) -> list[Candidate]:
+) -> Candidate:
     """
-    Search one axis. Returns all causally valid candidates (up to BEAM_SIZE).
-    Discovery pass promotes to rotating validation; search continues.
+    Run the Stage A R1 cheap training screen, between-life optimizer update,
+    and rotating validation for one (family, optimizer) candidate.
     """
-    candidates: list[Candidate] = []
+    genome.plasticity_family = genome.plasticity_family
+    pre = run_credit_preflight(genome, genome.plasticity_family)
+    candidate = Candidate(
+        genome=genome,
+        credit_family=genome.plasticity_family,
+        optimizer_arm=optimizer_arm,
+        preflight_passed=pre.passed,
+        decision_code=pre.decision_code,
+    )
+    if not pre.passed:
+        return candidate
 
-    for v in variants:
-        g = copy.deepcopy(base_genome)
-        setattr(g, genome_field, v)
+    optimizer = _make_optimizer(optimizer_arm)
+    working_genome = optimizer.propose(genome) if hasattr(optimizer, "propose") else genome
 
-        all_scores = []
-        causal_flags = []
-        consumed: list[str] = []
-        for seed in world_seeds[:budget_per_variant]:
-            world = _make_world(seed)
-            result = _run_newborn_life(g, world, h_disabled=h_disabled)
-            all_scores.append(result["score"])
-            causal_flags.append(result["causal_valid"])
-            consumed.append(seed)
+    # Two-life cheap training screen.
+    training_scores: list[float] = []
+    for seed in cheap_train_seeds:
+        world = _make_world(seed)
+        result = _run_newborn_life(working_genome, world, h_disabled=h_disabled)
+        training_scores.append(result["score"])
+        candidate.consumed_world_seeds.append(seed)
 
-        score = sum(all_scores) / len(all_scores)
-        causal_valid = sum(causal_flags) > len(causal_flags) / 2
+    if optimizer_arm == "meta_gradient":
+        working_genome = optimizer.update_after_training_lives(working_genome, training_scores)
+    elif optimizer_arm == "evolutionary":
+        population = optimizer.spawn_population(working_genome)
+        pop_scores = []
+        for idx, child in enumerate(population):
+            seed = cheap_train_seeds[idx % len(cheap_train_seeds)]
+            world = _make_world(f"{seed}_evo_{idx}")
+            result = _run_newborn_life(child, world, h_disabled=h_disabled)
+            pop_scores.append(result["score"])
+            candidate.consumed_world_seeds.append(f"{seed}_evo_{idx}")
+        working_genome = optimizer.select(population, pop_scores)
+        training_scores.extend(pop_scores)
 
-        c = Candidate(
-            genome=g,
-            discovery_score=score,
-            causal_valid=causal_valid,
-            validation_scores=all_scores,
-            consumed_world_seeds=consumed,
-            axis_tag=f"{axis_name}:{v}",
-        )
-        candidates.append(c)
+    candidate.genome = working_genome
+    candidate.training_scores = training_scores
+    candidate.optimizer_telemetry = optimizer.telemetry()
 
-    candidates.sort(key=lambda c: c.rank_key(), reverse=True)
-    return candidates[:BEAM_SIZE]
+    if (
+        candidate.optimizer_telemetry.get("outer_updates", 0) == 0
+        and candidate.optimizer_telemetry.get("outer_generations", 0) == 0
+    ):
+        candidate.decision_code = "outer_optimization_not_exercised"
+        return candidate
 
+    # Rotating validation worlds never contribute outer updates.
+    validation_scores = []
+    causal_results_all = []
+    for seed in rotating_validation_seeds:
+        world = _make_world(seed)
+        result = _run_newborn_life(working_genome, world, h_disabled=h_disabled)
+        validation_scores.append(result["score"])
+        causal_results_all.extend(result["causal_results"])
+        candidate.consumed_world_seeds.append(seed)
+    candidate.validation_scores = validation_scores
+    candidate.validation_pass = len(validation_scores) > 0
+    candidate.causal_valid = all(r.passed for r in causal_results_all) if causal_results_all else False
 
-def bounded_interaction_matrix(
-    beam: list[Candidate],
-    test_seeds: list[str],
-    h_disabled: bool = True,
-) -> list[Candidate]:
-    """
-    Test cross-axis interactions within the beam.
-    Returns re-ranked beam.
-    """
-    for cand in beam:
-        for seed in test_seeds:
-            world = _make_world(seed)
-            result = _run_newborn_life(cand.genome, world, h_disabled=h_disabled)
-            cand.validation_scores.append(result["score"])
-            if not result["causal_valid"]:
-                cand.causal_valid = False
-            cand.consumed_world_seeds.append(seed)
-    beam.sort(key=lambda c: c.rank_key(), reverse=True)
-    return beam
+    train_avg = sum(training_scores) / max(1, len(training_scores))
+    valid_avg = sum(validation_scores) / max(1, len(validation_scores))
+    if not candidate.causal_valid:
+        candidate.decision_code = "credit_not_causal"
+    elif train_avg >= 0.65 and valid_avg < 0.65:
+        candidate.decision_code = "sensorimotor_overfit"
+    elif valid_avg < 0.65:
+        candidate.decision_code = "local_rule_optimization_fail"
+    else:
+        candidate.decision_code = "validation_pass"
+    return candidate
 
 
 @dataclass
@@ -244,6 +259,7 @@ def run_confirmation(
     passed = avg >= pass_threshold
     candidate.confirmed = passed
     candidate.confirmation_failed = not passed
+    candidate.decision_code = "stage_a_confirmation_pass" if passed else "stage_a_confirmation_fail"
 
     rec = ConfirmationRecord(
         candidate_genome_hash=candidate.genome.genome_hash(),
@@ -259,58 +275,82 @@ def run_stage_a_search(
     confirmation_seeds: list[str],
     preregistered_n: int = 1,
     h_disabled: bool = True,
-    output_dir: str = "runs/exos_dev1/stage_a",
+    output_dir: str = "runs/exos_dev1/stage_a_r1",
 ) -> dict:
     """
-    Full Stage A discovery loop.
+    Full Stage A R1 search loop.
 
-    Returns summary with best candidate and confirmation record.
-    Writes ConfirmationRecord to output_dir/confirmation.json.
+    Uses both optimizer arms on the same inherited genome surface.
+    Keeps a beam of the best 3 causally valid candidates.
     """
     Path(output_dir).mkdir(parents=True, exist_ok=True)
-    base_genome = DevGenome.default()
+    if len(world_seeds) < 6:
+        raise ValueError("Stage A R1 requires at least 6 world seeds for cheap-train and rotating validation")
 
-    # Axis 1: cortical plasticity
-    beam1 = search_axis("plasticity", AXIS_1_PLASTICITY, base_genome, "plasticity_family", world_seeds, h_disabled=h_disabled)
+    cheap_train_seeds = world_seeds[:2]
+    rotating_validation_seeds = world_seeds[2:6]
+    candidates: list[Candidate] = []
 
-    # Axis 2: fast memory (cross each plasticity candidate)
-    beam2: list[Candidate] = []
-    for cand in beam1:
-        b = search_axis("fast_memory", AXIS_2_FAST_MEMORY, cand.genome, "fast_memory_family", world_seeds, h_disabled=h_disabled)
-        beam2.extend(b)
-    beam2.sort(key=lambda c: c.rank_key(), reverse=True)
-    beam2 = beam2[:BEAM_SIZE]
+    for family in R1_CREDIT_FAMILIES:
+        for optimizer_arm in R1_OPTIMIZER_ARMS:
+            genome = DevGenome.default()
+            genome.plasticity_family = family
+            cand = _cheap_train_and_validate(
+                genome=genome,
+                optimizer_arm=optimizer_arm,
+                cheap_train_seeds=cheap_train_seeds,
+                rotating_validation_seeds=rotating_validation_seeds,
+                h_disabled=h_disabled,
+            )
+            candidates.append(cand)
 
-    # Axis 3: consolidation
-    beam3: list[Candidate] = []
-    for cand in beam2:
-        b = search_axis("consolidation", AXIS_3_CONSOLIDATION, cand.genome, "consolidation_family", world_seeds, h_disabled=h_disabled)
-        beam3.extend(b)
-    beam3.sort(key=lambda c: c.rank_key(), reverse=True)
-    beam3 = beam3[:BEAM_SIZE]
+    # Hard gate on causal validity, then reliability, then complexity.
+    beam = [c for c in candidates if c.causal_valid]
+    beam.sort(key=lambda c: c.rank_key(), reverse=True)
+    beam = beam[:BEAM_SIZE]
 
-    # Interaction matrix
-    interaction_seeds = world_seeds[:4]
-    beam_final = bounded_interaction_matrix(beam3, interaction_seeds, h_disabled=h_disabled)
-    beam_final = [c for c in beam_final if c.causal_valid]
+    if not beam:
+        summary = {
+            "outcome": "local_rule_optimization_fail",
+            "beam": [],
+            "candidates": [self_summary(c) for c in candidates],
+        }
+        with open(Path(output_dir) / "search_summary.json", "w") as f:
+            json.dump(summary, f, indent=2)
+        return summary
 
-    if not beam_final:
-        return {"outcome": "no_causally_valid_candidate", "beam": []}
-
-    # Select best candidate
-    best = beam_final[0]
-
-    # ONE untouched confirmation tranche
+    # Candidate promoted through validation; confirmation is terminal.
+    best = beam[0]
     conf_rec = run_confirmation(best, confirmation_seeds, h_disabled=h_disabled)
     conf_rec.save(Path(output_dir) / "confirmation.json")
 
-    outcome = "stage_a_confirmed" if conf_rec.passed else "confirmation_failed_immutable"
-    return {
-        "outcome": outcome,
+    summary = {
+        "outcome": best.decision_code,
         "best_genome_hash": best.genome.genome_hash(),
+        "best_family": best.credit_family,
+        "best_optimizer_arm": best.optimizer_arm,
+        "beam_size": len(beam),
+        "beam": [self_summary(c) for c in beam],
         "confirmation": {
             "passed": conf_rec.passed,
             "scores": conf_rec.scores,
         },
-        "beam_size": len(beam_final),
+        "validation_pass": True,
+    }
+    with open(Path(output_dir) / "search_summary.json", "w") as f:
+        json.dump(summary, f, indent=2)
+    return summary
+
+
+def self_summary(candidate: Candidate) -> dict:
+    return {
+        "family": candidate.credit_family,
+        "optimizer_arm": candidate.optimizer_arm,
+        "decision_code": candidate.decision_code,
+        "preflight_passed": candidate.preflight_passed,
+        "causal_valid": candidate.causal_valid,
+        "training_scores": candidate.training_scores,
+        "validation_scores": candidate.validation_scores,
+        "optimizer_telemetry": candidate.optimizer_telemetry,
+        "genome_hash": candidate.genome.genome_hash(),
     }
