@@ -1,0 +1,162 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R1_2.PREREG.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R1.2",
+  "written_before_first_scored_execution": true,
+  "status": "frozen_for_scored_search",
+  "question": "Can the R1.1 Stage A search be made numerically robust and crash-persistent without changing the learning hypothesis, credit families, fitness objective, Stage A gates, or memory boundary?",
+  "lineage_stop_inherited": "numerical_failure_before_behavior",
+  "identity": {
+    "contract_lock_commit": "c735745",
+    "implementation_commit": "098f4c5",
+    "implementation_sha": "098f4c580067494c6857ce5996e443347aa358cb",
+    "runner_schema_sha": "d93804123e3fd7598fedb5608ac33b05cdcfaf91e034501fc03444fa6e15c774",
+    "latent_surface_sha": "322ab4da70161f7fa7b01492a52853889127d39e9730424ea4fa721b5ead51b5",
+    "fitness_sha": "0722cbe9cc46e9914dd4dde31aafb2c5fb9fb54011d00ee1d6106095cd7035b6",
+    "default_phenotype_genome_hash": "f2fab895dabfd860e5674704bf527ccb5115bf03716df03b1977e7d8f2866b1f",
+    "default_latent_hash": "7c03f054f4b3989cfdb088dd4e38d7d2c4c5bec63713b69730c005f0b2b05e30",
+    "backend": "cpu",
+    "numeric_mode": "float32",
+    "dependency_environment_lock_hash": "12df60dcaad045f07ab62ea164404f49152c2e92a1985ee08bbb3026293e1ad5"
+  },
+  "shared_latent_surface": {
+    "latent_parameter_names": [
+      "learning_rate",
+      "eligibility_decay",
+      "reward_gate_scale",
+      "prediction_error_scale",
+      "novelty_scale",
+      "hebbian_lr",
+      "baseline_decay",
+      "gamma",
+      "actor_credit_scale",
+      "critic_scale",
+      "consequence_scale",
+      "reward_gate_center",
+      "action_update_floor"
+    ],
+    "transform_bounds": {
+      "learning_rate": {"kind": "positive_bounded", "lo": 1e-06, "hi": 0.5},
+      "eligibility_decay": {"kind": "unit_decay", "lo": 0.0, "hi": 0.999},
+      "reward_gate_scale": {"kind": "signed", "max_abs": 2.0},
+      "prediction_error_scale": {"kind": "signed", "max_abs": 2.0},
+      "novelty_scale": {"kind": "signed", "max_abs": 2.0},
+      "hebbian_lr": {"kind": "positive_bounded", "lo": 1e-06, "hi": 0.5},
+      "baseline_decay": {"kind": "unit_decay", "lo": 0.0, "hi": 0.999},
+      "gamma": {"kind": "unit_decay", "lo": 0.0, "hi": 0.999},
+      "actor_credit_scale": {"kind": "signed", "max_abs": 2.0},
+      "critic_scale": {"kind": "signed", "max_abs": 2.0},
+      "consequence_scale": {"kind": "signed", "max_abs": 2.0},
+      "reward_gate_center": {"kind": "bounded", "lo": 0.0, "hi": 1.0},
+      "action_update_floor": {"kind": "positive_bounded", "lo": 1e-08, "hi": 0.1}
+    },
+    "latent_and_transformed_hashes_recorded": true
+  },
+  "credit_rule_families": [
+    "reward_baseline_three_factor",
+    "action_contingent_actor_critic",
+    "consequence_prediction_credit"
+  ],
+  "optimizer_arms": [
+    "reward_based_meta_gradient_r1_2",
+    "evolutionary_r1_2"
+  ],
+  "training_policy": {
+    "sampling_distribution": "torch.distributions.Categorical(logits=stable_logits)",
+    "training_action_policy": "stochastic_softmax_sample",
+    "evaluation_action_policy": "hard_argmax",
+    "manual_exponentiate_and_normalize": false
+  },
+  "intervention_config": {
+    "h_write_disabled": true,
+    "h_read_disabled": true,
+    "stage_b_participation": false,
+    "factorial_replay": false
+  },
+  "training_fitness": {
+    "formula": "F = w_r * R_normalized + w_a * A_rewarded_improvement + w_m * M_reward_weighted_margin + w_t * T_rewarded_retention - w_b * P_unbounded",
+    "weights": {
+      "w_r": 0.4,
+      "w_a": 0.2,
+      "w_m": 0.2,
+      "w_t": 0.2,
+      "w_b": 0.1
+    },
+    "component_ranges": {
+      "R_normalized": [-1.0, 1.0],
+      "A_rewarded_improvement": [-1.0, 1.0],
+      "M_reward_weighted_margin": [-1.0, 1.0],
+      "T_rewarded_retention": [-1.0, 1.0],
+      "P_unbounded": [0.0, 1.0],
+      "F_total": [-1.1, 1.0]
+    }
+  },
+  "robustness_limits": {
+    "meta_gradient_clip_norm": 5.0,
+    "meta_genome_step_clip_norm": 1.0,
+    "evolutionary_step_clip_norm": 1.0,
+    "invalid_fraction_threshold": 0.75,
+    "invalid_streak_limit": 2,
+    "worst_fitness_on_invalid_candidate": -1.1
+  },
+  "crash_safe_ledger": {
+    "required": true,
+    "write_started_before_scored_rng": true,
+    "append_candidate_records": true,
+    "write_failed_on_exception": true,
+    "write_completed_on_success": true,
+    "atomic_writes_and_fsync": true
+  },
+  "search_budget": {
+    "cheap_train_lives_per_outer_step": 2,
+    "rotating_validation_lives": 4,
+    "beam_size": 3,
+    "meta_updates": 4,
+    "evolutionary_generations": 4,
+    "preregistered_validation_threshold": 0.65,
+    "stop_when": [
+      "frozen_budget_exhausted",
+      "single_confirmation_result_recorded"
+    ]
+  },
+  "world_seeds": {
+    "cheap_train": [
+      "stage_a_r1_2_world_101",
+      "stage_a_r1_2_world_102"
+    ],
+    "rotating_validation": [
+      "stage_a_r1_2_world_103",
+      "stage_a_r1_2_world_104",
+      "stage_a_r1_2_world_105",
+      "stage_a_r1_2_world_106"
+    ],
+    "confirmation": [
+      "stage_a_r1_2_conf_101",
+      "stage_a_r1_2_conf_102",
+      "stage_a_r1_2_conf_103",
+      "stage_a_r1_2_conf_104"
+    ],
+    "excluded_benchmark": [
+      "stage_a_r1_1_bench_001",
+      "stage_a_r1_1_bench_002"
+    ],
+    "excluded_stress": [
+      "stage_a_r1_2_stress_001",
+      "stage_a_r1_2_stress_002",
+      "stage_a_r1_2_stress_003",
+      "stage_a_r1_2_stress_004",
+      "stage_a_r1_2_stress_005",
+      "stage_a_r1_2_stress_006",
+      "stage_a_r1_2_stress_conf_001",
+      "stage_a_r1_2_stress_conf_002",
+      "stage_a_r1_2_stress_conf_003",
+      "stage_a_r1_2_stress_conf_004"
+    ]
+  },
+  "throughput_or_stress_records": {
+    "stress_record_path": "runs/exos_dev1/stage_a_r1_2_stress/run_completed.json",
+    "stress_horizon_exceeded_scored_horizon": true
+  },
+  "written_utc": "2026-08-19T12:10:00Z"
+}
