@@ -247,6 +247,23 @@ def variants_for(family: str, *, max_n: int = 25) -> list[dict[str, Any]]:
                     }
                 )
                 i += 1
+    elif family == "sticky_sep":
+        i = 0
+        for eta in (0.05, 0.1, 0.2, 0.35, 0.5):
+            for mix in (0.35, 0.5, 0.65, 0.8, 0.92):
+                out.append(
+                    {
+                        "family": family,
+                        "name": f"sticky_{i:02d}",
+                        "eta": float(eta),
+                        "mix": float(mix),
+                        "max_k": 4,
+                        "spawn": 0.99,
+                        "sep": 0.0,
+                        "seed": 17000 + i,
+                    }
+                )
+                i += 1
     else:
         raise RuntimeError(family)
     return out[: int(max_n)]

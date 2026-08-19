@@ -36,6 +36,7 @@ NEW_FAMILIES = [
     "cluster_sfa",
     "kmeans_rho",
     "sep_cluster",
+    "sticky_sep",
 ]
 
 

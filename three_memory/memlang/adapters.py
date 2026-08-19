@@ -639,6 +639,7 @@ class KMeansRhoAdapter(ValueAdapter):
         self.mix = float(self.cfg.get("mix") or 0.6)
         self.k = int(self.cfg.get("k") or 4)
         self.centers: list[np.ndarray] = []
+        self.last_j = -1
 
     def _assign(self, x: np.ndarray) -> int:
         if not self.centers:
@@ -658,6 +659,7 @@ class KMeansRhoAdapter(ValueAdapter):
         if gated <= PROTO_EPS:
             return
         j = self._assign(x)
+        self.last_j = j
         m = min(1.0, self.eta * gated)
         self.centers[j] = unit((1.0 - m) * self.centers[j] + m * x)
 
@@ -667,8 +669,7 @@ class KMeansRhoAdapter(ValueAdapter):
         x = unit(rho_post)
         if not self.centers:
             return x
-        sims = np.array([float(np.dot(c, x)) for c in self.centers], dtype=np.float64)
-        j = int(np.argmax(sims))
+        j = self.last_j if 0 <= self.last_j < len(self.centers) else int(np.argmax([float(np.dot(c, x)) for c in self.centers]))
         return self.compose_value(self.centers[j], rho_post, self.mix)
 
     def geometry(self) -> dict[str, Any]:
@@ -692,12 +693,14 @@ class SepClusterAdapter(ValueAdapter):
             sep=float(self.cfg.get("sep") or 0.1),
         )
         self.rhos: list[np.ndarray] = []
+        self.last_j = -1
 
     def update(self, rho_post: np.ndarray, adv: float) -> None:
         x = unit(rho_post)
         tgt = self.teaching_target(rho_post)
         gated = _gated(adv)
         j = self.duals.update(tgt, gated)
+        self.last_j = j
         while len(self.rhos) < len(self.duals.protos):
             self.rhos.append(x.copy())
         if j >= 0 and gated > PROTO_EPS:
@@ -707,11 +710,9 @@ class SepClusterAdapter(ValueAdapter):
     def value(self, rho_post: np.ndarray) -> np.ndarray:
         if self.last_target is None:
             return self.scramble_rho(rho_post)
-        tgt = self.teaching_target(rho_post)
-        if not self.duals.protos or not self.rhos:
+        if not self.rhos:
             return unit(rho_post)
-        sims = np.array([float(np.dot(p, unit(tgt))) for p in self.duals.protos], dtype=np.float64)
-        j = min(int(np.argmax(sims)), len(self.rhos) - 1)
+        j = self.last_j if 0 <= self.last_j < len(self.rhos) else 0
         return self.compose_value(self.rhos[j], rho_post, self.mix)
 
     def geometry(self) -> dict[str, Any]:
@@ -723,6 +724,21 @@ class SepClusterAdapter(ValueAdapter):
             "n_protos": len(self.rhos),
             "n_duals": len(self.duals.protos),
         }
+
+
+class StickySepAdapter(SepClusterAdapter):
+    """Sticky dual-index rho means, no repulsion, spawn high enough for four motors."""
+
+    family = "sticky_sep"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        cfg = dict(cfg or {})
+        cfg.setdefault("sep", 0.0)
+        cfg.setdefault("spawn", 0.99)
+        cfg.setdefault("max_k", 4)
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "sticky_sep")
+        self.family = "sticky_sep"
 
 
 FAMILIES = {
@@ -742,6 +758,7 @@ FAMILIES = {
     "cluster_sfa": ClusterSfaAdapter,
     "kmeans_rho": KMeansRhoAdapter,
     "sep_cluster": SepClusterAdapter,
+    "sticky_sep": StickySepAdapter,
 }
 
 
