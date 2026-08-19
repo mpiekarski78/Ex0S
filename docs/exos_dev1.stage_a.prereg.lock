@@ -1,0 +1,97 @@
+{
+  "version": "EX0S-DEV1.STAGE_A.PREREG.LOCK",
+  "stage": "A",
+  "description": "Stage A — Grounded cortical plasticity. One continuous newborn life learns four motor roles from interaction and consequences. H write/read disabled throughout.",
+  "written_before_first_scored_execution": true,
+  "note": "This preregistration must be written before scored Stage A runs begin and must not be edited afterward.",
+
+  "identity": {
+    "implementation_sha": "7460993a6c2a0f069d74a834422c0885ebbfb4cd7ccc5121dac579f5ca471db9",
+    "runner_schema_sha": "75079c3a55eb3f337b9db21c1c2ba3de01f285c33f360abf876cbfa3d2075e0c",
+    "default_genome_hash": "0d487c8ee8f1afd3628d445dcb635a39e6edac8be959b0ef5bfa3b12efccd84f",
+    "world_seed_prefix": "dev1_stage_a_world_",
+    "curriculum_version": "dev1_curriculum_v1",
+    "backend": "cpu",
+    "numeric_mode": "float32"
+  },
+
+  "h_disabled": true,
+  "note_h_disabled": "H write/read disabled throughout Stage A so fast memory cannot solve what is described as cortical grounding.",
+
+  "world_config": {
+    "n_symbols": 16,
+    "n_roles": 4,
+    "sensory_dim": 64,
+    "episode_length": 32,
+    "n_episodes": 64,
+    "reward_on_correct": 1.0,
+    "reward_on_incorrect": -0.1
+  },
+
+  "search_budget": {
+    "discovery_world_seeds": [
+      "dev1_stage_a_world_001", "dev1_stage_a_world_002",
+      "dev1_stage_a_world_003", "dev1_stage_a_world_004",
+      "dev1_stage_a_world_005", "dev1_stage_a_world_006",
+      "dev1_stage_a_world_007", "dev1_stage_a_world_008"
+    ],
+    "rotating_validation_world_seeds": [
+      "dev1_stage_a_val_001", "dev1_stage_a_val_002",
+      "dev1_stage_a_val_003", "dev1_stage_a_val_004"
+    ],
+    "confirmation_world_seeds": [
+      "dev1_stage_a_conf_001", "dev1_stage_a_conf_002",
+      "dev1_stage_a_conf_003", "dev1_stage_a_conf_004"
+    ],
+    "beam_size": 3,
+    "budget_per_variant": 4,
+    "preregistered_pass_count_threshold": 1,
+    "confirmation_pass_threshold": 0.65
+  },
+
+  "search_axes": {
+    "axis_1_cortical_plasticity": ["three_factor", "meta_learned", "evolved"],
+    "axis_2_fast_memory": ["competitive_hebbian", "factorized"],
+    "axis_3_consolidation": ["replay", "online_slow", "hybrid"],
+    "axis_4_capacity": [64, 256, 1024]
+  },
+
+  "causal_gates_required": [
+    "reward_off_must_fail_to_learn",
+    "permuted_feedback_must_fail_to_learn",
+    "feedback_must_be_causal"
+  ],
+
+  "stage_a_pass_criteria": {
+    "grounding_accuracy_threshold": 0.65,
+    "renamed_symbols_must_pass": true,
+    "ordinary_actions_must_be_retained": true,
+    "no_persistent_memory_claim_yet": true
+  },
+
+  "intervention_config": {
+    "h_write_disabled": true,
+    "h_read_disabled": true,
+    "slow_cortex_consolidation_disabled": false,
+    "reward_off_ablation": false,
+    "permuted_feedback_ablation": false
+  },
+
+  "confirmation_rules": {
+    "untouched_tranche": true,
+    "failed_confirmation_is_immutable": true,
+    "failed_worlds_permanently_consumed": true,
+    "discovery_may_reopen_without_failed_cells": true,
+    "confirmation_results_never_reenter_discovery": true
+  },
+
+  "what_does_not_count_as_progress": [
+    "new_diagnostic",
+    "in_sample_decoder",
+    "oracle_W_star",
+    "geometry_improvement",
+    "more_passing_unit_tests"
+  ],
+
+  "written_utc": "2026-08-19T10:00:00Z"
+}
