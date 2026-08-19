@@ -1,0 +1,50 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R1_1.DEV.DECISION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R1.1",
+  "type": "immutable_dev_decision_record",
+  "status": "closed_for_infrastructure_failure",
+  "prereg_commit": "84a6e4a",
+  "implementation_commit": "99e57f2",
+  "attempted_run_id": "stage_a_r1_1_attempt_001",
+  "consumed_seed_partition": {
+    "cheap_train": [
+      "stage_a_r1_1_world_001",
+      "stage_a_r1_1_world_002"
+    ],
+    "rotating_validation": [
+      "stage_a_r1_1_world_003",
+      "stage_a_r1_1_world_004",
+      "stage_a_r1_1_world_005",
+      "stage_a_r1_1_world_006"
+    ],
+    "confirmation": [
+      "stage_a_r1_1_conf_001",
+      "stage_a_r1_1_conf_002",
+      "stage_a_r1_1_conf_003",
+      "stage_a_r1_1_conf_004"
+    ]
+  },
+  "numerical_failure_code": "terminate_on_nan_or_inf",
+  "exception": {
+    "type": "RuntimeError",
+    "message": "probability tensor contains either `inf`, `nan` or element < 0"
+  },
+  "traceback_hash": "ff329798cce3064a88f146cd7a8baebb185c7fda80dea3760f3e24a4baaa7841",
+  "behavioral_outcome_produced": false,
+  "confirmation_consumed": false,
+  "run_artifacts_missing": true,
+  "architectural_conclusion": "none",
+  "interpretation": "numerical_failure_before_behavior",
+  "explicit_refusal": {
+    "replay_attempt": false,
+    "replacement_attempt": false,
+    "reason": "the scored R1.1 attempt is consumed and may not be replayed or silently replaced"
+  },
+  "notes": [
+    "The missing failure artifact is itself treated as a runner defect.",
+    "This record closes R1.1 as an infrastructure failure rather than a Stage A behavioral result."
+  ],
+  "written_utc": "2026-08-19T11:52:00Z"
+}
