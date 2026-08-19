@@ -1,0 +1,69 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R2.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R2",
+  "type": "stage_isolation_lock",
+  "status": "active",
+  "lineage_stop_inherited": "no_causal_grounding_within_frozen_r1_2_budget",
+  "authorized_filespaces": [
+    "docs/exos_dev1.stage_a_r2.contract.lock",
+    "docs/exos_dev1.stage_a_r2.isolation.lock",
+    "docs/exos_dev1.stage_a_r2.prereg.lock",
+    "three_memory/dev1/",
+    "experiments/dev1/",
+    "tests/dev1/",
+    "runs/exos_dev1/stage_a_r2/"
+  ],
+  "historical_filespaces_immutable": [
+    "docs/exos_dev1.stage_a_r1_2.contract.lock",
+    "docs/exos_dev1.stage_a_r1_2.isolation.lock",
+    "docs/exos_dev1.stage_a_r1_2.prereg.lock",
+    "docs/exos_dev1.stage_a_r1_2.dev_decision.lock",
+    "runs/exos_dev1/stage_a_r1_2/"
+  ],
+  "blocked_program_paths": [
+    "docs/exos_dev1.stage_b.contract.md",
+    "docs/exos_dev1.stage_b.prereg.lock",
+    "docs/exos_dev1.redirect.lock",
+    "docs/cortex.candidate.lock",
+    "three_memory/neural_cortex.py"
+  ],
+  "forbidden_actions": [
+    "rerun_or_patch_frozen_R1_2",
+    "turn_R2_into_R1_coefficient_tuning",
+    "rerun_scale_factorial",
+    "unlock_stage_b_without_stage_a_confirmation_pass",
+    "inherit_facts_meanings_or_fixture_specific_routes",
+    "encode_credit_family_as_genome_capability_flag",
+    "instrumentation_feedback_into_organism",
+    "candidate_or_product_changes"
+  ],
+  "must_prove_during_R2": {
+    "scaffold_sensitivity": [
+      "matched_extreme_valid_genomes_change_recurrent_dynamics",
+      "matched_extreme_valid_genomes_change_sensory_separability",
+      "matched_extreme_valid_genomes_change_motor_basis_separability",
+      "matched_extreme_valid_genomes_change_actor_update_direction_and_magnitude",
+      "matched_extreme_valid_genomes_change_action_logits_or_probabilities",
+      "matched_extreme_valid_genomes_change_homeostatic_response"
+    ],
+    "telemetry_restoration": [
+      "all_R_A_M_T_P_components_logged",
+      "reward_off_feedback_off_permuted_feedback_logged",
+      "exact_first_failing_causal_predicate_logged",
+      "raw_and_clipped_optimizer_telemetry_logged",
+      "genome_and_phenotype_deltas_logged"
+    ],
+    "memory_boundary": [
+      "H_absent_when_stage_a_requires_it",
+      "no_fact_inheritance",
+      "no_fixture_specific_route_inheritance"
+    ]
+  },
+  "notes": [
+    "R2 is the first scaffold-search test of the neuroscience-derived correction: inherit useful organization and learning machinery, but not knowledge.",
+    "If R2 remains flat despite proven scaffold sensitivity and meaningful optimization, the likely bottleneck shifts deeper than size or credit coefficients."
+  ],
+  "written_utc": "2026-08-19T12:29:00Z"
+}
