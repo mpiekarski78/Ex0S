@@ -28,7 +28,7 @@
   },
   "interpretation": "those four implementations failed; representation learning is not falsified",
   "telemetry_schema": "MEMLANG-1.TELEMETRY.v2",
-  "implementation_sha": "1fd788b16c6355ad827838ebf22dbce1cb654420eb73475dd1415cd9c6b64f70",
+  "implementation_sha": "472c50a8ae66d231b41ac9ac4c147f37de7406572742d8e1f2823eff96ae3cf5",
   "runner_schema_sha": "9ce2df4f1ac57d4ca99f85843d4755916daa68f2f7b5ea2991bff679e724dabd",
   "stage_a_sha": "8b1ac5852552469b2ae63c747934518ad9779cb0f0fd7f62e80d0acc5080b87e",
   "neural_sha": "555bba37cc79b407f8d2205b6ce9440f2a7b204fb7eff2cc55a8ff5e883a7f01",
@@ -40,6 +40,11 @@
     "latent_manifold",
     "slow_feature",
     "efference_copy"
+  ],
+  "wave2_families": [
+    "rho_cluster",
+    "contrastive_rho",
+    "cluster_sfa"
   ],
   "budget_lock_families_unchanged": [
     "slow_target",

@@ -31,6 +31,9 @@ NEW_FAMILIES = [
     "latent_manifold",
     "slow_feature",
     "efference_copy",
+    "rho_cluster",
+    "contrastive_rho",
+    "cluster_sfa",
 ]
 
 

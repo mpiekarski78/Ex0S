@@ -501,6 +501,132 @@ class EfferenceCopyAdapter(ValueAdapter):
         return {"family": self.family, "name": self.name, "eta": self.eta, "pure": self.pure, "n_protos": len(self.bank.protos)}
 
 
+class RhoClusterAdapter(ValueAdapter):
+    """Cluster by organism dual; store slow means of rho in identity coordinates."""
+
+    family = "rho_cluster"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "rho_cluster")
+        self.eta = float(self.cfg.get("eta") or 0.1)
+        self.mix = float(self.cfg.get("mix") or 0.6)
+        self.duals = _ProtoBank(
+            max_k=int(self.cfg.get("max_k") or 8),
+            spawn=float(self.cfg.get("spawn") or 0.35),
+            eta=self.eta,
+            sep=float(self.cfg.get("sep") or 0.05),
+        )
+        self.rhos: list[np.ndarray] = []
+
+    def update(self, rho_post: np.ndarray, adv: float) -> None:
+        x = unit(rho_post)
+        tgt = self.teaching_target(rho_post)
+        gated = _gated(adv)
+        j = self.duals.update(tgt, gated)
+        while len(self.rhos) < len(self.duals.protos):
+            self.rhos.append(x.copy())
+        if j >= 0 and gated > PROTO_EPS:
+            m = min(1.0, self.eta * gated)
+            self.rhos[j] = unit((1.0 - m) * self.rhos[j] + m * x)
+
+    def value(self, rho_post: np.ndarray) -> np.ndarray:
+        x = unit(rho_post)
+        if self.last_target is None:
+            return self.scramble_rho(rho_post)
+        tgt = self.teaching_target(rho_post)
+        if not self.duals.protos or not self.rhos:
+            return x
+        sims = np.array([float(np.dot(p, unit(tgt))) for p in self.duals.protos], dtype=np.float64)
+        j = min(int(np.argmax(sims)), len(self.rhos) - 1)
+        return self.compose_value(self.rhos[j], rho_post, self.mix)
+
+    def geometry(self) -> dict[str, Any]:
+        return {"family": self.family, "name": self.name, "eta": self.eta, "mix": self.mix, "n_protos": len(self.rhos)}
+
+
+class ContrastiveRhoAdapter(ValueAdapter):
+    """Pull rho images of the same dual together; push different duals apart."""
+
+    family = "contrastive_rho"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "contrastive_rho")
+        self.eta = float(self.cfg.get("eta") or 0.05)
+        self.sep = float(self.cfg.get("sep") or 0.05)
+        self.mix = float(self.cfg.get("mix") or 0.5)
+        self.W = np.eye(self.n, dtype=np.float64)
+        self.duals = _ProtoBank(max_k=8, spawn=0.35, eta=0.1, sep=self.sep)
+        self.rhos: list[np.ndarray] = []
+
+    def update(self, rho_post: np.ndarray, adv: float) -> None:
+        x = unit(rho_post)
+        tgt = self.teaching_target(rho_post)
+        gated = _gated(adv)
+        y = self.W @ x
+        j = self.duals.update(tgt, gated)
+        while len(self.rhos) < len(self.duals.protos):
+            self.rhos.append(x.copy())
+        if j >= 0 and gated > PROTO_EPS:
+            same = self.rhos[j]
+            self.W = self.W + self.eta * gated * np.outer(unit(same) - unit(y), x)
+            for i, other in enumerate(self.rhos):
+                if i == j:
+                    continue
+                self.W = self.W - self.sep * gated * np.outer(unit(other), x)
+            self.rhos[j] = unit((1.0 - self.eta) * self.rhos[j] + self.eta * x)
+            np.clip(self.W, -2.0, 2.0, out=self.W)
+
+    def value(self, rho_post: np.ndarray) -> np.ndarray:
+        if self.last_target is None:
+            return self.scramble_rho(rho_post)
+        return self.compose_value(unit(self.W @ unit(rho_post)), rho_post, self.mix)
+
+    def geometry(self) -> dict[str, Any]:
+        return {"family": self.family, "name": self.name, "eta": self.eta, "mix": self.mix, "n_protos": len(self.rhos)}
+
+
+class ClusterSfaAdapter(ValueAdapter):
+    """Slow-feature pull on rho within a dual cluster; variance across clusters."""
+
+    family = "cluster_sfa"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "cluster_sfa")
+        self.eta = float(self.cfg.get("eta") or 0.05)
+        self.mix = float(self.cfg.get("mix") or 0.6)
+        self.W = np.eye(self.n, dtype=np.float64)
+        self.duals = _ProtoBank(max_k=8, spawn=0.35, eta=0.1, sep=0.08)
+        self.prev: dict[int, np.ndarray] = {}
+
+    def update(self, rho_post: np.ndarray, adv: float) -> None:
+        x = unit(rho_post)
+        tgt = self.teaching_target(rho_post)
+        gated = _gated(adv)
+        j = self.duals.update(tgt, gated)
+        y = unit(self.W @ x)
+        if j >= 0 and gated > PROTO_EPS:
+            prev = self.prev.get(j)
+            if prev is not None:
+                self.W = self.W - self.eta * gated * np.outer(y - prev, x)
+            for k, pv in self.prev.items():
+                if k == j:
+                    continue
+                self.W = self.W + 0.05 * gated * np.outer(y, pv)
+            self.prev[j] = y.copy()
+            np.clip(self.W, -2.0, 2.0, out=self.W)
+
+    def value(self, rho_post: np.ndarray) -> np.ndarray:
+        if self.last_target is None:
+            return self.scramble_rho(rho_post)
+        return self.compose_value(unit(self.W @ unit(rho_post)), rho_post, self.mix)
+
+    def geometry(self) -> dict[str, Any]:
+        return {"family": self.family, "name": self.name, "eta": self.eta, "mix": self.mix}
+
+
 FAMILIES = {
     "slow_target": SlowTargetAdapter,
     "hebbian_delta": HebbianDeltaAdapter,
@@ -513,6 +639,9 @@ FAMILIES = {
     "latent_manifold": LatentManifoldAdapter,
     "slow_feature": SlowFeatureAdapter,
     "efference_copy": EfferenceCopyAdapter,
+    "rho_cluster": RhoClusterAdapter,
+    "contrastive_rho": ContrastiveRhoAdapter,
+    "cluster_sfa": ClusterSfaAdapter,
 }
 
 
