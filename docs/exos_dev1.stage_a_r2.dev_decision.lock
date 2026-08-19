@@ -1,0 +1,54 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R2.DEV.DECISION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R2",
+  "type": "immutable_dev_decision_record",
+  "status": "closed_for_scored_result",
+  "implementation_commit": "cbf0fd0",
+  "implementation_sha": "cbf0fd0cb0b57649a7f4145bc2b43b34a3fa7b8e",
+  "prereg_commit": "22d2f69",
+  "prereg_sha": "22d2f6905c04c848790256ac16d0baa5cc61a5d9",
+  "run_id": "exos_dev1_r2_scored_20260819",
+  "ledger_hashes": {
+    "run_started_json": "9387d8c21dd450d542b6eb47d9843fbf85d4c1a3cc1b3004fddfba9153c67c37",
+    "run_completed_json": "de7650a84c11624c416e7a934f560dbd000fb157e7518017abfdea53e66c47ce",
+    "candidate_ledger_json": "2fa8286aafc72b6f8c78ff6b5126cf2da9b305ab9963aa025aa3439ef3f6fdae",
+    "search_summary_json": "2fa8286aafc72b6f8c78ff6b5126cf2da9b305ab9963aa025aa3439ef3f6fdae",
+    "scored_summary_json": "a031b739cac32b2d42bcb7e5323286f7dd89f169d567a67776efc7e8c1f36bf3"
+  },
+  "candidate_ledger_note": "R2 runner stores full per-candidate training and validation curves in search_summary.json; no separate candidate_records.jsonl was written.",
+  "budget_completion": {
+    "meta_gradient_outer_updates": 24,
+    "evolution_generations": 24,
+    "evolution_population_size": 12,
+    "families_executed": 3,
+    "optimizer_arms_per_family": 3,
+    "candidates_total": 9,
+    "budget_fully_consumed": true,
+    "early_termination": false,
+    "wall_seconds_actual": 6071.93
+  },
+  "run_integrity": {
+    "run_failed_json_absent": true,
+    "zero_invalid_candidates": true,
+    "confirmation_lives_consumed": 0
+  },
+  "candidate_outcomes": [
+    {"family": "reward_baseline_three_factor", "optimizer_arm": "meta_gradient_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_fitness_first": -0.6501, "training_fitness_last": -0.6495, "treatment_accuracy_last": 0.0234},
+    {"family": "reward_baseline_three_factor", "optimizer_arm": "evolution_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_fitness_first": -0.6463, "training_fitness_last": -0.5856, "treatment_accuracy_last": 0.0234},
+    {"family": "reward_baseline_three_factor", "optimizer_arm": "evolution_topology", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_fitness_first": -0.6252, "training_fitness_last": -0.6252, "treatment_accuracy_last": 0.0225},
+    {"family": "action_contingent_actor_critic", "optimizer_arm": "meta_gradient_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_fitness_first": -0.6501, "training_fitness_last": -0.6495, "treatment_accuracy_last": 0.0234},
+    {"family": "action_contingent_actor_critic", "optimizer_arm": "evolution_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_fitness_first": -0.6463, "training_fitness_last": -0.5856, "treatment_accuracy_last": 0.0234},
+    {"family": "action_contingent_actor_critic", "optimizer_arm": "evolution_topology", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_fitness_first": -0.6252, "training_fitness_last": -0.6252, "treatment_accuracy_last": 0.0225},
+    {"family": "consequence_prediction_credit", "optimizer_arm": "meta_gradient_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_fitness_first": -0.6501, "training_fitness_last": -0.6495, "treatment_accuracy_last": 0.0234},
+    {"family": "consequence_prediction_credit", "optimizer_arm": "evolution_continuous", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_fitness_first": -0.6463, "training_fitness_last": -0.5856, "treatment_accuracy_last": 0.0234},
+    {"family": "consequence_prediction_credit", "optimizer_arm": "evolution_topology", "decision_code": "credit_not_causal", "first_failing_causal_predicate": "grounding_fail", "training_fitness_first": -0.6252, "training_fitness_last": -0.6252, "treatment_accuracy_last": 0.0225}
+  ],
+  "aggregate_outcome": "scaffold_optimization_fail",
+  "stage_b_status": "locked",
+  "interpretation": "no_causal_grounding_within_frozen_r2_scaffold_search",
+  "architectural_conclusion": "none",
+  "scientific_scope_note": "Within the preregistered 24/24/12 budget, the tested continuous scaffold surface and three-motif topology surface did not yield causal credit grounding. This result rules out that specific scaffold parameterization and topology motif set—not search scale generally, not inherited developmental topology as a class, and not the credit-rule families in isolation.",
+  "written_utc": "2026-08-19T16:10:00Z"
+}
