@@ -53,6 +53,13 @@ Ex0S 0.0.003  ←  TM.0.11.FAMILY
 Ex0S 0.0.004  ←  TM.0.13.FAMILY
         provenance-sensitive composition across 288 planted contextual worlds
         hold-out E–H sealed until canonical · genome delta 0
+        │
+        ▼ TM062 transport closes: only_unrestricted_interpolates
+        │ action-conditioned transport does not generalize · product stays 0.0.004
+        │
+        ▼ MEMLANG-1 five-hour Stage A search (research/memlang1-5h, frozen)
+        invertible ρ recolorings interpolate in-time, fail chronological transfer
+        later_context_drift · stage_a_integrated_pass=false · no product stamp
 ```
 
 | Ex0S | Lab | What changed |
@@ -61,10 +68,51 @@ Ex0S 0.0.004  ←  TM.0.13.FAMILY
 | **0.0.002** | TM.0.11 COMPOSE | Learned relations become **inputs** to other learned relations at use time |
 | **0.0.003** | TM.0.11.FAMILY (frozen compose) | Frozen compose operates over generated S across **depth, first-hop branching, downstream revision** |
 | **0.0.004** | TM.0.13.FAMILY (frozen CONTEXT) | Frozen CONTEXT recipe distinguishes identical frontiers via bounded κ across **unseen planted contextual worlds** |
+| *(no stamp)* | TM.0.62.XGEN → MEMLANG-1 | TM062 closed `only_unrestricted_interpolates`; MEMLANG-1 five-hour search found no adapter passing Stage A (`later_context_drift`); product stays **0.0.004** |
 
 Pre-0.0.001 TM work built the pieces. Ex0S starts when the recipe is frozen enough to treat as a lineage, not only a series of demos.
 
 **Next (lab, not a stamp):** Isolated **v27** scored **0/16** on G3+G5 after G1 cleared. Do not restore phrase replay. Do not reveal FULLDEV.R7. Full D0–D12 is still closed (`eligible_for_000005=false`). Product stamp stays a human decision (`ex0s=null`). No Ex0S 1.0.
+
+### TM.0.62.XGEN → MEMLANG-1 (active research branch)
+
+After TM062 closed with `only_unrestricted_interpolates`, the lab opened **MEMLANG-1** — an isolated search for an organism-owned value adapter that can form **action-invariant write-time values** across unseen cues, contexts, and later development without the runner constructing those values.
+
+> **Question:** Can an organism-owned value adapter form action-invariant write-time values across unseen cues, contexts, and later development without the runner constructing those values?
+
+| Document | Contents |
+|----------|----------|
+| [`docs/memlang1_contract.md`](docs/memlang1_contract.md) | Full contract: locked question, stage definitions, causal pins |
+| [`docs/memlang1.prereg.lock`](docs/memlang1.prereg.lock) | Pre-registration (lab, product, authorized edits) |
+| [`docs/memlang1.isolation.lock`](docs/memlang1.isolation.lock) | Isolation gate: what is and is not authorized |
+| [`docs/memlang1.budget.lock`](docs/memlang1.budget.lock) | Sprint budget (five-hour adaptive search) |
+| [`docs/memlang1.search.manifest.lock`](docs/memlang1.search.manifest.lock) | Wave-by-wave manifest: Wave 0 baseline → Wave 6; committed SHAs |
+| [`runs/memlang1/_provenance/hard_stop_12point.json`](runs/memlang1/_provenance/hard_stop_12point.json) | 12-point hard-stop report (sprint conclusion) |
+| [`runs/memlang1/_provenance/wave0_replay_3828d39.json`](runs/memlang1/_provenance/wave0_replay_3828d39.json) | Wave 0 representative replay results |
+| [`runs/memlang1/_provenance/literature.json`](runs/memlang1/_provenance/literature.json) | Literature surveyed during sprint; mechanism translations |
+
+**Branch:** `research/memlang1-5h` (frozen after sprint hard stop at `4b361ab`). Do not merge to main.
+
+**Stage A — Invariant Value Formation** (the only executable gate so far):
+
+| Causal pin | Meaning |
+|-----------|---------|
+| `feedback_off_fail` | Value must not degenerate when motor feedback is absent |
+| `permuted_feedback_fail` | Scrambled feedback must break decoding |
+| `reward_gate_fail` | Advantage gate must control write |
+
+**Sprint outcome (2026-08-19, 00:00–04:51 UTC):** 5,877 complete Stage A batteries across 19 adapter families (Waves 0–6 + mutant). No candidate achieved `stage_a_integrated_pass`. Dominant failure: `later_context_drift` — invertible recolorings of ρ support in-time interpolation but fail chronological transfer. Best representative family: `whitening`. Next direction: organism-owned nonlinear readouts or slow cortex maps for action identity.
+
+**Stage B–E** (`docs/memlang1.stage_b.lock` → `stage_e.lock`) are defined but not yet executable (`stage_b_executable=false`).
+
+**Reproduction (on `research/memlang1-5h`):**
+
+```bash
+git checkout research/memlang1-5h
+python -m pytest tests/test_memlang1_stage_a.py -x
+python -m experiments.run_memlang1 --family identity --seed 0
+python -m experiments.run_memlang1_parallel --families whitening --workers 4
+```
 
 ### TM.0.23.CORTEX (under 0.0.004)
 
@@ -160,6 +208,8 @@ TM.0.10.FAMILY frozen relation worlds (**Ex0S 0.0.001**): [`docs/tm010family_res
 TM.0.11 COMPOSE (**Ex0S 0.0.002**): [`docs/tm011compose_results.md`](docs/tm011compose_results.md).  
 TM.0.11.FAMILY frozen composition (**Ex0S 0.0.003**): [`docs/tm011family_results.md`](docs/tm011family_results.md).  
 TM.0.11.BOUND capacity envelope (0.0.003 under test): [`docs/tm011bound_results.md`](docs/tm011bound_results.md).
+TM.0.62.XGEN transport generalization: [`docs/lineage_xgen.decision.lock`](docs/lineage_xgen.decision.lock) — `only_unrestricted_interpolates`; no architecture earned.
+MEMLANG-1 Stage A search (five-hour sprint): [`docs/memlang1.search.manifest.lock`](docs/memlang1.search.manifest.lock) · [`runs/memlang1/_provenance/hard_stop_12point.json`](runs/memlang1/_provenance/hard_stop_12point.json) — `later_context_drift`; no integrated pass; branch `research/memlang1-5h` frozen.
 TM.0.12.CONTEXT representation audit: [`docs/tm012context_results.md`](docs/tm012context_results.md).
 TM.0.12.MINIMAP distinguishability: [`docs/tm012minimap_results.md`](docs/tm012minimap_results.md).
 TM.0.12.PATHDISC same-S origin vs path: [`docs/tm012pathdisc_results.md`](docs/tm012pathdisc_results.md).
@@ -347,6 +397,8 @@ Comparison: [`docs/comparison_bdh.md`](docs/comparison_bdh.md).
 | TM.0.10.FAMILY (**Ex0S 0.0.001**) | **252/252** / delta 0 | 7 templates, hold-out E–G; [`docs/tm010family_results.md`](docs/tm010family_results.md) |
 | TM.0.11 COMPOSE (**Ex0S 0.0.002**) | **Store-works** / **Fail** | frontier compose; no shortcut; [`docs/tm011compose_results.md`](docs/tm011compose_results.md) |
 | TM.0.11.FAMILY (**Ex0S 0.0.003**) | **252/252** generated S / delta 0 | depth 4 hold-out; first-hop D/F; G revise; [`docs/tm011family_results.md`](docs/tm011family_results.md) |
+| TM.0.62.XGEN transport generalization | `only_unrestricted_interpolates` / no stamp | action-conditioned transport does not generalize; product stays 0.0.004; [`docs/lineage_xgen.decision.lock`](docs/lineage_xgen.decision.lock) |
+| MEMLANG-1 Stage A value adapter search | **no pass** / `later_context_drift` | five-hour sprint; 5,877 batteries; 19 families; best: `whitening`; [`docs/memlang1.search.manifest.lock`](docs/memlang1.search.manifest.lock) · branch `research/memlang1-5h` |
 
 ## Quick start
 
@@ -499,12 +551,17 @@ Protocol: [`docs/protocol.md`](docs/protocol.md).
 ## Layout
 
 ```text
-three_memory/     # cortex, neural_cortex, ρ, S, W library, drives, agent, env, byte LM
-experiments/      # run_v0 … run_v23, run_tm010 … run_tm023cortex, train_prior
-docs/             # protocol, comparison, conclusion, v1–v23, TM.0.x, CORTEX locks
+three_memory/        # cortex, neural_cortex, ρ, S, W library, drives, agent, env, byte LM
+three_memory/memlang/  # MEMLANG-1: adapters.py, variants.py, telemetry.py (branch: research/memlang1-5h)
+experiments/         # run_v0 … run_v23, run_tm010 … run_tm023cortex, train_prior
+                     #   run_memlang1.py, run_memlang1_parallel.py, run_memlang1_sprint.py
+                     #   analyze_memlang1.py
+docs/                # protocol, comparison, conclusion, v1–v23, TM.0.x, CORTEX locks
+                     #   memlang1_contract.md, memlang1.*.lock (prereg, isolation, budget, manifest, stages)
+                     #   lineage_xgen.decision.lock
 tests/
-runs/             # gitignored
-checkpoints/      # gitignored (prior.pt)
+runs/                # gitignored (Stage A telemetry in runs/memlang1/ on research branch)
+checkpoints/         # gitignored (prior.pt)
 ```
 
 ## License
