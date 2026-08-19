@@ -156,6 +156,7 @@ def main() -> None:
     ap.add_argument("--search", action="store_true")
     ap.add_argument("--identity", action="store_true")
     ap.add_argument("--max-families", type=int, default=None)
+    ap.add_argument("--families", default=None, help="comma-separated families; default is the frozen Wave 0 budget")
     args = ap.parse_args()
     if args.smoke:
         print(json.dumps(smoke(), indent=2))
@@ -172,7 +173,10 @@ def main() -> None:
         print(json.dumps(out, indent=2, default=str))
         return
     if args.search:
-        print(json.dumps(search(max_families=args.max_families), indent=2, default=str))
+        fams = None
+        if args.families:
+            fams = [x.strip() for x in str(args.families).split(",") if x.strip()]
+        print(json.dumps(search(max_families=args.max_families, families=fams), indent=2, default=str))
         return
     raise SystemExit("use --smoke, --identity, or --search")
 
