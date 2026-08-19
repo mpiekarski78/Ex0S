@@ -132,7 +132,10 @@ class ActionCortex(nn.Module):
         if policy_mode == "hard":
             channel = int(scores.argmax().item())
         elif policy_mode == "stochastic":
-            channel = int(torch.multinomial(scores, 1, generator=generator).item())
+            if generator is not None and scores.device.type == "cpu":
+                channel = int(torch.multinomial(scores, 1, generator=generator).item())
+            else:
+                channel = int(torch.multinomial(scores, 1).item())
         else:
             raise ValueError(f"unknown policy_mode: {policy_mode}")
         top2 = scores.topk(min(2, scores.numel())).values
