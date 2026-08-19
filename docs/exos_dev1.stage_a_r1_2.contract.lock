@@ -1,0 +1,187 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R1_2.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R1.2",
+  "type": "stage_contract_lock",
+  "status": "authorized_for_implementation",
+  "inherits_immutable_history": [
+    "docs/exos_dev1.stage_a_r1_1.contract.lock",
+    "docs/exos_dev1.stage_a_r1_1.isolation.lock",
+    "docs/exos_dev1.stage_a_r1_1.prereg.lock",
+    "docs/exos_dev1.stage_a_r1_1.dev_decision.lock",
+    "runs/exos_dev1/stage_a_r1_1/"
+  ],
+  "historical_r1_1_status": "immutable_preserved",
+  "question": "Can the R1.1 Stage A search be made numerically robust and crash-persistent without changing the learning hypothesis, credit families, fitness objective, Stage A gates, or memory boundary?",
+  "current_branch": "research/exos_dev1",
+  "product": "0.0.004",
+  "candidate_policy": "no_v41_before_stage_d_confirmation_and_review",
+  "product_policy": "no_product_change_before_explicit_earn_decision",
+  "lineage_stop_inherited": "numerical_failure_before_behavior",
+  "authorized_scope": [
+    "latent_to_phenotype_genome_parameterization_only",
+    "stable_stochastic_sampling_only",
+    "candidate_level_fail_closed_rejection_only",
+    "crash_safe_run_ledger_only",
+    "excluded_seed_stress_and_robustness_tests_only",
+    "separate_r1_2_runner_only"
+  ],
+  "forbidden_scope": [
+    "change_credit_rule_families",
+    "change_training_fitness_objective",
+    "change_stage_a_causal_gates",
+    "change_memory_boundary_or_H_absence_rule",
+    "change_search_hypothesis",
+    "edit_or_rerun_frozen_R1_1",
+    "nan_to_num_rescue_of_invalid_candidate",
+    "post_failure_repair_of_scored_run",
+    "candidate_or_product_changes"
+  ],
+  "genome_parameterization": {
+    "optimizers_operate_on": "shared_unconstrained_latent_z",
+    "organism_receives_only": "transformed_phenotype_parameters",
+    "raw_optimizer_values_may_enter_life": false,
+    "latent_and_transformed_hashes_both_required": true,
+    "parameter_domains": {
+      "gamma": {
+        "required_domain": "0<=gamma<1",
+        "transform": "bounded_sigmoid",
+        "bounds_frozen_before_implementation": true
+      },
+      "eligibility_decay": {
+        "required_domain": "0<=d<1",
+        "transform": "bounded_sigmoid",
+        "bounds_frozen_before_implementation": true
+      },
+      "baseline_decay": {
+        "required_domain": "0<=d<1",
+        "transform": "bounded_sigmoid",
+        "bounds_frozen_before_implementation": true
+      },
+      "learning_rates": {
+        "required_domain": "finite_positive_bounded",
+        "transform": "bounded_sigmoid_or_softplus_with_hard_max",
+        "bounds_frozen_before_implementation": true
+      },
+      "temperature": {
+        "required_domain": "finite_strictly_positive",
+        "transform": "bounded_positive_transform",
+        "bounds_frozen_before_implementation": true
+      },
+      "nonnegative_floors": {
+        "required_domain": "finite_bounded_interval",
+        "transform": "bounded_sigmoid",
+        "bounds_frozen_before_implementation": true
+      },
+      "signed_gains": {
+        "required_domain": "finite_symmetric_interval",
+        "transform": "scaled_tanh",
+        "bounds_frozen_before_implementation": true
+      }
+    }
+  },
+  "fail_closed_candidate_behavior": {
+    "validate_before_every_life": [
+      "transformed_parameter_domains",
+      "genome_finite",
+      "weight_finite",
+      "recurrent_state_finite",
+      "legal_temperature"
+    ],
+    "validate_after_every_outer_update": [
+      "genome_finite",
+      "loss_finite",
+      "gradient_finite",
+      "gradient_norm_within_limit",
+      "genome_step_norm_within_limit"
+    ],
+    "invalid_candidate_response": [
+      "reject_atomically",
+      "assign_declared_worst_fitness",
+      "discard_all_partial_organism_state",
+      "continue_healthy_candidates"
+    ],
+    "invalid_candidate_must_not_terminate_population": true,
+    "systemic_termination_rule_must_be_preregistered": true,
+    "allowed_systemic_termination_modes": [
+      "all_candidates_invalid_in_generation",
+      "invalid_fraction_exceeds_pinned_threshold_for_pinned_consecutive_generations",
+      "optimizer_state_becomes_nonfinite"
+    ]
+  },
+  "sampling_law": {
+    "distribution": "torch.distributions.Categorical(logits=stable_logits)",
+    "validate_logits_finite_before_construction": true,
+    "validate_temperature_legal_before_construction": true,
+    "manual_exponentiate_and_normalize": false,
+    "logit_clipping_allowed_only_if_preregistered": true,
+    "post_failure_nan_repair_disallowed": true
+  },
+  "crash_safe_run_ledger": {
+    "write_before_any_scored_rng_sampling": [
+      "run_started.json"
+    ],
+    "flush_after_every_completed_unit": [
+      "append_only_candidate_or_generation_records",
+      "current_rng_states",
+      "last_finite_genome_hash",
+      "last_finite_telemetry_hash"
+    ],
+    "on_failure_write": [
+      "run_failed.json"
+    ],
+    "on_success_write": [
+      "run_completed.json"
+    ],
+    "failure_record_must_include": [
+      "stage",
+      "arm",
+      "family",
+      "generation",
+      "candidate",
+      "exception",
+      "traceback_hash",
+      "last_finite_boundary"
+    ],
+    "atomic_writes_and_fsync_required": true,
+    "scored_run_never_resumed": true
+  },
+  "verification_required_before_preregistration": {
+    "adversarial_injections": [
+      "gamma_gt_1",
+      "decay_gt_1",
+      "zero_or_negative_temperature",
+      "nan_or_inf_genome",
+      "nan_or_inf_logits",
+      "nan_or_inf_loss",
+      "nan_or_inf_gradient",
+      "oversized_gradient",
+      "oversized_genome_step",
+      "candidate_failure_while_siblings_continue",
+      "process_exception_persists_run_failed_json",
+      "successful_completion_persists_run_completed_json",
+      "H_remains_empty_and_untouched"
+    ],
+    "stress_test": {
+      "required": true,
+      "uses_excluded_seeds_only": true,
+      "longer_than_future_scored_horizon": true,
+      "must_exercise": [
+        "both_optimizer_arms",
+        "every_credit_family"
+      ],
+      "must_show": "no_nonfinite_state"
+    }
+  },
+  "execution_order": [
+    "commit_and_push_R1_2_locks_alone",
+    "implement_in_separate_R1_2_runner_with_R1_1_untouched",
+    "commit_and_push_R1_2_implementation",
+    "run_full_DEV1_tests_and_excluded_seed_stress",
+    "freeze_R1_2_prereg_with_fresh_never_used_partitions",
+    "commit_and_push_R1_2_prereg_from_clean_tree",
+    "execute_once"
+  ],
+  "written_utc": "2026-08-19T12:00:00Z"
+}

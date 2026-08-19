@@ -1,0 +1,81 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R1_2.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R1.2",
+  "type": "stage_isolation_lock",
+  "status": "active",
+  "lineage_stop_inherited": "numerical_failure_before_behavior",
+  "authorized_filespaces": [
+    "docs/exos_dev1.stage_a_r1_2.contract.lock",
+    "docs/exos_dev1.stage_a_r1_2.isolation.lock",
+    "docs/exos_dev1.stage_a_r1_2.prereg.lock",
+    "three_memory/dev1/",
+    "experiments/dev1/",
+    "tests/dev1/",
+    "runs/exos_dev1/stage_a_r1_2/"
+  ],
+  "historical_filespaces_immutable": [
+    "docs/exos_dev1.stage_a_r1_1.contract.lock",
+    "docs/exos_dev1.stage_a_r1_1.isolation.lock",
+    "docs/exos_dev1.stage_a_r1_1.prereg.lock",
+    "docs/exos_dev1.stage_a_r1_1.dev_decision.lock",
+    "runs/exos_dev1/stage_a_r1_1/"
+  ],
+  "blocked_program_paths": [
+    "docs/exos_dev1.stage_b.contract.md",
+    "docs/exos_dev1.stage_b.prereg.lock",
+    "docs/exos_dev1.redirect.lock",
+    "docs/cortex.candidate.lock",
+    "three_memory/neural_cortex.py"
+  ],
+  "forbidden_actions": [
+    "rerun_or_patch_frozen_R1_1",
+    "change_credit_families",
+    "change_fitness_objective",
+    "change_stage_a_gates",
+    "change_H_boundary",
+    "change_search_hypothesis",
+    "nan_to_num_candidate_rescue",
+    "manual_exp_then_normalize_sampling",
+    "allow_one_invalid_candidate_to_terminate_population",
+    "silent_failure_without_run_ledger",
+    "candidate_or_product_changes"
+  ],
+  "must_prove_during_R1_2": {
+    "domain_transforms": [
+      "latent_z_only_seen_by_optimizers",
+      "bounded_sigmoid_for_gamma_and_decays",
+      "bounded_positive_transform_for_temperature",
+      "bounded_positive_rates",
+      "scaled_tanh_for_signed_gains",
+      "latent_and_transformed_hashes_recorded"
+    ],
+    "fail_closed_behavior": [
+      "invalid_candidate_rejected_atomically",
+      "worst_fitness_assigned",
+      "partial_state_discarded",
+      "healthy_candidates_continue",
+      "systemic_termination_rule_only"
+    ],
+    "crash_safe_ledger": [
+      "run_started_json_written_before_scored_rng",
+      "append_only_candidate_or_generation_records_flushed",
+      "run_failed_json_survives_process_exception",
+      "run_completed_json_exists_on_success"
+    ],
+    "H_absent": [
+      "H_begins_empty",
+      "H_write_counter_remains_zero",
+      "H_read_counter_remains_zero",
+      "H_state_hash_unchanged",
+      "same_true_under_stress"
+    ]
+  },
+  "notes": [
+    "R1.2 is an infrastructure correction only.",
+    "The scientific objective, fitness objective, credit families, Stage A gates, and memory boundary are unchanged from R1.1.",
+    "All diagnostic and stress seeds used before the future scored run must be permanently excluded from discovery, validation, and confirmation."
+  ],
+  "written_utc": "2026-08-19T12:01:00Z"
+}
