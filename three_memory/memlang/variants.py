@@ -214,6 +214,39 @@ def variants_for(family: str, *, max_n: int = 25) -> list[dict[str, Any]]:
             for eta in etas:
                 out.append({"family": family, "name": f"csfa_{i:02d}", "eta": float(eta), "mix": float(mix), "seed": 14000 + i})
                 i += 1
+    elif family == "kmeans_rho":
+        i = 0
+        for spawn in (0.5, 0.75, 0.9, 0.95, 0.99):
+            for mix in (0.4, 0.6, 0.8, 0.9, 0.92):
+                out.append(
+                    {
+                        "family": family,
+                        "name": f"km_{i:02d}",
+                        "eta": 0.15,
+                        "mix": float(mix),
+                        "k": 4,
+                        "spawn": float(spawn),
+                        "seed": 15000 + i,
+                    }
+                )
+                i += 1
+    elif family == "sep_cluster":
+        i = 0
+        for spawn in (0.7, 0.85, 0.92, 0.97, 0.99):
+            for mix in (0.4, 0.6, 0.8, 0.9, 0.92):
+                out.append(
+                    {
+                        "family": family,
+                        "name": f"sep_{i:02d}",
+                        "eta": 0.15,
+                        "mix": float(mix),
+                        "max_k": 4,
+                        "spawn": float(spawn),
+                        "sep": 0.12,
+                        "seed": 16000 + i,
+                    }
+                )
+                i += 1
     else:
         raise RuntimeError(family)
     return out[: int(max_n)]

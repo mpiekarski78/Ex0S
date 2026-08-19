@@ -34,6 +34,8 @@ NEW_FAMILIES = [
     "rho_cluster",
     "contrastive_rho",
     "cluster_sfa",
+    "kmeans_rho",
+    "sep_cluster",
 ]
 
 

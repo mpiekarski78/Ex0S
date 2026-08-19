@@ -627,6 +627,104 @@ class ClusterSfaAdapter(ValueAdapter):
         return {"family": self.family, "name": self.name, "eta": self.eta, "mix": self.mix}
 
 
+class KMeansRhoAdapter(ValueAdapter):
+    """Online k-means on write-time rho. k is machinery, not an action-index codebook."""
+
+    family = "kmeans_rho"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "kmeans_rho")
+        self.eta = float(self.cfg.get("eta") or 0.1)
+        self.mix = float(self.cfg.get("mix") or 0.6)
+        self.k = int(self.cfg.get("k") or 4)
+        self.centers: list[np.ndarray] = []
+
+    def _assign(self, x: np.ndarray) -> int:
+        if not self.centers:
+            self.centers.append(x.copy())
+            return 0
+        sims = np.array([float(np.dot(c, x)) for c in self.centers], dtype=np.float64)
+        j = int(np.argmax(sims))
+        spawn = float(self.cfg.get("spawn") or 0.85)
+        if float(sims[j]) < spawn and len(self.centers) < self.k:
+            self.centers.append(x.copy())
+            return len(self.centers) - 1
+        return j
+
+    def update(self, rho_post: np.ndarray, adv: float) -> None:
+        x = unit(rho_post)
+        gated = _gated(adv)
+        if gated <= PROTO_EPS:
+            return
+        j = self._assign(x)
+        m = min(1.0, self.eta * gated)
+        self.centers[j] = unit((1.0 - m) * self.centers[j] + m * x)
+
+    def value(self, rho_post: np.ndarray) -> np.ndarray:
+        if self.last_target is None:
+            return self.scramble_rho(rho_post)
+        x = unit(rho_post)
+        if not self.centers:
+            return x
+        sims = np.array([float(np.dot(c, x)) for c in self.centers], dtype=np.float64)
+        j = int(np.argmax(sims))
+        return self.compose_value(self.centers[j], rho_post, self.mix)
+
+    def geometry(self) -> dict[str, Any]:
+        return {"family": self.family, "name": self.name, "eta": self.eta, "mix": self.mix, "n_protos": len(self.centers)}
+
+
+class SepClusterAdapter(ValueAdapter):
+    """Dual clustering with a high spawn threshold so distinct motors do not share a rho mean."""
+
+    family = "sep_cluster"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "sep_cluster")
+        self.eta = float(self.cfg.get("eta") or 0.1)
+        self.mix = float(self.cfg.get("mix") or 0.6)
+        self.duals = _ProtoBank(
+            max_k=int(self.cfg.get("max_k") or 4),
+            spawn=float(self.cfg.get("spawn") or 0.9),
+            eta=self.eta,
+            sep=float(self.cfg.get("sep") or 0.1),
+        )
+        self.rhos: list[np.ndarray] = []
+
+    def update(self, rho_post: np.ndarray, adv: float) -> None:
+        x = unit(rho_post)
+        tgt = self.teaching_target(rho_post)
+        gated = _gated(adv)
+        j = self.duals.update(tgt, gated)
+        while len(self.rhos) < len(self.duals.protos):
+            self.rhos.append(x.copy())
+        if j >= 0 and gated > PROTO_EPS:
+            m = min(1.0, self.eta * gated)
+            self.rhos[j] = unit((1.0 - m) * self.rhos[j] + m * x)
+
+    def value(self, rho_post: np.ndarray) -> np.ndarray:
+        if self.last_target is None:
+            return self.scramble_rho(rho_post)
+        tgt = self.teaching_target(rho_post)
+        if not self.duals.protos or not self.rhos:
+            return unit(rho_post)
+        sims = np.array([float(np.dot(p, unit(tgt))) for p in self.duals.protos], dtype=np.float64)
+        j = min(int(np.argmax(sims)), len(self.rhos) - 1)
+        return self.compose_value(self.rhos[j], rho_post, self.mix)
+
+    def geometry(self) -> dict[str, Any]:
+        return {
+            "family": self.family,
+            "name": self.name,
+            "eta": self.eta,
+            "mix": self.mix,
+            "n_protos": len(self.rhos),
+            "n_duals": len(self.duals.protos),
+        }
+
+
 FAMILIES = {
     "slow_target": SlowTargetAdapter,
     "hebbian_delta": HebbianDeltaAdapter,
@@ -642,6 +740,8 @@ FAMILIES = {
     "rho_cluster": RhoClusterAdapter,
     "contrastive_rho": ContrastiveRhoAdapter,
     "cluster_sfa": ClusterSfaAdapter,
+    "kmeans_rho": KMeansRhoAdapter,
+    "sep_cluster": SepClusterAdapter,
 }
 
 
