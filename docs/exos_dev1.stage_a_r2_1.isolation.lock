@@ -1,0 +1,70 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R2_1.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R2.1",
+  "type": "stage_isolation_lock",
+  "status": "active",
+  "lineage_stop_inherited": "invalidated_experiment__credit_lifecycle_and_family_dispatch",
+  "authorized_filespaces": [
+    "docs/exos_dev1.stage_a_r2_1.contract.lock",
+    "docs/exos_dev1.stage_a_r2_1.isolation.lock",
+    "docs/exos_dev1.stage_a_r2_1.prereg.lock",
+    "three_memory/dev1/",
+    "experiments/dev1/",
+    "tests/dev1/",
+    "runs/exos_dev1/stage_a_r2_1/"
+  ],
+  "historical_filespaces_immutable": [
+    "docs/exos_dev1.stage_a_r2.contract.lock",
+    "docs/exos_dev1.stage_a_r2.isolation.lock",
+    "docs/exos_dev1.stage_a_r2.prereg.lock",
+    "docs/exos_dev1.stage_a_r2.dev_decision.lock",
+    "docs/exos_dev1.stage_a_r2.audit.addendum.lock",
+    "runs/exos_dev1/stage_a_r2/exos_dev1_r2_scored_20260819/",
+    "runs/exos_dev1/stage_a_r2/r2_excluded_throughput_20260819/",
+    "runs/exos_dev1/stage_a_r2/r2_excluded_stress_20260819/"
+  ],
+  "blocked_program_paths": [
+    "docs/exos_dev1.stage_b.contract.md",
+    "docs/exos_dev1.stage_b.prereg.lock",
+    "experiments/dev1/search_r2.py"
+  ],
+  "forbidden_actions": [
+    "rerun_or_patch_frozen_R2_scored_run",
+    "rewrite_R2_dev_decision_or_prereg",
+    "implement_R3",
+    "unlock_stage_b_without_stage_a_confirmation_pass",
+    "change_scaffold_surfaces_from_R2",
+    "change_credit_family_definitions",
+    "reward_density_redesign_before_credit_lifecycle_preflight_passes",
+    "instrumentation_feedback_into_organism",
+    "candidate_or_product_changes"
+  ],
+  "must_prove_before_R2_1_preregistration": {
+    "credit_lifecycle": [
+      "eligibility_finite_and_nonzero_immediately_before_credit",
+      "rewarded_update_finite_and_nonzero",
+      "reward_off_produces_zero_persistent_update",
+      "positive_vs_negative_outcome_opposite_signed_projection",
+      "reset_clears_eligibility_only_after_credit"
+    ],
+    "family_dispatch": [
+      "three_families_produce_measurably_distinct_update_trajectories",
+      "plasticity_family_bound_and_asserted_per_candidate",
+      "family_name_and_implementation_hash_in_every_life_record"
+    ],
+    "scaffold_and_boundary": [
+      "genome_scaffold_motion_produces_phenotype_motion",
+      "no_expected_action_in_update_static_and_dynamic_proof",
+      "H_absent_when_stage_a_requires_it",
+      "boundedness_logged_as_constraint_not_learning_evidence"
+    ]
+  },
+  "notes": [
+    "R2.1 is an execution correction, not a new scientific hypothesis about scaffolds.",
+    "Preserve R2 scaffold surfaces; repair only credit lifecycle and family dispatch.",
+    "Do not alter exploration or consequence density until excluded-seed sample-efficiency audit after lifecycle repair."
+  ],
+  "written_utc": "2026-08-19T16:22:00Z"
+}

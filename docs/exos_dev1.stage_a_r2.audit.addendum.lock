@@ -1,0 +1,78 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R2.AUDIT.ADDENDUM.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R2",
+  "type": "immutable_interpretation_addendum",
+  "references": {
+    "dev_decision": "docs/exos_dev1.stage_a_r2.dev_decision.lock",
+    "prereg": "docs/exos_dev1.stage_a_r2.prereg.lock",
+    "implementation_commit": "cbf0fd0",
+    "prereg_commit": "22d2f69",
+    "decision_commit": "b38027c",
+    "run_id": "exos_dev1_r2_scored_20260819",
+    "search_summary": "runs/exos_dev1/stage_a_r2/exos_dev1_r2_scored_20260819/search_summary.json"
+  },
+  "preserve_historical_result": {
+    "aggregate_outcome": "scaffold_optimization_fail",
+    "operational_outcome_preserved": true,
+    "ledger_hashes_preserved": true,
+    "result_not_rewritten": true
+  },
+  "supersedes_interpretation_in_dev_decision": true,
+  "interpretation": "invalidated_experiment__credit_lifecycle_and_family_dispatch",
+  "architectural_conclusion": "none",
+  "continuous_scaffold_claims": "withdrawn",
+  "topology_scaffold_claims": "withdrawn",
+  "scored_partition": {
+    "status": "consumed",
+    "replay_forbidden": true,
+    "seeds": [
+      "exos_dev1_r2_scored_world_001",
+      "exos_dev1_r2_scored_world_002",
+      "exos_dev1_r2_scored_world_003",
+      "exos_dev1_r2_scored_world_004",
+      "exos_dev1_r2_scored_world_005",
+      "exos_dev1_r2_scored_world_006",
+      "exos_dev1_r2_conf_001",
+      "exos_dev1_r2_conf_002",
+      "exos_dev1_r2_conf_003",
+      "exos_dev1_r2_conf_004"
+    ]
+  },
+  "load_bearing_defects": [
+    {
+      "id": "credit_lifecycle_reset_before_plasticity",
+      "location": "experiments/dev1/search_r2.py _evaluate_r2_life",
+      "mechanism": "episode_reset() clears eligibility trace before rest() applies local plasticity",
+      "measured_effect": "W_motor delta norm 0.0 over training lives with runner order; nonzero only when rest precedes reset",
+      "consequence": "rewarded actor learning did not fire during scored training lives"
+    },
+    {
+      "id": "credit_family_not_dispatched",
+      "location": "experiments/dev1/search_r2.py run_stage_a_r2_search",
+      "mechanism": "all candidates evaluate DevGenome.default() without binding requested plasticity_family",
+      "measured_effect": "identical training curves across all three nominal credit families per optimizer arm",
+      "consequence": "three-family comparison never occurred"
+    }
+  ],
+  "boundedness_proxy_confirmation": {
+    "observation": "evolutionary_continuous arm improved fitness via P component drop (0.76 to 0.14) with zero treatment_accuracy change",
+    "conclusion": "optimizer found a boundedness proxy, not causal grounding or rewarded behavioral improvement"
+  },
+  "reward_density_note": {
+    "observed_stochastic_reward_rate": 0.03125,
+    "confounded": true,
+    "reason": "learning never fired; sample-efficiency audit deferred until credit lifecycle is repaired"
+  },
+  "scientific_scope_note": "R2 did not falsify developmental scaffolds. It exposed that the organism was never actually receiving the credit the search was supposed to optimize. Continuous and topology scaffold claims from R2 are withdrawn pending R2.1 execution with a repaired credit lifecycle and family dispatch.",
+  "next_authorized_revision": "R2.1",
+  "forbidden_next_steps": [
+    "R2_replay",
+    "R3_implementation",
+    "Stage_B",
+    "larger_coefficient_search",
+    "reward_density_redesign_before_credit_lifecycle_repair"
+  ],
+  "written_utc": "2026-08-19T16:20:00Z"
+}

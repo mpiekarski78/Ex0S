@@ -1,0 +1,185 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R2_1.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R2.1",
+  "type": "stage_contract_lock",
+  "status": "authorized_for_implementation",
+  "inherits_immutable_history": [
+    "docs/exos_dev1.stage_a_r2.contract.lock",
+    "docs/exos_dev1.stage_a_r2.isolation.lock",
+    "docs/exos_dev1.stage_a_r2.prereg.lock",
+    "docs/exos_dev1.stage_a_r2.dev_decision.lock",
+    "docs/exos_dev1.stage_a_r2.audit.addendum.lock",
+    "runs/exos_dev1/stage_a_r2/exos_dev1_r2_scored_20260819/"
+  ],
+  "historical_r2_status": "invalidated_experiment__credit_lifecycle_and_family_dispatch",
+  "lineage_stop_inherited": "invalidated_experiment__credit_lifecycle_and_family_dispatch",
+  "question": "When credit lifecycle and family dispatch are repaired, can the preserved R2 continuous and topology scaffold surfaces make local interaction-driven credit produce causal grounding?",
+  "scope_is_not": [
+    "R2_replay",
+    "R3_new_search_surface",
+    "Stage_B",
+    "reward_density_redesign_before_credit_lifecycle_proof",
+    "larger_coefficient_search",
+    "withdrawal_of_R2_scaffold_surfaces"
+  ],
+  "authorized_scope": [
+    "credit_lifecycle_correction_only",
+    "plasticity_family_bind_and_assert_per_candidate",
+    "life_record_family_and_implementation_hash",
+    "boundedness_as_feasibility_constraint_not_learning_evidence",
+    "preserved_continuous_scaffold_surface_from_R2",
+    "preserved_topology_scaffold_surface_from_R2",
+    "preserved_scaffold_sensitivity_preflight_from_R2",
+    "credit_lifecycle_excluded_seed_preflight",
+    "separate_R2_1_runner",
+    "fresh_discovery_validation_confirmation_seeds"
+  ],
+  "forbidden_scope": [
+    "rerun_or_patch_frozen_R2_scored_run",
+    "reuse_R2_scored_seed_partition",
+    "change_scaffold_parameterization_or_topology_motif_set",
+    "change_credit_rule_family_definitions",
+    "change_stage_b_lock_state_without_stage_a_confirmation_pass",
+    "change_memory_boundary",
+    "reward_density_or_exploration_redesign_before_sample_efficiency_audit",
+    "candidate_or_product_changes"
+  ],
+  "credit_lifecycle_contract": {
+    "required_order": [
+      "observe",
+      "act",
+      "consequence_or_reward_delivery",
+      "apply_eligible_plasticity",
+      "clear_or_reset_transient_state"
+    ],
+    "rest_ambiguity_rule": "rest() must not be the sole ambiguous owner of immediate reward credit; credit applies when the outcome arrives or through an explicit pre_reset credit operation",
+    "eligibility_rule": "eligibility must be finite and nonzero immediately before credit application on rewarded steps",
+    "reset_rule": "reset clears eligibility only after credit has been applied for the triggering interaction"
+  },
+  "plasticity_family_dispatch": {
+    "bind_per_candidate": true,
+    "assert_before_every_life": true,
+    "families": [
+      "reward_baseline_three_factor",
+      "action_contingent_actor_critic",
+      "consequence_prediction_credit"
+    ],
+    "must_produce_distinct_update_trajectories": true
+  },
+  "life_record_requirements": {
+    "required_fields_per_life": [
+      "plasticity_family_name",
+      "plasticity_implementation_hash",
+      "scaffold_hash",
+      "eligibility_norm_before_credit",
+      "rewarded_update_norm",
+      "reward_off_update_norm",
+      "signed_reward_projection"
+    ]
+  },
+  "fitness_and_boundedness": {
+    "R_A_M_T_components": "unchanged_from_R1_2",
+    "P_component_role": "feasibility_safety_constraint_or_bounded_penalty_only",
+    "P_must_not_be_positive_learning_evidence": true,
+    "optimizer_must_not_optimize_boundedness_proxy_without_rewarded_behavior_change": true
+  },
+  "scaffold_tracks": {
+    "inherited_from_R2_unchanged": true,
+    "continuous_scaffold": {
+      "search_surface": [
+        "initialization_scales",
+        "spectral_radii",
+        "connection_densities",
+        "E_I_balance",
+        "motor_basis_geometry",
+        "homeostasis",
+        "normalization",
+        "plasticity_masks_and_gains"
+      ],
+      "optimizers": ["meta_gradient", "evolution"]
+    },
+    "topology_scaffold": {
+      "search_surface": ["discrete_connectivity_motifs", "connectivity_masks", "module_routing"],
+      "optimizers": ["evolution"],
+      "motifs": ["dense", "block", "banded"]
+    }
+  },
+  "mandatory_excluded_seed_preflight_before_preregistration": {
+    "checks": [
+      {
+        "name": "eligibility_before_credit",
+        "required_result": "finite_and_nonzero_on_rewarded_step"
+      },
+      {
+        "name": "rewarded_update",
+        "required_result": "finite_and_nonzero"
+      },
+      {
+        "name": "reward_off",
+        "required_result": "zero_persistent_update"
+      },
+      {
+        "name": "positive_vs_negative_outcome",
+        "required_result": "opposite_signed_projection"
+      },
+      {
+        "name": "reset_timing",
+        "required_result": "clears_eligibility_only_after_credit"
+      },
+      {
+        "name": "three_families",
+        "required_result": "measurably_distinct_update_trajectories"
+      },
+      {
+        "name": "genome_scaffold_motion",
+        "required_result": "produces_phenotype_motion"
+      },
+      {
+        "name": "no_expected_action_in_update",
+        "required_result": "static_and_dynamic_proof"
+      }
+    ],
+    "terminal_code_on_failure": "credit_lifecycle_preflight_fail",
+    "must_complete_before_preregistration": true
+  },
+  "post_preflight_sample_efficiency_rule": {
+    "only_after_credit_lifecycle_preflight_passes": true,
+    "action": "excluded_seed_sample_efficiency_curve_on_existing_interaction_protocol",
+    "alter_exploration_or_consequence_density_only_if": "rewarded_learning_remains_flat_after_lifecycle_repair"
+  },
+  "seed_partition_rule": {
+    "fresh_discovery_seeds": true,
+    "fresh_validation_seeds": true,
+    "fresh_confirmation_seeds": true,
+    "R2_scored_partition_forbidden": true,
+    "excluded_seed_benchmark_partitions_forbidden_for_scored_run": true
+  },
+  "decision_ladder": [
+    "credit_lifecycle_preflight_fail",
+    "scaffold_sensitivity_fail",
+    "scaffold_numerical_fail",
+    "outer_optimization_not_exercised",
+    "scaffold_optimization_fail",
+    "sensorimotor_overfit",
+    "credit_not_causal",
+    "stage_a_confirmation_fail",
+    "stage_a_confirmation_pass"
+  ],
+  "stage_b_unlock_rule": {
+    "only_terminal_unlock_code": "stage_a_confirmation_pass",
+    "stage_b_remains_locked": true
+  },
+  "execution_order": [
+    "R2_audit_addendum_commit",
+    "R2_1_contract_and_isolation_lock_only_commit",
+    "implement_credit_lifecycle_and_family_dispatch_in_separate_runner",
+    "implement_credit_lifecycle_excluded_seed_preflight_and_life_records",
+    "full_tests_and_excluded_seed_preflight_proofs",
+    "freeze_R2_1_preregistration_with_fresh_partitions",
+    "commit_and_push_R2_1_prereg_from_clean_tree",
+    "execute_once"
+  ],
+  "written_utc": "2026-08-19T16:22:00Z"
+}
