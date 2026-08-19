@@ -1,0 +1,173 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R1_1.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R1.1",
+  "type": "stage_contract_lock",
+  "status": "authorized_for_implementation",
+  "inherits_immutable_history": [
+    "docs/exos_dev1.stage_a_r1.contract.lock",
+    "docs/exos_dev1.stage_a_r1.prereg.lock",
+    "docs/exos_dev1.stage_a_r1.addendum.lock",
+    "runs/exos_dev1/stage_a_r1/search_summary.json"
+  ],
+  "historical_r1_status": "immutable_preserved",
+  "question": "Can a newborn cortex learn four opaque motor roles across renamed symbols and unseen contexts when its inherited local credit rule is optimized by a graded between-life controller that does not terminate on pre-causal candidates?",
+  "current_branch": "research/exos_dev1",
+  "product": "0.0.004",
+  "candidate_policy": "no_v41_before_stage_d_confirmation_and_review",
+  "product_policy": "no_product_change_before_explicit_earn_decision",
+  "lineage_stop_inherited": "invalidated_search__promotion_gate_terminated_optimization",
+  "historical_signal_audit": {
+    "current_life_score_definition": "correct_actions / total_actions",
+    "current_life_total_actions": 1024,
+    "repeated_value_explained": "0.0009765625 == 1 / 1024 == one correct action in a 32 episode x 32 step newborn life",
+    "controller_problem": "the present score is too quantized and flat to serve as the only graded outer-learning signal for early search"
+  },
+  "authorized_scope": [
+    "controller_correction_for_stage_a_r1_1_only",
+    "graded_training_fitness_from_organism_experience",
+    "genuine_reward_based_meta_gradient_outer_optimizer",
+    "evolutionary_outer_optimizer",
+    "rotating_validation",
+    "one_untouched_confirmation_tranche"
+  ],
+  "forbidden_scope": [
+    "H_writes",
+    "H_reads",
+    "Stage_B_execution_or_machinery_participation",
+    "repeated_factorial",
+    "candidate_or_product_changes",
+    "expected_actions_or_fixture_answers_in_outer_objective",
+    "teacher_action_cross_entropy_meta_objective",
+    "runner_generated_neural_targets",
+    "v41_or_live_pointer_changes",
+    "editing_historical_R1_result_or_addendum"
+  ],
+  "credit_rule_families": [
+    "reward_baseline_three_factor",
+    "action_contingent_actor_critic",
+    "consequence_prediction_credit"
+  ],
+  "outer_optimizers": {
+    "arms": [
+      "reward_based_meta_gradient",
+      "evolutionary"
+    ],
+    "shared_genome_surface": true,
+    "optimizer_metadata_in_genome": false,
+    "credit_family_identity_in_genome": false,
+    "reward_based_meta_gradient_boundary": {
+      "outer_objective_type": "policy_gradient_score_function",
+      "allowed_signals": [
+        "chosen_motor_log_probability_or_equivalent_score_function_term",
+        "realized_scalar_reward",
+        "normalized_life_fitness",
+        "organism_owned_confidence_or_top1_minus_top2_margin"
+      ],
+      "forbidden_signals": [
+        "expected_action_identity",
+        "fixture_answer_handle",
+        "teacher_action_cross_entropy_target",
+        "validation_or_confirmation_world_feedback"
+      ],
+      "hard_action_evaluation": "canonical",
+      "soft_action_surrogate": false,
+      "updates_apply_to": "inherited_G_only_after_completed_training_lives",
+      "discard_after_life": [
+        "W",
+        "H",
+        "rho",
+        "eligibility_state"
+      ]
+    },
+    "evolutionary_boundary": {
+      "selection_signal": "normalized_life_fitness",
+      "mutation_target": "inherited_G_only_between_lives",
+      "validation_and_confirmation_updates": "none"
+    }
+  },
+  "training_fitness": {
+    "type": "graded_normalized_experience_only",
+    "uses_fixture_answer_identity": false,
+    "uses_validation_worlds": false,
+    "components": [
+      {
+        "name": "normalized_cumulative_reward",
+        "weight": 0.5,
+        "definition": "mean_t ((r_t - r_min) / (r_max - r_min)) over all realized rewards in the life"
+      },
+      {
+        "name": "acquisition_improvement",
+        "weight": 0.2,
+        "definition": "clip(mean_normalized_reward_last_quarter - mean_normalized_reward_first_quarter, 0, 1)"
+      },
+      {
+        "name": "chosen_action_margin_improvement",
+        "weight": 0.15,
+        "definition": "clip(mean_confidence_last_quarter - mean_confidence_first_quarter, 0, 1); if confidence is unavailable or degenerate, use mean(top1_softmax_minus_top2_softmax)"
+      },
+      {
+        "name": "retention",
+        "weight": 0.1,
+        "definition": "mean_normalized_reward_final_quarter"
+      },
+      {
+        "name": "boundedness",
+        "weight": 0.05,
+        "definition": "1.0 when weights, activations, and eligibility remain finite and under preregistered stability bounds; otherwise smoothly decays toward 0.0"
+      }
+    ],
+    "notes": [
+      "All terms derive from organism experience or organism-owned outputs only.",
+      "Training fitness is graded even when causal validity is not yet achieved.",
+      "The repeated 1/1024 correctness value is retained as a diagnostic metric only, not the sole outer-learning signal."
+    ]
+  },
+  "search_controller_rules": {
+    "structural_preflight_is_only_early_hard_kill": true,
+    "noncausal_candidates_continue_optimization": true,
+    "causal_validity_controls_validation_promotion_only": true,
+    "empty_validation_beam_does_not_stop_training_population": true,
+    "optimizer_runs_until": [
+      "frozen_budget",
+      "convergence_rule",
+      "numerical_failure"
+    ],
+    "validation_produces_no_optimizer_updates": true,
+    "confirmation_remains_untouched": true
+  },
+  "decision_ladder": [
+    "credit_preflight_fail",
+    "outer_optimization_not_exercised",
+    "invalidated_search__promotion_gate_terminated_optimization",
+    "local_rule_optimization_fail",
+    "sensorimotor_overfit",
+    "credit_not_causal",
+    "stage_a_confirmation_fail",
+    "stage_a_confirmation_pass"
+  ],
+  "promotion_flags": [
+    "validation_pass"
+  ],
+  "closure_rule": {
+    "r1_1_execution_closes_when": [
+      "frozen_budget_exhausted",
+      "single_confirmation_result_recorded"
+    ],
+    "only_stage_a_unlock_code": "stage_a_confirmation_pass"
+  },
+  "selection_rule": {
+    "training_population_ranker": "normalized_life_fitness",
+    "validation_population_gate": "causal_validity",
+    "validation_ranker": "validation_reliability",
+    "final_tiebreaker": "complexity"
+  },
+  "confirmation_rule": {
+    "single_untouched_tranche": true,
+    "failed_confirmation_consumes_worlds": true,
+    "resumed_discovery_may_not_reuse_confirmation_cells": true,
+    "future_candidates_need_fresh_confirmation_worlds": true
+  },
+  "written_utc": "2026-08-19T11:35:00Z"
+}

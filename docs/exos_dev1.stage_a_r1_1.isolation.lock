@@ -1,0 +1,97 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R1_1.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R1.1",
+  "type": "stage_isolation_lock",
+  "status": "active",
+  "lineage_stop_inherited": "invalidated_search__promotion_gate_terminated_optimization",
+  "authorized_filespaces": [
+    "docs/exos_dev1.stage_a_r1_1.contract.lock",
+    "docs/exos_dev1.stage_a_r1_1.isolation.lock",
+    "docs/exos_dev1.stage_a_r1_1.prereg.lock",
+    "three_memory/dev1/",
+    "experiments/dev1/",
+    "tests/dev1/",
+    "runs/exos_dev1/stage_a_r1_1/"
+  ],
+  "historical_filespaces_immutable": [
+    "docs/exos_dev1.stage_a_r1.contract.lock",
+    "docs/exos_dev1.stage_a_r1.prereg.lock",
+    "docs/exos_dev1.stage_a_r1.addendum.lock",
+    "runs/exos_dev1/stage_a_r1/"
+  ],
+  "blocked_program_paths": [
+    "docs/exos_dev1.stage_b.contract.md",
+    "docs/exos_dev1.stage_b.prereg.lock",
+    "docs/exos_dev1.redirect.lock",
+    "docs/cortex.candidate.lock",
+    "three_memory/neural_cortex.py"
+  ],
+  "forbidden_actions": [
+    "edit_historical_R1_result_or_addendum",
+    "enable_H_write",
+    "enable_H_read",
+    "route_H_reinstatement_into_cortex",
+    "execute_or_prepare_Stage_B",
+    "rerun_scale_factorial",
+    "patch_frozen_monolith",
+    "change_product_version",
+    "change_live_pointer",
+    "inject_expected_action_identity_into_any_weight_update_or_outer_objective",
+    "teacher_action_cross_entropy_meta_objective",
+    "runner_generated_neural_targets",
+    "runner_selected_retrieval_addresses",
+    "terminate_training_because_validation_beam_is_empty"
+  ],
+  "must_prove_during_R1_1": {
+    "H_absent": [
+      "H_begins_empty",
+      "H_write_counter_remains_zero",
+      "H_read_counter_remains_zero",
+      "H_state_hash_unchanged",
+      "no_H_reinstatement_enters_cortex",
+      "same_true_across_checkpoint_and_reset"
+    ],
+    "credit_preflight": [
+      "sensory_states_differ_across_cues",
+      "motor_efference_states_differ_across_four_channels",
+      "positive_and_negative_outcomes_produce_distinguishable_correctly_directed_action_credit_modulation",
+      "eligibility_nonzero_when_outcome_arrives",
+      "rewarded_interaction_causes_finite_nontrivial_delta_W_actor",
+      "reward_off_causes_no_persistent_reward_gated_actor_update",
+      "permuted_feedback_follows_observed_motor_not_fixture_answer",
+      "activity_and_weights_remain_finite_and_noncollapsed"
+    ],
+    "graded_training_fitness": [
+      "uses_realized_reward_only",
+      "uses_organism_owned_confidence_or_margin_only",
+      "remains_defined_for_precausal_candidates",
+      "is_not_flat_at_1_over_1024_resolution"
+    ]
+  },
+  "search_execution_constraints": {
+    "cheap_training_screen_may_rank_by_graded_fitness": true,
+    "rotating_validation_required": true,
+    "both_optimizers_share_same_genome_surface": true,
+    "validation_worlds_never_used_for_outer_updates": true,
+    "confirmation_worlds_untouched_until_frozen_candidate": true,
+    "empty_validation_beam_does_not_stop_training_population": true,
+    "previous_stage_a_worlds_forbidden": [
+      "dev1_stage_a_world_001",
+      "dev1_stage_a_world_002",
+      "dev1_stage_a_world_003",
+      "dev1_stage_a_world_004",
+      "dev1_stage_a_world_005",
+      "dev1_stage_a_world_006",
+      "dev1_stage_a_world_007",
+      "dev1_stage_a_world_008"
+    ]
+  },
+  "notes": [
+    "Reward-based meta-gradient means score-function or policy-gradient outer learning only; no teacher-action cross-entropy target is permitted.",
+    "The historical R1 outcome remains preserved and may be cited, but not edited.",
+    "CPU/GPU semantic agreement remains a correctness test; throughput measurement remains separate and unscored."
+  ],
+  "written_utc": "2026-08-19T11:36:00Z"
+}
