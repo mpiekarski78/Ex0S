@@ -1,23 +1,23 @@
 {
   "version": "EX0S-DEV1.REDIRECT.LOCK",
   "program": "EX0S-DEV1",
-  "written_after": ["stage_a_search", "factorial_M0_M2_C0_C2"],
-  "note": "This record is immutable once written. It records the causal interpretation of the factorial results and specifies the redirect direction.",
+  "written_after": ["stage_a_search_generation_0", "factorial_M0_M2_C0_C2"],
+  "note": "This record is immutable once written. It records the causal interpretation of the executable factorial results and the bookkeeping correction that the prior Stage A run did not exercise the intended outer-loop search.",
 
   "factorial_results": {
     "M0": {
       "architecture": "monolith_frozen",
       "n": 64,
       "score": 0.0,
-      "causal_valid": true,
+      "causal_valid": false,
       "not_executable": false,
-      "note": "NeuralCortex n=64 is the only executable monolith arm"
+      "note": "NeuralCortex n=64 is the only executable monolith arm; this executable arm also failed Stage A grounding"
     },
     "M1": {
       "architecture": "monolith_frozen",
       "n": 256,
-      "score": 0.0,
-      "causal_valid": false,
+      "score": null,
+      "causal_valid": null,
       "not_executable": true,
       "not_executable_reason": "NeuralCortex cannot be instantiated at n=256 without source edits",
       "status": "not_executable_under_frozen_control"
@@ -25,8 +25,8 @@
     "M2": {
       "architecture": "monolith_frozen",
       "n": 1024,
-      "score": 0.0,
-      "causal_valid": false,
+      "score": null,
+      "causal_valid": null,
       "not_executable": true,
       "not_executable_reason": "NeuralCortex cannot be instantiated at n=1024 without source edits",
       "status": "not_executable_under_frozen_control"
@@ -57,14 +57,31 @@
     }
   },
 
-  "pattern": "all_arms_fail_stage_a",
-  "causal_interpretation": "All sizes and plasticity families fail at grounding. This is not a memory failure — the sensorimotor feedback and local plasticity interface is the bottleneck. Increasing capacity does not help when the learning signal itself is near-zero.",
+  "pattern": "all_executable_arms_fail_stage_a",
+  "factorial_scope_correction": {
+    "modular_scale_effect": "not observed across C0-C2",
+    "monolithic_scale_effect": "unknown",
+    "m1_m2_status": "untested_under_frozen_control"
+  },
+  "causal_interpretation": "Among executable arms, Stage A grounding failed. The modular size increase from C0 to C2 did not overcome the present learning-signal problem. This does not close the monolithic scale-only hypothesis because M1 and M2 were not executable under frozen control. It also does not close meta-learned or evolved credit families, because the prior Stage A run did not perform outer-loop optimization.",
 
-  "redirect": "redesign_sensorimotor_reward_interface_and_local_plasticity",
+  "redirect": "revisit_sensorimotor_credit_assignment",
   "redirect_details": {
-    "primary_fix": "Strengthen the neuromodulatory reward prediction error signal. Current sigmoid-gated output produces near-zero modulation (~0.5 with random init). Required: a clearly signed RPE (reward - baseline) that produces non-negligible updates.",
-    "secondary_fix": "Apply local plasticity per-step (not per-episode-end) so weight updates track the reward signal in the correct temporal window.",
-    "tertiary": "Consider more expressive sensory encoder (learnable projection with initialization that produces non-degenerate activations) rather than random fixed-init encoder."
+    "status": "recommended next work remains inside Stage A",
+    "preflight_required": [
+      "sensory states differ",
+      "motor/efference states differ",
+      "positive and negative outcomes produce opposite credit signs",
+      "eligibility remains nonzero when outcome arrives",
+      "a rewarded demonstration produces measurable delta-W",
+      "no task answer enters the update"
+    ],
+    "credit_families_to_search": [
+      "signed reward minus learned baseline",
+      "action-contingent reward prediction error with eligibility",
+      "sensory-consequence prediction error gated by reward"
+    ],
+    "outer_loop_requirement": "resume with a real outer-loop search budget for meta_learned and evolved families rather than only random or minimally sampled instantiation"
   },
 
   "what_this_is_not": [
@@ -79,10 +96,10 @@
   "stage_b_unlock_status": "locked — Stage A must pass untouched confirmation first",
 
   "next_research_loop": {
-    "target": "Stage A re-search after sensorimotor interface redesign",
+    "target": "Stage A R1 preflight plus integrated credit-assignment search",
     "preregistration_required": true,
-    "worlds_to_use": "fresh, previously untouched world seeds — not dev1_stage_a_world_001-008",
-    "note": "Failed Stage A worlds (001-008 and conf_001-004) are permanently consumed and must not be reused as training data."
+    "worlds_to_use": "fresh, previously untouched Stage A R1 world seeds — not dev1_stage_a_world_001-008",
+    "note": "The executed generation consumed dev1_stage_a_world_001-008. No confirmation tranche ran. Stage A remains open; the next run should freeze exos_dev1.stage_a_r1.prereg.lock and execute real preflight plus outer-loop-integrated search."
   },
 
   "timestamp_utc": "2026-08-19T12:30:00Z"

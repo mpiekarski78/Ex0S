@@ -27,9 +27,15 @@ Search axes (staged conditional, not Cartesian):
 Beam: retain top BEAM_SIZE causally valid candidates after each axis.
 Interaction matrix: bounded cross-product of top beam after axes 1-3.
 
-Research optimizer is active from Stage A (not locked until Stage D).
-It updates only inherited G between lives; validation and confirmation
-lives never contribute gradients.
+Planned design: a research optimizer should be active from Stage A
+(not locked until Stage D), updating only inherited G between lives
+while validation and confirmation lives never contribute gradients.
+
+Current implementation status:
+- axis instantiation search is implemented
+- outer-loop meta-learning / evolutionary optimization is NOT yet implemented
+- therefore failures in `meta_learned` and `evolved` here are not
+  evidence against those families as optimized methods
 """
 
 from __future__ import annotations

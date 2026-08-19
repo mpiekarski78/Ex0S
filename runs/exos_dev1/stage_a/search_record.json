@@ -1,0 +1,72 @@
+{
+  "stage": "A",
+  "outcome": "stage_a_search_not_exercised",
+  "causal_bottleneck": "stage_a_search_not_exercised",
+  "causal_label_in_ladder": 1,
+  "decision_ladder_position": "setup_precondition_fail_or_stage_a_search_not_exercised (outer-loop optimizer absent)",
+  "search_budget_exhausted": false,
+  "worlds_consumed": [
+    "dev1_stage_a_world_001", "dev1_stage_a_world_002",
+    "dev1_stage_a_world_003", "dev1_stage_a_world_004",
+    "dev1_stage_a_world_005", "dev1_stage_a_world_006",
+    "dev1_stage_a_world_007", "dev1_stage_a_world_008"
+  ],
+  "variants_searched": {
+    "axis_1_plasticity": ["three_factor", "meta_learned", "evolved"],
+    "axis_2_fast_memory": ["competitive_hebbian", "factorized"],
+    "axis_3_consolidation": ["replay", "online_slow", "hybrid"]
+  },
+  "execution_accounting": {
+    "candidate_config_count": 18,
+    "complete_newborn_training_lives": 84,
+    "outer_loop_generations": 0,
+    "outer_loop_meta_updates": 0,
+    "outer_loop_evolutionary_updates": 0,
+    "rotating_validation_lives_executed": 0,
+    "confirmation_lives_executed": 0,
+    "promotion_and_elimination": {
+      "axis_1_plasticity": {
+        "evaluated_configs": 3,
+        "retained": 3,
+        "eliminated": 0
+      },
+      "axis_2_fast_memory": {
+        "evaluated_configs": 6,
+        "retained": 3,
+        "eliminated": 3
+      },
+      "axis_3_consolidation": {
+        "evaluated_configs": 9,
+        "retained": 3,
+        "eliminated": 6
+      },
+      "bounded_interaction_matrix": {
+        "retained_candidates_entering": 3,
+        "interaction_lives": 12,
+        "candidates_promoted_to_confirmation": 0
+      }
+    },
+    "best_training_trajectory": {
+      "best_discovery_score": 0.0,
+      "best_validation_score": 0.0,
+      "best_candidate_family_path": [
+        "evolved",
+        "competitive_hebbian",
+        "replay"
+      ]
+    }
+  },
+  "diagnosis": {
+    "status": "outer_loop_optimizer_not_exercised",
+    "eligibility_trace_scale": "small (debugged norm ~0.07 at end of episode)",
+    "neuromodulatory_gate": "near_zero with random initialization (sigmoid output ≈ 0.5)",
+    "effective_dW_per_episode": "~1e-5 in baseline debugging",
+    "root_cause": "The executed run instantiated three_factor, meta_learned, and evolved families inside the same local search loop, but performed no meta-learning updates and no evolutionary generations across many training lives. This is a baseline apparatus-generation result, not a completed exercise of the meta-learning or evolutionary families."
+  },
+  "redirect_rule_applied": "If the previous run did not actually perform meta/evolutionary optimization, correct the decision to stage_a_search_not_exercised and resume the frozen budget.",
+  "redirect": "revisit_sensorimotor_credit_assignment",
+  "next_action": "Stay inside Stage A. Freeze exos_dev1.stage_a_r1.prereg.lock with a preflight followed by integrated search: verify sensory and motor states differ, opposite outcomes produce opposite credit signs, eligibility remains nonzero when outcome arrives, rewarded demonstration produces measurable delta-W, and no task answer enters the update. Then search generic credit families under a real outer-loop budget.",
+  "confirmation_ran": false,
+  "note": "Stage B remains locked until Stage A passes untouched confirmation. This corrected search record supersedes the earlier grounding-fail interpretation for this specific run because the intended outer-loop search machinery was not exercised.",
+  "timestamp_utc": "2026-08-19T12:15:00Z"
+}
