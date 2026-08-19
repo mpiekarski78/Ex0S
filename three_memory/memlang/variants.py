@@ -264,6 +264,28 @@ def variants_for(family: str, *, max_n: int = 25) -> list[dict[str, Any]]:
                     }
                 )
                 i += 1
+    elif family == "motor_cluster":
+        i = 0
+        for spawn in (0.2, 0.4, 0.6, 0.8, 0.9):
+            for mix in (0.35, 0.5, 0.65, 0.8, 0.92):
+                out.append(
+                    {
+                        "family": family,
+                        "name": f"mcl_{i:02d}",
+                        "eta": 0.25,
+                        "mix": float(mix),
+                        "spawn": float(spawn),
+                        "max_k": 8,
+                        "seed": 18000 + i,
+                    }
+                )
+                i += 1
+    elif family == "whitening":
+        i = 0
+        for eps in (1e-4, 1e-3, 1e-2, 0.05, 0.1):
+            for eta in etas:
+                out.append({"family": family, "name": f"zca_{i:02d}", "eta": float(eta), "eps": float(eps), "seed": 19000 + i})
+                i += 1
     else:
         raise RuntimeError(family)
     return out[: int(max_n)]

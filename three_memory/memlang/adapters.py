@@ -726,6 +726,94 @@ class SepClusterAdapter(ValueAdapter):
         }
 
 
+class MotorClusterAdapter(ValueAdapter):
+    """Cluster by observed motor vectors, which remain separated when duals collapse."""
+
+    family = "motor_cluster"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "motor_cluster")
+        self.eta = float(self.cfg.get("eta") or 0.2)
+        self.mix = float(self.cfg.get("mix") or 0.5)
+        self.spawn = float(self.cfg.get("spawn") or 0.5)
+        self.max_k = int(self.cfg.get("max_k") or 8)
+        self.motors: list[np.ndarray] = []
+        self.rhos: list[np.ndarray] = []
+        self.last_j = -1
+
+    def _assign_motor(self, motor: np.ndarray) -> int:
+        m = unit(motor)
+        if not self.motors:
+            self.motors.append(m.copy())
+            return 0
+        sims = np.array([float(np.dot(p, m)) for p in self.motors], dtype=np.float64)
+        j = int(np.argmax(sims))
+        if float(sims[j]) < self.spawn and len(self.motors) < self.max_k:
+            self.motors.append(m.copy())
+            return len(self.motors) - 1
+        return j
+
+    def update(self, rho_post: np.ndarray, adv: float) -> None:
+        x = unit(rho_post)
+        gated = _gated(adv)
+        if gated <= PROTO_EPS:
+            return
+        if self.last_motor is None or int(self.last_motor.size) == 0:
+            return
+        j = self._assign_motor(self.last_motor)
+        self.last_j = j
+        while len(self.rhos) < len(self.motors):
+            self.rhos.append(x.copy())
+        mix = min(1.0, self.eta * gated)
+        self.rhos[j] = unit((1.0 - mix) * self.rhos[j] + mix * x)
+        self.motors[j] = unit((1.0 - 0.2) * self.motors[j] + 0.2 * unit(self.last_motor))
+
+    def value(self, rho_post: np.ndarray) -> np.ndarray:
+        if self.last_target is None or self.last_motor is None:
+            return self.scramble_rho(rho_post)
+        if not self.rhos:
+            return unit(rho_post)
+        j = self.last_j if 0 <= self.last_j < len(self.rhos) else 0
+        return self.compose_value(self.rhos[j], rho_post, self.mix)
+
+    def geometry(self) -> dict[str, Any]:
+        return {"family": self.family, "name": self.name, "eta": self.eta, "mix": self.mix, "n_protos": len(self.rhos)}
+
+
+class WhiteningAdapter(ValueAdapter):
+    """Online ZCA whitening of rho so a linear decoder sees stationary second-order stats."""
+
+    family = "whitening"
+
+    def __init__(self, n: int, cfg: dict[str, Any] | None = None) -> None:
+        super().__init__(n, cfg)
+        self.name = str(self.cfg.get("name") or "whitening")
+        self.eta = float(self.cfg.get("eta") or 0.05)
+        self.eps = float(self.cfg.get("eps") or 1e-3)
+        self.cov = np.eye(self.n, dtype=np.float64)
+
+    def update(self, rho_post: np.ndarray, adv: float) -> None:
+        x = unit(rho_post)
+        gated = _gated(adv)
+        if gated <= PROTO_EPS:
+            return
+        self.cov = (1.0 - self.eta * gated) * self.cov + (self.eta * gated) * np.outer(x, x)
+
+    def value(self, rho_post: np.ndarray) -> np.ndarray:
+        if self.last_target is None:
+            return self.scramble_rho(rho_post)
+        x = unit(rho_post)
+        w, v = np.linalg.eigh(0.5 * (self.cov + self.cov.T) + self.eps * np.eye(self.n))
+        w = np.clip(w, self.eps, None)
+        zca = (v * (w ** -0.5)) @ v.T
+        return unit(zca @ x)
+
+    def geometry(self) -> dict[str, Any]:
+        s = np.linalg.svd(self.cov, compute_uv=False)
+        return {"family": self.family, "name": self.name, "eta": self.eta, "rank": int((s > 1e-8).sum())}
+
+
 class StickySepAdapter(SepClusterAdapter):
     """Sticky dual-index rho means, no repulsion, spawn high enough for four motors."""
 
@@ -759,6 +847,8 @@ FAMILIES = {
     "kmeans_rho": KMeansRhoAdapter,
     "sep_cluster": SepClusterAdapter,
     "sticky_sep": StickySepAdapter,
+    "motor_cluster": MotorClusterAdapter,
+    "whitening": WhiteningAdapter,
 }
 
 

@@ -37,6 +37,8 @@ NEW_FAMILIES = [
     "kmeans_rho",
     "sep_cluster",
     "sticky_sep",
+    "motor_cluster",
+    "whitening",
 ]
 
 
