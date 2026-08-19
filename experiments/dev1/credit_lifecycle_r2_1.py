@@ -15,6 +15,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import torch
+import torch.nn.functional as F
 
 from experiments.dev1.scaffold_r2 import (
     ContinuousScaffoldPhenotype,
@@ -76,6 +77,144 @@ def bind_genome_for_family(family: str, seed: int | None = None) -> DevGenome:
     bound = org.plasticity_rule.name()
     assert bound == family, f"family dispatch failed: {bound} != {family}"
     return genome
+
+
+def _target_channel_preference_from_state(
+    org: ModularOrganism,
+    target_channel: int,
+    *,
+    apply_motor_bias: bool = False,
+) -> tuple[float, float, float]:
+    """Softmax probability, signed margin, and raw logit for a fixed motor channel."""
+    _, motor_logits = org.action_ctx(org.rho.relational_repr, org.rho.action_repr)
+    if apply_motor_bias and hasattr(org, "_r2_motor_channel_bias"):
+        motor_logits = motor_logits + org._r2_motor_channel_bias
+    logit = float(motor_logits[target_channel].item())
+    scores = F.softmax(motor_logits, dim=-1)
+    prob = float(scores[target_channel].item())
+    top2 = scores.topk(min(2, scores.numel())).values
+    top1 = float(top2[0].item())
+    second = float(top2[-1].item())
+    if int(scores.argmax().item()) == target_channel:
+        margin = top1 - second
+    else:
+        margin = prob - top1
+    return prob, margin, logit
+
+
+def _pin_action_channel(org: ModularOrganism, target_channel: int) -> None:
+    """Keep hard policy on one motor channel for repeated cue/action grounding."""
+    bias = torch.zeros(org.genome.n_motor_channels, device=org.device)
+    bias[target_channel] = 2.0
+    org._r2_motor_channel_bias = bias
+
+
+def _preference_trajectory_for_reward(
+    family: str,
+    event,
+    reward: float,
+    n_repeats: int = 40,
+) -> dict[str, list[float] | int]:
+    """
+    Exact R2.1 lifecycle: repeated cue/action pairs with outcome credit.
+    Tracks the first chosen channel's probability, margin, and raw logit.
+    """
+    continuous = ContinuousScaffoldPhenotype(plasticity_mask_gain=12.0)
+    org = _birth_with_scaffold(family, continuous, TopologyScaffoldPhenotype())
+    sensory = event.sensory_vector
+    org.observe(OrganismObservation(sensory_vector=sensory, reward=0.0))
+    action = org.act(policy_mode="hard")
+    target = action.motor_channel
+    _pin_action_channel(org, target)
+    probs: list[float] = []
+    margins: list[float] = []
+    logits: list[float] = []
+    p0, m0, l0 = _target_channel_preference_from_state(org, target)
+    probs.append(p0)
+    margins.append(m0)
+    logits.append(l0)
+    for _ in range(n_repeats):
+        org.observe(OrganismObservation(sensory_vector=sensory, reward=reward))
+        org.apply_outcome_credit()
+        org.episode_reset()
+        org.rest()
+        org.observe(OrganismObservation(sensory_vector=sensory, reward=0.0))
+        org.act(policy_mode="hard")
+        p, m, l = _target_channel_preference_from_state(org, target)
+        probs.append(p)
+        margins.append(m)
+        logits.append(l)
+    return {
+        "target_channel": target,
+        "probabilities": probs,
+        "margins": margins,
+        "logits": logits,
+    }
+
+
+@dataclass
+class BehavioralMicroGroundingResult:
+    passed: bool
+    checks: dict[str, bool]
+    metrics: dict[str, float | dict]
+
+
+def run_behavioral_micro_grounding(
+    seed: str = "r2_1_micro_grounding",
+    family: str = "reward_baseline_three_factor",
+    n_repeats: int = 40,
+) -> BehavioralMicroGroundingResult:
+    """
+    Behavioral sanity: repeated signed consequences move the chosen action's
+    margin/probability in the expected direction; reward-off leaves them stable.
+    Uses the public R2.1 observe→act→consequence→credit lifecycle.
+    """
+    world = _make_world(seed)
+    event = world.generate_episode()[0]
+    pos = _preference_trajectory_for_reward(family, event, reward=1.0, n_repeats=n_repeats)
+    neg = _preference_trajectory_for_reward(family, event, reward=-1.0, n_repeats=n_repeats)
+    off = _preference_trajectory_for_reward(family, event, reward=0.0, n_repeats=n_repeats)
+
+    pos_prob_delta = float(pos["probabilities"][-1]) - float(pos["probabilities"][0])
+    pos_margin_delta = float(pos["margins"][-1]) - float(pos["margins"][0])
+    pos_logit_delta = float(pos["logits"][-1]) - float(pos["logits"][0])
+    neg_prob_delta = float(neg["probabilities"][-1]) - float(neg["probabilities"][0])
+    neg_margin_delta = float(neg["margins"][-1]) - float(neg["margins"][0])
+    neg_logit_delta = float(neg["logits"][-1]) - float(neg["logits"][0])
+    off_prob_span = max(abs(float(off["probabilities"][-1]) - float(off["probabilities"][0])), 0.0)
+    off_margin_span = max(abs(float(off["margins"][-1]) - float(off["margins"][0])), 0.0)
+    off_logit_span = max(abs(float(off["logits"][-1]) - float(off["logits"][0])), 0.0)
+
+    checks = {
+        "positive_increases_preference": bool(
+            pos_logit_delta > 1e-6 or pos_prob_delta > 1e-6 or pos_margin_delta > 1e-6
+        ),
+        "negative_decreases_preference": bool(
+            neg_logit_delta < -1e-6 or neg_prob_delta < -1e-6 or neg_margin_delta < -1e-6
+        ),
+        "reward_off_stable": bool(
+            off_prob_span < 1e-5 and off_margin_span < 1e-5 and off_logit_span < 1e-5
+        ),
+    }
+    passed = all(checks.values())
+    return BehavioralMicroGroundingResult(
+        passed=passed,
+        checks=checks,
+        metrics={
+            "positive_prob_delta": pos_prob_delta,
+            "positive_margin_delta": pos_margin_delta,
+            "positive_logit_delta": pos_logit_delta,
+            "negative_prob_delta": neg_prob_delta,
+            "negative_margin_delta": neg_margin_delta,
+            "negative_logit_delta": neg_logit_delta,
+            "reward_off_prob_span": off_prob_span,
+            "reward_off_margin_span": off_margin_span,
+            "reward_off_logit_span": off_logit_span,
+            "positive_trajectory": pos,
+            "negative_trajectory": neg,
+            "reward_off_trajectory": off,
+        },
+    )
 
 
 def run_r2_1_interaction_step(
@@ -176,7 +315,10 @@ def run_credit_lifecycle_preflight(
 
     scaffold = run_scaffold_sensitivity_preflight(bind_genome_for_family(family), family)
 
+    micro = run_behavioral_micro_grounding(seed=seed, family=family)
+
     checks = {
+        "credit_applied_once": bool(credit["applied"] and not credit["refused"]),
         "eligibility_before_credit": bool(elig_before > 1e-8),
         "rewarded_update": bool(credit["rewarded_update_norm"] > 1e-8),
         "reward_off_zero": bool(reward_off_norm < 1e-8),
@@ -191,6 +333,7 @@ def run_credit_lifecycle_preflight(
         "reset_after_credit": bool(elig_after_credit > 1e-8 and elig_after_reset < 1e-8),
         "genome_scaffold_motion": bool(scaffold.passed),
         "no_expected_action_in_update": bool(_static_no_expected_action_proof()),
+        "behavioral_micro_grounding": bool(micro.passed),
     }
 
     passed = all(checks.values())
@@ -208,6 +351,7 @@ def run_credit_lifecycle_preflight(
             "eligibility_after_credit": elig_after_credit,
             "eligibility_after_reset": elig_after_reset,
             "family_pairwise_cosine": family_pairwise,
+            "behavioral_micro_grounding": micro.metrics,
         },
         details={
             "plasticity_implementation_hash": plasticity_implementation_hash(family),

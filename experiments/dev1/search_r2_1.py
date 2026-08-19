@@ -159,7 +159,7 @@ def _evaluate_r2_1_life(
                 correct += 1
             total += 1
         org.episode_reset()
-        org.rest(apply_plasticity=False)
+        org.rest()
 
     signed_rewards = [_signed_reward_signal(r, world) for r in reward_history]
     reward_weighted_margin = [c * r for c, r in zip(confidence_history, signed_rewards)]

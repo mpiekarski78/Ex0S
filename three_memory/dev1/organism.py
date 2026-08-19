@@ -154,6 +154,12 @@ class ModularOrganism:
         # Internal surprises (for prioritized replay)
         self._surprises: list[float] = []
 
+        # Outcome-credit lifecycle (R2.1)
+        self._awaiting_consequence: bool = False
+        self._outcome_credit_pending: bool = False
+        self._outcome_credit_consumed: bool = False
+        self._credit_interaction_step: int = -1
+
     @classmethod
     def birth(
         cls,
@@ -204,6 +210,11 @@ class ModularOrganism:
         )
         self._last_mod = mod
 
+        if self._awaiting_consequence:
+            self._outcome_credit_pending = True
+            self._outcome_credit_consumed = False
+            self._awaiting_consequence = False
+
         # Eligibility update deferred to act() so action_repr is populated
 
         # Write to H if past onset age and H not disabled
@@ -250,6 +261,10 @@ class ModularOrganism:
         self._last_action_channel = channel
         self._last_action_policy_mode = policy_mode
         self._last_action_log_prob = float(torch.log(scores[channel] + 1e-12).item())
+        self._awaiting_consequence = True
+        self._outcome_credit_pending = False
+        self._outcome_credit_consumed = False
+        self._credit_interaction_step = self.step
 
         self.slog.append(EventKind.ACT, step=self.step, payload={
             "motor_channel": channel,
@@ -320,7 +335,29 @@ class ModularOrganism:
         Stage A R2.1 credit lifecycle: observe → act → consequence → credit.
         Eligibility must be finite and nonzero before this call; reset must occur
         only after credit has been applied for the triggering interaction.
+
+        Returns applied/refused status. A second call for the same interaction
+        is refused. Checkpoint restore invalidates pending credit (deterministic rule).
         """
+        if self._outcome_credit_consumed:
+            return {
+                "applied": False,
+                "refused": True,
+                "reason": "outcome_credit_already_consumed",
+                "eligibility_norm_before_credit": 0.0,
+                "rewarded_update_norm": 0.0,
+                "signed_reward_projection": 0.0,
+            }
+        if not self._outcome_credit_pending:
+            return {
+                "applied": False,
+                "refused": True,
+                "reason": "outcome_credit_not_pending",
+                "eligibility_norm_before_credit": 0.0,
+                "rewarded_update_norm": 0.0,
+                "signed_reward_projection": 0.0,
+            }
+
         elig = self.eligibility.trace
         elig_norm = float(elig.norm().item())
         w_before = self.action_ctx.W_motor.weight.data.clone()
@@ -342,24 +379,34 @@ class ModularOrganism:
         chosen = getattr(self, "_last_action_channel", 0)
         channel_update = float(dW[chosen].norm().item()) if dW.numel() else 0.0
         signed_projection = reward_signal * channel_update
-        self._last_outcome_credit = {
+
+        self._outcome_credit_consumed = True
+        self._outcome_credit_pending = False
+
+        result = {
+            "applied": True,
+            "refused": False,
+            "reason": "",
             "eligibility_norm_before_credit": elig_norm,
             "rewarded_update_norm": update_norm,
             "signed_reward_projection": signed_projection,
         }
-        return dict(self._last_outcome_credit)
+        self._last_outcome_credit = dict(result)
+        return result
 
-    def rest(self, n_ticks: int = 1, apply_plasticity: bool = True) -> dict:
+    def rest(self, n_ticks: int = 1) -> dict:
         """
-        Internal rest period: organism applies local plasticity and replay.
-        No gradient updates. Slow cortex disabled if consolidation_disabled=True.
-        Returns rest telemetry.
+        Internal rest period: replay and optional legacy plasticity.
 
-        When immediate outcome credit is applied via apply_outcome_credit(),
-        callers should pass apply_plasticity=False to avoid duplicate credit.
+        If outcome credit was already consumed via apply_outcome_credit(),
+        rest() skips duplicate plasticity automatically.
         """
-        if apply_plasticity:
+        if not self._outcome_credit_consumed:
             self._apply_local_plasticity()
+
+        self._outcome_credit_consumed = False
+        self._outcome_credit_pending = False
+        self._awaiting_consequence = False
 
         replayed = 0
         if not self.consolidation_disabled and self.hippocampus._store:
@@ -384,7 +431,13 @@ class ModularOrganism:
         """
         Clear ρ and transient eligibility only.
         W and H persist unchanged. S_log is not cleared.
+
+        Reset before outcome credit invalidates any pending credit token so
+        stale eligibility cannot be used after a boundary reset.
         """
+        if self._outcome_credit_pending and not self._outcome_credit_consumed:
+            self._outcome_credit_pending = False
+            self._awaiting_consequence = False
         snap = self.rho.cleared_snapshot()
         elig_snap = {"trace": self.eligibility.trace.cpu().tolist()}
         self.rho.reset()
@@ -414,7 +467,14 @@ class ModularOrganism:
             working_state=self.rho.state_dict(),
             eligibility_state={"trace": self.eligibility.trace.cpu()},
             plasticity_state=self.hippocampus.hippocampus_plasticity_state_dict(),
-            counters={"step": self.step},
+            counters={
+                "step": self.step,
+                "outcome_credit_pending": self._outcome_credit_pending,
+                "outcome_credit_consumed": self._outcome_credit_consumed,
+                "awaiting_consequence": self._awaiting_consequence,
+                "credit_interaction_step": self._credit_interaction_step,
+                "last_action_channel": getattr(self, "_last_action_channel", -1),
+            },
             rng_state={"torch": torch.get_rng_state().tolist()},
             slog_snapshot=self.slog.snapshot(),
         )
@@ -432,6 +492,14 @@ class ModularOrganism:
         self.eligibility.trace = cp.eligibility_state["trace"].to(self.device)
         self.step = cp.counters["step"]
         self.slog.restore_from_snapshot(cp.slog_snapshot)
+        # Deterministic checkpoint rule: pending outcome credit is invalidated on restore.
+        # Caller must re-deliver consequence (observe with reward) before credit applies.
+        self._outcome_credit_pending = False
+        self._outcome_credit_consumed = True
+        self._awaiting_consequence = False
+        self._credit_interaction_step = cp.counters.get("credit_interaction_step", -1)
+        if "last_action_channel" in cp.counters and cp.counters["last_action_channel"] >= 0:
+            self._last_action_channel = int(cp.counters["last_action_channel"])
 
     def hippocampal_graft(self, graft: HippocampalGraft) -> None:
         """

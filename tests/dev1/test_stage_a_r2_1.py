@@ -13,6 +13,7 @@ from experiments.dev1.credit_lifecycle_r2_1 import (
     R2_1_CREDIT_FAMILIES,
     bind_genome_for_family,
     plasticity_implementation_hash,
+    run_behavioral_micro_grounding,
     run_credit_lifecycle_preflight,
     run_r2_1_interaction_step,
 )
@@ -65,8 +66,72 @@ def test_r2_1_rest_skips_duplicate_plasticity():
     org.observe(OrganismObservation(sensory_vector=event.sensory_vector, reward=1.0))
     org.apply_outcome_credit()
     w_after_credit = org.action_ctx.W_motor.weight.data.clone()
-    org.rest(apply_plasticity=False)
+    org.rest()
     assert torch.allclose(org.action_ctx.W_motor.weight.data, w_after_credit)
+
+
+def test_r2_1_second_credit_call_is_refused():
+    genome = bind_genome_for_family("reward_baseline_three_factor")
+    world = _make_world("r2_1_test_second_credit")
+    event = world.generate_episode()[0]
+    org = ModularOrganism.birth(genome, h_disabled=True, consolidation_disabled=True)
+    w0 = org.action_ctx.W_motor.weight.data.clone()
+    org.observe(OrganismObservation(sensory_vector=event.sensory_vector, reward=0.0))
+    org.act(policy_mode="hard")
+    org.observe(OrganismObservation(sensory_vector=event.sensory_vector, reward=1.0))
+    first = org.apply_outcome_credit()
+    w_after_first = org.action_ctx.W_motor.weight.data.clone()
+    second = org.apply_outcome_credit()
+    assert first["applied"] is True
+    assert second["refused"] is True
+    assert second["reason"] == "outcome_credit_already_consumed"
+    assert torch.allclose(org.action_ctx.W_motor.weight.data, w_after_first)
+    assert float((w_after_first - w0).norm().item()) > 1e-8
+
+
+def test_r2_1_reset_before_credit_cannot_use_stale_eligibility():
+    genome = bind_genome_for_family("reward_baseline_three_factor")
+    world = _make_world("r2_1_test_reset_before_credit")
+    event = world.generate_episode()[0]
+    org = ModularOrganism.birth(genome, h_disabled=True, consolidation_disabled=True)
+    w0 = org.action_ctx.W_motor.weight.data.clone()
+    org.observe(OrganismObservation(sensory_vector=event.sensory_vector, reward=0.0))
+    org.act(policy_mode="hard")
+    org.episode_reset()
+    credit = org.apply_outcome_credit()
+    assert credit["refused"] is True
+    assert credit["reason"] == "outcome_credit_not_pending"
+    assert torch.allclose(org.action_ctx.W_motor.weight.data, w0)
+
+
+def test_r2_1_checkpoint_between_outcome_and_credit_invalidates_pending():
+    genome = bind_genome_for_family("reward_baseline_three_factor")
+    world = _make_world("r2_1_test_checkpoint_credit")
+    event = world.generate_episode()[0]
+    org = ModularOrganism.birth(genome, h_disabled=True, consolidation_disabled=True)
+    w0 = org.action_ctx.W_motor.weight.data.clone()
+    org.observe(OrganismObservation(sensory_vector=event.sensory_vector, reward=0.0))
+    org.act(policy_mode="hard")
+    org.observe(OrganismObservation(sensory_vector=event.sensory_vector, reward=1.0))
+    cp = org.full_checkpoint()
+    org.restore_from_checkpoint(cp)
+    refused = org.apply_outcome_credit()
+    assert refused["refused"] is True
+    assert refused["reason"] == "outcome_credit_already_consumed"
+    assert torch.allclose(org.action_ctx.W_motor.weight.data, w0)
+    org.rest()
+    org.observe(OrganismObservation(sensory_vector=event.sensory_vector, reward=0.0))
+    org.act(policy_mode="hard")
+    org.observe(OrganismObservation(sensory_vector=event.sensory_vector, reward=1.0))
+    applied = org.apply_outcome_credit()
+    assert applied["applied"] is True
+    assert float((org.action_ctx.W_motor.weight.data - w0).norm().item()) > 1e-8
+
+
+def test_r2_1_behavioral_micro_grounding_passes():
+    result = run_behavioral_micro_grounding(seed="r2_1_test_micro_grounding")
+    assert result.passed, result.checks
+    assert all(result.checks.values())
 
 
 def test_r2_1_families_produce_distinct_updates():
