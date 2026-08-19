@@ -1,0 +1,136 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R1.ADDENDUM.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R1",
+  "type": "immutable_interpretation_addendum",
+  "references": {
+    "prereg": "docs/exos_dev1.stage_a_r1.prereg.lock",
+    "search_summary": "runs/exos_dev1/stage_a_r1/search_summary.json",
+    "apparatus_commit": "bd6a617"
+  },
+  "preserve_historical_result": {
+    "search_summary_outcome": "local_rule_optimization_fail",
+    "search_summary_preserved": true,
+    "result_not_rewritten": true
+  },
+  "audit_question": "Did the scored Stage A R1 run meaningfully search the inherited genome surface, or did the promotion controller terminate optimization before the frozen budget could test learnability?",
+  "preregistered_budget": {
+    "cheap_train_lives_per_candidate": 2,
+    "rotating_validation_lives_per_candidate": 4,
+    "beam_size": 3,
+    "stop_rule": [
+      "frozen_budget_exhausted",
+      "single_confirmation_result_recorded"
+    ]
+  },
+  "actual_execution": {
+    "families": 3,
+    "optimizer_arms": 2,
+    "total_candidates": 6,
+    "meta_gradient_outer_updates_per_candidate": 1,
+    "evolutionary_generations_per_candidate": 1,
+    "evolutionary_population_size": 4,
+    "rotating_validation_lives_per_candidate": 4,
+    "confirmation_lives_executed": 0,
+    "beam_size_after_validation": 0,
+    "exact_stop_reason": "beam_empty_after_validation_hard_gate"
+  },
+  "candidate_level_outcomes": {
+    "all_candidates_decision_code": "credit_not_causal",
+    "aggregate_outcome_reason": "run_stage_a_search emits local_rule_optimization_fail when the post-validation causal beam is empty, regardless of individual candidate codes"
+  },
+  "meta_gradient_audit": {
+    "aggregate_training_fitness": 0.00048828125,
+    "loss_defined_in_implementation": false,
+    "gradient_norm_defined_in_implementation": false,
+    "soft_action_surrogate": false,
+    "meta_gradient_arm_status": "not_implemented_as_named",
+    "reason": "no_differentiable_outer_loss_or_gradient",
+    "architectural_conclusion": "none",
+    "genome_parameter_delta_l2": 0.07898662121659904,
+    "genome_parameter_delta_max_abs": 0.024975585937500044,
+    "top_parameter_deltas": {
+      "eligibility_decay": -0.024975585937500044,
+      "reward_gate_scale": -0.024975585937500044,
+      "prediction_error_scale": -0.024975585937500044,
+      "baseline_decay": -0.024975585937500044,
+      "gamma": -0.024975585937500044
+    }
+  },
+  "evolutionary_audit": {
+    "population_size": 4,
+    "fitnesses": [
+      0.0,
+      0.0009765625,
+      0.0,
+      0.0
+    ],
+    "fitness_variance": 1.7881393432617188e-07,
+    "mutation_delta_variance": 0.011619859335021722,
+    "selected_parent_index": 1,
+    "selected_parent_genome_delta_l2": 0.38867200366020627
+  },
+  "scores_behind_credit_not_causal": {
+    "cheap_train_scores_meta_gradient": [
+      0.0009765625,
+      0.0
+    ],
+    "cheap_train_scores_evolutionary": [
+      0.0009765625,
+      0.0,
+      0.0,
+      0.0009765625,
+      0.0,
+      0.0
+    ],
+    "rotating_validation_scores_all_families_and_arms": [
+      0.0,
+      0.0,
+      0.0009765625,
+      0.0
+    ],
+    "causal_gate_path": "grounding_accuracy failed before later causal controls were reached; reward_off and permuted_feedback were therefore not the first failing controls on these candidates"
+  },
+  "budget_interpretation": {
+    "beam_empty_terminated_optimization_before_frozen_budget": true,
+    "full_multi_generation_budget_exhausted": false,
+    "meaningful_outer_search_demonstrated": false
+  },
+  "interpretation": {
+    "decision_code": "invalidated_search__promotion_gate_terminated_optimization",
+    "reason": "The evolutionary machinery executed one generation. The arm named meta_gradient changed inherited parameters but did not compute a differentiable outer loss or meta-gradient. All candidates were then rejected by the causal gate and the empty validation beam terminated the run. This tests the promotion controller more than the learnability budget of the local credit rules.",
+    "what_is_supported": [
+      "the credit path exists",
+      "the evolutionary machinery executes one generation",
+      "the meta_gradient-named arm provides a parameter-update path only",
+      "preflight and H-isolation boundary held"
+    ],
+    "what_is_not_supported": [
+      "a scientific conclusion of local_rule_optimization_fail for the three families",
+      "a conclusion that the shared genome surface was meaningfully searched",
+      "a claim that a genuine meta-gradient optimizer executed",
+      "any Stage B unlock"
+    ]
+  },
+  "required_search_correction": {
+    "structural_preflight_remains_hard_kill": true,
+    "training_fitness_must_be_graded": [
+      "acquisition_improvement",
+      "reward_conditioned_action_margin",
+      "retention",
+      "stability",
+      "bounded_weights"
+    ],
+    "causal_validity_controls_validation_promotion": true,
+    "noncausal_candidates_may_continue_receiving_outer_updates": true,
+    "empty_validation_beam_must_not_terminate_training_population": true,
+    "optimizers_must_run_until": [
+      "frozen_budget",
+      "convergence_rule",
+      "numerical_failure"
+    ]
+  },
+  "stage_b_status": "locked",
+  "written_utc": "2026-08-19T11:20:00Z"
+}
