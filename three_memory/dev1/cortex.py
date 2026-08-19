@@ -115,14 +115,26 @@ class ActionCortex(nn.Module):
         motor_logits = self.W_motor(action_state)
         return action_state, motor_logits
 
-    def competition(self, motor_logits: torch.Tensor) -> tuple[int, torch.Tensor, float]:
+    def competition(
+        self,
+        motor_logits: torch.Tensor,
+        policy_mode: str = "hard",
+        generator: torch.Generator | None = None,
+    ) -> tuple[int, torch.Tensor, float]:
         """
-        Winner-take-all motor competition.
+        Motor competition.
         Returns (channel_idx, scores, confidence).
-        Confidence = winner margin normalized by softmax entropy.
+        Confidence is the top-1 minus top-2 softmax margin.
+        `policy_mode="hard"` uses canonical argmax evaluation.
+        `policy_mode="stochastic"` samples from the softmax policy.
         """
         scores = F.softmax(motor_logits, dim=-1)
-        channel = int(scores.argmax().item())
+        if policy_mode == "hard":
+            channel = int(scores.argmax().item())
+        elif policy_mode == "stochastic":
+            channel = int(torch.multinomial(scores, 1, generator=generator).item())
+        else:
+            raise ValueError(f"unknown policy_mode: {policy_mode}")
         top2 = scores.topk(min(2, scores.numel())).values
         confidence = float((top2[0] - top2[-1]).item())
         return channel, scores, confidence

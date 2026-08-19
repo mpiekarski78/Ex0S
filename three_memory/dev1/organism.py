@@ -225,7 +225,11 @@ class ModularOrganism:
 
         return event
 
-    def act(self) -> ActionResult:
+    def act(
+        self,
+        policy_mode: str = "hard",
+        action_generator: torch.Generator | None = None,
+    ) -> ActionResult:
         """
         Produce motor output via action cortex competition.
         No gradient update to W, H, or ρ.
@@ -236,12 +240,19 @@ class ModularOrganism:
         # Update eligibility trace here (after action state is populated)
         self.eligibility.update(self.rho.relational_repr, self.rho.action_repr)
 
-        channel, scores, confidence = self.action_ctx.competition(motor_logits)
+        channel, scores, confidence = self.action_ctx.competition(
+            motor_logits,
+            policy_mode=policy_mode,
+            generator=action_generator,
+        )
         self._last_action_channel = channel
+        self._last_action_policy_mode = policy_mode
+        self._last_action_log_prob = float(torch.log(scores[channel] + 1e-12).item())
 
         self.slog.append(EventKind.ACT, step=self.step, payload={
             "motor_channel": channel,
             "confidence": confidence,
+            "policy_mode": policy_mode,
         })
         return ActionResult(
             motor_channel=channel,
