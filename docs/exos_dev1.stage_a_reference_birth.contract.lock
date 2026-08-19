@@ -1,0 +1,216 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "ReferenceBirth",
+  "type": "stage_contract_lock",
+  "status": "authorized_for_implementation",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T01:25:00Z",
+
+  "authorization": {
+    "authorized_by": "docs/exos_dev1.stage_a_r2_1.closure.lock",
+    "stage_a_continuation": true,
+    "not_R3_workaround": true,
+    "explicit_override_of_historical_R3_refusal": true
+  },
+
+  "inherits_immutable_history": [
+    "docs/exos_dev1.stage_a_r2_1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_r2_1.closure.lock",
+    "docs/exos_dev1.stage_a_r2_1.contract.lock",
+    "docs/exos_dev1.stage_a_r2_1.isolation.lock",
+    "docs/exos_dev1.stage_a_r2.audit.addendum.lock",
+    "runs/exos_dev1/stage_a_r2_1/exos_dev1_r2_1b_scored_20260819/"
+  ],
+
+  "r2_1_baseline": {
+    "interpretation": "partial_learning_without_causal_generalization",
+    "best_arm": "reward_baseline_three_factor/evolution_continuous",
+    "validation_accuracy_mean_historical": 0.071044921875,
+    "control_lock": "docs/exos_dev1.stage_a_r2_1.control.lock",
+    "control_lock_non_blocking": true
+  },
+
+  "question": "Can a known reward-based e-prop learning architecture produce persistent causal grounding on unseen mappings where R2.1 produced only partial learning?",
+
+  "implementation_naming": {
+    "spiking_lssn_exact": "reward_eprop",
+    "rate_based_adaptation": "reward_eprop_rate_adaptation",
+    "rule": "Rate-based implementation must not claim exact Bellec et al. reproduction"
+  },
+
+  "reference": "Bellec et al., reward-based e-prop",
+
+  "primary_arms": {
+    "conventional_actor_critic_ceiling": {
+      "role": "measurement_only_ceiling",
+      "organism_candidate": false,
+      "autograd_allowed_during_lives": true,
+      "same_observations_rewards_interactions": true,
+      "forbidden": ["expected_action_labels", "oracle_channels"],
+      "failure_code": "setup_ceiling_fail"
+    },
+    "reward_eprop_rate_adaptation": {
+      "role": "primary_local_plasticity_treatment",
+      "organism_candidate": true
+    },
+    "teacher_demo_eprop": {
+      "role": "developmental_teaching_treatment",
+      "organism_candidate": true
+    },
+    "r2_1_local_plasticity_control": {
+      "role": "frozen_historical_mechanism",
+      "organism_candidate": true,
+      "requires_control_lock_or_numerical_fallback": true
+    }
+  },
+
+  "matched_interventions": [
+    "reward_off",
+    "eligibility_zero",
+    "eligibility_permuted",
+    "motor_feedback_permuted"
+  ],
+
+  "teacher_boundary": {
+    "allowed": "Demonstrated action as observed motor event through same motor/efference pathway as self-generated action",
+    "timing_frozen": "subsequent_observed_motor_event",
+    "note": "Teacher action does NOT replace sampled action; it arrives on the next observe() as an observed motor event on the efference channel",
+    "forbidden": [
+      "expected_answer_id",
+      "direct_neural_target_write",
+      "retrieval_address_selection",
+      "bypass_sensory_or_motor_state",
+      "runner_owned_weight_update"
+    ],
+    "permuted_teacher_test": "Learning must follow observed demonstration, not fixture answer"
+  },
+
+  "frozen_learning_law": {
+    "variant": "reward_eprop_rate_adaptation",
+    "sign_convention": "gradient_ascent_on_expected_return",
+    "td_error": "delta_t = r_t + gamma * V_{t+1} - V_t",
+    "terminal_rule": "V_{t+1} = 0 at episode terminal boundaries",
+    "learning_signal": "L_{j,t} = delta_t * sum_k B_{jk} * (1[a_t=k] - pi_k(t))",
+    "actor_update": "Delta W_{ji}^{actor}(t) = eta_actor * L_{j,t} * e_{ji}^{actor}(t)",
+    "critic_update": "Delta W_{ji}^{critic}(t) = eta_critic * delta_t * e_{ji}^{critic}(t)",
+    "eligibility_recurrence": "e_t = lambda * e_{t-1} + pre_t outer post_t (rate-based outer-product approximation; not spiking e-prop recurrence)",
+    "eligibility_decay_lambda": "inherited from genome.eligibility_decay",
+    "eligibility_reset": "reset_transient at episode_reset; credit applied before reset via apply_outcome_credit",
+    "projection_B": "inherited_fixed_per_genome; not task-specific; initialized generic random orthonormal rows",
+    "action_sampling": "softmax(motor_logits / temperature); training=stochastic; validation/confirmation=hard",
+    "update_clipping": "clamp Delta W to [-0.1, 0.1] per step",
+    "normalization": "optional homeostatic rho normalization from inherited coefficients",
+    "reward_timing": "scalar reward delivered on consequence observe(); credit on apply_outcome_credit()",
+    "within_life_forbidden": ["BPTT", "runner_optimizer_step", "expected_answers"],
+    "outer_meta_training": "may differentiate through training lives only; validation and confirmation apply local updates only"
+  },
+
+  "inherited_knowledge_leakage_controls": {
+    "mappings_randomized_per_life": true,
+    "motor_channel_permutation_equivariance_required": true,
+    "renamed_cue_symbols_required": true,
+    "newborn_accuracy_at_chance_before_interaction": true,
+    "no_persistent_fixed_channel_preference_across_permutations": true,
+    "ceiling_and_treatments_identical_observations_rewards_interaction_counts": true
+  },
+
+  "required_telemetry_per_life": [
+    "action_entropy",
+    "action_histogram",
+    "chosen_action_probability",
+    "chosen_action_margin",
+    "critic_value",
+    "reward_prediction_error",
+    "eligibility_norm",
+    "learning_signal_norm",
+    "update_norm",
+    "rewarded_action_margin_change",
+    "cumulative_reward",
+    "accuracy",
+    "retention_after_reset",
+    "genome_hash",
+    "phenotype_hash",
+    "intervention_identity",
+    "device",
+    "rng_stream_id"
+  ],
+
+  "causal_quantity": "rewarded_action_probability_or_margin_increase_surviving_transient_reset",
+
+  "gpu_execution": {
+    "scored_run_cuda_only": true,
+    "infrastructure_cpu_fallback_requires_prereg_amendment": true,
+    "requirements": [
+      "neural_tensors_on_cuda",
+      "batched_newborn_lives",
+      "independent_state_and_rng_per_batch_row",
+      "profiler_kernel_record",
+      "throughput_vs_cpu",
+      "finite_forward_and_plasticity",
+      "no_shared_world_state_between_batch_rows"
+    ],
+    "nvidia_smi_diagnostic_only": true,
+    "cpu_gpu_parity": "identical_supplied_random_variates; matching_decisions_within_tolerance"
+  },
+
+  "decision_ladder": [
+    "setup_ceiling_fail",
+    "eprop_reference_preflight_fail",
+    "persistent_weight_learning_fail",
+    "credit_not_causal",
+    "reference_birth_validation_fail",
+    "reward_eprop_confirmation_fail",
+    "reward_eprop_confirmation_pass",
+    "teacher_eprop_confirmation_fail",
+    "teacher_dependent_grounding_pass"
+  ],
+
+  "promotion_routing": {
+    "reward_validates": "run_reward_confirmation_untouched_seeds",
+    "reward_fails_teacher_validates": "run_teacher_confirmation",
+    "neither_validates": "reference_birth_validation_fail",
+    "reward_confirmation_pass": "reward_eprop_confirmation_pass",
+    "reward_confirmation_fail": "reward_eprop_confirmation_fail",
+    "teacher_confirmation_pass": "teacher_dependent_grounding_pass_then_architectural_review",
+    "teacher_confirmation_fail": "teacher_eprop_confirmation_fail",
+    "teacher_dependent_grounding_never_from_validation_alone": true
+  },
+
+  "allowed_inherited_parameters": [
+    "initial_generic_recurrent_weights",
+    "learning_signal_projection_statistics",
+    "eligibility_time_constants",
+    "actor_critic_learning_rates",
+    "critic_initialization",
+    "normalization_and_clipping",
+    "neuron_adaptation_parameters"
+  ],
+
+  "forbidden_inherited_information": [
+    "cue_identities",
+    "action_mappings",
+    "fixture_seeds",
+    "curriculum_stage_identifiers",
+    "expected_answers",
+    "validation_results",
+    "confirmation_results"
+  ],
+
+  "forbidden_scope": [
+    "another_scaffold_parameter_wall",
+    "stage_b_execution",
+    "candidate_lock_changes",
+    "product_version_change",
+    "live_pointer_cutover",
+    "automatic_confirmation_reuse"
+  ],
+
+  "stage_b_rule": {
+    "auto_unlock": false,
+    "reward_confirmation_pass": "proceed_within_stage_a",
+    "teacher_dependent_grounding_pass": "architectural_review_required",
+    "confirmation_pass_opens_review_not_unlock": true
+  }
+}

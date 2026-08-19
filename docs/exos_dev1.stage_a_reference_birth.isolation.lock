@@ -1,0 +1,69 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "ReferenceBirth",
+  "type": "stage_isolation_lock",
+  "status": "active",
+  "written_utc": "2026-08-20T01:25:00Z",
+
+  "authorized_by": "docs/exos_dev1.stage_a_r2_1.closure.lock",
+  "explicit_override": "Reference Birth authorized as Stage A continuation; not implement_R3",
+
+  "lineage_stop_inherited": "partial_learning_without_causal_generalization",
+
+  "authorized_filespaces": [
+    "docs/exos_dev1.stage_a_reference_birth.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth.isolation.lock",
+    "docs/exos_dev1.stage_a_reference_birth.prereg.lock",
+    "docs/exos_dev1.stage_a_r2_1.control.lock",
+    "three_memory/dev1/plasticity/eprop/",
+    "three_memory/dev1/device.py",
+    "experiments/dev1/search_reference_birth.py",
+    "experiments/dev1/reference_birth_preflight.py",
+    "experiments/dev1/recover_r2_1_control.py",
+    "tests/dev1/test_stage_a_reference_birth.py",
+    "runs/exos_dev1/stage_a_reference_birth/"
+  ],
+
+  "historical_filespaces_immutable": [
+    "docs/exos_dev1.stage_a_r2_1.isolation.lock",
+    "docs/exos_dev1.stage_a_r2_1.contract.lock",
+    "docs/exos_dev1.stage_a_r2_1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_r2_1.closure.lock",
+    "docs/exos_dev1.stage_a_r2_1.prereg.lock",
+    "docs/exos_dev1.stage_a_r2_1b.prereg.lock",
+    "docs/exos_dev1.stage_a_r2.audit.addendum.lock",
+    "docs/exos_dev1.stage_a_r2.dev_decision.lock",
+    "experiments/dev1/search_r2_1.py",
+    "runs/exos_dev1/stage_a_r2_1/exos_dev1_r2_1b_scored_20260819/"
+  ],
+
+  "blocked_program_paths": [
+    "docs/exos_dev1.stage_b.contract.md",
+    "docs/exos_dev1.stage_b.prereg.lock",
+    "experiments/dev1/search_r2.py",
+    "experiments/dev1/search_r2_1.py"
+  ],
+
+  "forbidden_actions": [
+    "further_R2_1_scored_execution",
+    "edit_historical_R2_1_isolation_lock",
+    "another_scaffold_search",
+    "stage_b_execution_before_reference_birth_decision",
+    "candidate_or_product_changes",
+    "live_pointer_cutover",
+    "approximate_r2_1_control_without_exact_scaffold_hash"
+  ],
+
+  "execution_order": [
+    "R2_1_decision_and_closure_commit",
+    "reference_birth_contract_isolation_commit",
+    "implement_eprop_mechanism_interventions_telemetry_cuda_batching",
+    "tests_and_excluded_seed_preflight",
+    "unscored_cuda_throughput_benchmark",
+    "freeze_prereg",
+    "scored_run_once",
+    "reference_birth_dev_decision"
+  ]
+}

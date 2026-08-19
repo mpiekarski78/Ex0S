@@ -1,0 +1,131 @@
+{
+  "_schema": "exos_dev1.stage_a_r2_1b.prereg.v1",
+  "_immutable": true,
+  "written_utc": "2026-08-19T19:50:00Z",
+
+  "revision": "R2.1b",
+  "retry_class": "infrastructure_completion_retry",
+  "scientific_attempt_number": 1,
+  "supersedes_execution_only": "docs/exos_dev1.stage_a_r2_1.prereg.lock",
+  "does_not_supersede": [
+    "docs/exos_dev1.stage_a_r2_1.contract.lock",
+    "docs/exos_dev1.stage_a_r2_1.isolation.lock",
+    "R2.1_gate_implementation_at_58225d3"
+  ],
+
+  "interrupted_attempt_excluded": {
+    "record": "runs/exos_dev1/stage_a_r2_1/exos_dev1_r2_1_scored_20260819_attempt_001_interrupted.json",
+    "run_id": "exos_dev1_r2_1_scored_20260819",
+    "ledger_lines": 144,
+    "behavioral_outcome_produced": false,
+    "confirmation_consumed": false,
+    "excluded_from_every_decision": true,
+    "reason": "R2.1 prereg v1 lacked explicit external-interruption restart authorization"
+  },
+
+  "provenance": {
+    "r2_1_contract_and_isolation_lock_commit": "88a5fa6",
+    "r2_1_initial_implementation_commit": "9abcb78",
+    "contract_and_isolation_predate_implementation": true,
+    "gate_repair_commit": "58225d3",
+    "r2_1_prereg_commit": "6d6bc2a",
+    "r2_1b_prereg_commit": "pending_at_commit",
+    "note": "Contract/isolation at 88a5fa6 predated 9abcb78. Gate repairs at 58225d3 predated R2.1 prereg freeze. Attempt 001 interrupted by session kill; R2.1b authorizes one infrastructure completion retry with fresh partitions."
+  },
+
+  "implementation": {
+    "commit_sha": "58225d3",
+    "executing_head_commit": "6d6bc2a",
+    "runner_file": "experiments/dev1/search_r2_1.py",
+    "credit_lifecycle_file": "experiments/dev1/credit_lifecycle_r2_1.py",
+    "organism_file": "three_memory/dev1/organism.py",
+    "credit_lifecycle_gates_at_prereg": {
+      "apply_outcome_credit_marks_consumed": true,
+      "rest_skips_duplicate_plasticity_when_consumed": true,
+      "behavioral_micro_grounding_demonstrated": true
+    }
+  },
+
+  "budget": {
+    "choice": "24_updates_24_generations_population_12",
+    "meta_gradient_outer_updates": 24,
+    "evolution_generations": 24,
+    "evolution_population_size": 12,
+    "beam_size": 3,
+    "training_world_count": 6,
+    "training_cheap_seeds": 2,
+    "training_validation_seeds": 4,
+    "validation_seed_count": 4,
+    "confirmation_seed_count": 4,
+    "estimated_wall_seconds": 8600,
+    "early_termination_allowed_only_for": [
+      "numerical_or_systemic_failure",
+      "preregistered_convergence_plateau"
+    ],
+    "absence_of_early_causal_candidate_is_not_a_stop_rule": true
+  },
+
+  "seed_partitions": {
+    "note": "Fresh R2.1b partitions; attempt 001 and R2.1 v1 scored seeds forbidden",
+    "excluded_seeds": [
+      "exos_dev1_r2_1_scored_world_001",
+      "exos_dev1_r2_1_scored_world_002",
+      "exos_dev1_r2_1_scored_world_003",
+      "exos_dev1_r2_1_scored_world_004",
+      "exos_dev1_r2_1_scored_world_005",
+      "exos_dev1_r2_1_scored_world_006",
+      "exos_dev1_r2_1_conf_001",
+      "exos_dev1_r2_1_conf_002",
+      "exos_dev1_r2_1_conf_003",
+      "exos_dev1_r2_1_conf_004",
+      "exos_dev1_r2_1_scored_preflight",
+      "r2_1_excluded_throughput_20260819_world_001",
+      "r2_1_excluded_throughput_20260819_world_002",
+      "r2_1_excluded_throughput_20260819_world_003",
+      "r2_1_excluded_throughput_20260819_world_004",
+      "r2_1_excluded_throughput_20260819_world_005",
+      "r2_1_excluded_throughput_20260819_world_006",
+      "r2_1_excluded_throughput_20260819_conf_001",
+      "r2_1_excluded_throughput_20260819_conf_002",
+      "r2_1_excluded_throughput_20260819_conf_003",
+      "r2_1_excluded_throughput_20260819_conf_004"
+    ],
+    "training_world_seeds": [
+      "exos_dev1_r2_1b_scored_world_001",
+      "exos_dev1_r2_1b_scored_world_002",
+      "exos_dev1_r2_1b_scored_world_003",
+      "exos_dev1_r2_1b_scored_world_004",
+      "exos_dev1_r2_1b_scored_world_005",
+      "exos_dev1_r2_1b_scored_world_006"
+    ],
+    "confirmation_seeds": [
+      "exos_dev1_r2_1b_conf_001",
+      "exos_dev1_r2_1b_conf_002",
+      "exos_dev1_r2_1b_conf_003",
+      "exos_dev1_r2_1b_conf_004"
+    ]
+  },
+
+  "run_identity": {
+    "run_id": "exos_dev1_r2_1b_scored_20260819",
+    "output_dir": "runs/exos_dev1/stage_a_r2_1/exos_dev1_r2_1b_scored_20260819",
+    "preflight_seed": "exos_dev1_r2_1_scored_preflight",
+    "attempt": "002",
+    "append_to_attempt_001_forbidden": true
+  },
+
+  "infrastructure_retry_authorization": {
+    "authorized": true,
+    "retry_reason": "external_session_interruption",
+    "rehearsal_repeat_required": false,
+    "code_changes_forbidden": true
+  },
+
+  "forbidden": [
+    "changing_seed_partitions_after_this_lock",
+    "appending_to_attempt_001_ledger",
+    "inspecting_confirmation_worlds_during_run",
+    "patching_runner_or_organism_during_run",
+    "including_attempt_001_partial_results_in_decision"
+  ]
+}
