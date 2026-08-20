@@ -4,7 +4,7 @@
   "stage": "A",
   "revision": "GestationalSensorimotorModel",
   "type": "stage_contract_lock",
-  "status": "prereg_frozen__awaiting_explicit_scored_authorization",
+  "status": "closed__optimization_ceiling_fail__setup_reference_only__gsm_behaviorally_untested",
   "product_version": "0.0.004",
   "written_utc": "2026-08-20T21:35:00Z",
   "prereg": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.prereg.lock",
@@ -123,5 +123,9 @@
     "stage_b_execution",
     "rewriting_r4_r2_grounded_acquisition_fail_or_first_split"
   ],
-  "runner_file": "experiments/dev1/search_gestational_sensorimotor_model.py"
+  "runner_file": "experiments/dev1/search_gestational_sensorimotor_model.py",
+  "ceiling_audit": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.ceiling_audit.lock",
+  "architectural_conclusion": null,
+  "gsm_mechanism_decision": null,
+  "confirmation_consumed": false
 }

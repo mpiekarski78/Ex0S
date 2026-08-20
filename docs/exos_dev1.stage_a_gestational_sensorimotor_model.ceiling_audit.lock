@@ -1,0 +1,164 @@
+{
+  "_schema": "exos_dev1.stage_a_gestational_sensorimotor_model.ceiling_audit_and_narrow_close.v1",
+  "_immutable": true,
+  "type": "ceiling_audit_and_narrow_close_lock",
+  "status": "closed__optimization_ceiling_fail__setup_reference_only",
+  "written_utc": "2026-08-20T23:34:12Z",
+  "product_version": "0.0.004",
+  "run_id": "exos_dev1_gestational_sensorimotor_model_scored_20260820",
+  "run_dir": "runs/exos_dev1/stage_a_gestational_sensorimotor_model/exos_dev1_gestational_sensorimotor_model_scored_20260820",
+  "run_preserved_unchanged": true,
+  "decision_code": "optimization_ceiling_fail",
+  "close_scope": "setup_reference_ceiling_failure_only",
+  "architectural_conclusion": null,
+  "gsm_mechanism_decision": null,
+  "gsm_behavioral_hypothesis_tested": false,
+  "do_not_infer_gsm_from_this_close": true,
+  "confirmation_consumed": false,
+  "confirmation_ledger_hits": 0,
+  "silent_replay_forbidden": true,
+  "routing": {
+    "selected": "planner_passes_ac_fails_under_correct_frozen_protocol",
+    "interpretation": "Valid optimization_ceiling_fail; GSM remains untested behaviorally",
+    "rejected": [
+      "beam_planner_reachability_also_fails",
+      "ceiling_differs_from_r4_r2_implementation_or_budget",
+      "ceiling_reconstruction_passes_measurement_defect",
+      "ceiling_passes_but_ladder_read_stale_or_incorrect_field"
+    ]
+  },
+  "failed_ceiling_conjuncts": [
+    "end_in_zone_rate",
+    "comfort_margin_over_random"
+  ],
+  "ceiling_conjuncts": {
+    "end_in_zone_rate": {
+      "value": 0.15625,
+      "threshold": 0.25,
+      "pass": false
+    },
+    "distance_reduction": {
+      "value": 0.2831388309132308,
+      "threshold": 0.1,
+      "pass": true
+    },
+    "comfort_margin_over_random": {
+      "value": 0.0625,
+      "threshold": 0.12,
+      "pass": false
+    }
+  },
+  "random_baseline": {
+    "end_in_zone_rate": 0.09375,
+    "distance_reduction": -0.12456273287534714
+  },
+  "ceiling_margin_over_random": {
+    "comfort_margin_over_random": 0.0625,
+    "distance_reduction_margin_over_random": 0.4077015637885779
+  },
+  "beam_planner_reachability_on_scored_discovery_world": {
+    "world_seed_suffix": "exos_dev1_gestational_sensorimotor_model_world_001:ceiling",
+    "end_in_zone_rate": 0.75,
+    "ever_reached_rate": 0.75,
+    "distance_reduction": 0.5557452929206192,
+    "body_controllability_gate_pass": true,
+    "not_organism_candidate": true
+  },
+  "ac_protocol": {
+    "implementation": "experiments/dev1/developmental_birth_r4_r2_ceiling.py::evaluate_ceiling_gate_bundle",
+    "same_as_r4_r2": true,
+    "body": "NurseryBodyV2",
+    "n_initializations": 3,
+    "initialization_seeds": [
+      0,
+      1,
+      2
+    ],
+    "aggregation": "best_of_three_by_end_in_zone_then_distance_reduction",
+    "stop_behavior": "always_run_exactly_three_initializations_then_stop",
+    "not_retry_until_pass": true,
+    "n_episodes": 32,
+    "episode_ticks": 16,
+    "train_episodes_defaulted_to_max_n_episodes_48": true,
+    "thresholds_identical_to_r4_r2": {
+      "optimization_ceiling_min_end_in_zone_rate": 0.25,
+      "optimization_ceiling_min_distance_reduction": 0.1,
+      "optimization_ceiling_min_margin_over_random": 0.12
+    }
+  },
+  "comparison_to_r4_r2_scored_ceiling_on_its_world": {
+    "r4_r2_end_in_zone_rate": 0.3125,
+    "r4_r2_distance_reduction": 0.24080320773646235,
+    "r4_r2_comfort_margin_over_random": 0.1875,
+    "r4_r2_beam_end_in_zone_rate": 0.8125,
+    "note": "Same ceiling implementation and thresholds; different fresh world partition. R4-R2 passed; GSM discovery world failed AC conjuncts."
+  },
+  "pre_ceiling_phase_contamination": {
+    "model_certification_before_ceiling": true,
+    "cert_world_seeds": [
+      "gsm_eng_cert_seed_001",
+      "gsm_eng_cert_seed_002",
+      "gsm_eng_cert_seed_003"
+    ],
+    "ceiling_world_seed": "exos_dev1_gestational_sensorimotor_model_world_001:ceiling",
+    "cert_constructs_local_NurseryWorldV2_only": true,
+    "ceiling_constructs_fresh_genome_and_world": true,
+    "shared_body_state_reused": false,
+    "assessment": "no_body_state_mutation_or_reuse_into_ceiling"
+  },
+  "evidence_before_ladder": {
+    "full_evidence_collected_before_ladder": true,
+    "phase_first_order": [
+      "model_certification",
+      "ceiling",
+      "arm_train",
+      "arm_val",
+      "intervention"
+    ],
+    "required_arms_completed": [
+      "sham_gestation",
+      "existing_homeostatic_gestation",
+      "predictive_gestation",
+      "predictive_gestation_shuffled_consequences",
+      "learned_model_off_at_action_selection"
+    ],
+    "interventions_completed": [
+      "exact_body_dynamics_model_measurement_ceiling_only",
+      "open_loop",
+      "uncertainty_fallback"
+    ],
+    "ladder_field_read_matches_ceiling_json": true,
+    "ladder_stopped_at": "optimization_ceiling_fail"
+  },
+  "provenance": {
+    "prereg_commit": "d7ebd8a693cdf15d676cf018fdf499183b0d0980",
+    "prereg_sha256": "13ed107b24690a7d342757c3e50ab6e580d11041cea8adf62bb94c936b53b500",
+    "authorization_commit": "27b9fd08548b72445adb69cef2600db552605675",
+    "authorization_lock": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.scored_authorization.lock",
+    "implementation_sha": "8129ccff11177263159f3d76342317288886c481",
+    "implementation_commit": "8129ccf",
+    "runner_commit": "4b4726ee23c6d17531ff5e106292acfb677120bb",
+    "runner_sha256": "d546872a02980add21a621f860d2d2f56f9a258843b83887d5dbcf19de1ff270",
+    "executing_head": "27b9fd08548b72445adb69cef2600db552605675",
+    "prereg_remains_scored_run_authorized_false": true
+  },
+  "confirmation_refusal": {
+    "refused": true,
+    "reason": "validation_did_not_pass:optimization_ceiling_fail",
+    "confirmation_seeds_registered": [
+      "exos_dev1_gestational_sensorimotor_model_conf_001",
+      "exos_dev1_gestational_sensorimotor_model_conf_002",
+      "exos_dev1_gestational_sensorimotor_model_conf_003",
+      "exos_dev1_gestational_sensorimotor_model_conf_004"
+    ],
+    "confirmation_consumed": false
+  },
+  "forbidden": [
+    "inferring_gsm_gestational_sensorimotor_mechanism_from_this_result",
+    "consuming_confirmation_seeds",
+    "silent_replay",
+    "retuning_ceiling_thresholds_to_pass",
+    "claiming_partial_gsm_behavioral_acquisition",
+    "rewriting_scored_run_artifacts"
+  ]
+}
