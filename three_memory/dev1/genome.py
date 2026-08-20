@@ -146,6 +146,10 @@ class DevGenome:
     sensory_dim: int = 64          # dimension of sensory input vectors
     seed: int = 0                  # birth RNG seed; NOT a world seed
 
+    # Reference Birth R3: inherited learning-signal generator parameters (flat).
+    # Generic learning machinery only — never symbols/facts/mappings/expected actions.
+    lsg_param_vector: list[float] | None = None
+
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 

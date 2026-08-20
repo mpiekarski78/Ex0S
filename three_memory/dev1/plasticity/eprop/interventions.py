@@ -12,6 +12,8 @@ class EpropIntervention:
     eligibility_zero: bool = False
     eligibility_permuted: bool = False
     motor_feedback_permuted: bool = False
+    signal_generator_off: bool = False
+    signal_generator_permuted: bool = False
 
     @classmethod
     def none(cls) -> "EpropIntervention":
@@ -32,3 +34,11 @@ class EpropIntervention:
     @classmethod
     def with_motor_feedback_permuted(cls) -> "EpropIntervention":
         return cls(name="motor_feedback_permuted", motor_feedback_permuted=True)
+
+    @classmethod
+    def with_signal_generator_off(cls) -> "EpropIntervention":
+        return cls(name="signal_generator_off", signal_generator_off=True)
+
+    @classmethod
+    def with_signal_generator_permuted(cls) -> "EpropIntervention":
+        return cls(name="signal_generator_permuted", signal_generator_permuted=True)

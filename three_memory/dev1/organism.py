@@ -68,6 +68,7 @@ from three_memory.dev1.plasticity.cortical_plasticity.three_factor import Reward
 from three_memory.dev1.plasticity.cortical_plasticity.meta_learned import ActionContingentActorCritic
 from three_memory.dev1.plasticity.cortical_plasticity.evolved import ConsequencePredictionCredit
 from three_memory.dev1.plasticity.eprop.reward_eprop import RewardEpropRateAdaptation
+from three_memory.dev1.plasticity.eprop.learned_eprop import InheritedSignalGeneratorEprop
 from three_memory.dev1.plasticity.consolidation.replay import ReplayConsolidation
 from three_memory.dev1.plasticity.consolidation.online_slow import OnlineSlowConsolidation
 from three_memory.dev1.plasticity.consolidation.hybrid import HybridConsolidation
@@ -87,8 +88,10 @@ def _build_cortical_plasticity(
         return ActionContingentActorCritic(n_pre, n_post, genome.plasticity)
     elif family == "consequence_prediction_credit":
         return ConsequencePredictionCredit(n_pre, n_post, genome.plasticity)
-    elif family in ("reward_eprop_rate_adaptation", "teacher_demo_eprop"):
+    elif family in ("reward_eprop_rate_adaptation", "teacher_demo_eprop", "r2_fixed_eprop_baseline"):
         return RewardEpropRateAdaptation(genome, n_pre, n_post, dev)
+    elif family == "inherited_learning_signal_generator":
+        return InheritedSignalGeneratorEprop(genome, n_pre, n_post, dev)
     else:
         raise ValueError(f"Unknown plasticity_family: {family!r}")
 
@@ -355,7 +358,10 @@ class ModularOrganism:
                     chosen_channel=chosen_channel,
                     n_channels=n_channels,
                 )
-            elif rule.name() == "reward_eprop_rate_adaptation":
+            elif rule.name() in (
+                "reward_eprop_rate_adaptation",
+                "inherited_learning_signal_generator",
+            ):
                 motor_logits = getattr(self, "_last_motor_logits", None)
                 if motor_logits is None:
                     return None
@@ -365,16 +371,29 @@ class ModularOrganism:
                     self._last_consequence_terminal,
                 )
                 rule.update_critic(delta_t, self.rho.relational_repr)
-                dW = rule.actor_delta(
+                actor_kwargs = dict(
                     eligibility=elig,
                     delta_t=delta_t,
                     chosen_channel=chosen_channel,
                     motor_logits=motor_logits,
                     n_channels=n_channels,
                 )
-                self._last_learning_signal_norm = float(
-                    rule.learning_signal_per_unit(delta_t, chosen_channel, motor_logits).norm().item()
-                )
+                if rule.name() == "inherited_learning_signal_generator":
+                    actor_kwargs["relational_state"] = self.rho.relational_repr
+                dW = rule.actor_delta(**actor_kwargs)
+                if rule.name() == "inherited_learning_signal_generator":
+                    self._last_learning_signal_norm = float(
+                        rule.learning_signal_per_unit(
+                            delta_t,
+                            chosen_channel,
+                            motor_logits,
+                            relational_state=self.rho.relational_repr,
+                        ).norm().item()
+                    )
+                else:
+                    self._last_learning_signal_norm = float(
+                        rule.learning_signal_per_unit(delta_t, chosen_channel, motor_logits).norm().item()
+                    )
                 self._last_td_error = float(delta_t.item())
                 self._last_critic_value = float(rule.critic.value(self.rho.relational_repr).item())
             else:
@@ -522,11 +541,14 @@ class ModularOrganism:
                 "eligibility_norm_before_credit": 0.0,
                 "rewarded_update_norm": 0.0,
             }
-        if not hasattr(self.plasticity_rule, "actor_delta") or self.plasticity_rule.name() != "reward_eprop_rate_adaptation":
+        if not hasattr(self.plasticity_rule, "actor_delta") or self.plasticity_rule.name() not in (
+            "reward_eprop_rate_adaptation",
+            "inherited_learning_signal_generator",
+        ):
             return {
                 "applied": False,
                 "refused": True,
-                "reason": "teacher_credit_requires_reward_eprop",
+                "reason": "teacher_credit_requires_eprop_family",
                 "credit_source": "teacher_demonstration",
                 "eligibility_norm_before_credit": 0.0,
                 "rewarded_update_norm": 0.0,
@@ -549,24 +571,37 @@ class ModularOrganism:
                 is_terminal=True,
             )
             self.plasticity_rule.update_critic(delta_t, self.rho.relational_repr)
-            dW = self.plasticity_rule.actor_delta(
+            actor_kwargs = dict(
                 eligibility=elig,
                 delta_t=delta_t,
                 chosen_channel=demo_channel,
                 motor_logits=motor_logits,
                 n_channels=self.genome.n_motor_channels,
             )
+            if self.plasticity_rule.name() == "inherited_learning_signal_generator":
+                actor_kwargs["relational_state"] = self.rho.relational_repr
+            dW = self.plasticity_rule.actor_delta(**actor_kwargs)
             if hasattr(self, "_r2_plasticity_channel_mask"):
                 dW = dW * self._r2_plasticity_channel_mask
             if hasattr(self, "_r2_plasticity_mask_gain"):
                 dW = dW * float(self._r2_plasticity_mask_gain)
             self.action_ctx.W_motor.weight.data.add_(dW)
             self._last_actor_delta = dW.detach().clone()
-            self._last_learning_signal_norm = float(
-                self.plasticity_rule.learning_signal_per_unit(
-                    delta_t, demo_channel, motor_logits
-                ).norm().item()
-            )
+            if self.plasticity_rule.name() == "inherited_learning_signal_generator":
+                self._last_learning_signal_norm = float(
+                    self.plasticity_rule.learning_signal_per_unit(
+                        delta_t,
+                        demo_channel,
+                        motor_logits,
+                        relational_state=self.rho.relational_repr,
+                    ).norm().item()
+                )
+            else:
+                self._last_learning_signal_norm = float(
+                    self.plasticity_rule.learning_signal_per_unit(
+                        delta_t, demo_channel, motor_logits
+                    ).norm().item()
+                )
             self._last_td_error = float(delta_t.item())
             self._last_critic_value = float(
                 self.plasticity_rule.critic.value(self.rho.relational_repr).item()
