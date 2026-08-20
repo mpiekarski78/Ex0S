@@ -1,0 +1,75 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH.ATTEMPT_001.CLOSURE.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "ReferenceBirth",
+  "attempt": "001",
+  "type": "attempt_closure_lock",
+  "status": "closed_invalidated_search",
+  "written_utc": "2026-08-20T09:15:00Z",
+
+  "not_a_dev_decision": true,
+  "reason_no_dev_decision": "Preregistered scientific program (outer optimization + matched causal interventions + update-effect telemetry) was not exercised. Fixed arms without interventions cannot falsify e-prop.",
+
+  "pins": {
+    "prereg": "docs/exos_dev1.stage_a_reference_birth.prereg.lock",
+    "prereg_commit": "82c0b30",
+    "implementation_sha": "60cc5999b1a1981ae58135958a5fba8f5e8666eb",
+    "audit": "docs/exos_dev1.stage_a_reference_birth.budget_trajectory.audit.lock",
+    "run_id": "exos_dev1_reference_birth_scored_20260820",
+    "run_directory": "runs/exos_dev1/stage_a_reference_birth/exos_dev1_reference_birth_scored_20260820"
+  },
+
+  "operational_runner_output": "reference_birth_validation_fail",
+  "scientific_code": "outer_optimization_not_exercised",
+  "interpretation": "invalidated_search__fixed_arms_without_causal_interventions",
+  "architectural_conclusion": "none",
+  "eprop_conclusion": "inconclusive",
+
+  "confirmation": {
+    "seeds_registered": [
+      "exos_dev1_reference_birth_conf_001",
+      "exos_dev1_reference_birth_conf_002",
+      "exos_dev1_reference_birth_conf_003",
+      "exos_dev1_reference_birth_conf_004"
+    ],
+    "consumed": false,
+    "untouched": true,
+    "auto_inherit_forbidden": true,
+    "future_revision_rule": "Reuse requires explicit prereg authorization; otherwise register fresh confirmation seeds"
+  },
+
+  "diagnostic_ceiling_reconstruction": {
+    "status": "post_scored_read_only_evidence",
+    "not_part_of_scored_ledger": true,
+    "seed": "exos_dev1_reference_birth_world_001",
+    "scored_lifetime_training_accuracy": 0.3359375,
+    "reconstructed_episode_accuracy_quartiles": [0.08203125, 0.28515625, 0.5, 0.4765625],
+    "reconstructed_hard_eval_fresh_world": 0.517578125,
+    "reconstructed_hard_eval_continue_stream": 0.50390625,
+    "preflight_8ep_accuracy_not_authoritative": 0.1171875,
+    "establishes": "interaction world learnable within frozen lifetime under autograd ceiling"
+  },
+
+  "forbidden_after_closure": [
+    "treat_attempt_001_as_eprop_falsification",
+    "write_normal_dev_decision_from_attempt_001",
+    "replay_attempt_001_partitions_as_scientific_retry",
+    "auto_route_attempt_001_confirmation_seeds"
+  ],
+
+  "authorizes": {
+    "reference_birth_r1": {
+      "role": "apparatus_correction",
+      "not_attempt_001_replay": true,
+      "requires_fresh_partitions": true,
+      "required_components": [
+        "batched_evolution_strategies_outer_optimization",
+        "full_scored_matched_interventions",
+        "update_effect_telemetry_per_credit",
+        "teacher_path_proof",
+        "search_surface_sensitivity_preflight"
+      ]
+    }
+  }
+}

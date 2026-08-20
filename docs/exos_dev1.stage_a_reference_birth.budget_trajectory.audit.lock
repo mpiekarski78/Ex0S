@@ -1,0 +1,186 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH.BUDGET_TRAJECTORY.AUDIT",
+  "type": "read_only_audit",
+  "status": "complete",
+  "written_utc": "2026-08-20T09:05:00Z",
+  "run_id": "exos_dev1_reference_birth_scored_20260820",
+  "attempt": "001",
+  "implementation_sha": "60cc5999b1a1981ae58135958a5fba8f5e8666eb",
+  "prereg": "docs/exos_dev1.stage_a_reference_birth.prereg.lock",
+  "dev_decision_written": false,
+  "note": "Audit only. Do not treat as e-prop falsification or Stage A close.",
+
+  "operational_outcome_prereg": {
+    "summary_outcome": "reference_birth_validation_complete",
+    "candidate_decision_codes": "reference_birth_validation_fail",
+    "first_failing_causal_predicate_all_treatments": "grounding_fail",
+    "confirmation_consumed": false,
+    "wall_seconds": 25.77,
+    "device": "cuda"
+  },
+
+  "world_structure": {
+    "n_symbols": 16,
+    "n_roles_correct_channels": 4,
+    "organism_n_motor_channels": 32,
+    "chance_uniform_32": 0.03125,
+    "uniform_among_four_roles_only": 0.25,
+    "episodes_per_life": 32,
+    "events_per_episode": 32,
+    "interactions_per_life": 1024,
+    "exposures_per_symbol_typical": {"min": 50, "median": 63, "max": 85},
+    "exposures_per_role_typical": "~235-274 per life",
+    "note": "Correct answers live only in channels {0,1,2,3}; 28/32 motor channels are never rewarded."
+  },
+
+  "ceiling": {
+    "scored_record": {
+      "seed": "exos_dev1_reference_birth_world_001",
+      "policy_mode": "stochastic",
+      "train_with_autograd": true,
+      "lifetime_training_accuracy": 0.3359375,
+      "cumulative_reward": 276.0,
+      "action_entropy_mean": 1.1924856541991176,
+      "update_norm_mean": 0.831582777277049,
+      "critic_value_mean": 0.24212598835401877,
+      "reward_prediction_error_mean": 0.02740526059642434,
+      "hard_eval_in_scored_ledger": false,
+      "per_episode_curve_in_scored_ledger": false
+    },
+    "preflight_short_life_8ep_accuracy": 0.1171875,
+    "diagnostic_reconstruction_same_seed_seed0": {
+      "purpose": "recover missing training curve / hard-eval; not a scored amendment",
+      "lifetime_training_accuracy_matches_ledger": 0.3359375,
+      "episode_accuracy_quartiles": [0.08203125, 0.28515625, 0.5, 0.4765625],
+      "episode_accuracy_first8": [0.0, 0.0625, 0.03125, 0.0625, 0.03125, 0.0625, 0.25, 0.15625],
+      "episode_accuracy_last8": [0.40625, 0.46875, 0.40625, 0.59375, 0.5, 0.46875, 0.4375, 0.53125],
+      "hard_eval_fresh_world_same_seed": 0.517578125,
+      "hard_eval_continue_trained_stream": 0.50390625
+    },
+    "interpretation": "Ceiling is substantially above chance (3.125%) and above naive 4-role uniform (25%). Lifetime training accuracy rises from ~8% early to ~48-50% late; post-train hard-eval ~51%. The 11.7% figure was the short preflight sample, not the scored ceiling. Setup is not underpowered at the 11.7% level."
+  },
+
+  "outer_optimization": {
+    "outer_updates_executed": 0,
+    "inherited_eprop_parameters_changed": false,
+    "evidence": [
+      "search_reference_birth.py evaluates fixed TREATMENT_ARMS once each; no meta/evolution/genome plasticity search",
+      "single genome_hash per arm across all six worlds",
+      "scaffold_hash identical across all treatment lives (default ContinuousScaffoldPhenotype)"
+    ],
+    "training_lives_per_treatment": 2,
+    "validation_lives_per_treatment": 4,
+    "lives_are_independent_newborns": true,
+    "scientific_code": "outer_optimization_not_exercised"
+  },
+
+  "treatment_accuracies": {
+    "reward_eprop_rate_adaptation": {
+      "train": [0.0224609375, 0.0205078125],
+      "train_mean": 0.021484375,
+      "val_hard": [0.0, 0.0, 0.0, 0.0],
+      "val_mean": 0.0
+    },
+    "teacher_demo_eprop": {
+      "train": [0.0224609375, 0.0205078125],
+      "train_mean": 0.021484375,
+      "val_hard": [0.0, 0.0, 0.0, 0.0],
+      "val_mean": 0.0
+    },
+    "r2_1_local_plasticity_control": {
+      "train": [0.0224609375, 0.0205078125],
+      "train_mean": 0.021484375,
+      "val_hard": [0.0, 0.0, 0.0, 0.0],
+      "val_mean": 0.0,
+      "control_lock": "non_executable; default scaffold used"
+    }
+  },
+
+  "telemetry": {
+    "action_entropy": {
+      "treatments_train_and_val_scores": "~3.465 (≈ ln 32); soft score distribution remains near-uniform",
+      "ceiling": 1.1925,
+      "hard_val_chosen_channel_collapse": "argmax concentrates on channels 30/31 (never correct roles)"
+    },
+    "eligibility_norm_mean_train": {
+      "reward_eprop": "~0.095",
+      "teacher_demo": "~0.134",
+      "r2_1_control": "~0.095"
+    },
+    "update_norm_mean": {
+      "reward_eprop": "~2.2e-08 to 2.7e-08",
+      "teacher_demo": "~3.3e-08 to 3.9e-08",
+      "r2_1_control": "~1.0e-07 to 1.6e-07",
+      "ceiling": 0.8316,
+      "note": "Treatment updates are ~7 orders of magnitude smaller than ceiling gradient norms."
+    },
+    "critic_value_mean_train": {
+      "reward_eprop_and_teacher": "~-0.009",
+      "r2_1_control": 0.0
+    },
+    "td_error_rpe_mean_train": {
+      "reward_eprop_and_teacher": "~-0.075 to -0.077",
+      "r2_1_control": 0.0
+    },
+    "rewarded_action_margin_increase_fraction": null,
+    "rewarded_action_margin_increase_fraction_reason": "Not instrumented in life eval; cannot audit learning-signal direction from ledger."
+  },
+
+  "matched_interventions": {
+    "scored_run_executed": false,
+    "ledger_intervention_field": "none for all 18 treatment lives",
+    "preflight_only": ["reward_off (runs; not scored comparison)"],
+    "missing_from_scored_path": [
+      "reward_off",
+      "eligibility_zero",
+      "eligibility_permuted",
+      "motor_feedback_permuted"
+    ]
+  },
+
+  "teacher": {
+    "demos_delivered_per_life_expected": 1023,
+    "timing": "subsequent_observed_motor_event after credit",
+    "behavior_follow_rate_recorded": false,
+    "train_accuracy_vs_reward_eprop": "identical to two decimals on both cheap seeds",
+    "note": "Teacher arm did not improve over reward-eprop in recorded accuracy; follow-through unmeasured."
+  },
+
+  "confirmation": {
+    "seeds_registered": [
+      "exos_dev1_reference_birth_conf_001",
+      "exos_dev1_reference_birth_conf_002",
+      "exos_dev1_reference_birth_conf_003",
+      "exos_dev1_reference_birth_conf_004"
+    ],
+    "consumed": false,
+    "untouched": true,
+    "future_revision_rule": "Attempt-001 confirmation seeds must not be auto-inherited. A future arm revision requires explicit prereg authorization to reuse these seeds, or must register fresh confirmation seeds."
+  },
+
+  "scientific_fork": {
+    "ceiling_strongly_accurate_treatments_flat": {
+      "supported": true,
+      "caveat": "Requires fair treatment optimization budget; see outer_optimization_not_exercised"
+    },
+    "ceiling_underpowered_at_11pct": {
+      "supported": false,
+      "reason": "11.7% was preflight 8-ep sample; scored ceiling hard-eval reconstructs to ~51%"
+    },
+    "outer_optimization_not_exercised": {
+      "supported": true,
+      "binding": true
+    },
+    "learning_signal_implementation_failure": {
+      "supported": "inconclusive",
+      "reason": "Update norms near machine noise and hard-val collapse to never-correct channels are suspicious, but rewarded-margin direction was not recorded; cannot score this fork from ledger alone."
+    },
+    "primary_scientific_interpretation_pending_dev_decision": "outer_optimization_not_exercised",
+    "secondary_observations": [
+      "Operational outcome remains reference_birth_validation_fail",
+      "Ceiling demonstrates the interaction world is learnable within the frozen lifetime under autograd",
+      "E-prop is not fairly falsified as a local mechanism until inherited parameters are outer-optimized and matched interventions are scored",
+      "Do not write mechanism-wall / e-prop-failure close from attempt 001 as currently budgeted"
+    ]
+  }
+}
