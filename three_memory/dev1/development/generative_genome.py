@@ -49,12 +49,12 @@ class GenerativeGenome:
     learning_rate: float = 3e-4
     critic_learning_rate: float = 3e-4
     eligibility_decay: float = 0.9
-    gestational_learning_rate: float = 1e-3
-    valence_gain: float = 1.0
+    gestational_learning_rate: float = 2e-1
+    valence_gain: float = 2.0
     homeostatic_setpoint: float = 0.5
 
     # Developmental schedule (age / internal signals only)
-    gestation_ticks: int = 64
+    gestation_ticks: int = 128
     babble_interval: int = 4
     calibration_onset_frac: float = 0.25
     homeostasis_onset_frac: float = 0.5

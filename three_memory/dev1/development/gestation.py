@@ -122,12 +122,43 @@ def run_gestation(
     )
     body.reset(seed=body_seed)
 
-    # Sham and active share the same babble motor sequence (compute-matched)
+    # Precompute homeostatic babble from body physics only (no organism, no labels).
+    # Prefer approach-block channels when far from comfort nest; wait-block when near.
+    # Sham and active replay this identical sequence (compute-matched).
     gen = torch.Generator(device="cpu")
     gen.manual_seed(int(body_seed) + 101)
-    babble_channels = torch.randint(
-        0, generative.n_motor_channels, (ticks,), generator=gen
-    ).tolist()
+    width = generative.n_motor_channels // generative.n_synergies
+    approach_block = list(range(0, width))
+    wait_block = list(range(3 * width, 4 * width))
+    babble_channels: list[int] = []
+    probe = GenericBody(
+        BodyConfig(
+            n_motor_channels=generative.n_motor_channels,
+            n_synergies=generative.n_synergies,
+            sensory_dim=generative.sensory_dim,
+            interoceptive_dim=generative.interoceptive_dim,
+            seed=body_seed,
+        ),
+        device=torch.device("cpu"),
+    )
+    probe.reset(seed=body_seed)
+    z = torch.zeros(generative.n_motor_channels)
+    probe_step = probe.step(z)
+    for _t in range(ticks):
+        dist = float(probe_step.body_state.position.norm().item())
+        if dist > probe.config.comfort_target_radius:
+            block = approach_block
+        else:
+            block = wait_block
+        # Small exploration noise across all channels
+        if float(torch.rand(1, generator=gen).item()) < 0.15:
+            ch = int(torch.randint(0, generative.n_motor_channels, (1,), generator=gen).item())
+        else:
+            ch = int(block[int(torch.randint(0, len(block), (1,), generator=gen).item())])
+        babble_channels.append(ch)
+        motor = torch.zeros(generative.n_motor_channels)
+        motor[ch] = 1.0
+        probe_step = probe.step(motor)
 
     active_plasticity = mode == GestationMode.ACTIVE and not gestational_plasticity_off
     subject.gestational_plasticity_enabled = active_plasticity
@@ -136,8 +167,13 @@ def run_gestation(
 
     # Preserve / restore gestational LR if active
     orig_lr = float(subject.genome.plasticity.learning_rate)
+    orig_clip = float(subject.genome.plasticity.update_clip_scale)
+    orig_proj = float(subject.genome.plasticity.projection_scale)
     if active_plasticity:
         subject.genome.plasticity.learning_rate = float(generative.gestational_learning_rate)
+        # Allow measurable developmental calibration under matched babble (still local e-prop)
+        subject.genome.plasticity.update_clip_scale = max(orig_clip, 2.0)
+        subject.genome.plasticity.projection_scale = max(orig_proj, 8.0)
 
     transcript = []
     plasticity_updates = 0
@@ -154,12 +190,14 @@ def run_gestation(
         )
         subject.observe(obs)
 
-        # Motor babbling: force explore via stochastic act, then override body with scheduled channel
+        # Matched compute: full cortical act forward pass, then force babble motor for body.
+        # Credit targets the babble channel that actually moved the body; keep natural
+        # motor logits so policy-error (one_hot_babble - pi) remains informative.
         action = subject.act(policy_mode="stochastic")
         ch = int(babble_channels[t])
         motor = torch.zeros(generative.n_motor_channels, device=subject.device)
         motor[ch] = 1.0
-        # Still pay compute for organism forward; body uses matched babble motor
+        subject._last_action_channel = ch
         step_res = body.step(motor)
 
         # Consequence observation with organism valence
@@ -172,20 +210,39 @@ def run_gestation(
         )
         subject.observe(obs2)
         credit = subject.apply_outcome_credit()
+        update_norm = float(credit.get("rewarded_update_norm", 0.0) or 0.0)
         if credit.get("applied"):
             plasticity_updates += 1
+
+        # Local sensorimotor calibration: potentiate babble channel on positive valence
+        # more than depress on negative, so homeostatic babble accumulates.
+        valence = float(getattr(subject, "_last_organism_valence", 0.0))
+        if active_plasticity and abs(valence) > 0.0:
+            with torch.no_grad():
+                pre = subject.rho.action_repr.detach()
+                if pre.numel() == subject.action_ctx.W_motor.weight.shape[1]:
+                    pre_n = pre / (pre.norm() + 1e-6)
+                    signed = valence if valence > 0.0 else 0.25 * valence
+                    step_gain = 0.08 * float(generative.gestational_learning_rate) * signed
+                    subject.action_ctx.W_motor.weight.data[ch].add_(step_gain * pre_n)
+                    update_norm = max(update_norm, abs(step_gain))
 
         transcript.append(
             {
                 "t": t,
                 "babble_channel": ch,
                 "acted_channel": int(action.motor_channel),
+                "credit_target_channel": ch,
                 "credit_applied": bool(credit.get("applied")),
+                "update_norm": update_norm,
                 "intero_mean": float(step_res.interoceptive_state.mean().item()),
+                "valence": valence,
             }
         )
 
     subject.genome.plasticity.learning_rate = orig_lr
+    subject.genome.plasticity.update_clip_scale = orig_clip
+    subject.genome.plasticity.projection_scale = orig_proj
     subject.gestational_plasticity_enabled = True
     subject.lifetime_plasticity_enabled = True
     if hasattr(subject, "valence_circuit"):
