@@ -1,0 +1,285 @@
+{
+  "_schema": "exos_dev1.stage_a_developmental_birth_r4_r2.prereg.v1",
+  "_immutable": true,
+  "written_utc": "2026-08-20T17:45:00Z",
+
+  "revision": "DevelopmentalBirthR4-R2",
+  "scientific_attempt_number": 1,
+  "role": "r4_factorial_on_certified_nursery_body_v2",
+  "not_quietly_attempt_003_of_r4": true,
+  "scored_run_authorized": true,
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.contract.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.isolation.lock",
+    "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
+    "docs/exos_dev1.stage_a_nursery_body_v2.conventions.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_developmental_body_reference_wall.dev_decision.lock"
+  ],
+
+  "provenance": {
+    "nursery_body_v2_freeze": "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
+    "conventions": "docs/exos_dev1.stage_a_nursery_body_v2.conventions.lock",
+    "r4_architecture_implementation_sha": "ba97883b6864a0345901b654396a417db3163a03",
+    "r4_r1_decision": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
+    "wall_decision": "docs/exos_dev1.stage_a_developmental_body_reference_wall.dev_decision.lock",
+    "preflight_seed": "developmental_birth_r4_r2_excluded_preflight_20260820",
+    "preflight_artifact": "runs/exos_dev1/stage_a_developmental_birth_r4_r2/excluded_preflight_and_benchmark.json"
+  },
+
+  "body_world": {
+    "version": "NurseryBodyV2",
+    "package": "three_memory/dev1/nursery_v2/",
+    "mass_preserving_projection": true,
+    "egocentric_synergies": ["forward", "backward", "rotate_left", "rotate_right"],
+    "historical_generic_body_untouched": true
+  },
+
+  "conventions_pinned": {
+    "reachability": {
+      "chi": "(d0 - r_comfort) / max_useful_travel",
+      "analytically_reachable": "chi <= 1",
+      "safety_rule": "chi <= 0.85"
+    },
+    "ac_retrain_tolerance": {
+      "n_initializations": 3,
+      "initialization_seeds": [0, 1, 2],
+      "aggregation": "best_of_three_by_end_in_zone_then_distance_reduction",
+      "stop_behavior": "always_run_exactly_three_initializations_then_stop",
+      "not_retry_until_ceiling_passes": true
+    },
+    "behavioral_gates": {
+      "ever_reached": "visited comfort zone on any tick",
+      "end_in_zone": "terminal state inside comfort zone",
+      "distance_reduction": "mean_start_distance - mean_end_distance",
+      "tick_fraction_comfort_retired": true,
+      "primary_scored_episode_success": "end_in_zone"
+    }
+  },
+
+  "mechanism_unchanged_from_r4": {
+    "genome": "generative_construction_program",
+    "gestation": "compute_matched_sham_vs_active_homeostatic_babble_on_nursery_v2",
+    "valence": "organism_owned_from_consecutive_interoceptive_states",
+    "factorial": "2x2_sham_active_x_fixed_eprop_lsg",
+    "same_pre_gestation_checkpoint_for_active_sham": true,
+    "same_nursery_v2_trajectories_and_budgets_across_credit_columns": true,
+    "gestational_and_lifetime_plasticity_off_separated": true
+  },
+
+  "factorial_cells": [
+    {"development": "sham_gestation", "credit": "r2_fixed_eprop_baseline"},
+    {"development": "sham_gestation", "credit": "inherited_learning_signal_generator"},
+    {"development": "active_gestation", "credit": "r2_fixed_eprop_baseline"},
+    {"development": "active_gestation", "credit": "inherited_learning_signal_generator"}
+  ],
+
+  "ceiling": {
+    "kind": "nursery_v2_recurrent_ac_same_observation_best_of_three",
+    "required_on_every_scored_setup_before_ladder": true,
+    "exact_dynamics_beam_planner_is_reference_not_scored_ceiling": true,
+    "ac_retrain_tolerance_frozen": true
+  },
+
+  "budget": {
+    "outer_optimizer": "matched_es_per_credit_column",
+    "generations": 8,
+    "population_size": 8,
+    "mutation_scale": 0.15,
+    "n_episodes_per_life": 32,
+    "episode_ticks": 16,
+    "gestation_ticks": 128,
+    "lives_per_individual": 1,
+    "training_cheap_seeds": 2,
+    "validation_seeds": 4,
+    "confirmation_seeds": 4,
+    "outer_world_exposure_matched_across_credit_columns": true,
+    "evaluation_budgets_matched_across_credit_columns": true,
+    "lsg_column_no_extra_lives_for_parameter_count": true,
+    "scored_run_cuda_required": true,
+    "protocol": "full_evidence_before_decision_ladder"
+  },
+
+  "thresholds": {
+    "note": "Primary gates use end_in_zone / distance_reduction / ever_reached. Tick-fraction comfort is not a primary scored gate.",
+    "optimization_ceiling_min_end_in_zone_rate": 0.25,
+    "optimization_ceiling_min_distance_reduction": 0.10,
+    "optimization_ceiling_min_margin_over_random": 0.12,
+    "grounded_acquisition_min_train_end_in_zone": 0.25,
+    "grounded_acquisition_min_signed_margin_proxy": 0.0,
+    "development_not_causal_if_sham_within_epsilon_of_active": 0.05,
+    "fresh_world_min_validation_end_in_zone": 0.20,
+    "lifetime_plasticity_off_success_implies_genome_overencoded_behavior": true,
+    "actor_critic_ceiling_measurement_only": true
+  },
+
+  "decision_ladder": [
+    "developmental_setup_fail",
+    "gestation_leakage",
+    "body_controllability_fail",
+    "optimization_ceiling_fail",
+    "genome_overencoded_behavior",
+    "grounded_acquisition_fail",
+    "development_not_causal",
+    "self_credit_not_causal",
+    "teacher_credit_not_causal",
+    "lsg_not_causal",
+    "fresh_world_fail",
+    "renamed_symbol_grounding_fail",
+    "stage_a_r4_r2_validation_pass",
+    "stage_a_r4_r2_confirmation_pass"
+  ],
+
+  "required_interventions": [
+    "sham_gestation",
+    "zero_tick_skip_observational",
+    "gestational_plasticity_off",
+    "lifetime_plasticity_off",
+    "reward_valence_off",
+    "motor_to_body_permutation",
+    "proprioceptive_feedback_permutation",
+    "teacher_demonstration_permutation",
+    "open_loop_or_shuffled_action_consequences",
+    "lsg_off",
+    "lsg_permuted"
+  ],
+
+  "seed_partitions": {
+    "note": "Fresh R4-R2 discovery/validation/confirmation. Prior R4/R4-R1/wall and Nursery v2 engineering/certification seeds permanently excluded.",
+    "excluded_seeds": [
+      "nursery_v2_eng_seed_001",
+      "nursery_v2_eng_seed_002",
+      "nursery_v2_eng_seed_003",
+      "exos_dev1_reference_birth_world_001",
+      "exos_dev1_reference_birth_world_002",
+      "exos_dev1_reference_birth_world_003",
+      "exos_dev1_reference_birth_world_004",
+      "exos_dev1_reference_birth_world_005",
+      "exos_dev1_reference_birth_world_006",
+      "exos_dev1_reference_birth_conf_001",
+      "exos_dev1_reference_birth_conf_002",
+      "exos_dev1_reference_birth_conf_003",
+      "exos_dev1_reference_birth_conf_004",
+      "exos_dev1_reference_birth_r1_world_001",
+      "exos_dev1_reference_birth_r1_world_002",
+      "exos_dev1_reference_birth_r1_world_003",
+      "exos_dev1_reference_birth_r1_world_004",
+      "exos_dev1_reference_birth_r1_world_005",
+      "exos_dev1_reference_birth_r1_world_006",
+      "exos_dev1_reference_birth_r1_conf_001",
+      "exos_dev1_reference_birth_r1_conf_002",
+      "exos_dev1_reference_birth_r1_conf_003",
+      "exos_dev1_reference_birth_r1_conf_004",
+      "exos_dev1_reference_birth_r2_world_001",
+      "exos_dev1_reference_birth_r2_world_002",
+      "exos_dev1_reference_birth_r2_world_003",
+      "exos_dev1_reference_birth_r2_world_004",
+      "exos_dev1_reference_birth_r2_world_005",
+      "exos_dev1_reference_birth_r2_world_006",
+      "exos_dev1_reference_birth_r2_conf_001",
+      "exos_dev1_reference_birth_r2_conf_002",
+      "exos_dev1_reference_birth_r2_conf_003",
+      "exos_dev1_reference_birth_r2_conf_004",
+      "exos_dev1_reference_birth_r3_world_001",
+      "exos_dev1_reference_birth_r3_world_002",
+      "exos_dev1_reference_birth_r3_world_003",
+      "exos_dev1_reference_birth_r3_world_004",
+      "exos_dev1_reference_birth_r3_world_005",
+      "exos_dev1_reference_birth_r3_world_006",
+      "exos_dev1_reference_birth_r3_conf_001",
+      "exos_dev1_reference_birth_r3_conf_002",
+      "exos_dev1_reference_birth_r3_conf_003",
+      "exos_dev1_reference_birth_r3_conf_004",
+      "exos_dev1_developmental_birth_r4_world_001",
+      "exos_dev1_developmental_birth_r4_world_002",
+      "exos_dev1_developmental_birth_r4_world_003",
+      "exos_dev1_developmental_birth_r4_world_004",
+      "exos_dev1_developmental_birth_r4_world_005",
+      "exos_dev1_developmental_birth_r4_world_006",
+      "exos_dev1_developmental_birth_r4_conf_001",
+      "exos_dev1_developmental_birth_r4_conf_002",
+      "exos_dev1_developmental_birth_r4_conf_003",
+      "exos_dev1_developmental_birth_r4_conf_004",
+      "exos_dev1_developmental_birth_r4_r1_world_001",
+      "exos_dev1_developmental_birth_r4_r1_world_002",
+      "exos_dev1_developmental_birth_r4_r1_world_003",
+      "exos_dev1_developmental_birth_r4_r1_world_004",
+      "exos_dev1_developmental_birth_r4_r1_world_005",
+      "exos_dev1_developmental_birth_r4_r1_world_006",
+      "exos_dev1_developmental_birth_r4_r1_conf_001",
+      "exos_dev1_developmental_birth_r4_r1_conf_002",
+      "exos_dev1_developmental_birth_r4_r1_conf_003",
+      "exos_dev1_developmental_birth_r4_r1_conf_004",
+      "reference_birth_excluded_preflight_20260820",
+      "reference_birth_r1_excluded_preflight_20260820",
+      "reference_birth_r2_excluded_preflight_20260820",
+      "reference_birth_r3_excluded_preflight_20260820",
+      "developmental_birth_r4_excluded_preflight_20260820",
+      "developmental_birth_r4_r1_excluded_ceiling_preflight_20260820",
+      "developmental_birth_r4_r2_excluded_preflight_20260820"
+    ],
+    "discovery_world_seeds": [
+      "exos_dev1_developmental_birth_r4_r2_world_001",
+      "exos_dev1_developmental_birth_r4_r2_world_002"
+    ],
+    "validation_world_seeds": [
+      "exos_dev1_developmental_birth_r4_r2_world_003",
+      "exos_dev1_developmental_birth_r4_r2_world_004",
+      "exos_dev1_developmental_birth_r4_r2_world_005",
+      "exos_dev1_developmental_birth_r4_r2_world_006"
+    ],
+    "confirmation_seeds": [
+      "exos_dev1_developmental_birth_r4_r2_conf_001",
+      "exos_dev1_developmental_birth_r4_r2_conf_002",
+      "exos_dev1_developmental_birth_r4_r2_conf_003",
+      "exos_dev1_developmental_birth_r4_r2_conf_004"
+    ],
+    "engineering_and_certification_seeds_permanently_excluded": true,
+    "prior_confirmation_auto_inherit_forbidden": true
+  },
+
+  "implementation": {
+    "life_file": "experiments/dev1/developmental_birth_r4_r2_life.py",
+    "ceiling_file": "experiments/dev1/developmental_birth_r4_r2_ceiling.py",
+    "outer_file": "experiments/dev1/developmental_birth_r4_r2_outer.py",
+    "preflight_file": "experiments/dev1/developmental_birth_r4_r2_preflight.py",
+    "runner_file": "experiments/dev1/search_developmental_birth_r4_r2.py",
+    "tests_file": "tests/dev1/test_stage_a_developmental_birth_r4_r2.py",
+    "nursery_package": "three_memory/dev1/nursery_v2/"
+  },
+
+  "run_identity": {
+    "run_id": "exos_dev1_developmental_birth_r4_r2_scored_20260820",
+    "output_dir": "runs/exos_dev1/stage_a_developmental_birth_r4_r2/exos_dev1_developmental_birth_r4_r2_scored_20260820",
+    "preflight_seed": "developmental_birth_r4_r2_excluded_preflight_20260820",
+    "attempt": "001",
+    "device_policy": "cuda_required"
+  },
+
+  "unchanged": {
+    "stage_b_boundary": "locked",
+    "product_version": "0.0.004",
+    "r1_r2_r3_artifacts_and_decisions": "immutable",
+    "r4_attempt_002_artifacts": "immutable",
+    "r4_r1_decision_db69d10": "immutable",
+    "wall_decision": "immutable"
+  },
+
+  "forbidden": [
+    "scored_execution_before_explicit_authorization",
+    "retry_until_ceiling_passes",
+    "using_tick_fraction_comfort_as_primary_scored_gate",
+    "reusing_nursery_engineering_or_certification_seeds",
+    "reusing_unreachable_r4_generic_body_contract",
+    "rewriting_db69d10_or_wall_decision",
+    "substituting_r2_or_r3_metrics_as_factorial_cells",
+    "auto_inheriting_prior_confirmation",
+    "changing_seed_partitions_after_this_lock",
+    "inspecting_confirmation_worlds_during_run",
+    "patching_runner_during_run",
+    "cpu_fallback_without_prereg_amendment",
+    "runner_supplying_behavioral_correctness_to_plasticity",
+    "stage_b_execution"
+  ]
+}

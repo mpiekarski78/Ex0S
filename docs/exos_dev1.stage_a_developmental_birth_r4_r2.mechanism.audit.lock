@@ -1,0 +1,142 @@
+{
+  "_schema": "exos_dev1.stage_a_developmental_birth_r4_r2.mechanism.audit.v1",
+  "_immutable": true,
+  "type": "read_only_mechanism_audit",
+  "status": "frozen__routing_complete_r4_r2_stopped",
+  "written_utc": "2026-08-20T18:55:00Z",
+  "routing_closed_utc": "2026-08-20T20:30:00Z",
+  "product_version": "0.0.004",
+  "code_changed": false,
+  "stop_lock": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
+  "next_contract": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.contract.lock",
+
+  "source_run": "runs/exos_dev1/stage_a_developmental_birth_r4_r2/exos_dev1_developmental_birth_r4_r2_scored_20260820",
+  "decision": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.dev_decision.lock",
+  "decision_code": "grounded_acquisition_fail",
+  "epsilon_active_sham": 0.05,
+
+  "first_causal_split": {
+    "code": "active_gestation_not_useful",
+    "canonical": "active_gestation_not_useful",
+    "detail": "active_approx_sham__gestation_changed_weights_without_useful_organization",
+    "routing": "new_gestational_sensorimotor_model_lineage_not_r4_r3",
+    "evidence": [
+      "fixed train end_in_zone: active 0.140625 vs sham 0.15625 (delta -0.015625, within eps)",
+      "lsg train end_in_zone: active 0.25 vs sham 0.21875 (delta +0.03125, within eps)",
+      "matched pre_gestation hashes within credit columns; post_gestation hashes diverge; active gestation_plasticity_updates=128 vs sham 0"
+    ],
+    "note": "0.25 active-LSG end_in_zone is not partial acquisition without positive signed margin and with negative mean distance reduction"
+  },
+
+  "comparisons": {
+    "active_vs_sham": {
+      "question": "Did development causally improve lifetime behavior?",
+      "answer": "no_within_epsilon",
+      "detail": "Both credit columns: |active-sham| <= 0.05 on train end_in_zone. Active fixed is worse than sham; active LSG only +0.031. Gestation changed weights but not useful organization."
+    },
+    "lifetime_plasticity_on_vs_off": {
+      "question": "Was success produced by learning during life?",
+      "answer": "weak_positive_but_not_success",
+      "plasticity_off_end_in_zone": 0.0625,
+      "plasticity_on_teacher_credit_off_end_in_zone": 0.125,
+      "plasticity_on_teacher_baseline_end_in_zone": 0.15625,
+      "detail": "Plasticity-on exceeds off, so lifetime machinery is not inert; absolute rates remain near random and margins ~0. Not the first failing split."
+    },
+    "early_vs_late_within_life": {
+      "question": "Did behavior improve within individual lives?",
+      "answer": "unavailable_from_completed_telemetry",
+      "detail": "Organism life records store only episode aggregates; no first/second-half or per-episode organism metrics were logged."
+    },
+    "reward_on_vs_off": {
+      "question": "Did organism-owned valence control learning?",
+      "answer": "weak_difference_without_acquisition",
+      "reward_off_end_in_zone": 0.0625,
+      "reward_on_teacher_credit_off_end_in_zone": 0.125,
+      "signed_margins": "~0 in both",
+      "detail": "Reward-on slightly higher end_in_zone, but no positive signed-margin learning signature."
+    },
+    "closed_loop_vs_open_loop": {
+      "question": "Were action consequences necessary?",
+      "answer": "no_closed_loop_advantage",
+      "open_loop_end_in_zone": 0.1875,
+      "closed_teacher_credit_off_end_in_zone": 0.125,
+      "detail": "Open/shuffled loop is not worse (is higher) than matched closed-loop control; body consequences are not entering learning as a necessary driver of scored end_in_zone."
+    },
+    "lsg_vs_fixed_and_controls": {
+      "question": "Did neuron-specific credit matter?",
+      "answer": "descriptive_lsg_higher_train_not_causal_acquisition",
+      "active_fixed_train_end_in_zone": 0.140625,
+      "active_lsg_train_end_in_zone": 0.25,
+      "lsg_off_end_in_zone": 0.09375,
+      "lsg_permuted_end_in_zone": 0.0625,
+      "detail": "LSG train exceeds fixed and LSG-off/permuted, but active LSG remains within eps of sham LSG and fails margin/validation; not a grounded-acquisition claim."
+    },
+    "train_vs_validation": {
+      "question": "Was any improvement developmental overfit?",
+      "answer": "active_lsg_train_val_drop_present_but_secondary",
+      "active_lsg_train": 0.25,
+      "active_lsg_val": 0.1640625,
+      "active_fixed_train_val": [0.140625, 0.140625],
+      "detail": "Active LSG drops 0.086 from train to val. First split remains active≈sham; overfit is secondary."
+    },
+    "es_parent_vs_selected": {
+      "question": "Did outer search move the developmental program?",
+      "answer": "noisy_lift_without_stable_acquisition",
+      "fixed_gen0_mean": 0.1484375,
+      "fixed_best_so_far": 0.34375,
+      "lsg_gen0_mean": 0.169921875,
+      "lsg_best_so_far": 0.296875,
+      "detail": "Best-so-far exceeds gen0 mean, but generation means do not climb monotonically; selected genomes still fail grounded acquisition (flat/negative margins, negative mean distance reduction)."
+    },
+    "action_distributions": {
+      "question": "Did policies collapse to one synergy?",
+      "answer": "unavailable_for_organism_lives",
+      "detail": "No synergy/channel histograms in organism life telemetry. Ceiling AC/beam only; not an organism policy audit."
+    },
+    "signed_margin_implementation": {
+      "question": "Was it computed over four synergies, after body projection, with correct valence sign?",
+      "answer": "no_not_synergy_aware_not_after_body_projection",
+      "observed_implementation": {
+        "space": "32 motor channels (softmax over W_motor logits)",
+        "margin_definition": "p(rewarded_channel) - max_{k!=rewarded} p(k)",
+        "aggregation": "mean over plasticity updates of outcome_sign * (post_margin - pre_margin)",
+        "outcome_sign_source": "_last_consequence_reward after organism valence when r4_use_organism_valence",
+        "body_projection_used": false,
+        "four_synergy_collapse_used": false
+      },
+      "consequence_for_gate": "Near-zero signed margins are expected if channel-level preference never organizes; the metric also does not certify synergy-level preference after mass-preserving projection."
+    }
+  },
+
+  "supporting_behavior_facts": {
+    "factorial_train_frac_positive_distance_reduction": 0.125,
+    "factorial_train_mean_distance_reduction": -0.0809,
+    "outer_fixed_mean_distance_reduction": -0.0881,
+    "outer_lsg_mean_distance_reduction": -0.1909,
+    "random_ceiling_end_in_zone": 0.125,
+    "reference_ceiling_end_in_zone": 0.3125,
+    "beam_planner_reference_end_in_zone": 0.8125
+  },
+
+  "honest_status": {
+    "valid_world_test": true,
+    "reference_ceiling_passed": true,
+    "confirmation_sealed": true,
+    "organism_acquired_grounded_behavior": false,
+    "architectural_conclusion": "none",
+    "stage_b": "locked",
+    "r4_r2_stopped": true,
+    "routing_from_first_causal_split": "gestational_sensorimotor_forward_model__predictive_calibration_during_babble",
+    "not_threshold_retuning": true,
+    "not_larger_es_over_same_gestation": true,
+    "not_descriptive_lsg_inference": true
+  },
+
+  "forbidden": [
+    "claiming_partial_acquisition_from_0.25_end_in_zone_alone",
+    "retuning_pass_threshold_from_this_audit",
+    "code_changes_in_this_audit",
+    "stage_b_execution",
+    "routing_architecture_from_descriptive_factorial_as_causal_proof"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "_schema": "exos_dev1.stage_a_nursery_body_v2.conventions.v1",
+  "_immutable": true,
+  "type": "measurement_conventions_lock",
+  "status": "frozen",
+  "written_utc": "2026-08-20T17:20:00Z",
+  "product_version": "0.0.004",
+
+  "applies_to": [
+    "NurseryBodyV2",
+    "DevelopmentalBirthR4-R2"
+  ],
+  "freeze": "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
+
+  "reachability": {
+    "chi": "(d0 - r_comfort) / max_useful_travel",
+    "d0": "initial_distance_from_nest",
+    "r_comfort": "comfort_target_radius",
+    "max_useful_travel": "step_scale * episode_ticks under unit forward synergy",
+    "analytically_reachable": "chi <= 1",
+    "safety_rule": "chi <= 0.85",
+    "certification_requirement": "fraction of starts with chi <= 0.85 is at least 0.95",
+    "note": "The 0.85 rule is an explicit safety margin inside the chi<=1 reachable region; it is not a redefinition of chi."
+  },
+
+  "behavioral_gates": {
+    "tick_fraction_comfort_retired": true,
+    "ever_reached": "episode visited comfort zone on any tick (including start after idle reset)",
+    "end_in_zone": "episode terminal state is inside comfort zone",
+    "distance_reduction": "mean_start_distance - mean_end_distance across episodes",
+    "independent": true,
+    "longer_successful_approaches_must_not_be_penalized_by_tick_fraction": true,
+    "primary_scored_episode_success_for_r4_r2": "end_in_zone"
+  },
+
+  "ac_retrain_tolerance": {
+    "meaning": "fixed_initialization_battery_not_retry_until_pass",
+    "n_initializations": 3,
+    "initialization_seeds": [0, 1, 2],
+    "aggregation": "best_of_three_by_end_in_zone_then_distance_reduction",
+    "stop_behavior": "always_run_exactly_three_initializations_then_stop",
+    "forbidden": [
+      "retry_until_ceiling_passes",
+      "open_ended_retrain_loops",
+      "adding_initializations_after_seeing_failures_beyond_the_frozen_three"
+    ]
+  },
+
+  "planner_wording": {
+    "canonical": "exact-dynamics beam planner",
+    "not": "exact optimal oracle"
+  }
+}

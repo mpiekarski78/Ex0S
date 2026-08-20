@@ -1,0 +1,104 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_DEVELOPMENTAL_BIRTH_R4_R2.DEV.DECISION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "DevelopmentalBirthR4-R2",
+  "type": "immutable_dev_decision_record",
+  "status": "closed_for_scored_result",
+  "written_utc": "2026-08-20T17:35:00Z",
+  "product_version": "0.0.004",
+
+  "nursery_body_v2_freeze": "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
+  "conventions": "docs/exos_dev1.stage_a_nursery_body_v2.conventions.lock",
+  "prereg_file": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.prereg.lock",
+  "contract_file": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.contract.lock",
+  "isolation_file": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.isolation.lock",
+  "r4_architecture_implementation_sha": "ba97883b6864a0345901b654396a417db3163a03",
+  "r4_r1_decision": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
+  "wall_decision": "docs/exos_dev1.stage_a_developmental_body_reference_wall.dev_decision.lock",
+  "executing_head_sha": "70cdbc4e50a17aeb07fc87475d406667a192a23c",
+
+  "run_id": "exos_dev1_developmental_birth_r4_r2_scored_20260820",
+  "attempt": "001",
+  "run_directory": "runs/exos_dev1/stage_a_developmental_birth_r4_r2/exos_dev1_developmental_birth_r4_r2_scored_20260820",
+
+  "runner_outcome": "developmental_birth_r4_r2_scored_complete",
+  "decision_code": "grounded_acquisition_fail",
+  "first_causal_split": "active_gestation_not_useful",
+  "interpretation": "nursery_body_v2_reference_ceiling_passed_but_best_active_organism_failed_grounded_acquisition; mechanism_audit_first_split_active_approx_sham",
+  "valid_r4_r2_setup_result": true,
+  "architectural_conclusion": "none",
+  "factorial_status": "descriptive_only_must_not_route_architecture_changes",
+  "confirmation_consumed": false,
+  "stage_b_status": "locked",
+  "candidate_lock": "forbidden",
+  "product": "0.0.004",
+  "lineage_stopped": true,
+  "stop_lock": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
+  "mechanism_audit": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.mechanism.audit.lock",
+  "next_lineage": "GestationalSensorimotorModel",
+
+  "failed_gate": {
+    "code": "grounded_acquisition_fail",
+    "after_ceiling_pass": true,
+    "failed_conjuncts": [
+      "best_active_signed_margin_proxy < 0.0 (observed max active margin ~ -5.3e-9)"
+    ],
+    "passed_or_borderline_conjuncts": [
+      "best_active_train_end_in_zone >= 0.25 (observed 0.25 on active_gestation__inherited_learning_signal_generator)"
+    ],
+    "primary_metric": "end_in_zone",
+    "tick_fraction_comfort_retired": true
+  },
+
+  "ceiling": {
+    "kind": "nursery_v2_recurrent_ac_best_of_three",
+    "organism_candidate": false,
+    "pass": true,
+    "end_in_zone_rate": 0.3125,
+    "ever_reached_rate": 0.40625,
+    "distance_reduction": 0.24080320773646235,
+    "comfort_margin_over_random": 0.1875,
+    "n_initializations_run": 3,
+    "ac_retrain_not_retry_until_pass": true,
+    "beam_planner_reference_end_in_zone": 0.8125,
+    "beam_planner_not_scored_capacity_bound": true
+  },
+
+  "best_active_acquisition": {
+    "credit": "inherited_learning_signal_generator",
+    "train_end_in_zone_mean": 0.25,
+    "train_ever_reached_mean": 0.25,
+    "train_distance_reduction_mean": -0.13565943425055593,
+    "train_margin_mean": -5.305992090143263e-09,
+    "validation_end_in_zone_mean": 0.1640625
+  },
+
+  "evidence_completeness": {
+    "matched_outer_es": true,
+    "fixed_lives": 128,
+    "lsg_lives": 128,
+    "factorial_cells": 4,
+    "interventions_executed": 12,
+    "confirmation_sealed": true,
+    "same_pre_gestation_checkpoint_within_credit_columns": true
+  },
+
+  "scope_of_negative_result": {
+    "valid_for": "R4-R2_organism_grounded_acquisition_under_nursery_body_v2_and_prereg_budgets",
+    "not_a_body_reachability_or_controllability_failure": true,
+    "not_an_optimization_ceiling_failure": true,
+    "not_an_architectural_falsification_of_gestation_or_lsg": true,
+    "r4_r1_decision_unchanged": true,
+    "wall_decision_unchanged": true,
+    "historical_generic_body_untouched": true
+  },
+
+  "forbidden_next": [
+    "routing_architecture_from_descriptive_factorial",
+    "rewriting_db69d10_or_wall_decision",
+    "stage_b_execution",
+    "treating_beam_planner_as_organism_capacity",
+    "consuming_confirmation_after_grounded_acquisition_fail"
+  ]
+}

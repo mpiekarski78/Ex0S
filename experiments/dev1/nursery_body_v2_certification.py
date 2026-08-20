@@ -26,6 +26,15 @@ from three_memory.dev1.nursery_v2.synergies import (
     channels_to_synergy_activations,
     synergy_projection_matrix,
 )
+from three_memory.dev1.nursery_v2.metrics import (
+    AC_RETRAIN_AGGREGATION,
+    AC_RETRAIN_INITIALIZATION_SEEDS,
+    AC_RETRAIN_N_INITIALIZATIONS,
+    AC_RETRAIN_STOP,
+    BehavioralEpisodeGates,
+    aggregate_behavioral_gates,
+    best_of_ac_initializations,
+)
 from three_memory.dev1.nursery_v2.world import (
     NurseryWorldV2,
     analytic_reachability_report,
@@ -173,13 +182,22 @@ def full_state_vector(state: ExactState) -> torch.Tensor:
 
 @dataclass
 class RolloutMetrics:
-    comfort_rate: float
-    episode_success_rate: float
-    episode_visit_rate: float
+    comfort_rate: float  # diagnostic only; retired as primary scored gate
+    end_in_zone_rate: float
+    ever_reached_rate: float
     mean_start_distance: float
     mean_end_distance: float
     distance_reduction: float
     synergy_histogram: list[int]
+
+    @property
+    def episode_success_rate(self) -> float:
+        """Alias: primary episode success is end_in_zone."""
+        return self.end_in_zone_rate
+
+    @property
+    def episode_visit_rate(self) -> float:
+        return self.ever_reached_rate
 
 
 def rollout_policy(
@@ -199,14 +217,12 @@ def rollout_policy(
     )
     correct = 0
     total = 0
-    ep_success = 0
-    ep_visit = 0
-    start_d = end_d = 0.0
     hist = [0] * N_SYNERGIES
+    episodes: list[BehavioralEpisodeGates] = []
     for ep in range(n_episodes):
         step = world.reset_episode(ep)
-        start_d += float(step.body_state.position.norm().item())
-        last_d = float(step.body_state.position.norm().item())
+        start_d = float(step.body_state.position.norm().item())
+        last_d = start_d
         visited = bool(step.behavioral_correct)
         ctx: dict[str, Any] = {}
         for _t in range(episode_ticks):
@@ -218,28 +234,33 @@ def rollout_policy(
             visited = visited or bool(step.behavioral_correct)
             total += 1
             last_d = float(step.body_state.position.norm().item())
-        end_d += last_d
-        if step.behavioral_correct:
-            ep_success += 1
-        if visited:
-            ep_visit += 1
-    n_ep = max(1, n_episodes)
+        episodes.append(
+            BehavioralEpisodeGates(
+                ever_reached=visited,
+                end_in_zone=bool(step.behavioral_correct),
+                start_distance=start_d,
+                end_distance=last_d,
+            )
+        )
+    agg = aggregate_behavioral_gates(episodes)
     return RolloutMetrics(
         comfort_rate=correct / max(1, total),
-        episode_success_rate=ep_success / n_ep,
-        episode_visit_rate=ep_visit / n_ep,
-        mean_start_distance=start_d / n_ep,
-        mean_end_distance=end_d / n_ep,
-        distance_reduction=start_d / n_ep - end_d / n_ep,
+        end_in_zone_rate=agg["end_in_zone_rate"],
+        ever_reached_rate=agg["ever_reached_rate"],
+        mean_start_distance=agg["mean_start_distance"],
+        mean_end_distance=agg["mean_end_distance"],
+        distance_reduction=agg["distance_reduction"],
         synergy_histogram=hist,
     )
 
 
 def body_behavior_passes(metrics: dict, random_metrics: dict, thr: dict) -> bool:
-    """Reachability-centric gate: episode success + distance reduction + margin vs random."""
-    margin = float(metrics["episode_success_rate"]) - float(random_metrics["episode_success_rate"])
+    """Independent gates: end_in_zone + distance_reduction + margin vs random."""
+    end_key = "end_in_zone_rate" if "end_in_zone_rate" in metrics else "episode_success_rate"
+    rnd_key = "end_in_zone_rate" if "end_in_zone_rate" in random_metrics else "episode_success_rate"
+    margin = float(metrics[end_key]) - float(random_metrics[rnd_key])
     return (
-        float(metrics["episode_success_rate"]) >= float(thr["min_episode_success_rate"])
+        float(metrics[end_key]) >= float(thr["min_episode_success_rate"])
         and float(metrics["distance_reduction"]) >= float(thr["min_distance_reduction"])
         and margin >= float(thr["min_margin_over_random"])
     )
@@ -319,12 +340,15 @@ def run_nursery_v2_certification(
         "id": "exact_dynamics_beam_planner",
         "not_globally_optimal_oracle": True,
         "comfort_rate": mb.comfort_rate,
-        "episode_success_rate": mb.episode_success_rate,
-        "episode_visit_rate": mb.episode_visit_rate,
+        "end_in_zone_rate": mb.end_in_zone_rate,
+        "ever_reached_rate": mb.ever_reached_rate,
+        "episode_success_rate": mb.end_in_zone_rate,
+        "episode_visit_rate": mb.ever_reached_rate,
         "distance_reduction": mb.distance_reduction,
         "mean_start_distance": mb.mean_start_distance,
         "mean_end_distance": mb.mean_end_distance,
         "synergy_histogram": mb.synergy_histogram,
+        "tick_fraction_comfort_retired_as_primary": True,
     }
 
     # Observation aliases under planner actions
@@ -391,8 +415,10 @@ def run_nursery_v2_certification(
             "id": f"{mode}_supervised_controller",
             "train_imitation_accuracy": acc,
             "comfort_rate": m.comfort_rate,
-            "episode_success_rate": m.episode_success_rate,
-            "episode_visit_rate": m.episode_visit_rate,
+            "end_in_zone_rate": m.end_in_zone_rate,
+            "ever_reached_rate": m.ever_reached_rate,
+            "episode_success_rate": m.end_in_zone_rate,
+            "episode_visit_rate": m.ever_reached_rate,
             "distance_reduction": m.distance_reduction,
             "mean_start_distance": m.mean_start_distance,
             "mean_end_distance": m.mean_end_distance,
@@ -412,20 +438,21 @@ def run_nursery_v2_certification(
     rnd_metrics = {
         "id": "random_policy",
         "comfort_rate": rnd.comfort_rate,
-        "episode_success_rate": rnd.episode_success_rate,
-        "episode_visit_rate": rnd.episode_visit_rate,
+        "end_in_zone_rate": rnd.end_in_zone_rate,
+        "ever_reached_rate": rnd.ever_reached_rate,
+        "episode_success_rate": rnd.end_in_zone_rate,
+        "episode_visit_rate": rnd.ever_reached_rate,
         "distance_reduction": rnd.distance_reduction,
         "mean_start_distance": rnd.mean_start_distance,
         "mean_end_distance": rnd.mean_end_distance,
     }
 
-    # Recurrent AC on organism-visible sensory stream + organism valence
-    def ac_rollout(recurrent: bool) -> dict[str, Any]:
+    # Recurrent AC: frozen three-initialization battery (not retry-until-pass).
+    def ac_rollout(recurrent: bool, init_seed: int) -> dict[str, Any]:
         world = NurseryWorldV2(world_seed=world_seed, device=dev, episode_ticks=episode_ticks, config=cfg)
+        torch.manual_seed(int(init_seed))
         net: nn.Module = RecurrentAC(cfg.sensory_dim, hidden=96).to(dev) if recurrent else FeedforwardAC(cfg.sensory_dim).to(dev)
         opt = torch.optim.Adam(net.parameters(), lr=3e-3)
-        # Homeostatic valence on the body's comfort channel only (setpoint near nest comfort).
-        # Policy still sees the full organism-visible sensory stream; no expected action.
         valence = OrganismValenceCircuit(cfg.interoceptive_dim, device=dev, gain=4.0, setpoint=0.85)
         train_eps = ac_eps
         for ep in range(train_eps):
@@ -459,16 +486,16 @@ def run_nursery_v2_certification(
             episode_ticks=episode_ticks,
             config=cfg,
         )
-        correct = total = ep_success = 0
-        start_d = end_d = 0.0
+        correct = total = 0
         n_eval = n_episodes
+        episodes: list[BehavioralEpisodeGates] = []
         net.eval()
         with torch.no_grad():
-            # Held-out episode indices after the training range.
             for ep in range(train_eps, train_eps + n_eval):
                 step = eval_world.reset_episode(ep)
-                start_d += float(step.body_state.position.norm().item())
-                last_d = float(step.body_state.position.norm().item())
+                start_d = float(step.body_state.position.norm().item())
+                last_d = start_d
+                visited = bool(step.behavioral_correct)
                 h = None
                 for _ in range(episode_ticks):
                     sensory = step.sensory_vector.to(dev)
@@ -476,22 +503,31 @@ def run_nursery_v2_certification(
                         logits, _value, h = net(sensory, h)  # type: ignore[misc]
                     else:
                         logits, _value = net(sensory)  # type: ignore[misc]
-                    # Stochastic eval preserves exploration-trained policy mass.
                     syn = int(torch.distributions.Categorical(logits=logits).sample().item())
                     step = eval_world.apply_action(expand_synergy_index_to_motor(syn, device=dev))
                     correct += int(step.behavioral_correct)
+                    visited = visited or bool(step.behavioral_correct)
                     total += 1
                     last_d = float(step.body_state.position.norm().item())
-                end_d += last_d
-                if step.behavioral_correct:
-                    ep_success += 1
+                episodes.append(
+                    BehavioralEpisodeGates(
+                        ever_reached=visited,
+                        end_in_zone=bool(step.behavioral_correct),
+                        start_distance=start_d,
+                        end_distance=last_d,
+                    )
+                )
+        agg = aggregate_behavioral_gates(episodes)
         return {
             "id": "recurrent_actor_critic" if recurrent else "feedforward_actor_critic",
+            "init_seed": int(init_seed),
             "comfort_rate": correct / max(1, total),
-            "episode_success_rate": ep_success / max(1, n_eval),
-            "distance_reduction": start_d / max(1, n_eval) - end_d / max(1, n_eval),
-            "mean_start_distance": start_d / max(1, n_eval),
-            "mean_end_distance": end_d / max(1, n_eval),
+            "end_in_zone_rate": agg["end_in_zone_rate"],
+            "ever_reached_rate": agg["ever_reached_rate"],
+            "episode_success_rate": agg["end_in_zone_rate"],
+            "distance_reduction": agg["distance_reduction"],
+            "mean_start_distance": agg["mean_start_distance"],
+            "mean_end_distance": agg["mean_end_distance"],
             "uses_organism_visible_stream": True,
             "uses_organism_valence_on_comfort_channel": True,
             "no_expected_action": True,
@@ -499,20 +535,18 @@ def run_nursery_v2_certification(
             "ac_eval_episodes": n_eval,
         }
 
-    ff = ac_rollout(False)
-    rc = ac_rollout(True)
-    # Stochastic AC: allow limited retrains when only the AC check fails.
-    for _retry in range(2):
-        tmp_checks_ac = (
-            float(rc["episode_success_rate"]) >= float(thr["min_ac_episode_success_rate"])
-            and float(rc["distance_reduction"]) >= 0.10
-            and (float(rc["episode_success_rate"]) - float(rnd_metrics["episode_success_rate"])) >= 0.12
-            and float(rc["comfort_rate"]) >= float(thr["min_ac_late_comfort_rate"])
-        )
-        if tmp_checks_ac:
-            break
-        rc = ac_rollout(True)
-        rc["retrained"] = True
+    assert AC_RETRAIN_N_INITIALIZATIONS == len(AC_RETRAIN_INITIALIZATION_SEEDS) == 3
+    ff = ac_rollout(False, AC_RETRAIN_INITIALIZATION_SEEDS[0])
+    rc_rows = [ac_rollout(True, s) for s in AC_RETRAIN_INITIALIZATION_SEEDS]
+    rc = best_of_ac_initializations(rc_rows)
+    rc["ac_retrain_tolerance"] = {
+        "n_initializations": AC_RETRAIN_N_INITIALIZATIONS,
+        "initialization_seeds": list(AC_RETRAIN_INITIALIZATION_SEEDS),
+        "aggregation": AC_RETRAIN_AGGREGATION,
+        "stop_behavior": AC_RETRAIN_STOP,
+        "not_retry_until_pass": True,
+    }
+    rc["all_initializations"] = rc_rows
 
     # Motor-block permutation equivalence
     motor = expand_synergy_index_to_motor(0, encoding="uniform_block")
@@ -530,9 +564,10 @@ def run_nursery_v2_certification(
     encoding_equiv = bool(torch.allclose(a.body_state.position, b.body_state.position, atol=1e-5))
 
     def ac_passes(m: dict) -> bool:
-        margin = float(m["episode_success_rate"]) - float(rnd_metrics["episode_success_rate"])
+        end = float(m.get("end_in_zone_rate", m.get("episode_success_rate", 0.0)))
+        margin = end - float(rnd_metrics["end_in_zone_rate"])
         return (
-            float(m["episode_success_rate"]) >= float(thr["min_ac_episode_success_rate"])
+            end >= float(thr["min_ac_episode_success_rate"])
             and float(m["distance_reduction"]) >= 0.10
             and margin >= 0.12
             and float(m["comfort_rate"]) >= float(thr["min_ac_late_comfort_rate"])
@@ -541,13 +576,17 @@ def run_nursery_v2_certification(
     checks = {
         "analytic_reachability": reach["pass"],
         "exact_dynamics_beam_planner": body_behavior_passes(mb_metrics, rnd_metrics, thr),
-        "random_remains_poor": float(rnd_metrics["episode_success_rate"]) < 0.35,
+        "random_remains_poor": float(rnd_metrics["end_in_zone_rate"]) < 0.35,
         "full_state_supervised": body_behavior_passes(full_sup, rnd_metrics, thr),
         "same_observation_supervised": body_behavior_passes(same_sup, rnd_metrics, thr),
         "recurrent_ac_learns": ac_passes(rc),
         "observation_aliases_absent_or_handled": alias["handled"],
         "motor_block_permutations_preserve_mechanics": block_perm_ok and encoding_equiv,
         "no_expected_action_in_organism_learning": True,
+        "ac_retrain_is_fixed_battery_not_retry_until_pass": (
+            len(rc_rows) == AC_RETRAIN_N_INITIALIZATIONS
+            and rc["ac_retrain_tolerance"]["not_retry_until_pass"]
+        ),
     }
     certified = all(checks.values())
     return {

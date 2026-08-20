@@ -4,31 +4,32 @@
   "stage": "A",
   "revision": "DevelopmentalBirthR4-R2",
   "type": "isolation_lock",
-  "status": "locked",
+  "status": "stopped",
   "product_version": "0.0.004",
   "written_utc": "2026-08-20T17:10:00Z",
+  "stopped_utc": "2026-08-20T20:30:00Z",
 
   "contract": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.contract.lock",
+  "stop_lock": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
   "nursery_freeze": "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
 
   "may_change": [
-    "three_memory/dev1/nursery_v2/",
-    "experiments/dev1/*r4_r2*",
-    "experiments/dev1/nursery_body_v2_certification.py",
-    "tests/dev1/test_stage_a_nursery_body_v2.py",
-    "tests/dev1/test_stage_a_developmental_birth_r4_r2.py",
-    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.*",
-    "docs/exos_dev1.stage_a_nursery_body_v2.*",
-    "runs/exos_dev1/stage_a_developmental_birth_r4_r2/",
-    "runs/exos_dev1/stage_a_nursery_body_v2/"
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.mechanism.audit.lock"
   ],
 
   "must_not_change": [
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.dev_decision.lock",
     "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
     "docs/exos_dev1.stage_a_developmental_body_reference_wall.dev_decision.lock",
     "three_memory/dev1/body/",
-    "historical_r4_generic_body_artifacts"
+    "historical_r4_generic_body_artifacts",
+    "scored_r4_r2_run_artifacts"
   ],
 
-  "scored_run": "forbidden_until_prereg_freeze_and_explicit_go"
+  "scored_run": "complete_and_closed",
+  "prereg": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.prereg.lock",
+  "scored_run_authorized": false,
+  "further_r4_r2_work": "forbidden",
+  "next_lineage": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.contract.lock"
 }

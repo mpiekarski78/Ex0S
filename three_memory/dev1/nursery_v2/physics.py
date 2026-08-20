@@ -74,6 +74,8 @@ class NurseryBodyV2:
         self.state = self._initial_state()
         self.motor_permutation: torch.Tensor | None = None
         self.proprio_permutation: torch.Tensor | None = None
+        self.open_loop: bool = False
+        self._open_loop_actions: list[torch.Tensor] = []
 
     def _initial_state(self) -> BodyState:
         gen = torch.Generator(device="cpu")
@@ -95,6 +97,7 @@ class NurseryBodyV2:
         if seed is not None:
             self.config.seed = int(seed)
         self.state = self._initial_state()
+        self._open_loop_actions.clear()
         return self.state
 
     def physics_hash(self) -> str:
@@ -117,7 +120,12 @@ class NurseryBodyV2:
             return proprio
         return proprio[self.proprio_permutation]
 
-    def step(self, motor_scores: torch.Tensor) -> BodyStepResult:
+    def step(
+        self,
+        motor_scores: torch.Tensor,
+        *,
+        teacher_channel: int | None = None,
+    ) -> BodyStepResult:
         cfg = self.config
         motor = motor_scores.detach().float().to(self.device).view(-1)
         if motor.numel() != cfg.n_motor_channels:
@@ -126,7 +134,15 @@ class NurseryBodyV2:
                 motor = torch.cat([motor, pad])
             else:
                 motor = motor[: cfg.n_motor_channels]
+        if teacher_channel is not None:
+            motor = torch.zeros(cfg.n_motor_channels, device=self.device)
+            motor[int(teacher_channel) % cfg.n_motor_channels] = 1.0
         motor_body = self._apply_motor_perm(motor)
+        if self.open_loop and self._open_loop_actions:
+            idx = self.state.tick % len(self._open_loop_actions)
+            motor_body = self._open_loop_actions[idx]
+        elif not self.open_loop:
+            self._open_loop_actions.append(motor_body.detach().clone())
         syn = channels_to_synergy_activations(motor_body, self.projection)
         forward, backward, rot_l, rot_r = [float(x) for x in syn.tolist()]
 

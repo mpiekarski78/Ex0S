@@ -61,4 +61,10 @@ def test_reachability_chi_definition():
     assert abs(travel - 0.15 * 16) < 1e-9
     chi = reachability_chi(1.05, cfg, 16)
     assert abs(chi - (1.05 - 0.35) / travel) < 1e-9
-    assert chi < 0.85  # reachable with safety margin under mass-preserving drive
+    assert chi <= 1.0  # analytically reachable
+    assert chi <= 0.85  # safety rule
+    report = __import__(
+        "three_memory.dev1.nursery_v2.world", fromlist=["analytic_reachability_report"]
+    ).analytic_reachability_report("unit_chi", n_episodes=4, episode_ticks=16)
+    assert report["analytical_reachable_rule"] == "chi <= 1"
+    assert report["safety_rule"] == "chi <= 0.85"

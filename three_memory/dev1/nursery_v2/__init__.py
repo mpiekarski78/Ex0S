@@ -1,4 +1,4 @@
-"""Nursery Body v2 package — engineering surface until certification freeze."""
+"""Nursery Body v2 package — certified developmental body/world surface."""
 
 from three_memory.dev1.nursery_v2.physics import BodyConfig, NurseryBodyV2
 from three_memory.dev1.nursery_v2.synergies import (

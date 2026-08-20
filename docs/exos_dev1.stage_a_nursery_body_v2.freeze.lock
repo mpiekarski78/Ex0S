@@ -28,8 +28,11 @@
   "reachability": {
     "chi": "(initial_distance - comfort_radius) / max_useful_travel",
     "max_useful_travel": "step_scale * episode_ticks under unit forward drive",
-    "requirement": "fraction_reachable >= 0.95 at safety_margin 0.85",
-    "observed_on_engineering_seeds": "1.0"
+    "analytically_reachable": "chi <= 1",
+    "safety_rule": "chi <= 0.85",
+    "requirement": "fraction of starts with chi <= 0.85 is at least 0.95",
+    "observed_on_engineering_seeds": "1.0",
+    "conventions": "docs/exos_dev1.stage_a_nursery_body_v2.conventions.lock"
   },
 
   "certification": {
