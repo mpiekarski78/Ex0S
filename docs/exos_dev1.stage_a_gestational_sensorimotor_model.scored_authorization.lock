@@ -1,0 +1,37 @@
+{
+  "_schema": "exos_dev1.stage_a_gestational_sensorimotor_model.scored_authorization.v1",
+  "_immutable": true,
+  "type": "scored_authorization_lock",
+  "status": "authorized_single_scored_attempt",
+  "written_utc": "2026-08-20T22:04:09Z",
+  "authorized": true,
+  "single_scored_attempt": true,
+  "authorization": "explicit_user_authorization_20260821_execute_single_preregistered_gsm_scored_run",
+  "run_id": "exos_dev1_gestational_sensorimotor_model_scored_20260820",
+  "output_dir": "runs/exos_dev1/stage_a_gestational_sensorimotor_model/exos_dev1_gestational_sensorimotor_model_scored_20260820",
+  "prereg": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.prereg.lock",
+  "prereg_commit": "d7ebd8a693cdf15d676cf018fdf499183b0d0980",
+  "prereg_sha256": "13ed107b24690a7d342757c3e50ab6e580d11041cea8adf62bb94c936b53b500",
+  "prereg_remains_scored_run_authorized_false": true,
+  "do_not_rewrite_frozen_prereg": true,
+  "implementation_commit": "8129ccf",
+  "implementation_sha": "8129ccff11177263159f3d76342317288886c481",
+  "runner_commit": "4b4726ee23c6d17531ff5e106292acfb677120bb",
+  "runner_file": "experiments/dev1/search_gestational_sensorimotor_model.py",
+  "runner_sha256": "d546872a02980add21a621f860d2d2f56f9a258843b83887d5dbcf19de1ff270",
+  "conditions": {
+    "no_code_threshold_seed_fallback_uncertainty_telemetry_changes": true,
+    "full_evidence_before_decision_ladder": true,
+    "monitor_infrastructure_only_while_active": true,
+    "confirmation_only_via_validation_pass_route": true,
+    "min_fraction_model_actions": 0.5,
+    "infrastructure_failure_closed_separately_no_silent_replay": true,
+    "reduced_budget_rehearsal_non_scientific": true
+  },
+  "forbidden": [
+    "rewriting_frozen_prereg",
+    "second_scored_attempt_without_new_authorization",
+    "silent_replay_after_infrastructure_failure",
+    "tuning_from_rehearsal_or_live_outcomes"
+  ]
+}
