@@ -1,0 +1,94 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_DEVELOPMENTAL_BODY_REFERENCE_WALL.DEV.DECISION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "DevelopmentalBodyReferenceWall",
+  "type": "immutable_dev_decision_record",
+  "status": "closed_for_scored_result",
+  "written_utc": "2026-08-20T15:46:00Z",
+  "product_version": "0.0.004",
+
+  "measurement_only": true,
+  "not_r4_r2": true,
+  "r4_r1_decision_stands_unchanged": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
+  "r4_r1_decision_commit": "db69d10",
+
+  "architecture_frozen_sha": "ba97883b6864a0345901b654396a417db3163a03",
+  "wall_implementation_and_prereg_sha": "4637d9a40a121267d1957141c1309fee3b6cc2bc",
+  "executing_head_sha": "4637d9a40a121267d1957141c1309fee3b6cc2bc",
+  "prereg_file": "docs/exos_dev1.stage_a_developmental_body_reference_wall.prereg.lock",
+  "protocol_file": "docs/exos_dev1.stage_a_developmental_body_reference_wall.protocol.lock",
+  "isolation_file": "docs/exos_dev1.stage_a_developmental_body_reference_wall.isolation.lock",
+
+  "run_id": "exos_dev1_developmental_body_reference_wall_scored_20260820",
+  "attempt": "001",
+  "run_directory": "runs/exos_dev1/stage_a_developmental_body_reference_wall/exos_dev1_developmental_body_reference_wall_scored_20260820",
+  "primary_world_seed": "exos_dev1_developmental_body_wall_world_001",
+
+  "decision_code": "body_physics_or_control_bug",
+  "interpretation": "exact_dynamics_beam_planner_failed_preregistered_body_behavior_margin_conjunct_on_scored_world_while_reducing_distance; under_uniform_block_four_synergy_actuation_max_travel_per_16_tick_episode_is_far_below_typical_start_distance_so_comfort_target_is_not_reliably_reachable_in_horizon",
+  "architectural_conclusion": "none",
+  "organism_conclusion": "none",
+  "gestation_conclusion": "none",
+  "credit_conclusion": "none",
+  "stage_b_status": "locked",
+
+  "model_based_oracle": {
+    "kind": "exact_dynamics_beam_planner",
+    "not_handcrafted_heuristic": true,
+    "handcrafted_heuristic_used_as_capacity_bound": false,
+    "comfort_rate": 0.0703125,
+    "distance_reduction": 0.15579748153686523,
+    "margin_over_random": 0.0078125,
+    "failed_conjunct": "min_margin_over_random",
+    "passed_conjuncts": ["min_final_comfort_rate", "min_distance_reduction"]
+  },
+
+  "reference_summary": {
+    "observation_aliases_conflict_keys": 0,
+    "full_state_supervised_pass": false,
+    "same_observation_supervised_pass": true,
+    "feedforward_ac_pass": false,
+    "recurrent_ac_pass": false,
+    "matched_mean_start_distance": 1.0476510524749756,
+    "note": "Same-observation supervised cleared numeric conjuncts without demonstrating in-horizon nest reachability; aliases were absent, so the stop is not an observation-collision defect."
+  },
+
+  "physics_horizon_contract": {
+    "synergy_activation_under_uniform_block": 0.125,
+    "step_scale": 0.15,
+    "approx_max_axis_travel_per_tick": 0.01875,
+    "episode_ticks": 16,
+    "approx_max_travel_per_episode": 0.3,
+    "typical_start_distance": 1.05,
+    "comfort_target_radius": 0.35,
+    "implication": "comfort_zone_not_reliably_reachable_within_scored_episode_budget_under_frozen_actuator"
+  },
+
+  "scope": {
+    "valid_for": "frozen_GenericBody_four_synergy_motor_basis_and_R4_episode_budget",
+    "localizes_r4_r1_stop_to": "developmental_world_learnability_contract",
+    "does_not_authorize": [
+      "organism_or_genome_edits",
+      "gestation_or_credit_edits",
+      "r4_replay",
+      "stage_b",
+      "blaming_developmental_organism"
+    ],
+    "next_authorized_class": "repair_or_renegotiate_body_world_horizon_actuator_or_scoring_contract_before_any_r4_r2"
+  },
+
+  "ledger_hashes": {
+    "run_started_json": "d693d2ac40ae33f8b2ababd86617dbc81e5c99d4b6a71d1e9adebbe1ec07aa15",
+    "run_completed_json": "1f2abcd92aa204fc02e35345eb3de88b393e73bb6f98f9a9173ca73e53d94f01",
+    "wall_summary_json": "73bb971d41f32d99af6f779206173699b1e38d03ba3a68287151e4a78b99f79d"
+  },
+
+  "forbidden_next": [
+    "r4_r2_before_body_contract_repair",
+    "organism_edits_from_this_wall",
+    "rewriting_db69d10",
+    "reusing_handcrafted_heuristic_as_oracle",
+    "stage_b_execution"
+  ]
+}
