@@ -186,6 +186,12 @@ class ModularOrganism:
         self._teacher_eligibility: torch.Tensor | None = None
         self._teacher_credit_enabled: bool = True
 
+        # Developmental Birth R4 gates (narrow hooks; default preserves R1–R3 behavior)
+        self.lifetime_plasticity_enabled: bool = True
+        self.gestational_plasticity_enabled: bool = True
+        self.r4_use_organism_valence: bool = False
+        self._last_organism_valence: float = 0.0
+
     @classmethod
     def birth(
         cls,
@@ -212,11 +218,24 @@ class ModularOrganism:
         sensory_v = _to_tensor(event.sensory_vector, self.device)
         sensory_v = _pad_or_trim(sensory_v, self.genome.sensory_dim)
 
+        # R4: organism-owned valence from consecutive interoceptive states.
+        # Runner behavioral correctness must never supply this path.
+        learning_reward = float(event.reward)
+        if (
+            self.r4_use_organism_valence
+            and hasattr(self, "valence_circuit")
+            and event.interoceptive_state is not None
+        ):
+            intero = _to_tensor(event.interoceptive_state, self.device)
+            learning_reward = float(self.valence_circuit.update(intero))
+            self._last_organism_valence = learning_reward
+
         # Forward pass
         self.rho.sensory_repr = self.sensory_ctx(sensory_v, self.rho.sensory_repr)
 
         if self.hippocampus.h_disabled:
-            retrieved = torch.zeros(self.genome.relational_ctx.n_units, device=self.device)
+            # Must match RelationalCortex input: sensory_units + ca1_n_units
+            retrieved = torch.zeros(self.genome.hippocampus.ca1_n_units, device=self.device)
         else:
             retrieved = self.hippocampus.read(self.rho.relational_repr)
         self.rho.relational_repr = self.relational_ctx(
@@ -232,7 +251,7 @@ class ModularOrganism:
             self.rho.sensory_repr,
             self.rho.relational_repr,
             self.rho.action_repr,
-            event.reward,
+            learning_reward,
         )
         self._last_mod = mod
 
@@ -240,7 +259,7 @@ class ModularOrganism:
             self._outcome_credit_pending = True
             self._outcome_credit_consumed = False
             self._awaiting_consequence = False
-            self._last_consequence_reward = float(event.reward)
+            self._last_consequence_reward = float(learning_reward)
             self._last_consequence_terminal = bool(event.is_terminal)
 
         if event.observed_motor_event is not None:
@@ -268,8 +287,10 @@ class ModularOrganism:
             self.slog.append(EventKind.WRITE_H, step=self.step, payload={"novelty": novelty_val})
 
         self.slog.append(EventKind.OBSERVE, step=self.step, payload={
-            "reward": event.reward,
+            "reward": learning_reward,
+            "runner_reward_field": float(event.reward),
             "terminal": event.is_terminal,
+            "organism_valence": float(getattr(self, "_last_organism_valence", 0.0)),
         })
 
         return event
@@ -327,6 +348,8 @@ class ModularOrganism:
         eligibility trace, scalar reward-derived modulation, consequence error,
         and the organism's chosen motor channel.
         """
+        if not self.lifetime_plasticity_enabled:
+            return None
         if not hasattr(self, "_last_mod") or not hasattr(self, "_last_action_channel"):
             return None
         mod = self._last_mod
@@ -417,6 +440,17 @@ class ModularOrganism:
         Returns applied/refused status. A second call for the same interaction
         is refused. Checkpoint restore invalidates pending credit (deterministic rule).
         """
+        if not self.lifetime_plasticity_enabled:
+            self._outcome_credit_pending = False
+            self._outcome_credit_consumed = True
+            return {
+                "applied": False,
+                "refused": True,
+                "reason": "lifetime_plasticity_disabled",
+                "eligibility_norm_before_credit": 0.0,
+                "rewarded_update_norm": 0.0,
+                "signed_reward_projection": 0.0,
+            }
         if self._outcome_credit_consumed:
             return {
                 "applied": False,
@@ -510,6 +544,17 @@ class ModularOrganism:
                 "applied": False,
                 "refused": True,
                 "reason": "teacher_credit_disabled",
+                "credit_source": "teacher_demonstration",
+                "eligibility_norm_before_credit": 0.0,
+                "rewarded_update_norm": 0.0,
+            }
+        if not self.lifetime_plasticity_enabled:
+            self._teacher_credit_pending = False
+            self._teacher_credit_consumed = True
+            return {
+                "applied": False,
+                "refused": True,
+                "reason": "lifetime_plasticity_disabled",
                 "credit_source": "teacher_demonstration",
                 "eligibility_norm_before_credit": 0.0,
                 "rewarded_update_norm": 0.0,

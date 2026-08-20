@@ -96,6 +96,10 @@ class OrganismObservation:
     # Teacher-demonstration consequence (R2): separate from self-action reward.
     # Runner delivers scalar outcome/teaching signal only — never a neural target.
     teaching_signal: float | None = None
+    # Developmental Birth R4: body-exposed interoception / proprioception.
+    # Body never exposes an expected action. Organism valence owns reinforcement.
+    interoceptive_state: Any = None
+    proprioceptive_vector: Any = None
 
 
 @dataclass
