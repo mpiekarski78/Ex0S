@@ -50,7 +50,7 @@ def evaluate_synergies_with_model(
     *,
     sensory: torch.Tensor,
     intero: torch.Tensor,
-    uncertainty_max: float = 0.35,  # frozen default; prereg pins this value
+    uncertainty_max: float = 0.35,
 ) -> list[SynergyEvaluation]:
     dims = fm.dims
     state = pack_visible_state(sensory=sensory, intero=intero, dims=dims).to(fm.device)

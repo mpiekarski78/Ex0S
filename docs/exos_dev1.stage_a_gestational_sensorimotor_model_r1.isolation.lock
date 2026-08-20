@@ -1,0 +1,33 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_GESTATIONAL_SENSORIMOTOR_MODEL_R1.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "GestationalSensorimotorModelR1",
+  "type": "isolation_lock",
+  "status": "locked",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-21T00:00:00Z",
+  "contract": "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.contract.lock",
+  "prereg": "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.prereg.lock",
+  "prior_gsm_ceiling_audit": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.ceiling_audit.lock",
+  "nursery_freeze": "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
+  "may_change": [
+    "experiments/dev1/*gsm_r1*",
+    "experiments/dev1/search_gestational_sensorimotor_model_r1.py",
+    "experiments/dev1/gsm_life.py",
+    "tests/dev1/test_stage_a_gestational_sensorimotor_model_r1.py",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.*",
+    "runs/exos_dev1/stage_a_gestational_sensorimotor_model_r1/"
+  ],
+  "must_not_change": [
+    "three_memory/dev1/gsm/",
+    "three_memory/dev1/nursery_v2/",
+    "three_memory/dev1/development/valence.py",
+    "three_memory/dev1/development/gestation.py",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model.ceiling_audit.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.*",
+    "runs/exos_dev1/stage_a_gestational_sensorimotor_model/exos_dev1_gestational_sensorimotor_model_scored_20260820/"
+  ],
+  "mechanism_sha_preserved": "8129ccff11177263159f3d76342317288886c481",
+  "stage_b": "locked"
+}

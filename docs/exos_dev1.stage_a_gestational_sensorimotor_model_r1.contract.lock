@@ -1,0 +1,65 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_GESTATIONAL_SENSORIMOTOR_MODEL_R1.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "GestationalSensorimotorModelR1",
+  "type": "stage_contract_lock",
+  "status": "protocol_frozen__awaiting_scored_execution",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-21T00:00:00Z",
+  "prereg": "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.prereg.lock",
+  "protocol_only_revision": true,
+  "mechanism_unchanged": true,
+  "mechanism_sha": "8129ccff11177263159f3d76342317288886c481",
+  "prior_gsm_attempt": {
+    "descriptive_only": true,
+    "ceiling_audit": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.ceiling_audit.lock",
+    "decision_code": "optimization_ceiling_fail",
+    "architectural_conclusion": null,
+    "do_not_infer_gsm_from_prior_attempt": true
+  },
+  "justified_by": [
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model.ceiling_audit.lock",
+    "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock"
+  ],
+  "hypothesis_unchanged": "A newborn benefits from gestation only when spontaneous action teaches it a reusable model of its own sensorimotor consequences.",
+  "protocol_change": {
+    "retire_stochastic_ac_as_hard_setup_gate": true,
+    "hard_setup_gates": [
+      "analytic_reachability",
+      "exact_dynamics_beam_planner",
+      "same_observation_supervised",
+      "observation_aliases_absent_or_handled",
+      "gsm_model_certification_held_out"
+    ],
+    "recurrent_ac": "reported_diagnostic_only_not_first_match_gate"
+  },
+  "decision_ladder": [
+    "setup_reference_fail",
+    "model_certification_fail",
+    "grounded_acquisition_fail",
+    "gsm_not_causal",
+    "closed_loop_not_causal",
+    "fresh_world_fail",
+    "gsm_validation_pass",
+    "gsm_confirmation_pass"
+  ],
+  "required_causal_comparisons": [
+    "active_model_vs_sham",
+    "model_on_vs_model_off",
+    "correct_vs_shuffled_consequences",
+    "closed_loop_vs_open_loop",
+    "valence_on_vs_off",
+    "prediction_selected_vs_uncertainty_fallback",
+    "min_fraction_gsm_selected_actions_0_50"
+  ],
+  "forbidden": [
+    "changing_gsm_mechanism_package",
+    "changing_gestation_physics_or_valence_modules",
+    "enlarging_or_tuning_ac_to_pass_setup",
+    "reusing_prior_gsm_scored_or_confirmation_seeds",
+    "inferring_from_prior_gsm_attempt_telemetry",
+    "stage_b_execution"
+  ],
+  "stage_b_boundary": "locked"
+}

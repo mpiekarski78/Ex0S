@@ -64,6 +64,7 @@ def evaluate_gsm_life(
     life_rng_seed: int = 0,
     open_loop: bool = False,
     model_off: bool = False,
+    valence_off: bool = False,
     uncertainty_max: float = DEFAULT_UNCERTAINTY_MAX,
     force_uncertainty_fallback: bool = False,
 ) -> GSMLifeMetrics:
@@ -153,7 +154,19 @@ def evaluate_gsm_life(
         for t in range(episode_ticks):
             sensory_t = step.sensory_vector.detach().clone()
             intero_t = step.interoceptive_state.detach().clone()
-            if use_model:
+            if use_model and valence_off:
+                # Causal control: keep model available but do not rank by organism valence.
+                from three_memory.dev1.nursery_v2.synergies import (
+                    N_SYNERGIES,
+                    expand_synergy_index_to_motor,
+                )
+
+                syn = int(torch.randint(0, N_SYNERGIES, (1,), generator=gen).item())
+                motor = expand_synergy_index_to_motor(syn, device=dev)
+                source = "valence_off"
+                unc_sum += float("nan")
+                _assert_finite_tensor("chosen_motor", motor)
+            elif use_model:
                 choice = choose_synergy_by_valence(
                     fm,
                     org.valence_circuit,
@@ -269,6 +282,7 @@ def evaluate_gsm_life(
             "late_end_in_zone_rate": sum(late_end) / max(1, len(late_end)),
             "open_loop": open_loop,
             "model_off": force_model_off,
+            "valence_off": bool(valence_off),
             "systematic_misprediction_risk": bool(cal.get("systematic_misprediction_risk")),
             "valence_sample_count": len(valence_samples),
             "valence_all_finite": all(
