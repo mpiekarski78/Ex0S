@@ -1,43 +1,47 @@
 {
   "_schema": "exos_dev1.stage_a_gestational_sensorimotor_model.prereg.v1",
   "_immutable": true,
-  "written_utc": "2026-08-20T20:50:00Z",
-
+  "written_utc": "2026-08-20T21:35:00Z",
+  "status": "prereg_frozen__awaiting_explicit_scored_authorization",
   "revision": "GestationalSensorimotorModel",
   "scientific_attempt_number": 1,
   "role": "new_developmental_mechanism_lineage",
   "not_r4_r3_tuning": true,
   "scored_run_authorized": false,
-
   "authorized_by": [
     "docs/exos_dev1.stage_a_gestational_sensorimotor_model.contract.lock",
     "docs/exos_dev1.stage_a_gestational_sensorimotor_model.isolation.lock",
     "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
     "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock"
   ],
-
   "provenance": {
     "implementation_commit": "8129ccf",
     "implementation_sha": "8129ccff11177263159f3d76342317288886c481",
+    "runner_file": "experiments/dev1/search_gestational_sensorimotor_model.py",
+    "runner_sha256": "d546872a02980add21a621f860d2d2f56f9a258843b83887d5dbcf19de1ff270",
     "r4_r2_stop": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
     "r4_r2_decision": "grounded_acquisition_fail",
     "r4_r2_first_split": "active_gestation_not_useful",
     "preflight_seed": "gestational_sensorimotor_model_excluded_preflight_20260820",
     "preflight_artifact": "runs/exos_dev1/stage_a_gestational_sensorimotor_model/excluded_model_certification_preflight.json",
-    "preflight_outcome": "gestational_sensorimotor_model_excluded_preflight_pass"
+    "preflight_outcome": "gestational_sensorimotor_model_excluded_preflight_pass",
+    "rehearsal_seed": "gestational_sensorimotor_model_excluded_rehearsal_20260820",
+    "runner_commit": "4b4726e",
+    "runner_and_gate_commit": "4b4726ee23c6d17531ff5e106292acfb677120bb"
   },
-
   "hypothesis": "A newborn benefits from gestation only when spontaneous action teaches it a reusable model of its own sensorimotor consequences.",
-
   "mechanism": {
     "forward_model": "s_hat = s + Delta(s, a_efference)",
-    "separate_streams": ["exteroceptive", "proprioceptive", "interoceptive"],
+    "separate_streams": [
+      "exteroceptive",
+      "proprioceptive",
+      "interoceptive"
+    ],
     "gestation_targets": "next_observed_organism_visible_state_only",
     "action_selection": "argmax_synergy organism_valence of predicted interoceptive consequence",
     "model_off_reverts_to_matched_baseline": true,
     "uncertainty_gate_against_model_exploitation": true
   },
-
   "required_arms": [
     "sham_gestation",
     "existing_homeostatic_gestation",
@@ -46,9 +50,7 @@
     "learned_model_off_at_action_selection",
     "exact_body_dynamics_model_measurement_ceiling_only"
   ],
-
   "model_certification_required_before_behavioral_scoring": true,
-
   "budget": {
     "gestation_ticks": 128,
     "n_episodes_per_life": 32,
@@ -59,7 +61,44 @@
     "confirmation_seeds": 4,
     "scored_run_cuda_required": true
   },
-
+  "uncertainty_fallback": {
+    "uncertainty_max": 0.35,
+    "fallback_policy": "uniform_random_synergy_no_planner",
+    "no_planner": true,
+    "no_expected_action": true,
+    "no_runner_selected_synergy": true,
+    "telemetry_records_action_source": true,
+    "treatment_cannot_pass_primarily_through_fallback": true
+  },
+  "thresholds": {
+    "note": "Frozen before scored authorization. Do not retune from rehearsal outcomes.",
+    "optimization_ceiling_min_end_in_zone_rate": 0.25,
+    "optimization_ceiling_min_distance_reduction": 0.1,
+    "optimization_ceiling_min_margin_over_random": 0.12,
+    "predictive_min_train_end_in_zone": 0.25,
+    "predictive_min_distance_reduction": 0.0,
+    "active_beats_control_epsilon": 0.05,
+    "fresh_world_min_validation_end_in_zone": 0.2,
+    "min_fraction_model_actions": 0.5,
+    "uncertainty_max": 0.35,
+    "systematic_misprediction_mean_abs_error": 0.35
+  },
+  "decision_ladder": [
+    "evidence_truncated_forbidden",
+    "model_certification_fail",
+    "body_controllability_fail",
+    "optimization_ceiling_fail",
+    "predictive_acquisition_fail",
+    "treatment_primarily_fallback",
+    "model_exploitation_risk",
+    "active_not_better_than_sham",
+    "shuffled_consequence_not_causal",
+    "model_off_does_not_remove_gain",
+    "closed_loop_not_better_than_open_loop",
+    "fresh_world_fail",
+    "stage_a_gsm_validation_pass",
+    "stage_a_gsm_confirmation_pass"
+  ],
   "behavioral_gates": {
     "closed_loop_beats_open_loop": true,
     "mean_distance_decreases": true,
@@ -70,18 +109,36 @@
     "primary_episode_success": "end_in_zone",
     "tick_fraction_comfort_retired": true
   },
-
   "telemetry_required": [
     "synergy_aware_policy_margin",
     "per_episode_early_late_learning_curves",
     "synergy_action_histograms",
     "forward_model_prediction_error_over_gestation",
     "paired_active_sham_trajectories",
-    "prediction_uncertainty_and_closed_loop_calibration_error"
+    "prediction_uncertainty_and_closed_loop_calibration_error",
+    "per_action_gsm_vs_fallback_source"
   ],
-
+  "protocol": {
+    "full_evidence_before_decision_ladder": true,
+    "confirmation_sealed_until_validation_pass": true,
+    "model_certification_required_before_behavioral_scoring": true,
+    "crash_safe_ledger": "candidate_life_records.jsonl",
+    "runner_complete_not_stub": true
+  },
+  "implementation": {
+    "package": "three_memory/dev1/gsm/",
+    "life_file": "experiments/dev1/gsm_life.py",
+    "certification_file": "experiments/dev1/gsm_model_certification.py",
+    "preflight_file": "experiments/dev1/gsm_preflight.py",
+    "runner_file": "experiments/dev1/search_gestational_sensorimotor_model.py",
+    "tests_file": "tests/dev1/test_stage_a_gestational_sensorimotor_model.py",
+    "implementation_sha": "8129ccff11177263159f3d76342317288886c481",
+    "runner_sha256": "d546872a02980add21a621f860d2d2f56f9a258843b83887d5dbcf19de1ff270",
+    "runner_commit": "4b4726ee23c6d17531ff5e106292acfb677120bb",
+    "runner_complete_not_stub": true
+  },
   "seed_partitions": {
-    "note": "Fresh GSM partitions. All R4-R2 scored and confirmation seeds remain consumed/sealed. Nursery eng and GSM eng/preflight seeds excluded.",
+    "note": "Fresh GSM partitions. All R4-R2 scored and confirmation seeds remain consumed/sealed. Nursery eng and GSM eng/preflight/rehearsal seeds excluded.",
     "excluded_seeds": [
       "nursery_v2_eng_seed_001",
       "nursery_v2_eng_seed_002",
@@ -90,6 +147,7 @@
       "gsm_eng_cert_seed_002",
       "gsm_eng_cert_seed_003",
       "gestational_sensorimotor_model_excluded_preflight_20260820",
+      "gestational_sensorimotor_model_excluded_rehearsal_20260820",
       "exos_dev1_developmental_birth_r4_r2_world_001",
       "exos_dev1_developmental_birth_r4_r2_world_002",
       "exos_dev1_developmental_birth_r4_r2_world_003",
@@ -124,6 +182,11 @@
       "developmental_birth_r4_r1_excluded_ceiling_preflight_20260820",
       "developmental_birth_r4_excluded_preflight_20260820"
     ],
+    "engineering_cert_seeds": [
+      "gsm_eng_cert_seed_001",
+      "gsm_eng_cert_seed_002",
+      "gsm_eng_cert_seed_003"
+    ],
     "discovery_world_seeds": [
       "exos_dev1_gestational_sensorimotor_model_world_001",
       "exos_dev1_gestational_sensorimotor_model_world_002"
@@ -143,30 +206,30 @@
     "r4_r2_scored_and_confirmation_sealed": true,
     "prior_confirmation_auto_inherit_forbidden": true
   },
-
   "run_identity": {
     "run_id": "exos_dev1_gestational_sensorimotor_model_scored_20260820",
     "output_dir": "runs/exos_dev1/stage_a_gestational_sensorimotor_model/exos_dev1_gestational_sensorimotor_model_scored_20260820",
     "preflight_seed": "gestational_sensorimotor_model_excluded_preflight_20260820",
+    "rehearsal_seed": "gestational_sensorimotor_model_excluded_rehearsal_20260820",
     "attempt": "001",
     "device_policy": "cuda_required"
   },
-
   "unchanged": {
     "stage_b_boundary": "locked",
     "product_version": "0.0.004",
     "r4_r2_decision": "immutable",
     "nursery_body_v2_freeze": "immutable"
   },
-
   "forbidden": [
     "scored_behavioral_execution_before_explicit_authorization",
     "reusing_r4_r2_scored_or_confirmation_seeds",
     "retuning_r4_r2_thresholds",
+    "retuning_thresholds_from_rehearsal",
     "larger_es_over_homeostatic_babble_gestation",
     "inferring_from_descriptive_r4_r2_lsg_advantage",
     "treating_exact_body_dynamics_model_as_organism_candidate",
     "expected_action_or_fixture_targets_in_gestation",
+    "treatment_pass_primarily_through_fallback",
     "stage_b_execution",
     "rewriting_r4_r2_grounded_acquisition_fail_or_first_split"
   ]

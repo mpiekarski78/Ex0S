@@ -4,14 +4,12 @@
   "stage": "A",
   "revision": "GestationalSensorimotorModel",
   "type": "isolation_lock",
-  "status": "locked",
+  "status": "prereg_frozen__awaiting_explicit_scored_authorization",
   "product_version": "0.0.004",
-  "written_utc": "2026-08-20T20:30:00Z",
-
+  "written_utc": "2026-08-20T21:35:00Z",
   "contract": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.contract.lock",
   "r4_r2_stop": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
   "nursery_freeze": "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
-
   "may_change": [
     "three_memory/dev1/nursery_v2/",
     "three_memory/dev1/development/ (gestation/forward-model surface only when implementing this lineage)",
@@ -21,7 +19,6 @@
     "docs/exos_dev1.stage_a_gestational_sensorimotor_model.*",
     "runs/exos_dev1/stage_a_gestational_sensorimotor_model/"
   ],
-
   "must_not_change": [
     "docs/exos_dev1.stage_a_developmental_birth_r4_r2.dev_decision.lock",
     "docs/exos_dev1.stage_a_developmental_birth_r4_r2.mechanism.audit.lock",
@@ -32,9 +29,9 @@
     "three_memory/dev1/body/",
     "historical_r4_generic_body_and_homeostatic_gestation_as_immutable_baseline"
   ],
-
   "scored_behavioral_run": "forbidden_until_explicit_go_after_prereg_freeze",
   "prereg": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.prereg.lock",
   "scored_run_authorized": false,
-  "stage_b": "locked"
+  "stage_b": "locked",
+  "runner_file": "experiments/dev1/search_gestational_sensorimotor_model.py"
 }

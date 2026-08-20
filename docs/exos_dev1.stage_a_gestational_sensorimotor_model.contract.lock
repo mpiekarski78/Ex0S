@@ -6,21 +6,18 @@
   "type": "stage_contract_lock",
   "status": "prereg_frozen__awaiting_explicit_scored_authorization",
   "product_version": "0.0.004",
-  "written_utc": "2026-08-20T20:30:00Z",
+  "written_utc": "2026-08-20T21:35:00Z",
   "prereg": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.prereg.lock",
   "scored_run_authorized": false,
   "implementation_sha": "8129ccff11177263159f3d76342317288886c481",
-
   "role": "new_developmental_mechanism_lineage",
   "not_r4_r3_tuning": true,
   "not_quietly_attempt_003_of_r4": true,
-
   "justified_by": [
     "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
     "docs/exos_dev1.stage_a_developmental_birth_r4_r2.dev_decision.lock",
     "docs/exos_dev1.stage_a_developmental_birth_r4_r2.mechanism.audit.lock"
   ],
-
   "inherits_immutable": [
     "docs/exos_dev1.stage_a_developmental_birth_r4_r2.dev_decision.lock",
     "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
@@ -28,22 +25,18 @@
     "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
     "docs/exos_dev1.stage_a_nursery_body_v2.conventions.lock"
   ],
-
   "hypothesis": "A newborn benefits from gestation only when spontaneous action teaches it a reusable model of its own sensorimotor consequences.",
-
   "r4_r2_diagnosis_unchanged": {
     "decision_code": "grounded_acquisition_fail",
     "first_causal_split": "active_gestation_not_useful",
     "homeostatic_babble_gestation_lacked_task_agnostic_predictive_objective": true
   },
-
   "body_world": {
     "version": "NurseryBodyV2",
     "freeze": "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
     "package": "three_memory/dev1/nursery_v2/",
     "fresh_partitions_required": true
   },
-
   "mechanism": {
     "name": "gestational_forward_sensorimotor_model",
     "during_motor_babbling_learn": "s_hat_{t+1} = F(s_t, a_t)",
@@ -62,10 +55,14 @@
     ],
     "after_gestation_action_selection": "a_star = argmax_a V(s_hat_{t+1}(s_t, a))",
     "V": "organism_owned_homeostatic_valence",
-    "synergy_candidates": ["forward", "backward", "rotate_left", "rotate_right"],
+    "synergy_candidates": [
+      "forward",
+      "backward",
+      "rotate_left",
+      "rotate_right"
+    ],
     "interpretation": "gestation_learns_consequences__lifetime_drives_select_desirable_consequence"
   },
-
   "required_comparison_arms": [
     {
       "arm": "sham_gestation",
@@ -92,7 +89,6 @@
       "purpose": "measurement_ceiling_only_never_organism_candidate"
     }
   ],
-
   "model_certification_before_behavioral_scoring": [
     "held_out_next_state_prediction_improves_over_constant_prediction",
     "predictions_distinguish_all_four_synergies",
@@ -101,7 +97,6 @@
     "shuffled_consequences_prevent_useful_calibration",
     "no_task_symbols_or_expected_actions_enter_gestation"
   ],
-
   "behavioral_gates": [
     "closed_loop_beats_open_loop",
     "mean_distance_decreases",
@@ -110,7 +105,6 @@
     "model_off_removes_the_gain",
     "fresh_bodies_or_worlds_pass"
   ],
-
   "telemetry_repairs_required": [
     "synergy_aware_policy_margin",
     "per_episode_early_late_learning_curves",
@@ -118,9 +112,7 @@
     "forward_model_prediction_error_over_gestation",
     "paired_active_sham_trajectories"
   ],
-
   "stage_b_boundary": "locked",
-
   "forbidden": [
     "scored_behavioral_run_before_model_certification_and_prereg",
     "retuning_r4_r2_thresholds",
@@ -130,5 +122,6 @@
     "expected_action_or_fixture_targets_in_gestation",
     "stage_b_execution",
     "rewriting_r4_r2_grounded_acquisition_fail_or_first_split"
-  ]
+  ],
+  "runner_file": "experiments/dev1/search_gestational_sensorimotor_model.py"
 }
