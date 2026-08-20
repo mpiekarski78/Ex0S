@@ -1,0 +1,112 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH_R1.MECHANISM.AUDIT",
+  "type": "read_only_mechanism_audit",
+  "status": "complete",
+  "written_utc": "2026-08-20T10:00:00Z",
+  "source_run": "exos_dev1_reference_birth_r1_scored_20260820",
+  "source_decision": "docs/exos_dev1.stage_a_reference_birth_r1.dev_decision.lock",
+  "excluded_seed_mechanism_trace_required": false,
+  "boundaries_resolved_from_existing_telemetry_and_code": true,
+
+  "selector_trace": {
+    "fitness_definition": "learning_fitness = accuracy - 0.5*(1-accuracy) = 1.5*accuracy - 0.5",
+    "fitness_components_included": ["accuracy"],
+    "fitness_components_excluded": [
+      "update_norm",
+      "margin_increase_fraction",
+      "rewarded_action_margin_change",
+      "cumulative_reward"
+    ],
+    "maximize_minimize": "maximize learning_fitness",
+    "tie_rule": "Python stable sort descending; parent evaluated first each generation → on exact ties parent always wins",
+    "tie_tolerance": "exact float equality; no epsilon preference for learning improvement",
+
+    "per_generation_reconstruction": {
+      "method": "ledger outer_train records grouped as 8 individuals × 2 cheap seeds in evaluation order",
+      "both_arms": {
+        "all_8_generations_unique_fitness_count": 1,
+        "shared_fitness": -0.461181640625,
+        "shared_accuracies_both_seeds": [0.0302734375, 0.021484375],
+        "parent_reselected_every_generation": true,
+        "parameter_movement_selected": 0.0,
+        "parent_re_evaluation_bit_exact_across_generations": true,
+        "same_life_rng_seed_per_world": "hash(world_seed) % 10000",
+        "comparable_randomness_parent_vs_children": true
+      }
+    },
+
+    "dispatch_application": {
+      "surfaces_reach_organism": true,
+      "evidence": [
+        "8 distinct surfaces per generation",
+        "7 distinct mutant genome_hashes distinct from parent",
+        "mutant update norms often 10x–100x parent"
+      ]
+    },
+
+    "update_to_margin_to_accuracy": {
+      "mutants_with_stronger_updates_than_parent": "frequent (examples up to ~1e-6 vs parent ~2e-8)",
+      "mutants_with_better_margin_increase_fraction": "frequent (often 2–6 of 7 mutants)",
+      "mutants_with_better_accuracy": 0,
+      "mutants_with_better_fitness": 0,
+      "decisive_split": "Stronger mutants improve rewarded margins but do not improve (or even change) accuracy-only fitness; exact ties + parent-first stable sort retain inactivity"
+    },
+
+    "absolute_stability_rewards_inactivity": true,
+
+    "selector_verdict": {
+      "faulty_local_signal_correctly_rejected": false,
+      "objective_aggregation_bug": true,
+      "dispatch_application_bug": false,
+      "selection_controller_incomparable_rng": false,
+      "primary_code": "objective_ignores_margin_signal_plus_tiebreak_prefers_parent"
+    }
+  },
+
+  "teacher_trace": {
+    "contract_timing": "subsequent_observed_motor_event (demo does not replace sampled action)",
+    "end_to_end_path": [
+      "demo channel stored as pending_teacher after credit",
+      "next observe() delivers observed_motor_event",
+      "_inject_observed_motor_event: action_repr += 0.25 * (one_hot @ W_motor)",
+      "act() samples organism channel → _last_action_channel = sampled",
+      "apply_outcome_credit / actor_delta uses chosen_channel = _last_action_channel",
+      "learning signal 1[a_t=k]-pi_k uses sampled action, not demonstrated channel",
+      "Delta W row written on sampled action channel",
+      "follow rate measured as act==observed demo on the same step as injection"
+    ],
+    "which_action_enters_policy_term": "organism_sampled_action_not_demonstrated_action",
+    "demo_affects_state_telemetry": true,
+    "demo_controls_actor_credit_target": false,
+    "follow_rate_scored_sample": 0.02346041055718475,
+    "chance_1_over_32": 0.03125,
+    "follow_below_chance": true,
+    "teacher_verdict": {
+      "primary_code": "teacher_demo_never_enters_actor_credit_target",
+      "explains_2pct_follow": "injection into action_repr alone does not steer policy; credit still reinforces sampled actions"
+    }
+  },
+
+  "routed_single_revision": {
+    "name": "ReferenceBirthR2",
+    "role": "mechanism_correction_not_broad_search",
+    "not_larger_es_budget": true,
+    "required_fixes": [
+      {
+        "id": "R2-SEL-1",
+        "title": "Outer fitness must score learning effect, not accuracy-only",
+        "requirement": "Include rewarded-margin increase (and/or update-effect causal quantity) in outer fitness; forbid exact-tie retention of parent when a child has strictly higher margin_increase_fraction or update-driven learning signal"
+      },
+      {
+        "id": "R2-TEACH-1",
+        "title": "Teacher credit target must be the demonstrated motor event",
+        "requirement": "Keep sampled action for environment reward; for teacher_demo_eprop, 1[a_t=k]-pi_k and Delta-W channel must use observed demonstration channel (efference), matching contract permuted-teacher law"
+      }
+    ],
+    "forbidden": [
+      "another_scaffold_wall",
+      "larger_ES_budget_as_primary_fix",
+      "reopening_sealed_confirmation_without_new_prereg"
+    ]
+  }
+}
