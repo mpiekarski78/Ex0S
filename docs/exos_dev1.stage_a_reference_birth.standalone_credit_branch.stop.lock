@@ -1,0 +1,68 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH.STANDALONE_CREDIT_BRANCH.STOP.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "type": "branch_stop_lock",
+  "status": "stopped",
+  "written_utc": "2026-08-20T11:40:00Z",
+  "product_version": "0.0.004",
+
+  "stopped_branch": {
+    "name": "standalone_reference_birth_credit_mechanisms",
+    "covers": [
+      "fixed_broadcast_rate_eprop",
+      "inherited_learning_signal_generator_as_standalone_treatment"
+    ],
+    "lineage": [
+      "ReferenceBirth attempt_001",
+      "ReferenceBirthR1",
+      "ReferenceBirthR2",
+      "ReferenceBirthR3"
+    ]
+  },
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_reference_birth_r3.dev_decision.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r3.provenance_budget_causal.audit.lock",
+    "docs/exos_dev1.stage_a_reference_birth.rate_eprop_branch.stop.lock"
+  ],
+
+  "prior_stops_cited": {
+    "fixed_broadcast_rate_eprop": "docs/exos_dev1.stage_a_reference_birth.rate_eprop_branch.stop.lock",
+    "do_not_reopen": true
+  },
+
+  "closure_verdict": {
+    "r3_decision_code": "training_acquisition_fail",
+    "r3_interpretation": "inherited_lsg_searched_but_no_within_life_acquisition_above_fixed_baseline",
+    "fixed_eprop_and_inherited_lsg": "neither_produced_behavioral_acquisition_as_standalone_reference_birth_treatments",
+    "ceiling_note": "actor_critic_ceiling_shows_optimization_task_learnable_not_developmental_problem_well_posed",
+    "valid_useful_failure": true
+  },
+
+  "scientific_status": {
+    "standalone_fixed_eprop": "stopped",
+    "standalone_inherited_lsg": "stopped",
+    "eprop_as_class": "scientifically_inconclusive",
+    "architectural_conclusion": "none",
+    "not_a_general_eprop_falsification": true
+  },
+
+  "forbidden_continuations": [
+    "additional_fixed_eprop_or_lsg_coefficient_search",
+    "larger_ES_budgets_on_r3_world",
+    "selector_teacher_credit_or_reward_signal_patches_on_stopped_line",
+    "reopening_r1_r2_r3_confirmation",
+    "claiming_eprop_as_general_algorithm_falsified",
+    "substituting_r2_or_r3_results_as_r4_factorial_cells"
+  ],
+
+  "permitted_reuse": {
+    "fixed_eprop_and_lsg_as_matched_credit_components_inside_r4": true,
+    "r2_r3_results_are_historical_motivation_only": true,
+    "r2_r3_results_are_not_r4_factorial_cells": true
+  },
+
+  "routes_to": "docs/exos_dev1.stage_a_developmental_birth_r4.contract.lock",
+  "route_role": "generative_developmental_organism_with_matched_credit_components"
+}

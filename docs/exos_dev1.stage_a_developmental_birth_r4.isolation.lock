@@ -1,0 +1,91 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_DEVELOPMENTAL_BIRTH_R4.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "DevelopmentalBirthR4",
+  "type": "isolation_lock",
+  "status": "authorized_for_implementation",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T11:40:00Z",
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_developmental_birth_r4.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth.standalone_credit_branch.stop.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r3.dev_decision.lock"
+  ],
+
+  "authorized_filespaces": [
+    "docs/exos_dev1.stage_a_developmental_birth_r4.*",
+    "three_memory/dev1/development/",
+    "three_memory/dev1/body/",
+    "narrow_r4_hooks_in_existing_dev1_interfaces",
+    "experiments/dev1/developmental_birth_r4_*",
+    "tests/dev1/test_stage_a_developmental_birth_r4.py",
+    "runs/exos_dev1/stage_a_developmental_birth_r4/"
+  ],
+
+  "immutable_history": {
+    "r1_r2_r3_runners": "immutable",
+    "r1_r2_r3_scored_artifacts": "immutable",
+    "r1_r2_r3_decisions": "immutable",
+    "stop_locks": "immutable",
+    "standalone_credit_branch_stop": "immutable",
+    "rate_eprop_branch_stop": "immutable"
+  },
+
+  "forbidden_edits": [
+    "docs/exos_dev1.stage_a_reference_birth_r3.*",
+    "docs/exos_dev1.stage_a_reference_birth_r2.*",
+    "docs/exos_dev1.stage_a_reference_birth_r1.*",
+    "docs/exos_dev1.stage_a_reference_birth.rate_eprop_branch.stop.lock",
+    "docs/exos_dev1.stage_a_reference_birth.standalone_credit_branch.stop.lock",
+    "historical_r1_r2_r3_experiment_runners_and_scored_artifacts",
+    "stage_b_unlock_or_execution"
+  ],
+
+  "post_freeze_execution_order": [
+    "1_commit_push_branch_stop_and_r4_contract_isolation",
+    "2_generative_genome_and_deterministic_embryonic_construction",
+    "3_generic_body_drives_proprioception_efference_copy_organism_owned_valence",
+    "4_task_agnostic_active_and_sham_gestation_and_checkpoint_cloning",
+    "5_closed_loop_grounding_world",
+    "6_matched_2x2_interventions_including_lsg_and_split_plasticity_off",
+    "7_unit_ownership_leakage_permutation_scale_smoke_tests",
+    "8_excluded_seed_preflight",
+    "9_freeze_r4_preregistration_numeric_thresholds_seeds_budget_equality",
+    "10_scored_r4_once",
+    "11_decision",
+    "12_untouched_confirmation_only_if_validation_authorizes"
+  ],
+
+  "current_session_stopping_point": {
+    "step": 1,
+    "permitted": [
+      "write_standalone_credit_stop",
+      "write_r4_contract_lock",
+      "write_r4_isolation_lock",
+      "commit_and_push_locks"
+    ],
+    "forbidden_until_explicitly_continued": [
+      "r4_implementation",
+      "r4_preregistration",
+      "r4_experiment_execution"
+    ]
+  },
+
+  "development_and_body_filespaces": {
+    "development": "three_memory/dev1/development/",
+    "body": "three_memory/dev1/body/",
+    "role": "authorized_future_implementation_homes_for_generative_growth_and_closed_loop_body"
+  },
+
+  "scientific_structure_locked": [
+    "historical_r2_r3_evidence_not_substituted_into_r4",
+    "factorial_uses_one_shared_organism_and_body",
+    "development_is_causal_sham_matched_not_merely_extra_experience",
+    "intrinsic_value_is_organism_owned",
+    "overencoding_has_explicit_lifetime_plasticity_off_control",
+    "credit_teacher_and_lsg_claims_are_separable",
+    "stage_b_remains_locked"
+  ]
+}

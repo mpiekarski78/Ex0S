@@ -1,0 +1,356 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_DEVELOPMENTAL_BIRTH_R4.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "DevelopmentalBirthR4",
+  "type": "stage_contract_lock",
+  "status": "authorized_for_implementation",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T11:40:00Z",
+
+  "authorization": {
+    "authorized_by": [
+      "docs/exos_dev1.stage_a_reference_birth_r3.dev_decision.lock",
+      "docs/exos_dev1.stage_a_reference_birth.standalone_credit_branch.stop.lock"
+    ],
+    "role": "new_architectural_lineage",
+    "not_r3_repair": true,
+    "historical_r2_r3_are_lineage_anchors_only": true,
+    "historical_r2_r3_are_not_r4_factorial_cells": true
+  },
+
+  "inherits_immutable_history": [
+    "docs/exos_dev1.stage_a_reference_birth.standalone_credit_branch.stop.lock",
+    "docs/exos_dev1.stage_a_reference_birth.rate_eprop_branch.stop.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r3.dev_decision.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r3.provenance_budget_causal.audit.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.dev_decision.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_r2_1.dev_decision.lock"
+  ],
+
+  "r3_status": {
+    "decision_code": "training_acquisition_fail",
+    "interpretation": "inherited_lsg_searched_but_no_within_life_acquisition_above_fixed_baseline",
+    "confirmation_sealed": true,
+    "eprop_as_class": "scientifically_inconclusive"
+  },
+
+  "question": "With a generative developmental genome, compute-matched sham vs active gestation, organism-owned valence, and matched fixed-credit vs LSG columns on one shared body world, can a newborn acquire grounded closed-loop actions where standalone Reference Birth credit failed?",
+
+  "developmental_sequence": [
+    "Inherited_generative_genome",
+    "Embryonic_circuit_growth",
+    "Spontaneous_activity",
+    "Motor_babbling",
+    "Sensorimotor_calibration",
+    "Homeostatic_stabilization",
+    "Grounded_interaction",
+    "Symbols_label_grounded_experience"
+  ],
+
+  "genome_role": "generative_construction_program_not_parameter_bag_around_random_matrices",
+
+  "state_ownership": {
+    "inherited_genome": {
+      "origin": "outer_evolution_or_meta_learning",
+      "may_contain": ["generic_construction_rules", "plasticity_rules", "developmental_rules"]
+    },
+    "gestational_state": {
+      "origin": "task_agnostic_development",
+      "may_contain": ["calibrated_generic_circuits", "body_models"]
+    },
+    "lifetime_state": {
+      "origin": "interaction_with_one_world",
+      "may_contain": ["acquired_skills", "associations", "memories"]
+    }
+  },
+
+  "may_inherit": [
+    "population_types_and_module_boundaries",
+    "generative_connectivity_and_topology_motifs",
+    "sensory_and_motor_map_construction_rules",
+    "four_generic_motor_synergies_over_32_channels",
+    "proprioceptive_and_efference_copy_circuitry",
+    "homeostatic_drives_and_setpoints",
+    "neuromodulatory_circuits_and_lsg_as_components",
+    "local_plasticity_growth_and_pruning_laws",
+    "developmental_schedules_and_critical_periods",
+    "generic_exploration_and_motor_babbling_policies"
+  ],
+
+  "must_not_contain_genome_or_gestation": [
+    "cue_names_hashes_or_token_identities",
+    "cue_to_action_mappings",
+    "fixture_answers_or_logical_slots",
+    "world_seeds_or_curriculum_identifiers",
+    "episodes_or_facts",
+    "scored_symbols",
+    "future_validation_or_confirmation_information",
+    "task_specific_final_weights"
+  ],
+
+  "gestational_weights": {
+    "task_agnostic_gestational_weights_allowed": true,
+    "precomputed_scored_task_weights_forbidden": true
+  },
+
+  "valence_ownership": {
+    "body_exposes_interoceptive_state": true,
+    "body_never_exposes_expected_action": true,
+    "organism_generic_valence_circuit_computes_reinforcement_from_consecutive_interoceptive_states": true,
+    "runner_may_record_behavioral_correctness": true,
+    "runner_cannot_supply_correctness_to_plasticity": true,
+    "actor_critic_ceiling_same_observations_actions_consequence_signal": true,
+    "actor_critic_ceiling_no_privileged_answer_table": true
+  },
+
+  "gestation_contract": {
+    "occurs_before_scored_lifetime_interaction": true,
+    "both_developmental_cells_start_from_same_post_growth_pre_gestation_checkpoint": true,
+    "checkpoint_cloned_before_treatment_and_intervention_differences": true,
+    "runner_may_select_birth_seed_and_generic_body_environment": true,
+    "runner_never_constructs_neural_targets_or_internal_representations": true,
+    "may_use": [
+      "spontaneous_neural_activity",
+      "generic_body_movement",
+      "motor_babbling",
+      "proprioceptive_and_efference_copy_observations",
+      "generic_sensory_changes_from_movement",
+      "homeostatic_stabilization",
+      "prediction_of_own_action_consequences"
+    ],
+    "must_not_use": [
+      "scored_symbols",
+      "scored_mappings",
+      "expected_actions",
+      "fixture_answers",
+      "validation_or_confirmation_worlds",
+      "task_family_identifiers"
+    ]
+  },
+
+  "first_closed_loop_body_world": {
+    "not_cue_to_one_of_32_classification": true,
+    "synergies_runner_report_names_only": ["approach", "withdraw", "orient", "wait"],
+    "cortex_receives_distributed_motor_activity_and_proprioception_not_semantic_labels": true,
+    "dense_predictable_sensory_and_proprioceptive_consequences": true,
+    "continuous_interoceptive_drive": true,
+    "valence_from_organism_owned_consecutive_interoceptive_states": true,
+    "teacher_uses_same_body_actuator_sensory_consequence_and_proprioceptive_channels": true,
+    "r2_self_teacher_credit_separation_intact": true,
+    "runner_behavioral_score_never_enters_learning_path": true
+  },
+
+  "symbols_follow_grounding": {
+    "later_stage_a_r4_rung_only": true,
+    "after_grounded_consequences_learned": true,
+    "renamed_symbols_label_already_grounded_actions_states_or_outcomes": true,
+    "not_composition_dialogue_or_persistent_fact_memory": true
+  },
+
+  "matched_2x2_factorial": {
+    "all_four_cells_share_same_body_world_physics_synergies_genome_schema_birth_seeds_scoring": true,
+    "development_factor": {
+      "sham_gestation": {
+        "same_ticks_movements_body_states_and_compute": true,
+        "developmental_plasticity_and_calibration_disabled": true,
+        "role": "matched_r4_control"
+      },
+      "active_gestation": {
+        "developmental_plasticity_and_calibration_enabled": true,
+        "role": "treatment"
+      }
+    },
+    "credit_columns": {
+      "fixed_local_credit": "matched_implementation_and_budget",
+      "inherited_lsg": "matched_implementation_and_budget"
+    },
+    "cells": [
+      {"development": "sham_gestation", "credit": "fixed_local_credit", "role": "matched_r4_control"},
+      {"development": "sham_gestation", "credit": "inherited_lsg", "role": "matched_r4_control"},
+      {"development": "active_gestation", "credit": "fixed_local_credit", "role": "developmental_substrate_treatment"},
+      {"development": "active_gestation", "credit": "inherited_lsg", "role": "full_treatment"}
+    ],
+    "zero_tick_skip": {
+      "role": "observational_diagnostic_only",
+      "not_a_factorial_cell": true
+    },
+    "sham_uses_r4_modular_organism_and_body_interface": true,
+    "not_historical_monolith": true,
+    "r2_r3_not_substituted_for_cells": true,
+    "outer_loop_world_exposure_and_evaluation_budgets_matched_within_each_credit_column": true,
+    "lsg_column_cannot_receive_more_developmental_lives_due_to_parameter_count": true
+  },
+
+  "required_matched_interventions": [
+    "sham_gestation",
+    "zero_tick_skip_observational",
+    "gestational_plasticity_off",
+    "lifetime_plasticity_off",
+    "reward_valence_off",
+    "motor_to_body_permutation",
+    "proprioceptive_feedback_permutation",
+    "teacher_demonstration_permutation",
+    "open_loop_or_shuffled_action_consequences",
+    "lsg_off",
+    "lsg_permuted"
+  ],
+
+  "intervention_laws": {
+    "gestational_plasticity_off": "tests_whether_developmental_calibration_matters",
+    "lifetime_plasticity_off": "tests_whether_genome_or_gestation_encoded_scored_behavior; only_this_supports_genome_overencoded_behavior",
+    "motor_permutation": {
+      "coordinated_renaming_of_cortex_output_body_actuator_and_proprioception_should_preserve_behavior": true,
+      "permuting_only_one_boundary_should_disrupt_corresponding_causal_link": true,
+      "fixture_action_names_never_enter_organism": true
+    },
+    "teacher_causality_conditional": {
+      "teacher_permutation_failure_invalidates_claimed_teacher_learning_effect": true,
+      "must_not_invalidate_autonomous_grounded_learning_when_reward_off_and_closed_loop_prove_self_learning": true
+    }
+  },
+
+  "frozen_interpretation_table": [
+    {
+      "result": "both_actively_gestated_credit_arms_learn",
+      "interpretation": "developmental_substrate_was_the_principal_omission"
+    },
+    {
+      "result": "only_active_gestation_plus_lsg_learns",
+      "interpretation": "development_and_neuron_specific_credit_are_jointly_necessary"
+    },
+    {
+      "result": "neither_actively_gestated_arm_learns",
+      "interpretation": "tested_local_plasticity_architectures_remain_inadequate"
+    },
+    {
+      "result": "sham_performs_equally_to_active",
+      "interpretation": "gestation_developmental_plasticity_not_causally_necessary"
+    },
+    {
+      "result": "lifetime_plasticity_off_succeeds",
+      "interpretation": "genome_or_gestation_encoded_scored_behavior",
+      "decision_code": "genome_overencoded_behavior"
+    },
+    {
+      "result": "gestational_plasticity_off_succeeds_while_lifetime_plasticity_on",
+      "interpretation": "developmental_calibration_not_necessary_for_later_learning"
+    },
+    {
+      "result": "reward_valence_off_succeeds",
+      "interpretation": "behavior_is_not_consequence_learned"
+    },
+    {
+      "result": "teacher_permutation_fails_when_claiming_teacher_learning",
+      "interpretation": "teacher_path_not_causally_controlling_that_claim"
+    },
+    {
+      "result": "teacher_permutation_fails_but_self_learning_proven",
+      "interpretation": "does_not_invalidate_autonomous_grounded_learning"
+    },
+    {
+      "result": "lsg_off_or_lsg_permuted_fail_to_disrupt_when_claiming_lsg_necessity",
+      "interpretation": "generated_Lj_not_causally_controlling_learning"
+    },
+    {
+      "result": "open_loop_consequences_succeed",
+      "interpretation": "closed_loop_sensorimotor_grounding_not_necessary"
+    },
+    {
+      "result": "training_passes_but_renamed_or_fresh_worlds_fail",
+      "interpretation": "developmental_overfit"
+    },
+    {
+      "result": "grounding_and_renamed_symbol_validation_pass",
+      "interpretation": "eligible_for_untouched_confirmation_only"
+    }
+  ],
+
+  "decision_ladder": [
+    "developmental_setup_fail",
+    "gestation_leakage",
+    "body_controllability_fail",
+    "optimization_ceiling_fail",
+    "genome_overencoded_behavior",
+    "grounded_acquisition_fail",
+    "development_not_causal",
+    "self_credit_not_causal",
+    "teacher_credit_not_causal",
+    "lsg_not_causal",
+    "fresh_world_fail",
+    "renamed_symbol_grounding_fail",
+    "stage_a_r4_validation_pass",
+    "stage_a_r4_confirmation_pass"
+  ],
+
+  "ceiling": {
+    "role": "measurement_only",
+    "organism_candidate": false,
+    "same_observations_actions_consequence_signal_as_treatments": true,
+    "no_privileged_answer_table": true
+  },
+
+  "required_provenance_hashes": [
+    "inherited_genome",
+    "construction_algorithm",
+    "embryonic_construction_seed",
+    "pre_gestation_checkpoint",
+    "gestation_transcript",
+    "post_gestation_checkpoint",
+    "body_physics",
+    "credit_implementation"
+  ],
+
+  "matched_outer_budgets": {
+    "world_exposure_matched_within_each_credit_column": true,
+    "evaluation_budgets_matched_within_each_credit_column": true,
+    "lsg_column_no_extra_developmental_lives_for_parameter_count": true
+  },
+
+  "scale_law": {
+    "smallest_executable_size_first": true,
+    "same_genome_schema_and_construction_algorithm_at_larger_sizes_without_source_edits": true,
+    "scaling_may_change_declared_population_counts_via_genome": true,
+    "no_hand_written_size_specific_wiring": true,
+    "scale_tests_capacity_and_robustness_only_after_small_scale_causal_grounding": true,
+    "small_scale_failure_does_not_authorize_scale_as_automatic_rescue": true
+  },
+
+  "stage_b_boundary": {
+    "status": "locked",
+    "r4_does_not_test": [
+      "episodic_fact_retention",
+      "donor_memory_transfer",
+      "memory_wipe",
+      "learned_addressing",
+      "revision",
+      "composition",
+      "dialogue"
+    ],
+    "those_wait_until_causal_grounded_action_and_renamed_symbol_grounding_pass_untouched_confirmation": true
+  },
+
+  "unchanged": {
+    "product_version": "0.0.004",
+    "candidate_lock": "forbidden_until_confirmation_pass_and_architectural_review",
+    "stage_b_boundary": "locked"
+  },
+
+  "partitions": {
+    "fresh_training_validation_confirmation_required": true,
+    "r1_r2_r3_confirmation_remain_sealed": true,
+    "r4_confirmation_must_be_explicitly_preregistered_separately": true,
+    "auto_inherit_prior_confirmation_forbidden": true
+  },
+
+  "forbidden_scope": [
+    "further_tuning_stopped_standalone_credit_line",
+    "substituting_r2_or_r3_metrics_for_r4_factorial_cells",
+    "inheriting_world_specific_knowledge_in_genome_or_gestation",
+    "runner_constructed_neural_targets",
+    "privileged_answer_table_for_ceiling_or_treatments",
+    "stage_b_execution",
+    "reopening_r1_r2_r3_confirmation"
+  ]
+}
