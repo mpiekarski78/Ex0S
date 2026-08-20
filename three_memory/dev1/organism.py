@@ -67,18 +67,28 @@ from three_memory.dev1.provenance import ProvenanceLog, EventKind
 from three_memory.dev1.plasticity.cortical_plasticity.three_factor import RewardBaselineThreeFactor
 from three_memory.dev1.plasticity.cortical_plasticity.meta_learned import ActionContingentActorCritic
 from three_memory.dev1.plasticity.cortical_plasticity.evolved import ConsequencePredictionCredit
+from three_memory.dev1.plasticity.eprop.reward_eprop import RewardEpropRateAdaptation
 from three_memory.dev1.plasticity.consolidation.replay import ReplayConsolidation
 from three_memory.dev1.plasticity.consolidation.online_slow import OnlineSlowConsolidation
 from three_memory.dev1.plasticity.consolidation.hybrid import HybridConsolidation
 
 
-def _build_cortical_plasticity(family: str, genome: DevGenome, n_pre: int, n_post: int):
+def _build_cortical_plasticity(
+    family: str,
+    genome: DevGenome,
+    n_pre: int,
+    n_post: int,
+    device: torch.device | None = None,
+):
+    dev = device or torch.device("cpu")
     if family == "reward_baseline_three_factor":
         return RewardBaselineThreeFactor(genome.plasticity)
     elif family == "action_contingent_actor_critic":
         return ActionContingentActorCritic(n_pre, n_post, genome.plasticity)
     elif family == "consequence_prediction_credit":
         return ConsequencePredictionCredit(n_pre, n_post, genome.plasticity)
+    elif family in ("reward_eprop_rate_adaptation", "teacher_demo_eprop"):
+        return RewardEpropRateAdaptation(genome, n_pre, n_post, dev)
     else:
         raise ValueError(f"Unknown plasticity_family: {family!r}")
 
@@ -142,7 +152,11 @@ class ModularOrganism:
             genome,
             genome.relational_ctx.n_units,
             genome.action_ctx.n_units,
+            device=self.device,
         )
+        self._last_consequence_reward: float = 0.0
+        self._last_consequence_terminal: bool = False
+        self._last_motor_logits: torch.Tensor | None = None
 
         # Consolidation
         self.consolidation = _build_consolidation(genome.consolidation_family, genome)
@@ -214,6 +228,11 @@ class ModularOrganism:
             self._outcome_credit_pending = True
             self._outcome_credit_consumed = False
             self._awaiting_consequence = False
+            self._last_consequence_reward = float(event.reward)
+            self._last_consequence_terminal = bool(event.is_terminal)
+
+        if event.observed_motor_event is not None:
+            self._inject_observed_motor_event(int(event.observed_motor_event))
 
         # Eligibility update deferred to act() so action_repr is populated
 
@@ -258,6 +277,7 @@ class ModularOrganism:
             policy_mode=policy_mode,
             generator=action_generator,
         )
+        self._last_motor_logits = motor_logits.detach()
         self._last_action_channel = channel
         self._last_action_policy_mode = policy_mode
         self._last_action_log_prob = float(torch.log(scores[channel] + 1e-12).item())
@@ -318,6 +338,27 @@ class ModularOrganism:
                     chosen_channel=chosen_channel,
                     n_channels=n_channels,
                 )
+            elif rule.name() == "reward_eprop_rate_adaptation":
+                motor_logits = getattr(self, "_last_motor_logits", None)
+                if motor_logits is None:
+                    return None
+                delta_t = rule.td_step(
+                    self._last_consequence_reward,
+                    self.rho.relational_repr,
+                    self._last_consequence_terminal,
+                )
+                rule.update_critic(delta_t, self.rho.relational_repr)
+                dW = rule.actor_delta(
+                    eligibility=elig,
+                    delta_t=delta_t,
+                    chosen_channel=chosen_channel,
+                    motor_logits=motor_logits,
+                    n_channels=n_channels,
+                )
+                self._last_learning_signal_norm = float(
+                    rule.learning_signal_per_unit(delta_t, chosen_channel, motor_logits).norm().item()
+                )
+                self._last_td_error = float(delta_t.item())
             else:
                 raise ValueError(f"Unknown local plasticity family: {rule.name()}")
             if hasattr(self, "_r2_plasticity_channel_mask"):
@@ -376,6 +417,8 @@ class ModularOrganism:
         elif "reward_gate" in mod:
             val = mod["reward_gate"]
             reward_signal = float(val.item() if hasattr(val, "item") else val)
+        elif hasattr(self, "_last_td_error"):
+            reward_signal = float(self._last_td_error)
         chosen = getattr(self, "_last_action_channel", 0)
         channel_update = float(dW[chosen].norm().item()) if dW.numel() else 0.0
         signed_projection = reward_signal * channel_update
@@ -442,6 +485,8 @@ class ModularOrganism:
         elig_snap = {"trace": self.eligibility.trace.cpu().tolist()}
         self.rho.reset()
         self.eligibility.reset_transient()
+        if hasattr(self.plasticity_rule, "reset_episode"):
+            self.plasticity_rule.reset_episode()
         self.hippocampus.reset_episode_counter()
         reset = EpisodeReset(
             cleared_working_state=snap["working_state"],
@@ -538,6 +583,16 @@ class ModularOrganism:
             hippocampus_capacity_max=cap["capacity_max"],
             evictions_this_episode=cap["evictions_total"],
         )
+
+    def _inject_observed_motor_event(self, channel: int) -> None:
+        """Efference-only teacher demonstration on the action pathway."""
+        n = self.genome.n_motor_channels
+        if channel < 0 or channel >= n:
+            return
+        demo = torch.zeros(n, device=self.device)
+        demo[channel] = 1.0
+        efference = demo @ self.action_ctx.W_motor.weight
+        self.rho.action_repr = self.rho.action_repr + 0.25 * efference
 
     def count_mutable_scalars(self) -> dict:
         """Compute the six capacity metrics required by scale.py."""

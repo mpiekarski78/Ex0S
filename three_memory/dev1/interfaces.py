@@ -92,6 +92,7 @@ class OrganismObservation:
     temporal_context: float = 0.0 # elapsed time / tick index (generic signal)
     reward: float = 0.0           # scalar gate; never an answer identifier
     is_terminal: bool = False
+    observed_motor_event: int | None = None  # efference-only demonstrated channel (Reference Birth)
 
 
 @dataclass

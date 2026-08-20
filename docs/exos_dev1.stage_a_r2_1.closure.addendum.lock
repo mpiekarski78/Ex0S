@@ -1,0 +1,25 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R2_1.CLOSURE.ADDENDUM.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "R2.1",
+  "type": "closure_addendum",
+  "status": "active",
+  "written_utc": "2026-08-20T02:05:00Z",
+
+  "supersedes_field_only": {
+    "file": "docs/exos_dev1.stage_a_r2_1.closure.lock",
+    "field": "pins.dev_decision_commit",
+    "prior_value": "pending_at_write",
+    "new_value": "e83bd8f"
+  },
+
+  "historical_closure_lock_unmodified": true,
+  "note": "The closure lock at 4936805 retains pending_at_write. This addendum pins the dev_decision commit without editing the immutable closure record.",
+
+  "pins": {
+    "dev_decision_lock": "docs/exos_dev1.stage_a_r2_1.dev_decision.lock",
+    "dev_decision_commit": "e83bd8f",
+    "dev_decision_sha": "e83bd8f345b63c7dd3bf6cf67ab62f1fbb39f987d"
+  }
+}
