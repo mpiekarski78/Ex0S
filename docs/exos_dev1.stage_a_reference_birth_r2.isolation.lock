@@ -1,0 +1,72 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH_R2.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "ReferenceBirthR2",
+  "type": "stage_isolation_lock",
+  "status": "active",
+  "written_utc": "2026-08-20T10:05:00Z",
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_reference_birth_r1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.mechanism.audit.lock"
+  ],
+  "role": "justified_single_mechanism_revision",
+  "not_broad_search": true,
+
+  "lineage_stop_inherited": "outer_es_immobile_on_near_inactive_default_surface",
+
+  "authorized_filespaces": [
+    "docs/exos_dev1.stage_a_reference_birth_r2.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.isolation.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.prereg.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.mechanism.audit.lock",
+    "three_memory/dev1/plasticity/eprop/",
+    "three_memory/dev1/organism.py",
+    "three_memory/dev1/interfaces.py",
+    "three_memory/dev1/genome.py",
+    "experiments/dev1/reference_birth_r1_outer.py",
+    "experiments/dev1/reference_birth_r1_life.py",
+    "experiments/dev1/reference_birth_r1_preflight.py",
+    "experiments/dev1/search_reference_birth_r1.py",
+    "experiments/dev1/search_reference_birth_r2.py",
+    "experiments/dev1/reference_birth_r2_outer.py",
+    "experiments/dev1/reference_birth_r2_life.py",
+    "experiments/dev1/reference_birth_r2_preflight.py",
+    "tests/dev1/test_stage_a_reference_birth_r2.py",
+    "runs/exos_dev1/stage_a_reference_birth_r2/"
+  ],
+
+  "historical_filespaces_immutable": [
+    "docs/exos_dev1.stage_a_reference_birth_r1.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.isolation.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.prereg.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.provenance_budget_causal.audit.lock",
+    "runs/exos_dev1/stage_a_reference_birth_r1/exos_dev1_reference_birth_r1_scored_20260820/",
+    "docs/exos_dev1.stage_a_reference_birth.prereg.lock",
+    "docs/exos_dev1.stage_a_r2_1.dev_decision.lock"
+  ],
+
+  "forbidden_actions": [
+    "larger_ES_budget_as_primary_fix",
+    "another_scaffold_search",
+    "reopen_r1_confirmation",
+    "auto_inherit_r1_confirmation_seeds",
+    "combine_teacher_channel_with_self_action_reward",
+    "reward_raw_update_norm_in_outer_fitness",
+    "permanent_parent_priority_tiebreak",
+    "stage_b_execution",
+    "candidate_or_product_changes"
+  ],
+
+  "execution_order": [
+    "r2_contract_isolation_freeze",
+    "implement_lexicographic_selector_and_separated_teacher_credit",
+    "required_selector_and_teacher_unit_tests",
+    "excluded_seed_preflight",
+    "freeze_r2_prereg_fresh_partitions_and_separate_confirmation",
+    "scored_run_once",
+    "reference_birth_r2_dev_decision"
+  ]
+}

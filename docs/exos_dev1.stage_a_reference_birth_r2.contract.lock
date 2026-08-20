@@ -1,0 +1,149 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH_R2.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "ReferenceBirthR2",
+  "type": "stage_contract_lock",
+  "status": "authorized_for_implementation",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T10:05:00Z",
+
+  "authorization": {
+    "authorized_by": [
+      "docs/exos_dev1.stage_a_reference_birth_r1.dev_decision.lock",
+      "docs/exos_dev1.stage_a_reference_birth_r1.mechanism.audit.lock"
+    ],
+    "role": "justified_single_mechanism_revision",
+    "not_broad_search": true,
+    "not_larger_es_budget": true
+  },
+
+  "inherits_immutable_history": [
+    "docs/exos_dev1.stage_a_reference_birth_r1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.mechanism.audit.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.provenance_budget_causal.audit.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.prereg.lock",
+    "docs/exos_dev1.stage_a_reference_birth.contract.lock",
+    "docs/exos_dev1.stage_a_r2_1.dev_decision.lock"
+  ],
+
+  "r1_status": {
+    "decision_code": "credit_not_causal",
+    "interpretation": "outer_es_immobile_on_near_inactive_default_surface",
+    "eprop_conclusion": "inconclusive",
+    "mechanism_audit": "docs/exos_dev1.stage_a_reference_birth_r1.mechanism.audit.lock"
+  },
+
+  "question": "With learning-effect-aware ES selection and explicitly separated self-action vs teacher-demonstration credit events, can reward-based e-prop produce causal grounding where R1 failed due to accuracy-only ties and teacher credit contamination?",
+
+  "unchanged": {
+    "architecture": true,
+    "scaffold_surface": true,
+    "eprop_equations": true,
+    "budget_class": "batched_evolution_strategies_same_class_as_r1",
+    "stage_b_boundary": "locked",
+    "product_version": "0.0.004",
+    "candidate_lock": "forbidden"
+  },
+
+  "authorized_scope_only": [
+    "learning_effect_aware_ES_selection",
+    "separated_self_action_and_teacher_demonstration_credit"
+  ],
+
+  "R2_SEL_1": {
+    "title": "Lexicographic learning-effect-aware outer fitness",
+    "lexicographic_order": [
+      "accuracy_or_reward_improvement",
+      "signed_rewarded_margin_improvement",
+      "retention",
+      "seeded_neutral_tie_break"
+    ],
+    "forbidden_fitness_terms": [
+      "raw_update_norm",
+      "permanent_parent_priority_on_ties"
+    ],
+    "dense_causal_term_per_credit": {
+      "formula": "g_t = s_t * (m_a,t^after - m_a,t^before)",
+      "s_t": "+1 for positive outcome; -1 for negative outcome",
+      "m_a": "rewarded-action margin for the credited actor channel of that event",
+      "meaning": "Rewarding an action should raise its margin; penalizing it should lower its margin"
+    },
+    "required_selector_tests": [
+      "equal_accuracy_better_signed_margin_mutant_wins",
+      "larger_update_worse_signed_margin_mutant_loses",
+      "better_accuracy_always_beats_margin_only_improvement",
+      "complete_ties_use_seeded_neutral_tie_break_not_parent_priority"
+    ],
+    "selection_fitness_and_behavioral_pass_gates_remain_separate": true
+  },
+
+  "R2_TEACH_1": {
+    "title": "Separated self-action and teacher-demonstration credit",
+    "forbidden": [
+      "combine_demonstrated_action_with_reward_from_organism_sampled_action",
+      "runner_constructed_neural_target",
+      "runner_owned_weight_update",
+      "teacher_outcome_rewrites_sampled_action_eligibility",
+      "self_action_reward_updates_teacher_target"
+    ],
+    "rationale": "If the organism sampled wrong and received negative reward, substituting the teacher correct channel into that same credit would depress the demonstrated action.",
+    "two_explicit_credit_events": [
+      {
+        "credit_source": "self_action",
+        "actor_target": "sampled_channel",
+        "learning_signal": "environment_outcome_or_TD_error"
+      },
+      {
+        "credit_source": "teacher_demonstration",
+        "actor_target": "demonstrated_channel",
+        "learning_signal": "outcome_or_generic_teaching_signal_associated_with_that_demonstration"
+      }
+    ],
+    "teacher_event_law": {
+      "has_own_eligibility_and_credit_source": true,
+      "runner_delivers": ["observed_motor_event", "its_consequence"],
+      "runner_never_constructs": ["neural_target", "weight_update"]
+    },
+    "required_controls": [
+      "teacher_credit_off_state_injection_alone_does_not_teach",
+      "permuted_demonstration_learning_follows_observed_demonstration",
+      "self_action_reward_never_updates_teacher_target",
+      "teacher_outcome_never_rewrites_sampled_action_eligibility",
+      "conflicting_self_and_teacher_events_remain_separately_attributable"
+    ]
+  },
+
+  "partitions": {
+    "fresh_training_and_validation_required": true,
+    "r1_confirmation_remains_sealed": true,
+    "r2_confirmation_must_be_explicitly_preregistered_separately": true,
+    "r1_confirmation_auto_inherit_forbidden": true
+  },
+
+  "decision_ladder": [
+    "setup_ceiling_fail",
+    "selector_unit_test_fail",
+    "teacher_credit_separation_fail",
+    "search_surface_sensitivity_fail",
+    "eprop_reference_preflight_fail",
+    "persistent_weight_learning_fail",
+    "credit_not_causal",
+    "reference_birth_r2_validation_fail",
+    "reward_eprop_confirmation_fail",
+    "reward_eprop_confirmation_pass",
+    "teacher_eprop_confirmation_fail",
+    "teacher_dependent_grounding_pass"
+  ],
+
+  "forbidden_scope": [
+    "larger_ES_budget_as_primary_fix",
+    "another_scaffold_parameter_wall",
+    "stage_b_execution",
+    "candidate_lock_changes",
+    "product_version_change",
+    "reopening_r1_confirmation",
+    "automatic_confirmation_reuse"
+  ]
+}
