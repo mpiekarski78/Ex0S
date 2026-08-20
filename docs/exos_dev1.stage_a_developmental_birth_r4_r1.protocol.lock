@@ -1,0 +1,93 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_DEVELOPMENTAL_BIRTH_R4_R1.PROTOCOL.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "DevelopmentalBirthR4-R1",
+  "type": "protocol_revision_lock",
+  "status": "authorized_for_measurement_repair",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T13:25:00Z",
+
+  "role": "protocol_revision_measurement_repair_only",
+  "not_architectural_change": true,
+  "not_quietly_attempt_003_of_r4": true,
+
+  "supersedes_measurement_of": {
+    "revision": "DevelopmentalBirthR4",
+    "attempt_002_close": "docs/exos_dev1.stage_a_developmental_birth_r4.attempt_002.measurement_invalidated.close.lock",
+    "ceiling_audit": "docs/exos_dev1.stage_a_developmental_birth_r4.attempt_002_ceiling.audit.lock",
+    "classification": "invalidated_measurement__channel_vs_synergy_boundary"
+  },
+
+  "inherits_frozen_from_r4": {
+    "contract": "docs/exos_dev1.stage_a_developmental_birth_r4.contract.lock",
+    "isolation": "docs/exos_dev1.stage_a_developmental_birth_r4.isolation.lock",
+    "architecture_implementation_sha": "ba97883b6864a0345901b654396a417db3163a03",
+    "frozen": [
+      "generative_genome_schema",
+      "embryonic_construction",
+      "gestation_sham_vs_active",
+      "body_physics",
+      "four_synergy_projection",
+      "organism_owned_valence",
+      "fixed_eprop_and_lsg_credit_mechanisms",
+      "2x2_factorial_structure",
+      "required_interventions",
+      "stage_b_boundary"
+    ]
+  },
+
+  "repaired": {
+    "learnability_ceiling": "synergy_aware_four_logit_actor_expanded_through_motor_basis",
+    "ceiling_gate": "body_behavior_conjuncts_not_raw_channel_accuracy",
+    "seed_partitions": "fresh_r4_r1_worlds_and_confirmation"
+  },
+
+  "ceiling_invariants": [
+    "channels_implementing_same_synergy_receive_shared_behavioral_credit",
+    "onehot_and_distributed_encodings_of_same_synergy_produce_identical_body_transitions",
+    "channel_permutation_within_synergy_leaves_behavior_and_learning_unchanged",
+    "ceiling_sees_same_exteroception_proprioception_interoception_organism_valence",
+    "no_expected_action_enters_ceiling_training"
+  ],
+
+  "ceiling_gate_body_behavior": {
+    "final_comfort_rate": true,
+    "improvement_over_initial_comfort": true,
+    "reduction_in_distance_internal_error": true,
+    "superiority_over_matched_untrained_or_random_policy": true,
+    "not_raw_32_channel_accuracy": true,
+    "not_synergy_classification_accuracy_alone": true
+  },
+
+  "attempt_002_factorial": {
+    "status": "descriptive_only",
+    "must_not_carry_into_r4_r1_decision": true
+  },
+
+  "decision_ladder": [
+    "developmental_setup_fail",
+    "gestation_leakage",
+    "body_controllability_fail",
+    "optimization_ceiling_fail",
+    "genome_overencoded_behavior",
+    "grounded_acquisition_fail",
+    "development_not_causal",
+    "self_credit_not_causal",
+    "teacher_credit_not_causal",
+    "lsg_not_causal",
+    "fresh_world_fail",
+    "renamed_symbol_grounding_fail",
+    "stage_a_r4_r1_validation_pass",
+    "stage_a_r4_r1_confirmation_pass"
+  ],
+
+  "forbidden": [
+    "changing_body_physics",
+    "changing_gestation_or_credit_mechanisms",
+    "carrying_attempt_002_factorial_into_decision",
+    "writing_dev_decision_from_invalidated_r4_ceiling",
+    "quiet_rename_to_attempt_003_of_r4",
+    "stage_b_execution"
+  ]
+}

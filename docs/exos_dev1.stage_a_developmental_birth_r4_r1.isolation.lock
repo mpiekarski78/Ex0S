@@ -1,0 +1,50 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_DEVELOPMENTAL_BIRTH_R4_R1.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "DevelopmentalBirthR4-R1",
+  "type": "isolation_lock",
+  "status": "locked",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T13:25:00Z",
+
+  "protocol": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.protocol.lock",
+  "parent_contract": "docs/exos_dev1.stage_a_developmental_birth_r4.contract.lock",
+  "parent_isolation": "docs/exos_dev1.stage_a_developmental_birth_r4.isolation.lock",
+
+  "measurement_surface": {
+    "ceiling_module": "experiments/dev1/developmental_birth_r4_ceiling.py",
+    "life_reexport": "experiments/dev1/developmental_birth_r4_life.py",
+    "tests": "tests/dev1/test_stage_a_developmental_birth_r4_r1_ceiling.py"
+  },
+
+  "frozen_packages_byte_identity_required_vs_ba97883": [
+    "three_memory/dev1/body/",
+    "three_memory/dev1/development/",
+    "three_memory/dev1/organism.py",
+    "three_memory/dev1/plasticity/"
+  ],
+
+  "may_change": [
+    "experiments/dev1/developmental_birth_r4_ceiling.py",
+    "experiments/dev1/developmental_birth_r4_life.py (ceiling import surface only)",
+    "experiments/dev1/search_developmental_birth_r4.py",
+    "experiments/dev1/developmental_birth_r4_preflight.py",
+    "tests/dev1/test_stage_a_developmental_birth_r4_r1_ceiling.py",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r1.*",
+    "runs/exos_dev1/stage_a_developmental_birth_r4_r1/"
+  ],
+
+  "seed_partition_rule": {
+    "fresh_r4_r1_partitions_required": true,
+    "r4_attempt_002_worlds_excluded_from_scored_r4_r1": true,
+    "r1_r2_r3_confirmation_remain_sealed": true,
+    "attempt_002_factorial_not_a_decision_input": true
+  },
+
+  "forbidden": [
+    "editing_frozen_body_or_credit_packages",
+    "reusing_r4_scored_world_or_conf_seeds_as_r4_r1_scored_partitions",
+    "inheriting_attempt_002_decision_code"
+  ]
+}

@@ -13,9 +13,11 @@ from dataclasses import dataclass, field
 from typing import Any
 
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 
+from experiments.dev1.developmental_birth_r4_ceiling import (
+    evaluate_ceiling_gate_bundle,
+    evaluate_ceiling_on_body_world,
+)
 from three_memory.dev1.body.world import ClosedLoopGroundingWorld
 from three_memory.dev1.device import dev1_device
 from three_memory.dev1.development.construction import construct_post_growth_organism
@@ -25,6 +27,12 @@ from three_memory.dev1.interfaces import OrganismObservation
 from three_memory.dev1.organism import ModularOrganism
 from three_memory.dev1.plasticity.eprop.interventions import EpropIntervention
 from three_memory.dev1.plasticity.eprop.signal_generator import default_lsg_vector
+
+# Re-export for runners that import ceiling helpers from the life module.
+__all_ceiling__ = (
+    "evaluate_ceiling_on_body_world",
+    "evaluate_ceiling_gate_bundle",
+)
 
 
 FACTORIAL_CELLS = (
@@ -66,81 +74,6 @@ def _apply_eprop_intervention(org: ModularOrganism, intervention: EpropIntervent
     elif intervention.reward_off:
         # Fixed e-prop path: zero consequence reward via valence bypass
         org.r4_use_organism_valence = False
-
-
-class BodyWorldCeiling(nn.Module):
-    """
-    Measurement-only actor–critic on the same body observations/actions/consequence.
-    Never an organism candidate. No privileged answer table.
-    """
-
-    def __init__(self, sensory_dim: int, n_actions: int, device: torch.device, seed: int = 0):
-        super().__init__()
-        self.device = device
-        torch.manual_seed(seed)
-        self.enc = nn.Sequential(nn.Linear(sensory_dim, 64), nn.Tanh(), nn.Linear(64, 64), nn.Tanh())
-        self.actor = nn.Linear(64, n_actions)
-        self.critic = nn.Linear(64, 1)
-        self.to(device)
-        self.opt = torch.optim.Adam(self.parameters(), lr=1e-3)
-
-    def step_update(self, sensory: torch.Tensor, reward: float) -> int:
-        logits, value = self.forward(sensory)
-        dist = torch.distributions.Categorical(logits=logits)
-        action = int(dist.sample().item())
-        logp = dist.log_prob(torch.tensor(action, device=self.device))
-        advantage = float(reward) - float(value.detach().item())
-        loss = -(logp * advantage) + 0.5 * (value - reward) ** 2
-        self.opt.zero_grad()
-        loss.backward()
-        self.opt.step()
-        return action
-
-    def forward(self, sensory: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
-        h = self.enc(sensory)
-        return self.actor(h), self.critic(h).squeeze(-1)
-
-
-def evaluate_ceiling_on_body_world(
-    generative: GenerativeGenome,
-    world_seed: str,
-    *,
-    n_episodes: int = 8,
-    episode_ticks: int = 16,
-    device: torch.device | None = None,
-) -> dict[str, float]:
-    """Same observations, actions, and organism-valence consequence — no answer table."""
-    from three_memory.dev1.development.valence import OrganismValenceCircuit
-
-    dev = device or dev1_device()
-    world = ClosedLoopGroundingWorld(
-        generative, world_seed=world_seed, device=dev, episode_ticks=episode_ticks
-    )
-    ceiling = BodyWorldCeiling(generative.sensory_dim, generative.n_motor_channels, dev, seed=0)
-    valence = OrganismValenceCircuit(generative.interoceptive_dim, device=dev)
-    correct = 0
-    total = 0
-    for ep in range(n_episodes):
-        valence.reset()
-        step = world.reset_episode(ep)
-        for _t in range(episode_ticks):
-            sensory = step.sensory_vector.to(dev)
-            logits, value = ceiling.forward(sensory)
-            dist = torch.distributions.Categorical(logits=logits)
-            action = int(dist.sample().item())
-            motor = torch.zeros(generative.n_motor_channels, device=dev)
-            motor[action] = 1.0
-            step = world.apply_action(motor)
-            v = valence.update(step.interoceptive_state)
-            logp = dist.log_prob(torch.tensor(action, device=dev))
-            adv = float(v) - float(value.detach().item())
-            loss = -(logp * adv) + 0.5 * (value - float(v)) ** 2
-            ceiling.opt.zero_grad()
-            loss.backward()
-            ceiling.opt.step()
-            correct += int(step.behavioral_correct)
-            total += 1
-    return {"treatment_accuracy": correct / max(1, total)}
 
 
 def evaluate_r4_life(

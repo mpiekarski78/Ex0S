@@ -1,0 +1,72 @@
+{
+  "_schema": "exos_dev1.stage_a_developmental_birth_r4.attempt_002.measurement_invalidated.close.v1",
+  "_immutable": true,
+  "type": "protocol_close",
+  "status": "closed_measurement_invalidated",
+  "written_utc": "2026-08-20T13:20:00Z",
+
+  "attempt": {
+    "run_id": "exos_dev1_developmental_birth_r4_scored_20260820_002",
+    "attempt_number": "002",
+    "artifacts_dir": "runs/exos_dev1/stage_a_developmental_birth_r4/exos_dev1_developmental_birth_r4_scored_20260820_002/",
+    "artifacts_preserved_unchanged": true,
+    "silent_replay": false
+  },
+
+  "provenance": {
+    "executing_head": "8704a433db847e7cabab07bedf67934af6ed0510",
+    "implementation_sha": "ba97883b6864a0345901b654396a417db3163a03",
+    "prereg": "docs/exos_dev1.stage_a_developmental_birth_r4.prereg.lock",
+    "ceiling_audit": "docs/exos_dev1.stage_a_developmental_birth_r4.attempt_002_ceiling.audit.lock",
+    "diagnostic_dir": "runs/exos_dev1/stage_a_developmental_birth_r4/exos_dev1_developmental_birth_r4_scored_20260820_002_ceiling_audit/"
+  },
+
+  "what_attempt_002_established": {
+    "organism_scientific_result": false,
+    "protocol_defect": true,
+    "defect": "optimization_ceiling solved a 32-way independent categorical credit problem while the body implements four synonym-rich motor synergies; recorded ceiling cannot gate R4 learnability"
+  },
+
+  "classification": {
+    "code": "invalidated_measurement__channel_vs_synergy_boundary",
+    "recorded_decision_code_in_search_summary": "optimization_ceiling_fail",
+    "scientific_status_of_recorded_decision_code": "invalidated_not_a_stage_a_r4_close",
+    "factorial_cells": "descriptive_only_must_not_carry_into_r4_r1_decision",
+    "dev_decision_lock": "not_written"
+  },
+
+  "artifacts_retained": [
+    "run_started.json",
+    "ceiling.json",
+    "outer_matched_es.json",
+    "factorial_cells.json",
+    "interventions.json",
+    "candidate_life_records.jsonl",
+    "run_completed.json",
+    "search_summary.json",
+    "supervisor/"
+  ],
+
+  "superseded_by": {
+    "revision": "DevelopmentalBirthR4-R1",
+    "role": "protocol_revision_measurement_repair_only",
+    "frozen": [
+      "r4_architecture",
+      "gestation",
+      "body_physics",
+      "credit_mechanisms"
+    ],
+    "repaired": [
+      "learnability_ceiling_measurement",
+      "ceiling_gate_body_behavior_definition",
+      "fresh_seed_partitions"
+    ]
+  },
+
+  "forbidden": [
+    "treating_attempt_002_optimization_ceiling_fail_as_organism_result",
+    "carrying_attempt_002_factorial_into_r4_r1_scientific_decision",
+    "silently_replaying_attempt_002",
+    "writing_dev_decision_lock_from_attempt_002"
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "_schema": "exos_dev1.stage_a_developmental_birth_r4_r1.prereg.v1",
+  "_immutable": true,
+  "written_utc": "2026-08-20T13:40:00Z",
+
+  "revision": "DevelopmentalBirthR4-R1",
+  "scientific_attempt_number": 1,
+  "role": "protocol_revision_measurement_repair_only",
+  "not_quietly_attempt_003_of_r4": true,
+  "scored_run_authorized": true,
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r1.protocol.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r1.isolation.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4.contract.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4.attempt_002.measurement_invalidated.close.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4.attempt_002_ceiling.audit.lock"
+  ],
+
+  "provenance": {
+    "r4_architecture_implementation_sha": "ba97883b6864a0345901b654396a417db3163a03",
+    "r4_architecture_frozen": true,
+    "measurement_repair_module": "experiments/dev1/developmental_birth_r4_ceiling.py",
+    "excluded_ceiling_validation": "runs/exos_dev1/stage_a_developmental_birth_r4_r1/excluded_ceiling_validation.json",
+    "excluded_preflight_seed": "developmental_birth_r4_r1_excluded_ceiling_preflight_20260820",
+    "attempt_002_factorial": "descriptive_only_not_carried_into_decision"
+  },
+
+  "mechanism_unchanged_from_r4": {
+    "genome": "generative_construction_program",
+    "gestation": "compute_matched_sham_vs_active_homeostatic_babble",
+    "valence": "organism_owned_from_consecutive_interoceptive_states",
+    "factorial": "2x2_sham_active_x_fixed_eprop_lsg",
+    "body_physics": "frozen",
+    "credit_mechanisms": "frozen"
+  },
+
+  "ceiling_repair": {
+    "kind": "synergy_aware_four_logit_actor_expanded_through_motor_basis",
+    "invariants": [
+      "channels_implementing_same_synergy_receive_shared_behavioral_credit",
+      "onehot_and_distributed_encodings_of_same_synergy_produce_identical_body_transitions",
+      "channel_permutation_within_synergy_leaves_behavior_and_learning_unchanged",
+      "ceiling_sees_same_exteroception_proprioception_interoception_organism_valence",
+      "no_expected_action_enters_ceiling_training"
+    ],
+    "gate_definition": "body_behavior_conjuncts",
+    "not_raw_32_channel_accuracy": true,
+    "final_comfort_rate_is_late_window_second_half": true
+  },
+
+  "factorial_cells": [
+    {"development": "sham_gestation", "credit": "r2_fixed_eprop_baseline"},
+    {"development": "sham_gestation", "credit": "inherited_learning_signal_generator"},
+    {"development": "active_gestation", "credit": "r2_fixed_eprop_baseline"},
+    {"development": "active_gestation", "credit": "inherited_learning_signal_generator"}
+  ],
+
+  "budget": {
+    "outer_optimizer": "matched_es_per_credit_column",
+    "generations": 8,
+    "population_size": 8,
+    "mutation_scale": 0.15,
+    "n_episodes_per_life": 32,
+    "episode_ticks": 16,
+    "gestation_ticks": 128,
+    "lives_per_individual": 1,
+    "training_cheap_seeds": 2,
+    "validation_seeds": 4,
+    "confirmation_seeds": 4,
+    "outer_world_exposure_matched_across_credit_columns": true,
+    "evaluation_budgets_matched_across_credit_columns": true,
+    "lsg_column_no_extra_lives_for_parameter_count": true,
+    "scored_run_cuda_required": true,
+    "protocol": "full_evidence_before_decision_ladder"
+  },
+
+  "thresholds": {
+    "note": "Informed by excluded-seed ceiling validation under frozen body/budgets. Absolute 0.20 comfort was not a credible capacity gate (handcrafted closed-loop diagnostic ~0.03). Gate is body-behavior conjuncts plus separate controllability probe.",
+    "body_controllability_min_heuristic_distance_reduction": 0.05,
+    "body_controllability_min_open_loop_synergy_distance_spread": 0.01,
+    "optimization_ceiling_min_final_comfort_rate": 0.05,
+    "optimization_ceiling_min_comfort_improvement": 0.0,
+    "optimization_ceiling_min_distance_reduction": 0.05,
+    "optimization_ceiling_min_margin_over_random": 0.02,
+    "grounded_acquisition_min_train_accuracy": 0.25,
+    "grounded_acquisition_min_signed_margin_proxy": 0.0,
+    "development_not_causal_if_sham_within_epsilon_of_active": 0.05,
+    "fresh_world_min_validation_accuracy": 0.20,
+    "lifetime_plasticity_off_success_implies_genome_overencoded_behavior": true,
+    "actor_critic_ceiling_measurement_only": true
+  },
+
+  "decision_ladder": [
+    "developmental_setup_fail",
+    "gestation_leakage",
+    "body_controllability_fail",
+    "optimization_ceiling_fail",
+    "genome_overencoded_behavior",
+    "grounded_acquisition_fail",
+    "development_not_causal",
+    "self_credit_not_causal",
+    "teacher_credit_not_causal",
+    "lsg_not_causal",
+    "fresh_world_fail",
+    "renamed_symbol_grounding_fail",
+    "stage_a_r4_r1_validation_pass",
+    "stage_a_r4_r1_confirmation_pass"
+  ],
+
+  "required_interventions": [
+    "sham_gestation",
+    "zero_tick_skip_observational",
+    "gestational_plasticity_off",
+    "lifetime_plasticity_off",
+    "reward_valence_off",
+    "motor_to_body_permutation",
+    "proprioceptive_feedback_permutation",
+    "teacher_demonstration_permutation",
+    "open_loop_or_shuffled_action_consequences",
+    "lsg_off",
+    "lsg_permuted"
+  ],
+
+  "unchanged": {
+    "stage_b_boundary": "locked",
+    "product_version": "0.0.004",
+    "r1_r2_r3_artifacts_and_decisions": "immutable",
+    "r4_attempt_002_artifacts": "immutable_descriptive_only"
+  },
+
+  "seed_partitions": {
+    "note": "Fresh R4-R1 partitions. R4 attempt-002 worlds and all prior confirmation seeds excluded from scored partitions.",
+    "excluded_seeds": [
+      "exos_dev1_reference_birth_world_001",
+      "exos_dev1_reference_birth_world_002",
+      "exos_dev1_reference_birth_world_003",
+      "exos_dev1_reference_birth_world_004",
+      "exos_dev1_reference_birth_world_005",
+      "exos_dev1_reference_birth_world_006",
+      "exos_dev1_reference_birth_conf_001",
+      "exos_dev1_reference_birth_conf_002",
+      "exos_dev1_reference_birth_conf_003",
+      "exos_dev1_reference_birth_conf_004",
+      "exos_dev1_reference_birth_r1_world_001",
+      "exos_dev1_reference_birth_r1_world_002",
+      "exos_dev1_reference_birth_r1_world_003",
+      "exos_dev1_reference_birth_r1_world_004",
+      "exos_dev1_reference_birth_r1_world_005",
+      "exos_dev1_reference_birth_r1_world_006",
+      "exos_dev1_reference_birth_r1_conf_001",
+      "exos_dev1_reference_birth_r1_conf_002",
+      "exos_dev1_reference_birth_r1_conf_003",
+      "exos_dev1_reference_birth_r1_conf_004",
+      "exos_dev1_reference_birth_r2_world_001",
+      "exos_dev1_reference_birth_r2_world_002",
+      "exos_dev1_reference_birth_r2_world_003",
+      "exos_dev1_reference_birth_r2_world_004",
+      "exos_dev1_reference_birth_r2_world_005",
+      "exos_dev1_reference_birth_r2_world_006",
+      "exos_dev1_reference_birth_r2_conf_001",
+      "exos_dev1_reference_birth_r2_conf_002",
+      "exos_dev1_reference_birth_r2_conf_003",
+      "exos_dev1_reference_birth_r2_conf_004",
+      "exos_dev1_reference_birth_r3_world_001",
+      "exos_dev1_reference_birth_r3_world_002",
+      "exos_dev1_reference_birth_r3_world_003",
+      "exos_dev1_reference_birth_r3_world_004",
+      "exos_dev1_reference_birth_r3_world_005",
+      "exos_dev1_reference_birth_r3_world_006",
+      "exos_dev1_reference_birth_r3_conf_001",
+      "exos_dev1_reference_birth_r3_conf_002",
+      "exos_dev1_reference_birth_r3_conf_003",
+      "exos_dev1_reference_birth_r3_conf_004",
+      "exos_dev1_developmental_birth_r4_world_001",
+      "exos_dev1_developmental_birth_r4_world_002",
+      "exos_dev1_developmental_birth_r4_world_003",
+      "exos_dev1_developmental_birth_r4_world_004",
+      "exos_dev1_developmental_birth_r4_world_005",
+      "exos_dev1_developmental_birth_r4_world_006",
+      "exos_dev1_developmental_birth_r4_conf_001",
+      "exos_dev1_developmental_birth_r4_conf_002",
+      "exos_dev1_developmental_birth_r4_conf_003",
+      "exos_dev1_developmental_birth_r4_conf_004",
+      "reference_birth_excluded_preflight_20260820",
+      "reference_birth_r1_excluded_preflight_20260820",
+      "reference_birth_r2_excluded_preflight_20260820",
+      "reference_birth_r3_excluded_preflight_20260820",
+      "developmental_birth_r4_excluded_preflight_20260820",
+      "developmental_birth_r4_r1_excluded_ceiling_preflight_20260820"
+    ],
+    "training_world_seeds": [
+      "exos_dev1_developmental_birth_r4_r1_world_001",
+      "exos_dev1_developmental_birth_r4_r1_world_002",
+      "exos_dev1_developmental_birth_r4_r1_world_003",
+      "exos_dev1_developmental_birth_r4_r1_world_004",
+      "exos_dev1_developmental_birth_r4_r1_world_005",
+      "exos_dev1_developmental_birth_r4_r1_world_006"
+    ],
+    "confirmation_seeds": [
+      "exos_dev1_developmental_birth_r4_r1_conf_001",
+      "exos_dev1_developmental_birth_r4_r1_conf_002",
+      "exos_dev1_developmental_birth_r4_r1_conf_003",
+      "exos_dev1_developmental_birth_r4_r1_conf_004"
+    ],
+    "r4_r1_confirmation_explicitly_preregistered_separately": true,
+    "prior_confirmation_auto_inherit_forbidden": true
+  },
+
+  "run_identity": {
+    "run_id": "exos_dev1_developmental_birth_r4_r1_scored_20260820",
+    "output_dir": "runs/exos_dev1/stage_a_developmental_birth_r4_r1/exos_dev1_developmental_birth_r4_r1_scored_20260820",
+    "preflight_seed": "developmental_birth_r4_r1_excluded_ceiling_preflight_20260820",
+    "attempt": "001",
+    "device_policy": "cuda_required"
+  },
+
+  "forbidden": [
+    "carrying_attempt_002_factorial_into_decision",
+    "substituting_r2_or_r3_metrics_as_factorial_cells",
+    "further_tuning_stopped_standalone_credit_line",
+    "auto_inheriting_r1_r2_r3_confirmation",
+    "reopening_r1_r2_r3_confirmation",
+    "changing_seed_partitions_after_this_lock",
+    "inspecting_confirmation_worlds_during_run",
+    "patching_runner_during_run",
+    "cpu_fallback_without_prereg_amendment",
+    "inheriting_world_specific_knowledge_in_genome_or_gestation",
+    "runner_supplying_behavioral_correctness_to_plasticity",
+    "changing_frozen_body_physics_or_credit",
+    "stage_b_execution"
+  ]
+}

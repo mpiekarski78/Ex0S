@@ -1,0 +1,105 @@
+{
+  "_schema": "exos_dev1.stage_a_developmental_birth_r4.attempt_002_ceiling.audit.v1",
+  "_immutable": true,
+  "type": "ceiling_measurement_audit",
+  "status": "pending_scientific_interpretation",
+  "written_utc": "2026-08-20T13:15:00Z",
+
+  "attempt_002": {
+    "run_id": "exos_dev1_developmental_birth_r4_scored_20260820_002",
+    "artifacts_preserved_unchanged": true,
+    "recorded_ceiling_accuracy": 0.03125,
+    "recorded_decision_code_in_search_summary": "optimization_ceiling_fail",
+    "scientific_decision_lock": "not_written",
+    "factorial_reinterpretation": "forbidden_in_this_audit; values remain descriptive because setup ladder fired first"
+  },
+
+  "provenance": {
+    "executing_head": "8704a433db847e7cabab07bedf67934af6ed0510",
+    "implementation_sha": "ba97883b6864a0345901b654396a417db3163a03",
+    "prereg": "docs/exos_dev1.stage_a_developmental_birth_r4.prereg.lock",
+    "ceiling_code": "experiments/dev1/developmental_birth_r4_life.py::evaluate_ceiling_on_body_world",
+    "body_code": "three_memory/dev1/body/physics.py::GenericBody.step",
+    "diagnostic_dir": "runs/exos_dev1/stage_a_developmental_birth_r4/exos_dev1_developmental_birth_r4_scored_20260820_002_ceiling_audit/"
+  },
+
+  "questions_and_findings": {
+    "is_ceiling_accuracy_scoring_32_channel_or_four_way_synergy": {
+      "answer": "neither",
+      "detail": "treatment_accuracy = fraction of ticks with body distance < comfort_target_radius (behavioral_correct). It does not score selected channel identity and does not score synergy-argmax identity."
+    },
+    "does_ceiling_produce_distributed_motor_through_same_synergy_decoder": {
+      "same_body_step_and_synergy_projection": true,
+      "same_motor_encoding_as_organism": false,
+      "detail": "Ceiling samples a Categorical over 32 logits and applies a one-hot motor vector. Organism applies full motor_scores (competition/softmax distribution). Both enter GenericBody.step → synergy_projection, but the motor command encoding differs."
+    },
+    "is_behavioral_correctness_body_consequence_level": {
+      "answer": true,
+      "definition": "behavioral_correct := position_norm < comfort_target_radius; behavioral_score := comfort. No privileged expected channel."
+    },
+    "does_ceiling_receive_same_sensory_proprio_intero_valence_stream": {
+      "sensory_vector_from_body": true,
+      "proprioception_packed_into_sensory_vector": true,
+      "interoception_used_for_organism_owned_valence": true,
+      "valence_not_runner_behavioral_correctness": true,
+      "policy_input": "sensory_vector only (matches organism cortex sensory path packing)",
+      "note": "Consequence signal for AC update is organism-valence from consecutive interoceptive states; matched in kind to organism credit consequence."
+    },
+    "training_curve_action_synergy_body_improvement": {
+      "source": "reconstructive diagnostic with same world seed suffix and budgets; see reconstruction_diagnostics.json",
+      "attempt002_recorded_accuracy": 0.03125,
+      "cpu_reconstruction_onehot_accuracy": 0.03515625,
+      "episodic_accuracy_curve_summary": "Almost flat near zero; rare episodes with non-zero comfort fraction; no sustained acquisition curve.",
+      "body_state_improvement": "Not observed: first-quarter mean distance 0.82, final-quarter mean distance 1.04 (worsened).",
+      "action_channel_histogram": "All 32 channels used under one-hot sampling (no collapse to a single channel).",
+      "synergy_argmax_histogram_cpu_recon": {"approach": 151, "withdraw": 146, "orient": 150, "wait": 65},
+      "mean_synergy_mass_cpu_recon": [18.875, 18.25, 18.75, 8.125]
+    },
+    "did_ceiling_optimize_32_channels_as_if_unique_actions": {
+      "answer": true,
+      "detail": "Actor head is Linear(64, 32) with Categorical credit to the sampled channel. Eight channels share each synergy block in body physics; the AC does not share credit across synonym channels. It did not collapse onto one channel, but it still treats synonym channels as distinct actions."
+    },
+    "does_prereg_0_20_refer_to_synergy_or_raw_channel_accuracy": {
+      "answer": "neither_explicitly; it gates treatment_accuracy",
+      "prereg_field": "thresholds.optimization_ceiling_min_accuracy = 0.20",
+      "operational_meaning_in_runner": "body-comfort tick fraction (behavioral_correct rate)",
+      "not_defined_as": ["4-way synergy classification accuracy", "32-way channel classification accuracy"],
+      "chance_floor_note": "0.03125 equals 1/32 and also matched reconstructive frac_start_already_correct on this world; it is not the uniform 1/4 synergy chance level."
+    }
+  },
+
+  "why_factorial_can_exceed_ceiling_without_proving_organism_above_true_ac_capacity": [
+    "Organism applies distributed motor_scores; ceiling applies one-hot channel pulses — different effective synergy drive.",
+    "Ceiling optimizes a 32-way categorical factorization while body consequences are 4-synergy.",
+    "Accuracy is body-comfort rate with a low incidental floor (~start-in-zone / rare visits), not a calibrated synergy competence score.",
+    "Therefore factorial validation > 0.03125 does not imply a valid AC upper-bound violation; it shows the recorded ceiling is not a credible upper bound for the organism interface."
+  ],
+
+  "open_loop_controllability_probe": {
+    "path": "runs/exos_dev1/stage_a_developmental_birth_r4/exos_dev1_developmental_birth_r4_scored_20260820_002_ceiling_audit/controllability_probe.json",
+    "finding": "Synergy blocks change body state differently (wait freezes; approach/withdraw/orient move). Runner synergy names are not nest-seeking labels; open-loop approach does not automatically reduce distance to origin. Body is not inert, but scored comfort requires closed-loop state-dependent policy.",
+    "not_classified_as_body_controllability_fail_in_this_audit": true
+  },
+
+  "routing_classification": {
+    "code": "invalidated_measurement__channel_vs_synergy_boundary",
+    "not": [
+      "valid optimization_ceiling_fail",
+      "body_controllability_fail",
+      "developmental_setup_fail"
+    ],
+    "rationale": "The decisive defect is the channel-vs-synergy measurement/optimization boundary: 32-way categorical AC + one-hot motor encoding versus 4-synergy body semantics and organism distributed scores, while reported accuracy is body-comfort rate whose 0.03125 value coincides with 1/32 rather than a synergy competence upper bound. This invalidates treating attempt 002's optimization_ceiling_fail as a credible Stage A R4 scientific close. It is not yet classified as developmental_setup_fail because the ceiling does call the same GenericBody.step/synergy projection and uses organism-owned valence; the failure is specifically the action-space/scoring boundary relative to synergies.",
+    "required_before_another_scored_run": [
+      "Canonical ceiling reconstruction with organism-matched distributed motor encoding and/or synergy-level action space",
+      "Explicit prereg statement whether optimization_ceiling_min_accuracy is body-comfort rate, synergy competence, or other",
+      "Protocol closure of attempt 002 as measurement-invalidated (not a scientific ladder close)",
+      "Fresh prereg/partitions before any new scored attempt"
+    ]
+  },
+
+  "forbidden_until_boundary_resolved": [
+    "docs/exos_dev1.stage_a_developmental_birth_r4.dev_decision.lock",
+    "reinterpreting_attempt_002_factorial_as_causal_scientific_conclusion",
+    "silently_replaying_attempt_002"
+  ]
+}

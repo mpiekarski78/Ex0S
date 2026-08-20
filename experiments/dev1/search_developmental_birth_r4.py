@@ -14,9 +14,9 @@ from pathlib import Path
 
 import torch
 
+from experiments.dev1.developmental_birth_r4_ceiling import evaluate_ceiling_gate_bundle
 from experiments.dev1.developmental_birth_r4_life import (
     FACTORIAL_CELLS,
-    evaluate_ceiling_on_body_world,
     evaluate_matched_factorial,
     evaluate_r4_life,
 )
@@ -36,7 +36,7 @@ def run_unscored_benchmark(world_seed: str, device: torch.device | None = None) 
         MatchedOuterBudget(population=4, generations=2, n_episodes=2, episode_ticks=4),
         device=dev,
     )
-    ceiling = evaluate_ceiling_on_body_world(
+    ceiling = evaluate_ceiling_gate_bundle(
         GenerativeGenome.small(), world_seed + ":ceiling", n_episodes=4, episode_ticks=8, device=dev
     )
     return {
@@ -46,7 +46,9 @@ def run_unscored_benchmark(world_seed: str, device: torch.device | None = None) 
         "cells": {k: v.treatment_accuracy for k, v in cells.items()},
         "es_matched": es["matched"],
         "es_lives": es["fixed_lives"],
-        "ceiling_accuracy": ceiling["treatment_accuracy"],
+        "ceiling_accuracy": ceiling["final_comfort_rate"],
+        "ceiling_kind": ceiling["ceiling_kind"],
+        "ceiling_margin_over_random": ceiling["comfort_margin_over_random"],
         "factorial_cells": list(FACTORIAL_CELLS),
     }
 
