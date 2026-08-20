@@ -1,0 +1,172 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH_R3.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "ReferenceBirthR3",
+  "type": "stage_contract_lock",
+  "status": "authorized_for_implementation",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T11:00:00Z",
+
+  "authorization": {
+    "authorized_by": [
+      "docs/exos_dev1.stage_a_reference_birth_r2.dev_decision.lock",
+      "docs/exos_dev1.stage_a_reference_birth.rate_eprop_branch.stop.lock"
+    ],
+    "role": "substantial_mechanism_jump",
+    "not_continuation_of_fixed_rate_eprop_tuning": true,
+    "not_llm_or_ordinary_model_retraining": true,
+    "outer_analogy": "evolution_learning_how_the_newborn_brain_should_learn",
+    "world_knowledge_must_still_be_acquired_within_life": true
+  },
+
+  "inherits_immutable_history": [
+    "docs/exos_dev1.stage_a_reference_birth.rate_eprop_branch.stop.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.dev_decision.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.provenance_budget_causal.audit.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.prereg.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_reference_birth.contract.lock",
+    "docs/exos_dev1.stage_a_r2_1.dev_decision.lock"
+  ],
+
+  "stopped_predecessor": {
+    "branch": "fixed_broadcast_rate_eprop",
+    "stop_lock": "docs/exos_dev1.stage_a_reference_birth.rate_eprop_branch.stop.lock",
+    "r2_decision_code": "credit_not_causal",
+    "r2_interpretation": "lexicographic_es_mobile_and_teacher_credit_separated_but_credit_still_not_causal",
+    "eprop_class_status": "scientifically_inconclusive"
+  },
+
+  "question": "Can an inherited cortex-owned learning-signal generator, paired with local eligibility traces and R2-separated self/teacher credit events, produce within-life causal grounding where fixed/broadcast rate-e-prop failed?",
+
+  "scientific_rationale": {
+    "eprop_factorization": "eligibility_traces_alone_insufficient; performance_depends_on_useful_neuron_specific_learning_signals",
+    "precedents": [
+      "Bellec et al. reward-based e-prop (synthetic-gradient learning signals improve performance)",
+      "natural e-prop dedicated learning-signal generator",
+      "meta-training inherited plasticity / differentiable plasticity as learning-to-learn"
+    ],
+    "not": [
+      "teaching_facts_symbols_mappings_or_expected_actions_into_the_organism",
+      "ordinary_supervised_model_retraining",
+      "LLM_finetuning_analogy"
+    ]
+  },
+
+  "frozen_within_life_update": {
+    "keep_local_eligibility_traces": true,
+    "replace": "fixed_or_broadcast_credit_signal_L",
+    "with": "separate_cortex_owned_network_producing_neuron_specific_learning_signals",
+    "actor_update": "Delta_W_ij(t) = eta * L_j(t) * e_ij(t)",
+    "L_j_source": "inherited_learning_signal_generator_network",
+    "updates_remain_local_within_evaluated_lives": true,
+    "no_bptt_within_life": true,
+    "no_runner_owned_weight_update": true
+  },
+
+  "inheritance_law": {
+    "outer_process_trains_or_evolves": "inherited_signal_generator_across_complete_developmental_lives",
+    "between_newborns_reset": [
+      "episodic_memory_H",
+      "working_state_rho",
+      "transient_eligibility",
+      "within_life_plastic_actor_weights_unless_explicitly_preregistered_otherwise"
+    ],
+    "inherit_only": [
+      "generic_learning_machinery",
+      "signal_generator_parameters",
+      "eligibility_coefficients_and_schedules_as_authorized"
+    ],
+    "never_inherit": [
+      "symbols",
+      "facts",
+      "cue_action_mappings",
+      "expected_actions",
+      "world_specific_answers"
+    ]
+  },
+
+  "preserve_from_R2": {
+    "separated_self_action_and_teacher_demonstration_credit": true,
+    "lexicographic_learning_effect_selection_available": true,
+    "teacher_event_has_own_eligibility_and_credit_source": true,
+    "runner_delivers_only_observed_motor_event_and_consequence": true
+  },
+
+  "comparison_arms_only": [
+    {
+      "arm": "r2_fixed_eprop_baseline",
+      "purpose": "frozen_failed_baseline",
+      "organism_candidate": false,
+      "note": "Replay fixed/broadcast rate-e-prop under R3 partitions for contrast; not a candidate for promotion"
+    },
+    {
+      "arm": "inherited_learning_signal_generator",
+      "purpose": "candidate_mechanism",
+      "organism_candidate": true
+    },
+    {
+      "arm": "conventional_actor_critic_ceiling",
+      "purpose": "learnability_ceiling_only",
+      "organism_candidate": false
+    },
+    {
+      "arm": "signal_generator_off_or_permuted",
+      "purpose": "causal_controls",
+      "organism_candidate": false,
+      "controls": [
+        "signal_generator_off",
+        "signal_generator_permuted"
+      ]
+    }
+  ],
+
+  "required_evidence_ladder": [
+    "training_acquisition",
+    "fresh_world_validation",
+    "reward_off_causality",
+    "teacher_permutation_causality",
+    "one_untouched_confirmation"
+  ],
+
+  "decision_ladder": [
+    "setup_ceiling_fail",
+    "signal_generator_unit_fail",
+    "inheritance_leakage_fail",
+    "search_surface_sensitivity_fail",
+    "training_acquisition_fail",
+    "credit_not_causal",
+    "reference_birth_r3_validation_fail",
+    "reward_eprop_confirmation_fail",
+    "reward_eprop_confirmation_pass",
+    "teacher_eprop_confirmation_fail",
+    "teacher_dependent_grounding_pass"
+  ],
+
+  "unchanged": {
+    "stage_b_boundary": "locked",
+    "product_version": "0.0.004",
+    "candidate_lock": "forbidden_until_confirmation_pass_and_architectural_review",
+    "local_eligibility_factorization": true,
+    "separated_self_teacher_credit_from_r2": true
+  },
+
+  "partitions": {
+    "fresh_training_validation_confirmation_required": true,
+    "r1_and_r2_confirmation_remain_sealed": true,
+    "r3_confirmation_must_be_explicitly_preregistered_separately": true,
+    "auto_inherit_prior_confirmation_forbidden": true
+  },
+
+  "forbidden_scope": [
+    "further_tuning_of_stopped_fixed_rate_eprop_branch",
+    "larger_ES_budget_on_fixed_L_as_primary_fix",
+    "inheriting_world_specific_knowledge_across_newborns",
+    "runner_constructed_neural_targets",
+    "stage_b_execution",
+    "claiming_ordinary_model_retraining_equivalence",
+    "reopening_r1_or_r2_confirmation"
+  ]
+}

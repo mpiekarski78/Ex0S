@@ -1,0 +1,77 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH_R3.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "ReferenceBirthR3",
+  "type": "stage_isolation_lock",
+  "status": "active",
+  "written_utc": "2026-08-20T11:00:00Z",
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_reference_birth_r2.dev_decision.lock",
+    "docs/exos_dev1.stage_a_reference_birth.rate_eprop_branch.stop.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r3.contract.lock"
+  ],
+
+  "role": "substantial_mechanism_jump_inherited_learning_signal_generator",
+  "not_fixed_rate_eprop_continuation": true,
+
+  "lineage_stop_inherited": "lexicographic_es_mobile_and_teacher_credit_separated_but_credit_still_not_causal",
+  "rate_eprop_branch_status": "stopped",
+
+  "authorized_filespaces": [
+    "docs/exos_dev1.stage_a_reference_birth_r3.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r3.isolation.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r3.prereg.lock",
+    "docs/exos_dev1.stage_a_reference_birth.rate_eprop_branch.stop.lock",
+    "three_memory/dev1/plasticity/eprop/",
+    "three_memory/dev1/organism.py",
+    "three_memory/dev1/interfaces.py",
+    "three_memory/dev1/genome.py",
+    "experiments/dev1/reference_birth_r2_outer.py",
+    "experiments/dev1/reference_birth_r2_life.py",
+    "experiments/dev1/search_reference_birth_r2.py",
+    "experiments/dev1/reference_birth_r3_outer.py",
+    "experiments/dev1/reference_birth_r3_life.py",
+    "experiments/dev1/reference_birth_r3_preflight.py",
+    "experiments/dev1/search_reference_birth_r3.py",
+    "tests/dev1/test_stage_a_reference_birth_r3.py",
+    "runs/exos_dev1/stage_a_reference_birth_r3/"
+  ],
+
+  "historical_filespaces_immutable": [
+    "docs/exos_dev1.stage_a_reference_birth_r2.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.isolation.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.prereg.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.dev_decision.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.provenance_budget_causal.audit.lock",
+    "runs/exos_dev1/stage_a_reference_birth_r2/exos_dev1_reference_birth_r2_scored_20260820/",
+    "docs/exos_dev1.stage_a_reference_birth_r1.dev_decision.lock",
+    "runs/exos_dev1/stage_a_reference_birth_r1/exos_dev1_reference_birth_r1_scored_20260820/",
+    "docs/exos_dev1.stage_a_r2_1.dev_decision.lock"
+  ],
+
+  "forbidden_actions": [
+    "further_tuning_stopped_fixed_rate_eprop",
+    "larger_ES_on_fixed_L_as_primary_fix",
+    "inherit_world_specific_knowledge_across_newborns",
+    "reopen_r1_or_r2_confirmation",
+    "auto_inherit_prior_confirmation_seeds",
+    "stage_b_execution",
+    "candidate_or_product_changes",
+    "claim_ordinary_model_retraining"
+  ],
+
+  "execution_order": [
+    "rate_eprop_branch_stop",
+    "r3_contract_isolation_freeze",
+    "implement_inherited_learning_signal_generator",
+    "preserve_r2_separated_self_teacher_credit",
+    "arms_baseline_candidate_ceiling_and_signal_controls",
+    "unit_and_leakage_tests",
+    "excluded_seed_preflight",
+    "freeze_r3_prereg_fresh_partitions_and_separate_confirmation",
+    "scored_run_once",
+    "reference_birth_r3_dev_decision"
+  ]
+}
