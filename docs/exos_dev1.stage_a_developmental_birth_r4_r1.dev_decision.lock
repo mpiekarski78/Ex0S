@@ -1,0 +1,105 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_DEVELOPMENTAL_BIRTH_R4_R1.DEV.DECISION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "DevelopmentalBirthR4-R1",
+  "type": "immutable_dev_decision_record",
+  "status": "closed_for_scored_result",
+  "written_utc": "2026-08-20T15:15:00Z",
+  "product_version": "0.0.004",
+
+  "architecture_implementation_commit": "ba97883",
+  "architecture_implementation_sha": "ba97883b6864a0345901b654396a417db3163a03",
+  "measurement_repair_and_prereg_commit": "15f172b",
+  "measurement_repair_and_prereg_sha": "15f172bd3e242811f5134f1d25d46fb5a0b11b45",
+  "executing_head_sha": "15f172bd3e242811f5134f1d25d46fb5a0b11b45",
+  "prereg_file": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.prereg.lock",
+  "protocol_file": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.protocol.lock",
+  "isolation_file": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.isolation.lock",
+  "pre_decision_audit": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.pre_decision.audit.lock",
+  "heuristic_controller_addendum": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.heuristic_controller.addendum.lock",
+  "attempt_002_close": "docs/exos_dev1.stage_a_developmental_birth_r4.attempt_002.measurement_invalidated.close.lock",
+
+  "run_id": "exos_dev1_developmental_birth_r4_r1_scored_20260820",
+  "attempt": "001",
+  "run_directory": "runs/exos_dev1/stage_a_developmental_birth_r4_r1/exos_dev1_developmental_birth_r4_r1_scored_20260820",
+
+  "runner_outcome": "developmental_birth_r4_r1_scored_complete",
+  "decision_code": "optimization_ceiling_fail",
+  "interpretation": "body_controllable_under_heuristic_probe_but_synergy_aware_ceiling_failed_preregistered_distance_reduction_and_margin_over_random_conjuncts",
+  "valid_r4_r1_setup_result": true,
+  "architectural_conclusion": "none",
+  "factorial_status": "descriptive_only_must_not_route_architecture_changes",
+  "attempt_002_factorial_not_used": true,
+  "confirmation_consumed": false,
+  "stage_b_status": "locked",
+  "candidate_lock": "forbidden",
+  "product": "0.0.004",
+
+  "failed_gate": {
+    "code": "optimization_ceiling_fail",
+    "after_body_controllability_pass": true,
+    "failed_conjuncts": [
+      "distance_reduction < 0.05 (observed -0.00412234291434288)",
+      "comfort_margin_over_random < 0.02 (observed 0.01171875)"
+    ],
+    "passed_conjuncts": [
+      "final_comfort_rate >= 0.05 (observed 0.13671875)",
+      "comfort_improvement >= 0.0 (observed 0.0011985131672450633)"
+    ]
+  },
+
+  "body_controllability": {
+    "pass": true,
+    "distance_reduction": 0.11068915482610464,
+    "open_loop_synergy_distance_spread": "recorded_in_body_controllability.json",
+    "probe": "measurement_only_heuristic_diagnostic"
+  },
+
+  "ceiling": {
+    "kind": "synergy_aware_r4_r1_gate_bundle",
+    "organism_candidate": false,
+    "final_comfort_rate": 0.13671875,
+    "comfort_improvement": 0.0011985131672450633,
+    "distance_reduction": -0.00412234291434288,
+    "comfort_margin_over_random": 0.01171875
+  },
+
+  "evidence_completeness": {
+    "matched_outer_es": true,
+    "fixed_lives": 128,
+    "lsg_lives": 128,
+    "factorial_cells": 4,
+    "interventions_executed": 12,
+    "confirmation_sealed": true
+  },
+
+  "scope_of_negative_result": {
+    "valid_for": "R4-R1_synergy_aware_learnability_ceiling_under_frozen_ba97883_body_and_budgets",
+    "not_a_channel_vs_synergy_measurement_defect": true,
+    "not_an_organism_architectural_falsification": true,
+    "does_not_authorize_architecture_gestation_body_or_credit_changes": true,
+    "factorial_must_not_route_next_edit": true
+  },
+
+  "ledger_hashes": {
+    "run_started_json": "3bcf18ec8ddf0b86f674c5f62d1ab653a486af44707cae6eb1db54b9ea0ca26b",
+    "run_completed_json": "9bb7e83b6f8a7ff62459e3793dfdf0b7726f2e4ca3529cff84bfb0775ef41c98",
+    "search_summary_json": "7ea3fc85a5f23e8bf689a1f5d50cc1196c7bbb868e4f962f06334108aaa4c754",
+    "ceiling_json": "8fd8f0468ed006a7b894014a6e4f0e13342357181e6aa4151902c1447efa3904",
+    "body_controllability_json": "d02c4ee99a2d9c0f1491aad1cdef7820d46f47314ea3b48ea000163490e02c9f",
+    "factorial_cells_json": "8e9f83482b91b31b08f34b8758fc0e925ae0953d661a871dff4580620b0d923c",
+    "interventions_json": "bcea661ad1371759dc96b4fb92586ddfbf6a2bb21d139bda2eb5b4a21b87feba",
+    "outer_matched_es_json": "e9a034878ed09dca1ce199b7e90d7d71129b6fa8565b1a021e499290620f83c0",
+    "candidate_life_records_jsonl": "ba8440c2b63c332d4fa9641df9a71a4550402be5141a12ea6fee77e789dbf3ce"
+  },
+
+  "forbidden_next": [
+    "routing_architecture_change_from_descriptive_factorial",
+    "replaying_this_scored_run",
+    "rewriting_r4_r1_prereg",
+    "treating_handcrafted_heuristic_as_optimal_oracle",
+    "stage_b_execution",
+    "consuming_confirmation_after_ceiling_fail"
+  ]
+}

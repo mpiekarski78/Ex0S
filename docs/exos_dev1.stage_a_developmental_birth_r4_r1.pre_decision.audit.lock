@@ -1,0 +1,102 @@
+{
+  "_schema": "exos_dev1.stage_a_developmental_birth_r4_r1.pre_decision.audit.v1",
+  "_immutable": true,
+  "type": "pre_decision_protocol_audit",
+  "status": "pass",
+  "written_utc": "2026-08-20T15:15:00Z",
+  "run_id": "exos_dev1_developmental_birth_r4_r1_scored_20260820",
+
+  "checks": {
+    "prereg_and_thresholds_predate_run_started": {
+      "pass": true,
+      "prereg_commit": "15f172bd3e242811f5134f1d25d46fb5a0b11b45",
+      "prereg_committed_at": "2026-08-20T10:21:28-04:00",
+      "run_started_utc": "2026-08-20T14:23:40Z",
+      "executing_head_at_start": "15f172bd3e242811f5134f1d25d46fb5a0b11b45",
+      "prereg_commits_after_run_start": []
+    },
+    "excluded_seeds_disjoint_from_scored_and_confirmation": {
+      "pass": true,
+      "train_vs_excluded_intersection": [],
+      "confirmation_vs_excluded_intersection": [],
+      "train_vs_confirmation_intersection": [],
+      "started_worlds_match_prereg": true,
+      "started_confirmation_match_prereg": true
+    },
+    "no_threshold_change_after_early_scored_observations": {
+      "pass": true,
+      "applied_thresholds_byte_equal_prereg": true,
+      "note": "Runner loaded thresholds from frozen prereg at execution; prereg file had no post-start commits."
+    },
+    "ceiling_and_organism_body_interface": {
+      "pass": true,
+      "same_GenericBody_step": true,
+      "same_frozen_synergy_projection_matrix": true,
+      "architecture_packages_unchanged_vs_ba97883": true,
+      "ceiling_motor_path": "synergy_categorical_sample -> expand_synergy_index_to_motor(uniform_block) -> world.apply_action",
+      "organism_motor_path": "action_cortex_competition_softmax_scores -> world.apply_action",
+      "note": "Both enter the identical frozen body transition function and motor-basis projection. Ceiling chooses among four synergies then expands through that basis; organism emits a 32-channel competition distribution into the same basis. One-hot and uniform-block encodings of the same synergy remain body-equivalent under the frozen projection."
+    },
+    "controllability_probe_measurement_only": {
+      "pass": true,
+      "probe_kind": "synergy_closed_loop_heuristic_diagnostic",
+      "separate_world_seed_suffixes": [":controllability", ":ol_approach", ":ol_withdraw", ":ol_orient", ":ol_wait"],
+      "actions_never_passed_into_evaluate_r4_life": true,
+      "no_expected_action_for_training": true,
+      "artifact_only": "body_controllability.json"
+    },
+    "four_factorial_cells_completed": {
+      "pass": true,
+      "cells": [
+        "sham_gestation__r2_fixed_eprop_baseline",
+        "sham_gestation__inherited_learning_signal_generator",
+        "active_gestation__r2_fixed_eprop_baseline",
+        "active_gestation__inherited_learning_signal_generator"
+      ]
+    },
+    "required_interventions_completed": {
+      "pass": true,
+      "executed": [
+        "zero_tick_skip",
+        "gestational_plasticity_off",
+        "lifetime_plasticity_off",
+        "reward_valence_off",
+        "motor_to_body_permutation",
+        "proprioceptive_feedback_permutation",
+        "teacher_demonstration_permutation",
+        "open_loop_or_shuffled_action_consequences",
+        "lsg_off",
+        "lsg_permuted"
+      ],
+      "sham_gestation_covered_as_factorial_cell": true
+    },
+    "confirmation_untouched_when_ceiling_conjunct_fails": {
+      "pass": true,
+      "confirmation_consumed": false,
+      "confirmation_results_present": false,
+      "ledger_confirmation_phase_hits": 0
+    },
+    "outer_budgets_matched": {
+      "pass": true,
+      "fixed_lives": 128,
+      "lsg_lives": 128
+    }
+  },
+
+  "gate_reconstruction": {
+    "body_controllability_pass": true,
+    "ceiling_body_behavior_pass": false,
+    "failed_conjuncts": ["distance_reduction", "comfort_margin_over_random"],
+    "passed_conjuncts": ["final_comfort_rate", "comfort_improvement"],
+    "final_comfort_rate": 0.13671875,
+    "comfort_improvement": 0.0011985131672450633,
+    "distance_reduction": -0.00412234291434288,
+    "comfort_margin_over_random": 0.01171875,
+    "ladder_decision_code": "optimization_ceiling_fail"
+  },
+
+  "attempt_002_factorial": {
+    "used_in_r4_r1_decision": false,
+    "status": "descriptive_only"
+  }
+}

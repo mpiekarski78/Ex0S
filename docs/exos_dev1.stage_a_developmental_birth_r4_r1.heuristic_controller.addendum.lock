@@ -1,0 +1,37 @@
+{
+  "_schema": "exos_dev1.stage_a_developmental_birth_r4_r1.heuristic_controller.addendum.v1",
+  "_immutable": true,
+  "type": "interpretation_addendum",
+  "status": "locked",
+  "written_utc": "2026-08-20T15:15:00Z",
+  "prereg_unchanged": true,
+  "prereg": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.prereg.lock",
+
+  "subject": {
+    "artifact": "runs/exos_dev1/stage_a_developmental_birth_r4_r1/excluded_ceiling_validation.json",
+    "legacy_field_name": "oracle_closed_loop_diagnostic",
+    "canonical_interpretation": "fixed_handcrafted_synergy_heuristic_controller",
+    "not_an_optimal_oracle": true,
+    "not_a_privileged_answer_table": true,
+    "not_used_in_ceiling_or_organism_training": true
+  },
+
+  "why_reported_comfort_near_0_033_is_below_scored_ceiling_comfort_near_0_14": [
+    "The excluded-seed ~0.033 figure came from a fixed handcrafted controller (if near nest wait; else withdraw/approach on dominant |x|; else orient), not from an optimal oracle or from the learned synergy AC.",
+    "That heuristic was evaluated on the excluded preflight seed, while the scored early ceiling comfort ~0.14 was the learned synergy AC late-window comfort rate on a different scored world seed (…_r4_r1_world_001:ceiling).",
+    "A non-optimal heuristic can underperform a learned AC on tick-wise comfort rate while still demonstrating partial controllability via distance reduction; the two numbers are not a contradiction of the body-behavior gate.",
+    "The scored ceiling still failed preregistered distance_reduction and margin-over-random conjuncts despite the higher comfort rate; comfort alone does not pass the gate."
+  ],
+
+  "rename": {
+    "prefer": "handcrafted_closed_loop_heuristic_diagnostic",
+    "legacy_keys_retained_in_validation_json": true,
+    "do_not_rewrite_prereg": true
+  },
+
+  "body_controllability_probe_in_scored_run": {
+    "field": "probe_kind",
+    "value": "synergy_closed_loop_heuristic_diagnostic",
+    "already_named_as_heuristic": true
+  }
+}
