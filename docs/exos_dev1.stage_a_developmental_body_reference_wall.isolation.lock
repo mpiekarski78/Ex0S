@@ -1,0 +1,36 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_DEVELOPMENTAL_BODY_REFERENCE_WALL.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "DevelopmentalBodyReferenceWall",
+  "type": "isolation_lock",
+  "status": "locked",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T15:35:00Z",
+
+  "protocol": "docs/exos_dev1.stage_a_developmental_body_reference_wall.protocol.lock",
+  "r4_r1_decision_immutable": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
+
+  "may_change": [
+    "experiments/dev1/developmental_body_reference_wall.py",
+    "experiments/dev1/search_developmental_body_reference_wall.py",
+    "tests/dev1/test_stage_a_developmental_body_reference_wall.py",
+    "docs/exos_dev1.stage_a_developmental_body_reference_wall.*",
+    "runs/exos_dev1/stage_a_developmental_body_reference_wall/"
+  ],
+
+  "must_not_change": [
+    "three_memory/dev1/body/",
+    "three_memory/dev1/development/",
+    "three_memory/dev1/organism.py",
+    "three_memory/dev1/plasticity/",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4*.prereg.lock"
+  ],
+
+  "seed_partition_rule": {
+    "fresh_wall_partitions_required": true,
+    "r4_and_r4_r1_scored_worlds_excluded": true,
+    "excluded_ceiling_preflight_seeds_excluded": true
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_DEVELOPMENTAL_BODY_REFERENCE_WALL.PROTOCOL.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "DevelopmentalBodyReferenceWall",
+  "type": "measurement_protocol_lock",
+  "status": "authorized_for_measurement_only",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T15:35:00Z",
+
+  "role": "measurement_only_body_world_learnability_wall",
+  "not_r4_r2": true,
+  "not_organism_edit": true,
+  "not_genome_edit": true,
+  "not_r4_replay": true,
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock"
+  ],
+  "r4_r1_decision_stands_unchanged": "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
+  "r4_r1_decision_sha_anchor": "db69d10",
+
+  "localization": {
+    "r4_r1_stop": "optimization_ceiling_fail_after_controllability_pass",
+    "meaning": "reference_learner_did_not_demonstrate_directed_control",
+    "no_conclusion_about": [
+      "gestation",
+      "fixed_credit_versus_lsg",
+      "stage_b",
+      "organism_architecture",
+      "generative_genome"
+    ]
+  },
+
+  "frozen": {
+    "body_physics_sha_pin": "ba97883b6864a0345901b654396a417db3163a03",
+    "packages": [
+      "three_memory/dev1/body/",
+      "three_memory/dev1/development/",
+      "three_memory/dev1/organism.py",
+      "three_memory/dev1/plasticity/"
+    ]
+  },
+
+  "question": "Under the frozen GenericBody closed-loop world and the four-synergy motor basis, what is the learnability / observability contract before any developmental-organism claim?",
+
+  "reference_order": [
+    {
+      "id": "exact_model_based_controller",
+      "question": "Can these body dynamics reliably reach the target?"
+    },
+    {
+      "id": "observation_collision_analysis",
+      "question": "Do identical organism observations ever require conflicting actions?"
+    },
+    {
+      "id": "full_state_supervised_controller",
+      "question": "Is a usable control policy representable?"
+    },
+    {
+      "id": "same_observation_supervised_controller",
+      "question": "Does the organism receive enough information?"
+    },
+    {
+      "id": "feedforward_actor_critic",
+      "question": "Is memory unnecessary?"
+    },
+    {
+      "id": "recurrent_actor_critic",
+      "question": "Can a standard learner acquire control under partial observability?"
+    },
+    {
+      "id": "random_policy",
+      "question": "Baseline only"
+    }
+  ],
+
+  "model_based_oracle": {
+    "kind": "exact_dynamics_beam_planner",
+    "uses_true_body_state": true,
+    "action_interface": "four_synergies_expanded_through_frozen_motor_basis",
+    "not_the_fixed_handcrafted_heuristic": true,
+    "heuristic_remains_labeled_and_not_a_capacity_bound": true
+  },
+
+  "observation_aliases": {
+    "required": true,
+    "definition": "states_with_effectively_identical_exteroception_proprioception_interoception_but_different_optimal_synergies",
+    "purpose": "detect_insufficient_organism_observation"
+  },
+
+  "routing": [
+    {
+      "when": "exact_model_based_controller_fails",
+      "code": "body_physics_or_control_bug"
+    },
+    {
+      "when": "model_based_passes_but_full_state_supervised_fails",
+      "code": "scoring_or_implementation_defect"
+    },
+    {
+      "when": "full_state_passes_same_observation_fails",
+      "code": "organism_sensors_omit_necessary_state"
+    },
+    {
+      "when": "same_observation_passes_ac_fails",
+      "code": "reward_optimizer_or_horizon_problem"
+    },
+    {
+      "when": "only_recurrent_ac_passes",
+      "code": "task_requires_transient_memory_canonical_ceiling_must_include_it"
+    },
+    {
+      "when": "canonical_same_observation_learner_passes",
+      "code": "freeze_that_ceiling_and_return_to_complete_r4_factorial_on_fresh_worlds"
+    }
+  ],
+
+  "pass_metrics_body_behavior": {
+    "final_comfort_rate": true,
+    "distance_reduction": true,
+    "margin_over_random": true,
+    "note": "Numeric thresholds frozen in prereg after excluded-seed calibration; not rewritten from R4-R1 organism factorial."
+  },
+
+  "forbidden": [
+    "organism_or_genome_edits",
+    "gestation_or_credit_edits",
+    "r4_replay",
+    "r4_r2_before_wall_close",
+    "stage_b_execution",
+    "using_fixed_handcrafted_heuristic_as_capacity_bound",
+    "rewriting_db69d10_r4_r1_decision"
+  ]
+}
