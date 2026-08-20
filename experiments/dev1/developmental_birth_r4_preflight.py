@@ -64,11 +64,93 @@ def sham_vs_active_compute_match_check() -> dict[str, Any]:
     }
 
 
+def gestation_effect_audit(seeds: tuple[int, ...] = (3, 7, 11, 13, 17)) -> dict[str, Any]:
+    """
+    Confirm active gestation changes weights and lifetime learning, not merely hashes.
+    Preferred-action divergence is seed-dependent; require it on at least one seed.
+    """
+    from three_memory.dev1.body.world import ClosedLoopGroundingWorld
+    from three_memory.dev1.development.construction import construct_post_growth_organism
+    from three_memory.dev1.development.generative_genome import GenerativeGenome
+    from three_memory.dev1.development.gestation import GestationMode, run_gestation
+    from experiments.dev1.developmental_birth_r4_life import evaluate_r4_life
+    import torch.nn.functional as F
+
+    rows = []
+    for seed in seeds:
+        g = GenerativeGenome.small(7)
+        sham, _ = run_gestation(
+            construct_post_growth_organism(g, device=torch.device("cpu"))[0],
+            g,
+            GestationMode.SHAM,
+            body_seed=seed,
+        )
+        act, _ = run_gestation(
+            construct_post_growth_organism(g, device=torch.device("cpu"))[0],
+            g,
+            GestationMode.ACTIVE,
+            body_seed=seed,
+        )
+        dW = float((act.action_ctx.W_motor.weight.data - sham.action_ctx.W_motor.weight.data).norm())
+        world = ClosedLoopGroundingWorld(g, world_seed=f"gest_audit_{seed}", device=torch.device("cpu"))
+
+        def _argmax(org):
+            org.valence_circuit.reset()
+            org.episode_reset()
+            step = world.reset_episode(0)
+            org.observe(world.observation_from_step(step))
+            _, logits = org.action_ctx(org.rho.relational_repr, org.rho.action_repr)
+            return int(logits.argmax())
+
+        as_ = _argmax(sham)
+        aa = _argmax(act)
+        ls = evaluate_r4_life(
+            "sham_gestation",
+            "r2_fixed_eprop_baseline",
+            f"gest_audit_sham_{seed}",
+            generative=GenerativeGenome.small(7),
+            n_episodes=4,
+            episode_ticks=6,
+            embryonic_seed=7,
+            body_seed=seed,
+            life_rng_seed=11,
+            use_teacher=False,
+        )
+        la = evaluate_r4_life(
+            "active_gestation",
+            "r2_fixed_eprop_baseline",
+            f"gest_audit_act_{seed}",
+            generative=GenerativeGenome.small(7),
+            n_episodes=4,
+            episode_ticks=6,
+            embryonic_seed=7,
+            body_seed=seed,
+            life_rng_seed=11,
+            use_teacher=False,
+        )
+        rows.append(
+            {
+                "seed": seed,
+                "dW": dW,
+                "argmax_diff": as_ != aa,
+                "score_delta": la.mean_behavioral_score - ls.mean_behavioral_score,
+                "acc_delta": la.treatment_accuracy - ls.treatment_accuracy,
+            }
+        )
+    ok = (
+        all(r["dW"] > 1e-4 for r in rows)
+        and any(r["argmax_diff"] for r in rows)
+        and any(abs(r["score_delta"]) > 1e-3 or abs(r["acc_delta"]) > 1e-6 for r in rows)
+    )
+    return {"ok": ok, "rows": rows}
+
+
 def run_preflight(device: torch.device | None = None) -> dict[str, Any]:
     dev = device or torch.device("cpu")
     out: dict[str, Any] = {}
     out["ownership"] = ownership_leakage_check()
     out["sham_active"] = sham_vs_active_compute_match_check()
+    out["gestation_effect"] = gestation_effect_audit()
     out["factorial"] = {
         k: {"acc": v.treatment_accuracy, "credit": v.credit, "development": v.development}
         for k, v in evaluate_matched_factorial(
@@ -110,7 +192,12 @@ def run_preflight(device: torch.device | None = None) -> dict[str, Any]:
         episode_ticks=2,
         device=dev,
     ).generative_genome_hash
-    out["ok"] = out["ownership"]["ok"] and out["sham_active"]["ok"] and out["matched_es"]["matched"]
+    out["ok"] = (
+        out["ownership"]["ok"]
+        and out["sham_active"]["ok"]
+        and out["gestation_effect"]["ok"]
+        and out["matched_es"]["matched"]
+    )
     return out
 
 
