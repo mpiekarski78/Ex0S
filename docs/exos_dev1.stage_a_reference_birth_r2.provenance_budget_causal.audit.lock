@@ -1,0 +1,88 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH_R2.PROVENANCE_BUDGET_CAUSAL.AUDIT",
+  "type": "post_scored_provenance_budget_causal_audit",
+  "status": "complete",
+  "written_utc": "2026-08-20T10:30:00Z",
+  "run_id": "exos_dev1_reference_birth_r2_scored_20260820",
+  "run_directory": "runs/exos_dev1/stage_a_reference_birth_r2/exos_dev1_reference_birth_r2_scored_20260820",
+  "prereg": "docs/exos_dev1.stage_a_reference_birth_r2.prereg.lock",
+  "implementation_commit": "a6d2eb8",
+  "executing_head": "686b3eb",
+
+  "execution": {
+    "supervisor_exit_code": 0,
+    "wall_seconds": 536.0732471942902,
+    "device": "cuda",
+    "device_name": "NVIDIA GB10",
+    "code_clean_vs_implementation_pin": true,
+    "confirmation_consumed": false,
+    "r1_confirmation_sealed": true
+  },
+
+  "budget": {
+    "outer_optimizer": "batched_evolution_strategies_lexicographic",
+    "shape": "8x8x2",
+    "outer_updates_executed_per_arm": 8,
+    "budget_fully_consumed": true,
+    "budget_class_unchanged_from_r1": true
+  },
+
+  "mechanism_revision_exercised": {
+    "R2_SEL_1_lexicographic_selection": true,
+    "parameter_movement_sum": {
+      "reward_eprop_rate_adaptation": 0.41441706118460386,
+      "teacher_demo_eprop": 0.19476996520705123
+    },
+    "generations_leaving_parent_slot": {
+      "reward_eprop_rate_adaptation": 3,
+      "teacher_demo_eprop": 1
+    },
+    "best_surface_equals_default": {
+      "reward_eprop_rate_adaptation": false,
+      "teacher_demo_eprop": false
+    },
+    "contrast_to_r1": "R1 selected_parameter_movement was 0.0 with permanent parent retention; R2 selector is mobile"
+  },
+
+  "teacher_separation": {
+    "R2_TEACH_1_separate_credit_events": true,
+    "outer_train_sample_self_and_teacher_events": [1024, 1024],
+    "validation_teacher_credit_events_per_life": 1024,
+    "validation_teacher_follow_rate": [0.0, 0.0, 0.0, 0.0]
+  },
+
+  "causal": {
+    "decision_code_both_arms": "credit_not_causal",
+    "treatment_outperforms_interventions": {
+      "reward_eprop_rate_adaptation": false,
+      "teacher_demo_eprop": false
+    },
+    "validation_accuracy_mean": {
+      "reward_eprop_rate_adaptation": 0.0,
+      "teacher_demo_eprop": 0.0
+    },
+    "signed_margin_improvement_scale": "O(1e-11) to O(1e-9) on train; not intervention-discriminating"
+  },
+
+  "ceiling": {
+    "lifetime_training_accuracy": 0.2470703125,
+    "update_norm_mean": 0.5812796864177585,
+    "establishes_world_learnable": true
+  },
+
+  "artifact_sha256": {
+    "run_started_json": "e2bfa4c31a4703abce8cd223c094f20f6254afd629f8ea348d7ac78c7844eebc",
+    "run_completed_json": "b68f50ba6cd6c0fac56add2da68a5179be5d10703014f2bc06e8e3aa42632a9b",
+    "search_summary_json": "e5c8cd403eec3474402fd0b755b3cc0c0d26d75c2ae88e48a3e6462d877f300e",
+    "reference_birth_r2_preflight_json": "903702b3d7fbb695d5d803d70a63106dabb01ffb4cfe1d377df058053cfc1d98",
+    "candidate_life_records_jsonl": "c3143af705ac3318e19c64b9142232b7651e50922f27807acee80afa0000d68d",
+    "outer_es_reward_eprop_rate_adaptation_json": "c051f4031a8eb32fa4924265a31a7352801601c2d733e72388891d4c27a4f73d",
+    "outer_es_teacher_demo_eprop_json": "bfa6c5337823eb8fcf2c3f870e8512b6557ad7e29c22ae16ec85e5891e593a48",
+    "interventions_reward_eprop_rate_adaptation_json": "cc52446e5dd7f8a5175a3b4c475b90a97eb535ec9bbe2e04840d57af1bbdd659",
+    "interventions_teacher_demo_eprop_json": "6fc5acc2a157a15c7fb8214ba49c60e6dae5646f0040ad6d29fe71b5d9163db6",
+    "supervisor_exit_code_txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "supervisor_stdout_stderr_log": "3bf301f57ab0f61fa7eb1addb5111f00cda4ce0364979666896eb7c6f6aafcf0",
+    "supervisor_run_meta_json": "4b4d3f4b2d9587a5284da49d29b2739445ac8d33070d039279133d846b68d120",
+    "supervisor_heartbeat_json": "f8e21fef7c24d0c8c3767e7d2d8d26ef0e1d57544a3017ebe586f3d8d0a65b4c"
+  }
+}

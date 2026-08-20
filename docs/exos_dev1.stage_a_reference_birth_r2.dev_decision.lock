@@ -1,0 +1,125 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH_R2.DEV.DECISION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "ReferenceBirthR2",
+  "type": "immutable_dev_decision_record",
+  "status": "closed_for_scored_result",
+  "written_utc": "2026-08-20T10:30:00Z",
+  "product_version": "0.0.004",
+
+  "implementation_commit": "a6d2eb8",
+  "implementation_sha": "a6d2eb8e267a34ef6f810a44d92528819aa9d9a9",
+  "prereg_commit": "686b3eb",
+  "prereg_sha": "686b3eb861f787b548794b08c11c726db10f6766",
+  "prereg_file": "docs/exos_dev1.stage_a_reference_birth_r2.prereg.lock",
+  "contract_file": "docs/exos_dev1.stage_a_reference_birth_r2.contract.lock",
+  "isolation_file": "docs/exos_dev1.stage_a_reference_birth_r2.isolation.lock",
+  "audit_file": "docs/exos_dev1.stage_a_reference_birth_r2.provenance_budget_causal.audit.lock",
+  "executing_head_commit": "686b3eb",
+  "executing_head_sha": "686b3eb861f787b548794b08c11c726db10f6766",
+  "code_clean_at_execution": true,
+
+  "run_id": "exos_dev1_reference_birth_r2_scored_20260820",
+  "attempt": "001",
+  "run_directory": "runs/exos_dev1/stage_a_reference_birth_r2/exos_dev1_reference_birth_r2_scored_20260820",
+
+  "runner_outcome": "reference_birth_r2_validation_fail",
+  "decision_code": "credit_not_causal",
+  "interpretation": "lexicographic_es_mobile_and_teacher_credit_separated_but_credit_still_not_causal",
+  "eprop_conclusion": "inconclusive",
+  "architectural_conclusion": "none",
+  "confirmation_consumed": false,
+  "stage_b_status": "locked",
+  "candidate_lock": "forbidden",
+  "product": "0.0.004",
+
+  "scope_of_negative_result": {
+    "valid_for": "current_implementation_and_search_after_R2_SEL_1_and_R2_TEACH_1",
+    "not_a_general_eprop_falsification": true,
+    "r1_failure_mode_resolved": "outer_es_immobile_on_near_inactive_default_surface",
+    "remaining_failure": "matched interventions: treatment does not outperform reward_off / eligibility_zero / motor_feedback_permuted on accuracy or signed-margin",
+    "note": "Valid narrow negative after the authorized single mechanism revision; selector mobility and separated teacher credit were exercised."
+  },
+
+  "mechanism_revision_status": {
+    "R2_SEL_1": {
+      "exercised": true,
+      "evidence": [
+        "parameter_movement_sum_reward_arm_0.414",
+        "parameter_movement_sum_teacher_arm_0.195",
+        "best_surface_not_default_both_arms",
+        "parent_slot_left_in_4_of_16_generation_selections"
+      ]
+    },
+    "R2_TEACH_1": {
+      "exercised": true,
+      "evidence": [
+        "self_and_teacher_credit_events_1024_each_on_teacher_lives",
+        "preflight_teacher_credit_separation_pass"
+      ]
+    }
+  },
+
+  "ledger_hashes": {
+    "run_started_json": "e2bfa4c31a4703abce8cd223c094f20f6254afd629f8ea348d7ac78c7844eebc",
+    "run_completed_json": "b68f50ba6cd6c0fac56add2da68a5179be5d10703014f2bc06e8e3aa42632a9b",
+    "search_summary_json": "e5c8cd403eec3474402fd0b755b3cc0c0d26d75c2ae88e48a3e6462d877f300e",
+    "reference_birth_r2_preflight_json": "903702b3d7fbb695d5d803d70a63106dabb01ffb4cfe1d377df058053cfc1d98",
+    "candidate_life_records_jsonl": "c3143af705ac3318e19c64b9142232b7651e50922f27807acee80afa0000d68d",
+    "outer_es_reward_eprop_rate_adaptation_json": "c051f4031a8eb32fa4924265a31a7352801601c2d733e72388891d4c27a4f73d",
+    "outer_es_teacher_demo_eprop_json": "bfa6c5337823eb8fcf2c3f870e8512b6557ad7e29c22ae16ec85e5891e593a48",
+    "interventions_reward_eprop_rate_adaptation_json": "cc52446e5dd7f8a5175a3b4c475b90a97eb535ec9bbe2e04840d57af1bbdd659",
+    "interventions_teacher_demo_eprop_json": "6fc5acc2a157a15c7fb8214ba49c60e6dae5646f0040ad6d29fe71b5d9163db6",
+    "supervisor_exit_code_txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "supervisor_stdout_stderr_log": "3bf301f57ab0f61fa7eb1addb5111f00cda4ce0364979666896eb7c6f6aafcf0",
+    "supervisor_run_meta_json": "4b4d3f4b2d9587a5284da49d29b2739445ac8d33070d039279133d846b68d120",
+    "supervisor_heartbeat_json": "f8e21fef7c24d0c8c3767e7d2d8d26ef0e1d57544a3017ebe586f3d8d0a65b4c"
+  },
+
+  "budget_completion": {
+    "outer_optimizer": "batched_evolution_strategies_lexicographic",
+    "generations": 8,
+    "population_size": 8,
+    "arms": 2,
+    "budget_shape": "8x8x2",
+    "outer_updates_executed_per_arm": 8,
+    "budget_fully_consumed": true,
+    "wall_seconds_actual": 536.0732471942902,
+    "device": "cuda",
+    "device_name": "NVIDIA GB10",
+    "supervisor_exit_code": 0
+  },
+
+  "ceiling": {
+    "lifetime_training_accuracy": 0.2470703125,
+    "update_norm_mean": 0.5812796864177585,
+    "establishes_world_learnable": true
+  },
+
+  "treatments": {
+    "reward_eprop_rate_adaptation": {
+      "train_accuracy_last": 0.02734375,
+      "validation_accuracy_mean": 0.0,
+      "best_fitness_key": [0.02734375, 1.0913936421275139e-11, 0.0, 0.15099192927436333],
+      "decision_code": "credit_not_causal",
+      "treatment_outperforms_interventions": false
+    },
+    "teacher_demo_eprop": {
+      "train_accuracy_last": 0.02734375,
+      "validation_accuracy_mean": 0.0,
+      "best_fitness_key": [0.02734375, 3.637978807091713e-12, 0.0, 0.636834245970608],
+      "decision_code": "credit_not_causal",
+      "treatment_outperforms_interventions": false,
+      "validation_teacher_follow_rate": 0.0
+    }
+  },
+
+  "forbidden_next": [
+    "larger_ES_budget_as_primary_fix",
+    "reopening_r1_or_r2_confirmation_without_new_prereg",
+    "stage_b_execution",
+    "candidate_or_product_changes",
+    "another_broad_scaffold_search"
+  ]
+}
