@@ -82,7 +82,9 @@ def _split_holdout(
 
 
 def _delta_error(pred_delta: torch.Tensor, target_delta: torch.Tensor) -> float:
-    return float(torch.mean(torch.abs(pred_delta - target_delta)).item())
+    return float(
+        torch.mean(torch.abs(pred_delta.detach().cpu() - target_delta.detach().cpu())).item()
+    )
 
 
 def _train_model(

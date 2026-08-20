@@ -171,3 +171,62 @@ def test_paired_active_sham_life_smoke():
     assert sham.model_updates == 0
     assert "synergy_histogram" in pred.life_record
     assert "early_end_in_zone_rate" in pred.life_record
+    assert "action_sources" in pred.life_record
+    assert "action_source_counts" in pred.life_record
+
+
+def test_uncertainty_fallback_path_records_fallback_source():
+    m = evaluate_gsm_life(
+        "predictive_gestation",
+        "gsm_eng_life_seed_fallback",
+        n_episodes=1,
+        episode_ticks=4,
+        gestation_ticks=8,
+        force_uncertainty_fallback=True,
+        embryonic_seed=0,
+        body_seed=2,
+    )
+    assert m.fraction_model_actions == 0.0
+    assert m.fraction_fallback_actions == 1.0
+    assert all(s.startswith("fallback:") for s in m.life_record["action_sources"])
+
+
+def test_scored_runner_complete_not_stub():
+    path = Path("experiments/dev1/search_gestational_sensorimotor_model.py")
+    src = path.read_text()
+    assert path.exists()
+    assert "def run_protocol" in src
+    assert "def apply_decision_ladder" in src
+    assert "full_evidence_before_decision_ladder" in src
+    assert "confirmation_sealed_until_validation_pass" in src
+    assert "--rehearsal" in src
+    assert "force_uncertainty_fallback" in src
+    assert "treatment_primarily_fallback" in src
+    assert len(src) > 8000
+
+
+def test_prereg_pins_uncertainty_fallback_and_disjoint_seeds():
+    import json
+
+    prereg = json.loads(Path("docs/exos_dev1.stage_a_gestational_sensorimotor_model.prereg.lock").read_text())
+    assert prereg["scored_run_authorized"] is False
+    u = prereg["uncertainty_fallback"]
+    assert u["uncertainty_max"] == 0.35
+    assert u["fallback_policy"] == "uniform_random_synergy_no_planner"
+    assert u["no_planner"] is True
+    assert u["no_expected_action"] is True
+    assert u["no_runner_selected_synergy"] is True
+    parts = prereg["seed_partitions"]
+    disc = set(parts["discovery_world_seeds"])
+    val = set(parts["validation_world_seeds"])
+    conf = set(parts["confirmation_seeds"])
+    excl = set(parts["excluded_seeds"])
+    assert not (disc & val)
+    assert not (disc & conf)
+    assert not (val & conf)
+    assert not ((disc | val | conf) & excl)
+    assert all(not s.startswith("exos_dev1_developmental_birth_r4_r2_") for s in disc | val | conf)
+    assert prereg["implementation"]["runner_file"] == (
+        "experiments/dev1/search_gestational_sensorimotor_model.py"
+    )
+    assert prereg["protocol"]["full_evidence_before_decision_ladder"] is True

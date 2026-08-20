@@ -7,7 +7,6 @@ organism-owned valence ranking of predicted synergy consequences.
 
 from __future__ import annotations
 
-import hashlib
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -24,6 +23,10 @@ from three_memory.dev1.nursery_v2.metrics import BehavioralEpisodeGates, aggrega
 from three_memory.dev1.nursery_v2.world import NurseryWorldV2
 
 
+DEFAULT_UNCERTAINTY_MAX = 0.35
+FALLBACK_POLICY = "uniform_random_synergy_no_planner"
+
+
 @dataclass
 class GSMLifeMetrics:
     arm: str
@@ -32,12 +35,19 @@ class GSMLifeMetrics:
     distance_reduction: float
     mean_model_uncertainty: float
     fraction_model_actions: float
+    fraction_fallback_actions: float
     mean_abs_calibration_error: float
     plasticity_updates: int
     model_updates: int
     pre_gestation_checkpoint_hash: str
     post_gestation_checkpoint_hash: str
+    all_finite: bool
     life_record: dict[str, Any] = field(default_factory=dict)
+
+
+def _assert_finite_tensor(name: str, t: torch.Tensor) -> None:
+    if not torch.isfinite(t).all():
+        raise RuntimeError(f"non-finite values in {name}")
 
 
 def evaluate_gsm_life(
@@ -48,18 +58,23 @@ def evaluate_gsm_life(
     device: torch.device | None = None,
     n_episodes: int = 8,
     episode_ticks: int = 16,
+    gestation_ticks: int | None = None,
     embryonic_seed: int = 0,
     body_seed: int = 0,
     life_rng_seed: int = 0,
     open_loop: bool = False,
     model_off: bool = False,
-    uncertainty_max: float = 0.35,
+    uncertainty_max: float = DEFAULT_UNCERTAINTY_MAX,
+    force_uncertainty_fallback: bool = False,
 ) -> GSMLifeMetrics:
     if world_seed.startswith("exos_dev1_developmental_birth_r4_r2_"):
         raise ValueError("R4-R2 scored/confirmation seeds are sealed for GSM")
 
     dev = device or torch.device("cpu")
     g = generative or GenerativeGenome.small(embryonic_seed=embryonic_seed)
+    if gestation_ticks is not None:
+        g.gestation_ticks = int(gestation_ticks)
+    unc_gate = 0.0 if force_uncertainty_fallback else float(uncertainty_max)
     org0, creceipt = construct_nursery_organism(g, device=dev)
 
     model_updates = 0
@@ -109,14 +124,21 @@ def evaluate_gsm_life(
     episodes: list[BehavioralEpisodeGates] = []
     unc_sum = 0.0
     model_actions = 0
+    fallback_actions = 0
     total_actions = 0
     cal_transitions: list[dict[str, torch.Tensor]] = []
     plasticity_updates = 0
     synergy_hist = [0, 0, 0, 0]
+    action_sources: list[str] = []
     early_end = []
     late_end = []
+    all_finite = True
+    valence_samples: list[float] = []
 
     use_model = (fm is not None) and (not force_model_off) and hasattr(org, "valence_circuit")
+    if fm is not None:
+        for p in fm.parameters():
+            _assert_finite_tensor("forward_model_weight", p.data)
 
     for ep in range(n_episodes):
         if hasattr(org, "valence_circuit"):
@@ -138,20 +160,31 @@ def evaluate_gsm_life(
                     sensory=sensory_t,
                     intero=intero_t,
                     model_enabled=True,
-                    uncertainty_max=uncertainty_max,
+                    uncertainty_max=unc_gate,
                     rng=gen,
                 )
                 motor = choice.motor
                 syn = choice.synergy_index
                 if choice.used_model:
                     model_actions += 1
+                    source = "gsm_prediction"
+                    for e in choice.evaluations:
+                        valence_samples.append(float(e.imagined_valence))
+                        if not (e.imagined_valence == e.imagined_valence):
+                            all_finite = False
+                else:
+                    fallback_actions += 1
+                    source = f"fallback:{choice.fallback_reason or FALLBACK_POLICY}"
                 unc_sum += float(choice.max_uncertainty)
+                _assert_finite_tensor("chosen_motor", motor)
             else:
                 action = org.act(policy_mode="stochastic", action_generator=gen)
                 motor = torch.as_tensor(action.motor_scores, device=dev, dtype=torch.float32)
                 syn = int(getattr(action, "motor_channel", 0)) // max(
                     1, g.n_motor_channels // g.n_synergies
                 )
+                source = "baseline_policy"
+            action_sources.append(source)
             synergy_hist[syn % 4] += 1
             total_actions += 1
             step = world.apply_action(motor)
@@ -171,6 +204,7 @@ def evaluate_gsm_life(
                         sensory=step.sensory_vector, intero=step.interoceptive_state, dims=fm.dims
                     ).to(dev)
                     pred = fm.predict_delta(s0, motor)
+                    _assert_finite_tensor("predicted_state", pred.predicted_state)
                     err = float(torch.mean(torch.abs(pred.predicted_state - s1)).item())
                     fm.record_realized_error(err)
 
@@ -203,6 +237,9 @@ def evaluate_gsm_life(
         if fm is not None
         else {"mean_abs_state_error": float("nan"), "systematic_misprediction_risk": False}
     )
+    source_counts: dict[str, int] = {}
+    for s in action_sources:
+        source_counts[s] = source_counts.get(s, 0) + 1
 
     return GSMLifeMetrics(
         arm=arm,
@@ -211,26 +248,39 @@ def evaluate_gsm_life(
         distance_reduction=float(agg["distance_reduction"]),
         mean_model_uncertainty=unc_sum / max(1, total_actions),
         fraction_model_actions=model_actions / max(1, total_actions),
+        fraction_fallback_actions=fallback_actions / max(1, total_actions),
         mean_abs_calibration_error=float(cal["mean_abs_state_error"]),
         plasticity_updates=plasticity_updates,
         model_updates=model_updates,
         pre_gestation_checkpoint_hash=pre_hash,
         post_gestation_checkpoint_hash=post_hash,
+        all_finite=all_finite,
         life_record={
             "n_episodes": n_episodes,
             "episode_ticks": episode_ticks,
+            "gestation_ticks": int(g.gestation_ticks),
+            "uncertainty_max": unc_gate,
+            "fallback_policy": FALLBACK_POLICY,
+            "force_uncertainty_fallback": bool(force_uncertainty_fallback),
             "synergy_histogram": synergy_hist,
+            "action_sources": action_sources,
+            "action_source_counts": source_counts,
             "early_end_in_zone_rate": sum(early_end) / max(1, len(early_end)),
             "late_end_in_zone_rate": sum(late_end) / max(1, len(late_end)),
             "open_loop": open_loop,
             "model_off": force_model_off,
             "systematic_misprediction_risk": bool(cal.get("systematic_misprediction_risk")),
+            "valence_sample_count": len(valence_samples),
+            "valence_all_finite": all(
+                v == v and abs(v) != float("inf") for v in valence_samples
+            ),
             "construction_hash": creceipt.generative_genome_hash,
             "world_hash": world.world_hash(),
             "telemetry_repairs": [
                 "synergy_action_histograms",
                 "per_episode_early_late_learning_curves",
                 "forward_model_prediction_error_over_gestation",
+                "per_action_gsm_vs_fallback_source",
             ],
         },
     )
