@@ -1,0 +1,38 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_GESTATIONAL_SENSORIMOTOR_MODEL.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "GestationalSensorimotorModel",
+  "type": "isolation_lock",
+  "status": "locked",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T20:30:00Z",
+
+  "contract": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.contract.lock",
+  "r4_r2_stop": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
+  "nursery_freeze": "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
+
+  "may_change": [
+    "three_memory/dev1/nursery_v2/",
+    "three_memory/dev1/development/ (gestation/forward-model surface only when implementing this lineage)",
+    "experiments/dev1/*gestational_sensorimotor*",
+    "experiments/dev1/*gsm*",
+    "tests/dev1/test_stage_a_gestational_sensorimotor*",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model.*",
+    "runs/exos_dev1/stage_a_gestational_sensorimotor_model/"
+  ],
+
+  "must_not_change": [
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.dev_decision.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.mechanism.audit.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_developmental_body_reference_wall.dev_decision.lock",
+    "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
+    "three_memory/dev1/body/",
+    "historical_r4_generic_body_and_homeostatic_gestation_as_immutable_baseline"
+  ],
+
+  "scored_behavioral_run": "forbidden_until_model_certification_prereg_and_explicit_go",
+  "stage_b": "locked"
+}
