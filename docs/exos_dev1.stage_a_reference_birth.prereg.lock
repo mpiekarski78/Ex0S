@@ -1,0 +1,114 @@
+{
+  "_schema": "exos_dev1.stage_a_reference_birth.prereg.v1",
+  "_immutable": true,
+  "written_utc": "2026-08-20T02:20:00Z",
+
+  "revision": "ReferenceBirth",
+  "scientific_attempt_number": 1,
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_reference_birth.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth.isolation.lock",
+    "docs/exos_dev1.stage_a_r2_1.closure.lock",
+    "docs/exos_dev1.stage_a_r2_1.closure.addendum.lock"
+  ],
+
+  "provenance": {
+    "reference_birth_contract_commit": "4936805",
+    "pre_ceiling_apparatus_commit": "47f7daa",
+    "implementation_commit": "60cc599",
+    "implementation_sha": "60cc5999b1a1981ae58135958a5fba8f5e8666eb",
+    "preflight_excluded_seed": "reference_birth_excluded_preflight_20260820",
+    "preflight_outcome": "eprop_reference_preflight_pass",
+    "cuda_benchmark_file": "runs/exos_dev1/stage_a_reference_birth/cuda_throughput_benchmark.json",
+    "control_recovery_status": "non_executable",
+    "control_recovery_lock": "docs/exos_dev1.stage_a_r2_1.control.recovery.lock"
+  },
+
+  "implementation": {
+    "commit_sha": "60cc599",
+    "runner_file": "experiments/dev1/search_reference_birth.py",
+    "ceiling_file": "experiments/dev1/conventional_ac_ceiling.py",
+    "eprop_file": "three_memory/dev1/plasticity/eprop/reward_eprop.py",
+    "preflight_file": "experiments/dev1/reference_birth_preflight.py",
+    "device_file": "three_memory/dev1/device.py"
+  },
+
+  "budget": {
+    "training_world_count": 6,
+    "training_cheap_seeds": 2,
+    "training_validation_seeds": 4,
+    "validation_seed_count": 4,
+    "confirmation_seed_count": 4,
+    "n_episodes_per_life": 32,
+    "treatment_arms": 3,
+    "ceiling_arm": "conventional_actor_critic_ceiling",
+    "cuda_batch_size": 4,
+    "scored_run_cuda_required": true,
+    "measured_cuda_benchmark": {
+      "batch_size": 4,
+      "n_episodes": 8,
+      "cpu_wall_seconds": 6.232534408569336,
+      "cuda_wall_seconds": 2.1012752056121826,
+      "speedup_ratio": 2.966072407804173,
+      "cpu_gpu_accuracy_delta": 0.001953125,
+      "ceiling_cuda_accuracy_sample": 0.05859375
+    },
+    "estimated_scored_wall_seconds": 900,
+    "early_termination_allowed_only_for": [
+      "numerical_or_systemic_failure",
+      "setup_ceiling_fail",
+      "eprop_reference_preflight_fail"
+    ]
+  },
+
+  "seed_partitions": {
+    "note": "Fresh Reference Birth partitions; all R2.1/R2.1b scored and preflight seeds excluded",
+    "excluded_seeds": [
+      "exos_dev1_r2_1_scored_world_001",
+      "exos_dev1_r2_1_scored_world_002",
+      "exos_dev1_r2_1_scored_world_003",
+      "exos_dev1_r2_1_scored_world_004",
+      "exos_dev1_r2_1_scored_world_005",
+      "exos_dev1_r2_1_scored_world_006",
+      "exos_dev1_r2_1b_scored_world_001",
+      "exos_dev1_r2_1b_scored_world_002",
+      "exos_dev1_r2_1b_scored_world_003",
+      "exos_dev1_r2_1b_scored_world_004",
+      "exos_dev1_r2_1b_scored_world_005",
+      "exos_dev1_r2_1b_scored_world_006",
+      "reference_birth_excluded_preflight_20260820",
+      "rb_unit_preflight",
+      "reference_birth_cuda_benchmark_20260820"
+    ],
+    "training_world_seeds": [
+      "exos_dev1_reference_birth_world_001",
+      "exos_dev1_reference_birth_world_002",
+      "exos_dev1_reference_birth_world_003",
+      "exos_dev1_reference_birth_world_004",
+      "exos_dev1_reference_birth_world_005",
+      "exos_dev1_reference_birth_world_006"
+    ],
+    "confirmation_seeds": [
+      "exos_dev1_reference_birth_conf_001",
+      "exos_dev1_reference_birth_conf_002",
+      "exos_dev1_reference_birth_conf_003",
+      "exos_dev1_reference_birth_conf_004"
+    ]
+  },
+
+  "run_identity": {
+    "run_id": "exos_dev1_reference_birth_scored_20260820",
+    "output_dir": "runs/exos_dev1/stage_a_reference_birth/exos_dev1_reference_birth_scored_20260820",
+    "preflight_seed": "reference_birth_excluded_preflight_20260820",
+    "attempt": "001",
+    "device_policy": "cuda_required"
+  },
+
+  "forbidden": [
+    "changing_seed_partitions_after_this_lock",
+    "inspecting_confirmation_worlds_during_run",
+    "patching_runner_or_organism_during_run",
+    "cpu_fallback_without_prereg_amendment",
+    "promoting_ceiling_as_organism_candidate"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_R2_1.CONTROL.RECOVERY.ASSESSMENT",
+  "status": "non_executable",
+  "executable": false,
+  "reason": "R2.1b ledger lacks per-child scaffold phenotypes and selection indices. Recovery would require re-evaluating candidates on consumed training worlds (exos_dev1_r2_1b_scored_world_001/002). Use numerical record in dev_decision.lock; do not manufacture approximate control.",
+  "expected_scaffold_hash": "4ee5a698cdd07850eb4daf36446c466a6e9bbb07c4e9eee6da994dd968f72fb8",
+  "run_ledger": "runs/exos_dev1/stage_a_r2_1/exos_dev1_r2_1b_scored_20260819/candidate_life_records.jsonl",
+  "search_summary": "runs/exos_dev1/stage_a_r2_1/exos_dev1_r2_1b_scored_20260819/search_summary.json",
+  "forbidden": [
+    "rerun_behavioral_scoring_on_consumed_r2_1_worlds",
+    "approximate_scaffold_without_exact_hash",
+    "manufacture_replacement_control"
+  ],
+  "fallback": "docs/exos_dev1.stage_a_r2_1.dev_decision.lock best_arm numerical record",
+  "assessed_at_commit": "60cc599"
+}

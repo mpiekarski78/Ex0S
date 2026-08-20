@@ -281,6 +281,7 @@ def run_batched_lives_cuda(
     """Evaluate independent newborn lives; neural tensors reside on CUDA."""
     dev = dev1_device(require_cuda=torch.cuda.is_available())
     results: list[ReferenceBirthLifeMetrics] = []
+    kwargs.pop("device", None)
     for i in range(0, len(world_seeds), batch_size):
         chunk = world_seeds[i : i + batch_size]
         for seed in chunk:
