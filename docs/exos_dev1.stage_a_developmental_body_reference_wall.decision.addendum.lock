@@ -1,0 +1,31 @@
+{
+  "_schema": "exos_dev1.stage_a_developmental_body_reference_wall.decision.addendum.v1",
+  "_immutable": true,
+  "type": "decision_interpretation_addendum",
+  "status": "locked",
+  "written_utc": "2026-08-20T16:25:00Z",
+
+  "parent_decision": "docs/exos_dev1.stage_a_developmental_body_reference_wall.dev_decision.lock",
+  "parent_decision_code_unchanged": "body_physics_or_control_bug",
+  "parent_decision_not_rewritten": true,
+
+  "narrow_interpretation": {
+    "code": "body_world_reachability_mismatch__episode_horizon_shorter_than_required_travel",
+    "meaning": "The body is controllable (exact-dynamics beam planner reduced distance by ~0.156). The scored comfort success condition is unreachable for most initial states because required travel exceeds maximum useful travel within the episode horizon under the attenuating block projection.",
+    "not_an_uncontrollable_body": true,
+    "not_an_organism_failure": true
+  },
+
+  "terminology": {
+    "capacity_controller_wording": "exact-dynamics beam planner",
+    "not_exact_optimal_oracle": true,
+    "reason": "Uses exact transition dynamics; beam search is not guaranteed globally optimal."
+  },
+
+  "authorized_next": {
+    "class": "NurseryBodyV2_unscored_engineering",
+    "r4_modification": false,
+    "r4_replay": false,
+    "freeze_and_r4_r2_only_after_certification": true
+  }
+}

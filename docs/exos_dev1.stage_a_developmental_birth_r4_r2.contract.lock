@@ -1,0 +1,66 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_DEVELOPMENTAL_BIRTH_R4_R2.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "DevelopmentalBirthR4-R2",
+  "type": "stage_contract_lock",
+  "status": "authorized_for_implementation",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T17:10:00Z",
+
+  "role": "r4_factorial_on_certified_nursery_body_v2",
+  "not_quietly_attempt_003_of_r4": true,
+  "developmental_question_unchanged_from_r4": true,
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_developmental_body_reference_wall.dev_decision.lock",
+    "docs/exos_dev1.stage_a_developmental_body_reference_wall.decision.addendum.lock"
+  ],
+
+  "question": "With a generative developmental genome, compute-matched sham vs active gestation, organism-owned valence, and matched fixed-credit vs LSG columns on the certified Nursery Body v2 world, can a newborn acquire grounded closed-loop actions?",
+
+  "body_world": {
+    "version": "NurseryBodyV2",
+    "freeze": "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
+    "package": "three_memory/dev1/nursery_v2/",
+    "egocentric_synergies": ["forward", "backward", "rotate_left", "rotate_right"],
+    "mass_preserving_projection": true
+  },
+
+  "unchanged_from_r4_contract": {
+    "factorial": "2x2_sham_active_x_fixed_eprop_lsg",
+    "valence_ownership": true,
+    "matched_outer_budgets": true,
+    "required_interventions_family": true,
+    "stage_b_boundary": "locked",
+    "historical_r2_r3_not_factorial_cells": true
+  },
+
+  "inherits_immutable": [
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4.attempt_002.measurement_invalidated.close.lock",
+    "docs/exos_dev1.stage_a_developmental_body_reference_wall.dev_decision.lock"
+  ],
+
+  "ceiling": {
+    "must_use_nursery_v2_motor_basis": true,
+    "synergy_aware": true,
+    "exact_dynamics_beam_planner_is_reference_not_scored_ceiling": true,
+    "canonical_ceiling_is_learnable_same_observation_policy_class": true
+  },
+
+  "partitions": {
+    "fresh_r4_r2_worlds_and_confirmation_required": true,
+    "prior_r4_and_r4_r1_and_wall_and_nursery_eng_seeds_excluded": true
+  },
+
+  "forbidden": [
+    "scored_run_before_r4_r2_prereg_and_explicit_authorization",
+    "reusing_unreachable_r4_generic_body_contract",
+    "rewriting_db69d10_or_wall_decision",
+    "stage_b_execution",
+    "organism_edits_unrelated_to_nursery_v2_world_adapter"
+  ]
+}
