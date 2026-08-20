@@ -1,0 +1,122 @@
+{
+  "_schema": "exos_dev1.stage_a_reference_birth_r1.prereg.v1",
+  "_immutable": true,
+  "written_utc": "2026-08-20T09:30:00Z",
+
+  "revision": "ReferenceBirthR1",
+  "scientific_attempt_number": 1,
+  "role": "apparatus_correction",
+  "not_attempt_001_replay": true,
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_reference_birth_r1.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.isolation.lock",
+    "docs/exos_dev1.stage_a_reference_birth.attempt_001.closure.lock"
+  ],
+
+  "attempt_001_excluded": {
+    "closure": "docs/exos_dev1.stage_a_reference_birth.attempt_001.closure.lock",
+    "interpretation": "invalidated_search__fixed_arms_without_causal_interventions",
+    "eprop_conclusion": "inconclusive",
+    "confirmation_auto_inherit_forbidden": true,
+    "partitions_forbidden": true
+  },
+
+  "provenance": {
+    "r1_contract_isolation_commit": "e8ede83",
+    "implementation_commit": "961f9a2",
+    "implementation_sha": "961f9a299012e0fa7881ed2041a89bdc7c2e1c82",
+    "attempt_001_closure_commit": "becb114",
+    "preflight_seed": "reference_birth_r1_excluded_preflight_20260820",
+    "preflight_outcome": "eprop_reference_preflight_pass"
+  },
+
+  "implementation": {
+    "commit_sha": "961f9a2",
+    "runner_file": "experiments/dev1/search_reference_birth_r1.py",
+    "outer_file": "experiments/dev1/reference_birth_r1_outer.py",
+    "life_file": "experiments/dev1/reference_birth_r1_life.py",
+    "preflight_file": "experiments/dev1/reference_birth_r1_preflight.py"
+  },
+
+  "budget": {
+    "outer_optimizer": "batched_evolution_strategies",
+    "generations": 8,
+    "population_size": 8,
+    "mutation_scale": 0.15,
+    "n_episodes_per_life": 32,
+    "training_cheap_seeds": 2,
+    "validation_seeds": 4,
+    "confirmation_seeds": 4,
+    "treatment_arms": [
+      "reward_eprop_rate_adaptation",
+      "teacher_demo_eprop"
+    ],
+    "matched_interventions": [
+      "reward_off",
+      "eligibility_zero",
+      "eligibility_permuted",
+      "motor_feedback_permuted"
+    ],
+    "scored_run_cuda_required": true,
+    "search_surface_sensitivity_max_update_norm_preflight": 3.5059599081677106e-05,
+    "search_surface_sensitivity_margin_spread_preflight": 0.75,
+    "estimated_scored_wall_seconds": 3600
+  },
+
+  "seed_partitions": {
+    "note": "Fresh R1 partitions; attempt-001 and all R2.1/R2.1b scored seeds excluded",
+    "excluded_seeds": [
+      "exos_dev1_reference_birth_world_001",
+      "exos_dev1_reference_birth_world_002",
+      "exos_dev1_reference_birth_world_003",
+      "exos_dev1_reference_birth_world_004",
+      "exos_dev1_reference_birth_world_005",
+      "exos_dev1_reference_birth_world_006",
+      "exos_dev1_reference_birth_conf_001",
+      "exos_dev1_reference_birth_conf_002",
+      "exos_dev1_reference_birth_conf_003",
+      "exos_dev1_reference_birth_conf_004",
+      "reference_birth_excluded_preflight_20260820",
+      "reference_birth_r1_excluded_preflight_20260820",
+      "exos_dev1_r2_1b_scored_world_001",
+      "exos_dev1_r2_1b_scored_world_002",
+      "exos_dev1_r2_1b_scored_world_003",
+      "exos_dev1_r2_1b_scored_world_004",
+      "exos_dev1_r2_1b_scored_world_005",
+      "exos_dev1_r2_1b_scored_world_006"
+    ],
+    "training_world_seeds": [
+      "exos_dev1_reference_birth_r1_world_001",
+      "exos_dev1_reference_birth_r1_world_002",
+      "exos_dev1_reference_birth_r1_world_003",
+      "exos_dev1_reference_birth_r1_world_004",
+      "exos_dev1_reference_birth_r1_world_005",
+      "exos_dev1_reference_birth_r1_world_006"
+    ],
+    "confirmation_seeds": [
+      "exos_dev1_reference_birth_r1_conf_001",
+      "exos_dev1_reference_birth_r1_conf_002",
+      "exos_dev1_reference_birth_r1_conf_003",
+      "exos_dev1_reference_birth_r1_conf_004"
+    ]
+  },
+
+  "run_identity": {
+    "run_id": "exos_dev1_reference_birth_r1_scored_20260820",
+    "output_dir": "runs/exos_dev1/stage_a_reference_birth_r1/exos_dev1_reference_birth_r1_scored_20260820",
+    "preflight_seed": "reference_birth_r1_excluded_preflight_20260820",
+    "attempt": "001",
+    "device_policy": "cuda_required"
+  },
+
+  "forbidden": [
+    "reusing_attempt_001_partitions",
+    "auto_inheriting_attempt_001_confirmation_seeds",
+    "changing_seed_partitions_after_this_lock",
+    "inspecting_confirmation_worlds_during_run",
+    "patching_runner_during_run",
+    "cpu_fallback_without_prereg_amendment",
+    "promoting_ceiling_as_organism_candidate"
+  ]
+}
