@@ -168,11 +168,20 @@ class ModularOrganism:
         # Internal surprises (for prioritized replay)
         self._surprises: list[float] = []
 
-        # Outcome-credit lifecycle (R2.1)
+        # Outcome-credit lifecycle (R2.1) — self-action only
         self._awaiting_consequence: bool = False
         self._outcome_credit_pending: bool = False
         self._outcome_credit_consumed: bool = False
         self._credit_interaction_step: int = -1
+
+        # Teacher-demonstration credit lifecycle (Reference Birth R2) — separate from self
+        self._teacher_awaiting_consequence: bool = False
+        self._teacher_credit_pending: bool = False
+        self._teacher_credit_consumed: bool = False
+        self._teacher_demo_channel: int | None = None
+        self._teacher_teaching_signal: float = 0.0
+        self._teacher_eligibility: torch.Tensor | None = None
+        self._teacher_credit_enabled: bool = True
 
     @classmethod
     def birth(
@@ -232,7 +241,14 @@ class ModularOrganism:
             self._last_consequence_terminal = bool(event.is_terminal)
 
         if event.observed_motor_event is not None:
-            self._inject_observed_motor_event(int(event.observed_motor_event))
+            self._arm_teacher_demonstration(int(event.observed_motor_event))
+
+        # Teacher consequence is never the self-action reward field.
+        if event.teaching_signal is not None and self._teacher_awaiting_consequence:
+            self._teacher_teaching_signal = float(event.teaching_signal)
+            self._teacher_credit_pending = True
+            self._teacher_credit_consumed = False
+            self._teacher_awaiting_consequence = False
 
         # Eligibility update deferred to act() so action_repr is populated
 
@@ -439,6 +455,8 @@ class ModularOrganism:
             "applied": True,
             "refused": False,
             "reason": "",
+            "credit_source": "self_action",
+            "actor_target": int(rewarded_channel),
             "eligibility_norm_before_credit": elig_norm,
             "rewarded_update_norm": update_norm,
             "signed_reward_projection": signed_projection,
@@ -451,8 +469,145 @@ class ModularOrganism:
             "critic_value": float(getattr(self, "_last_critic_value", 0.0)),
             "td_error": float(getattr(self, "_last_td_error", reward_signal)),
             "action_entropy": float(getattr(self, "_last_action_entropy", 0.0)),
+            "outcome_sign": int((self._last_consequence_reward > 0) - (self._last_consequence_reward < 0)),
         }
         self._last_outcome_credit = dict(result)
+        return result
+
+    def set_teacher_credit_enabled(self, enabled: bool) -> None:
+        """Control: teacher credit off → state injection alone does not teach."""
+        self._teacher_credit_enabled = bool(enabled)
+
+    def apply_teacher_demonstration_credit(self) -> dict:
+        """
+        Apply credit for a teacher demonstration on its own eligibility/credit source.
+
+        Actor target is the demonstrated channel. Learning signal is the teaching
+        signal delivered with that demonstration — never the self-action reward.
+        Does not rewrite sampled-action eligibility or self-action credit state.
+        """
+        if not self._teacher_credit_enabled:
+            return {
+                "applied": False,
+                "refused": True,
+                "reason": "teacher_credit_disabled",
+                "credit_source": "teacher_demonstration",
+                "eligibility_norm_before_credit": 0.0,
+                "rewarded_update_norm": 0.0,
+            }
+        if self._teacher_credit_consumed:
+            return {
+                "applied": False,
+                "refused": True,
+                "reason": "teacher_credit_already_consumed",
+                "credit_source": "teacher_demonstration",
+                "eligibility_norm_before_credit": 0.0,
+                "rewarded_update_norm": 0.0,
+            }
+        if not self._teacher_credit_pending:
+            return {
+                "applied": False,
+                "refused": True,
+                "reason": "teacher_credit_not_pending",
+                "credit_source": "teacher_demonstration",
+                "eligibility_norm_before_credit": 0.0,
+                "rewarded_update_norm": 0.0,
+            }
+        if self._teacher_demo_channel is None or self._teacher_eligibility is None:
+            return {
+                "applied": False,
+                "refused": True,
+                "reason": "teacher_demonstration_not_armed",
+                "credit_source": "teacher_demonstration",
+                "eligibility_norm_before_credit": 0.0,
+                "rewarded_update_norm": 0.0,
+            }
+        if not hasattr(self.plasticity_rule, "actor_delta") or self.plasticity_rule.name() != "reward_eprop_rate_adaptation":
+            return {
+                "applied": False,
+                "refused": True,
+                "reason": "teacher_credit_requires_reward_eprop",
+                "credit_source": "teacher_demonstration",
+                "eligibility_norm_before_credit": 0.0,
+                "rewarded_update_norm": 0.0,
+            }
+
+        demo_channel = int(self._teacher_demo_channel)
+        elig = self._teacher_eligibility
+        elig_norm = float(elig.norm().item())
+        # Snapshot self eligibility so teacher credit cannot rewrite it.
+        self_elig_before = self.eligibility.trace.detach().clone()
+        w_before = self.action_ctx.W_motor.weight.data.clone()
+        pre_stats = self._rewarded_action_stats(demo_channel)
+
+        with torch.no_grad():
+            _, motor_logits = self.action_ctx(self.rho.relational_repr, self.rho.action_repr)
+            teaching = float(self._teacher_teaching_signal)
+            delta_t = self.plasticity_rule.td_step(
+                teaching,
+                self.rho.relational_repr,
+                is_terminal=True,
+            )
+            self.plasticity_rule.update_critic(delta_t, self.rho.relational_repr)
+            dW = self.plasticity_rule.actor_delta(
+                eligibility=elig,
+                delta_t=delta_t,
+                chosen_channel=demo_channel,
+                motor_logits=motor_logits,
+                n_channels=self.genome.n_motor_channels,
+            )
+            if hasattr(self, "_r2_plasticity_channel_mask"):
+                dW = dW * self._r2_plasticity_channel_mask
+            if hasattr(self, "_r2_plasticity_mask_gain"):
+                dW = dW * float(self._r2_plasticity_mask_gain)
+            self.action_ctx.W_motor.weight.data.add_(dW)
+            self._last_actor_delta = dW.detach().clone()
+            self._last_learning_signal_norm = float(
+                self.plasticity_rule.learning_signal_per_unit(
+                    delta_t, demo_channel, motor_logits
+                ).norm().item()
+            )
+            self._last_td_error = float(delta_t.item())
+            self._last_critic_value = float(
+                self.plasticity_rule.critic.value(self.rho.relational_repr).item()
+            )
+
+        # Restore sampled-action eligibility unchanged.
+        self.eligibility.trace.copy_(self_elig_before)
+
+        update_norm = float(dW.norm().item())
+        post_stats = self._rewarded_action_stats(demo_channel)
+        margin_delta = post_stats["margin"] - pre_stats["margin"]
+        outcome_sign = int((teaching > 0) - (teaching < 0))
+
+        self._teacher_credit_consumed = True
+        self._teacher_credit_pending = False
+
+        result = {
+            "applied": True,
+            "refused": False,
+            "reason": "",
+            "credit_source": "teacher_demonstration",
+            "actor_target": demo_channel,
+            "eligibility_norm_before_credit": elig_norm,
+            "rewarded_update_norm": update_norm,
+            "signed_reward_projection": teaching * update_norm,
+            "pre_rewarded_action_probability": pre_stats["probability"],
+            "post_rewarded_action_probability": post_stats["probability"],
+            "pre_rewarded_action_margin": pre_stats["margin"],
+            "post_rewarded_action_margin": post_stats["margin"],
+            "margin_change_sign": int((margin_delta > 0) - (margin_delta < 0)),
+            "learning_signal_norm": float(self._last_learning_signal_norm),
+            "critic_value": float(self._last_critic_value),
+            "td_error": float(self._last_td_error),
+            "action_entropy": float(getattr(self, "_last_action_entropy", 0.0)),
+            "outcome_sign": outcome_sign,
+            "teaching_signal": teaching,
+            "self_eligibility_unchanged": bool(
+                torch.allclose(self.eligibility.trace, self_elig_before)
+            ),
+        }
+        self._last_teacher_credit = dict(result)
         return result
 
     def _rewarded_action_stats(self, rewarded_channel: int) -> dict[str, float]:
@@ -518,6 +673,10 @@ class ModularOrganism:
         if self._outcome_credit_pending and not self._outcome_credit_consumed:
             self._outcome_credit_pending = False
             self._awaiting_consequence = False
+        self._teacher_awaiting_consequence = False
+        self._teacher_credit_pending = False
+        self._teacher_eligibility = None
+        self._teacher_demo_channel = None
         snap = self.rho.cleared_snapshot()
         elig_snap = {"trace": self.eligibility.trace.cpu().tolist()}
         self.rho.reset()
@@ -620,6 +779,26 @@ class ModularOrganism:
             hippocampus_capacity_max=cap["capacity_max"],
             evictions_this_episode=cap["evictions_total"],
         )
+
+    def _arm_teacher_demonstration(self, channel: int) -> None:
+        """
+        Efference-only demo injection plus separate teacher eligibility arming.
+
+        Does not mutate sampled-action eligibility: live eligibility is restored
+        after computing the teacher-owned eligibility snapshot.
+        """
+        n = self.genome.n_motor_channels
+        if channel < 0 or channel >= n:
+            return
+        self._inject_observed_motor_event(channel)
+        self_elig_backup = self.eligibility.trace.detach().clone()
+        self.eligibility.update(self.rho.relational_repr, self.rho.action_repr)
+        self._teacher_eligibility = self.eligibility.trace.detach().clone()
+        self.eligibility.trace.copy_(self_elig_backup)
+        self._teacher_demo_channel = int(channel)
+        self._teacher_awaiting_consequence = True
+        self._teacher_credit_pending = False
+        self._teacher_credit_consumed = False
 
     def _inject_observed_motor_event(self, channel: int) -> None:
         """Efference-only teacher demonstration on the action pathway."""

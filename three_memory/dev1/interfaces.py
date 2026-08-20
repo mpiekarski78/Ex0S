@@ -93,6 +93,9 @@ class OrganismObservation:
     reward: float = 0.0           # scalar gate; never an answer identifier
     is_terminal: bool = False
     observed_motor_event: int | None = None  # efference-only demonstrated channel (Reference Birth)
+    # Teacher-demonstration consequence (R2): separate from self-action reward.
+    # Runner delivers scalar outcome/teaching signal only — never a neural target.
+    teaching_signal: float | None = None
 
 
 @dataclass
