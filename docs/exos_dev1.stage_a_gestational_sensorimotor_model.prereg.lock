@@ -1,0 +1,173 @@
+{
+  "_schema": "exos_dev1.stage_a_gestational_sensorimotor_model.prereg.v1",
+  "_immutable": true,
+  "written_utc": "2026-08-20T20:50:00Z",
+
+  "revision": "GestationalSensorimotorModel",
+  "scientific_attempt_number": 1,
+  "role": "new_developmental_mechanism_lineage",
+  "not_r4_r3_tuning": true,
+  "scored_run_authorized": false,
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model.contract.lock",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model.isolation.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
+    "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock"
+  ],
+
+  "provenance": {
+    "implementation_commit": "8129ccf",
+    "implementation_sha": "8129ccff11177263159f3d76342317288886c481",
+    "r4_r2_stop": "docs/exos_dev1.stage_a_developmental_birth_r4_r2.stop.lock",
+    "r4_r2_decision": "grounded_acquisition_fail",
+    "r4_r2_first_split": "active_gestation_not_useful",
+    "preflight_seed": "gestational_sensorimotor_model_excluded_preflight_20260820",
+    "preflight_artifact": "runs/exos_dev1/stage_a_gestational_sensorimotor_model/excluded_model_certification_preflight.json",
+    "preflight_outcome": "gestational_sensorimotor_model_excluded_preflight_pass"
+  },
+
+  "hypothesis": "A newborn benefits from gestation only when spontaneous action teaches it a reusable model of its own sensorimotor consequences.",
+
+  "mechanism": {
+    "forward_model": "s_hat = s + Delta(s, a_efference)",
+    "separate_streams": ["exteroceptive", "proprioceptive", "interoceptive"],
+    "gestation_targets": "next_observed_organism_visible_state_only",
+    "action_selection": "argmax_synergy organism_valence of predicted interoceptive consequence",
+    "model_off_reverts_to_matched_baseline": true,
+    "uncertainty_gate_against_model_exploitation": true
+  },
+
+  "required_arms": [
+    "sham_gestation",
+    "existing_homeostatic_gestation",
+    "predictive_gestation",
+    "predictive_gestation_shuffled_consequences",
+    "learned_model_off_at_action_selection",
+    "exact_body_dynamics_model_measurement_ceiling_only"
+  ],
+
+  "model_certification_required_before_behavioral_scoring": true,
+
+  "budget": {
+    "gestation_ticks": 128,
+    "n_episodes_per_life": 32,
+    "episode_ticks": 16,
+    "engineering_cert_seeds": 3,
+    "discovery_seeds": 2,
+    "validation_seeds": 4,
+    "confirmation_seeds": 4,
+    "scored_run_cuda_required": true
+  },
+
+  "behavioral_gates": {
+    "closed_loop_beats_open_loop": true,
+    "mean_distance_decreases": true,
+    "end_in_zone_exceeds_matched_random": true,
+    "active_predictive_gestation_beats_sham": true,
+    "model_off_removes_the_gain": true,
+    "fresh_bodies_or_worlds_pass": true,
+    "primary_episode_success": "end_in_zone",
+    "tick_fraction_comfort_retired": true
+  },
+
+  "telemetry_required": [
+    "synergy_aware_policy_margin",
+    "per_episode_early_late_learning_curves",
+    "synergy_action_histograms",
+    "forward_model_prediction_error_over_gestation",
+    "paired_active_sham_trajectories",
+    "prediction_uncertainty_and_closed_loop_calibration_error"
+  ],
+
+  "seed_partitions": {
+    "note": "Fresh GSM partitions. All R4-R2 scored and confirmation seeds remain consumed/sealed. Nursery eng and GSM eng/preflight seeds excluded.",
+    "excluded_seeds": [
+      "nursery_v2_eng_seed_001",
+      "nursery_v2_eng_seed_002",
+      "nursery_v2_eng_seed_003",
+      "gsm_eng_cert_seed_001",
+      "gsm_eng_cert_seed_002",
+      "gsm_eng_cert_seed_003",
+      "gestational_sensorimotor_model_excluded_preflight_20260820",
+      "exos_dev1_developmental_birth_r4_r2_world_001",
+      "exos_dev1_developmental_birth_r4_r2_world_002",
+      "exos_dev1_developmental_birth_r4_r2_world_003",
+      "exos_dev1_developmental_birth_r4_r2_world_004",
+      "exos_dev1_developmental_birth_r4_r2_world_005",
+      "exos_dev1_developmental_birth_r4_r2_world_006",
+      "exos_dev1_developmental_birth_r4_r2_conf_001",
+      "exos_dev1_developmental_birth_r4_r2_conf_002",
+      "exos_dev1_developmental_birth_r4_r2_conf_003",
+      "exos_dev1_developmental_birth_r4_r2_conf_004",
+      "exos_dev1_developmental_birth_r4_r1_world_001",
+      "exos_dev1_developmental_birth_r4_r1_world_002",
+      "exos_dev1_developmental_birth_r4_r1_world_003",
+      "exos_dev1_developmental_birth_r4_r1_world_004",
+      "exos_dev1_developmental_birth_r4_r1_world_005",
+      "exos_dev1_developmental_birth_r4_r1_world_006",
+      "exos_dev1_developmental_birth_r4_r1_conf_001",
+      "exos_dev1_developmental_birth_r4_r1_conf_002",
+      "exos_dev1_developmental_birth_r4_r1_conf_003",
+      "exos_dev1_developmental_birth_r4_r1_conf_004",
+      "exos_dev1_developmental_birth_r4_world_001",
+      "exos_dev1_developmental_birth_r4_world_002",
+      "exos_dev1_developmental_birth_r4_world_003",
+      "exos_dev1_developmental_birth_r4_world_004",
+      "exos_dev1_developmental_birth_r4_world_005",
+      "exos_dev1_developmental_birth_r4_world_006",
+      "exos_dev1_developmental_birth_r4_conf_001",
+      "exos_dev1_developmental_birth_r4_conf_002",
+      "exos_dev1_developmental_birth_r4_conf_003",
+      "exos_dev1_developmental_birth_r4_conf_004",
+      "developmental_birth_r4_r2_excluded_preflight_20260820",
+      "developmental_birth_r4_r1_excluded_ceiling_preflight_20260820",
+      "developmental_birth_r4_excluded_preflight_20260820"
+    ],
+    "discovery_world_seeds": [
+      "exos_dev1_gestational_sensorimotor_model_world_001",
+      "exos_dev1_gestational_sensorimotor_model_world_002"
+    ],
+    "validation_world_seeds": [
+      "exos_dev1_gestational_sensorimotor_model_world_003",
+      "exos_dev1_gestational_sensorimotor_model_world_004",
+      "exos_dev1_gestational_sensorimotor_model_world_005",
+      "exos_dev1_gestational_sensorimotor_model_world_006"
+    ],
+    "confirmation_seeds": [
+      "exos_dev1_gestational_sensorimotor_model_conf_001",
+      "exos_dev1_gestational_sensorimotor_model_conf_002",
+      "exos_dev1_gestational_sensorimotor_model_conf_003",
+      "exos_dev1_gestational_sensorimotor_model_conf_004"
+    ],
+    "r4_r2_scored_and_confirmation_sealed": true,
+    "prior_confirmation_auto_inherit_forbidden": true
+  },
+
+  "run_identity": {
+    "run_id": "exos_dev1_gestational_sensorimotor_model_scored_20260820",
+    "output_dir": "runs/exos_dev1/stage_a_gestational_sensorimotor_model/exos_dev1_gestational_sensorimotor_model_scored_20260820",
+    "preflight_seed": "gestational_sensorimotor_model_excluded_preflight_20260820",
+    "attempt": "001",
+    "device_policy": "cuda_required"
+  },
+
+  "unchanged": {
+    "stage_b_boundary": "locked",
+    "product_version": "0.0.004",
+    "r4_r2_decision": "immutable",
+    "nursery_body_v2_freeze": "immutable"
+  },
+
+  "forbidden": [
+    "scored_behavioral_execution_before_explicit_authorization",
+    "reusing_r4_r2_scored_or_confirmation_seeds",
+    "retuning_r4_r2_thresholds",
+    "larger_es_over_homeostatic_babble_gestation",
+    "inferring_from_descriptive_r4_r2_lsg_advantage",
+    "treating_exact_body_dynamics_model_as_organism_candidate",
+    "expected_action_or_fixture_targets_in_gestation",
+    "stage_b_execution",
+    "rewriting_r4_r2_grounded_acquisition_fail_or_first_split"
+  ]
+}
