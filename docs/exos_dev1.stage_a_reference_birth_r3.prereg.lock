@@ -1,0 +1,161 @@
+{
+  "_schema": "exos_dev1.stage_a_reference_birth_r3.prereg.v1",
+  "_immutable": true,
+  "written_utc": "2026-08-20T11:10:00Z",
+
+  "revision": "ReferenceBirthR3",
+  "scientific_attempt_number": 1,
+  "role": "substantial_mechanism_jump",
+  "not_fixed_rate_eprop_continuation": true,
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_reference_birth_r3.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r3.isolation.lock",
+    "docs/exos_dev1.stage_a_reference_birth.rate_eprop_branch.stop.lock"
+  ],
+
+  "stopped_predecessor": {
+    "stop_lock": "docs/exos_dev1.stage_a_reference_birth.rate_eprop_branch.stop.lock",
+    "r2_decision": "docs/exos_dev1.stage_a_reference_birth_r2.dev_decision.lock",
+    "eprop_class_status": "scientifically_inconclusive"
+  },
+
+  "provenance": {
+    "r3_contract_isolation_commit": "529eb6e",
+    "implementation_commit": "5ad82cf",
+    "implementation_sha": "5ad82cfd89c6c8c9ceaee26e0985eeef31e9dc95",
+    "preflight_seed": "reference_birth_r3_excluded_preflight_20260820",
+    "preflight_outcome": "eprop_reference_preflight_pass",
+    "lsg_param_count_preflight": 3184,
+    "update_norm_mean_preflight": 7.389711546790245e-06
+  },
+
+  "implementation": {
+    "commit_sha": "5ad82cf",
+    "runner_file": "experiments/dev1/search_reference_birth_r3.py",
+    "outer_file": "experiments/dev1/reference_birth_r3_outer.py",
+    "life_file": "experiments/dev1/reference_birth_r3_life.py",
+    "preflight_file": "experiments/dev1/reference_birth_r3_preflight.py",
+    "tests_file": "tests/dev1/test_stage_a_reference_birth_r3.py",
+    "lsg_module": "three_memory/dev1/plasticity/eprop/signal_generator.py",
+    "learned_eprop_module": "three_memory/dev1/plasticity/eprop/learned_eprop.py"
+  },
+
+  "mechanism": {
+    "within_life_update": "Delta_W_ij(t) = eta * L_j(t) * e_ij(t)",
+    "L_j_source": "inherited_learning_signal_generator",
+    "eligibility_traces_kept": true,
+    "lsg_frozen_within_life": true,
+    "r2_separated_self_teacher_credit_preserved": true
+  },
+
+  "comparison_arms": [
+    "r2_fixed_eprop_baseline",
+    "inherited_learning_signal_generator",
+    "conventional_actor_critic_ceiling",
+    "signal_generator_off_or_permuted"
+  ],
+
+  "budget": {
+    "outer_optimizer": "batched_evolution_strategies_lsg",
+    "generations": 8,
+    "population_size": 8,
+    "mutation_scale": 0.15,
+    "n_episodes_per_life": 32,
+    "training_cheap_seeds": 2,
+    "validation_seeds": 4,
+    "confirmation_seeds": 4,
+    "budget_class_same_as_r1_r2": true,
+    "scored_run_cuda_required": true,
+    "estimated_scored_wall_seconds": 4500
+  },
+
+  "required_evidence_ladder": [
+    "training_acquisition",
+    "fresh_world_validation",
+    "reward_off_causality",
+    "teacher_permutation_causality",
+    "one_untouched_confirmation"
+  ],
+
+  "unchanged": {
+    "stage_b_boundary": "locked",
+    "product_version": "0.0.004"
+  },
+
+  "seed_partitions": {
+    "note": "Fresh R3 partitions; R1/R2 confirmation sealed and excluded; fixed rate-e-prop branch stopped",
+    "excluded_seeds": [
+      "exos_dev1_reference_birth_world_001",
+      "exos_dev1_reference_birth_world_002",
+      "exos_dev1_reference_birth_world_003",
+      "exos_dev1_reference_birth_world_004",
+      "exos_dev1_reference_birth_world_005",
+      "exos_dev1_reference_birth_world_006",
+      "exos_dev1_reference_birth_conf_001",
+      "exos_dev1_reference_birth_conf_002",
+      "exos_dev1_reference_birth_conf_003",
+      "exos_dev1_reference_birth_conf_004",
+      "exos_dev1_reference_birth_r1_world_001",
+      "exos_dev1_reference_birth_r1_world_002",
+      "exos_dev1_reference_birth_r1_world_003",
+      "exos_dev1_reference_birth_r1_world_004",
+      "exos_dev1_reference_birth_r1_world_005",
+      "exos_dev1_reference_birth_r1_world_006",
+      "exos_dev1_reference_birth_r1_conf_001",
+      "exos_dev1_reference_birth_r1_conf_002",
+      "exos_dev1_reference_birth_r1_conf_003",
+      "exos_dev1_reference_birth_r1_conf_004",
+      "exos_dev1_reference_birth_r2_world_001",
+      "exos_dev1_reference_birth_r2_world_002",
+      "exos_dev1_reference_birth_r2_world_003",
+      "exos_dev1_reference_birth_r2_world_004",
+      "exos_dev1_reference_birth_r2_world_005",
+      "exos_dev1_reference_birth_r2_world_006",
+      "exos_dev1_reference_birth_r2_conf_001",
+      "exos_dev1_reference_birth_r2_conf_002",
+      "exos_dev1_reference_birth_r2_conf_003",
+      "exos_dev1_reference_birth_r2_conf_004",
+      "reference_birth_excluded_preflight_20260820",
+      "reference_birth_r1_excluded_preflight_20260820",
+      "reference_birth_r2_excluded_preflight_20260820",
+      "reference_birth_r3_excluded_preflight_20260820"
+    ],
+    "training_world_seeds": [
+      "exos_dev1_reference_birth_r3_world_001",
+      "exos_dev1_reference_birth_r3_world_002",
+      "exos_dev1_reference_birth_r3_world_003",
+      "exos_dev1_reference_birth_r3_world_004",
+      "exos_dev1_reference_birth_r3_world_005",
+      "exos_dev1_reference_birth_r3_world_006"
+    ],
+    "confirmation_seeds": [
+      "exos_dev1_reference_birth_r3_conf_001",
+      "exos_dev1_reference_birth_r3_conf_002",
+      "exos_dev1_reference_birth_r3_conf_003",
+      "exos_dev1_reference_birth_r3_conf_004"
+    ],
+    "r3_confirmation_explicitly_preregistered_separately": true,
+    "prior_confirmation_auto_inherit_forbidden": true
+  },
+
+  "run_identity": {
+    "run_id": "exos_dev1_reference_birth_r3_scored_20260820",
+    "output_dir": "runs/exos_dev1/stage_a_reference_birth_r3/exos_dev1_reference_birth_r3_scored_20260820",
+    "preflight_seed": "reference_birth_r3_excluded_preflight_20260820",
+    "attempt": "001",
+    "device_policy": "cuda_required"
+  },
+
+  "forbidden": [
+    "further_tuning_stopped_fixed_rate_eprop",
+    "auto_inheriting_r1_or_r2_confirmation",
+    "reopening_r1_or_r2_confirmation",
+    "changing_seed_partitions_after_this_lock",
+    "inspecting_confirmation_worlds_during_run",
+    "patching_runner_during_run",
+    "cpu_fallback_without_prereg_amendment",
+    "inheriting_world_specific_knowledge_across_newborns",
+    "stage_b_execution"
+  ]
+}
