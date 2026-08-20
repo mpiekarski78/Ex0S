@@ -1,0 +1,132 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH_R1.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "ReferenceBirthR1",
+  "type": "stage_contract_lock",
+  "status": "authorized_for_implementation",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-20T09:20:00Z",
+
+  "authorization": {
+    "authorized_by": "docs/exos_dev1.stage_a_reference_birth.attempt_001.closure.lock",
+    "role": "apparatus_correction",
+    "not_attempt_001_replay": true,
+    "stage_a_continuation": true
+  },
+
+  "inherits_immutable_history": [
+    "docs/exos_dev1.stage_a_reference_birth.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth.isolation.lock",
+    "docs/exos_dev1.stage_a_reference_birth.prereg.lock",
+    "docs/exos_dev1.stage_a_reference_birth.budget_trajectory.audit.lock",
+    "docs/exos_dev1.stage_a_reference_birth.attempt_001.closure.lock",
+    "docs/exos_dev1.stage_a_r2_1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_r2_1.closure.lock"
+  ],
+
+  "attempt_001_status": {
+    "operational_runner_output": "reference_birth_validation_fail",
+    "scientific_code": "outer_optimization_not_exercised",
+    "interpretation": "invalidated_search__fixed_arms_without_causal_interventions",
+    "eprop_conclusion": "inconclusive",
+    "confirmation_untouched": true
+  },
+
+  "question": "With genuine outer optimization of a limited inherited e-prop surface, scored matched interventions, and update-effect telemetry, can reward-based e-prop produce persistent causal grounding where attempt 001 only evaluated fixed nearly-inactive arms?",
+
+  "outer_optimization": {
+    "optimizer": "batched_evolution_strategies",
+    "transparent_first": true,
+    "inherited_surface": [
+      "log_actor_learning_rate",
+      "log_critic_learning_rate",
+      "eligibility_decay",
+      "td_discount_gamma",
+      "learning_signal_projection_scale",
+      "entropy_exploration_temperature",
+      "update_clip_scale"
+    ],
+    "forbidden_surface": [
+      "full_task_specific_matrices",
+      "cue_identities",
+      "action_mappings"
+    ],
+    "required_records": [
+      "population_diversity",
+      "generations",
+      "parent_selection",
+      "parameter_movement",
+      "phenotype_movement"
+    ]
+  },
+
+  "matched_interventions": {
+    "required": [
+      "reward_off",
+      "eligibility_zero",
+      "eligibility_permuted",
+      "motor_feedback_permuted"
+    ],
+    "from_matched_candidate_checkpoints": true,
+    "identical_life_rng": true,
+    "pass_rule": "treatment must outperform its causal interventions"
+  },
+
+  "update_effect_telemetry_per_credit": [
+    "pre_rewarded_action_probability",
+    "post_rewarded_action_probability",
+    "pre_rewarded_action_margin",
+    "post_rewarded_action_margin",
+    "margin_change_sign",
+    "eligibility_norm",
+    "learning_signal_norm",
+    "update_norm",
+    "critic_value",
+    "td_error",
+    "action_entropy",
+    "action_histogram"
+  ],
+
+  "teacher_path_proof": {
+    "record": ["demonstration_count", "observed_motor_channel", "behavioral_follow_rate"],
+    "excluded_seed_permutation_test": "permuting demonstrations must redirect learning toward the observed motor event"
+  },
+
+  "search_surface_sensitivity": {
+    "required_before_prereg": true,
+    "setup_check_not_threshold_tuning": true,
+    "must_show": "valid inherited-parameter extremes move full-world update norms out of ~1e-8 regime and measurably change rewarded-action margins"
+  },
+
+  "ceiling_established": {
+    "attempt_001_lifetime_train": 0.3359375,
+    "diagnostic_hard_eval": 0.517578125,
+    "establishes_world_learnable": true
+  },
+
+  "fresh_partitions_required": true,
+  "attempt_001_confirmation_auto_inherit_forbidden": true,
+
+  "decision_ladder": [
+    "setup_ceiling_fail",
+    "search_surface_sensitivity_fail",
+    "outer_optimization_not_exercised",
+    "eprop_reference_preflight_fail",
+    "persistent_weight_learning_fail",
+    "credit_not_causal",
+    "reference_birth_r1_validation_fail",
+    "reward_eprop_confirmation_fail",
+    "reward_eprop_confirmation_pass",
+    "teacher_eprop_confirmation_fail",
+    "teacher_dependent_grounding_pass"
+  ],
+
+  "forbidden_scope": [
+    "attempt_001_partition_replay",
+    "another_scaffold_parameter_wall",
+    "stage_b_execution",
+    "candidate_lock_changes",
+    "automatic_confirmation_reuse"
+  ]
+}

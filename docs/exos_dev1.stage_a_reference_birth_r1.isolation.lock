@@ -1,0 +1,68 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH_R1.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "ReferenceBirthR1",
+  "type": "stage_isolation_lock",
+  "status": "active",
+  "written_utc": "2026-08-20T09:20:00Z",
+
+  "authorized_by": "docs/exos_dev1.stage_a_reference_birth.attempt_001.closure.lock",
+  "role": "apparatus_correction",
+  "not_attempt_001_replay": true,
+
+  "lineage_stop_inherited": "invalidated_search__fixed_arms_without_causal_interventions",
+
+  "authorized_filespaces": [
+    "docs/exos_dev1.stage_a_reference_birth_r1.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.isolation.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.prereg.lock",
+    "docs/exos_dev1.stage_a_reference_birth.budget_trajectory.audit.lock",
+    "docs/exos_dev1.stage_a_reference_birth.attempt_001.closure.lock",
+    "three_memory/dev1/plasticity/eprop/",
+    "three_memory/dev1/device.py",
+    "three_memory/dev1/organism.py",
+    "three_memory/dev1/interfaces.py",
+    "three_memory/dev1/genome.py",
+    "experiments/dev1/search_reference_birth_r1.py",
+    "experiments/dev1/reference_birth_r1_outer.py",
+    "experiments/dev1/reference_birth_r1_preflight.py",
+    "experiments/dev1/reference_birth_life.py",
+    "experiments/dev1/conventional_ac_ceiling.py",
+    "experiments/dev1/reference_birth_cuda_benchmark.py",
+    "tests/dev1/test_stage_a_reference_birth_r1.py",
+    "tests/dev1/test_stage_a_reference_birth.py",
+    "runs/exos_dev1/stage_a_reference_birth_r1/"
+  ],
+
+  "historical_filespaces_immutable": [
+    "docs/exos_dev1.stage_a_reference_birth.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth.isolation.lock",
+    "docs/exos_dev1.stage_a_reference_birth.prereg.lock",
+    "docs/exos_dev1.stage_a_r2_1.isolation.lock",
+    "docs/exos_dev1.stage_a_r2_1.contract.lock",
+    "docs/exos_dev1.stage_a_r2_1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_r2_1.closure.lock",
+    "runs/exos_dev1/stage_a_reference_birth/exos_dev1_reference_birth_scored_20260820/",
+    "experiments/dev1/search_r2_1.py"
+  ],
+
+  "forbidden_actions": [
+    "replay_attempt_001_partitions",
+    "auto_inherit_attempt_001_confirmation_seeds",
+    "treat_attempt_001_as_eprop_falsification",
+    "write_attempt_001_dev_decision",
+    "another_scaffold_search",
+    "stage_b_execution_before_r1_decision"
+  ],
+
+  "execution_order": [
+    "attempt_001_audit_and_closure_commit",
+    "r1_contract_isolation_commit",
+    "implement_outer_es_telemetry_interventions_teacher_sensitivity",
+    "excluded_seed_verification",
+    "freeze_r1_prereg_fresh_partitions",
+    "scored_run_once",
+    "reference_birth_r1_dev_decision"
+  ]
+}
