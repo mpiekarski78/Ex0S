@@ -1,0 +1,71 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH_R3.PROVENANCE_BUDGET_CAUSAL.AUDIT",
+  "type": "post_scored_provenance_budget_causal_audit",
+  "status": "complete",
+  "written_utc": "2026-08-20T11:15:00Z",
+  "run_id": "exos_dev1_reference_birth_r3_scored_20260820",
+  "run_directory": "runs/exos_dev1/stage_a_reference_birth_r3/exos_dev1_reference_birth_r3_scored_20260820",
+  "prereg": "docs/exos_dev1.stage_a_reference_birth_r3.prereg.lock",
+  "implementation_commit": "5ad82cf",
+  "executing_head": "e225918",
+
+  "execution": {
+    "supervisor_exit_code": 0,
+    "wall_seconds": 383.2500009536743,
+    "device": "cuda",
+    "device_name": "NVIDIA GB10",
+    "confirmation_consumed": false
+  },
+
+  "budget": {
+    "outer_optimizer": "batched_evolution_strategies_lsg",
+    "shape": "8x8_lsg",
+    "outer_updates_executed": 8,
+    "budget_fully_consumed": true,
+    "lsg_param_count": 3184
+  },
+
+  "mechanism_exercised": {
+    "inherited_learning_signal_generator": true,
+    "parameter_movement_sum": 1.1916989584560236,
+    "generations_leaving_parent_slot": 8,
+    "lsg_frozen_within_life": true,
+    "r2_separated_teacher_credit_preserved": true
+  },
+
+  "baseline_contrast": {
+    "r2_fixed_eprop_train_accuracy_mean": 0.0361328125,
+    "r2_fixed_eprop_validation_accuracy_mean": 0.0,
+    "candidate_train_accuracy_last": 0.0361328125,
+    "candidate_validation_accuracy_mean": 0.0,
+    "acquisition_above_baseline": false
+  },
+
+  "controls": {
+    "reward_off_causality": true,
+    "teacher_permutation_passed": true,
+    "treatment_outperforms_signal_controls": false,
+    "beats_signal_generator_off": true,
+    "beats_signal_generator_permuted": false
+  },
+
+  "ceiling": {
+    "lifetime_training_accuracy": 0.4248046875,
+    "establishes_world_learnable": true
+  },
+
+  "artifact_sha256": {
+    "run_started_json": "1d5eacccb17fca57a382f30bb16b981eb1f3a1d81050bacf0b14ef1f0874df20",
+    "run_completed_json": "35367b842a7b4370480afc03620fdc3a47f6c8d907c163fe2a1ae719efdda3f4",
+    "search_summary_json": "0a4c15603e93d4abb3d344b400fef96b428425c3c422f112bf2e753af53e9249",
+    "reference_birth_r3_preflight_json": "728b9dd1b964ef6ac9c57e2a0834e15139beaf0ae2cd018b43cec2cc0c86472a",
+    "candidate_life_records_jsonl": "e53c2267d8dd11f79c974aec89f82e51b3e9a19325bd8d567cbd8cdde8899b58",
+    "baseline_r2_fixed_eprop_json": "519047f95a4332b8892e85ca9afd06e046b615b32bc43efb9c1af4e1187e5675",
+    "outer_es_inherited_learning_signal_generator_json": "d961a85fc251640db8fb8e41bb17227150caa9a35568643d27af4d13609fed15",
+    "controls_signal_generator_json": "cf68456a896c038995905f84dbdde49ffff89315ae9065cfb207b0a5ea16c7a5",
+    "supervisor_exit_code_txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "supervisor_stdout_stderr_log": "0243ed688f586cc0945bb64790209767329c6edfd13640318225ae500400b61d",
+    "supervisor_run_meta_json": "f02fa546cafa78cfd3257741b7f1bf0e6af5606cc6051076d67135d61120a109",
+    "supervisor_heartbeat_json": "060f0c7f2e9206662add3b9d4a350b9c806e72e10d0dd5106d19d65cb88aaf40"
+  }
+}

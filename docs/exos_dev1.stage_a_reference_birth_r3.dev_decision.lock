@@ -1,0 +1,110 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_REFERENCE_BIRTH_R3.DEV.DECISION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "ReferenceBirthR3",
+  "type": "immutable_dev_decision_record",
+  "status": "closed_for_scored_result",
+  "written_utc": "2026-08-20T11:15:00Z",
+  "product_version": "0.0.004",
+
+  "implementation_commit": "5ad82cf",
+  "implementation_sha": "5ad82cfd89c6c8c9ceaee26e0985eeef31e9dc95",
+  "prereg_commit": "e225918",
+  "prereg_sha": "e225918f3befd9763db981f36a48856c2a575f2f",
+  "prereg_file": "docs/exos_dev1.stage_a_reference_birth_r3.prereg.lock",
+  "contract_file": "docs/exos_dev1.stage_a_reference_birth_r3.contract.lock",
+  "isolation_file": "docs/exos_dev1.stage_a_reference_birth_r3.isolation.lock",
+  "audit_file": "docs/exos_dev1.stage_a_reference_birth_r3.provenance_budget_causal.audit.lock",
+  "executing_head_commit": "e225918",
+  "executing_head_sha": "e225918f3befd9763db981f36a48856c2a575f2f",
+  "code_clean_at_execution": true,
+
+  "run_id": "exos_dev1_reference_birth_r3_scored_20260820",
+  "attempt": "001",
+  "run_directory": "runs/exos_dev1/stage_a_reference_birth_r3/exos_dev1_reference_birth_r3_scored_20260820",
+
+  "runner_outcome": "reference_birth_r3_validation_fail",
+  "decision_code": "training_acquisition_fail",
+  "interpretation": "inherited_lsg_searched_but_no_within_life_acquisition_above_fixed_baseline",
+  "eprop_conclusion": "inconclusive",
+  "architectural_conclusion": "none",
+  "confirmation_consumed": false,
+  "stage_b_status": "locked",
+  "candidate_lock": "forbidden",
+  "product": "0.0.004",
+
+  "scope_of_negative_result": {
+    "valid_for": "current_inherited_learning_signal_generator_implementation_and_ES_search",
+    "not_a_general_eprop_falsification": true,
+    "mechanism_exercised": [
+      "outer_ES_over_LSG_parameters_mobile",
+      "within_life_local_Delta_W_eta_L_e",
+      "LSG_frozen_within_life",
+      "R2_separated_self_teacher_credit"
+    ],
+    "failed_gate": "training_acquisition_vs_r2_fixed_eprop_baseline",
+    "note": "Ceiling learnable (~42% train). Candidate train matched baseline (~3.6%); validation 0%. Partial control signal (reward_off and generator_off beaten on signed margin) without acquisition."
+  },
+
+  "treatments": {
+    "r2_fixed_eprop_baseline": {
+      "organism_candidate": false,
+      "train_accuracy_mean": 0.0361328125,
+      "validation_accuracy_mean": 0.0
+    },
+    "inherited_learning_signal_generator": {
+      "organism_candidate": true,
+      "train_accuracy_last": 0.0361328125,
+      "validation_accuracy_mean": 0.0,
+      "outer_updates_executed": 8,
+      "parameter_movement_sum": 1.1916989584560236,
+      "decision_code": "training_acquisition_fail"
+    },
+    "conventional_actor_critic_ceiling": {
+      "organism_candidate": false,
+      "lifetime_training_accuracy": 0.4248046875
+    }
+  },
+
+  "controls_summary": {
+    "reward_off_causality": true,
+    "teacher_permutation_causality": true,
+    "treatment_outperforms_all_signal_controls": false
+  },
+
+  "ledger_hashes": {
+    "run_started_json": "1d5eacccb17fca57a382f30bb16b981eb1f3a1d81050bacf0b14ef1f0874df20",
+    "run_completed_json": "35367b842a7b4370480afc03620fdc3a47f6c8d907c163fe2a1ae719efdda3f4",
+    "search_summary_json": "0a4c15603e93d4abb3d344b400fef96b428425c3c422f112bf2e753af53e9249",
+    "reference_birth_r3_preflight_json": "728b9dd1b964ef6ac9c57e2a0834e15139beaf0ae2cd018b43cec2cc0c86472a",
+    "candidate_life_records_jsonl": "e53c2267d8dd11f79c974aec89f82e51b3e9a19325bd8d567cbd8cdde8899b58",
+    "baseline_r2_fixed_eprop_json": "519047f95a4332b8892e85ca9afd06e046b615b32bc43efb9c1af4e1187e5675",
+    "outer_es_inherited_learning_signal_generator_json": "d961a85fc251640db8fb8e41bb17227150caa9a35568643d27af4d13609fed15",
+    "controls_signal_generator_json": "cf68456a896c038995905f84dbdde49ffff89315ae9065cfb207b0a5ea16c7a5",
+    "supervisor_exit_code_txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "supervisor_stdout_stderr_log": "0243ed688f586cc0945bb64790209767329c6edfd13640318225ae500400b61d",
+    "supervisor_run_meta_json": "f02fa546cafa78cfd3257741b7f1bf0e6af5606cc6051076d67135d61120a109",
+    "supervisor_heartbeat_json": "060f0c7f2e9206662add3b9d4a350b9c806e72e10d0dd5106d19d65cb88aaf40"
+  },
+
+  "budget_completion": {
+    "outer_optimizer": "batched_evolution_strategies_lsg",
+    "generations": 8,
+    "population_size": 8,
+    "outer_updates_executed": 8,
+    "budget_fully_consumed": true,
+    "wall_seconds_actual": 383.2500009536743,
+    "device": "cuda",
+    "device_name": "NVIDIA GB10",
+    "supervisor_exit_code": 0
+  },
+
+  "forbidden_next": [
+    "larger_ES_budget_as_primary_fix_on_same_LSG",
+    "return_to_stopped_fixed_rate_eprop_tuning",
+    "reopening_r1_r2_r3_confirmation_without_new_prereg",
+    "stage_b_execution",
+    "candidate_or_product_changes"
+  ]
+}
