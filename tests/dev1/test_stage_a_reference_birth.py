@@ -51,6 +51,34 @@ def test_eprop_intervention_factories_set_only_intended_field():
             assert getattr(intervention, field) is expected, f"{intervention.name}: {field}"
 
 
+def test_reference_birth_ceiling_is_measurement_only():
+    life = evaluate_reference_birth_life(
+        "conventional_actor_critic_ceiling",
+        "rb_ceiling_unit",
+        "stochastic",
+        device=dev1_device(),
+        n_episodes=8,
+    )
+    assert life.plasticity_family_name == "conventional_actor_critic_ceiling"
+    assert life.life_record.get("organism_candidate") is False
+    assert life.life_record.get("train_with_autograd") is True
+    assert life.first_failing_causal_predicate == "measurement_only_ceiling"
+
+
+def test_reference_birth_ceiling_hard_eval_no_autograd():
+    from experiments.dev1.conventional_ac_ceiling import evaluate_ceiling_life
+
+    life = evaluate_ceiling_life(
+        "rb_ceiling_hard",
+        "hard",
+        device=dev1_device(),
+        n_episodes=4,
+        train_with_autograd=False,
+    )
+    assert life.life_record.get("train_with_autograd") is False
+    assert 0.0 <= life.treatment_accuracy <= 1.0
+
+
 def test_reference_birth_eprop_family_dispatch():
     genome = bind_genome_for_arm("reward_eprop_rate_adaptation")
     org = ModularOrganism.birth(genome, device=dev1_device(), h_disabled=True, consolidation_disabled=True)

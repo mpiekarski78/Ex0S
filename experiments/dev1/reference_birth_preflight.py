@@ -9,6 +9,7 @@ from dataclasses import asdict, dataclass
 
 import torch
 
+from experiments.dev1.conventional_ac_ceiling import evaluate_ceiling_life
 from experiments.dev1.reference_birth_life import (
     REFERENCE_BIRTH_ARMS,
     evaluate_reference_birth_life,
@@ -90,6 +91,19 @@ def run_reference_birth_preflight(seed: str = PREFLIGHT_SEED) -> ReferenceBirthP
     checks["all_arms_bind"] = all(
         plasticity_implementation_hash(arm) for arm in REFERENCE_BIRTH_ARMS if arm != "conventional_actor_critic_ceiling"
     )
+
+    ceiling = evaluate_ceiling_life(
+        seed + "_ceiling",
+        "stochastic",
+        device=dev,
+        n_episodes=8,
+        train_with_autograd=True,
+    )
+    checks["ceiling_runs_with_autograd"] = ceiling.life_record.get("train_with_autograd") is True
+    checks["ceiling_not_organism_candidate"] = ceiling.life_record.get("organism_candidate") is False
+    checks["ceiling_finite_forward"] = ceiling.treatment_accuracy >= 0.0
+    metrics["ceiling_accuracy"] = ceiling.treatment_accuracy
+    metrics["ceiling_update_norm"] = ceiling.update_norm_mean
 
     passed = all(checks.values())
     decision_code = "eprop_reference_preflight_pass" if passed else "eprop_reference_preflight_fail"

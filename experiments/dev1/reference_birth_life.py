@@ -13,6 +13,11 @@ from typing import Any
 import torch
 import torch.nn.functional as F
 
+from experiments.dev1.conventional_ac_ceiling import (
+    CEILING_ARM,
+    evaluate_ceiling_life,
+    ceiling_implementation_hash,
+)
 from experiments.dev1.probes import probe_permuted_feedback, probe_reward_off, run_causal_decision_ladder
 from experiments.dev1.scaffold_r2 import (
     ContinuousScaffoldPhenotype,
@@ -64,6 +69,8 @@ class ReferenceBirthLifeMetrics:
 
 
 def plasticity_implementation_hash(family: str) -> str:
+    if family == CEILING_ARM or family == "conventional_actor_critic_ceiling":
+        return ceiling_implementation_hash()
     genome = DevGenome.default()
     if family == "r2_1_local_plasticity_control":
         genome.plasticity_family = "reward_baseline_three_factor"
@@ -91,7 +98,7 @@ def bind_genome_for_arm(arm: str, seed: int | None = None) -> DevGenome:
     elif arm in EPROP_ARMS:
         genome.plasticity_family = arm if arm == "reward_eprop_rate_adaptation" else "teacher_demo_eprop"
     elif arm == "conventional_actor_critic_ceiling":
-        genome.plasticity_family = "reward_eprop_rate_adaptation"
+        pass  # ceiling uses separate model; genome defaults only for world dims
     else:
         raise ValueError(f"unknown arm: {arm}")
     return genome
@@ -130,6 +137,33 @@ def evaluate_reference_birth_life(
     h_disabled: bool = True,
     n_episodes: int = 32,
 ) -> ReferenceBirthLifeMetrics:
+    if arm == "conventional_actor_critic_ceiling":
+        train = policy_mode == "stochastic"
+        cm = evaluate_ceiling_life(
+            world_seed,
+            policy_mode,
+            device=device or dev1_device(),
+            n_episodes=n_episodes,
+            train_with_autograd=train,
+        )
+        return ReferenceBirthLifeMetrics(
+            total_fitness=cm.learning_fitness,
+            learning_fitness=cm.learning_fitness,
+            components={"accuracy": cm.treatment_accuracy, "cumulative_reward": cm.cumulative_reward},
+            cumulative_reward=cm.cumulative_reward,
+            treatment_accuracy=cm.treatment_accuracy,
+            reward_off_score=0.0,
+            feedback_off_score=0.0,
+            permuted_feedback_score=0.0,
+            first_failing_causal_predicate="measurement_only_ceiling",
+            phenotype_hash=cm.plasticity_implementation_hash,
+            scaffold_hash="",
+            plasticity_family_name=CEILING_ARM,
+            plasticity_implementation_hash=cm.plasticity_implementation_hash,
+            device=cm.device,
+            life_record=cm.life_record,
+        )
+
     dev = device or dev1_device()
     genome = bind_genome_for_arm(arm)
     world = _make_world(world_seed)

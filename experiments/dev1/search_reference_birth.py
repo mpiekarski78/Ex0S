@@ -70,7 +70,7 @@ def run_stage_a_reference_birth_search(
         "stochastic",
         device=dev,
         h_disabled=h_disabled,
-        n_episodes=8,
+        n_episodes=32,
     )
     _append_jsonl(ledger_path, {"run_id": run_id, "arm": "ceiling", **ceiling.life_record})
     if ceiling.treatment_accuracy < 0.1:
