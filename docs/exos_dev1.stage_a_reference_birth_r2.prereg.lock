@@ -1,0 +1,194 @@
+{
+  "_schema": "exos_dev1.stage_a_reference_birth_r2.prereg.v1",
+  "_immutable": true,
+  "written_utc": "2026-08-20T10:15:00Z",
+
+  "revision": "ReferenceBirthR2",
+  "scientific_attempt_number": 2,
+  "role": "justified_single_mechanism_revision",
+  "not_broad_search": true,
+  "not_larger_es_budget": true,
+
+  "authorized_by": [
+    "docs/exos_dev1.stage_a_reference_birth_r2.contract.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r2.isolation.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.dev_decision.lock",
+    "docs/exos_dev1.stage_a_reference_birth_r1.mechanism.audit.lock"
+  ],
+
+  "r1_status": {
+    "decision": "docs/exos_dev1.stage_a_reference_birth_r1.dev_decision.lock",
+    "decision_code": "credit_not_causal",
+    "interpretation": "outer_es_immobile_on_near_inactive_default_surface",
+    "confirmation_sealed": true,
+    "confirmation_auto_inherit_forbidden": true
+  },
+
+  "authorized_scope_only": [
+    "learning_effect_aware_ES_selection",
+    "separated_self_action_and_teacher_demonstration_credit"
+  ],
+
+  "provenance": {
+    "r2_contract_isolation_commit": "d30d8c3",
+    "implementation_commit": "a6d2eb8",
+    "implementation_sha": "a6d2eb8e267a34ef6f810a44d92528819aa9d9a9",
+    "r1_decision_commit": "da4522f",
+    "mechanism_audit_commit": "e58fca5",
+    "preflight_seed": "reference_birth_r2_excluded_preflight_20260820",
+    "preflight_outcome": "eprop_reference_preflight_pass",
+    "preflight_checks": {
+      "cuda_available": true,
+      "search_surface_sensitivity": true,
+      "teacher_credit_separation": true,
+      "matched_interventions_run": true,
+      "ceiling_runs": true,
+      "update_effect_telemetry": true,
+      "lexicographic_fitness_present": true,
+      "cuda_life": true
+    },
+    "search_surface_sensitivity_max_update_norm_preflight": 3.1857352638109404e-05,
+    "search_surface_sensitivity_signed_margin_spread_preflight": 1.5861587598919868e-09
+  },
+
+  "implementation": {
+    "commit_sha": "a6d2eb8",
+    "runner_file": "experiments/dev1/search_reference_birth_r2.py",
+    "outer_file": "experiments/dev1/reference_birth_r2_outer.py",
+    "life_file": "experiments/dev1/reference_birth_r2_life.py",
+    "preflight_file": "experiments/dev1/reference_birth_r2_preflight.py",
+    "tests_file": "tests/dev1/test_stage_a_reference_birth_r2.py"
+  },
+
+  "R2_SEL_1": {
+    "lexicographic_order": [
+      "accuracy_or_reward_improvement",
+      "signed_rewarded_margin_improvement",
+      "retention",
+      "seeded_neutral_tie_break"
+    ],
+    "dense_causal_term": "g_t = s_t * (m_a,t^after - m_a,t^before)",
+    "forbidden_fitness_terms": [
+      "raw_update_norm",
+      "permanent_parent_priority_on_ties"
+    ]
+  },
+
+  "R2_TEACH_1": {
+    "two_credit_events": [
+      "self_action_sampled_channel_environment_outcome",
+      "teacher_demonstration_demonstrated_channel_teaching_signal"
+    ],
+    "runner_delivers_only": ["observed_motor_event", "teaching_signal_consequence"],
+    "runner_never_constructs": ["neural_target", "weight_update"]
+  },
+
+  "budget": {
+    "outer_optimizer": "batched_evolution_strategies_lexicographic",
+    "generations": 8,
+    "population_size": 8,
+    "mutation_scale": 0.15,
+    "n_episodes_per_life": 32,
+    "training_cheap_seeds": 2,
+    "validation_seeds": 4,
+    "confirmation_seeds": 4,
+    "budget_class_unchanged_from_r1": true,
+    "treatment_arms": [
+      "reward_eprop_rate_adaptation",
+      "teacher_demo_eprop"
+    ],
+    "matched_interventions": [
+      "reward_off",
+      "eligibility_zero",
+      "eligibility_permuted",
+      "motor_feedback_permuted"
+    ],
+    "scored_run_cuda_required": true,
+    "estimated_scored_wall_seconds": 3600
+  },
+
+  "unchanged": {
+    "architecture": true,
+    "scaffold_surface": true,
+    "eprop_equations": true,
+    "stage_b_boundary": "locked",
+    "product_version": "0.0.004"
+  },
+
+  "seed_partitions": {
+    "note": "Fresh R2 train/val/confirmation partitions; R1 confirmation sealed and excluded; attempt-001 and prior scored seeds excluded",
+    "excluded_seeds": [
+      "exos_dev1_reference_birth_world_001",
+      "exos_dev1_reference_birth_world_002",
+      "exos_dev1_reference_birth_world_003",
+      "exos_dev1_reference_birth_world_004",
+      "exos_dev1_reference_birth_world_005",
+      "exos_dev1_reference_birth_world_006",
+      "exos_dev1_reference_birth_conf_001",
+      "exos_dev1_reference_birth_conf_002",
+      "exos_dev1_reference_birth_conf_003",
+      "exos_dev1_reference_birth_conf_004",
+      "exos_dev1_reference_birth_r1_world_001",
+      "exos_dev1_reference_birth_r1_world_002",
+      "exos_dev1_reference_birth_r1_world_003",
+      "exos_dev1_reference_birth_r1_world_004",
+      "exos_dev1_reference_birth_r1_world_005",
+      "exos_dev1_reference_birth_r1_world_006",
+      "exos_dev1_reference_birth_r1_conf_001",
+      "exos_dev1_reference_birth_r1_conf_002",
+      "exos_dev1_reference_birth_r1_conf_003",
+      "exos_dev1_reference_birth_r1_conf_004",
+      "reference_birth_excluded_preflight_20260820",
+      "reference_birth_r1_excluded_preflight_20260820",
+      "reference_birth_r2_excluded_preflight_20260820",
+      "exos_dev1_r2_1b_scored_world_001",
+      "exos_dev1_r2_1b_scored_world_002",
+      "exos_dev1_r2_1b_scored_world_003",
+      "exos_dev1_r2_1b_scored_world_004",
+      "exos_dev1_r2_1b_scored_world_005",
+      "exos_dev1_r2_1b_scored_world_006",
+      "exos_dev1_r2_1_scored_world_001",
+      "exos_dev1_r2_1_scored_world_002",
+      "exos_dev1_r2_1_scored_world_003",
+      "exos_dev1_r2_1_scored_world_004",
+      "exos_dev1_r2_1_scored_world_005",
+      "exos_dev1_r2_1_scored_world_006"
+    ],
+    "training_world_seeds": [
+      "exos_dev1_reference_birth_r2_world_001",
+      "exos_dev1_reference_birth_r2_world_002",
+      "exos_dev1_reference_birth_r2_world_003",
+      "exos_dev1_reference_birth_r2_world_004",
+      "exos_dev1_reference_birth_r2_world_005",
+      "exos_dev1_reference_birth_r2_world_006"
+    ],
+    "confirmation_seeds": [
+      "exos_dev1_reference_birth_r2_conf_001",
+      "exos_dev1_reference_birth_r2_conf_002",
+      "exos_dev1_reference_birth_r2_conf_003",
+      "exos_dev1_reference_birth_r2_conf_004"
+    ],
+    "r2_confirmation_explicitly_preregistered_separately": true,
+    "r1_confirmation_auto_inherit_forbidden": true
+  },
+
+  "run_identity": {
+    "run_id": "exos_dev1_reference_birth_r2_scored_20260820",
+    "output_dir": "runs/exos_dev1/stage_a_reference_birth_r2/exos_dev1_reference_birth_r2_scored_20260820",
+    "preflight_seed": "reference_birth_r2_excluded_preflight_20260820",
+    "attempt": "001",
+    "device_policy": "cuda_required"
+  },
+
+  "forbidden": [
+    "reusing_r1_or_attempt_001_partitions",
+    "auto_inheriting_r1_confirmation_seeds",
+    "reopening_r1_confirmation",
+    "changing_seed_partitions_after_this_lock",
+    "inspecting_confirmation_worlds_during_run",
+    "patching_runner_during_run",
+    "cpu_fallback_without_prereg_amendment",
+    "larger_ES_budget_as_primary_fix",
+    "promoting_ceiling_as_organism_candidate"
+  ]
+}
