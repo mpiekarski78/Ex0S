@@ -281,6 +281,7 @@ class ModularOrganism:
         self._last_action_channel = channel
         self._last_action_policy_mode = policy_mode
         self._last_action_log_prob = float(torch.log(scores[channel] + 1e-12).item())
+        self._last_action_entropy = float(-(scores * torch.log(scores + 1e-12)).sum().item())
         self._awaiting_consequence = True
         self._outcome_credit_pending = False
         self._outcome_credit_consumed = False
@@ -359,6 +360,7 @@ class ModularOrganism:
                     rule.learning_signal_per_unit(delta_t, chosen_channel, motor_logits).norm().item()
                 )
                 self._last_td_error = float(delta_t.item())
+                self._last_critic_value = float(rule.critic.value(self.rho.relational_repr).item())
             else:
                 raise ValueError(f"Unknown local plasticity family: {rule.name()}")
             if hasattr(self, "_r2_plasticity_channel_mask"):
@@ -402,10 +404,17 @@ class ModularOrganism:
         elig = self.eligibility.trace
         elig_norm = float(elig.norm().item())
         w_before = self.action_ctx.W_motor.weight.data.clone()
+
+        rewarded_channel = getattr(self, "_last_action_channel", 0)
+        # If reward was positive, the rewarded channel is the chosen one; margin is vs that channel.
+        pre_stats = self._rewarded_action_stats(rewarded_channel)
+
         dW = self._apply_local_plasticity()
         if dW is None:
             dW = torch.zeros_like(w_before)
         update_norm = float(dW.norm().item())
+        post_stats = self._rewarded_action_stats(rewarded_channel)
+        margin_delta = post_stats["margin"] - pre_stats["margin"]
         mod = getattr(self, "_last_mod", {})
         reward_signal = 0.0
         if "reward_baseline_error" in mod:
@@ -433,9 +442,37 @@ class ModularOrganism:
             "eligibility_norm_before_credit": elig_norm,
             "rewarded_update_norm": update_norm,
             "signed_reward_projection": signed_projection,
+            "pre_rewarded_action_probability": pre_stats["probability"],
+            "post_rewarded_action_probability": post_stats["probability"],
+            "pre_rewarded_action_margin": pre_stats["margin"],
+            "post_rewarded_action_margin": post_stats["margin"],
+            "margin_change_sign": int((margin_delta > 0) - (margin_delta < 0)),
+            "learning_signal_norm": float(getattr(self, "_last_learning_signal_norm", 0.0)),
+            "critic_value": float(getattr(self, "_last_critic_value", 0.0)),
+            "td_error": float(getattr(self, "_last_td_error", reward_signal)),
+            "action_entropy": float(getattr(self, "_last_action_entropy", 0.0)),
         }
         self._last_outcome_credit = dict(result)
         return result
+
+    def _rewarded_action_stats(self, rewarded_channel: int) -> dict[str, float]:
+        """Read-only policy stats for the rewarded (chosen) motor channel."""
+        with torch.no_grad():
+            _, motor_logits = self.action_ctx(self.rho.relational_repr, self.rho.action_repr)
+            temp = 1.0
+            if hasattr(self.plasticity_rule, "temperature"):
+                temp = float(self.plasticity_rule.temperature)
+            import torch.nn.functional as F
+            probs = F.softmax(motor_logits / max(temp, 1e-6), dim=-1)
+            p = float(probs[rewarded_channel].item())
+            top2 = probs.topk(min(2, probs.numel())).values
+            margin = float((top2[0] - top2[-1]).item())
+            # Channel-specific margin vs best alternative
+            others = probs.clone()
+            others[rewarded_channel] = -1.0
+            alt = float(others.max().item())
+            channel_margin = p - alt
+            return {"probability": p, "margin": channel_margin, "top_margin": margin}
 
     def rest(self, n_ticks: int = 1) -> dict:
         """

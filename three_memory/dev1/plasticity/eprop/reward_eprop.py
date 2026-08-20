@@ -1,5 +1,5 @@
 """
-Reward-based e-prop rate adaptation for EX0S-DEV1 Reference Birth.
+Reward-based e-prop rate adaptation for EX0S-DEV1 Reference Birth R1.
 
 Adaptation of Bellec et al. reward-based e-prop to the existing rate-based
 cortical populations. Not an exact spiking LSNN reproduction.
@@ -14,8 +14,6 @@ from three_memory.dev1.genome import DevGenome, PlasticityCoefficients
 from three_memory.dev1.plasticity.eprop.critic import LocalCritic
 from three_memory.dev1.plasticity.eprop.interventions import EpropIntervention
 from three_memory.dev1.plasticity.eprop.projections import LearningSignalProjection
-
-CLIP = 0.1
 
 
 class RewardEpropRateAdaptation:
@@ -52,8 +50,17 @@ class RewardEpropRateAdaptation:
         self._v_prev = None
         self._elig_critic.zero_()
 
-    def policy_probs(self, motor_logits: torch.Tensor, temperature: float = 1.0) -> torch.Tensor:
-        return F.softmax(motor_logits / max(temperature, 1e-6), dim=-1)
+    @property
+    def clip(self) -> float:
+        return float(self.coeffs.update_clip_scale)
+
+    @property
+    def temperature(self) -> float:
+        return float(self.coeffs.temperature)
+
+    def policy_probs(self, motor_logits: torch.Tensor, temperature: float | None = None) -> torch.Tensor:
+        temp = self.temperature if temperature is None else temperature
+        return F.softmax(motor_logits / max(temp, 1e-6), dim=-1)
 
     def learning_signal_per_unit(
         self,
@@ -63,9 +70,14 @@ class RewardEpropRateAdaptation:
     ) -> torch.Tensor:
         probs = self.policy_probs(motor_logits)
         one_hot = torch.zeros(self.genome.n_motor_channels, device=self.device)
-        one_hot[chosen_channel] = 1.0
+        credit_channel = chosen_channel
+        if self.intervention.motor_feedback_permuted:
+            # Permute which channel receives motor-feedback credit relative to action.
+            credit_channel = int((chosen_channel + self.genome.n_motor_channels // 2) % self.genome.n_motor_channels)
+        one_hot[credit_channel] = 1.0
         policy_vec = one_hot - probs
-        return delta_t * (policy_vec @ self.projection.B)
+        projected = policy_vec @ self.projection.B
+        return delta_t * self.coeffs.projection_scale * projected
 
     def actor_delta(
         self,
@@ -84,16 +96,12 @@ class RewardEpropRateAdaptation:
             elig = eligibility[torch.randperm(eligibility.shape[0], device=eligibility.device), :]
         l_j = self.learning_signal_per_unit(delta_t, chosen_channel, motor_logits)
         elig_signal = elig.mean(dim=0)
+        update_channel = chosen_channel
+        if self.intervention.motor_feedback_permuted:
+            update_channel = int((chosen_channel + n_channels // 2) % n_channels)
         dW = torch.zeros(n_channels, elig_signal.numel(), device=self.device)
-        dW[chosen_channel] = self.coeffs.learning_rate * l_j * elig_signal
-        return dW.clamp(-CLIP, CLIP)
-
-    def critic_delta(self, delta_t: torch.Tensor, relational_state: torch.Tensor) -> torch.Tensor:
-        if self.intervention.reward_off:
-            return torch.zeros_like(self.critic.fc.weight)
-        with torch.no_grad():
-            grad = delta_t * relational_state.unsqueeze(0)
-        return (self.coeffs.critic_scale * self.coeffs.learning_rate * grad).clamp(-CLIP, CLIP)
+        dW[update_channel] = self.coeffs.learning_rate * l_j * elig_signal
+        return dW.clamp(-self.clip, self.clip)
 
     def update_critic(self, delta_t: torch.Tensor, relational_state: torch.Tensor) -> float:
         if self.intervention.reward_off:
@@ -101,14 +109,14 @@ class RewardEpropRateAdaptation:
         with torch.no_grad():
             dW = (
                 self.coeffs.critic_scale
-                * self.coeffs.learning_rate
+                * self.coeffs.critic_learning_rate
                 * delta_t
                 * relational_state.unsqueeze(0)
-            ).clamp(-CLIP, CLIP)
+            ).clamp(-self.clip, self.clip)
             self.critic.fc.weight.data.add_(dW)
             if self.critic.fc.bias is not None:
                 self.critic.fc.bias.data.add_(
-                    self.coeffs.critic_scale * self.coeffs.learning_rate * delta_t
+                    self.coeffs.critic_scale * self.coeffs.critic_learning_rate * delta_t
                 )
         return float(dW.norm().item())
 
@@ -128,7 +136,3 @@ class RewardEpropRateAdaptation:
         delta = self.critic.td_error(reward, v_t, v_next, is_terminal)
         self._v_prev = v_t.detach()
         return delta.squeeze()
-
-    def reset_episode(self) -> None:
-        self._v_prev = None
-        self._elig_critic.zero_()

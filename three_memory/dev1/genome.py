@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import dataclass, field, asdict
 from typing import Any
 
@@ -47,6 +48,7 @@ class PlasticityCoefficients:
     but do not fix the solution.
     """
     learning_rate: float = 3e-4
+    critic_learning_rate: float = 3e-4
     eligibility_decay: float = 0.9
     reward_gate_scale: float = 1.0
     prediction_error_scale: float = 1.0
@@ -59,6 +61,9 @@ class PlasticityCoefficients:
     consequence_scale: float = 1.0
     reward_gate_center: float = 0.5
     action_update_floor: float = 1e-6
+    projection_scale: float = 1.0
+    temperature: float = 1.0
+    update_clip_scale: float = 0.1
 
 
 @dataclass
@@ -156,6 +161,7 @@ class DevGenome:
         p = self.plasticity
         return {
             "learning_rate": p.learning_rate,
+            "critic_learning_rate": p.critic_learning_rate,
             "eligibility_decay": p.eligibility_decay,
             "reward_gate_scale": p.reward_gate_scale,
             "prediction_error_scale": p.prediction_error_scale,
@@ -168,6 +174,9 @@ class DevGenome:
             "consequence_scale": p.consequence_scale,
             "reward_gate_center": p.reward_gate_center,
             "action_update_floor": p.action_update_floor,
+            "projection_scale": p.projection_scale,
+            "temperature": p.temperature,
+            "update_clip_scale": p.update_clip_scale,
         }
 
     def set_credit_parameter_dict(self, params: dict[str, float]) -> None:
@@ -175,6 +184,37 @@ class DevGenome:
         for k, v in params.items():
             if hasattr(self.plasticity, k):
                 setattr(self.plasticity, k, float(v))
+
+    def r1_inherited_surface_dict(self) -> dict[str, float]:
+        """Limited Reference Birth R1 outer-search surface (not full matrices)."""
+        p = self.plasticity
+        return {
+            "log_actor_learning_rate": float(math.log(max(p.learning_rate, 1e-12))),
+            "log_critic_learning_rate": float(math.log(max(p.critic_learning_rate, 1e-12))),
+            "eligibility_decay": p.eligibility_decay,
+            "td_discount_gamma": p.gamma,
+            "learning_signal_projection_scale": p.projection_scale,
+            "entropy_exploration_temperature": p.temperature,
+            "update_clip_scale": p.update_clip_scale,
+        }
+
+    def apply_r1_inherited_surface(self, surface: dict[str, float]) -> None:
+        """Decode R1 outer surface into plasticity coefficients."""
+        import math as _math
+        if "log_actor_learning_rate" in surface:
+            self.plasticity.learning_rate = float(_math.exp(surface["log_actor_learning_rate"]))
+        if "log_critic_learning_rate" in surface:
+            self.plasticity.critic_learning_rate = float(_math.exp(surface["log_critic_learning_rate"]))
+        if "eligibility_decay" in surface:
+            self.plasticity.eligibility_decay = float(max(0.01, min(0.999, surface["eligibility_decay"])))
+        if "td_discount_gamma" in surface:
+            self.plasticity.gamma = float(max(0.0, min(0.999, surface["td_discount_gamma"])))
+        if "learning_signal_projection_scale" in surface:
+            self.plasticity.projection_scale = float(max(1e-6, surface["learning_signal_projection_scale"]))
+        if "entropy_exploration_temperature" in surface:
+            self.plasticity.temperature = float(max(1e-3, surface["entropy_exploration_temperature"]))
+        if "update_clip_scale" in surface:
+            self.plasticity.update_clip_scale = float(max(1e-6, surface["update_clip_scale"]))
 
     def genome_hash(self) -> str:
         canonical = json.dumps(self.to_dict(), sort_keys=True, ensure_ascii=True)
