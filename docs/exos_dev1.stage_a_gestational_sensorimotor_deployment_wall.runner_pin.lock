@@ -1,0 +1,44 @@
+{
+  "_schema": "exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.runner_pin.v1",
+  "_immutable": true,
+  "type": "runner_pin_lock",
+  "status": "runner_pinned__prereg_unchanged",
+  "written_utc": "2026-08-21T00:23:00Z",
+  "product_version": "0.0.004",
+  "revision": "GestationalSensorimotorDeploymentWall",
+  "do_not_rewrite_frozen_prereg": true,
+  "prereg": "docs/exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.prereg.lock",
+  "prereg_sha256": "2fa2fbd8fc419ecc8d9039f91a9fac4b58b9ac48775e591e126ed4bed2920d19",
+  "prereg_scored_run_authorized_remains_false": true,
+  "implementation_commit": "9e26d3c9f5e551768964fae139f588196fb53ef1",
+  "mechanism_sha": "8129ccff11177263159f3d76342317288886c481",
+  "mechanism_commit": "8129ccf",
+  "runner_file": "experiments/dev1/search_gestational_sensorimotor_deployment_wall.py",
+  "runner_sha256": "478ec4becc64dcbdb0bf03f82088d0633dca7eb7c170b269ea7fa4005edd8198",
+  "life_file": "experiments/dev1/gsm_deployment_wall_life.py",
+  "life_sha256": "586338c0712038579270aab00f5bc58844d98e1bfb0a5cc2e26f9864faf6f5dd",
+  "controllers_file": "experiments/dev1/gsm_deployment_wall_controllers.py",
+  "controllers_sha256": "a489ef78264ef0d773ee9ac7a47ae7865fcc34af07b25924cec49e081a5d61cb",
+  "tests_file": "tests/dev1/test_stage_a_gestational_sensorimotor_deployment_wall.py",
+  "tests_sha256": "426736a7b1ecca482f642466bd6d609430dca0d04638d7dbac4726c95073d679",
+  "pins": {
+    "horizon_ticks": 3,
+    "uncertainty_max": 0.35,
+    "paired_randomness": true,
+    "exact_controllers_measurement_only": true
+  },
+  "rehearsal": {
+    "run_id": "exos_dev1_gestational_sensorimotor_deployment_wall_excluded_rehearsal_20260821",
+    "completed": true,
+    "decision_code_descriptive_only": "setup_reference_fail",
+    "note": "Reduced-budget infrastructure rehearsal; no threshold adjustment.",
+    "confirmation_sealed": true
+  },
+  "forbidden": [
+    "rewriting_frozen_prereg",
+    "lowering_uncertainty_max",
+    "sweeping_horizon",
+    "threshold_adjustment_from_rehearsal",
+    "changing_mechanism_sha"
+  ]
+}
