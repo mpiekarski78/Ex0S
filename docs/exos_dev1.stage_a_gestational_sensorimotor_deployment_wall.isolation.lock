@@ -1,0 +1,44 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_GESTATIONAL_SENSORIMOTOR_DEPLOYMENT_WALL.ISOLATION.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "GestationalSensorimotorDeploymentWall",
+  "type": "isolation_lock",
+  "status": "locked",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-21T00:12:00Z",
+  "contract": "docs/exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.contract.lock",
+  "prereg": "docs/exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.prereg.lock",
+  "prior_close": "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.close.lock",
+  "nursery_freeze": "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
+  "may_change": [
+    "experiments/dev1/*gsm_deployment_wall*",
+    "experiments/dev1/search_gestational_sensorimotor_deployment_wall.py",
+    "experiments/dev1/gsm_life.py",
+    "experiments/dev1/gsm_r1_setup_gates.py",
+    "tests/dev1/test_stage_a_gestational_sensorimotor_deployment_wall.py",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.*",
+    "runs/exos_dev1/stage_a_gestational_sensorimotor_deployment_wall/"
+  ],
+  "must_not_change": [
+    "three_memory/dev1/gsm/",
+    "three_memory/dev1/nursery_v2/",
+    "three_memory/dev1/development/valence.py",
+    "three_memory/dev1/development/gestation.py",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.close.lock",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.prereg.lock",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.contract.lock",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.isolation.lock",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model.ceiling_audit.lock",
+    "docs/exos_dev1.stage_a_developmental_birth_r4_r2.*",
+    "runs/exos_dev1/stage_a_gestational_sensorimotor_model_r1/exos_dev1_gestational_sensorimotor_model_r1_scored_20260821/",
+    "runs/exos_dev1/stage_a_gestational_sensorimotor_model/exos_dev1_gestational_sensorimotor_model_scored_20260820/"
+  ],
+  "mechanism_sha_preserved": "8129ccff11177263159f3d76342317288886c481",
+  "allowed_measurement_controllers_outside_mechanism_package": [
+    "exact_one_step_valence_evaluator_wrapper",
+    "exact_receding_horizon_H3_controller"
+  ],
+  "note": "Learned paths must call existing choose_synergy_by_valence; forced arm uses require_trusted=false without changing uncertainty_max. Exact arms are measurement-only.",
+  "stage_b": "locked"
+}

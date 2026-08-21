@@ -1,0 +1,117 @@
+{
+  "version": "EX0S-DEV1.STAGE_A_GESTATIONAL_SENSORIMOTOR_DEPLOYMENT_WALL.CONTRACT.LOCK",
+  "program": "EX0S-DEV1",
+  "stage": "A",
+  "revision": "GestationalSensorimotorDeploymentWall",
+  "type": "stage_contract_lock",
+  "status": "protocol_frozen__awaiting_implementation_and_scored_authorization",
+  "product_version": "0.0.004",
+  "written_utc": "2026-08-21T00:12:00Z",
+  "prereg": "docs/exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.prereg.lock",
+  "justified_by": [
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.close.lock",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.prereg.lock",
+    "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock"
+  ],
+  "prior_close": {
+    "lock": "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.close.lock",
+    "decision_code": "grounded_acquisition_fail",
+    "narrow_interpretation": "certified_forward_model_not_translated_into_online_control",
+    "architectural_conclusion": null
+  },
+  "scientific_question": "Given a forward model that certifies offline, which online interface fails: trust gate, learned representation transfer, one-step valence evaluator/sign, or missing horizon/value machinery?",
+  "not_a_parameter_search": true,
+  "hypothesis_unchanged": "A newborn benefits from gestation only when spontaneous action teaches it a reusable model of its own sensorimotor consequences.",
+  "wall_name": "gsm_online_deployment_wall",
+  "required_arms": [
+    {
+      "id": "learned_gated",
+      "isolates": "frozen_failure_baseline_current_learned_model_plus_trust_gate",
+      "notes": "Same interface as R1 predictive treatment; uncertainty_max unchanged at 0.35."
+    },
+    {
+      "id": "learned_forced",
+      "isolates": "whether_uncertainty_rejection_is_the_wall",
+      "notes": "Learned model must choose; trust gate bypassed (require_trusted=false). Do not lower uncertainty_max."
+    },
+    {
+      "id": "exact_one_step_valence",
+      "isolates": "whether_evaluator_or_sign_is_wrong",
+      "notes": "Exact NurseryBodyV2 dynamics + current one-step OrganismValenceCircuit evaluator. Measurement/control-reference arm, not an organism candidate."
+    },
+    {
+      "id": "exact_receding_horizon",
+      "isolates": "whether_myopic_one_step_control_is_insufficient",
+      "notes": "Exact dynamics + short frozen receding-horizon controller (H=3). Measurement/control-reference arm, not an organism candidate."
+    },
+    {
+      "id": "random_fallback",
+      "isolates": "behavioral_baseline",
+      "notes": "Uniform random synergy / matched uncertainty-fallback baseline."
+    }
+  ],
+  "required_measurements": [
+    "online_prediction_error_vs_gestation_validation_error",
+    "trusted_action_coverage_by_time",
+    "trusted_action_coverage_by_state_region",
+    "predicted_vs_realized_interoceptive_improvement",
+    "selected_action_predicted_advantage_sign_correctness",
+    "outcomes_conditional_on_gsm_selected_vs_fallback",
+    "synergy_histograms",
+    "synergy_histogram_early_to_late_change"
+  ],
+  "decisive_routing": [
+    {
+      "code": "missing_value_or_horizon_machinery",
+      "when": "exact_one_step_fails_AND_exact_receding_horizon_passes"
+    },
+    {
+      "code": "learned_representation_does_not_transfer_online",
+      "when": "exact_one_step_passes_AND_learned_forced_fails"
+    },
+    {
+      "code": "uncertainty_calibration_or_coverage_failure",
+      "when": "learned_forced_passes_AND_learned_gated_fails"
+    },
+    {
+      "code": "model_not_causally_useful",
+      "when": "learned_gated_controls_behavior_AND_does_not_beat_required_interventions"
+    },
+    {
+      "code": "deployment_wall_pass_proceed_to_fresh_validation",
+      "when": "learned_gated_treatment_passes_behavioral_thresholds"
+    }
+  ],
+  "decision_ladder": [
+    "setup_reference_fail",
+    "model_certification_fail",
+    "missing_value_or_horizon_machinery",
+    "learned_representation_does_not_transfer_online",
+    "uncertainty_calibration_or_coverage_failure",
+    "model_not_causally_useful",
+    "deployment_wall_fail",
+    "deployment_wall_pass",
+    "fresh_world_fail",
+    "gsm_validation_pass",
+    "gsm_confirmation_pass"
+  ],
+  "frozen_controls": {
+    "uncertainty_max": 0.35,
+    "do_not_lower_uncertainty_max": true,
+    "do_not_increase_gestation_or_training_budget": true,
+    "do_not_rerun_gsm_r1": true,
+    "receding_horizon_ticks": 3,
+    "do_not_sweep_horizon": true,
+    "mechanism_sha_preserved_for_learned_paths": "8129ccff11177263159f3d76342317288886c481"
+  },
+  "forbidden": [
+    "parameter_search_over_uncertainty_max",
+    "parameter_search_over_horizon",
+    "increasing_gestation_ticks_or_episodes_to_pass",
+    "rerunning_or_editing_gsm_r1_scored_run",
+    "changing_gsm_mechanism_package_weights_or_architecture_before_wall_routing",
+    "treating_exact_dynamics_arms_as_organism_candidates",
+    "stage_b_execution"
+  ],
+  "stage_b_boundary": "locked"
+}

@@ -1,0 +1,113 @@
+{
+  "_schema": "exos_dev1.stage_a_gestational_sensorimotor_model_r1.close.v1",
+  "_immutable": true,
+  "type": "narrow_behavioral_close_lock",
+  "status": "closed__grounded_acquisition_fail__certified_model_not_translated_into_online_control",
+  "written_utc": "2026-08-21T00:12:00Z",
+  "product_version": "0.0.004",
+  "revision": "GestationalSensorimotorModelR1",
+  "scientific_attempt_number": 2,
+  "run_id": "exos_dev1_gestational_sensorimotor_model_r1_scored_20260821",
+  "run_dir": "runs/exos_dev1/stage_a_gestational_sensorimotor_model_r1/exos_dev1_gestational_sensorimotor_model_r1_scored_20260821",
+  "run_preserved_unchanged": true,
+  "decision_code": "grounded_acquisition_fail",
+  "first_match_exact": "grounded_acquisition_fail",
+  "ladder_rungs_not_reached": [
+    "gsm_not_causal",
+    "closed_loop_not_causal",
+    "fresh_world_fail",
+    "gsm_validation_pass",
+    "gsm_confirmation_pass"
+  ],
+  "close_scope": "valid_gsm_behavioral_acquisition_failure_only",
+  "narrow_interpretation": "certified_forward_model_not_translated_into_online_control",
+  "architectural_conclusion": null,
+  "mechanism_decision": null,
+  "do_not_infer_which_of_forward_model_trust_gate_or_controller_is_the_wall": true,
+  "progress_statement": "Wall moved from can_gestation_learn_dynamics to can_learned_dynamics_control_behavior.",
+  "interface_mismatch": {
+    "offline_model_certification": "pass_all_three_eng_seeds",
+    "online_fraction_model_actions": 0.298828125,
+    "online_fraction_fallback_actions": 0.701171875,
+    "fallback_source_dominant": "fallback:all_predictions_untrusted",
+    "action_source_counts_predictive_train": {
+      "gsm_prediction": 112,
+      "fallback:all_predictions_untrusted": 400
+    },
+    "train_end_in_zone": 0.03125,
+    "train_distance_reduction": -0.12963693449273705,
+    "validation_end_in_zone": 0.03125,
+    "note": "Forward model certified offline; during life it controlled <50% of actions; distance worsened relative to controls."
+  },
+  "acquisition_conjuncts": {
+    "end_in_zone_rate": {
+      "value": 0.03125,
+      "threshold": 0.25,
+      "pass": false
+    },
+    "distance_reduction": {
+      "value": -0.12963693449273705,
+      "threshold": 0.0,
+      "pass": false
+    },
+    "fraction_model_actions": {
+      "value": 0.298828125,
+      "threshold": 0.5,
+      "pass": false
+    },
+    "systematic_misprediction_risk": {
+      "value": false,
+      "required": false,
+      "pass": true
+    }
+  },
+  "setup_and_certification": {
+    "setup_reference_pass": true,
+    "hard_checks_pass": {
+      "analytic_reachability": true,
+      "exact_dynamics_beam_planner": true,
+      "same_observation_supervised": true,
+      "observation_aliases_absent_or_handled": true
+    },
+    "model_certification_all_certified": true,
+    "ac_diagnostic_only_not_first_match": true
+  },
+  "descriptive_not_ladder_deciding": {
+    "valence_off_end_in_zone": 0.125,
+    "treatment_end_in_zone": 0.03125,
+    "note": "Raises evaluator/sign suspicion for the next deployment wall; does not change this close."
+  },
+  "confirmation": {
+    "consumed": false,
+    "ledger_hits": 0,
+    "refusal_reason": "validation_did_not_pass:grounded_acquisition_fail",
+    "confirmation_seeds_remain_sealed": [
+      "exos_dev1_gestational_sensorimotor_model_r1_conf_001",
+      "exos_dev1_gestational_sensorimotor_model_r1_conf_002",
+      "exos_dev1_gestational_sensorimotor_model_r1_conf_003",
+      "exos_dev1_gestational_sensorimotor_model_r1_conf_004"
+    ]
+  },
+  "provenance": {
+    "prereg": "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.prereg.lock",
+    "contract": "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.contract.lock",
+    "isolation": "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.isolation.lock",
+    "mechanism_sha": "8129ccff11177263159f3d76342317288886c481",
+    "mechanism_commit": "8129ccf",
+    "executing_head": "aef1895c7b8bcf79c3d91d2b2a3944c3c345e873",
+    "runner_sha256": "9c1a8796b0f36a7cf07e74ae4f454234a924caeaed904e63027f2c6c85e0f671",
+    "prior_gsm0_ceiling_audit": "docs/exos_dev1.stage_a_gestational_sensorimotor_model.ceiling_audit.lock"
+  },
+  "next_wall": "docs/exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.prereg.lock",
+  "forbidden": [
+    "rerunning_gsm_r1",
+    "lowering_uncertainty_max",
+    "increasing_gestation_or_training_budget_to_pass",
+    "retuning_behavioral_thresholds_to_pass",
+    "consuming_confirmation_seeds",
+    "silent_replay",
+    "claiming_which_of_model_trust_gate_or_controller_failed",
+    "rewriting_scored_run_artifacts",
+    "parameter_search_as_next_step"
+  ]
+}

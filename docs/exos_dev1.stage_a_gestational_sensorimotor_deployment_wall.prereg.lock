@@ -1,0 +1,277 @@
+{
+  "_schema": "exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.prereg.v1",
+  "_immutable": true,
+  "written_utc": "2026-08-21T00:12:00Z",
+  "status": "prereg_frozen__scored_run_unauthorized",
+  "revision": "GestationalSensorimotorDeploymentWall",
+  "scientific_attempt_number": 3,
+  "role": "decisive_online_deployment_wall_after_gsm_r1_close",
+  "not_a_parameter_search": true,
+  "not_r1_retune": true,
+  "scored_run_authorized": false,
+  "single_scored_attempt": true,
+  "authorized_by": [],
+  "authorization_requires": [
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.contract.lock",
+    "docs/exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.isolation.lock",
+    "implementation_runner_sha_recorded",
+    "explicit_user_authorization_to_score"
+  ],
+  "provenance": {
+    "prior_close": "docs/exos_dev1.stage_a_gestational_sensorimotor_model_r1.close.lock",
+    "prior_decision_code": "grounded_acquisition_fail",
+    "narrow_interpretation": "certified_forward_model_not_translated_into_online_control",
+    "mechanism_sha": "8129ccff11177263159f3d76342317288886c481",
+    "mechanism_commit": "8129ccf",
+    "mechanism_package": "three_memory/dev1/gsm/",
+    "mechanism_unchanged": true,
+    "nursery_freeze": "docs/exos_dev1.stage_a_nursery_body_v2.freeze.lock",
+    "r1_run_descriptive_baseline_only": true,
+    "r1_run_id": "exos_dev1_gestational_sensorimotor_model_r1_scored_20260821"
+  },
+  "hypothesis": "A newborn benefits from gestation only when spontaneous action teaches it a reusable model of its own sensorimotor consequences.",
+  "wall_question": "Which online interface prevents a certified gestational forward model from controlling behavior: trust gate, learned transfer, one-step valence sign/evaluator, or missing horizon?",
+  "arms": {
+    "learned_gated": {
+      "description": "Current learned model + trust gate (frozen R1 failure baseline)",
+      "require_trusted": true,
+      "uncertainty_max": 0.35,
+      "organism_candidate": true
+    },
+    "learned_forced": {
+      "description": "Learned model forced to choose; trust gate bypassed",
+      "require_trusted": false,
+      "uncertainty_max": 0.35,
+      "uncertainty_max_not_used_as_rejector": true,
+      "organism_candidate": true
+    },
+    "exact_one_step_valence": {
+      "description": "Exact dynamics + current one-step valence evaluator",
+      "dynamics": "exact_nursery_body_v2",
+      "controller": "one_step_argmax_imagined_valence",
+      "valence": "OrganismValenceCircuit_unchanged",
+      "organism_candidate": false,
+      "measurement_only": true
+    },
+    "exact_receding_horizon": {
+      "description": "Exact dynamics + short receding-horizon controller",
+      "dynamics": "exact_nursery_body_v2",
+      "controller": "receding_horizon_argmax_sum_imagined_valence",
+      "horizon_ticks": 3,
+      "do_not_sweep_horizon": true,
+      "organism_candidate": false,
+      "measurement_only": true
+    },
+    "random_fallback": {
+      "description": "Uniform random synergy / matched fallback baseline",
+      "organism_candidate": false,
+      "measurement_only": true
+    }
+  },
+  "measurements_required": {
+    "online_prediction_error_vs_gestation_validation_error": true,
+    "trusted_action_coverage_by_time": true,
+    "trusted_action_coverage_by_state_region": {
+      "required": true,
+      "regions": ["near_comfort", "mid_distance", "far"]
+    },
+    "predicted_vs_realized_interoceptive_improvement": true,
+    "selected_action_predicted_advantage_sign_correctness": true,
+    "outcomes_conditional_on_gsm_selected_vs_fallback": true,
+    "synergy_histograms": true,
+    "synergy_histogram_early_to_late_change": {
+      "required": true,
+      "early_fraction": 0.25,
+      "late_fraction": 0.25
+    }
+  },
+  "setup_gates": {
+    "hard": [
+      "analytic_reachability",
+      "exact_dynamics_beam_planner",
+      "same_observation_supervised",
+      "observation_aliases_absent_or_handled",
+      "gsm_model_certification_held_out"
+    ],
+    "recurrent_ac": "diagnostic_only_not_first_match_gate",
+    "do_not_enlarge_or_tune_ac": true
+  },
+  "decision_ladder": [
+    "setup_reference_fail",
+    "model_certification_fail",
+    "missing_value_or_horizon_machinery",
+    "learned_representation_does_not_transfer_online",
+    "uncertainty_calibration_or_coverage_failure",
+    "model_not_causally_useful",
+    "deployment_wall_fail",
+    "deployment_wall_pass",
+    "fresh_world_fail",
+    "gsm_validation_pass",
+    "gsm_confirmation_pass"
+  ],
+  "routing_rules": [
+    {
+      "code": "missing_value_or_horizon_machinery",
+      "predicate": "exact_one_step_valence fails behavioral thresholds AND exact_receding_horizon passes"
+    },
+    {
+      "code": "learned_representation_does_not_transfer_online",
+      "predicate": "exact_one_step_valence passes AND learned_forced fails"
+    },
+    {
+      "code": "uncertainty_calibration_or_coverage_failure",
+      "predicate": "learned_forced passes AND learned_gated fails"
+    },
+    {
+      "code": "model_not_causally_useful",
+      "predicate": "learned_gated meets min_fraction_model_actions and behavioral floor AND does not beat required causal interventions"
+    },
+    {
+      "code": "deployment_wall_pass",
+      "predicate": "learned_gated passes behavioral thresholds; then evaluate fresh validation / confirmation"
+    },
+    {
+      "code": "deployment_wall_fail",
+      "predicate": "no earlier decisive routing matched and learned_gated fails"
+    }
+  ],
+  "budget": {
+    "gestation_ticks": 128,
+    "n_episodes_per_life": 32,
+    "episode_ticks": 16,
+    "engineering_cert_seeds": 3,
+    "discovery_seeds": 2,
+    "validation_seeds": 4,
+    "confirmation_seeds": 4,
+    "scored_run_cuda_required": true,
+    "do_not_increase_relative_to_gsm_r1": true
+  },
+  "uncertainty_fallback": {
+    "uncertainty_max": 0.35,
+    "do_not_lower": true,
+    "fallback_policy": "uniform_random_synergy_no_planner",
+    "no_planner": true,
+    "telemetry_records_action_source": true
+  },
+  "thresholds": {
+    "note": "Behavioral thresholds unchanged from GSM-R1 spirit. Exact arms use the same end_in_zone / distance floors for routing comparisons.",
+    "predictive_min_train_end_in_zone": 0.25,
+    "predictive_min_distance_reduction": 0.0,
+    "active_beats_control_epsilon": 0.05,
+    "fresh_world_min_validation_end_in_zone": 0.2,
+    "min_fraction_model_actions": 0.5,
+    "uncertainty_max": 0.35,
+    "systematic_misprediction_mean_abs_error": 0.35,
+    "receding_horizon_ticks": 3
+  },
+  "implementation": {
+    "package": "three_memory/dev1/gsm/",
+    "mechanism_sha": "8129ccff11177263159f3d76342317288886c481",
+    "life_file": "experiments/dev1/gsm_life.py",
+    "setup_gates_file": "experiments/dev1/gsm_r1_setup_gates.py",
+    "runner_file": "experiments/dev1/search_gestational_sensorimotor_deployment_wall.py",
+    "tests_file": "tests/dev1/test_stage_a_gestational_sensorimotor_deployment_wall.py",
+    "runner_sha256": null,
+    "note": "Runner SHA filled at freeze-complete commit before scored authorization."
+  },
+  "seed_partitions": {
+    "note": "Fresh deployment-wall partitions. Prior GSM-0, GSM-R1 scored/confirmation, and R4-R2 sealed/excluded.",
+    "excluded_seeds": [
+      "nursery_v2_eng_seed_001",
+      "nursery_v2_eng_seed_002",
+      "nursery_v2_eng_seed_003",
+      "gsm_eng_cert_seed_001",
+      "gsm_eng_cert_seed_002",
+      "gsm_eng_cert_seed_003",
+      "gsm_r1_eng_cert_seed_001",
+      "gsm_r1_eng_cert_seed_002",
+      "gsm_r1_eng_cert_seed_003",
+      "gsm_dw_eng_cert_seed_001",
+      "gsm_dw_eng_cert_seed_002",
+      "gsm_dw_eng_cert_seed_003",
+      "gestational_sensorimotor_model_excluded_preflight_20260820",
+      "gestational_sensorimotor_model_excluded_rehearsal_20260820",
+      "gestational_sensorimotor_model_r1_excluded_rehearsal_20260821",
+      "gestational_sensorimotor_deployment_wall_excluded_rehearsal_20260821",
+      "exos_dev1_gestational_sensorimotor_model_world_001",
+      "exos_dev1_gestational_sensorimotor_model_world_002",
+      "exos_dev1_gestational_sensorimotor_model_world_003",
+      "exos_dev1_gestational_sensorimotor_model_world_004",
+      "exos_dev1_gestational_sensorimotor_model_world_005",
+      "exos_dev1_gestational_sensorimotor_model_world_006",
+      "exos_dev1_gestational_sensorimotor_model_conf_001",
+      "exos_dev1_gestational_sensorimotor_model_conf_002",
+      "exos_dev1_gestational_sensorimotor_model_conf_003",
+      "exos_dev1_gestational_sensorimotor_model_conf_004",
+      "exos_dev1_gestational_sensorimotor_model_r1_world_001",
+      "exos_dev1_gestational_sensorimotor_model_r1_world_002",
+      "exos_dev1_gestational_sensorimotor_model_r1_world_003",
+      "exos_dev1_gestational_sensorimotor_model_r1_world_004",
+      "exos_dev1_gestational_sensorimotor_model_r1_world_005",
+      "exos_dev1_gestational_sensorimotor_model_r1_world_006",
+      "exos_dev1_gestational_sensorimotor_model_r1_conf_001",
+      "exos_dev1_gestational_sensorimotor_model_r1_conf_002",
+      "exos_dev1_gestational_sensorimotor_model_r1_conf_003",
+      "exos_dev1_gestational_sensorimotor_model_r1_conf_004",
+      "exos_dev1_developmental_birth_r4_r2_world_001",
+      "exos_dev1_developmental_birth_r4_r2_world_002",
+      "exos_dev1_developmental_birth_r4_r2_world_003",
+      "exos_dev1_developmental_birth_r4_r2_world_004",
+      "exos_dev1_developmental_birth_r4_r2_world_005",
+      "exos_dev1_developmental_birth_r4_r2_world_006",
+      "exos_dev1_developmental_birth_r4_r2_conf_001",
+      "exos_dev1_developmental_birth_r4_r2_conf_002",
+      "exos_dev1_developmental_birth_r4_r2_conf_003",
+      "exos_dev1_developmental_birth_r4_r2_conf_004"
+    ],
+    "engineering_cert_seeds": [
+      "gsm_dw_eng_cert_seed_001",
+      "gsm_dw_eng_cert_seed_002",
+      "gsm_dw_eng_cert_seed_003"
+    ],
+    "discovery_world_seeds": [
+      "exos_dev1_gestational_sensorimotor_deployment_wall_world_001",
+      "exos_dev1_gestational_sensorimotor_deployment_wall_world_002"
+    ],
+    "validation_world_seeds": [
+      "exos_dev1_gestational_sensorimotor_deployment_wall_world_003",
+      "exos_dev1_gestational_sensorimotor_deployment_wall_world_004",
+      "exos_dev1_gestational_sensorimotor_deployment_wall_world_005",
+      "exos_dev1_gestational_sensorimotor_deployment_wall_world_006"
+    ],
+    "confirmation_seeds": [
+      "exos_dev1_gestational_sensorimotor_deployment_wall_conf_001",
+      "exos_dev1_gestational_sensorimotor_deployment_wall_conf_002",
+      "exos_dev1_gestational_sensorimotor_deployment_wall_conf_003",
+      "exos_dev1_gestational_sensorimotor_deployment_wall_conf_004"
+    ],
+    "prior_gsm_r1_and_r4_r2_sealed": true,
+    "prior_confirmation_auto_inherit_forbidden": true
+  },
+  "run_identity": {
+    "run_id": "exos_dev1_gestational_sensorimotor_deployment_wall_scored_PENDING",
+    "output_dir": "runs/exos_dev1/stage_a_gestational_sensorimotor_deployment_wall/",
+    "attempt": "001",
+    "device_policy": "cuda_required"
+  },
+  "unchanged": {
+    "stage_b_boundary": "locked",
+    "product_version": "0.0.004",
+    "gsm_mechanism_package": "immutable_at_8129ccf",
+    "nursery_body_v2_freeze": "immutable",
+    "gsm_r1_close": "immutable",
+    "uncertainty_max": 0.35,
+    "gestation_ticks": 128
+  },
+  "forbidden": [
+    "lowering_uncertainty_max",
+    "increasing_gestation_or_training_budget",
+    "rerunning_gsm_r1",
+    "sweeping_receding_horizon",
+    "changing_mechanism_sha",
+    "silent_replay",
+    "consuming_prior_confirmation_seeds",
+    "stage_b_execution",
+    "scoring_before_explicit_authorization"
+  ]
+}
