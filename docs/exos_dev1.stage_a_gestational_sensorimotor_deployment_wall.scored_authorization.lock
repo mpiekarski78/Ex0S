@@ -1,0 +1,39 @@
+{
+  "_schema": "exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.scored_authorization.v1",
+  "_immutable": true,
+  "type": "scored_authorization_lock",
+  "status": "authorized_single_scored_attempt",
+  "written_utc": "2026-08-21T00:24:00Z",
+  "authorized": true,
+  "single_scored_attempt": true,
+  "authorization": "explicit_user_authorization_20260821_commit_push_locks_implement_pin_then_score_once",
+  "run_id": "exos_dev1_gestational_sensorimotor_deployment_wall_scored_20260821",
+  "output_dir": "runs/exos_dev1/stage_a_gestational_sensorimotor_deployment_wall/exos_dev1_gestational_sensorimotor_deployment_wall_scored_20260821",
+  "prereg": "docs/exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.prereg.lock",
+  "prereg_sha256": "2fa2fbd8fc419ecc8d9039f91a9fac4b58b9ac48775e591e126ed4bed2920d19",
+  "prereg_remains_scored_run_authorized_false": true,
+  "do_not_rewrite_frozen_prereg": true,
+  "runner_pin": "docs/exos_dev1.stage_a_gestational_sensorimotor_deployment_wall.runner_pin.lock",
+  "runner_pin_commit": "7bc14270bf5006238d407c5e610ae97960c02131",
+  "implementation_commit": "9e26d3c9f5e551768964fae139f588196fb53ef1",
+  "implementation_sha": "8129ccff11177263159f3d76342317288886c481",
+  "runner_file": "experiments/dev1/search_gestational_sensorimotor_deployment_wall.py",
+  "runner_sha256": "478ec4becc64dcbdb0bf03f82088d0633dca7eb7c170b269ea7fa4005edd8198",
+  "conditions": {
+    "no_threshold_adjustment_from_rehearsal": true,
+    "full_evidence_before_decision_ladder": true,
+    "confirmation_only_via_deployment_wall_pass_route": true,
+    "horizon_ticks": 3,
+    "uncertainty_max": 0.35,
+    "mechanism_immutable_at_8129ccf": true,
+    "exact_controllers_measurement_only": true
+  },
+  "forbidden": [
+    "rewriting_frozen_prereg",
+    "second_scored_attempt_without_new_authorization",
+    "silent_replay_after_infrastructure_failure",
+    "tuning_from_rehearsal_or_live_outcomes",
+    "lowering_uncertainty_max",
+    "sweeping_horizon"
+  ]
+}
